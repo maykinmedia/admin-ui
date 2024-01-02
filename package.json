@@ -11,7 +11,8 @@
     "rollup": "rollup -c --bundleConfigAsCjs",
     "clean": "rm -rf ./dist",
     "rebuild": "npm run clean && npm run build",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky install"
   },
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
@@ -34,6 +35,9 @@
     "@rollup/plugin-terser": "^0.4.4",
     "@rollup/plugin-typescript": "^11.1.5",
     "@types/react": "^18.2.46",
+    "husky": "^8.0.3",
+    "lint-staged": "^15.2.0",
+    "prettier": "3.1.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "rollup": "^4.9.2",
@@ -47,6 +51,7 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
   },
-  "dependencies": {
+  "lint-staged": {
+    "*.{css,js,jsx,ts,tsx,md}": "prettier --write"
   }
 }
