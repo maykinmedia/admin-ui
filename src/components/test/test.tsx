@@ -1,6 +1,13 @@
 import React from "react";
 import "./test.css";
 
-export const Foo: React.FC<React.HTMLProps<any>> = ({ ...props }) => (
-  <b {...props}>foo</b>
-);
+/**
+ * Test component
+ * @param children Children
+ * @param props
+ * @constructor
+ */
+export const Test: React.FC<React.PropsWithChildren> = ({
+  children,
+  ...props
+}) => <b {...props}>{children}</b>;
