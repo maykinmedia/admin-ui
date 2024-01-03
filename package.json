@@ -7,10 +7,11 @@
     "./*": "./dist/*/*.js"
   },
   "scripts": {
-    "build": "npm run clean && npm run rollup",
-    "rollup": "rollup -c --bundleConfigAsCjs",
+    "build": "npm run clean && npm run build",
     "clean": "rm -rf ./dist",
-    "rebuild": "npm run clean && npm run build",
+    "rollup": "rollup -c --bundleConfigAsCjs",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix src",
     "test": "echo \"Error: no test specified\" && exit 1",
     "prepare": "husky install",
     "storybook": "storybook dev -p 6006",
@@ -45,9 +46,15 @@
     "@storybook/react-webpack5": "^7.6.7",
     "@storybook/test": "^7.6.7",
     "@types/react": "^18.2.46",
+    "@typescript-eslint/eslint-plugin": "^6.17.0",
+    "@typescript-eslint/parser": "^6.17.0",
+    "eslint": "^8.56.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.1.2",
+    "eslint-plugin-react": "^7.33.2",
     "husky": "^8.0.3",
     "lint-staged": "^15.2.0",
-    "prettier": "3.1.1",
+    "prettier": "^3.1.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "rollup": "^4.9.2",
@@ -63,6 +70,6 @@
     "react-dom": "^17.0.2"
   },
   "lint-staged": {
-    "*.{css,js,jsx,ts,tsx,md}": "prettier --write"
+    "*.{css,js,jsx,ts,tsx,md}": "npm run lint:fix"
   }
 }
