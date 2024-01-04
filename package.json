@@ -2,14 +2,11 @@
   "name": "maykin-ui",
   "version": "0.0.0",
   "description": "",
-  "exports": {
-    ".": "./dist/index.js",
-    "./*": "./dist/*/*.js"
-  },
   "scripts": {
-    "build": "npm run clean && npm run build",
+    "build": "npm run rollup",
+    "rebuild": "npm run clean && npm run build",
     "clean": "rm -rf ./dist",
-    "rollup": "rollup -c --bundleConfigAsCjs",
+    "rollup": "rollup -c",
     "lint": "eslint .",
     "lint:fix": "eslint --fix src",
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -17,11 +14,12 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },
-  "main": "dist/cjs/index.js",
-  "module": "dist/esm/index.js",
+  "main": "dist/index.js",
   "files": [
-    "dist"
+    "dist",
+    "src"
   ],
+  "types": "dist/types/",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/maykinmedia/maykin-ui.git"
@@ -58,7 +56,6 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "rollup": "^4.9.2",
-    "rollup-plugin-dts": "^6.1.0",
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "rollup-plugin-postcss": "^4.0.2",
     "storybook": "^7.6.7",

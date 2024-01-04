@@ -7,7 +7,7 @@ import "./test.css";
  * @param props
  * @constructor
  */
-export const Test: React.FC<React.PropsWithChildren> = ({
+export const Test: React.FC<React.PropsWithChildren<{ foo: string }>> = ({
   children,
   ...props
 }) => <b {...props}>{children}</b>;

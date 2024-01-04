@@ -13,5 +13,6 @@ type Story = StoryObj<typeof meta>;
 export const FooComponent: Story = {
   args: {
     children: "The quick brown fox jumps over the lazy dog.",
+    foo: "bar",
   },
 };

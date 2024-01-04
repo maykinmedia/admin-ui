@@ -1,12 +1,13 @@
 {
   "compilerOptions": {
     "target": "ESNext",
+    "outDir": "dist",
     "strict": true,
     "jsx": "react",
     "declaration": true,
-    "declarationDir": "types",
+    "declarationDir": "dist/types",
     "moduleResolution": "node",
-    "allowSyntheticDefaultImports": true,
-    "emitDeclarationOnly": true
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true
   }
 }
