@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "description": "",
   "scripts": {
+    "create-component": "./bin/create_component.sh",
     "build": "npm run rollup",
     "rebuild": "npm run clean && npm run build",
     "clean": "rm -rf ./dist",

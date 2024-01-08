@@ -2,13 +2,18 @@ import React from "react";
 
 import "./test.css";
 
+export type TestProps = React.PropsWithChildren<{
+  // Props here.
+}>;
+
 /**
  * Test component
- * @param children Children
+ * @param children
  * @param props
  * @constructor
  */
-export const Test: React.FC<React.PropsWithChildren<{ foo: string }>> = ({
-  children,
-  ...props
-}) => <b {...props}>{children}</b>;
+export const Test: React.FC<TestProps> = ({ children, ...props }) => (
+  <div className="test" {...props}>
+    {children}
+  </div>
+);
