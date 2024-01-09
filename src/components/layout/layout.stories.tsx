@@ -53,13 +53,13 @@ const meta = {
 
 export default meta;
 
-export const RefernceLayoutDesktop = {
+export const ReferenceLayoutDesktop = {
   args: {
     debug: true,
   },
 };
 
-export const RefernceLayoutMobile = {
+export const ReferenceLayoutMobile = {
   args: {
     debug: true,
   },
