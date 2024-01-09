@@ -11,8 +11,13 @@
   outline: 1px solid green;
 }
 
-.mykn-grid--debug:before {
-  color: red;
+.mykn-grid--debug[data-testid]:before {
+  content: attr(data-testid);
+  color: green;
+  display: block;
+  font-family: monospace;
+  grid-column: 1 / 12 span;
+  text-align: center;
 }
 
 .mykn-grid--debug[data-testid]:before {

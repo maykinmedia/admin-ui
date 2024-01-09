@@ -10,26 +10,25 @@
 
 .mykn-column--debug:before {
   color: blue;
-  content: "mobile (full span)";
+  content: "Mobile (full span)";
   display: block;
   font-family: monospace;
   text-align: center;
 }
 
 .mykn-column--debug[data-testid]:before {
-  content: attr(data-testid);
+  content: attr(data-testid)!important;
 }
 
 @media screen and (min-width: $breakpoint-desktop) {
-  @media screen and (min-width: $breakpoint-desktop) {
-    @for $i from 1 through 12 {
-      .mykn-column--span-#{$i} {
-        grid-column: auto / span #{$i};
-      }
+  @for $i from 1 through 12 {
+    .mykn-column--span-#{$i} {
+      grid-column: auto / span #{$i};
+    }
 
-      .mykn-column--debug.column--span-#{$i}:before {
-        content: "span #{$i}";
-      }
+    .mykn-column--debug.mykn-column--span-#{$i}:before {
+      content: "Span #{$i}";
     }
   }
 }
+

@@ -8,6 +8,9 @@ export type ColumnProps = React.PropsWithChildren<{
 
   /** If set, show the outline of the column. */
   debug?: boolean;
+
+  /** Gets passed as props. */
+  [index: string]: unknown;
 }>;
 
 /**

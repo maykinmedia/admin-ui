@@ -12,8 +12,8 @@ const meta = {
     layout: "fullscreen",
   },
   render: (args) => (
-    <Container debug={args.debug}>
-      <Grid debug={args.debug}>
+    <Container debug={args.debug} data-testid="Container">
+      <Grid debug={args.debug} data-testid="Grid">
         <Column {...args}></Column>
         <Column {...args}></Column>
         <Column {...args}></Column>
@@ -36,7 +36,6 @@ type Story = StoryObj<typeof meta>;
 
 export const ColumnComponent: Story = {
   args: {
-    children: "The quick brown fox jumps over the lazy dog.",
     debug: true,
     span: 1,
   },

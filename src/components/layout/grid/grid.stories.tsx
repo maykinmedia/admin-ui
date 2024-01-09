@@ -22,7 +22,7 @@ type Story = StoryObj<typeof meta>;
 
 export const GridComponent: Story = {
   args: {
-    children: "The quick brown fox jumps over the lazy dog.",
+    "data-testid": "Grid",
     debug: true,
   },
 };
