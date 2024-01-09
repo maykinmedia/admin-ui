@@ -1,6 +1,6 @@
 import React from "react";
 
-import "./logo.css";
+import "./logo.scss";
 
 export type LogoProps = {
   /** The aria-label to set on the SVG element. */

@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import React from "react";
 
-import "./grid.css";
+import "./grid.scss";
 
 export type GridProps = React.PropsWithChildren<{
   /** If set, show the outline of the grid. */

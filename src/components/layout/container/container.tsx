@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import React from "react";
 
-import "./container.css";
+import "./container.scss";
 
 export type ContainerProps = React.PropsWithChildren<{
   /** If set, show the outline of the container. */

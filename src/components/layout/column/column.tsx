@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import React from "react";
 
-import "./column.css";
+import "./column.scss";
 
 export type ColumnProps = React.PropsWithChildren<{
   span: number;
