@@ -1,4 +1,6 @@
 .idea
+build-storybook.log
 dist
 node_modules
+maykin-ui-*.*.*.tgz
 storybook-static

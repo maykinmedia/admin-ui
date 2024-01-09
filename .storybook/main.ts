@@ -8,6 +8,9 @@ const config: StorybookConfig = {
     "@storybook/addon-onboarding",
     "@storybook/addon-interactions",
   ],
+  core: {
+    disableTelemetry: true,
+  },
   framework: {
     name: "@storybook/react-webpack5",
     options: {

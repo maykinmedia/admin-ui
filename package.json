@@ -14,7 +14,8 @@
     "prepare": "husky install",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "test-storybook": "test-storybook"
+    "test-storybook": "test-storybook",
+    "chromatic": "npx chromatic"
   },
   "main": "dist/index.js",
   "files": [
@@ -26,7 +27,9 @@
     "type": "git",
     "url": "git+https://github.com/maykinmedia/maykin-ui.git"
   },
-  "author": "Maykin Media",
+  "author": {
+    "name": "Maykin Media"
+  },
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/maykinmedia/maykin-ui/issues"
@@ -74,5 +77,7 @@
   },
   "lint-staged": {
     "*.{css,js,jsx,ts,tsx,md}": "npm run lint:fix"
-  }
+  },
+  "readme": "ERROR: No README data found!",
+  "_id": "maykin-ui@0.0.0"
 }
