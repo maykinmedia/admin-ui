@@ -79,5 +79,8 @@
     "*.{css,js,jsx,ts,tsx,md}": "npm run lint:fix"
   },
   "readme": "ERROR: No README data found!",
-  "_id": "maykin-ui@0.0.0"
+  "_id": "maykin-ui@0.0.0",
+  "dependencies": {
+    "clsx": "^2.1.0"
+  }
 }
