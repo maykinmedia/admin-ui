@@ -27,9 +27,9 @@ function create_index_file() {
 
 # Function to create the CSS file
 function create_css_file() {
-  echo ".mykn-$component_name_lowercase {" > "$2/$component_name_lowercase.css"
-  echo "  /* Rules here. */" >> "$2/$component_name_lowercase.css"
-  echo "}" >> "$2/$component_name_lowercase.css"
+  echo ".mykn-$component_name_lowercase {" > "$2/$component_name_lowercase.scss"
+  echo "  /* Rules here. */" >> "$2/$component_name_lowercase.scss"
+  echo "}" >> "$2/$component_name_lowercase.scss"
 }
 
 # Function to create the stories.tsx file
@@ -60,7 +60,7 @@ function create_component_file() {
   cat > "$2/$component_name_lowercase.tsx" <<EOF
 import React from "react";
 
-import "./$component_name_lowercase.css";
+import "./$component_name_lowercase.scss";
 
 export type ${capitalized_component_name}Props = React.PropsWithChildren<{
   // Props here.
