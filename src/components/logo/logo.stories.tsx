@@ -4,7 +4,7 @@ import { userEvent } from "@storybook/test";
 import { Logo } from "./logo";
 
 const meta = {
-  title: "Components/Logo",
+  title: "Brand/Logo",
   component: Logo,
 } satisfies Meta<typeof Logo>;
 

@@ -40,7 +40,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { ${capitalized_component_name} } from "./$component_name_lowercase";
 
 const meta = {
-  title: "Components/${capitalized_component_name}",
+  title: "Uncategorized/${capitalized_component_name}",
   component: ${capitalized_component_name},
 } satisfies Meta<typeof ${capitalized_component_name}>;
 
