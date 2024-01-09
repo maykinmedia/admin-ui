@@ -1,0 +1,29 @@
+.logo .logo__image {
+  width: 100%;
+  object-fit: contain;
+  max-width: 155px;
+  overflow: visible;
+}
+
+.logo .logo__handle {
+  transition: transform .1s ease-in-out;
+}
+
+.logo[href]:hover .logo__handle--left,
+.logo[href]:focus .logo__handle--left {
+  transform: translateX(-2px);
+}
+
+
+.logo[href]:active .logo__handle--left {
+  transform: translateX(2px);
+}
+
+.logo[href]:hover .logo__handle--right,
+.logo[href]:focus .logo__handle--right {
+  transform: translateX(2px);
+}
+
+.logo[href]:active .logo__handle--right {
+  transform: translateX(-2px);
+}
