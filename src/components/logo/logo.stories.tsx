@@ -13,7 +13,7 @@ type Story = StoryObj<typeof meta>;
 
 export const LogoComponent: Story = {
   args: {
-    href: "/?path=/story/components-logo--logo-component",
+    href: "/?path=/story/brand-logo--logo-component",
     hrefLabel: "Navigate to logo component page.",
     label: "Maykin logo",
   },
@@ -21,7 +21,7 @@ export const LogoComponent: Story = {
 
 export const LogoAnimatesOnHoverAndClick: Story = {
   args: {
-    href: "#",
+    href: "/?path=/story/brand-logo--logo-component",
     hrefLabel: "Navigate to logo component page.",
     label: "Maykin logo",
   },
