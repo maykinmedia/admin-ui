@@ -1,0 +1,25 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(6, auto);
+  gap: 12px;
+  width: 100%;
+}
+
+.grid--debug {
+  outline: 1px solid green;
+}
+
+.grid--debug:before {
+  color: red;
+}
+
+.grid--debug[data-testid]:before {
+  content: attr(data-testid);
+}
+
+@media screen and (min-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(12, auto);
+    gap: 32px;
+  }
+}

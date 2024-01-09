@@ -1,0 +1,117 @@
+.column {
+  grid-column: auto / 6 span;
+}
+
+.column--debug {
+  outline: 1px solid blue;
+}
+
+.column--debug:before {
+  color: blue;
+  content: "mobile (full span)";
+  display: block;
+  font-family: monospace;
+  text-align: center;
+}
+
+.column--debug[data-testid]:before {
+  content: attr(data-testid);
+}
+
+@media screen and (min-width: 768px) {
+  .column--span-1 {
+    grid-column: auto / 1 span;
+  }
+
+  .column--debug.column--span-1:before {
+    content: "span 1";
+  }
+
+  .column--span-2 {
+    grid-column: auto / 2 span;
+  }
+
+  .column--debug.column--span-2:before {
+    content: "span 2";
+  }
+
+  .column--span-3 {
+    grid-column: auto / span 3;
+  }
+
+  .column--debug.column--span-3:before {
+    content: "span 3";
+  }
+
+  .column--span-4 {
+    grid-column: auto / span 4;
+  }
+
+  .column--debug.column--span-4:before {
+    content: "span 4";
+  }
+
+  .column--span-5 {
+    grid-column: auto / span 5;
+  }
+
+  .column--debug.column--span-5:before {
+    content: "span 5";
+  }
+
+  .column--span-6 {
+    grid-column: auto / span 6;
+  }
+
+  .column--debug.column--span-6:before {
+    content: "span 6";
+  }
+
+  .column--span-7 {
+    grid-column: auto / span 7;
+  }
+
+  .column--debug.column--span-7:before {
+    content: "span 7";
+  }
+
+  .column--span-8 {
+    grid-column: auto / span 8;
+  }
+
+  .column--debug.column--span-8:before {
+    content: "span 8";
+  }
+
+  .column--span-9 {
+    grid-column: auto / span 9;
+  }
+
+  .column--debug.column--span-9:before {
+    content: "span 9";
+  }
+
+  .column--span-10 {
+    grid-column: auto / span 10;
+  }
+
+  .column--debug.column--span-10:before {
+    content: "span 10";
+  }
+
+  .column--span-11 {
+    grid-column: auto / span 11;
+  }
+
+  .column--debug.column--span-11:before {
+    content: "span 11";
+  }
+
+  .column--span-12 {
+    grid-column: auto / span 12;
+  }
+
+  .column--debug.column--span-12:before {
+    content: "span 12";
+  }
+}
