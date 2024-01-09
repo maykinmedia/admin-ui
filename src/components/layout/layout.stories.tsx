@@ -72,7 +72,7 @@ export const SampleLayout = {
   args: {
     debug: true,
   },
-  render: (args) => (
+  render: (args: { debug: boolean }) => (
     <Container debug={args.debug}>
       <Grid debug={args.debug}>
         <Column span={12} debug={args.debug} data-testid="Header"></Column>
