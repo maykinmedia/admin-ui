@@ -27,7 +27,7 @@ function create_index_file() {
 
 # Function to create the CSS file
 function create_css_file() {
-  echo ".$component_name_lowercase {" > "$2/$component_name_lowercase.css"
+  echo ".mykn-$component_name_lowercase {" > "$2/$component_name_lowercase.css"
   echo "  /* Rules here. */" >> "$2/$component_name_lowercase.css"
   echo "}" >> "$2/$component_name_lowercase.css"
 }
@@ -73,7 +73,7 @@ export type ${capitalized_component_name}Props = React.PropsWithChildren<{
  * @constructor
  */
 export const ${capitalized_component_name}: React.FC<${capitalized_component_name}Props> = ({ children, ...props }) => (
-  <div className="$component_name_lowercase" {...props}>
+  <div className="mykn-$component_name_lowercase" {...props}>
     {children}
   </div>
 );

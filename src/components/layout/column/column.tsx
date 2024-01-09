@@ -26,8 +26,8 @@ export const Column: React.FC<ColumnProps> = ({
 }) => {
   return (
     <div
-      className={clsx("column", `column--span-${span}`, {
-        "column--debug": debug,
+      className={clsx("mykn-column", `mykn-column--span-${span}`, {
+        "mykn-column--debug": debug,
       })}
       {...props}
     >

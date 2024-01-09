@@ -1,14 +1,14 @@
 @import '../../../settings/style';
 
-.column {
+.mykn-column {
   grid-column: auto / 6 span;
 }
 
-.column--debug {
+.mykn-column--debug {
   outline: 1px solid blue;
 }
 
-.column--debug:before {
+.mykn-column--debug:before {
   color: blue;
   content: "mobile (full span)";
   display: block;
@@ -16,18 +16,18 @@
   text-align: center;
 }
 
-.column--debug[data-testid]:before {
+.mykn-column--debug[data-testid]:before {
   content: attr(data-testid);
 }
 
 @media screen and (min-width: $breakpoint-desktop) {
   @media screen and (min-width: $breakpoint-desktop) {
     @for $i from 1 through 12 {
-      .column--span-#{$i} {
+      .mykn-column--span-#{$i} {
         grid-column: auto / span #{$i};
       }
 
-      .column--debug.column--span-#{$i}:before {
+      .mykn-column--debug.column--span-#{$i}:before {
         content: "span #{$i}";
       }
     }

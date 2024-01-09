@@ -1,17 +1,17 @@
-.container {
+.mykn-container {
   margin: 0 auto;
   max-width: min(1240px, calc(100% - 40px));
   width: 100%;
 }
 
-.container--debug {
+.mykn-container--debug {
   outline: 1px solid red;
 }
 
-.container--debug:before {
+.mykn-container--debug:before {
   color: red;
 }
 
-.container--debug[data-testid]:before {
+.mykn-container--debug[data-testid]:before {
   content: attr(data-testid);
 }

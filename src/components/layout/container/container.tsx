@@ -20,7 +20,10 @@ export const Container: React.FC<ContainerProps> = ({
   debug,
   ...props
 }) => (
-  <div className={clsx("container", { "container--debug": debug })} {...props}>
+  <div
+    className={clsx("mykn-container", { "mykn-container--debug": debug })}
+    {...props}
+  >
     {children}
   </div>
 );

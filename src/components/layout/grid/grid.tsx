@@ -16,7 +16,7 @@ export type GridProps = React.PropsWithChildren<{
  * @constructor
  */
 export const Grid: React.FC<GridProps> = ({ children, debug, ...props }) => (
-  <div className={clsx("grid", { "grid--debug": debug })} {...props}>
+  <div className={clsx("mykn-grid", { "mykn-grid--debug": debug })} {...props}>
     {children}
   </div>
 );

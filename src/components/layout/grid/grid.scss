@@ -1,26 +1,26 @@
 @import '../../../settings/style';
 
-.grid {
+.mykn-grid {
   display: grid;
   grid-template-columns: repeat(6, auto);
   gap: 12px;
   width: 100%;
 }
 
-.grid--debug {
+.mykn-grid--debug {
   outline: 1px solid green;
 }
 
-.grid--debug:before {
+.mykn-grid--debug:before {
   color: red;
 }
 
-.grid--debug[data-testid]:before {
+.mykn-grid--debug[data-testid]:before {
   content: attr(data-testid);
 }
 
 @media screen and (min-width: $breakpoint-desktop) {
-  .grid {
+  .mykn-grid {
     grid-template-columns: repeat(12, auto);
     gap: 32px;
   }
