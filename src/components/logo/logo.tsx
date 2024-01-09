@@ -16,7 +16,7 @@ export type LogoProps = {
 };
 
 /**
- * The Maykin Media logo
+ * The Maykin logo.
  * @param children
  * @param props
  * @constructor
