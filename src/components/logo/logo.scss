@@ -1,3 +1,5 @@
+@import '../../settings/style';
+
 .logo .logo__image {
   width: 100%;
   object-fit: contain;
@@ -6,7 +8,7 @@
 }
 
 .logo .logo__handle {
-  transition: transform 0.1s ease-in-out;
+  transition: transform var(--animation-duration) var(--animation-timing-function);
 }
 
 .logo[href]:hover .logo__handle--left,
