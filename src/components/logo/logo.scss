@@ -1,0 +1,30 @@
+@import '../../settings/style';
+
+.mykn-logo .mykn-logo__image {
+  width: 100%;
+  object-fit: contain;
+  max-width: 155px;
+  overflow: visible;
+}
+
+.mykn-logo .mykn-logo__handle {
+  transition: transform var(--animation-duration) var(--animation-timing-function);
+}
+
+.mykn-logo[href]:hover .mykn-logo__handle--left,
+.mykn-logo[href]:focus .mykn-logo__handle--left {
+  transform: translateX(-2px);
+}
+
+.mykn-logo[href]:active .mykn-logo__handle--left {
+  transform: translateX(2px);
+}
+
+.mykn-logo[href]:hover .mykn-logo__handle--right,
+.mykn-logo[href]:focus .mykn-logo__handle--right {
+  transform: translateX(2px);
+}
+
+.mykn-logo[href]:active .mykn-logo__handle--right {
+  transform: translateX(-2px);
+}

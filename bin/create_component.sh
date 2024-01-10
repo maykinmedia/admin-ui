@@ -27,9 +27,9 @@ function create_index_file() {
 
 # Function to create the CSS file
 function create_css_file() {
-  echo ".$component_name_lowercase {" > "$2/$component_name_lowercase.css"
-  echo "  /* Rules here. */" >> "$2/$component_name_lowercase.css"
-  echo "}" >> "$2/$component_name_lowercase.css"
+  echo ".mykn-$component_name_lowercase {" > "$2/$component_name_lowercase.scss"
+  echo "  /* Rules here. */" >> "$2/$component_name_lowercase.scss"
+  echo "}" >> "$2/$component_name_lowercase.scss"
 }
 
 # Function to create the stories.tsx file
@@ -40,7 +40,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { ${capitalized_component_name} } from "./$component_name_lowercase";
 
 const meta = {
-  title: "Components/${capitalized_component_name}",
+  title: "Uncategorized/${capitalized_component_name}",
   component: ${capitalized_component_name},
 } satisfies Meta<typeof ${capitalized_component_name}>;
 
@@ -60,7 +60,7 @@ function create_component_file() {
   cat > "$2/$component_name_lowercase.tsx" <<EOF
 import React from "react";
 
-import "./$component_name_lowercase.css";
+import "./$component_name_lowercase.scss";
 
 export type ${capitalized_component_name}Props = React.PropsWithChildren<{
   // Props here.
@@ -73,7 +73,7 @@ export type ${capitalized_component_name}Props = React.PropsWithChildren<{
  * @constructor
  */
 export const ${capitalized_component_name}: React.FC<${capitalized_component_name}Props> = ({ children, ...props }) => (
-  <div className="$component_name_lowercase" {...props}>
+  <div className="mykn-$component_name_lowercase" {...props}>
     {children}
   </div>
 );

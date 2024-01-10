@@ -67,6 +67,8 @@
     "rollup": "^4.9.2",
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "rollup-plugin-postcss": "^4.0.2",
+    "sass": "^1.69.7",
+    "sass-loader": "^13.3.3",
     "storybook": "^7.6.7",
     "tslib": "^2.6.2",
     "typescript": "^5.3.3"
@@ -79,5 +81,8 @@
     "*.{css,js,jsx,ts,tsx,md}": "npm run lint:fix"
   },
   "readme": "ERROR: No README data found!",
-  "_id": "maykin-ui@0.0.0"
+  "_id": "maykin-ui@0.0.0",
+  "dependencies": {
+    "clsx": "^2.1.0"
+  }
 }
