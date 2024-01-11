@@ -2,9 +2,7 @@ import React, { AnchorHTMLAttributes } from "react";
 
 import "./a.scss";
 
-export type AProps = React.PropsWithChildren<
-  AnchorHTMLAttributes<HTMLAnchorElement>
->;
+export type AProps = AnchorHTMLAttributes<HTMLAnchorElement>;
 
 /**
  * Anchor (<a>) component
