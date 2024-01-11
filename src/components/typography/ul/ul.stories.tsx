@@ -1,18 +1,30 @@
 import type { Meta, StoryObj } from "@storybook/react";
+import React from "react";
 
-import { P } from "./p";
+import { A } from "../a";
+import { LI } from "../li";
+import { UL } from "./ul";
 
 const meta = {
-  title: "Typography/P",
-  component: P,
-} satisfies Meta<typeof P>;
+  title: "Typography/UL",
+  component: UL,
+} satisfies Meta<typeof UL>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const PComponent: Story = {
+export const ULComponent: Story = {
   args: {
-    children: "The quick brown fox jumps over the lazy dog.",
-    size: "s",
+    children: (
+      <>
+        <LI>
+          <A href="https://www.lipsum.com/feed/html">
+            Lorem ipsum dolor sit amet.
+          </A>
+        </LI>
+        <LI>Consectetur adipiscing elit.</LI>
+        <LI>Nullam non faucibus lorem, nec egestas ante.</LI>
+      </>
+    ),
   },
 };

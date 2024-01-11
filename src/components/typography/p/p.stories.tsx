@@ -1,17 +1,18 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { H3 } from "./h3";
+import { P } from "./p";
 
 const meta = {
-  title: "Typography/H3",
-  component: H3,
-} satisfies Meta<typeof H3>;
+  title: "Typography/P",
+  component: P,
+} satisfies Meta<typeof P>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const H3Component: Story = {
+export const PComponent: Story = {
   args: {
     children: "The quick brown fox jumps over the lazy dog.",
+    size: "s",
   },
 };

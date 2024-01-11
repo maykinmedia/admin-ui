@@ -17,7 +17,6 @@ const meta = {
       <P size="xs">{args.children}</P>
     </>
   ),
-  ord,
 } satisfies Meta;
 
 export default meta;

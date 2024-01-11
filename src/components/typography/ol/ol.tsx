@@ -2,19 +2,19 @@ import clsx from "clsx";
 import React from "react";
 
 import { PProps } from "../p";
-import "./ul.scss";
+import "./ol.scss";
 
-export type ULProps = PProps;
+export type OLProps = PProps;
 
 /**
- * UL component
+ * OL component
  * @param children
  * @param size
  * @param props
  * @constructor
  */
-export const UL: React.FC<ULProps> = ({ children, size = "s", ...props }) => (
-  <ul className={clsx("mykn-ul", `mykn-ul--size-${size}`)} {...props}>
+export const OL: React.FC<OLProps> = ({ children, size = "s", ...props }) => (
+  <ol className={clsx("mykn-ol", `mykn-ol--size-${size}`)} {...props}>
     {children}
-  </ul>
+  </ol>
 );

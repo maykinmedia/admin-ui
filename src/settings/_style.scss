@@ -1,32 +1,54 @@
-$breakpoint-desktop: 768px;
-
+/// USE CSS VARIABLES WHERE POSSIBLE
 :root {
+  /// ANIMATION
   --animation-timing-function: ease-in-out;
   --animation-duration: 0.2s;
 
+  /// THEME
   --theme-color-primary-800: #341A90;
   --theme-color-primary-700: #5422B9;
   --theme-color-primary-600: #8D75E6;
   --theme-color-primary-400: #BDB0ED;
-  --theme-color-primary-200: #ECF1FF;  /* FIXME? */
+  --theme-color-primary-200: #ECF1FF; /* FIXME? */
 
-  --theme-shade-800: #0F172A;
-  --theme-shade-700: #1E293B;
-  --theme-shade-600: #334155;
-  --theme-shade-400: #475569;
+  --theme-color-tertiary-800: #0F172A;
+  --theme-color-tertiary-700: #1E293B;
+  --theme-color-tertiary-600: #334155;
+  --theme-color-tertiary-400: #475569;
 
   --theme-shade-1000: #000;
+  --theme-shade-900: #272727;
+  --theme-shade-700: #545454;
+  --theme-shade-400: #B3B3B3;
   --theme-shade-0: #FFF;
 
+  /// TYPOGRAPHY
   --typography-color-background: var(--theme-shade-0);
-  --typography-color-text: var(--theme-shade-1000);
+  --typography-color-h: var(--theme-shade-900);
+  --typography-color-body: var(--theme-shade-700);
+  --typography-color-muted: var(--theme-shade-400);
+
+  --typography-font-size-h1: 24px;
+  --typography-font-size-h2: 20px;
+  --typography-font-size-h3: 16px;
+  --typography-font-size-body-s: 14px;
+  --typography-font-size-body-xs: 12px;
+
+  --typography-line-height-h1: 24px;
+  --typography-line-height-h2: 24px;
+  --typography-line-height-h3: 24px;
+  --typography-line-height-body-s: 24px;
+  --typography-line-height-body-xs: 24px;
 }
 
+/// SASS CONSTANTS AS FALLBACK
+$breakpoint-desktop: 768px;
+
+/// ASSETS
 @font-face {
   font-family: 'Inter';
   font-style: normal;
   font-weight: 100 900;
   font-display: swap;
-  src: url('../../fonts/Inter-VariableFont_slnt,wght.ttf') format('truetype');
+  src: url('/src/fonts/Inter-VariableFont_slnt,wght.ttf') format('truetype');
 }
-

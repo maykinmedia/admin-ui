@@ -1,14 +1,6 @@
 @use "../../../settings/style";
+@use '../p/p';
 
-.mykn-p {
-  color: var(--typography-color-text);
-  font-family: Inter, sans-serif;
-  font-size: var(--typography-font-size-body-s);
-  line-height: var(--typography-line-height-body-s);
-  margin: 0;
-
-  &--size-xs {
-    font-size: var(--typography-font-size-body-xs);
-    line-height: var(--typography-line-height-body-xs);
-  }
+.mykn-ul {
+  @extend .mykn-p
 }

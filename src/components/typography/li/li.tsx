@@ -2,19 +2,19 @@ import clsx from "clsx";
 import React from "react";
 
 import { PProps } from "../p";
-import "./ol.scss";
+import "./li.scss";
 
-export type OLProps = PProps;
+export type LIProps = PProps;
 
 /**
- * OL component
+ * LI component
  * @param children
  * @param size
  * @param props
  * @constructor
  */
-export const OL: React.FC<OLProps> = ({ children, size = "s", ...props }) => (
-  <ol className={clsx("mykn-ol", `mykn-ol--size-${size}`)} {...props}>
+export const LI: React.FC<LIProps> = ({ children, size = "s", ...props }) => (
+  <li className={clsx("mykn-li", `mykn-li--size-${size}`)} {...props}>
     {children}
-  </ol>
+  </li>
 );

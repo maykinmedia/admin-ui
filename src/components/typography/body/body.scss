@@ -1,0 +1,14 @@
+@use "../../../settings/style";
+
+.mykn-body {
+  .mykn-h1,
+  .mykn-h2,
+  .mykn-h3,
+  .mykn-p,
+  .mykn-ol,
+  .mykn-ul {
+    &:not(:last-child) {
+      margin-bottom: 16px;
+    }
+  }
+}

@@ -4,6 +4,7 @@ import terser from "@rollup/plugin-terser";
 import typescript from "@rollup/plugin-typescript";
 import peerDepsExternal from "rollup-plugin-peer-deps-external";
 import postcss from "rollup-plugin-postcss";
+import postcss_url from "postcss-url";
 
 export default [
   {
@@ -24,6 +25,12 @@ export default [
         extract: true,
         minimize: true,
         sourceMap: true,
+        plugins: [
+          postcss_url({
+            basePath: process.cwd(),
+            url: 'inline'
+          }),
+        ],
       }),
       terser(),
     ],

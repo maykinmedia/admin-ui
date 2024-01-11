@@ -1,0 +1,9 @@
+@use '../P/p';
+
+.mykn-a {
+  @extend .mykn-p;
+
+  &:hover {
+    text-decoration: none;
+  }
+}

@@ -1,7 +1,10 @@
-.mykn-h2 {
-  color: var(--typography-color-text);
+@use "../../../settings/style";
+
+.mykn-h3 {
+  color: var(--typography-color-h);
   font-family: Inter, sans-serif;
-  font-size: var(--typography-font-size-h2);
-  line-height: var(--typography-font-size-h2);
-  margin: 0;
+  font-size: var(--typography-font-size-h3);
+  line-height: var(--typography-line-height-h3);
+  margin-top: 0;
+  margin-bottom: 0;
 }

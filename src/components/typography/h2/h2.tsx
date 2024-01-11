@@ -1,19 +1,19 @@
 import React from "react";
 
-import "./h1.scss";
+import "./h2.scss";
 
-export type H1Props = React.PropsWithChildren<{
+export type H2Props = React.PropsWithChildren<{
   // Props here.
 }>;
 
 /**
- * H1 component
+ * H2 component
  * @param children
  * @param props
  * @constructor
  */
-export const H1: React.FC<H1Props> = ({ children, ...props }) => (
-  <h1 className="mykn-h1" {...props}>
+export const H2: React.FC<H2Props> = ({ children, ...props }) => (
+  <h2 className="mykn-h2" {...props}>
     {children}
-  </h1>
+  </h2>
 );

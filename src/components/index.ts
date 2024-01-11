@@ -2,3 +2,4 @@
 export * from "./layout";
 export * from "./logo";
 export * from "./page";
+export * from "./typography";

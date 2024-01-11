@@ -1,19 +1,35 @@
+import clsx from "clsx";
 import React from "react";
 
-import "./h3.scss";
+import "./p.scss";
 
-export type H3Props = React.PropsWithChildren<{
-  // Props here.
+export type PProps = React.PropsWithChildren<{
+  /** Whether the text should be presented in a lighter color. */
+  muted?: boolean;
+
+  /** The size of the text. */
+  size?: "s" | "xs";
 }>;
 
 /**
- * H3 component
+ * UL component
  * @param children
+ * @param size
  * @param props
  * @constructor
  */
-export const H3: React.FC<H3Props> = ({ children, ...props }) => (
-  <h3 className="mykn-h3" {...props}>
+export const P: React.FC<PProps> = ({
+  children,
+  muted,
+  size = "s",
+  ...props
+}) => (
+  <p
+    className={clsx("mykn-p", `mykn-p--size-${size}`, {
+      ["mykn-p--muted"]: muted,
+    })}
+    {...props}
+  >
     {children}
-  </h3>
+  </p>
 );
