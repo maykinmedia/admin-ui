@@ -21,3 +21,12 @@ $breakpoint-desktop: 768px;
   --typography-color-background: var(--theme-shade-0);
   --typography-color-text: var(--theme-shade-1000);
 }
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('../../fonts/Inter-VariableFont_slnt,wght.ttf') format('truetype');
+}
+

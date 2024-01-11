@@ -1,4 +1,4 @@
-@import '../../../settings/style';
+@use "../../../settings/style";
 
 .mykn-grid {
   display: grid;
@@ -24,7 +24,7 @@
   content: attr(data-testid);
 }
 
-@media screen and (min-width: $breakpoint-desktop) {
+@media screen and (min-width: style.$breakpoint-desktop) {
   .mykn-grid {
     grid-template-columns: repeat(12, auto);
     gap: 32px;
