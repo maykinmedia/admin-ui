@@ -118,4 +118,4 @@ create_component_file $component_name_lowercase $component_dir
 # Update components/index.ts file
 update_index_file
 
-echo "Component '$component_name' created successfully."
+echo "Component '$component_name_lowercase' created successfully."
