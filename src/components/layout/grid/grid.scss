@@ -5,28 +5,28 @@
   grid-template-columns: repeat(6, auto);
   gap: 12px;
   width: 100%;
-}
 
-.mykn-grid--debug {
-  outline: 1px solid green;
-}
+  &--debug {
+    outline: 1px solid green;
+  }
 
-.mykn-grid--debug[data-testid]:before {
-  content: attr(data-testid);
-  color: green;
-  display: block;
-  font-family: monospace;
-  grid-column: 1 / 12 span;
-  text-align: center;
-}
+  &--debug[data-testid]:before {
+    content: attr(data-testid);
+    color: green;
+    display: block;
+    font-family: monospace;
+    grid-column: 1 / 12 span;
+    text-align: center;
+  }
 
-.mykn-grid--debug[data-testid]:before {
-  content: attr(data-testid);
-}
+  &--debug[data-testid]:before {
+    content: attr(data-testid);
+  }
 
-@media screen and (min-width: style.$breakpoint-desktop) {
-  .mykn-grid {
-    grid-template-columns: repeat(12, auto);
-    gap: 32px;
+  @media screen and (min-width: style.$breakpoint-desktop) {
+    & {
+      grid-template-columns: repeat(12, auto);
+      gap: 32px;
+    }
   }
 }
