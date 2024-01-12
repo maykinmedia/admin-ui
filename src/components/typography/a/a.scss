@@ -2,8 +2,13 @@
 
 .mykn-a {
   @extend .mykn-p;
+  color: var(--theme-color-primary-800);
 
   &:hover {
     text-decoration: none;
+  }
+
+  &[aria-current] {
+    font-weight: var(--typography-font-weight-bold);
   }
 }

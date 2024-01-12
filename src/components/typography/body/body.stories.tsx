@@ -25,11 +25,14 @@ export const BodyComponent: Story = {
       <>
         <H1>Lorem ipsum dolor sit ament</H1>
         <P>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam non
-          faucibus lorem, nec egestas ante. Donec in erat nec ligula pulvinar
-          dictum in at nunc. Ut placerat, metus nec condimentum tincidunt,
-          mauris lectus bibendum est, id sagittis leo orci tincidunt ligula.
-          Suspendisse ut nunc at diam commodo placerat.
+          <A href="https://www.lipsum.com/feed/html" target="_blank">
+            Lorem ipsum
+          </A>{" "}
+          dolor sit amet, consectetur adipiscing elit. Nullam non faucibus
+          lorem, nec egestas ante. Donec in erat nec ligula pulvinar dictum in
+          at nunc. Ut placerat, metus nec condimentum tincidunt, mauris lectus
+          bibendum est, id sagittis leo orci tincidunt ligula. Suspendisse ut
+          nunc at diam commodo placerat.
         </P>
 
         <H2>Lorem ipsum dolor sit ament</H2>
