@@ -13,12 +13,15 @@ export type ToolbarProps = React.PropsWithChildren<
 
     /** When set to true, padding is applied to A components to match Button component's height. */
     padA?: boolean;
+
+    /** The variant (style) of the toolbar. */
+    variant?: "normal" | "transparent";
   }
 >;
 
 /**
  * A flexible and customizable toolbar component for arranging and aligning
- * various interactive elements such as buttons, links, or other components.
+ * various interactive elements such as `A`, `Button`, `ButtonLink` and `Dropdown`.
  * @param children
  * @param align
  * @param direction
@@ -31,6 +34,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
   align = "start",
   direction = "horizontal",
   padA = false,
+  variant = "normal",
   ...props
 }) => (
   <nav
@@ -38,6 +42,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
       "mykn-toolbar",
       `mykn-toolbar--align-${align}`,
       `mykn-toolbar--direction-${direction}`,
+      `mykn-toolbar--variant-${variant}`,
       {
         "mykn-toolbar--pad-a": padA,
       },

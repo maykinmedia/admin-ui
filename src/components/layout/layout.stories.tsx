@@ -7,9 +7,6 @@ import { Grid } from "./grid";
 
 const meta = {
   title: "Layout/Reference",
-  parameters: {
-    layout: "fullscreen",
-  },
   render: (args) => (
     <Container debug={args.debug}>
       <Grid debug={args.debug}>

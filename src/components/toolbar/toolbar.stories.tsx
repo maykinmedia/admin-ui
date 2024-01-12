@@ -47,78 +47,34 @@ export const ToolbarComponent: Story = {
   },
 };
 
-export const ToolbarOnMobile = {
-  args: {
-    align: "end",
-    children: (
-      <>
-        <Button variant="transparent">
-          <Outline.PencilIcon />
-          Zaaktypen
-        </Button>
-
-        <Button variant="transparent">
-          <Outline.ClipboardDocumentIcon />
-          Documenttypen
-        </Button>
-
-        <ButtonLink
-          href="https://www.example.com"
-          target="_blank"
-          variant="transparent"
-        >
-          <Outline.UserIcon />
-          Admin
-        </ButtonLink>
-
-        <Button variant="primary">
-          <Outline.ArrowRightStartOnRectangleIcon />
-          Uitloggen
-        </Button>
-      </>
-    ),
-  },
+export const ToolbarOnMobile: Story = {
+  ...ToolbarComponent,
   parameters: {
     viewport: { defaultViewport: "mobile1" },
   },
 };
 
-export const VerticalToolbar: Story = {
+export const TransparentToolbar: Story = {
+  ...ToolbarComponent,
   args: {
+    ...ToolbarComponent.args,
+    variant: "transparent",
+  },
+};
+
+export const VerticalToolbar: Story = {
+  ...ToolbarComponent,
+  args: {
+    ...ToolbarComponent.args,
     direction: "vertical",
-    children: (
-      <>
-        <Button variant="transparent">
-          <Outline.PencilIcon />
-          Zaaktypen
-        </Button>
-
-        <Button variant="transparent">
-          <Outline.ClipboardDocumentIcon />
-          Documenttypen
-        </Button>
-
-        <ButtonLink
-          href="https://www.example.com"
-          target="_blank"
-          variant="transparent"
-        >
-          <Outline.UserIcon />
-          Admin
-        </ButtonLink>
-
-        <Button variant="primary">
-          <Outline.ArrowRightStartOnRectangleIcon />
-          Uitloggen
-        </Button>
-      </>
-    ),
+    variant: "transparent",
   },
 };
 
 export const ToolbarWithLinks: Story = {
   args: {
     direction: "vertical",
+    variant: "transparent",
     children: (
       <>
         <A href="https://www.example.com" target="_blank">
@@ -163,9 +119,10 @@ export const ToolbarWithLinks: Story = {
 
 export const MixedToolbar: Story = {
   args: {
-    align: "center",
+    align: "start",
     direction: "vertical",
     padA: true,
+    variant: "transparent",
     children: (
       <>
         <A href="https://www.example.com" target="_blank">
