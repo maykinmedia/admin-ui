@@ -12,6 +12,7 @@ export type LogoProps = {
   /** An aria-label describing the link action. */
   hrefLabel?: string;
 
+  /** Gets passed as props. */
   [index: string]: unknown;
 };
 

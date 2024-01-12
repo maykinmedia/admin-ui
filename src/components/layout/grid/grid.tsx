@@ -4,7 +4,7 @@ import React from "react";
 import "./grid.scss";
 
 export type GridProps = React.PropsWithChildren<{
-  /** If set, show the outline of the grid. */
+  /** If set, show the Outline of the grid. */
   debug?: boolean;
 
   /** Gets passed as props. */
