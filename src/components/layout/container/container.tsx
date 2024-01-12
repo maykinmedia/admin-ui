@@ -4,7 +4,7 @@ import React from "react";
 import "./container.scss";
 
 export type ContainerProps = React.PropsWithChildren<{
-  /** If set, show the outline of the container. */
+  /** If set, show the Outline of the container. */
   debug?: boolean;
 
   /** Gets passed as props. */

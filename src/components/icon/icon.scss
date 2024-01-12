@@ -1,0 +1,10 @@
+.mykn-icon {
+  height: 1.2em;
+  vertical-align: middle;
+  width: 1.2em;
+  margin: 0 0.5em;
+
+  &:first-child {
+    margin-inline-start: 0;
+  }
+}

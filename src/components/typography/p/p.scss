@@ -1,0 +1,20 @@
+@use "../../../settings/style";
+
+.mykn-p {
+  color: var(--typography-color-body);
+  font-family: Inter, sans-serif;
+  font-size: var(--typography-font-size-body-s);
+  font-weight: var(--typography-font-weight-normal);
+  line-height: var(--typography-line-height-body-s);
+  margin-top: 0;
+  margin-bottom: 0;
+
+  &--size-xs {
+    font-size: var(--typography-font-size-body-xs);
+    line-height: var(--typography-line-height-body-xs);
+  }
+
+  &--muted {
+    color: var(--typography-color-muted);
+  }
+}

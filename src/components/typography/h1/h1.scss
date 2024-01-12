@@ -1,0 +1,11 @@
+@use "../../../settings/style";
+
+.mykn-h1 {
+  color: var(--typography-color-h);
+  font-family: Inter, sans-serif;
+  font-size: var(--typography-font-size-h1);
+  font-weight: var(--typography-font-weight-bold);
+  line-height: var(--typography-line-height-h1);
+  margin-top: 0;
+  margin-bottom: 0;
+}

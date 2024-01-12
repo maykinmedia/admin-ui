@@ -6,7 +6,7 @@ import "./column.scss";
 export type ColumnProps = React.PropsWithChildren<{
   span: number;
 
-  /** If set, show the outline of the column. */
+  /** If set, show the Outline of the column. */
   debug?: boolean;
 
   /** Gets passed as props. */
