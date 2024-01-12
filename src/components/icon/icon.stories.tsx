@@ -12,6 +12,8 @@ const meta = {
       description: {
         component: `Heroicons (https://heroicons.com/) are used for this project, wrappers are provided by the icon
         component which finalizes the styling. Please use the wrapped versions instead of importing Heroicons directly.
+        FIXME: Auto-completion might not fully work.
+
 
     import { Outline, Solid } from "maykin-ui/icon";
     <Outline.AcademicCapIcon label="Academic Cap"/>
@@ -29,14 +31,20 @@ export const AllIcons: Story = {
   render: () => {
     return (
       <>
-        <h4>Outline</h4>
+        <h4>Outline (click to copy)</h4>
         {Object.entries(Outline).map(([name, Icon]) => (
-          <Icon key={name} label={name} title={name} />
+          <Icon
+            key={name}
+            onClick={() => navigator.clipboard.writeText(`<Outline.${name}/>`)}
+          />
         ))}
 
-        <h4>Solid</h4>
+        <h4>Solid (click to copy)</h4>
         {Object.entries(Solid).map(([name, Icon]) => (
-          <Icon key={name} label={name} title={name} />
+          <Icon
+            key={name}
+            onClick={() => navigator.clipboard.writeText(`<Solid.${name}/>`)}
+          />
         ))}
       </>
     );
@@ -49,15 +57,15 @@ export const IconsInButtons: Story = {
     return (
       <>
         <Button>
-          <Outline.AcademicCapIcon label="Academic Cap" />
+          <Outline.AcademicCapIcon />
           Click me!
         </Button>
         <Button variant="transparent">
-          <Outline.AcademicCapIcon label="Academic Cap" />
+          <Outline.AcademicCapIcon />
           Click me!
         </Button>
         <ButtonLink href="https://www.example.com" target="_blank">
-          <Outline.AcademicCapIcon label="Academic Cap" />
+          <Outline.AcademicCapIcon />
           Click me!
         </ButtonLink>
         <ButtonLink
@@ -65,7 +73,7 @@ export const IconsInButtons: Story = {
           target="_blank"
           variant="transparent"
         >
-          <Outline.AcademicCapIcon label="Academic Cap" />
+          <Outline.AcademicCapIcon />
           Click me!
         </ButtonLink>
       </>
@@ -79,23 +87,23 @@ export const IconsInTypographicComponents: Story = {
     return (
       <Body>
         <H1>
-          <Outline.AcademicCapIcon label="Academic Cap" />
+          <Outline.AcademicCapIcon />
           The quick brown fox jumps over the lazy dog.
         </H1>
         <H2>
-          <Outline.AcademicCapIcon label="Academic Cap" />
+          <Outline.AcademicCapIcon />
           The quick brown fox jumps over the lazy dog.
         </H2>
         <H3>
-          <Outline.AcademicCapIcon label="Academic Cap" />
+          <Outline.AcademicCapIcon />
           The quick brown fox jumps over the lazy dog.
         </H3>
         <P size="s">
-          <Outline.AcademicCapIcon label="Academic Cap" />
+          <Outline.AcademicCapIcon />
           The quick brown fox jumps over the lazy dog.
         </P>
         <P size="xs">
-          <Outline.AcademicCapIcon label="Academic Cap" />
+          <Outline.AcademicCapIcon />
           The quick brown fox jumps over the lazy dog.
         </P>
       </Body>
