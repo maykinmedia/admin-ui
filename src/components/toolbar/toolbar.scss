@@ -1,0 +1,50 @@
+@use '../../settings/style';
+
+.mykn-toolbar {
+  $self: &;
+  column-gap: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  row-gap: 12px;
+  text-align: start;
+
+  &--align-center {
+    justify-content: center;
+    text-align: center;
+  }
+
+  &--align-end {
+    justify-content: end;
+    text-align: end;
+  }
+
+  &--align-center {
+    justify-content: center;
+    text-align: center;
+  }
+
+  @media screen and (min-width: style.$breakpoint-desktop) {
+    &--direction-horizontal {
+      align-items: center;
+      flex-direction: row;
+    }
+  }
+
+  &--pad-a .mykn-a {
+    padding: var(--spacing-v-s) var(--spacing-h-s);
+  }
+
+  .mykn-a {
+    text-decoration: none;
+    color: var(--theme-color-body);
+
+    &[aria-current] {
+      color: var(--theme-color-primary-800)
+    }
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
