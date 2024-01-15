@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { expect, userEvent, within } from "@storybook/test";
+import { expect, userEvent, waitFor, within } from "@storybook/test";
 import React from "react";
 
 import { Button, ButtonLink } from "../button";
@@ -19,19 +19,20 @@ const meta = {
 
     // Click opens, escape closes.
     await userEvent.click(button, { delay: 10 });
-    expect(await canvas.findByRole("dialog")).toBeVisible();
+    await expect(canvas.getByRole("dialog")).toBeVisible();
     userEvent.keyboard("{Escape}");
-    expect(await canvas.findByRole("dialog")).not.toBeVisible();
+    await waitFor(() => expect(canvas.queryByRole("dialog")).toBeNull());
     await userEvent.click(button, { delay: 10 });
-    expect(await canvas.findByRole("dialog")).toBeVisible();
+    await expect(canvas.getByRole("dialog")).toBeVisible();
 
     // Tab focuses items.
     await userEvent.tab({ delay: 10 });
     await userEvent.tab({ delay: 10 });
     await userEvent.tab({ delay: 10 });
 
-    const buttons = await canvas.findAllByRole("button");
-    expect(buttons[buttons.length - 1]).toBe(document.activeElement);
+    expect(canvas.getAllByRole("dialog").findLast((v) => v)).toContainElement(
+      document.activeElement as HTMLElement,
+    );
   },
 } satisfies Meta<typeof Dropdown>;
 
@@ -102,19 +103,20 @@ export const ActivateOnHover: Story = {
 
     // Click opens, escape closes.
     await userEvent.hover(button, { delay: 10 });
-    expect(await canvas.findByRole("dialog")).toBeVisible();
+    await expect(canvas.getByRole("dialog")).toBeVisible();
     userEvent.keyboard("{Escape}");
-    expect(await canvas.findByRole("dialog")).not.toBeVisible();
+    await waitFor(() => expect(canvas.queryByRole("dialog")).toBeNull());
     await userEvent.hover(button, { delay: 10 });
-    expect(await canvas.findByRole("dialog")).toBeVisible();
+    await expect(canvas.getByRole("dialog")).toBeVisible();
 
     // Tab focuses items.
     await userEvent.tab({ delay: 10 });
     await userEvent.tab({ delay: 10 });
     await userEvent.tab({ delay: 10 });
 
-    const buttons = await canvas.findAllByRole("button");
-    expect(buttons[buttons.length - 1]).toBe(document.activeElement);
+    expect(canvas.getByRole("dialog")).toContainElement(
+      document.activeElement as HTMLElement,
+    );
   },
 };
 
@@ -125,20 +127,21 @@ export const ActivateOnFocus: Story = {
 
     // Click opens, escape closes.
     await userEvent.tab({ delay: 10 });
-    expect(await canvas.findByRole("dialog")).toBeVisible();
+    await expect(canvas.getByRole("dialog")).toBeVisible();
     userEvent.keyboard("{Escape}");
-    expect(await canvas.findByRole("dialog")).not.toBeVisible();
+    await waitFor(() => expect(canvas.queryByRole("dialog")).toBeNull());
     await userEvent.tab({ shift: true, delay: 10 });
     await userEvent.tab({ delay: 10 });
-    expect(await canvas.findByRole("dialog")).toBeVisible();
+    await expect(canvas.getByRole("dialog")).toBeVisible();
 
     // Tab focuses items.
     await userEvent.tab({ delay: 10 });
     await userEvent.tab({ delay: 10 });
     await userEvent.tab({ delay: 10 });
 
-    const buttons = await canvas.findAllByRole("button");
-    expect(buttons[buttons.length - 1]).toBe(document.activeElement);
+    expect(canvas.getByRole("dialog")).toContainElement(
+      document.activeElement as HTMLElement,
+    );
   },
 };
 

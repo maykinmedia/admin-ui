@@ -15,9 +15,8 @@ export type NavbarProps = ToolbarProps;
  */
 export const Navbar: React.FC<NavbarProps> = ({ children, ...props }) => {
   const [isMobile, setIsMobile] = useState(
-    window?.matchMedia("(max-width: 767px)").matches,
+    window?.matchMedia("(max-width: 767px)").matches ?? true,
   );
-
   /**
    * Updates `isMobile` on resize.
    */
