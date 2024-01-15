@@ -5,11 +5,15 @@ import { Page } from "../src";
 
 const preview: Preview = {
   decorators: [
-    (Story) => (
-      <Page>
+    (Story, { parameters }) => {
+      return parameters.ignoreGlobalDecorator ? (
         <Story />
-      </Page>
-    ),
+      ) : (
+        <Page>
+          <Story />
+        </Page>
+      );
+    },
   ],
   parameters: {
     actions: { argTypesRegex: "^on[A-Z].*" },

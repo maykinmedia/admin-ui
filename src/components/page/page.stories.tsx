@@ -17,6 +17,7 @@ const meta = {
   title: "Building Blocks/Page",
   component: Page,
   parameters: {
+    ignoreGlobalDecorator: true,
     layout: "fullscreen",
   },
 } satisfies Meta<PagePropsAndCustomArgs>;
