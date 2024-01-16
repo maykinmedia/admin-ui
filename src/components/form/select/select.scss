@@ -1,0 +1,78 @@
+@use '../../../settings/style';
+
+.mykn-select {
+  align-items: center;
+  background: var(--typography-color-background);
+  border: 1px solid var(--theme-color-primary-800);
+  border-radius: 6px;
+  box-sizing: border-box;
+  color: var(--typography-color-body);
+  cursor: pointer;
+  display: inline-flex;
+  justify-content: space-between;
+  font-family: Inter, sans-serif;
+  font-size: var(--typography-font-size-body-s);
+  line-height: var(--typography-line-height-body-s);
+  padding: var(--spacing-v-s) var(--spacing-h-s);
+  width: 320px;
+  max-width: 100%;
+  position: relative;
+
+  .mykn-icon {
+    transition: transform var(--animation-duration-medium) var(--animation-timing-function);
+  }
+
+  &[aria-expanded="true"] > .mykn-icon {
+    transform: scaleY(-1);
+  }
+
+  &__label {
+    width: 100%;
+    flex-grow: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .mykn-icon {
+    flex-shrink: 0;
+  }
+
+  &__dropdown {
+    background: var(--typography-color-background);
+    border: 1px solid var(--theme-color-primary-800);
+    border-radius: 4px;
+    box-sizing: border-box;
+    min-width: 100%;
+    padding: var(--spacing-v-s) 0;
+    width: fit-content;
+    z-index: 1000;
+  }
+}
+
+.mykn-option {
+  --mykn-option-color-background: var(--typography-color-background);
+  --mykn-option-color-body: var(--typography-color-body);
+  --mykn-option-font-weight: var(--typography-font-weight-normal);
+
+  background: var(--mykn-option-color-background);
+  box-sizing: border-box;
+  color: var(--mykn-option-color-body);
+  cursor: pointer;
+  font-family: Inter, sans-serif;
+  font-size: var(--typography-font-size-body-s);
+  font-weight: var(--mykn-option-font-weight);
+  line-height: var(--typography-line-height-body-s);
+  padding: 0 var(--spacing-h-s);
+  white-space: nowrap;
+
+  &[aria-selected="true"] {
+    --mykn-option-color-background: var(--theme-shade-300);
+    --mykn-option-font-weight: var(--typography-font-weight-bold);
+  }
+
+  &#{&}--active {
+    --mykn-option-color-background: var(--theme-color-primary-800);
+    --mykn-option-color-body: var(--typography-color-background);
+  }
+}
