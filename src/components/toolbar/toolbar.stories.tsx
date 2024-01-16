@@ -3,12 +3,20 @@ import React from "react";
 
 import { Button, ButtonLink } from "../button";
 import { Outline } from "../icon";
+import { Page } from "../page";
 import { A } from "../typography";
 import { Toolbar } from "./toolbar";
 
 const meta = {
   title: "Controls/Toolbar",
   component: Toolbar,
+  decorators: [
+    (Story) => (
+      <Page>
+        <Story />
+      </Page>
+    ),
+  ],
 } satisfies Meta<typeof Toolbar>;
 
 export default meta;

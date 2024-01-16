@@ -4,12 +4,20 @@ import React from "react";
 
 import { Button, ButtonLink } from "../button";
 import { Outline } from "../icon";
+import { Page } from "../page";
 import { Toolbar } from "../toolbar";
 import { Dropdown } from "./dropdown";
 
 const meta = {
   title: "Controls/Dropdown",
   component: Dropdown,
+  decorators: [
+    (Story) => (
+      <Page>
+        <Story />
+      </Page>
+    ),
+  ],
   parameters: {
     layout: "fullscreen",
   },

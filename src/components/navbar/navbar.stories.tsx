@@ -4,11 +4,19 @@ import React from "react";
 
 import { Button, ButtonLink } from "../button";
 import { Outline } from "../icon";
+import { Page } from "../page";
 import { Navbar } from "./navbar";
 
 const meta = {
   title: "Controls/Navbar",
   component: Navbar,
+  decorators: [
+    (Story) => (
+      <Page>
+        <Story />
+      </Page>
+    ),
+  ],
 } satisfies Meta<typeof Navbar>;
 
 export default meta;
