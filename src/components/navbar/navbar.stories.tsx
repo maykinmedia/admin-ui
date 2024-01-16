@@ -50,6 +50,9 @@ export const NavbarOnMobile: Story = {
   ...NavbarComponent,
   parameters: {
     viewport: { defaultViewport: "mobile1" },
+    chromatic: {
+      viewports: ["mobile1"],
+    },
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
