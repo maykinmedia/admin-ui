@@ -6,14 +6,14 @@
   --animation-duration-medium: 0.3s;
 
   /// THEME
-  --theme-color-primary-800: #341A90;
-  --theme-color-primary-700: #5422B9;
-  --theme-color-primary-600: #8D75E6;
-  --theme-color-primary-400: #BDB0ED;
-  --theme-color-primary-200: #ECF1FF; /* FIXME? */
+  --theme-color-primary-800: #341a90;
+  --theme-color-primary-700: #5422b9;
+  --theme-color-primary-600: #8d75e6;
+  --theme-color-primary-400: #bdb0ed;
+  --theme-color-primary-200: #ecf1ff; /* FIXME? */
 
-  --theme-color-tertiary-800: #0F172A;
-  --theme-color-tertiary-700: #1E293B;
+  --theme-color-tertiary-800: #0f172a;
+  --theme-color-tertiary-700: #1e293b;
   --theme-color-tertiary-600: #334155;
   --theme-color-tertiary-400: #475569;
 
@@ -61,9 +61,9 @@ $breakpoint-desktop: 768px;
 
 /// ASSETS
 @font-face {
-  font-family: 'Inter';
+  font-family: "Inter";
   font-style: normal;
   font-weight: 100 900;
   font-display: swap;
-  src: url('/src/fonts/Inter-VariableFont_slnt,wght.ttf') format('truetype');
+  src: url("/src/fonts/Inter-VariableFont_slnt,wght.ttf") format("truetype");
 }

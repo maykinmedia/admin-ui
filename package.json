@@ -80,7 +80,8 @@
     "react-dom": "^17.0.2"
   },
   "lint-staged": {
-    "*.{css,js,jsx,ts,tsx,md}": "npm run lint:fix"
+    "*.{scss}": "npx prettier -w",
+    "*.{js,jsx,ts,tsx,md}": "npm run lint:fix"
   },
   "readme": "ERROR: No README data found!",
   "_id": "maykin-ui@0.0.0",
