@@ -24,6 +24,7 @@ export const SelectComponent: Story = {
       { label: "Senior", value: "SR" },
       { label: "Graduate", value: "GR" },
     ],
+    labelClear: "Clear value",
     name: "school_year",
     placeholder: "Select school year",
   },
@@ -55,6 +56,7 @@ export const SelectComponent: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     const select = canvas.getByRole("combobox");
+    const clear = canvas.getByLabelText("Clear value");
 
     const spy = fn();
     select.addEventListener("change", spy);
@@ -88,6 +90,8 @@ export const SelectComponent: Story = {
       const data = JSON.parse(pre?.textContent || "{}");
       await expect(data.school_year).toBe("JR");
     }
+
+    await userEvent.click(clear, { delay: 10 });
   },
 };
 
@@ -100,6 +104,7 @@ export const UsageWithFormik: Story = {
       { label: "Senior", value: "SR" },
       { label: "Graduate", value: "GR" },
     ],
+    labelClear: "Clear value",
     name: "school_year",
     placeholder: "Select school year",
   },
@@ -133,6 +138,7 @@ export const UsageWithFormik: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     const select = canvas.getByRole("combobox");
+    const clear = canvas.getByLabelText("Clear value");
 
     userEvent.click(select, { delay: 10 });
     const junior = await canvas.findByText("Junior");
@@ -146,5 +152,7 @@ export const UsageWithFormik: Story = {
       const data = JSON.parse(pre?.textContent || "{}");
       await expect(data.school_year).toBe("JR");
     }
+
+    await userEvent.click(clear, { delay: 10 });
   },
 };

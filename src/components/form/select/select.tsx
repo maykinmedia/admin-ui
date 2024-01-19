@@ -17,7 +17,7 @@ import {
 import clsx from "clsx";
 import React, { useEffect } from "react";
 
-import { Solid } from "../../icon";
+import { Outline, Solid } from "../../icon";
 import { eventFactory } from "../eventFactory";
 import "./select.scss";
 
@@ -38,11 +38,27 @@ export type SelectProps = React.HTMLAttributes<HTMLDivElement> & {
    */
   onChange?: (event: Event) => void;
 
+  /** The clear value (accessible) label. */
+  labelClear?: string;
+
+  /** Whether a value is required, a required select can't be cleared. */
+  required?: boolean;
+
   /** Placeholder text. */
   placeholder?: string;
 
   value?: Option["value"] | null;
-};
+} & SelectRequiredConditional;
+
+type SelectRequiredConditional =
+  | {
+      labelClear: string;
+      required?: false;
+    }
+  | {
+      labelClear?: string;
+      required: true;
+    };
 
 /**
  * A single (select) option, can be passed to `Select  as array.
@@ -65,7 +81,9 @@ export const Select: React.FC<SelectProps> = ({
   name,
   options = [],
   onChange,
+  labelClear = "Clear value",
   placeholder = "",
+  required = false,
   value = null,
   ...props
 }) => {
@@ -106,7 +124,7 @@ export const Select: React.FC<SelectProps> = ({
    * @param event
    * @param index
    */
-  const handleChange = (event: React.UIEvent, index: number) => {
+  const handleChange = (event: React.UIEvent, index: number | null) => {
     const selectedOption = index !== null ? options[index] : null;
 
     setSelectedIndex(index);
@@ -176,6 +194,16 @@ export const Select: React.FC<SelectProps> = ({
         <div className="mykn-select__label">
           {selectedOptionLabel || placeholder}
         </div>
+        {!required && (
+          <button
+            className="mykn-select__clear"
+            type="button"
+            aria-label={labelClear}
+            onClick={(e) => handleChange(e, null)}
+          >
+            <Outline.XCircleIcon />
+          </button>
+        )}
         <Solid.ChevronDownIcon />
       </div>
 

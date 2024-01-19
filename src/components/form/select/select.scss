@@ -1,4 +1,4 @@
-@use '../../../settings/style';
+@use "../../../settings/style";
 
 .mykn-select {
   align-items: center;
@@ -19,7 +19,8 @@
   position: relative;
 
   .mykn-icon {
-    transition: transform var(--animation-duration-medium) var(--animation-timing-function);
+    transition: transform var(--animation-duration-medium)
+      var(--animation-timing-function);
   }
 
   &[aria-expanded="true"] > .mykn-icon {
@@ -32,6 +33,15 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+  }
+
+  &__clear {
+    appearance: none;
+    background-color: transparent;
+    border: none;
+    margin: 0;
+    padding: 0;
+    flex-shrink: 0;
   }
 
   .mykn-icon {
