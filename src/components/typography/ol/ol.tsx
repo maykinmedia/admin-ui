@@ -4,16 +4,16 @@ import React from "react";
 import { PProps } from "../p";
 import "./ol.scss";
 
-export type OLProps = PProps;
+export type OlProps = PProps;
 
 /**
- * OL component
+ * Ol component
  * @param children
  * @param size
  * @param props
  * @constructor
  */
-export const OL: React.FC<OLProps> = ({ children, size = "s", ...props }) => (
+export const Ol: React.FC<OlProps> = ({ children, size = "s", ...props }) => (
   <ol className={clsx("mykn-ol", `mykn-ol--size-${size}`)} {...props}>
     {children}
   </ol>

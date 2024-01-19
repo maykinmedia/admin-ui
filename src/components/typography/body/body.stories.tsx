@@ -6,10 +6,10 @@ import { H1 } from "../h1";
 import { H2 } from "../h2";
 import { H3 } from "../h3";
 import { Hr } from "../hr";
-import { LI } from "../li";
-import { OL } from "../ol";
+import { Li } from "../li";
+import { Ol } from "../ol";
 import { P } from "../p";
-import { UL } from "../ul";
+import { Ul } from "../ul";
 import { Body } from "./body";
 
 const meta = {
@@ -56,25 +56,25 @@ export const BodyComponent: Story = {
         <H3>Lorem ipsum dolor sit ament</H3>
         <P>Lorem ipsum dolor sit amet.</P>
 
-        <UL>
-          <LI>
+        <Ul>
+          <Li>
             <A href="https://www.lipsum.com/feed/html" target="_blank">
               Lorem ipsum dolor sit amet.
             </A>
-          </LI>
-          <LI>Consectetur adipiscing elit.</LI>
-          <LI>Nullam non faucibus lorem, nec egestas ante.</LI>
-        </UL>
+          </Li>
+          <Li>Consectetur adipiscing elit.</Li>
+          <Li>Nullam non faucibus lorem, nec egestas ante.</Li>
+        </Ul>
 
-        <OL>
-          <LI>
+        <Ol>
+          <Li>
             <A href="https://www.lipsum.com/feed/html" target="_blank">
               Lorem ipsum dolor sit amet.
             </A>
-          </LI>
-          <LI>Consectetur adipiscing elit.</LI>
-          <LI>Nullam non faucibus lorem, nec egestas ante.</LI>
-        </OL>
+          </Li>
+          <Li>Consectetur adipiscing elit.</Li>
+          <Li>Nullam non faucibus lorem, nec egestas ante.</Li>
+        </Ol>
 
         <P muted size="xs">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam non

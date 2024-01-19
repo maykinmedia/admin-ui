@@ -4,16 +4,16 @@ import React from "react";
 import { PProps } from "../p";
 import "./ul.scss";
 
-export type ULProps = PProps;
+export type UlProps = PProps;
 
 /**
- * UL component
+ * Ul component
  * @param children
  * @param size
  * @param props
  * @constructor
  */
-export const UL: React.FC<ULProps> = ({ children, size = "s", ...props }) => (
+export const Ul: React.FC<UlProps> = ({ children, size = "s", ...props }) => (
   <ul className={clsx("mykn-ul", `mykn-ul--size-${size}`)} {...props}>
     {children}
   </ul>
