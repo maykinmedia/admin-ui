@@ -3,4 +3,8 @@
   border-radius: 12px;
   box-sizing: border-box;
   padding: var(--spacing-v-xxl) var(--spacing-h-xxl);
+
+  & + & {
+    margin-top: var(--spacing-v-m);
+  }
 }
