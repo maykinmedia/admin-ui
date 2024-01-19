@@ -5,6 +5,7 @@ import { A } from "../a";
 import { H1 } from "../h1";
 import { H2 } from "../h2";
 import { H3 } from "../h3";
+import { Hr } from "../hr";
 import { LI } from "../li";
 import { OL } from "../ol";
 import { P } from "../p";
@@ -24,6 +25,7 @@ export const BodyComponent: Story = {
     children: (
       <>
         <H1>Lorem ipsum dolor sit ament</H1>
+        <Hr />
         <P>
           <A href="https://www.lipsum.com/feed/html" target="_blank">
             Lorem ipsum
