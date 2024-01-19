@@ -21,6 +21,9 @@ export const ULComponent: Story = {
           <A href="https://www.lipsum.com/feed/html">
             Lorem ipsum dolor sit amet.
           </A>
+          <UL>
+            <LI>Lorem ipsum dolor siet amet.</LI>
+          </UL>
         </LI>
         <LI>Consectetur adipiscing elit.</LI>
         <LI>Nullam non faucibus lorem, nec egestas ante.</LI>

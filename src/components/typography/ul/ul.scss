@@ -2,5 +2,11 @@
 @use '../p/p';
 
 .mykn-ul {
-  @extend .mykn-p
+  @extend .mykn-p;
+  list-style-position: inside;
+  padding-inline-start: 0;
+
+  .mykn-ul {
+    padding-inline-start: var(--spacing-h-xl);
+  }
 }

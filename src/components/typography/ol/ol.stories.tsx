@@ -21,6 +21,9 @@ export const OLComponent: Story = {
           <A href="https://www.lipsum.com/feed/html">
             Lorem ipsum dolor sit amet.
           </A>
+          <OL>
+            <LI>Lorem ipsum dolor siet amet.</LI>
+          </OL>
         </LI>
         <LI>Consectetur adipiscing elit.</LI>
         <LI>Nullam non faucibus lorem, nec egestas ante.</LI>
