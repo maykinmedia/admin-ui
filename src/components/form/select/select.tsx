@@ -112,7 +112,10 @@ export const Select: React.FC<SelectProps> = ({
   const { getReferenceProps } = useInteractions([dismiss, role, click]);
 
   useEffect(() => {
-    const index = options.findIndex((o) => o.value === value);
+    const index = options.findIndex((o) =>
+      o.value ? o.value === value : o.label === value,
+    );
+
     if (index === -1) {
       return;
     }

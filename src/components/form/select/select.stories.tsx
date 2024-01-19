@@ -20,7 +20,7 @@ export const SelectComponent: Story = {
     options: [
       { label: "Freshman", value: "FR" },
       { label: "Sophomore", value: "SO" },
-      { label: "Junior", value: "JR", selected: true },
+      { label: "Junior", value: "JR" },
       { label: "Senior", value: "SR" },
       { label: "Graduate", value: "GR" },
     ],
@@ -100,7 +100,7 @@ export const UsageWithFormik: Story = {
     options: [
       { label: "Freshman", value: "FR" },
       { label: "Sophomore", value: "SO" },
-      { label: "Junior", value: "JR", selected: true },
+      { label: "Junior", value: "JR" },
       { label: "Senior", value: "SR" },
       { label: "Graduate", value: "GR" },
     ],
@@ -154,5 +154,37 @@ export const UsageWithFormik: Story = {
     }
 
     await userEvent.click(clear, { delay: 10 });
+  },
+};
+
+export const ValueBasedOnOptionValue: Story = {
+  args: {
+    options: [
+      { label: "Freshman", value: "FR" },
+      { label: "Sophomore", value: "SO" },
+      { label: "Junior", value: "JR" },
+      { label: "Senior", value: "SR" },
+      { label: "Graduate", value: "GR" },
+    ],
+    labelClear: "Clear value",
+    name: "school_year",
+    placeholder: "Select school year",
+    value: "JR",
+  },
+};
+
+export const ValueBasedOnOptionLabel: Story = {
+  args: {
+    options: [
+      { label: "Freshman" },
+      { label: "Sophomore" },
+      { label: "Junior" },
+      { label: "Senior" },
+      { label: "Graduate" },
+    ],
+    labelClear: "Clear value",
+    name: "school_year",
+    placeholder: "Select school year",
+    value: "Junior",
   },
 };
