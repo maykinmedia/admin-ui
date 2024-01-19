@@ -2,5 +2,10 @@
 @use '../p/p';
 
 .mykn-ol {
-  @extend .mykn-p
-}
+  @extend .mykn-p;
+  list-style-position: inside;
+  padding-inline-start: 0;
+
+  .mykn-ol {
+    padding-inline-start: var(--spacing-h-xl);
+  }}

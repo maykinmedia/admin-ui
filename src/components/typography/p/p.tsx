@@ -12,7 +12,7 @@ export type PProps = React.PropsWithChildren<{
 }>;
 
 /**
- * UL component
+ * Ul component
  * @param children
  * @param size
  * @param props

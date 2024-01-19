@@ -19,12 +19,19 @@
   --theme-shade-1000: #000;
   --theme-shade-900: #272727;
   --theme-shade-700: #545454;
-  --theme-shade-400: #B3B3B3;
-  --theme-shade-0: #FFF;
+  --theme-shade-400: #b3b3b3;
+  --theme-shade-300: #eaeaea;
+  --theme-shade-0: #fff;
 
   /// SPACING
   --spacing-h-s: 12px;
   --spacing-v-s: 6px;
+
+  --spacing-h-xl: 20px;
+  --spacing-v-xl: 50px;
+
+  --spacing-h-xxl: 32px;
+  --spacing-v-xxl: 32px;
 
   /// TYPOGRAPHY
   --typography-color-background: var(--theme-shade-0);

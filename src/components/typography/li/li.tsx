@@ -4,16 +4,16 @@ import React from "react";
 import { PProps } from "../p";
 import "./li.scss";
 
-export type LIProps = PProps;
+export type LiProps = PProps;
 
 /**
- * LI component
+ * Li component
  * @param children
  * @param size
  * @param props
  * @constructor
  */
-export const LI: React.FC<LIProps> = ({ children, size = "s", ...props }) => (
+export const Li: React.FC<LiProps> = ({ children, size = "s", ...props }) => (
   <li className={clsx("mykn-li", `mykn-li--size-${size}`)} {...props}>
     {children}
   </li>
