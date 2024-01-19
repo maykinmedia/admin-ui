@@ -1,4 +1,4 @@
-@use '../../settings/style';
+@use "../../settings/style";
 
 .mykn-dropdown {
   display: inline-flex;
@@ -6,9 +6,8 @@
   justify-content: center;
 
   &--open > .mykn-button {
-    outline: 1px solid var(--theme-color-primary-800)
+    outline: 1px solid var(--theme-color-primary-800);
   }
-
 
   .mykn-a,
   .mykn-button,
@@ -22,11 +21,12 @@
     border-radius: 4px;
     box-sizing: border-box;
     padding: 2px;
+    z-index: 1000;
   }
 
   @media screen and (max-width: style.$breakpoint-desktop - 1px) {
     &__dropdown {
-      width: 100%;  // Fallback.
+      width: 100%; // Fallback.
       width: min(100%, max(calc(100vw - 2 * var(--spacing-h-xl)), 100cqw));
     }
   }
