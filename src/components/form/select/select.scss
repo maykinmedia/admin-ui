@@ -14,7 +14,7 @@
   font-size: var(--typography-font-size-body-s);
   line-height: var(--typography-line-height-body-s);
   padding: var(--spacing-v-s) var(--spacing-h-s);
-  width: 320px;
+  width: min(320px, 100%);
   max-width: 100%;
   position: relative;
 
