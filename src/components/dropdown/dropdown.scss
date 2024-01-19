@@ -1,0 +1,45 @@
+@use '../../settings/style';
+
+.mykn-dropdown {
+  display: inline-flex;
+  position: relative;
+  justify-content: center;
+
+  &--open > .mykn-button {
+    outline: 1px solid var(--theme-color-primary-800)
+  }
+
+
+  .mykn-a,
+  .mykn-button,
+  .mykn-dropdown {
+    width: 100%;
+  }
+
+  &__dropdown {
+    width: fit-content;
+    border: 1px solid var(--theme-color-primary-800);
+    border-radius: 4px;
+    box-sizing: border-box;
+    padding: 2px;
+  }
+
+  @media screen and (max-width: style.$breakpoint-desktop - 1px) {
+    &__dropdown {
+      width: 100%;  // Fallback.
+      width: min(100%, max(calc(100vw - 2 * var(--spacing-h-xl)), 100cqw));
+    }
+  }
+
+  @media screen and (min-width: style.$breakpoint-desktop) {
+    &__dropdown .mykn-toolbar--direction-horizontal {
+      width: min-content;
+    }
+  }
+
+  @media screen and (min-width: style.$breakpoint-desktop) {
+    &__dropdown .mykn-toolbar--direction-vertical {
+      width: max-content;
+    }
+  }
+}

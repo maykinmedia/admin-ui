@@ -6,7 +6,7 @@ import { Outline } from "../icon";
 import { Container, Grid } from "../layout";
 import { Column } from "../layout/column";
 import { Logo } from "../logo";
-import { Toolbar } from "../toolbar";
+import { Navbar } from "../navbar";
 import { Page } from "./page";
 
 type PagePropsAndCustomArgs = React.ComponentProps<typeof Page> & {
@@ -17,6 +17,7 @@ const meta = {
   title: "Building Blocks/Page",
   component: Page,
   parameters: {
+    ignoreGlobalDecorator: true,
     layout: "fullscreen",
   },
 } satisfies Meta<PagePropsAndCustomArgs>;
@@ -38,16 +39,14 @@ export const SamplePage: Story = {
     <Page>
       <Container debug={debug}>
         <Grid debug={debug}>
-          <Column debug={debug} span={1}>
+          <Column debug={debug} span={12}>
             <Logo
               href="/?path=/story/building-blocks-page--sample-page"
               hrefLabel="Navigate to story page"
               label="Maykin"
             />
-          </Column>
 
-          <Column debug={debug} span={11}>
-            <Toolbar align="end">
+            <Navbar align="end">
               <Button variant="transparent">
                 <Outline.PencilIcon />
                 Zaaktypen
@@ -71,10 +70,17 @@ export const SamplePage: Story = {
                 <Outline.ArrowRightStartOnRectangleIcon />
                 Uitloggen
               </Button>
-            </Toolbar>
+            </Navbar>
           </Column>
         </Grid>
       </Container>
     </Page>
   ),
+};
+
+export const SamplePageOnMobile: Story = {
+  ...SamplePage,
+  parameters: {
+    viewport: { defaultViewport: "mobile1" },
+  },
 };

@@ -2,37 +2,73 @@
 
 .mykn-toolbar {
   $self: &;
+  background-color: var(--typography-color-background);
   column-gap: 24px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  padding: var(--spacing-v-s) 0;
   row-gap: 12px;
   text-align: start;
 
-  &--align-center {
-    justify-content: center;
-    text-align: center;
-  }
-
-  &--align-end {
-    justify-content: end;
-    text-align: end;
-  }
-
-  &--align-center {
-    justify-content: center;
-    text-align: center;
+  &--variant-transparent {
+    background-color: transparent;
   }
 
   @media screen and (min-width: style.$breakpoint-desktop) {
+    &--align-start {
+      align-items: start;
+      justify-content: start;
+      text-align: start;
+    }
+
+    &--align-end {
+      align-items: end;
+      justify-content: end;
+      text-align: end;
+    }
+
+    &--align-center {
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
     &--direction-horizontal {
       align-items: center;
       flex-direction: row;
     }
+
+    &--direction-vertical#{&}--align-start .mykn-a,
+    &--direction-vertical#{&}--align-start .mykn-button,
+    &--direction-vertical#{&}--align-start .mykn-dropdown {
+      display: flex;
+      justify-content: start;
+      text-align: start;
+    }
+
+    &--direction-vertical#{&}--align-end .mykn-a,
+    &--direction-vertical#{&}--align-end .mykn-button,
+    &--direction-vertical#{&}--align-end .mykn-dropdown {
+      display: flex;
+      justify-content: end;
+      text-align: end;
+    }
+
+    &--direction-vertical#{&}--align-center .mykn-a,
+    &--direction-vertical#{&}--align-center .mykn-button,
+    &--direction-vertical#{&}--align-center .mykn-dropdown {
+      width: 100%;
+    }
   }
 
   &--pad-a .mykn-a {
+    box-sizing: border-box;
     padding: var(--spacing-v-s) var(--spacing-h-s);
+
+    @media screen and (max-width: style.$breakpoint-desktop - 1px) {
+      width: 100%;
+    }
   }
 
   .mykn-a {

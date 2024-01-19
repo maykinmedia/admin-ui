@@ -1,73 +1,56 @@
 import clsx from "clsx";
-import React from "react";
+import React, { LegacyRef } from "react";
 
 import "./button.scss";
 
-export type ButtonProps = React.PropsWithChildren<{
+type BaseButtonProps = {
   variant?: "primary" | "transparent";
-}>;
-
-/**
- * Higher-order component (HOC) applying button logic to WrappedComponent
- * @param WrappedComponent
- * @private
- */
-const withButtonBehavior = <P extends ButtonProps>(
-  WrappedComponent: React.ComponentType<P>,
-) => {
-  // Define the enhanced component
-  const EnhancedButton: React.FC<P> = ({
-    children,
-    variant = "primary",
-    ...props
-  }) => {
-    return (
-      <WrappedComponent
-        className={clsx("mykn-button", `mykn-button--variant-${variant}`)}
-        {...(props as P)}
-      >
-        {children}
-      </WrappedComponent>
-    );
-  };
-
-  return EnhancedButton;
 };
 
-/**
- * Base template for Button component
- * @private
- */
-const BaseButton: React.FC<
-  ButtonProps & React.ButtonHTMLAttributes<HTMLButtonElement>
-> = (props) => {
-  return <button {...props}>{props.children}</button>;
-};
+export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> &
+  BaseButtonProps;
 
-/**
- * Base template for ButtonLink component
- * @private
- */
-const BaseButtonLink: React.FC<
-  ButtonProps & React.AnchorHTMLAttributes<HTMLAnchorElement>
-> = (props) => {
-  return <a {...props}>{props.children}</a>;
-};
+export type ButtonLinkProps = React.AnchorHTMLAttributes<HTMLAnchorElement> &
+  BaseButtonProps;
 
 /**
  * Button component
- * @param children
- * @param type
+ * @param variant
  * @param props
  * @constructor
  */
-export const Button = withButtonBehavior(BaseButton);
+export const Button = React.forwardRef<HTMLAnchorElement, ButtonProps>(
+  ({ variant = "primary", ...props }, ref) => {
+    return (
+      <button
+        ref={ref as LegacyRef<HTMLButtonElement>}
+        className={clsx("mykn-button", `mykn-button--variant-${variant}`)}
+        {...props}
+      >
+        {props.children}
+      </button>
+    );
+  },
+);
+Button.displayName = "Button";
 
 /**
- * Anchor (<a>) version of button component
- * @param children
- * @param type
+ * Button component
+ * @param variant
  * @param props
  * @constructor
  */
-export const ButtonLink = withButtonBehavior(BaseButtonLink);
+export const ButtonLink = React.forwardRef<HTMLAnchorElement, ButtonLinkProps>(
+  ({ variant, ...props }, ref) => {
+    return (
+      <a
+        ref={ref as LegacyRef<HTMLAnchorElement>}
+        className={clsx("mykn-button", `mykn-button--variant-${variant}`)}
+        {...props}
+      >
+        {props.children}
+      </a>
+    );
+  },
+);
+ButtonLink.displayName = "ButtonLink";
