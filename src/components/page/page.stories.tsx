@@ -2,11 +2,15 @@ import type { Meta, StoryObj } from "@storybook/react";
 import React from "react";
 
 import { Button, ButtonLink } from "../button";
+import { Card } from "../card";
+import { Select } from "../form";
 import { Outline } from "../icon";
 import { Container, Grid } from "../layout";
 import { Column } from "../layout/column";
 import { Logo } from "../logo";
 import { Navbar } from "../navbar";
+import { Body, H1 } from "../typography";
+import { Hr } from "../typography/hr";
 import { Page } from "./page";
 
 type PagePropsAndCustomArgs = React.ComponentProps<typeof Page> & {
@@ -72,6 +76,24 @@ export const SamplePage: Story = {
               </Button>
             </Navbar>
           </Column>
+
+          <Column span={12}>
+            <Card>
+              <Body>
+                <H1>Catalogi</H1>
+                <Hr />
+                <Select
+                  name=""
+                  options={[{ label: "Wonen en leven" }]}
+                  value="Wonen en leven"
+                  required
+                ></Select>
+              </Body>
+            </Card>
+            <Card></Card>
+          </Column>
+
+          <Column span={12}></Column>
         </Grid>
       </Container>
     </Page>
