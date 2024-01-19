@@ -3,7 +3,7 @@
     "browser": true,
     "es2021": true
   },
-  "ignorePatterns": ["dist/**/*", "**/*.css", "**/*.scss"],
+  "ignorePatterns": ["*.config.js", "dist/**/*", "**/*.css", "**/*.scss", "**/*.md"],
   "extends": [
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
