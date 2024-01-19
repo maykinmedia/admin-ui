@@ -1,4 +1,4 @@
-@use '../../settings/style';
+@use "../../settings/style";
 
 .mykn-toolbar {
   $self: &;
@@ -13,6 +13,14 @@
 
   &--variant-transparent {
     background-color: transparent;
+  }
+
+  @media screen and (max-width: style.$breakpoint-desktop - 1px) {
+    .mykn-a,
+    .mykn-button,
+    .mykn-dropdown {
+      justify-content: start;
+    }
   }
 
   @media screen and (min-width: style.$breakpoint-desktop) {
@@ -65,10 +73,6 @@
   &--pad-a .mykn-a {
     box-sizing: border-box;
     padding: var(--spacing-v-s) var(--spacing-h-s);
-
-    @media screen and (max-width: style.$breakpoint-desktop - 1px) {
-      width: 100%;
-    }
   }
 
   .mykn-a {
@@ -76,7 +80,7 @@
     color: var(--theme-color-body);
 
     &[aria-current] {
-      color: var(--theme-color-primary-800)
+      color: var(--theme-color-primary-800);
     }
 
     &:hover {
