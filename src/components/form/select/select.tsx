@@ -29,7 +29,7 @@ export type SelectProps = React.HTMLAttributes<HTMLDivElement> & {
   options: Option[];
 
   /**
-   * Get called when the selected option is changed
+   * Gets called when the selected option is changed
    *
    * A custom "change" event created with `detail` set to the selected option.
    * The event is dispatched on `fakeInputRef.current` setting `target` to a
