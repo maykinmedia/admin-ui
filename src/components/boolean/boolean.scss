@@ -1,0 +1,21 @@
+@import "../../settings/style";
+
+.mykn-boolean {
+  align-items: center;
+  border-radius: var(--border-radus-m);
+  display: inline-flex;
+  font-size: var(--typography-font-size-body-s);
+  justify-content: center;
+  height: var(--typography-line-height-body-s);
+  width: var(--typography-line-height-body-s);
+
+  &--value-true {
+    background-color: var(--theme-color-success-background);
+    color: var(--theme-color-success-body);
+  }
+
+  &--explicit#{&}--value-false {
+    background-color: var(--theme-color-danger-background);
+    color: var(--theme-color-danger-body);
+  }
+}
