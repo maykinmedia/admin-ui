@@ -18,7 +18,7 @@ import clsx from "clsx";
 import React, { useEffect, useState } from "react";
 
 import { Button, ButtonProps } from "../button";
-import { ToolbarProps } from "../toolbar";
+import { Toolbar, ToolbarProps } from "../toolbar";
 import "./dropdown.scss";
 
 export type DropdownProps = ButtonProps & {
@@ -34,8 +34,11 @@ export type DropdownProps = ButtonProps & {
   /** Whether the dropdown should be open. */
   open?: boolean;
 
-  /** `Children` should be a `Toolbar` component containing the individual items. */
-  children: React.ReactElement<ToolbarProps>;
+  /** The items shown inside the dropdown. */
+  items?: ToolbarProps["items"];
+
+  /** Any additional props to pass to the toolbar. */
+  toolbarProps?: Omit<ToolbarProps, "items">;
 };
 
 /**
@@ -56,6 +59,8 @@ export const Dropdown: React.FC<DropdownProps> = ({
   label,
   open = false,
   placement = "bottom",
+  items,
+  toolbarProps,
   ...props
 }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -111,7 +116,9 @@ export const Dropdown: React.FC<DropdownProps> = ({
             style={floatingStyles}
             {...getFloatingProps()}
           >
-            {children}
+            <Toolbar items={items} {...toolbarProps}>
+              {children}
+            </Toolbar>
           </div>
         </FloatingFocusManager>
       )}

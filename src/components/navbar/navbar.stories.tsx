@@ -2,7 +2,6 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { expect, userEvent, waitFor, within } from "@storybook/test";
 import React from "react";
 
-import { Button, ButtonLink } from "../button";
 import { Outline } from "../icon";
 import { Page } from "../page";
 import { Navbar } from "./navbar";
@@ -24,33 +23,44 @@ type Story = StoryObj<typeof meta>;
 
 export const NavbarComponent: Story = {
   args: {
-    children: (
-      <>
-        <Button variant="transparent">
-          <Outline.PencilIcon />
-          Zaaktypen
-        </Button>
-
-        <Button variant="transparent">
-          <Outline.ClipboardDocumentIcon />
-          Documenttypen
-        </Button>
-
-        <ButtonLink
-          href="https://www.example.com"
-          target="_blank"
-          variant="transparent"
-        >
-          <Outline.UserIcon />
-          Admin
-        </ButtonLink>
-
-        <Button variant="primary">
-          <Outline.ArrowRightStartOnRectangleIcon />
-          Uitloggen
-        </Button>
-      </>
-    ),
+    items: [
+      {
+        as: "button",
+        variant: "transparent",
+        children: (
+          <>
+            <Outline.PencilIcon /> Zaaktypen
+          </>
+        ),
+      },
+      {
+        as: "button",
+        variant: "transparent",
+        children: (
+          <>
+            <Outline.ClipboardDocumentIcon /> Documenttypen
+          </>
+        ),
+      },
+      {
+        as: "button",
+        variant: "transparent",
+        children: (
+          <>
+            <Outline.UserIcon /> Admin
+          </>
+        ),
+      },
+      {
+        as: "button",
+        variant: "primary",
+        children: (
+          <>
+            <Outline.ArrowRightStartOnRectangleIcon /> Uitloggen
+          </>
+        ),
+      },
+    ],
   },
 };
 

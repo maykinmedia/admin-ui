@@ -2,11 +2,10 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { expect, userEvent, waitFor, within } from "@storybook/test";
 import React from "react";
 
-import { Button, ButtonLink } from "../button";
 import { Outline } from "../icon";
 import { Page } from "../page";
 import { Toolbar } from "../toolbar";
-import { Dropdown } from "./dropdown";
+import { Dropdown, DropdownProps } from "./dropdown";
 
 const meta = {
   title: "Controls/Dropdown",
@@ -44,33 +43,51 @@ const meta = {
   },
 } satisfies Meta<typeof Dropdown>;
 
-const DEFAULT_CHILDREN = (
-  <Toolbar direction="vertical">
-    <Button variant="transparent">
-      <Outline.PencilIcon />
-      Zaaktypen
-    </Button>
-
-    <Button variant="transparent">
-      <Outline.ClipboardDocumentIcon />
-      Documenttypen
-    </Button>
-
-    <ButtonLink
-      href="https://www.example.com"
-      target="_blank"
-      variant="transparent"
-    >
-      <Outline.UserIcon />
-      Admin
-    </ButtonLink>
-
-    <Button variant="transparent">
-      <Outline.ArrowRightStartOnRectangleIcon />
-      Uitloggen
-    </Button>
-  </Toolbar>
-);
+const DEFAULT_ARGS = {
+  toolbarProps: {
+    direction: "vertical",
+  },
+  items: [
+    {
+      as: "button",
+      variant: "transparent",
+      children: (
+        <>
+          <Outline.PencilIcon /> Zaaktypen
+        </>
+      ),
+    },
+    {
+      as: "button",
+      variant: "transparent",
+      children: (
+        <>
+          <Outline.ClipboardDocumentIcon /> Documenttypen
+        </>
+      ),
+    },
+    {
+      as: "buttonLink",
+      href: "https://www.example.com",
+      target: "_blank",
+      variant: "transparent",
+      children: (
+        <>
+          <Outline.UserIcon /> Admin
+        </>
+      ),
+    },
+    {
+      as: "button",
+      variant: "transparent",
+      children: (
+        <>
+          <Outline.ArrowRightStartOnRectangleIcon /> Uitloggen
+        </>
+      ),
+    },
+  ],
+} satisfies Omit<DropdownProps, "label">;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
@@ -83,7 +100,7 @@ export const DropdownComponent: Story = {
         <Outline.EllipsisVerticalIcon />
       </>
     ),
-    children: DEFAULT_CHILDREN,
+    ...DEFAULT_ARGS,
   },
 };
 
@@ -103,7 +120,7 @@ export const ActivateOnHover: Story = {
         <Outline.EllipsisVerticalIcon />
       </>
     ),
-    children: DEFAULT_CHILDREN,
+    ...DEFAULT_ARGS,
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
@@ -162,7 +179,7 @@ export const DropdownVariant: Story = {
       </>
     ),
     variant: "transparent",
-    children: DEFAULT_CHILDREN,
+    ...DEFAULT_ARGS,
   },
 };
 
@@ -174,33 +191,47 @@ export const HorizontalDropdown: Story = {
         <Outline.EllipsisHorizontalIcon />
       </>
     ),
-    children: (
-      <Toolbar direction="horizontal">
-        <Button variant="transparent">
-          <Outline.PencilIcon />
-          Zaaktypen
-        </Button>
-
-        <Button variant="transparent">
-          <Outline.ClipboardDocumentIcon />
-          Documenttypen
-        </Button>
-
-        <ButtonLink
-          href="https://www.example.com"
-          target="_blank"
-          variant="transparent"
-        >
-          <Outline.UserIcon />
-          Admin
-        </ButtonLink>
-
-        <Button variant="transparent">
-          <Outline.ArrowRightStartOnRectangleIcon />
-          Uitloggen
-        </Button>
-      </Toolbar>
-    ),
+    toolbarProps: { direction: "horizontal" },
+    items: [
+      {
+        as: "button",
+        variant: "transparent",
+        children: (
+          <>
+            <Outline.PencilIcon /> Zaaktypen
+          </>
+        ),
+      },
+      {
+        as: "button",
+        variant: "transparent",
+        children: (
+          <>
+            <Outline.ClipboardDocumentIcon /> Documenttypen
+          </>
+        ),
+      },
+      {
+        as: "buttonLink",
+        href: "https://www.example.com",
+        target: "_blank",
+        variant: "transparent",
+        children: (
+          <>
+            <Outline.UserIcon /> Admin
+          </>
+        ),
+      },
+      {
+        as: "button",
+        variant: "transparent",
+        children: (
+          <>
+            <Outline.ArrowRightStartOnRectangleIcon /> Uitloggen
+          </>
+        ),
+      },
+    ],
   },
 };
 
@@ -212,35 +243,56 @@ export const DropdownInToolbar: Story = {
         <Outline.EllipsisVerticalIcon />
       </>
     ),
-    children: DEFAULT_CHILDREN,
+    ...DEFAULT_ARGS,
   },
   render: (args) => (
-    <Toolbar align="end">
-      <Button variant="transparent">
-        <Outline.PencilIcon />
-        Zaaktypen
-      </Button>
-
-      <Button variant="transparent">
-        <Outline.ClipboardDocumentIcon />
-        Documenttypen
-      </Button>
-
-      <ButtonLink
-        href="https://www.example.com"
-        target="_blank"
-        variant="transparent"
-      >
-        <Outline.UserIcon />
-        Admin
-      </ButtonLink>
-
-      <Button variant="transparent">
-        <Outline.ArrowRightStartOnRectangleIcon />
-        Uitloggen
-      </Button>
-      <Dropdown {...args} />
-    </Toolbar>
+    <Toolbar
+      align="end"
+      items={[
+        {
+          as: "button",
+          variant: "transparent",
+          children: (
+            <>
+              <Outline.PencilIcon /> Zaaktypen
+            </>
+          ),
+        },
+        {
+          as: "button",
+          variant: "transparent",
+          children: (
+            <>
+              <Outline.ClipboardDocumentIcon /> Documenttypen
+            </>
+          ),
+        },
+        {
+          as: "buttonLink",
+          href: "https://www.example.com",
+          target: "_blank",
+          variant: "transparent",
+          children: (
+            <>
+              <Outline.UserIcon /> Admin
+            </>
+          ),
+        },
+        {
+          as: "button",
+          variant: "transparent",
+          children: (
+            <>
+              <Outline.ArrowRightStartOnRectangleIcon /> Uitloggen
+            </>
+          ),
+        },
+        {
+          as: "custom",
+          children: <Dropdown {...args} />,
+        },
+      ]}
+    />
   ),
 };
 
@@ -253,46 +305,64 @@ export const NestedDropdown: Story = {
       </>
     ),
     variant: "primary",
-    children: (
-      <Toolbar direction="vertical">
-        <Button variant="transparent">
-          <Outline.PencilIcon />
-          Zaaktypen
-        </Button>
-
-        <Button variant="transparent">
-          <Outline.ClipboardDocumentIcon />
-          Documenttypen
-        </Button>
-
-        <Dropdown
-          activateOnHover={true}
-          label={
-            <>
-              <Outline.EllipsisVerticalIcon />
-              Hover me!
-            </>
-          }
-          placement="right"
-          variant="transparent"
-        >
-          <Toolbar direction="vertical">
-            <ButtonLink
-              href="https://www.example.com"
-              target="_blank"
-              variant="transparent"
-            >
-              <Outline.UserIcon />
-              Admin
-            </ButtonLink>
-
-            <Button variant="transparent">
-              <Outline.ArrowRightStartOnRectangleIcon />
-              Uitloggen
-            </Button>
-          </Toolbar>
-        </Dropdown>
-      </Toolbar>
-    ),
+    toolbarProps: { direction: "vertical" },
+    items: [
+      {
+        as: "button",
+        variant: "transparent",
+        children: (
+          <>
+            <Outline.PencilIcon /> Zaaktypen
+          </>
+        ),
+      },
+      {
+        as: "button",
+        variant: "transparent",
+        children: (
+          <>
+            <Outline.ClipboardDocumentIcon /> Documenttypen
+          </>
+        ),
+      },
+      {
+        as: "custom",
+        children: (
+          <Dropdown
+            activateOnHover={true}
+            label={
+              <>
+                <Outline.EllipsisVerticalIcon />
+                Hover me!
+              </>
+            }
+            placement="right"
+            variant="transparent"
+            items={[
+              {
+                as: "buttonLink",
+                href: "https://www.example.com",
+                target: "_blank",
+                variant: "transparent",
+                children: (
+                  <>
+                    <Outline.UserIcon /> Admin
+                  </>
+                ),
+              },
+              {
+                as: "button",
+                variant: "transparent",
+                children: (
+                  <>
+                    <Outline.ArrowRightStartOnRectangleIcon /> Uitloggen
+                  </>
+                ),
+              },
+            ]}
+          />
+        ),
+      },
+    ],
   },
 };
