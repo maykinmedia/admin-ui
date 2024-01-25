@@ -8,7 +8,7 @@ export type InputProps = Omit<
   "value"
 > & {
   /** Gets called when the value is changed */
-  onChange?: (event: Event) => void;
+  onChange?: React.ChangeEventHandler<HTMLInputElement>;
 
   /** Input value. */
   value?: string | number;
@@ -54,7 +54,7 @@ export const Input: React.FC<InputProps> = ({
     const detail = type === "file" ? input.files : event.target.value;
     const changeEvent = eventFactory("change", detail, true, false, false);
     input.dispatchEvent(changeEvent);
-    onChange && onChange(changeEvent);
+    onChange && onChange(event);
   };
 
   return (

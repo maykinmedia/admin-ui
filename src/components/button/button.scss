@@ -4,12 +4,16 @@
   --mykn-button-color-background: var(--theme-color-primary-800);
   --mykn-button-color-shadow: var(--theme-shade-1000);
   --mykn-button-color-text: var(--theme-shade-0);
+  --mykn-button-height: auto;
+  --mykn-button-width: auto;
   --mykn-button-offset: 0px;
+  --mykn-button-padding-v: var(--spacing-v-s);
+  --mykn-button-padding-h: var(--spacing-h-s);
 
   align-items: center;
   appearance: none;
   margin: 0;
-  padding: var(--spacing-v-s) var(--spacing-h-s);
+  padding: var(--mykn-button-padding-v) var(--mykn-button-padding-h);
   background-color: var(--mykn-button-color-background);
   border: 1px solid var(--mykn-button-color-border);
   border-radius: var(--border-radus-m);
@@ -21,6 +25,7 @@
   display: inline-flex;
   flex-wrap: wrap;
   gap: 0.5em;
+  height: var(--mykn-button-height);
   font-family: Inter, sans-serif;
   font-size: var(--typography-font-size-body-s);
   justify-content: center;
@@ -30,6 +35,18 @@
   transition: all var(--animation-duration-fast)
     var(--animation-timing-function);
   transform: translateY(var(--mykn-button-offset));
+  width: var(--mykn-button-width);
+
+  &--square {
+    --mykn-button-height: calc(
+      var(--typography-line-height-body-s) + 2 * var(--spacing-v-s)
+    );
+    --mykn-button-width: calc(
+      var(--typography-line-height-body-s) + 2 * var(--spacing-v-s)
+    );
+    --mykn-button-padding-v: 0;
+    --mykn-button-padding-h: 0;
+  }
 
   &--variant-primary {
     &:focus,
@@ -41,6 +58,25 @@
     &[aria-expanded="true"],
     &:active {
       --mykn-button-color-background: var(--theme-color-primary-800);
+      --mykn-button-offset: 0px;
+    }
+  }
+
+  &--variant-outline {
+    --mykn-button-color-background: transparent;
+    --mykn-button-color-border: var(--theme-shade-700);
+    --mykn-button-color-shadow: currentColor;
+    --mykn-button-color-text: var(--typography-color-body);
+
+    &:focus,
+    &:hover {
+      --mykn-button-color-background: var(--theme-color-primary-200);
+      --mykn-button-offset: -2px;
+    }
+
+    &[aria-expanded="true"],
+    &:active {
+      --mykn-button-color-background: var(--typography-color-background);
       --mykn-button-offset: 0px;
     }
   }

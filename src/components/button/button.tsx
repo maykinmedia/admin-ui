@@ -4,7 +4,8 @@ import React, { LegacyRef } from "react";
 import "./button.scss";
 
 type BaseButtonProps = {
-  variant?: "primary" | "transparent";
+  square?: boolean;
+  variant?: "primary" | "outline" | "transparent";
 };
 
 export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> &
@@ -20,11 +21,13 @@ export type ButtonLinkProps = React.AnchorHTMLAttributes<HTMLAnchorElement> &
  * @constructor
  */
 export const Button = React.forwardRef<HTMLAnchorElement, ButtonProps>(
-  ({ variant = "primary", ...props }, ref) => {
+  ({ square = false, variant = "primary", ...props }, ref) => {
     return (
       <button
         ref={ref as LegacyRef<HTMLButtonElement>}
-        className={clsx("mykn-button", `mykn-button--variant-${variant}`)}
+        className={clsx("mykn-button", `mykn-button--variant-${variant}`, {
+          "mykn-button--square": square,
+        })}
         {...props}
       >
         {props.children}

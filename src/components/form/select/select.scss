@@ -18,6 +18,10 @@
   max-width: 100%;
   position: relative;
 
+  &--size-fit-content {
+    width: fit-content;
+  }
+
   .mykn-icon {
     transition: transform var(--animation-duration-medium)
       var(--animation-timing-function);

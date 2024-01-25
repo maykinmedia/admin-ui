@@ -1,0 +1,7 @@
+@use "../../settings/style";
+
+.mykn-paginator {
+  align-items: center;
+  display: flex;
+  gap: var(--spacing-h-m);
+}
