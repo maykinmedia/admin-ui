@@ -155,3 +155,91 @@ export const MixedToolbar: Story = {
     ),
   },
 };
+
+export const ToolbarWithItemsProp: Story = {
+  args: {
+    align: "start",
+    items: [
+      // Button
+      {
+        variant: "transparent",
+        children: (
+          <>
+            <Outline.PencilIcon />
+            Zaaktypen
+          </>
+        ),
+      },
+
+      // Button
+      {
+        variant: "transparent",
+        children: (
+          <>
+            <Outline.ClipboardDocumentIcon />
+            Documenttypen
+          </>
+        ),
+      },
+
+      // ButtonLink
+      {
+        variant: "transparent",
+        children: (
+          <>
+            <Outline.UserIcon />
+            Admin
+          </>
+        ),
+        href: "https://www.example.com",
+      },
+
+      // Dropdown
+      {
+        label: (
+          <>
+            {" "}
+            Click me!
+            <Outline.EllipsisVerticalIcon />
+          </>
+        ),
+        items: [
+          {
+            variant: "transparent",
+            children: (
+              <>
+                <Outline.PencilIcon /> Zaaktypen
+              </>
+            ),
+          },
+          {
+            variant: "transparent",
+            children: (
+              <>
+                <Outline.ClipboardDocumentIcon /> Documenttypen
+              </>
+            ),
+          },
+          {
+            href: "https://www.example.com",
+            target: "_blank",
+            variant: "transparent",
+            children: (
+              <>
+                <Outline.UserIcon /> Admin
+              </>
+            ),
+          },
+          {
+            variant: "transparent",
+            children: (
+              <>
+                <Outline.ArrowRightStartOnRectangleIcon /> Uitloggen
+              </>
+            ),
+          },
+        ],
+      },
+    ],
+  },
+};

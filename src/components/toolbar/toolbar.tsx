@@ -1,20 +1,11 @@
 import clsx from "clsx";
 import React from "react";
 
-import { Button, ButtonLink, ButtonProps } from "../button";
+import { Button, ButtonLink, ButtonLinkProps, ButtonProps } from "../button";
+import { Dropdown, DropdownProps } from "../dropdown";
 import "./toolbar.scss";
 
-/**
- * We create a discriminated union type for the ToolbarItemProps
- * When we use `as` to Button, href is not allowed.
- * When we use `as` to ButtonLink, we also require AnchorHTMLAttributes.
- * When we use `as` to custom, we require children.
- */
-type ToolbarItemProps =
-  | (ButtonProps & { href?: never; as: "button" })
-  | (ButtonProps &
-      React.AnchorHTMLAttributes<HTMLAnchorElement> & { as: "buttonLink" })
-  | React.PropsWithChildren<{ as: "custom" }>;
+export type ToolbarItem = ButtonProps | ButtonLinkProps | DropdownProps;
 
 export type ToolbarProps = React.PropsWithChildren<
   React.HTMLAttributes<HTMLElement> & {
@@ -31,7 +22,7 @@ export type ToolbarProps = React.PropsWithChildren<
     variant?: "normal" | "transparent";
 
     /** The items shown inside the toolbar, alternatively, can opt to use children instead. */
-    items?: ToolbarItemProps[];
+    items?: ToolbarItem[];
   }
 >;
 
@@ -42,6 +33,8 @@ export type ToolbarProps = React.PropsWithChildren<
  * @param align
  * @param direction
  * @param padA
+ * @param variant
+ * @param items
  * @param props
  * @constructor
  */
@@ -51,21 +44,45 @@ export const Toolbar: React.FC<ToolbarProps> = ({
   direction = "horizontal",
   padA = false,
   variant = "normal",
-  items,
+  items = [],
   ...props
 }) => {
-  const renderItem = (item: ToolbarItemProps) => {
-    switch (item.as) {
-      case "button":
-        return <Button {...item}>{item.children}</Button>;
-      case "buttonLink":
-        return <ButtonLink {...item}>{item.children}</ButtonLink>;
-      case "custom":
-        return item.children;
-      default:
-        return null;
+  const isItemButtonLinkProps = (item: ToolbarItem): item is ButtonLinkProps =>
+    Object.hasOwn(item, "href");
+
+  const isItemDropdownProps = (item: ToolbarItem): item is DropdownProps =>
+    Object.hasOwn(item, "items"); // Mandatory on Dropdown if passed to toolbar items.
+
+  const isItemButtonProps = (item: ToolbarItem): item is ButtonProps =>
+    !Object.hasOwn(item, "href");
+
+  /**
+   * Returns the React.FC for the item based on it's shape.
+   * @param item
+   */
+  const getItemComponent = (item: ToolbarItem): React.FC => {
+    if (isItemButtonLinkProps(item)) {
+      return ButtonLink;
     }
+    if (isItemDropdownProps(item)) {
+      return Dropdown as React.FC;
+    }
+    if (isItemButtonProps(item)) {
+      return Button;
+    }
+    return () => null;
   };
+
+  /**
+   * Renders an item (in items).
+   * @param item
+   * @param index
+   */
+  const renderItem = (item: ToolbarItem, index: number) => {
+    const Component = getItemComponent(item);
+    return <Component key={index} {...item}></Component>;
+  };
+
   return (
     <nav
       className={clsx(
@@ -80,11 +97,8 @@ export const Toolbar: React.FC<ToolbarProps> = ({
       role="toolbar"
       {...props}
     >
-      {items
-        ? items.map((item, index) => (
-            <React.Fragment key={index}>{renderItem(item)}</React.Fragment>
-          ))
-        : children}
+      {items.map(renderItem)}
+      {children}
     </nav>
   );
 };
