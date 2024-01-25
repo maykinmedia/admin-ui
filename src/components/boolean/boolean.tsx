@@ -38,6 +38,7 @@ export const Boolean: React.FC<BooleanProps> = ({
     })}
     {...props}
     title={value ? labelTrue : labelFalse}
+    aria-label={value ? labelTrue : labelFalse}
   >
     {value && <Outline.CheckIcon />}
     {!value && explicit && <Outline.XMarkIcon />}

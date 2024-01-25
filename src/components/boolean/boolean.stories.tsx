@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
+import { expect, within } from "@storybook/test";
 import React from "react";
 
 import { Body, H1, H2, H3, P } from "../typography";
@@ -18,6 +19,12 @@ export const True: Story = {
     labelTrue: "This value is true",
     labelFalse: "This value is false",
   },
+  play: ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const boolean = canvas.getByLabelText("This value is true");
+    expect(boolean).toBeVisible();
+    expect(boolean.children).toHaveLength(1);
+  },
 };
 
 export const False: Story = {
@@ -25,6 +32,12 @@ export const False: Story = {
     value: false,
     labelTrue: "This value is true",
     labelFalse: "This value is false",
+  },
+  play: ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const boolean = canvas.getByLabelText("This value is false");
+    expect(boolean).toBeVisible();
+    expect(boolean.children).toHaveLength(0);
   },
 };
 
@@ -34,6 +47,11 @@ export const ExplicitFalse: Story = {
     value: false,
     labelTrue: "This value is true",
     labelFalse: "This value is false",
+  },
+  play: ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const boolean = canvas.getByLabelText("This value is false");
+    expect(boolean.children).toHaveLength(1);
   },
 };
 
