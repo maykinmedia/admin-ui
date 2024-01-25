@@ -1,0 +1,59 @@
+.mykn-input {
+  appearance: none;
+  align-items: center;
+  background: var(--typography-color-background);
+  border: 1px solid var(--theme-color-primary-800);
+  border-radius: 6px;
+  box-sizing: border-box;
+  color: var(--typography-color-body);
+  font-family: Inter, sans-serif;
+  font-size: var(--typography-font-size-body-s);
+  line-height: var(--typography-line-height-body-s);
+  padding: var(--spacing-v-s) var(--spacing-h-s);
+  position: relative;
+  width: min(320px, 100%);
+  max-width: 100%;
+
+  &[size] {
+    width: auto;
+  }
+
+  &[type="color"] {
+    min-height: 38px;
+    overflow: hidden;
+    padding: 0;
+
+    &::-webkit-color-swatch-wrapper {
+      padding: 0;
+    }
+
+    &::-webkit-color-swatch {
+      border: none;
+    }
+
+    &:before,
+    &:after {
+      align-items: center;
+      color: var(--typography-color-body);
+      content: attr(value);
+      display: flex;
+      height: 50%;
+      left: 50%;
+      position: absolute;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    &:before {
+      opacity: 0.9;
+      background-color: var(--typography-color-background);
+      border-radius: 6px;
+      color: transparent;
+      padding: var(--spacing-v-s) var(--spacing-h-s);
+    }
+  }
+
+  &[type="file"] {
+    border: none;
+  }
+}

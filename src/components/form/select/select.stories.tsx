@@ -2,9 +2,10 @@ import { action } from "@storybook/addon-actions";
 import type { Meta, StoryObj } from "@storybook/react";
 import { expect, fn, userEvent, waitFor, within } from "@storybook/test";
 import { Formik } from "formik";
-import React, { useState } from "react";
+import React from "react";
 
 import { Button } from "../../button";
+import { FORM_TEST_DECORATOR } from "../.storybook/decorators";
 import { Select } from "./select";
 
 const meta = {
@@ -31,28 +32,7 @@ export const SelectComponent: Story = {
   argTypes: {
     onChange: { action: "onChange" },
   },
-  decorators: [
-    (Story) => {
-      // Solely here to force re-rendering story on change.
-      const [count, setCount] = useState(0);
-
-      const getData = () => {
-        const form = document.forms[0];
-        const formData = new FormData(form);
-
-        // Convert FormData to JSON using Array.from and reduce
-        return Array.from(formData.entries()).reduce<
-          Record<string, FormDataEntryValue>
-        >((acc, [key, value]) => ({ ...acc, [key]: value }), {});
-      };
-      return (
-        <form onChange={() => setCount(count + 1)} aria-label="form">
-          <Story />
-          <pre role="log">{JSON.stringify(getData())}</pre>
-        </form>
-      );
-    },
-  ],
+  decorators: [FORM_TEST_DECORATOR],
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     const select = canvas.getByRole("combobox");
@@ -61,9 +41,9 @@ export const SelectComponent: Story = {
     const spy = fn();
     select.addEventListener("change", spy);
 
-    userEvent.click(select, { delay: 10 });
+    await userEvent.click(select, { delay: 10 });
     const junior = await canvas.findByText("Junior");
-    userEvent.click(junior, { delay: 10 });
+    await userEvent.click(junior, { delay: 10 });
 
     // Test that event listener on the (custom) select gets called.
     await waitFor(testEventListener);
