@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import React, { useEffect, useState } from "react";
 
 import { eventFactory } from "../eventFactory";
@@ -7,6 +8,9 @@ export type InputProps = Omit<
   React.InputHTMLAttributes<HTMLInputElement>,
   "value"
 > & {
+  /** The variant (style) of the input. */
+  variant?: "normal" | "transparent";
+
   /** Gets called when the value is changed */
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
 
@@ -23,6 +27,7 @@ export type InputProps = Omit<
 export const Input: React.FC<InputProps> = ({
   type = "text",
   value,
+  variant = "normal",
   onChange,
   ...props
 }) => {
@@ -60,7 +65,7 @@ export const Input: React.FC<InputProps> = ({
   return (
     <input
       ref={inputRef}
-      className="mykn-input"
+      className={clsx("mykn-input", `mykn-input--variant-${variant}`)}
       type={type}
       value={valueState}
       onChange={_onChange}

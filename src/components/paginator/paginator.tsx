@@ -189,6 +189,7 @@ export const Paginator: React.FC<PaginatorProps> = ({
               required={true}
               size="fit-content"
               value={pageSizeState}
+              variant="transparent"
               onChange={handlePageSizeChange}
             />
           </>
@@ -201,6 +202,7 @@ export const Paginator: React.FC<PaginatorProps> = ({
           size={String(pageCount).length}
           type="number"
           value={pageState}
+          variant="transparent"
           onChange={handlePageChange}
         ></Input>
       </div>

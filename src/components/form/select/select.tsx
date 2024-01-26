@@ -51,6 +51,9 @@ export type SelectProps = React.HTMLAttributes<HTMLDivElement> & {
   size?: "fit-content";
 
   value?: Option["value"] | null;
+
+  /** The variant (style) of the input. */
+  variant?: "normal" | "transparent";
 } & SelectRequiredConditional;
 
 type SelectRequiredConditional =
@@ -92,6 +95,7 @@ export const Select: React.FC<SelectProps> = ({
   required = false,
   size,
   value = null,
+  variant = "normal",
   ...props
 }) => {
   const fakeInputRef = React.useRef<HTMLSelectElement>(null);
@@ -179,7 +183,7 @@ export const Select: React.FC<SelectProps> = ({
   return (
     <>
       <div
-        className={clsx("mykn-select", {
+        className={clsx("mykn-select", `mykn-select--variant-${variant}`, {
           "mykn-select--selected": selectedIndex,
           [`mykn-select--size-${size}`]: size,
         })}

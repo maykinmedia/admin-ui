@@ -1,10 +1,11 @@
 import { action } from "@storybook/addon-actions";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryFn, StoryObj } from "@storybook/react";
 import { expect, fn, userEvent, waitFor, within } from "@storybook/test";
 import { Formik } from "formik";
 import React from "react";
 
 import { Button } from "../../button";
+import { Page } from "../../page";
 import { FORM_TEST_DECORATOR } from "../.storybook/decorators";
 import { Select } from "./select";
 
@@ -73,6 +74,19 @@ export const SelectComponent: Story = {
 
     await userEvent.click(clear, { delay: 10 });
   },
+};
+
+export const TransparentSelect = {
+  ...SelectComponent,
+  args: { ...SelectComponent.args, variant: "transparent" },
+  decorators: [
+    ...(SelectComponent.decorators as StoryFn[]),
+    (Story: StoryFn) => (
+      <Page>
+        <Story />
+      </Page>
+    ),
+  ],
 };
 
 export const UsageWithFormik: Story = {

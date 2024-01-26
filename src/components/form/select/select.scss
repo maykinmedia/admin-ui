@@ -22,6 +22,10 @@
     width: fit-content;
   }
 
+  &--variant-transparent {
+    background-color: transparent;
+  }
+
   .mykn-icon {
     transition: transform var(--animation-duration-medium)
       var(--animation-timing-function);
