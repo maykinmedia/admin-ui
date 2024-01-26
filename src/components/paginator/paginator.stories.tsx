@@ -1,6 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { expect, userEvent, waitFor, within } from "@storybook/test";
+import React from "react";
 
+import { Page } from "../page";
 import { Paginator } from "./paginator";
 
 const meta = {
@@ -10,9 +12,13 @@ const meta = {
     onPageChange: { action: "onPageChange" },
     onPageSizeChange: { action: "onPageSizeChange" },
   },
-  parameters: {
-    layout: "centered",
-  },
+  decorators: [
+    (Story) => (
+      <Page>
+        <Story />
+      </Page>
+    ),
+  ],
 } satisfies Meta<typeof Paginator>;
 
 export default meta;
@@ -35,6 +41,13 @@ export const PaginatorComponent: Story = {
     labelPageSize: "Show rows",
     labelPrevious: "Go to previous page",
     labelNext: "Go to next page",
+  },
+};
+
+export const PaginatorOnMobile = {
+  ...PaginatorComponent,
+  parameters: {
+    viewport: { defaultViewport: "mobile1" },
   },
 };
 

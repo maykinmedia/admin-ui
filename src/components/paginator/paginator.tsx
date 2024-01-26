@@ -180,55 +180,59 @@ export const Paginator: React.FC<PaginatorProps> = ({
 
   return (
     <nav className="mykn-paginator" {...props}>
-      {pageSizeOptions.length > 0 && (
-        <>
-          <P>{formatMessage(labelPageSize, context)}</P>
-          <Select
-            options={pageSizeOptions}
-            required={true}
-            size="fit-content"
-            value={pageSizeState}
-            onChange={handlePageSizeChange}
+      <div className="mykn-paginator__section mykn-paginator__section--form">
+        {pageSizeOptions.length > 0 && (
+          <>
+            <P>{formatMessage(labelPageSize, context)}</P>
+            <Select
+              options={pageSizeOptions}
+              required={true}
+              size="fit-content"
+              value={pageSizeState}
+              onChange={handlePageSizeChange}
+            />
+          </>
+        )}
+
+        <P>{formatMessage(labelGoToPage, context)}</P>
+        <Input
+          min={1}
+          max={pageCount}
+          size={String(pageCount).length}
+          type="number"
+          value={pageState}
+          onChange={handlePageChange}
+        ></Input>
+      </div>
+
+      <div className="mykn-paginator__section mykn-paginator__section--navigate">
+        <P>{formatMessage(labelCurrentPageRange, context)}</P>
+        <Button
+          square
+          variant="outline"
+          aria-label={labelPrevious}
+          onClick={handlePrevious}
+        >
+          <Outline.ChevronLeftIcon />
+        </Button>
+        <Button
+          square
+          variant="outline"
+          aria-label={labelNext}
+          onClick={handleNext}
+        >
+          <Outline.ChevronRightIcon />
+        </Button>
+
+        {labelLoading && (
+          <Outline.ArrowPathIcon
+            spin={true}
+            aria-hidden={!loadingState}
+            aria-label={loadingState ? labelLoading : ""}
+            hidden={!loadingState}
           />
-        </>
-      )}
-
-      <P>{formatMessage(labelGoToPage, context)}</P>
-      <Input
-        min={1}
-        max={pageCount}
-        size={String(pageCount).length}
-        type="number"
-        value={pageState}
-        onChange={handlePageChange}
-      ></Input>
-
-      <P>{formatMessage(labelCurrentPageRange, context)}</P>
-      <Button
-        square
-        variant="outline"
-        aria-label={labelPrevious}
-        onClick={handlePrevious}
-      >
-        <Outline.ChevronLeftIcon />
-      </Button>
-      <Button
-        square
-        variant="outline"
-        aria-label={labelNext}
-        onClick={handleNext}
-      >
-        <Outline.ChevronRightIcon />
-      </Button>
-
-      {labelLoading && (
-        <Outline.ArrowPathIcon
-          spin={true}
-          aria-hidden={!loadingState}
-          aria-label={loadingState ? labelLoading : ""}
-          hidden={!loadingState}
-        />
-      )}
+        )}
+      </div>
     </nav>
   );
 };
