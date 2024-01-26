@@ -24,7 +24,16 @@
   --theme-shade-300: #eaeaea;
   --theme-shade-0: #fff;
 
+  --theme-color-success-body: #0b4f00;
+  --theme-color-success-background: #e9ffe9;
+
+  --theme-color-danger-body: #ff4545;
+  --theme-color-danger-background: #{rgba(#ff4545, 0.1)};
+
   /// SPACING
+  --border-radus-l: 12px;
+  --border-radus-m: 6px;
+
   --gutter-h-desktop: 12px;
   --gutter-v-desktop: 24px;
 

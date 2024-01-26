@@ -1,4 +1,4 @@
-@use '../../settings/style';
+@use "../../settings/style";
 
 .mykn-button {
   --mykn-button-color-background: var(--theme-color-primary-800);
@@ -12,8 +12,9 @@
   padding: var(--spacing-v-s) var(--spacing-h-s);
   background-color: var(--mykn-button-color-background);
   border: 1px solid var(--mykn-button-color-border);
-  border-radius: 4px;
-  box-shadow: 0 calc(var(--mykn-button-offset) * -1) var(--mykn-button-color-shadow);
+  border-radius: var(--border-radus-m);
+  box-shadow: 0 calc(var(--mykn-button-offset) * -1)
+    var(--mykn-button-color-shadow);
   box-sizing: border-box;
   color: var(--mykn-button-color-text);
   cursor: pointer;
@@ -26,9 +27,9 @@
   line-height: var(--typography-line-height-body-s);
   text-align: center;
   text-decoration: none;
-  transition: all var(--animation-duration-fast) var(--animation-timing-function);
+  transition: all var(--animation-duration-fast)
+    var(--animation-timing-function);
   transform: translateY(var(--mykn-button-offset));
-
 
   &--variant-primary {
     &:focus,
@@ -37,7 +38,7 @@
       --mykn-button-offset: -2px;
     }
 
-    &[aria-expanded=true],
+    &[aria-expanded="true"],
     &:active {
       --mykn-button-color-background: var(--theme-color-primary-800);
       --mykn-button-offset: 0px;
@@ -55,7 +56,7 @@
       --mykn-button-offset: -2px;
     }
 
-    &[aria-expanded=true],
+    &[aria-expanded="true"],
     &:active {
       --mykn-button-color-background: var(--typography-color-background);
       --mykn-button-offset: 0px;
