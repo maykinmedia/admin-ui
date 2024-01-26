@@ -76,6 +76,7 @@ export const PaginatorComponentWithSpinner: Story = {
     const pageInput = canvas.getByRole("spinbutton");
     const previousButton = canvas.getByLabelText("Go to previous page");
     const nextButton = canvas.getByLabelText("Go to next page");
+    canvas.getByRole("navigation");
     canvas.getByText("Show rows");
     canvas.getByText("Go to");
 
