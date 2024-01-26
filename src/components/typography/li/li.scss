@@ -2,4 +2,8 @@
 
 .mykn-li {
   @extend .mykn-p;
+
+  &--size-xs {
+    @extend .mykn-p--size-xs;
+  }
 }

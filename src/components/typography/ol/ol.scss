@@ -5,6 +5,15 @@
   list-style-position: inside;
   padding-inline-start: 0;
 
+  &--inline .mykn-li {
+    float: left; // fallback
+    float: inline-start;
+  }
+
+  &--list-style-none {
+    list-style: none;
+  }
+
   .mykn-ol {
     padding-inline-start: var(--spacing-h-xl);
   }
