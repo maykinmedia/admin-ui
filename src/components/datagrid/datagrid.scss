@@ -1,0 +1,143 @@
+@use "../../settings/constants";
+
+.mykn-datagrid {
+  background-color: var(--typography-color-background);
+  border-radius: var(--border-radus-m);
+
+  &__table {
+    border-spacing: 0;
+    width: 100%;
+  }
+
+  &__caption {
+    padding: var(--spacing-v-m) var(--spacing-h-m);
+    text-align: start;
+  }
+
+  &__head {
+    background-color: var(--typography-color-background);
+    position: sticky;
+    top: 0;
+  }
+
+  &__head &__row:first-child &__cell {
+    border-top: 1px solid var(--theme-shade-300);
+  }
+
+  &__cell {
+    border-bottom: 1px solid var(--theme-shade-300);
+    box-sizing: border-box;
+    padding: var(--spacing-v-m) var(--spacing-h-m);
+  }
+
+  &__cell--type-boolean {
+    text-align: center;
+  }
+
+  &__cell--type-number {
+    text-align: end;
+  }
+
+  &__foot {
+    position: sticky;
+    bottom: 0;
+  }
+
+  &__foot &__cell {
+    border-bottom: none;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  @media screen and (max-width: constants.$breakpoint-desktop - 1px) {
+    background-color: transparent;
+    overflow: visible;
+
+    &__table {
+      display: block;
+    }
+
+    &__caption {
+      background-color: var(--typography-color-background);
+      border-radius: var(--border-radus-m);
+      display: block;
+    }
+
+    &__head {
+      display: none;
+    }
+
+    &__body {
+      display: block;
+    }
+
+    &__row {
+      background-color: var(
+        --typography-color-background
+      ); //border-radius: var(--border-radus-m);
+      display: flex;
+      flex-wrap: wrap;
+
+      &:nth-child(even) {
+        background-color: var(--theme-shade-100);
+      }
+    }
+
+    &__row:nth-child(even) &__cell {
+      border-bottom: 1px solid var(--typography-color-background);
+    }
+
+    &__cell {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-h-m);
+      width: 100%;
+      position: relative;
+
+      .mykn-p {
+        font-weight: var(--typography-font-weight-bold);
+        width: 100%;
+      }
+
+      &:before {
+        color: var(--theme-shade-700);
+        content: attr(aria-description);
+        font-family: Inter, sans-serif;
+        font-size: var(--typography-font-size-body-xs);
+        font-weight: var(--typography-font-weight-normal);
+        line-height: var(--typography-line-height-body-xs);
+        display: block;
+        text-align: start;
+        width: 40%;
+      }
+
+      &:first-child .mykn-a:has(.mykn-icon) {
+        float: right;
+      }
+    }
+
+    &__foot {
+      display: flex;
+    }
+
+    &__foot &__row {
+      width: 100%;
+    }
+
+    &__foot &__cell {
+      padding: 0;
+
+      &:before {
+        display: none;
+      }
+    }
+
+    .mykn-toolbar {
+      border-radius: var(--border-radus-m);
+    }
+
+    .mykn-paginator .mykn-icon--spin:first-child {
+      display: none;
+    }
+  }
+}

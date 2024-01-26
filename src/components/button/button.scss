@@ -45,6 +45,7 @@
     );
     --mykn-button-padding-v: 0;
     --mykn-button-padding-h: 0;
+    flex-shrink: 0;
   }
 
   &--variant-primary {

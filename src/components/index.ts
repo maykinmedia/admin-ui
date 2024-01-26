@@ -1,8 +1,10 @@
 // Auto-generated file. Do not modify manually.
+export * from "./badge";
 export * from "./boolean";
 export * from "./breadcrumbs";
 export * from "./button";
 export * from "./card";
+export * from "./datagrid";
 export * from "./dropdown";
 export * from "./form";
 export * from "./icon";

@@ -7,12 +7,16 @@
   margin-top: 0;
   margin-bottom: 0;
 
-  &--size-xs {
-    font-size: var(--typography-font-size-body-xs);
-    line-height: var(--typography-line-height-body-xs);
+  &--bold {
+    font-weight: var(--typography-font-weight-bold);
   }
 
   &--muted {
     color: var(--typography-color-muted);
+  }
+
+  &--size-xs {
+    font-size: var(--typography-font-size-body-xs);
+    line-height: var(--typography-line-height-body-xs);
   }
 }

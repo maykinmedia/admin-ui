@@ -12,12 +12,16 @@
   }
 
   @media screen and (max-width: constants.$breakpoint-desktop - 1px) {
+    &__section--form {
+      display: none;
+    }
+
     &__section {
       width: 100%;
+      justify-content: flex-end;
 
-      > * {
-        width: 100% !important;
-        white-space: nowrap;
+      .mykn-button {
+        justify-content: center !important;
       }
     }
   }

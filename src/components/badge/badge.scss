@@ -1,0 +1,13 @@
+.mykn-badge {
+  background-color: var(--theme-color-primary-200);
+  align-items: center;
+  border-radius: var(--border-radus-m);
+  display: inline-flex;
+  font-family: Inter, sans-serif;
+  font-size: var(--typography-font-size-body-xs);
+  font-weight: var(--typography-font-weight-normal);
+  height: var(--typography-line-height-body-s);
+  justify-content: center;
+  line-height: var(--typography-line-height-body-xs);
+  padding: 0 var(--spacing-h-s);
+}

@@ -4,6 +4,9 @@ import React from "react";
 import "./p.scss";
 
 export type PProps = React.PropsWithChildren<{
+  /** Whether the text should be presented bold. */
+  bold?: boolean;
+
   /** Whether the text should be presented in a lighter color. */
   muted?: boolean;
 
@@ -13,6 +16,7 @@ export type PProps = React.PropsWithChildren<{
 
 /**
  * Ul component
+ * @param bold
  * @param children
  * @param muted
  * @param size
@@ -20,13 +24,15 @@ export type PProps = React.PropsWithChildren<{
  * @constructor
  */
 export const P: React.FC<PProps> = ({
+  bold = false,
   children,
-  muted,
+  muted = false,
   size = "s",
   ...props
 }) => (
   <p
     className={clsx("mykn-p", `mykn-p--size-${size}`, {
+      ["mykn-p--bold"]: bold,
       ["mykn-p--muted"]: muted,
     })}
     {...props}

@@ -7,7 +7,7 @@ import { Outline } from "../icon";
 import { P } from "../typography";
 import "./paginator.scss";
 
-export type PaginatorProps = {
+export type PaginatorProps = React.HTMLAttributes<HTMLElement> & {
   /** The total number of results (items not pages). */
   count: number;
 
@@ -35,14 +35,17 @@ export type PaginatorProps = {
   /** The go to next page (accessible) label. */
   labelNext: string;
 
-  /** The options for the page size, can be omitted if no variable pages size is supported. */
-  pageSizeOptions?: Option<number, number>[];
-
   /**
    * The loading (accessible) label,
    * @see onPageChange
    */
   labelLoading?: string;
+
+  /** Indicates whether the spinner should be shown (requires `labelLoading`). */
+  loading?: boolean;
+
+  /** The options for the page size, can be omitted if no variable pages size is supported. */
+  pageSizeOptions?: Option<number, number>[];
 
   /**
    * Gets called when the selected page is changed
@@ -89,6 +92,7 @@ export const Paginator: React.FC<PaginatorProps> = ({
   labelPrevious = "Go to previous page",
   labelNext = "Go to next page",
   labelLoading,
+  loading = undefined,
   page = 1,
   pageSize,
   pageSizeOptions = [],
@@ -182,6 +186,9 @@ export const Paginator: React.FC<PaginatorProps> = ({
     setPageState(sanitizedValue);
   };
 
+  // `loading` takes precedence over `loadingState` (derived from Promise).
+  const isLoading = typeof loading === "boolean" ? loading : loadingState;
+
   return (
     <nav
       className="mykn-paginator"
@@ -189,6 +196,15 @@ export const Paginator: React.FC<PaginatorProps> = ({
       {...props}
     >
       <div className="mykn-paginator__section mykn-paginator__section--form">
+        {labelLoading && (
+          <Outline.ArrowPathIcon
+            spin={true}
+            aria-hidden={!isLoading}
+            aria-label={isLoading ? labelLoading : ""}
+            hidden={!isLoading}
+          />
+        )}
+
         {pageSizeOptions.length > 0 && (
           <>
             <P>{formatMessage(labelPageSize, context)}</P>
@@ -233,15 +249,6 @@ export const Paginator: React.FC<PaginatorProps> = ({
         >
           <Outline.ChevronRightIcon />
         </Button>
-
-        {labelLoading && (
-          <Outline.ArrowPathIcon
-            spin={true}
-            aria-hidden={!loadingState}
-            aria-label={loadingState ? labelLoading : ""}
-            hidden={!loadingState}
-          />
-        )}
       </div>
     </nav>
   );

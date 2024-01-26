@@ -10,6 +10,7 @@
   justify-content: space-between;
   font-family: Inter, sans-serif;
   font-size: var(--typography-font-size-body-s);
+  font-weight: var(--typography-font-weight-normal);
   line-height: var(--typography-line-height-body-s);
   padding: var(--spacing-v-s) var(--spacing-h-s);
   width: min(320px, 100%);
@@ -80,6 +81,7 @@
   font-weight: var(--mykn-option-font-weight);
   line-height: var(--typography-line-height-body-s);
   padding: 0 var(--spacing-h-s);
+  text-align: start;
   white-space: nowrap;
 
   &[aria-selected="true"] {
