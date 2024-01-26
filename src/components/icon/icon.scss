@@ -2,4 +2,22 @@
   height: 1.2em;
   vertical-align: middle;
   width: 1.2em;
+
+  &--hidden {
+    visibility: hidden;
+  }
+
+  &--spin {
+    animation: spin var(--animation-duration-slow)
+      var(--animation-timing-function) infinite;
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }

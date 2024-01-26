@@ -5,7 +5,7 @@ import {
   autoUpdate,
   flip,
   offset,
-  size,
+  size as sizeMiddleware,
   useClick,
   useDismiss,
   useFloating,
@@ -22,11 +22,14 @@ import { eventFactory } from "../eventFactory";
 import "./select.scss";
 
 export type SelectProps = React.HTMLAttributes<HTMLDivElement> & {
-  /** Input name. */
-  name: string;
-
   /** Can be used to generate `SelectOption` components from an array of objects. */
   options: Option[];
+
+  /** The clear value (accessible) label. */
+  labelClear?: string;
+
+  /** Input name. */
+  name?: string;
 
   /**
    * Gets called when the selected option is changed
@@ -38,16 +41,19 @@ export type SelectProps = React.HTMLAttributes<HTMLDivElement> & {
    */
   onChange?: (event: Event) => void;
 
-  /** The clear value (accessible) label. */
-  labelClear?: string;
+  /** Placeholder text. */
+  placeholder?: string;
 
   /** Whether a value is required, a required select can't be cleared. */
   required?: boolean;
 
-  /** Placeholder text. */
-  placeholder?: string;
+  /** Can be set to `fit-content` to apply auto sizing based on content width. */
+  size?: "fit-content";
 
   value?: Option["value"] | null;
+
+  /** The variant (style) of the input. */
+  variant?: "normal" | "transparent";
 } & SelectRequiredConditional;
 
 type SelectRequiredConditional =
@@ -63,9 +69,12 @@ type SelectRequiredConditional =
 /**
  * A single (select) option, can be passed to `Select  as array.
  */
-export type Option = {
-  label: string;
-  value?: React.OptionHTMLAttributes<HTMLOptionElement>["value"];
+export type Option<
+  L = number | string,
+  V = React.OptionHTMLAttributes<HTMLOptionElement>["value"],
+> = {
+  label: L;
+  value?: V;
   selected?: React.OptionHTMLAttributes<HTMLOptionElement>["selected"]; // TODO
 };
 
@@ -84,7 +93,9 @@ export const Select: React.FC<SelectProps> = ({
   labelClear = "Clear value",
   placeholder = "",
   required = false,
+  size,
   value = null,
+  variant = "normal",
   ...props
 }) => {
   const fakeInputRef = React.useRef<HTMLSelectElement>(null);
@@ -100,7 +111,7 @@ export const Select: React.FC<SelectProps> = ({
     middleware: [
       offset(6),
       flip(),
-      size({
+      sizeMiddleware({
         padding: 20,
       }),
     ],
@@ -172,8 +183,9 @@ export const Select: React.FC<SelectProps> = ({
   return (
     <>
       <div
-        className={clsx("mykn-select", {
-          "mykn-select__label--selected": selectedIndex,
+        className={clsx("mykn-select", `mykn-select--variant-${variant}`, {
+          "mykn-select--selected": selectedIndex,
+          [`mykn-select--size-${size}`]: size,
         })}
         tabIndex={0}
         ref={refs.setReference}
@@ -186,7 +198,7 @@ export const Select: React.FC<SelectProps> = ({
         <select
           ref={fakeInputRef}
           name={name}
-          value={selectedOptionValue}
+          defaultValue={selectedOptionValue}
           hidden={true}
         >
           {selectedOptionValue && (
@@ -269,7 +281,7 @@ const BaseSelectDropdown: React.FC<SelectDropdownProps> = ({
   setSelectedIndex,
 }) => {
   const listRef = React.useRef<Array<HTMLElement | null>>([]);
-  const listContentRef = React.useRef(options.map((o) => o.label));
+  const listContentRef = React.useRef(options.map((o) => String(o.label)));
   const isTypingRef = React.useRef(false);
 
   const click = useClick(context, { event: "mousedown" });

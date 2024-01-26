@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import React, { useEffect, useState } from "react";
 
 import { eventFactory } from "../eventFactory";
@@ -7,8 +8,11 @@ export type InputProps = Omit<
   React.InputHTMLAttributes<HTMLInputElement>,
   "value"
 > & {
+  /** The variant (style) of the input. */
+  variant?: "normal" | "transparent";
+
   /** Gets called when the value is changed */
-  onChange?: (event: Event) => void;
+  onChange?: React.ChangeEventHandler<HTMLInputElement>;
 
   /** Input value. */
   value?: string | number;
@@ -23,6 +27,7 @@ export type InputProps = Omit<
 export const Input: React.FC<InputProps> = ({
   type = "text",
   value,
+  variant = "normal",
   onChange,
   ...props
 }) => {
@@ -54,13 +59,13 @@ export const Input: React.FC<InputProps> = ({
     const detail = type === "file" ? input.files : event.target.value;
     const changeEvent = eventFactory("change", detail, true, false, false);
     input.dispatchEvent(changeEvent);
-    onChange && onChange(changeEvent);
+    onChange && onChange(event);
   };
 
   return (
     <input
       ref={inputRef}
-      className="mykn-input"
+      className={clsx("mykn-input", `mykn-input--variant-${variant}`)}
       type={type}
       value={valueState}
       onChange={_onChange}

@@ -1,0 +1,24 @@
+@use "../../settings/style";
+
+.mykn-paginator {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-v-m);
+
+  &__section {
+    align-items: center;
+    display: flex;
+    gap: var(--spacing-h-m);
+  }
+
+  @media screen and (max-width: style.$breakpoint-desktop - 1px) {
+    &__section {
+      width: 100%;
+
+      > * {
+        width: 100% !important;
+        white-space: nowrap;
+      }
+    }
+  }
+}

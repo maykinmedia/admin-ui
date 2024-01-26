@@ -5,6 +5,7 @@ import { Formik } from "formik";
 import React from "react";
 
 import { Button } from "../../button";
+import { Page } from "../../page";
 import { FORM_TEST_DECORATOR } from "../.storybook/decorators";
 import { Input } from "./input";
 
@@ -166,6 +167,24 @@ export const InputWithCustomSize: Story = {
   },
   argTypes: FORM_TEST_ARG_TYPES,
   decorators: [FORM_TEST_DECORATOR],
+};
+
+export const TransparentInput: Story = {
+  args: {
+    name: "input",
+    placeholder: "e.g. John Doe",
+    type: "text",
+    variant: "transparent",
+  },
+  argTypes: FORM_TEST_ARG_TYPES,
+  decorators: [
+    FORM_TEST_DECORATOR,
+    (Story) => (
+      <Page>
+        <Story />
+      </Page>
+    ),
+  ],
 };
 
 export const UsageWithFormik: Story = {
