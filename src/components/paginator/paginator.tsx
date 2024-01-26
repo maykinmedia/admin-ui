@@ -26,6 +26,9 @@ export type PaginatorProps = {
   /** The page size (accessible) label. */
   labelPageSize: string;
 
+  /** The pagination (accessible) label. */
+  labelPagination: string;
+
   /** The go to previous page (accessible) label. */
   labelPrevious: string;
 
@@ -82,6 +85,7 @@ export const Paginator: React.FC<PaginatorProps> = ({
   labelCurrentPageRange = "{pageStart} - {pageEnd} of {pageCount}",
   labelGoToPage = "Go to",
   labelPageSize = "Show rows",
+  labelPagination = "Pagination",
   labelPrevious = "Go to previous page",
   labelNext = "Go to next page",
   labelLoading,
@@ -179,7 +183,11 @@ export const Paginator: React.FC<PaginatorProps> = ({
   };
 
   return (
-    <nav className="mykn-paginator" {...props}>
+    <nav
+      className="mykn-paginator"
+      aria-label={formatMessage(labelPagination, context)}
+      {...props}
+    >
       <div className="mykn-paginator__section mykn-paginator__section--form">
         {pageSizeOptions.length > 0 && (
           <>

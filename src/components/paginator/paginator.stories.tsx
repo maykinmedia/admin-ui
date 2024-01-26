@@ -39,6 +39,7 @@ export const PaginatorComponent: Story = {
     labelCurrentPageRange: "{pageStart} - {pageEnd} of {pageCount}",
     labelGoToPage: "Go to",
     labelPageSize: "Show rows",
+    labelPagination: "Pagination",
     labelPrevious: "Go to previous page",
     labelNext: "Go to next page",
   },
@@ -67,6 +68,7 @@ export const PaginatorComponentWithSpinner: Story = {
     labelGoToPage: "Go to",
     labelLoading: "Loading",
     labelPageSize: "Show rows",
+    labelPagination: "Pagination",
     labelPrevious: "Go to previous page",
     labelNext: "Go to next page",
     onPageChange: () => new Promise((resolve) => setTimeout(resolve, 1000)),
@@ -77,6 +79,7 @@ export const PaginatorComponentWithSpinner: Story = {
     const previousButton = canvas.getByLabelText("Go to previous page");
     const nextButton = canvas.getByLabelText("Go to next page");
     canvas.getByRole("navigation");
+    canvas.getByLabelText("Pagination");
     canvas.getByText("Show rows");
     canvas.getByText("Go to");
 
