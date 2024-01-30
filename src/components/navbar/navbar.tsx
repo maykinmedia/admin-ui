@@ -28,31 +28,25 @@ export const Navbar: React.FC<NavbarProps> = ({ children, ...props }) => {
     return () => window.removeEventListener("resize", onResize);
   });
 
-  /**
-   * Renders the toolbar.
-   */
-  const renderToolbar = () => (
-    <Toolbar
-      align="end"
-      variant={isMobile ? "normal" : "transparent"}
-      {...props}
-    >
-      {children}
-    </Toolbar>
-  );
-
   return (
     <div className="mykn-navbar">
       {isMobile ? (
         <Dropdown
           label={<Outline.Bars2Icon />}
-          variant="transparent"
           aria-label="Menu openen/sluiten"
+          {...props}
+          variant={"transparent"}
         >
-          {renderToolbar()}
+          {children}
         </Dropdown>
       ) : (
-        renderToolbar()
+        <Toolbar
+          align="end"
+          variant={isMobile ? "normal" : "transparent"}
+          {...props}
+        >
+          {children}
+        </Toolbar>
       )}
     </div>
   );

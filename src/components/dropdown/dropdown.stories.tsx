@@ -45,7 +45,7 @@ const meta = {
 } satisfies Meta<typeof Dropdown>;
 
 const DEFAULT_CHILDREN = (
-  <Toolbar direction="vertical">
+  <>
     <Button variant="transparent">
       <Outline.PencilIcon />
       Zaaktypen
@@ -69,7 +69,7 @@ const DEFAULT_CHILDREN = (
       <Outline.ArrowRightStartOnRectangleIcon />
       Uitloggen
     </Button>
-  </Toolbar>
+  </>
 );
 
 export default meta;
@@ -174,8 +174,11 @@ export const HorizontalDropdown: Story = {
         <Outline.EllipsisHorizontalIcon />
       </>
     ),
+    toolbarProps: {
+      direction: "horizontal",
+    },
     children: (
-      <Toolbar direction="horizontal">
+      <>
         <Button variant="transparent">
           <Outline.PencilIcon />
           Zaaktypen
@@ -199,7 +202,7 @@ export const HorizontalDropdown: Story = {
           <Outline.ArrowRightStartOnRectangleIcon />
           Uitloggen
         </Button>
-      </Toolbar>
+      </>
     ),
   },
 };
@@ -254,7 +257,7 @@ export const NestedDropdown: Story = {
     ),
     variant: "primary",
     children: (
-      <Toolbar direction="vertical">
+      <>
         <Button variant="transparent">
           <Outline.PencilIcon />
           Zaaktypen
@@ -292,7 +295,55 @@ export const NestedDropdown: Story = {
             </Button>
           </Toolbar>
         </Dropdown>
-      </Toolbar>
+      </>
     ),
+  },
+};
+
+export const DropdownWithItemsProp: Story = {
+  args: {
+    label: (
+      <>
+        {" "}
+        Click me!
+        <Outline.EllipsisVerticalIcon />
+      </>
+    ),
+    items: [
+      {
+        variant: "transparent",
+        children: (
+          <>
+            <Outline.PencilIcon /> Zaaktypen
+          </>
+        ),
+      },
+      {
+        variant: "transparent",
+        children: (
+          <>
+            <Outline.ClipboardDocumentIcon /> Documenttypen
+          </>
+        ),
+      },
+      {
+        href: "https://www.example.com",
+        target: "_blank",
+        variant: "transparent",
+        children: (
+          <>
+            <Outline.UserIcon /> Admin
+          </>
+        ),
+      },
+      {
+        variant: "transparent",
+        children: (
+          <>
+            <Outline.ArrowRightStartOnRectangleIcon /> Uitloggen
+          </>
+        ),
+      },
+    ],
   },
 };

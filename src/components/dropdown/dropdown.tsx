@@ -34,8 +34,17 @@ export type DropdownProps = ButtonProps & {
   /** Whether the dropdown should be open. */
   open?: boolean;
 
-  /** `Children` should be a `Toolbar` component containing the individual items. */
-  children: React.ReactElement<ToolbarProps>;
+  /** The items shown inside the dropdown. */
+  items?: ToolbarProps["items"];
+
+  /** Any additional props to pass to the toolbar. */
+  toolbarProps?: Omit<ToolbarProps, "items">;
+  // toolbarProps?: unknown;
+};
+
+type TOOLBAR_MODULE_STUB = {
+  Toolbar: React.FC<ToolbarProps>;
+  ToolbarProps: ToolbarProps;
 };
 
 /**
@@ -56,8 +65,20 @@ export const Dropdown: React.FC<DropdownProps> = ({
   label,
   open = false,
   placement = "bottom",
+  items,
+  toolbarProps,
   ...props
 }) => {
+  // FIXME: Experimental approach for avoiding circular dependency.
+  const [toolbarModuleState, setToolbarModuleState] =
+    useState<TOOLBAR_MODULE_STUB | null>(null);
+
+  if (!toolbarModuleState) {
+    import("../toolbar/toolbar").then((toolbarModule) =>
+      setToolbarModuleState(toolbarModule as TOOLBAR_MODULE_STUB),
+    );
+  }
+
   const [isOpen, setIsOpen] = useState(false);
 
   /**
@@ -98,6 +119,10 @@ export const Dropdown: React.FC<DropdownProps> = ({
     role,
   ]);
 
+  const isToolbarModuleLoaded = (
+    toolbarModuleState: TOOLBAR_MODULE_STUB | null,
+  ): toolbarModuleState is TOOLBAR_MODULE_STUB => Boolean(toolbarModuleState);
+
   return (
     <div className={clsx("mykn-dropdown", { "mykn-dropdown--open": isOpen })}>
       <Button ref={refs.setReference} {...getReferenceProps()} {...props}>
@@ -111,7 +136,16 @@ export const Dropdown: React.FC<DropdownProps> = ({
             style={floatingStyles}
             {...getFloatingProps()}
           >
-            {children}
+            {isToolbarModuleLoaded(toolbarModuleState) && (
+              <toolbarModuleState.Toolbar
+                align="start"
+                direction="vertical"
+                items={items}
+                {...toolbarProps}
+              >
+                {children}
+              </toolbarModuleState.Toolbar>
+            )}
           </div>
         </FloatingFocusManager>
       )}

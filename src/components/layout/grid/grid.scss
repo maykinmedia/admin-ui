@@ -1,4 +1,4 @@
-@use "../../../settings/style";
+@use "../../../settings/constants";
 
 .mykn-grid {
   display: grid;
@@ -23,7 +23,7 @@
     content: attr(data-testid);
   }
 
-  @media screen and (min-width: style.$breakpoint-desktop) {
+  @media screen and (min-width: constants.$breakpoint-desktop) {
     & {
       grid-template-columns: repeat(12, auto);
       gap: var(--gutter-v-desktop) var(--gutter-h-desktop);

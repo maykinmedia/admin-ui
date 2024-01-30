@@ -1,6 +1,8 @@
 import type { Preview } from "@storybook/react";
 import * as React from "react";
 
+import "../src/settings/tokens.css";
+
 const preview: Preview = {
   parameters: {
     actions: { argTypesRegex: "^on[A-Z].*" },

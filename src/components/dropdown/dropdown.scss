@@ -1,4 +1,4 @@
-@use "../../settings/style";
+@use "../../settings/constants";
 
 .mykn-dropdown {
   display: inline-flex;
@@ -24,20 +24,20 @@
     z-index: 1000;
   }
 
-  @media screen and (max-width: style.$breakpoint-desktop - 1px) {
+  @media screen and (max-width: constants.$breakpoint-desktop - 1px) {
     &__dropdown {
       width: 100%; // Fallback.
       width: min(100%, max(calc(100vw - 2 * var(--spacing-h-xl)), 100cqw));
     }
   }
 
-  @media screen and (min-width: style.$breakpoint-desktop) {
+  @media screen and (min-width: constants.$breakpoint-desktop) {
     &__dropdown .mykn-toolbar--direction-horizontal {
       width: min-content;
     }
   }
 
-  @media screen and (min-width: style.$breakpoint-desktop) {
+  @media screen and (min-width: constants.$breakpoint-desktop) {
     &__dropdown .mykn-toolbar--direction-vertical {
       width: max-content;
     }

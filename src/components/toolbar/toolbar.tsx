@@ -1,7 +1,11 @@
 import clsx from "clsx";
 import React from "react";
 
+import { Button, ButtonLink, ButtonLinkProps, ButtonProps } from "../button";
+import { Dropdown, DropdownProps } from "../dropdown";
 import "./toolbar.scss";
+
+export type ToolbarItem = ButtonProps | ButtonLinkProps | DropdownProps;
 
 export type ToolbarProps = React.PropsWithChildren<
   React.HTMLAttributes<HTMLElement> & {
@@ -16,6 +20,9 @@ export type ToolbarProps = React.PropsWithChildren<
 
     /** The variant (style) of the toolbar. */
     variant?: "normal" | "transparent";
+
+    /** The items shown inside the toolbar, alternatively, can opt to use children instead. */
+    items?: ToolbarItem[];
   }
 >;
 
@@ -26,6 +33,8 @@ export type ToolbarProps = React.PropsWithChildren<
  * @param align
  * @param direction
  * @param padA
+ * @param variant
+ * @param items
  * @param props
  * @constructor
  */
@@ -35,21 +44,61 @@ export const Toolbar: React.FC<ToolbarProps> = ({
   direction = "horizontal",
   padA = false,
   variant = "normal",
+  items = [],
   ...props
-}) => (
-  <nav
-    className={clsx(
-      "mykn-toolbar",
-      `mykn-toolbar--align-${align}`,
-      `mykn-toolbar--direction-${direction}`,
-      `mykn-toolbar--variant-${variant}`,
-      {
-        "mykn-toolbar--pad-a": padA,
-      },
-    )}
-    role="toolbar"
-    {...props}
-  >
-    {children}
-  </nav>
-);
+}) => {
+  const isItemButtonLinkProps = (item: ToolbarItem): item is ButtonLinkProps =>
+    Object.hasOwn(item, "href");
+
+  const isItemDropdownProps = (item: ToolbarItem): item is DropdownProps =>
+    Object.hasOwn(item, "items"); // Mandatory on Dropdown if passed to toolbar items.
+
+  const isItemButtonProps = (item: ToolbarItem): item is ButtonProps =>
+    !Object.hasOwn(item, "href");
+
+  /**
+   * Returns the React.FC for the item based on it's shape.
+   * @param item
+   */
+  const getItemComponent = (item: ToolbarItem): React.FC => {
+    if (isItemButtonLinkProps(item)) {
+      return ButtonLink;
+    }
+    if (isItemDropdownProps(item)) {
+      return Dropdown as React.FC;
+    }
+    if (isItemButtonProps(item)) {
+      return Button;
+    }
+    return () => null;
+  };
+
+  /**
+   * Renders an item (in items).
+   * @param item
+   * @param index
+   */
+  const renderItem = (item: ToolbarItem, index: number) => {
+    const Component = getItemComponent(item);
+    return <Component key={index} {...item}></Component>;
+  };
+
+  return (
+    <nav
+      className={clsx(
+        "mykn-toolbar",
+        `mykn-toolbar--align-${align}`,
+        `mykn-toolbar--direction-${direction}`,
+        `mykn-toolbar--variant-${variant}`,
+        {
+          "mykn-toolbar--pad-a": padA,
+        },
+      )}
+      role="toolbar"
+      {...props}
+    >
+      {items.map(renderItem)}
+      {children}
+    </nav>
+  );
+};
