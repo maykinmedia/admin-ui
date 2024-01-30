@@ -1,5 +1,4 @@
-@use "../../../settings/style";
-@use '../p/p';
+@use "../p/p";
 
 .mykn-ol {
   @extend .mykn-p;
@@ -8,4 +7,5 @@
 
   .mykn-ol {
     padding-inline-start: var(--spacing-h-xl);
-  }}
+  }
+}

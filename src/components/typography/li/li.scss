@@ -1,6 +1,5 @@
-@use "../../../settings/style";
-@use '../p/p';
+@use "../p/p";
 
 .mykn-li {
-  @extend .mykn-p
+  @extend .mykn-p;
 }

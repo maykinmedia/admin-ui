@@ -1,4 +1,4 @@
-@use "../../../settings/style";
+@use "../../../settings/constants";
 
 .mykn-column {
   grid-column: auto / 6 span;
@@ -16,10 +16,10 @@
   }
 
   &--debug[data-testid]:before {
-    content: attr(data-testid)!important;
+    content: attr(data-testid) !important;
   }
 
-  @media screen and (min-width: style.$breakpoint-desktop) {
+  @media screen and (min-width: constants.$breakpoint-desktop) {
     @for $i from 1 through 12 {
       &--span-#{$i} {
         grid-column: auto / span #{$i};
@@ -31,4 +31,3 @@
     }
   }
 }
-
