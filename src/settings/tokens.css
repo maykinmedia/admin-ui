@@ -11,6 +11,7 @@
   --theme-color-primary-600: #8d75e6;
   --theme-color-primary-400: #bdb0ed;
   --theme-color-primary-200: #ecf1ff;
+  --theme-color-primary-100: #f2eeff;
 
   --theme-color-tertiary-800: #0f172a;
   --theme-color-tertiary-700: #1e293b;
@@ -19,9 +20,13 @@
 
   --theme-shade-1000: #000;
   --theme-shade-900: #272727;
+  --theme-shade-800: #4b4b4b;
   --theme-shade-700: #545454;
   --theme-shade-400: #b3b3b3;
   --theme-shade-300: #eaeaea;
+  --theme-shade-200: #e6e6e6;
+  --theme-shade-100: #f1f1f1;
+  --theme-shade-50: #fcfcfc;
   --theme-shade-0: #fff;
 
   --theme-color-success-body: #0b4f00;
@@ -33,6 +38,7 @@
   /* SPACING */
   --border-radus-l: 12px;
   --border-radus-m: 6px;
+  --border-radus-s: 4px;
 
   --gutter-h-desktop: 12px;
   --gutter-v-desktop: 24px;
@@ -46,11 +52,17 @@
   --spacing-h-m: 8px;
   --spacing-v-m: 8px;
 
+  --spacing-h-l: 16px;
+  --spacing-v-l: 16px;
+
   --spacing-h-xl: 20px;
   --spacing-v-xl: 50px;
 
   --spacing-h-xxl: 32px;
   --spacing-v-xxl: 32px;
+
+  --spacing-h-xxxl: 40px;
+  --spacing-v-xxxl: 40px;
 
   /* TYPOGRAPHY */
   --typography-color-background: var(--theme-shade-0);

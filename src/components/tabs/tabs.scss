@@ -1,0 +1,35 @@
+@use "../../settings/constants";
+
+.mykn-tabs {
+  &__tablist {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--spacing-v-l);
+    box-sizing: border-box;
+    border: 1px solid var(--theme-shade-100);
+    border-radius: var(--border-radus-s);
+    background-color: var(--theme-shade-50);
+    padding: var(--spacing-h-m) var(--spacing-v-xxxl);
+    width: 100%;
+  }
+
+  .mykn-p {
+    color: var(--theme-shade-200);
+    user-select: none;
+  }
+
+  &__content {
+    margin-top: var(--spacing-h-l);
+  }
+
+  @media screen and (max-width: constants.$breakpoint-desktop) {
+    &__tablist {
+      justify-content: center;
+    }
+
+    .mykn-p {
+      display: none;
+    }
+  }
+}

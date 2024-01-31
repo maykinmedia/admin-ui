@@ -1,4 +1,5 @@
 .mykn-button {
+  $self: &;
   --mykn-button-color-background: var(--theme-color-primary-800);
   --mykn-button-color-shadow: var(--theme-shade-1000);
   --mykn-button-color-text: var(--theme-shade-0);
@@ -47,9 +48,14 @@
   }
 
   &--variant-primary {
+    &#{$self}--active,  // TODO
     &:focus,
     &:hover {
       --mykn-button-color-background: var(--theme-color-primary-700);
+    }
+
+    &:focus,
+    &:hover {
       --mykn-button-offset: -2px;
     }
 
@@ -66,9 +72,14 @@
     --mykn-button-color-shadow: currentColor;
     --mykn-button-color-text: var(--typography-color-body);
 
+    &#{$self}--active,
     &:focus,
     &:hover {
       --mykn-button-color-background: var(--theme-color-primary-200);
+    }
+
+    &:focus,
+    &:hover {
       --mykn-button-offset: -2px;
     }
 
@@ -84,9 +95,15 @@
     --mykn-button-color-shadow: currentColor;
     --mykn-button-color-text: var(--theme-shade-700);
 
+    &#{$self}--active,
     &:focus,
     &:hover {
-      --mykn-button-color-background: var(--theme-color-primary-200);
+      --mykn-button-color-background: var(--theme-color-primary-100);
+      --mykn-button-color-text: var(--theme-color-primary-800);
+    }
+
+    &:focus,
+    &:hover {
       --mykn-button-offset: -2px;
     }
 
