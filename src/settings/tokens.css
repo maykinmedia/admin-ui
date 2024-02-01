@@ -34,7 +34,7 @@
   --theme-color-success-background: #e9ffe9;
 
   --theme-color-danger-body: #ff4545;
-  --theme-color-danger-background: #FFDFDF;
+  --theme-color-danger-background: #FFEFEF;
 
   /* SPACING */
   --border-radius-l: 12px;
@@ -73,7 +73,7 @@
 
   /* TYPOGRAPHY */
   --typography-color-background: var(--theme-shade-0);
-  --typography-color-background-dark: var(--theme-shade-100);
+  --typography-color-background-alt: var(--theme-shade-100);
   --typography-color-h: var(--theme-shade-900);
   --typography-color-body: var(--theme-shade-700);
   --typography-color-border: var(--theme-shade-300);

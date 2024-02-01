@@ -2,11 +2,12 @@
 
 .mykn-a {
   @extend .mykn-p;
+  align-items: center;
   color: var(--theme-color-primary-800);
   display: inline-flex;
   font-size: inherit;
   justify-content: center;
-  align-items: center;
+  font-weight: inherit;
   gap: 0.5em;
   width: fit-content;
 

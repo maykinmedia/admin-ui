@@ -1,37 +1,99 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { userEvent } from "@storybook/test";
 import React from "react";
 
+import { Toolbar } from "../toolbar";
 import { Button, ButtonLink } from "./button";
 
 const meta = {
   title: "Controls/Button",
   component: Button,
+  render: ({ ...args }) => (
+    <Toolbar>
+      <Button {...args} variant="primary">
+        Primary Button
+      </Button>
+      <Button {...args} variant="transparent">
+        Tranparent Button
+      </Button>
+      <Button {...args} variant="outline">
+        Outline Button
+      </Button>
+    </Toolbar>
+  ),
 } satisfies Meta<typeof Button>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const ButtonComponent: Story = {
+export const Buttons: Story = {
+  args: {},
+};
+
+export const ActiveButtons: Story = {
   args: {
-    children: "The quick brown fox jumps over the lazy dog.",
+    active: true,
   },
 };
 
-export const TransparentButton: Story = {
+export const BoldButtons: Story = {
   args: {
-    children: "The quick brown fox jumps over the lazy dog.",
-    variant: "transparent",
+    bold: true,
   },
 };
 
-export const ButtonAnimatesOnHoverAndClick: Story = {
+export const JustifiedButtons: Story = {
   args: {
-    children: "The quick brown fox jumps over the lazy dog.",
+    justify: true,
   },
-  play: async () => {
-    await userEvent.tab({ delay: 10 });
+};
+
+export const MutedButtons: Story = {
+  args: {
+    muted: true,
   },
+};
+
+export const PadlessButtons: Story = {
+  args: {
+    pad: false,
+  },
+};
+
+export const HorizontallyPaddedButtons: Story = {
+  args: {
+    pad: "h",
+  },
+};
+
+export const VerticallyPaddedButtons: Story = {
+  args: {
+    pad: "v",
+  },
+};
+
+export const SmallerButtonText: Story = {
+  args: {
+    size: "xs",
+  },
+};
+
+export const SquareButtons: Story = {
+  args: {
+    square: true,
+  },
+  render: ({ ...args }) => (
+    <Toolbar>
+      <Button {...args} variant="primary">
+        1
+      </Button>
+      <Button {...args} variant="transparent">
+        2
+      </Button>
+      <Button {...args} variant="outline">
+        3
+      </Button>
+    </Toolbar>
+  ),
 };
 
 export const ButtonLinkComponent: StoryObj<typeof ButtonLink> = {
@@ -40,27 +102,17 @@ export const ButtonLinkComponent: StoryObj<typeof ButtonLink> = {
     href: "https://www.example.com",
     target: "_blank",
   },
-  render: (args) => <ButtonLink {...args} />,
-};
-
-export const TransparentButtonLink: StoryObj<typeof ButtonLink> = {
-  args: {
-    children: "The quick brown fox jumps over the lazy dog.",
-    href: "https://www.example.com",
-    target: "_blank",
-    variant: "transparent",
-  },
-  render: (args) => <ButtonLink {...args} />,
-};
-
-export const ButtonLinkAnimatesOnHoverAndClick: StoryObj<typeof ButtonLink> = {
-  args: {
-    children: "The quick brown fox jumps over the lazy dog.",
-    href: "https://www.example.com",
-    target: "_blank",
-  },
-  play: async () => {
-    await userEvent.tab({ delay: 10 });
-  },
-  render: (args) => <ButtonLink {...args} />,
+  render: ({ ...args }) => (
+    <Toolbar>
+      <ButtonLink {...args} variant="primary">
+        Primary ButtonLink
+      </ButtonLink>
+      <ButtonLink {...args} variant="transparent">
+        Tranparent ButtonLink
+      </ButtonLink>
+      <ButtonLink {...args} variant="outline">
+        Outline ButtonLink
+      </ButtonLink>
+    </Toolbar>
+  ),
 };

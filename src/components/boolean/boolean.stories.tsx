@@ -36,8 +36,8 @@ export const False: Story = {
   play: ({ canvasElement }) => {
     const canvas = within(canvasElement);
     const boolean = canvas.getByLabelText("This value is false");
-    expect(boolean).toBeVisible();
-    expect(boolean.children).toHaveLength(0);
+    expect(boolean).not.toBeVisible();
+    expect(boolean.children).toHaveLength(1);
   },
 };
 
@@ -51,6 +51,7 @@ export const ExplicitFalse: Story = {
   play: ({ canvasElement }) => {
     const canvas = within(canvasElement);
     const boolean = canvas.getByLabelText("This value is false");
+    expect(boolean).toBeVisible();
     expect(boolean.children).toHaveLength(1);
   },
 };

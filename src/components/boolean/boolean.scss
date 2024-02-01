@@ -12,8 +12,12 @@
     color: var(--theme-color-success-body);
   }
 
-  &--explicit#{&}--value-false {
+  &--value-false {
     background-color: var(--theme-color-danger-background);
     color: var(--theme-color-danger-body);
+  }
+
+  &--value-false:not(#{&}--explicit) {
+    visibility: hidden;
   }
 }

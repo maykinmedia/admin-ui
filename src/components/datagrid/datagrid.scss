@@ -24,15 +24,23 @@
     border-top: 1px solid var(--typography-color-border);
   }
 
+  &__head &__cell {
+    padding: var(--spacing-v-m) var(--spacing-h-l);
+  }
+
   &__cell {
     border-bottom: 1px solid var(--typography-color-border);
     box-sizing: border-box;
-    padding: var(--spacing-v-m) var(--spacing-h-m);
+    padding: var(--spacing-v-l) var(--spacing-h-l);
+
+    .mykn-p {
+      display: inline-flex;
+      gap: var(--spacing-h-xs);
+    }
   }
 
   &__cell--type-boolean,
   &__cell--type-number {
-    padding: var(--spacing-v-m) var(--spacing-h-xxl);
     text-align: end;
     width: 0;
   }
@@ -76,7 +84,7 @@
       flex-wrap: wrap;
 
       &:nth-child(even) {
-        background-color: var(--typography-color-background-dark);
+        background-color: var(--typography-color-background-alt);
       }
     }
 
@@ -116,8 +124,9 @@
     &__cell--type-boolean,
     &__cell--type-number {
       flex-direction: row;
-      padding: var(--spacing-v-m) var(--spacing-h-m);
-      text-align: right;
+      justify-content: space-between;
+      padding: var(--spacing-v-l) var(--spacing-h-l);
+      text-align: end;
       width: 100%;
     }
 

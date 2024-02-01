@@ -13,7 +13,7 @@ export type BadgeProps = React.PropsWithChildren<{
  * @constructor
  */
 export const Badge: React.FC<BadgeProps> = ({ children, ...props }) => (
-  <div className="mykn-badge" {...props}>
+  <span className="mykn-badge" {...props}>
     {children}
-  </div>
+  </span>
 );
