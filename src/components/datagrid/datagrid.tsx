@@ -104,7 +104,9 @@ export const DataGrid: React.FC<DataGridProps> = ({
     // Implicit link: first column and `rowUrl` resolved using `urlFields`.
     const isImplicitLink = rowUrl && fieldIndex === 0;
 
-    // Cell should be a link is truthy.
+    // If isExplicitLink is truthy, link should be data (data is a link).
+    // If isImplicitLink is truthy, link should be rowUrl (rowUrl is resolved URL of row).
+    // Otherwise, link should be an empty string (no link was resolved).
     const link = isExplicitLink
       ? String(data)
       : isImplicitLink
