@@ -1,10 +1,12 @@
 import clsx from "clsx";
 import React from "react";
 
-import { PProps } from "../p";
 import "./li.scss";
 
-export type LiProps = PProps;
+export type LiProps = React.HTMLAttributes<HTMLLIElement> & {
+  /** The size of the text. */
+  size?: "s" | "xs";
+};
 
 /**
  * Li component

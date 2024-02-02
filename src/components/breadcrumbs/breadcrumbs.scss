@@ -1,0 +1,27 @@
+.mykn-breadcrumbs {
+  display: flex;
+
+  &__list {
+    display: grid;
+    grid-auto-flow: column;
+    gap: var(--spacing-v-m);
+    list-style: none;
+  }
+
+  &__item {
+    display: grid;
+    grid-auto-flow: column;
+    gap: var(--spacing-v-xs);
+    align-items: center;
+    color: var(--theme-shade-600);
+
+    &--last {
+      color: var(--theme-color-primary-800);
+    }
+  }
+
+  .mykn-icon {
+    color: var(--theme-color-primary-800);
+    margin: 0 var(--spacing-h-xs);
+  }
+}

@@ -14,6 +14,7 @@ export type PProps = React.PropsWithChildren<{
 /**
  * Ul component
  * @param children
+ * @param muted
  * @param size
  * @param props
  * @constructor

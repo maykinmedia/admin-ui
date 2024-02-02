@@ -1,16 +1,29 @@
-@use '../p/p';
+@use "../p/p";
 
 .mykn-a {
   @extend .mykn-p;
   color: var(--theme-color-primary-800);
   display: inline-flex;
+  font-size: inherit;
   justify-content: center;
   align-items: center;
   gap: 0.5em;
   width: fit-content;
 
+  &--text-decoration-none {
+    text-decoration: none;
+
+    &#{&}:hover {
+      text-decoration: underline;
+    }
+  }
+
   &:hover {
     text-decoration: none;
+  }
+
+  &#{&}--muted {
+    @extend .mykn-p--muted;
   }
 
   &[aria-current] {
