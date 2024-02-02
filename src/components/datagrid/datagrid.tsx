@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import React, { useId } from "react";
 
-import { field2Caption } from "../../lib/format/string";
+import { field2Caption, isLink } from "../../lib/format/string";
 import { Badge, BadgeProps } from "../badge";
 import { Boolean, BooleanProps } from "../boolean";
 import { Outline } from "../icon";
@@ -9,9 +9,6 @@ import { Paginator, PaginatorProps } from "../paginator";
 import { Toolbar } from "../toolbar";
 import { A, AProps, H3, P } from "../typography";
 import "./datagrid.scss";
-
-/** Matches a URL. */
-const REGEX_URL = /https?:\/\/[^\s]+$/;
 
 export type RowData = Record<string, boolean | number | string | null>;
 
@@ -93,13 +90,13 @@ export const DataGrid: React.FC<DataGridProps> = ({
    */
   const renderCell = (rowData: RowData, field: string, index: number) => {
     const fieldIndex = renderableFields.indexOf(field);
-    const urlField = urlFields.find((f) => String(rowData[f]).match(REGEX_URL));
+    const urlField = urlFields.find((f) => isLink(String(rowData[f])));
     const rowUrl = urlField ? rowData[urlField] : null;
     const data = rowData[field];
     const type = typeof data;
 
     // Explicit link: passed as URL without being set as urlField.
-    const isExplicitLink = String(data).match(REGEX_URL);
+    const isExplicitLink = isLink(String(data));
 
     // Implicit link: first column and `rowUrl` resolved using `urlFields`.
     const isImplicitLink = rowUrl && fieldIndex === 0;
