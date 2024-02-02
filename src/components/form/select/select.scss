@@ -2,7 +2,7 @@
   align-items: center;
   background: var(--typography-color-background);
   border: 1px solid var(--theme-color-primary-800);
-  border-radius: var(--border-radus-m);
+  border-radius: var(--border-radius-m);
   box-sizing: border-box;
   color: var(--typography-color-body);
   cursor: pointer;
@@ -57,7 +57,7 @@
   &__dropdown {
     background: var(--typography-color-background);
     border: 1px solid var(--theme-color-primary-800);
-    border-radius: var(--border-radus-m);
+    border-radius: var(--border-radius-m);
     box-sizing: border-box;
     min-width: 100%;
     padding: var(--spacing-v-s) 0;

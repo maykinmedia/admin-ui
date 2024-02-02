@@ -37,9 +37,9 @@
   --theme-color-danger-background: #{rgba(#ff4545, 0.1)};
 
   /* SPACING */
-  --border-radus-l: 12px;
-  --border-radus-m: 6px;
-  --border-radus-s: 4px;
+  --border-radius-l: 12px;
+  --border-radius-m: 6px;
+  --border-radius-s: 4px;
 
   --gutter-h-desktop: 12px;
   --gutter-v-desktop: 24px;
