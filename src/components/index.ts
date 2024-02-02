@@ -11,5 +11,6 @@ export * from "./logo";
 export * from "./navbar";
 export * from "./page";
 export * from "./paginator";
+export * from "./tabs";
 export * from "./toolbar";
 export * from "./typography";

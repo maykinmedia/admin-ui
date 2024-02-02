@@ -4,6 +4,7 @@ import React, { LegacyRef } from "react";
 import "./button.scss";
 
 type BaseButtonProps = {
+  active?: boolean;
   square?: boolean;
   variant?: "primary" | "outline" | "transparent";
 };
@@ -16,16 +17,19 @@ export type ButtonLinkProps = React.AnchorHTMLAttributes<HTMLAnchorElement> &
 
 /**
  * Button component
+ * @param active
  * @param variant
+ * @param square
  * @param props
  * @constructor
  */
 export const Button = React.forwardRef<HTMLAnchorElement, ButtonProps>(
-  ({ square = false, variant = "primary", ...props }, ref) => {
+  ({ active, square = false, variant = "primary", ...props }, ref) => {
     return (
       <button
         ref={ref as LegacyRef<HTMLButtonElement>}
         className={clsx("mykn-button", `mykn-button--variant-${variant}`, {
+          "mykn-button--active": active,
           "mykn-button--square": square,
         })}
         {...props}
@@ -39,16 +43,20 @@ Button.displayName = "Button";
 
 /**
  * Button component
+ * @param active
+ * @param square
  * @param variant
- * @param props
  * @constructor
  */
 export const ButtonLink = React.forwardRef<HTMLAnchorElement, ButtonLinkProps>(
-  ({ variant, ...props }, ref) => {
+  ({ active, square, variant, ...props }, ref) => {
     return (
       <a
         ref={ref as LegacyRef<HTMLAnchorElement>}
-        className={clsx("mykn-button", `mykn-button--variant-${variant}`)}
+        className={clsx("mykn-button", `mykn-button--variant-${variant}`, {
+          "mykn-button--active": active,
+          "mykn-button--square": square,
+        })}
         {...props}
       >
         {props.children}
