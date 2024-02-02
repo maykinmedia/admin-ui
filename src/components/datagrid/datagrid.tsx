@@ -1,6 +1,7 @@
 import clsx from "clsx";
 import React, { useId } from "react";
 
+import { field2Caption } from "../../lib/format/string";
 import { Badge, BadgeProps } from "../badge";
 import { Boolean, BooleanProps } from "../boolean";
 import { Outline } from "../icon";
@@ -81,7 +82,7 @@ export const DataGrid: React.FC<DataGridProps> = ({
 }) => {
   const id = useId();
   const renderableFields = fields.filter((f) => !urlFields.includes(f));
-  const captions = renderableFields.map((f) => field2Caption(f as string));
+  const captions = renderableFields.map(field2Caption);
   const titleId = title ? `${id}-caption` : undefined;
 
   /**
@@ -218,10 +219,3 @@ export const DataGrid: React.FC<DataGridProps> = ({
     </div>
   );
 };
-
-/**
- * Converts "field_name" to "FIELD NAME".
- * @param field
- */
-const field2Caption = (field: string): string =>
-  String(field).replaceAll("_", " ").toUpperCase();
