@@ -79,7 +79,6 @@ export const DataGrid: React.FC<DataGridProps> = ({
 }) => {
   const id = useId();
   const renderableFields = fields.filter((f) => !urlFields.includes(f));
-  const captions = renderableFields.map(field2Caption);
   const titleId = title ? `${id}-caption` : undefined;
 
   /**
@@ -170,17 +169,27 @@ export const DataGrid: React.FC<DataGridProps> = ({
         {/* Headings */}
         <thead className="mykn-datagrid__head" role="rowgroup">
           <tr className="mykn-datagrid__row" role="row">
-            {captions.map((caption) => (
-              <th
-                key={`${id}-heading-${String(caption)}`}
-                className="mykn-datagrid__cell mykn-datagrid__cell--header"
-                role="columnheader"
-              >
-                <P bold muted size="xs">
-                  {caption}
-                </P>
-              </th>
-            ))}
+            {renderableFields.map((field) => {
+              const caption = field2Caption(field);
+              const data = results?.[0]?.[field];
+              const type = typeof data;
+
+              return (
+                <th
+                  key={`${id}-heading-${caption}`}
+                  className={clsx(
+                    "mykn-datagrid__cell",
+                    "mykn-datagrid__cell--header",
+                    { [`mykn-datagrid__cell--type-${type}`]: data },
+                  )}
+                  role="columnheader"
+                >
+                  <P bold muted size="xs">
+                    {caption}
+                  </P>
+                </th>
+              );
+            })}
           </tr>
         </thead>
 

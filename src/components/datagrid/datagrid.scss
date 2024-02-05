@@ -30,12 +30,11 @@
     padding: var(--spacing-v-m) var(--spacing-h-m);
   }
 
-  &__cell--type-boolean {
-    text-align: center;
-  }
-
+  &__cell--type-boolean,
   &__cell--type-number {
+    padding: var(--spacing-v-m) var(--spacing-h-xxl);
     text-align: end;
+    width: 0;
   }
 
   &__foot {
@@ -72,14 +71,12 @@
     }
 
     &__row {
-      background-color: var(
-        --typography-color-background
-      ); //border-radius: var(--border-radus-m);
+      background-color: var(--typography-color-background);
       display: flex;
       flex-wrap: wrap;
 
       &:nth-child(even) {
-        background-color: var(--theme-shade-100);
+        background-color: var(--typography-color-background-dark);
       }
     }
 
@@ -114,6 +111,14 @@
       &:first-child .mykn-a:has(.mykn-icon) {
         float: right;
       }
+    }
+
+    &__cell--type-boolean,
+    &__cell--type-number {
+      flex-direction: row;
+      padding: var(--spacing-v-m) var(--spacing-h-m);
+      text-align: right;
+      width: 100%;
     }
 
     &__foot {
