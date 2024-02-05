@@ -1,3 +1,20 @@
+/** Matches a URL. */
+export const REGEX_URL = /https?:\/\/[^\s]+$/;
+
+/**
+ * Returns whether `string` is a link according to `REGEX_URL`.
+ * @param string
+ */
+export const isLink = (string: string): boolean =>
+  Boolean(string.match(REGEX_URL));
+
+/**
+ * Converts "field_name" to "FIELD NAME".
+ * @param field
+ */
+export const field2Caption = (field: string): string =>
+  String(field).replaceAll("_", " ").toUpperCase();
+
 /**
  * Converts "Some object name" to "some-object-name".
  * @param input
