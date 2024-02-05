@@ -2,7 +2,7 @@
 
 .mykn-datagrid {
   background-color: var(--typography-color-background);
-  border-radius: var(--border-radus-m);
+  border-radius: var(--border-radius-m);
 
   &__table {
     border-spacing: 0;
@@ -58,7 +58,7 @@
 
     &__caption {
       background-color: var(--typography-color-background);
-      border-radius: var(--border-radus-m);
+      border-radius: var(--border-radius-m);
       display: block;
     }
 
@@ -138,7 +138,7 @@
     }
 
     .mykn-toolbar {
-      border-radius: var(--border-radus-m);
+      border-radius: var(--border-radius-m);
     }
 
     .mykn-paginator .mykn-icon--spin:first-child {
