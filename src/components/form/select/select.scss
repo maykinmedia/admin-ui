@@ -1,7 +1,7 @@
 .mykn-select {
   align-items: center;
   background: var(--typography-color-background);
-  border: 1px solid var(--theme-color-primary-800);
+  border: 1px solid var(--form-color-border);
   border-radius: var(--border-radius-m);
   box-sizing: border-box;
   color: var(--typography-color-body);
@@ -85,7 +85,7 @@
   white-space: nowrap;
 
   &[aria-selected="true"] {
-    --mykn-option-color-background: var(--theme-shade-300);
+    --mykn-option-color-background: var(--typography-color-background-dark);
     --mykn-option-font-weight: var(--typography-font-weight-bold);
   }
 

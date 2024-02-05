@@ -21,11 +21,11 @@
   }
 
   &__head &__row:first-child &__cell {
-    border-top: 1px solid var(--theme-shade-300);
+    border-top: 1px solid var(--typography-color-border);
   }
 
   &__cell {
-    border-bottom: 1px solid var(--theme-shade-300);
+    border-bottom: 1px solid var(--typography-color-border);
     box-sizing: border-box;
     padding: var(--spacing-v-m) var(--spacing-h-m);
   }
