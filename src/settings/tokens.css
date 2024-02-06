@@ -26,7 +26,7 @@
   --theme-shade-400: #b3b3b3;
   --theme-shade-300: #eaeaea;
   --theme-shade-200: #e6e6e6;
-  --theme-shade-100: #f1f1f1;
+  --theme-shade-100: #f7f7f7;
   --theme-shade-50: #fcfcfc;
   --theme-shade-0: #fff;
 
@@ -34,7 +34,7 @@
   --theme-color-success-background: #e9ffe9;
 
   --theme-color-danger-body: #ff4545;
-  --theme-color-danger-background: #{rgba(#ff4545, 0.1)};
+  --theme-color-danger-background: #FFDFDF;
 
   /* SPACING */
   --border-radius-l: 12px;
@@ -68,10 +68,15 @@
   --spacing-h-xxxl: 40px;
   --spacing-v-xxxl: 40px;
 
+  /* FORM */
+  --form-color-border: var(--theme-shade-300);
+
   /* TYPOGRAPHY */
   --typography-color-background: var(--theme-shade-0);
+  --typography-color-background-dark: var(--theme-shade-100);
   --typography-color-h: var(--theme-shade-900);
   --typography-color-body: var(--theme-shade-700);
+  --typography-color-border: var(--theme-shade-300);
   --typography-color-muted: var(--theme-shade-600);
 
   --typography-font-size-h1: 24px;

@@ -2,12 +2,13 @@
   appearance: none;
   align-items: center;
   background: var(--typography-color-background);
-  border: 1px solid var(--theme-color-primary-800);
+  border: 1px solid var(--form-color-border);
   border-radius: 6px;
   box-sizing: border-box;
   color: var(--typography-color-body);
   font-family: Inter, sans-serif;
   font-size: var(--typography-font-size-body-s);
+  font-weight: var(--typography-font-weight-normal);
   line-height: var(--typography-line-height-body-s);
   padding: var(--spacing-v-s) var(--spacing-h-s);
   position: relative;

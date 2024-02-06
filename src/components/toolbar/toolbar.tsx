@@ -18,6 +18,9 @@ export type ToolbarProps = React.PropsWithChildren<
     /** When set to true, padding is applied to A components to match Button component's height. */
     padA?: boolean;
 
+    /** When set to true, horizontal padding is applied to the toolbar. */
+    padH?: boolean;
+
     /** The variant (style) of the toolbar. */
     variant?: "normal" | "transparent";
 
@@ -33,6 +36,7 @@ export type ToolbarProps = React.PropsWithChildren<
  * @param align
  * @param direction
  * @param padA
+ * @param padH
  * @param variant
  * @param items
  * @param props
@@ -43,6 +47,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
   align = "start",
   direction = "horizontal",
   padA = false,
+  padH = false,
   variant = "normal",
   items = [],
   ...props
@@ -92,6 +97,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
         `mykn-toolbar--variant-${variant}`,
         {
           "mykn-toolbar--pad-a": padA,
+          "mykn-toolbar--pad-h": padH,
         },
       )}
       role="toolbar"
