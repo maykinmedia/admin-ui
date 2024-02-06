@@ -3,7 +3,7 @@
   align-items: center;
   background: var(--typography-color-background);
   border: 1px solid var(--form-color-border);
-  border-radius: 6px;
+  border-radius: var(--border-radius-m);
   box-sizing: border-box;
   color: var(--typography-color-body);
   font-family: Inter, sans-serif;

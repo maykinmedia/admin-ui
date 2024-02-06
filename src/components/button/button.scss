@@ -3,11 +3,14 @@
   --mykn-button-color-background: var(--theme-color-primary-800);
   --mykn-button-color-shadow: var(--theme-shade-1000);
   --mykn-button-color-text: var(--theme-shade-0);
+  --mykn-button-font-size: var(--typography-font-size-body-s);
+  --mykn-button-font-weight: var(--typography-font-weight-normal);
+  --mykn-button-line-height: var(--typography-line-height-body-s);
   --mykn-button-height: auto;
   --mykn-button-width: auto;
   --mykn-button-offset: 0px;
-  --mykn-button-padding-v: var(--spacing-v-s);
-  --mykn-button-padding-h: var(--spacing-h-s);
+  --mykn-button-padding-v: 0;
+  --mykn-button-padding-h: 0;
 
   align-items: center;
   appearance: none;
@@ -22,19 +25,44 @@
   color: var(--mykn-button-color-text);
   cursor: pointer;
   display: inline-flex;
-  flex-wrap: wrap;
   gap: 0.5em;
   height: var(--mykn-button-height);
   font-family: Inter, sans-serif;
-  font-size: var(--typography-font-size-body-s);
+  font-size: var(--mykn-button-font-size);
+  font-weight: var(--mykn-button-font-weight);
   justify-content: center;
-  line-height: var(--typography-line-height-body-s);
+  line-height: var(--mykn-button-line-height);
   text-align: center;
   text-decoration: none;
   transition: all var(--animation-duration-fast)
     var(--animation-timing-function);
   transform: translateY(var(--mykn-button-offset));
   width: var(--mykn-button-width);
+
+  &--bold {
+    --mykn-button-font-weight: var(--typography-font-weight-bold);
+  }
+
+  &--justify {
+    --mykn-button-width: 100%;
+  }
+
+  &--muted {
+    --mykn-button-color-text: var(--typography-color-muted) !important;
+  }
+
+  &--pad-h {
+    --mykn-button-padding-h: var(--spacing-h-s);
+  }
+
+  &--pad-v {
+    --mykn-button-padding-v: var(--spacing-v-s);
+  }
+
+  &--size-xs {
+    --mykn-button-font-size: var(--typography-font-size-body-xs);
+    --mykn-button-line-height: var(--typography-line-height-body-xs);
+  }
 
   &--square {
     --mykn-button-height: calc(
@@ -49,7 +77,7 @@
   }
 
   &--variant-primary {
-    &#{$self}--active,  // TODO
+    &#{$self}--active, // TODO
     &:focus,
     &:hover {
       --mykn-button-color-background: var(--theme-color-primary-700);
@@ -113,5 +141,9 @@
       --mykn-button-color-background: var(--typography-color-background);
       --mykn-button-offset: 0px;
     }
+  }
+
+  &--wrap {
+    flex-wrap: wrap;
   }
 }

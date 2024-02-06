@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import React, { useEffect, useState } from "react";
 
+import { sortData } from "../../lib/array/sortData";
 import { Page } from "../page";
 import { PaginatorProps } from "../paginator";
 import { DataGrid } from "./datagrid";
@@ -15,12 +16,15 @@ const meta = {
       </Page>
     ),
   ],
+  parameters: {
+    actions: [], // Prevent auto mocked callback functions.
+  },
 } satisfies Meta<typeof DataGrid>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const DataridComponent = {
+export const DataGridComponent = {
   args: {
     booleanProps: {
       labelTrue: "This value is true",
@@ -49,6 +53,7 @@ export const DataridComponent = {
       {
         url: "https://www.example.com",
         Omschrijving: "Afvalpas vervangen",
+        Zaaktype: "https://www.example.com",
         Versie: 2,
         Actief: false,
         Toekomstig: false,
@@ -57,6 +62,7 @@ export const DataridComponent = {
       {
         url: "https://www.example.com",
         Omschrijving: "Erfpacht wijzigen",
+        Zaaktype: "https://www.example.com",
         Versie: 4,
         Actief: true,
         Toekomstig: true,
@@ -65,6 +71,7 @@ export const DataridComponent = {
       {
         url: "https://www.example.com",
         Omschrijving: "Dakkapel vervangen",
+        Zaaktype: "https://www.example.com",
         Versie: 1,
         Actief: false,
         Toekomstig: false,
@@ -73,6 +80,7 @@ export const DataridComponent = {
       {
         url: "https://www.example.com",
         Omschrijving: "Dakkapel vervangen",
+        Zaaktype: "https://www.example.com",
         Versie: 4,
         Actief: true,
         Toekomstig: true,
@@ -81,6 +89,7 @@ export const DataridComponent = {
       {
         url: "https://www.example.com",
         Omschrijving: "Erfpacht wijzigen",
+        Zaaktype: "https://www.example.com",
         Versie: 2,
         Actief: false,
         Toekomstig: false,
@@ -89,6 +98,7 @@ export const DataridComponent = {
       {
         url: "https://www.example.com",
         Omschrijving: "Dakkapel vervangen",
+        Zaaktype: "https://www.example.com",
         Versie: 4,
         Actief: true,
         Toekomstig: true,
@@ -97,6 +107,7 @@ export const DataridComponent = {
       {
         url: "https://www.example.com",
         Omschrijving: "Erfpacht wijzigen",
+        Zaaktype: "https://www.example.com",
         Versie: 1,
         Actief: false,
         Toekomstig: false,
@@ -105,6 +116,7 @@ export const DataridComponent = {
       {
         url: "https://www.example.com",
         Omschrijving: "Dakkapel vervangen",
+        Zaaktype: "https://www.example.com",
         Versie: 1,
         Actief: false,
         Toekomstig: false,
@@ -116,13 +128,29 @@ export const DataridComponent = {
   },
 };
 
-export const DatagridOnMobile: Story = {
-  ...DataridComponent,
+export const DataGridOnMobile: Story = {
+  ...DataGridComponent,
   parameters: {
     viewport: { defaultViewport: "mobile1" },
     chromatic: {
       viewports: ["mobile1"],
     },
+  },
+};
+
+export const SortableDataGrid: Story = {
+  ...DataGridComponent,
+  args: {
+    ...DataGridComponent.args,
+    sort: true,
+  },
+};
+
+export const SortedDataGrid: Story = {
+  ...DataGridComponent,
+  args: {
+    ...DataGridComponent.args,
+    sort: "Versie",
   },
 };
 
@@ -152,6 +180,7 @@ export const JSONPlaceholderExample: Story = {
       labelNext: "Go to next page",
     },
     results: [],
+    sort: true,
     title: "Posts",
   },
   render: (args) => {
@@ -161,6 +190,7 @@ export const JSONPlaceholderExample: Story = {
       args.paginatorProps?.pageSize || 10,
     );
     const [results, setResults] = useState(args.results);
+    const [sort, setSort] = useState<string>("");
     const paginatorProps = args.paginatorProps as PaginatorProps;
 
     paginatorProps.pageSize = pageSize;
@@ -170,16 +200,24 @@ export const JSONPlaceholderExample: Story = {
       const index = page - 1;
       const abortController = new AbortController();
 
+      // Process sorting and pagination locally in place for demonstration purposes.
       fetch("https://jsonplaceholder.typicode.com/posts", {
         signal: abortController.signal,
       })
         .then((response) => response.json())
         .then((data) => {
-          // Paginate locally for demonstration purposes.
-          const posts = data.slice(
+          // Sort.
+          const direction = String(sort).startsWith("-") ? "DESC" : "ASC";
+          const sorted = sort
+            ? sortData(data, String(sort).replace(/^-/, ""), direction)
+            : data;
+
+          // Paginate.
+          const posts = sorted.slice(
             index * pageSize,
             index * pageSize + pageSize,
           );
+
           setResults(posts);
           setLoading(false);
         });
@@ -188,12 +226,18 @@ export const JSONPlaceholderExample: Story = {
         abortController.abort();
         setLoading(false);
       };
-    }, [page, pageSize]);
+    }, [page, pageSize, sort]);
 
     paginatorProps.loading = loading;
     paginatorProps.onPageChange = (page) => setPage(page);
     paginatorProps.onPageSizeChange = async (pageSize) => setPageSize(pageSize);
 
-    return <DataGrid {...args} results={results} />;
+    return (
+      <DataGrid
+        {...args}
+        results={results}
+        onSort={(field) => setSort(field)}
+      />
+    );
   },
 };

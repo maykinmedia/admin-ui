@@ -32,7 +32,7 @@ export const Boolean: React.FC<BooleanProps> = ({
   labelFalse,
   ...props
 }) => (
-  <div
+  <span
     className={clsx("mykn-boolean", `mykn-boolean--value-${value}`, {
       "mykn-boolean--explicit": explicit,
     })}
@@ -41,6 +41,6 @@ export const Boolean: React.FC<BooleanProps> = ({
     aria-label={value ? labelTrue : labelFalse}
   >
     {value && <Outline.CheckIcon />}
-    {!value && explicit && <Outline.XMarkIcon />}
-  </div>
+    {!value && <Outline.XMarkIcon />}
+  </span>
 );
