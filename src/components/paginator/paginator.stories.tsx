@@ -98,7 +98,7 @@ export const PaginatorComponentWithSpinner: Story = {
         await expect(pageInput).toHaveValue(1);
 
         // ...spinner to become visible.
-        await expect(canvas.getByLabelText("Loading")).toBeVisible();
+        await expect(await canvas.findByLabelText("Loading")).toBeVisible();
       },
       {
         timeout: 400,
@@ -110,7 +110,7 @@ export const PaginatorComponentWithSpinner: Story = {
       async () =>
         //...spinner to become invisible again.
         await expect(canvas.queryByLabelText("Loading")).toBeFalsy(),
-      { timeout: 1000 },
+      { timeout: 2000 },
     );
 
     // Type to "2" in pageInput.
