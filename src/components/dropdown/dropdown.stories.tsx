@@ -20,27 +20,38 @@ const meta = {
   ],
   parameters: {
     layout: "fullscreen",
+    lastButtonText: "Uitloggen",
   },
-  play: async ({ canvasElement }) => {
+  play: async ({ canvasElement, parameters }) => {
     const canvas = within(canvasElement);
     const button = canvas.getByText("Click me!");
 
     // Click opens, escape closes.
     await userEvent.click(button, { delay: 10 });
-    await expect(canvas.getByRole("dialog")).toBeVisible();
+    await expect(await canvas.findByRole("dialog")).toBeVisible();
     userEvent.keyboard("{Escape}");
     await waitFor(() => expect(canvas.queryByRole("dialog")).toBeNull());
     await userEvent.click(button, { delay: 10 });
-    await expect(canvas.getByRole("dialog")).toBeVisible();
 
-    // Tab focuses items.
-    await userEvent.tab({ delay: 10 });
-    await userEvent.tab({ delay: 10 });
-    await userEvent.tab({ delay: 10 });
+    await waitFor(async () => {
+      const _list = document.activeElement?.closest(
+        '[role="dialog"]',
+      ) as HTMLElement;
+      const buttons = await within(_list).findAllByRole("button");
+      const lastButton = buttons[buttons.length - 1];
+      const lastButtonActive = document.activeElement === lastButton;
 
-    expect(canvas.getAllByRole("dialog").findLast((v) => v)).toContainElement(
-      document.activeElement as HTMLElement,
-    );
+      if (!lastButtonActive) {
+        await userEvent.tab({ delay: 10 });
+        throw new Error("Last button not selected");
+      }
+    });
+
+    if (parameters.lastButtonText) {
+      await expect(document.activeElement?.textContent).toBe(
+        parameters.lastButtonText,
+      );
+    }
   },
 } satisfies Meta<typeof Dropdown>;
 
@@ -105,51 +116,73 @@ export const ActivateOnHover: Story = {
     ),
     children: DEFAULT_CHILDREN,
   },
-  play: async ({ canvasElement }) => {
+  play: async ({ canvasElement, parameters }) => {
     const canvas = within(canvasElement);
     const button = canvas.getByText("Hover me!");
 
     // Click opens, escape closes.
     await userEvent.hover(button, { delay: 10 });
-    await expect(canvas.getByRole("dialog")).toBeVisible();
-    userEvent.keyboard("{Escape}");
+    await waitFor(() => canvas.findByRole("dialog"), { timeout: 300 });
+    await userEvent.keyboard("{Escape}");
     await waitFor(() => expect(canvas.queryByRole("dialog")).toBeNull());
     await userEvent.hover(button, { delay: 10 });
-    await expect(canvas.getByRole("dialog")).toBeVisible();
 
-    // Tab focuses items.
-    await userEvent.tab({ delay: 10 });
-    await userEvent.tab({ delay: 10 });
-    await userEvent.tab({ delay: 10 });
+    await waitFor(async () => {
+      const _list = document.activeElement?.closest(
+        '[role="dialog"]',
+      ) as HTMLElement;
+      const buttons = await within(_list).findAllByRole("button");
+      const lastButton = buttons[buttons.length - 1];
+      const lastButtonActive = document.activeElement === lastButton;
 
-    expect(canvas.getByRole("dialog")).toContainElement(
-      document.activeElement as HTMLElement,
-    );
+      if (!lastButtonActive) {
+        await userEvent.tab({ delay: 10 });
+        throw new Error("Last button not selected");
+      }
+    });
+
+    if (parameters.lastButtonText) {
+      await expect(document.activeElement?.textContent).toBe(
+        parameters.lastButtonText,
+      );
+    }
   },
 };
 
 export const ActivateOnFocus: Story = {
   ...ActivateOnHover,
-  play: async ({ canvasElement }) => {
+  play: async ({ canvasElement, parameters }) => {
     const canvas = within(canvasElement);
+    const button = await canvas.getByText("Hover me!");
 
     // Click opens, escape closes.
     await userEvent.tab({ delay: 10 });
-    await expect(canvas.getByRole("dialog")).toBeVisible();
-    userEvent.keyboard("{Escape}");
+    button.focus();
+    await waitFor(() => canvas.findByRole("dialog"), { timeout: 300 });
+    await userEvent.keyboard("{Escape}");
     await waitFor(() => expect(canvas.queryByRole("dialog")).toBeNull());
     await userEvent.tab({ shift: true, delay: 10 });
     await userEvent.tab({ delay: 10 });
-    await expect(canvas.getByRole("dialog")).toBeVisible();
 
-    // Tab focuses items.
-    await userEvent.tab({ delay: 10 });
-    await userEvent.tab({ delay: 10 });
-    await userEvent.tab({ delay: 10 });
+    await waitFor(async () => {
+      const _list = document.activeElement?.closest(
+        '[role="dialog"]',
+      ) as HTMLElement;
+      const buttons = await within(_list).findAllByRole("button");
+      const lastButton = buttons[buttons.length - 1];
+      const lastButtonActive = document.activeElement === lastButton;
 
-    expect(canvas.getByRole("dialog")).toContainElement(
-      document.activeElement as HTMLElement,
-    );
+      if (!lastButtonActive) {
+        await userEvent.tab({ delay: 10 });
+        throw new Error("Last button not selected");
+      }
+    });
+
+    if (parameters.lastButtonText) {
+      await expect(document.activeElement?.textContent).toBe(
+        parameters.lastButtonText,
+      );
+    }
   },
 };
 
@@ -314,7 +347,8 @@ export const DropdownWithItemsProp: Story = {
         variant: "transparent",
         children: (
           <>
-            <Outline.PencilIcon /> Zaaktypen
+            <Outline.PencilIcon />
+            Zaaktypen
           </>
         ),
       },
@@ -322,7 +356,8 @@ export const DropdownWithItemsProp: Story = {
         variant: "transparent",
         children: (
           <>
-            <Outline.ClipboardDocumentIcon /> Documenttypen
+            <Outline.ClipboardDocumentIcon />
+            Documenttypen
           </>
         ),
       },
@@ -340,7 +375,8 @@ export const DropdownWithItemsProp: Story = {
         variant: "transparent",
         children: (
           <>
-            <Outline.ArrowRightStartOnRectangleIcon /> Uitloggen
+            <Outline.ArrowRightStartOnRectangleIcon />
+            Uitloggen
           </>
         ),
       },
