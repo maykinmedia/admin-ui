@@ -10,6 +10,7 @@ import { Container, Grid } from "../layout";
 import { Column } from "../layout/column";
 import { Logo } from "../logo";
 import { Navbar } from "../navbar";
+import { Tab, Tabs } from "../tabs";
 import { Body, H1 } from "../typography";
 import { Hr } from "../typography/hr";
 import { Page } from "./page";
@@ -36,7 +37,7 @@ export const PageComponent: Story = {
   },
 };
 
-export const SamplePage: Story = {
+export const ListViewSamplePage: Story = {
   args: {
     debug: false,
   },
@@ -197,8 +198,89 @@ export const SamplePage: Story = {
   ),
 };
 
-export const SamplePageOnMobile: Story = {
-  ...SamplePage,
+export const ListViewMobileSamplePage: Story = {
+  ...ListViewSamplePage,
+  parameters: {
+    viewport: { defaultViewport: "mobile1" },
+  },
+};
+
+export const DetailViewSamplePage: Story = {
+  args: {
+    debug: false,
+  },
+  render: ({ debug }) => (
+    <Page>
+      <Container debug={debug}>
+        <Grid debug={debug}>
+          <Column debug={debug} span={12}>
+            <Logo
+              href="/?path=/story/building-blocks-page--sample-page"
+              hrefLabel="Navigate to story page"
+              label="Maykin"
+            />
+
+            <Navbar align="end">
+              <Button variant="transparent">
+                <Outline.PencilIcon />
+                Zaaktypen
+              </Button>
+
+              <Button variant="transparent">
+                <Outline.ClipboardDocumentIcon />
+                Documenttypen
+              </Button>
+
+              <ButtonLink
+                href="https://www.example.com"
+                target="_blank"
+                variant="transparent"
+              >
+                <Outline.UserIcon />
+                Admin
+              </ButtonLink>
+
+              <Button variant="primary">
+                <Outline.ArrowRightStartOnRectangleIcon />
+                Uitloggen
+              </Button>
+            </Navbar>
+          </Column>
+          <Column span={12}>
+            <Card>
+              <Body>
+                <Button>
+                  <Outline.ArrowLeftIcon />
+                  Zaaktype
+                </Button>
+                <br /> <br />
+                <H1>Erfpacht wijzigen</H1>
+                <Tabs>
+                  <Tab label={"Structuur"}>
+                    <Hr />
+                    <br />
+                    Grid here...
+                  </Tab>
+                  <Tab label={"Basis"} />
+                  <Tab label={"Statussen"} />
+                  <Tab label={"Documenten"} />
+                  <Tab label={"Rollen"} />
+                  <Tab label={"Eigenschappen"} />
+                  <Tab label={"Resultaten"} />
+                  <Tab label={"Relaties"} />
+                  <Tab label={"Objecten"} />
+                </Tabs>
+              </Body>
+            </Card>
+          </Column>
+        </Grid>
+      </Container>
+    </Page>
+  ),
+};
+
+export const DetailViewMobileSamplePage: Story = {
+  ...DetailViewSamplePage,
   parameters: {
     viewport: { defaultViewport: "mobile1" },
   },
