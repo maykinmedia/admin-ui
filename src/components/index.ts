@@ -15,4 +15,5 @@ export * from "./page";
 export * from "./paginator";
 export * from "./tabs";
 export * from "./toolbar";
+export * from "./tooltip";
 export * from "./typography";

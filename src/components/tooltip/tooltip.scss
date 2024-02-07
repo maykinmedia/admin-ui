@@ -1,0 +1,35 @@
+.mykn-tooltip {
+  transition: opacity 0.5s;
+  transform: scale(0.8);
+  opacity: 0;
+  border-radius: var(--border-radius-m);
+
+  &--open {
+    opacity: 1;
+    background-color: var(--theme-color-primary-200);
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+    transform: scale(1);
+  }
+
+  &__arrow {
+    fill: var(--theme-color-tertiary-400);
+  }
+
+  &__content {
+    padding: var(--spacing-h-m) var(--spacing-v-m);
+    box-sizing: border-box;
+    overflow-wrap: break-word;
+
+    &--sm {
+      max-width: 200px;
+    }
+
+    &--md {
+      max-width: 400px;
+    }
+
+    &--lg {
+      max-width: 600px;
+    }
+  }
+}
