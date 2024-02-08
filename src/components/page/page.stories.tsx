@@ -3,7 +3,7 @@ import React from "react";
 
 import { Button, ButtonLink } from "../button";
 import { Card } from "../card";
-import { DataGrid } from "../datagrid";
+import { DataGrid } from "../data/datagrid";
 import { Select } from "../form";
 import { Outline } from "../icon";
 import { Container, Grid } from "../layout";
@@ -94,102 +94,105 @@ export const ListViewSamplePage: Story = {
             </Card>
 
             <Card>
-              <DataGrid
-                booleanProps={{
-                  labelFalse: "This value is false",
-                  labelTrue: "This value is true",
-                }}
-                paginatorProps={{
-                  count: 100,
-                  labelCurrentPageRange:
-                    "{pageStart} - {pageEnd} of {pageCount}",
-                  labelGoToPage: "Go to",
-                  labelLoading: "Loading",
-                  labelNext: "Go to next page",
-                  labelPageSize: "Show rows",
-                  labelPagination: "pagination",
-                  labelPrevious: "Go to previous page",
-                  onPageChange: () => {},
-                  page: 3,
-                  pageSize: 20,
-                  pageSizeOptions: [
+              <Body>
+                <DataGrid
+                  boolProps={{
+                    labelFalse: "This value is false",
+                    labelTrue: "This value is true",
+                  }}
+                  paginatorProps={{
+                    count: 100,
+                    labelCurrentPageRange:
+                      "{pageStart} - {pageEnd} of {pageCount}",
+                    labelGoToPage: "Go to",
+                    labelLoading: "Loading",
+                    labelNext: "Go to next page",
+                    labelPageSize: "Show rows",
+                    labelPagination: "pagination",
+                    labelPrevious: "Go to previous page",
+                    onPageChange: () => {},
+                    page: 3,
+                    pageSize: 20,
+                    pageSizeOptions: [
+                      {
+                        label: 10,
+                      },
+                      {
+                        label: 20,
+                      },
+                      {
+                        label: 30,
+                      },
+                      {
+                        label: 40,
+                      },
+                      {
+                        label: 50,
+                      },
+                    ],
+                  }}
+                  results={[
                     {
-                      label: 10,
+                      Omschrijving: "Afvalpas vervangen",
+                      Versie: 2,
+                      Actief: false,
+                      Concept: true,
+                      Toekomstig: false,
                     },
                     {
-                      label: 20,
+                      Omschrijving: "Erfpacht wijzigen",
+                      Actief: true,
+                      Versie: 4,
+                      Concept: true,
+                      Toekomstig: true,
                     },
                     {
-                      label: 30,
+                      Omschrijving: "Dakkapel vervangen",
+                      Actief: false,
+                      Versie: 1,
+                      Concept: false,
+                      Toekomstig: false,
                     },
                     {
-                      label: 40,
+                      Omschrijving: "Dakkapel vervangen",
+                      Actief: true,
+                      Versie: 4,
+                      Concept: true,
+                      Toekomstig: true,
                     },
                     {
-                      label: 50,
+                      Omschrijving: "Erfpacht wijzigen",
+                      Actief: false,
+                      Versie: 2,
+                      Concept: true,
+                      Toekomstig: false,
                     },
-                  ],
-                }}
-                results={[
-                  {
-                    Omschrijving: "Afvalpas vervangen",
-                    Versie: 2,
-                    Actief: false,
-                    Concept: true,
-                    Toekomstig: false,
-                  },
-                  {
-                    Omschrijving: "Erfpacht wijzigen",
-                    Actief: true,
-                    Versie: 4,
-                    Concept: true,
-                    Toekomstig: true,
-                  },
-                  {
-                    Omschrijving: "Dakkapel vervangen",
-                    Actief: false,
-                    Versie: 1,
-                    Concept: false,
-                    Toekomstig: false,
-                  },
-                  {
-                    Omschrijving: "Dakkapel vervangen",
-                    Actief: true,
-                    Versie: 4,
-                    Concept: true,
-                    Toekomstig: true,
-                  },
-                  {
-                    Omschrijving: "Erfpacht wijzigen",
-                    Actief: false,
-                    Versie: 2,
-                    Concept: true,
-                    Toekomstig: false,
-                  },
-                  {
-                    Omschrijving: "Dakkapel vervangen",
-                    Actief: true,
-                    Versie: 4,
-                    Concept: true,
-                    Toekomstig: true,
-                  },
-                  {
-                    Omschrijving: "Erfpacht wijzigen",
-                    Actief: false,
-                    Versie: 1,
-                    Concept: false,
-                    Toekomstig: false,
-                  },
-                  {
-                    Omschrijving: "Dakkapel vervangen",
-                    Versie: 1,
-                    Actief: false,
-                    Concept: false,
-                    Toekomstig: false,
-                  },
-                ]}
-                title="Zaaktypen"
-              />
+                    {
+                      Omschrijving: "Dakkapel vervangen",
+                      Actief: true,
+                      Versie: 4,
+                      Concept: true,
+                      Toekomstig: true,
+                    },
+                    {
+                      Omschrijving: "Erfpacht wijzigen",
+                      Actief: false,
+                      Versie: 1,
+                      Concept: false,
+                      Toekomstig: false,
+                    },
+                    {
+                      Omschrijving: "Dakkapel vervangen",
+                      Versie: 1,
+                      Actief: false,
+                      Concept: false,
+                      Toekomstig: false,
+                    },
+                  ]}
+                  sort={true}
+                  title="Zaaktypen"
+                />
+              </Body>
             </Card>
           </Column>
         </Grid>
