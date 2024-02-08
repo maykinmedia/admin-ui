@@ -10,7 +10,7 @@
   .mykn-ol,
   .mykn-ul {
     &:not(:last-child) {
-      margin-bottom: var(--spacing-v-l);
+      margin-block-end: var(--spacing-v-l);
     }
   }
 

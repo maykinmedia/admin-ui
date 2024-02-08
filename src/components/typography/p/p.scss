@@ -4,8 +4,8 @@
   font-size: var(--typography-font-size-body-s);
   font-weight: var(--typography-font-weight-normal);
   line-height: var(--typography-line-height-body-s);
-  margin-top: 0;
-  margin-bottom: 0;
+  margin-block-start: 0;
+  margin-block-end: 0;
 
   &--bold {
     font-weight: var(--typography-font-weight-bold);

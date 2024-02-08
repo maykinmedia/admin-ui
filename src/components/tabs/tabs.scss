@@ -20,7 +20,7 @@
   }
 
   &__content {
-    margin-top: var(--spacing-h-l);
+    margin-block-start: var(--spacing-h-l);
   }
 
   @media screen and (max-width: constants.$breakpoint-desktop) {
