@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import React, { useEffect, useState } from "react";
 
-import { sortData } from "../../lib/array/sortData";
-import { Page } from "../page";
+import { sortAttributeDataArray } from "../../../lib/data/attributedata";
+import { Page } from "../../page";
 import { PaginatorProps } from "../paginator";
 import { DataGrid } from "./datagrid";
 
@@ -26,7 +26,7 @@ type Story = StoryObj<typeof meta>;
 
 export const DataGridComponent = {
   args: {
-    booleanProps: {
+    boolProps: {
       labelTrue: "This value is true",
       labelFalse: "This value is false",
     },
@@ -55,6 +55,7 @@ export const DataGridComponent = {
         Omschrijving: "Afvalpas vervangen",
         Zaaktype: "https://www.example.com",
         Versie: 2,
+        Opmerkingen: null,
         Actief: false,
         Toekomstig: false,
         Concept: true,
@@ -64,6 +65,7 @@ export const DataGridComponent = {
         Omschrijving: "Erfpacht wijzigen",
         Zaaktype: "https://www.example.com",
         Versie: 4,
+        Opmerkingen: null,
         Actief: true,
         Toekomstig: true,
         Concept: true,
@@ -73,6 +75,7 @@ export const DataGridComponent = {
         Omschrijving: "Dakkapel vervangen",
         Zaaktype: "https://www.example.com",
         Versie: 1,
+        Opmerkingen: null,
         Actief: false,
         Toekomstig: false,
         Concept: false,
@@ -82,6 +85,7 @@ export const DataGridComponent = {
         Omschrijving: "Dakkapel vervangen",
         Zaaktype: "https://www.example.com",
         Versie: 4,
+        Opmerkingen: null,
         Actief: true,
         Toekomstig: true,
         Concept: true,
@@ -91,6 +95,7 @@ export const DataGridComponent = {
         Omschrijving: "Erfpacht wijzigen",
         Zaaktype: "https://www.example.com",
         Versie: 2,
+        Opmerkingen: null,
         Actief: false,
         Toekomstig: false,
         Concept: true,
@@ -100,6 +105,7 @@ export const DataGridComponent = {
         Omschrijving: "Dakkapel vervangen",
         Zaaktype: "https://www.example.com",
         Versie: 4,
+        Opmerkingen: null,
         Actief: true,
         Toekomstig: true,
         Concept: true,
@@ -109,6 +115,7 @@ export const DataGridComponent = {
         Omschrijving: "Erfpacht wijzigen",
         Zaaktype: "https://www.example.com",
         Versie: 1,
+        Opmerkingen: null,
         Actief: false,
         Toekomstig: false,
         Concept: false,
@@ -118,6 +125,7 @@ export const DataGridComponent = {
         Omschrijving: "Dakkapel vervangen",
         Zaaktype: "https://www.example.com",
         Versie: 1,
+        Opmerkingen: null,
         Actief: false,
         Toekomstig: false,
         Concept: false,
@@ -156,7 +164,7 @@ export const SortedDataGrid: Story = {
 
 export const JSONPlaceholderExample: Story = {
   args: {
-    booleanProps: {
+    boolProps: {
       labelTrue: "This value is true",
       labelFalse: "This value is false",
     },
@@ -209,7 +217,11 @@ export const JSONPlaceholderExample: Story = {
           // Sort.
           const direction = String(sort).startsWith("-") ? "DESC" : "ASC";
           const sorted = sort
-            ? sortData(data, String(sort).replace(/^-/, ""), direction)
+            ? sortAttributeDataArray(
+                data,
+                String(sort).replace(/^-/, ""),
+                direction,
+              )
             : data;
 
           // Paginate.

@@ -1,15 +1,20 @@
 import clsx from "clsx";
 import React, { useEffect, useId, useState } from "react";
 
-import { sortData } from "../../lib/array/sortData";
-import { field2Caption, isLink } from "../../lib/format/string";
-import { Badge, BadgeProps } from "../badge";
-import { Boolean, BooleanProps } from "../boolean";
-import { Button } from "../button";
-import { Outline } from "../icon";
+import {
+  AttributeData,
+  isNull,
+  sortAttributeDataArray,
+} from "../../../lib/data/attributedata";
+import { field2Caption, isLink } from "../../../lib/format/string";
+import { BadgeProps } from "../../badge";
+import { BoolProps } from "../../boolean";
+import { Button } from "../../button";
+import { Outline } from "../../icon";
+import { Toolbar } from "../../toolbar";
+import { A, AProps, H3, P, PProps } from "../../typography";
 import { Paginator, PaginatorProps } from "../paginator";
-import { Toolbar } from "../toolbar";
-import { A, AProps, H3, P } from "../typography";
+import { Value } from "../value";
 import "./datagrid.scss";
 
 /**
@@ -25,11 +30,9 @@ const DEFAULT_URL_FIELDS = [
   "get_url",
 ];
 
-export type RowData = Record<string, boolean | number | string | null>;
-
 export type DataGridProps = {
   /** The results (after pagination), only primitive types supported for now. */
-  results: RowData[];
+  results: AttributeData[];
 
   /** A `string[]` containing the keys in `results` to show data for. */
   fields?: string[];
@@ -39,7 +42,7 @@ export type DataGridProps = {
 
   /**
    *  A `string[]` containing the fields which should be used to detect the url
-   *  of a row. Fields specified in this array won't be rendered, instead: the
+   *  of a row. Fields specified in this data won't be rendered, instead: the
    *  first (non url) field is rendered as link (`A`) with `href` set to the
    *  resolved url of the row.
    */
@@ -51,11 +54,14 @@ export type DataGridProps = {
   /** Props for Badge. */
   badgeProps?: BadgeProps;
 
-  /** Props for Boolean. */
-  booleanProps?: Omit<BooleanProps, "value">;
+  /** Props for Bool. */
+  boolProps?: Omit<BoolProps, "value">;
 
   /** If set, the paginator is enabled. */
   paginatorProps?: PaginatorProps;
+
+  /** Props for P. */
+  pProps?: PProps;
 
   /** A title for the datagrid. */
   title?: string;
@@ -67,11 +73,12 @@ export type DataGridProps = {
  * DataGrid component
  * @param aProps
  * @param badgeProps
- * @param booleanProps
+ * @param boolProps
  * @param onSort
  * @param paginatorProps
  * @param results
  * @param fields
+ * @param pProps
  * @param sort
  * @param title
  * @param urlFields
@@ -81,10 +88,11 @@ export type DataGridProps = {
 export const DataGrid: React.FC<DataGridProps> = ({
   aProps,
   badgeProps,
-  booleanProps,
+  boolProps,
   results,
   fields = results?.length ? Object.keys(results[0]) : [],
   paginatorProps,
+  pProps,
   sort,
   title = "",
   urlFields = DEFAULT_URL_FIELDS,
@@ -109,7 +117,7 @@ export const DataGrid: React.FC<DataGridProps> = ({
 
   const sortedResults =
     !onSort && sortField && sortDirection
-      ? sortData(results, sortField, sortDirection)
+      ? sortAttributeDataArray(results, sortField, sortDirection)
       : results;
 
   /**
@@ -127,7 +135,7 @@ export const DataGrid: React.FC<DataGridProps> = ({
    * @param rowData
    * @param field
    */
-  const renderCell = (rowData: RowData, field: string) => {
+  const renderCell = (rowData: AttributeData, field: string) => {
     const rowIndex = sortedResults.indexOf(rowData);
     const fieldIndex = renderableFields.indexOf(field);
     const page = paginatorProps?.page;
@@ -138,7 +146,8 @@ export const DataGrid: React.FC<DataGridProps> = ({
         key={key}
         aProps={aProps}
         badgeProps={badgeProps}
-        booleanProps={booleanProps}
+        boolProps={boolProps}
+        pProps={pProps}
         rowData={rowData}
         field={field}
         fields={fields}
@@ -249,8 +258,9 @@ export const DataGrid: React.FC<DataGridProps> = ({
 export type DataGridCellProps = {
   aProps: DataGridProps["aProps"];
   badgeProps: DataGridProps["badgeProps"];
-  booleanProps: DataGridProps["booleanProps"];
-  rowData: RowData;
+  boolProps: DataGridProps["boolProps"];
+  pProps: DataGridProps["pProps"];
+  rowData: AttributeData;
   field: string;
   fields: DataGridProps["fields"];
   urlFields: DataGridProps["urlFields"];
@@ -260,7 +270,8 @@ export type DataGridCellProps = {
  * DataGrid cell
  * @param aProps
  * @param badgeProps
- * @param booleanProps
+ * @param boolProps
+ * @param pProps
  * @param field
  * @param fields
  * @param rowData
@@ -271,7 +282,8 @@ export type DataGridCellProps = {
 export const DataGridCell: React.FC<DataGridCellProps> = ({
   aProps,
   badgeProps,
-  booleanProps,
+  boolProps,
+  pProps,
   field,
   fields = [],
   rowData,
@@ -281,54 +293,11 @@ export const DataGridCell: React.FC<DataGridCellProps> = ({
   const fieldIndex = renderableFields.indexOf(field);
   const urlField = urlFields.find((f) => isLink(String(rowData[f])));
   const rowUrl = urlField ? rowData[urlField] : null;
-  const data = rowData[field];
-  const type = typeof data;
+  const value = rowData[field];
+  const type = isNull(value) ? "null" : typeof value;
 
-  // Explicit link: passed as URL without being set as urlField.
-  const isExplicitLink = isLink(String(data));
-
-  // Implicit link: first column and `rowUrl` resolved using `urlFields`.
-  const isImplicitLink = rowUrl && fieldIndex === 0;
-
-  // Cell should be a link is truthy.
-  const link = isExplicitLink
-    ? String(data)
-    : isImplicitLink
-      ? String(rowUrl)
-      : "";
-
-  // Certain types should be rendered with component.
-  let contents: React.ReactNode = data;
-  switch (type) {
-    case "boolean":
-      contents = <Boolean {...(booleanProps as BooleanProps)} value={!!data} />;
-      break;
-    case "number":
-      contents = <Badge {...(badgeProps as BadgeProps)}>{data}</Badge>;
-      break;
-    case "string":
-      if (isExplicitLink) {
-        contents = (
-          <P>
-            <A href={link} target="_blank" {...aProps}>
-              {contents}
-            </A>
-          </P>
-        );
-      } else if (isImplicitLink) {
-        contents = (
-          <P>
-            <A href={link} aria-label={link}>
-              <Outline.ArrowTopRightOnSquareIcon />
-            </A>
-            {contents}
-          </P>
-        );
-      } else {
-        contents = <P>{data}</P>;
-      }
-      break;
-  }
+  const isImplicitLink = rowUrl && fieldIndex === 0 && !isLink(String(value));
+  const link = isImplicitLink ? String(rowUrl) : "";
 
   return (
     <td
@@ -338,7 +307,18 @@ export const DataGridCell: React.FC<DataGridCellProps> = ({
       )}
       aria-description={field2Caption(field as string)}
     >
-      {contents}
+      {link && (
+        <A href={link} aria-label={link}>
+          <Outline.ArrowTopRightOnSquareIcon />
+        </A>
+      )}
+      <Value
+        aProps={aProps}
+        badgeProps={badgeProps}
+        boolProps={boolProps as BoolProps}
+        pProps={pProps}
+        value={value}
+      />
     </td>
   );
 };

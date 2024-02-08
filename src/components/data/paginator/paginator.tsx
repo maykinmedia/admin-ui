@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 
-import { formatMessage } from "../../lib/i18n/formatMessage";
-import { Button } from "../button";
-import { Input, Option, Select, SelectProps } from "../form";
-import { Outline } from "../icon";
-import { P } from "../typography";
+import { formatMessage } from "../../../lib/i18n/formatMessage";
+import { Button } from "../../button";
+import { Input, Option, Select, SelectProps } from "../../form";
+import { Outline } from "../../icon";
+import { P } from "../../typography";
 import "./paginator.scss";
 
 export type PaginatorProps = React.HTMLAttributes<HTMLElement> & {

@@ -2,9 +2,9 @@ import clsx from "clsx";
 import React from "react";
 
 import { Outline } from "../../components/icon";
-import "./boolean.scss";
+import "./bool.scss";
 
-export type BooleanProps = {
+export type BoolProps = {
   /** The accessible label when value is true. */
   labelTrue: string;
 
@@ -19,13 +19,13 @@ export type BooleanProps = {
 };
 
 /**
- * Boolean component, shows a checkmark if `value` is `true`. If `value` is
+ * Bool component, shows a checkmark if `value` is `true`. If `value` is
  * `false` the icon is hidden, unless `explicit` is `true`.
  * @param children
  * @param props
  * @constructor
  */
-export const Boolean: React.FC<BooleanProps> = ({
+export const Bool: React.FC<BoolProps> = ({
   explicit = false,
   value,
   labelTrue,
@@ -33,8 +33,8 @@ export const Boolean: React.FC<BooleanProps> = ({
   ...props
 }) => (
   <span
-    className={clsx("mykn-boolean", `mykn-boolean--value-${value}`, {
-      "mykn-boolean--explicit": explicit,
+    className={clsx("mykn-bool", `mykn-bool--value-${value}`, {
+      "mykn-bool--explicit": explicit,
     })}
     {...props}
     title={value ? labelTrue : labelFalse}

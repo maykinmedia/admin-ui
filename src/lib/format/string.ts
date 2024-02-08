@@ -13,17 +13,41 @@ export const isLink = (string: string): boolean =>
  * @param field
  */
 export const field2Caption = (field: string): string =>
-  String(field).replaceAll("_", " ").toUpperCase();
+  unHyphen(field).toUpperCase();
+
+/**
+ * Converts "field_name" to "Field name".
+ * @param field
+ */
+export const field2Title = (field: string): string => ucFirst(unHyphen(field));
 
 /**
  * Converts "Some object name" to "some-object-name".
- * @param input
+ * @param string
  */
-export const slugify = (input: string): string => {
-  return input
+export const slugify = (string: string): string => {
+  return string
     .toLowerCase() // Convert to lowercase
     .replace(/\s+/g, "-") // Replace spaces with hyphens
     .replace(/[^\w-]+/g, "") // Remove non-word characters (excluding hyphens)
     .replace(/--+/g, "-") // Replace multiple hyphens with a single hyphen
     .replace(/^-+|-+$/g, ""); // Remove leading and trailing hyphens
 };
+
+/**
+ * Converts "some-hyphenated-or_underscored_string" to "some hyphenated or underscored string".
+ * @param string
+ */
+export const unHyphen = (string: string): string => {
+  return string
+    .replaceAll("-", " ") // Replace hyphens with spaces
+    .replaceAll("_", " ") // Replace underscores with spaces
+    .replace(/  +/g, " "); // Replace multiple spaces with a single space
+};
+
+/**
+ * Converts "some string" to "Some string"
+ * @param string
+ */
+export const ucFirst = (string: string): string =>
+  string.charAt(0).toUpperCase() + string.slice(1);
