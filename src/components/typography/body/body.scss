@@ -1,13 +1,20 @@
+@use "../../../settings/constants";
+
 .mykn-body {
+  padding: var(--spacing-v-xl) var(--spacing-h-xl);
+
   .mykn-h1,
   .mykn-h2,
   .mykn-h3,
-  .mykn-hr,
   .mykn-p,
   .mykn-ol,
   .mykn-ul {
     &:not(:last-child) {
-      margin-bottom: 16px;
+      margin-bottom: var(--spacing-v-l);
     }
+  }
+
+  @media screen and (min-width: constants.$breakpoint-desktop) {
+    padding: var(--spacing-v-xxxl) var(--spacing-h-xxxl);
   }
 }

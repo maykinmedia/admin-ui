@@ -1,7 +1,9 @@
-@use "../p/p";
-
 .mykn-ul {
-  @extend .mykn-p;
+  color: var(--typography-color-body);
+  font-family: var(--typography-font-family-body);
+  font-size: var(--typography-font-size-body-s);
+  font-weight: var(--typography-font-weight-normal);
+  line-height: var(--typography-line-height-body-s);
   list-style-position: inside;
   padding-inline-start: 0;
 

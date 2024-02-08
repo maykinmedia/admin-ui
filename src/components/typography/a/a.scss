@@ -1,7 +1,6 @@
-@use "../p/p";
-
 .mykn-a {
-  @extend .mykn-p;
+  font-family: inherit;
+  line-height: var(--typography-line-height-body-s);
   align-items: center;
   color: var(--theme-color-primary-800);
   display: inline-flex;
@@ -24,7 +23,7 @@
   }
 
   &#{&}--muted {
-    @extend .mykn-p--muted;
+    color: var(--typography-color-muted);
   }
 
   &[aria-current] {

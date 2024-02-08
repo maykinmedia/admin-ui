@@ -7,7 +7,8 @@ export type BodyProps = React.PropsWithChildren<{
 }>;
 
 /**
- * Provides styling (e.g. margins) for a group of typographic components.
+ * Provides styling (e.g. margins) for a group of (typographic) components.
+ * Can be used in various components to provide padding.
  * @param children
  * @param props
  * @constructor

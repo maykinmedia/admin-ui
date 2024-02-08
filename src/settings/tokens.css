@@ -66,7 +66,7 @@
   --spacing-v-xxl: 32px;
 
   --spacing-h-xxxl: 40px;
-  --spacing-v-xxxl: 40px;
+  --spacing-v-xxxl: 20px;
 
   /* FORM */
   --form-color-border: var(--theme-shade-300);
@@ -78,6 +78,9 @@
   --typography-color-body: var(--theme-shade-700);
   --typography-color-border: var(--theme-shade-300);
   --typography-color-muted: var(--theme-shade-600);
+
+  --typography-font-family-h: Inter, sans-serif;
+  --typography-font-family-body: Inter, sans-serif;
 
   --typography-font-size-h1: 24px;
   --typography-font-size-h2: 20px;

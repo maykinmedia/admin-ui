@@ -2,7 +2,6 @@
   background-color: var(--typography-color-background);
   border-radius: var(--border-radius-l);
   box-sizing: border-box;
-  padding: var(--spacing-v-xxl) var(--spacing-h-xxl);
 
   & + & {
     margin-top: var(--spacing-v-m);
