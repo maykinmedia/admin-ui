@@ -11,6 +11,10 @@
     gap: var(--spacing-h-m);
   }
 
+  &__section .mykn-p:not(:last-child) {
+    margin-block-end: 0;
+  }
+
   @media screen and (max-width: constants.$breakpoint-desktop - 1px) {
     &__section--form {
       display: none;
