@@ -56,8 +56,7 @@
 
   &__foot &__cell {
     border-bottom: none;
-    padding-top: 0;
-    padding-bottom: 0;
+    padding: 0;
   }
 
   @media screen and (max-width: constants.$breakpoint-desktop - 1px) {
@@ -142,8 +141,6 @@
     }
 
     &__foot &__cell {
-      padding: 0;
-
       &:before {
         display: none;
       }
