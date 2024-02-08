@@ -4,6 +4,6 @@
   box-sizing: border-box;
 
   & + & {
-    margin-top: var(--spacing-v-m);
+    margin-block-start: var(--spacing-v-m);
   }
 }
