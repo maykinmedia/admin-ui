@@ -3,4 +3,5 @@ export * from "./body";
 export * from "./h1";
 export * from "./h2";
 export * from "./h3";
+export * from "./hr";
 export * from "./p";

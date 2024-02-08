@@ -1,5 +1,9 @@
 .mykn-hr {
   border: 0;
   border-bottom: 1px solid var(--typography-color-border);
-  margin: 0;
+  margin: var(--spacing-v-l) 0;
+
+  &--size-xxl {
+    margin: var(--spacing-v-xxl) 0;
+  }
 }
