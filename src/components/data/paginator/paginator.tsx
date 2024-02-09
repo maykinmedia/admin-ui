@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 
-import { formatMessage } from "../../../lib/i18n/formatMessage";
+import { ucFirst } from "../../../lib/format/string";
+import { formatMessage } from "../../../lib/i18n/formatmessage";
+import { useIntl } from "../../../lib/i18n/useIntl";
 import { Button } from "../../button";
 import { Input, Option, Select, SelectProps } from "../../form";
 import { Outline } from "../../icon";
@@ -16,30 +18,6 @@ export type PaginatorProps = React.HTMLAttributes<HTMLElement> & {
 
   /** The page size (items per page), required even if `pageSizeOptions` is not set. */
   pageSize: number;
-
-  /** The current page range (accessible) label. */
-  labelCurrentPageRange: string;
-
-  /** The go to page (accessible) label. */
-  labelGoToPage: string;
-
-  /** The page size (accessible) label. */
-  labelPageSize: string;
-
-  /** The pagination (accessible) label. */
-  labelPagination: string;
-
-  /** The go to previous page (accessible) label. */
-  labelPrevious: string;
-
-  /** The go to next page (accessible) label. */
-  labelNext: string;
-
-  /**
-   * The loading (accessible) label,
-   * @see onPageChange
-   */
-  labelLoading?: string;
 
   /** Indicates whether the spinner should be shown (requires `labelLoading`). */
   loading?: boolean;
@@ -59,6 +37,30 @@ export type PaginatorProps = React.HTMLAttributes<HTMLElement> & {
 
   /** Gets called when the selected page size is changed. */
   onPageSizeChange?: (pageSize: number) => Promise<unknown> | void;
+
+  /** The current page range (accessible) label. */
+  labelCurrentPageRange?: string;
+
+  /** The go to page (accessible) label. */
+  labelGoToPage?: string;
+
+  /**
+   * The loading (accessible) label,
+   * @see onPageChange
+   */
+  labelLoading?: string;
+
+  /** The page size (accessible) label. */
+  labelPageSize?: string;
+
+  /** The pagination (accessible) label. */
+  labelPagination?: string;
+
+  /** The go to previous page (accessible) label. */
+  labelPrevious?: string;
+
+  /** The go to next page (accessible) label. */
+  labelNext?: string;
 };
 
 /**
@@ -85,13 +87,13 @@ export type PaginatorProps = React.HTMLAttributes<HTMLElement> & {
  */
 export const Paginator: React.FC<PaginatorProps> = ({
   count,
-  labelCurrentPageRange = "{pageStart} - {pageEnd} of {pageCount}",
-  labelGoToPage = "Go to",
-  labelPageSize = "Show rows",
-  labelPagination = "Pagination",
-  labelPrevious = "Go to previous page",
-  labelNext = "Go to next page",
-  labelLoading,
+  labelCurrentPageRange = "",
+  labelGoToPage = "",
+  labelPageSize = "",
+  labelPagination = "",
+  labelPrevious = "",
+  labelNext = "",
+  labelLoading = "",
   loading = undefined,
   page = 1,
   pageSize,
@@ -119,6 +121,84 @@ export const Paginator: React.FC<PaginatorProps> = ({
     pageEnd,
     pageSize: pageSizeState,
   };
+
+  const intl = useIntl();
+
+  const _labelCurrentPageRange = labelCurrentPageRange
+    ? formatMessage(labelCurrentPageRange, context)
+    : intl.formatMessage(
+        {
+          description:
+            "components.Paginator: The current page range (accessible) label",
+          defaultMessage:
+            "resultaat {pageStart} t/m {pageEnd} van {pageCount} pagina's",
+        },
+        context,
+      );
+
+  const _labelGoToPage = labelGoToPage
+    ? formatMessage(labelGoToPage, context)
+    : intl.formatMessage(
+        {
+          description:
+            "components.Paginator: The go to page (accessible) label",
+          defaultMessage: "naar pagina",
+        },
+        context,
+      );
+
+  const _labelPageSize = labelPageSize
+    ? formatMessage(labelPageSize, context)
+    : intl.formatMessage(
+        {
+          description: "components.Paginator: The page size (accessible) label",
+          defaultMessage: "aantal resultaten",
+        },
+        context,
+      );
+
+  const _labelPagination = labelPagination
+    ? formatMessage(labelPagination, context)
+    : intl.formatMessage(
+        {
+          description:
+            "components.Paginator: The pagination (accessible) label",
+          defaultMessage: "paginering",
+        },
+        context,
+      );
+
+  const _labelPrevious = labelPrevious
+    ? formatMessage(labelPrevious, context)
+    : intl.formatMessage(
+        {
+          description:
+            "components.Paginator: The go to previous page (accessible) label",
+          defaultMessage: "vorige",
+        },
+        context,
+      );
+
+  const _labelNext = labelNext
+    ? formatMessage(labelNext, context)
+    : intl.formatMessage(
+        {
+          description:
+            "components.Paginator: The go to next page (accessible) label",
+          defaultMessage: "volgende",
+        },
+        context,
+      );
+
+  const _labelLoading = labelLoading
+    ? formatMessage(labelLoading, context)
+    : intl.formatMessage(
+        {
+          description: "components.Paginator: The loading (accessible) label",
+          defaultMessage: "bezig met laden...",
+        },
+        context,
+      );
 
   useEffect(() => setPageState(page), [page]);
   useEffect(() => setPageSizeState(pageSize), [pageSize]);
@@ -192,22 +272,22 @@ export const Paginator: React.FC<PaginatorProps> = ({
   return (
     <nav
       className="mykn-paginator"
-      aria-label={formatMessage(labelPagination, context)}
+      aria-label={ucFirst(_labelPagination)}
       {...props}
     >
       <div className="mykn-paginator__section mykn-paginator__section--form">
-        {labelLoading && (
+        {_labelLoading && (
           <Outline.ArrowPathIcon
             spin={true}
             aria-hidden={!isLoading}
-            aria-label={isLoading ? labelLoading : ""}
+            aria-label={isLoading ? ucFirst(_labelLoading) : ""}
             hidden={!isLoading}
           />
         )}
 
         {pageSizeOptions.length > 0 && (
           <>
-            <P>{formatMessage(labelPageSize, context)}</P>
+            <P>{ucFirst(_labelPageSize)}</P>
             <Select
               options={pageSizeOptions}
               required={true}
@@ -219,7 +299,7 @@ export const Paginator: React.FC<PaginatorProps> = ({
           </>
         )}
 
-        <P>{formatMessage(labelGoToPage, context)}</P>
+        <P>{ucFirst(_labelGoToPage)}</P>
         <Input
           min={1}
           max={pageCount}
@@ -232,11 +312,11 @@ export const Paginator: React.FC<PaginatorProps> = ({
       </div>
 
       <div className="mykn-paginator__section mykn-paginator__section--navigate">
-        <P>{formatMessage(labelCurrentPageRange, context)}</P>
+        <P>{ucFirst(_labelCurrentPageRange)}</P>
         <Button
           square
           variant="outline"
-          aria-label={labelPrevious}
+          aria-label={ucFirst(_labelPrevious)}
           onClick={handlePrevious}
         >
           <Outline.ChevronLeftIcon />
@@ -244,7 +324,7 @@ export const Paginator: React.FC<PaginatorProps> = ({
         <Button
           square
           variant="outline"
-          aria-label={labelNext}
+          aria-label={ucFirst(_labelNext)}
           onClick={handleNext}
         >
           <Outline.ChevronRightIcon />

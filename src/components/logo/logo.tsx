@@ -1,13 +1,15 @@
 import React from "react";
 
+import { formatMessage } from "../../lib/i18n/formatmessage";
+import { useIntl } from "../../lib/i18n/useIntl";
 import "./logo.scss";
 
 export type LogoProps = {
-  /** The aria-label to set on the SVG element. */
-  label: string;
-
   /** If set, provide a link. */
   href?: string;
+
+  /** The aria-label to set on the SVG element. */
+  label?: string;
 
   /** An aria-label describing the link action. */
   hrefLabel?: string;
@@ -28,20 +30,45 @@ export const Logo: React.FC<LogoProps> = ({
   hrefLabel,
   ...props
 }) => {
+  const context = {
+    href: href || "",
+  };
+
+  const intl = useIntl();
+  const _hrefLabel = hrefLabel
+    ? formatMessage(hrefLabel, context)
+    : intl.formatMessage(
+        {
+          description:
+            "components.Logo: An aria-label describing the link action",
+          defaultMessage: 'go to "{href}"',
+        },
+        context,
+      );
+  const _label = label
+    ? formatMessage(label, context)
+    : intl.formatMessage(
+        {
+          description:
+            "components.Logo: The aria-label to set on the SVG element",
+          defaultMessage: "Maykin logo",
+        },
+        context,
+      );
   const Tag = href ? "a" : "span";
 
   return (
     <Tag
       className="mykn-logo"
       href={href}
-      aria-label={href && hrefLabel}
+      aria-label={href && _hrefLabel}
       {...props}
     >
       <svg
         className="mykn-logo__image"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 121.8 26.41"
-        aria-label={label}
+        aria-label={_label}
       >
         <path
           className="mykn-logo__handle mykn-logo__handle--left"

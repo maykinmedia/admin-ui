@@ -1,0 +1,106 @@
+{
+  "1og5yd": [
+    {
+      "type": 0,
+      "value": "number of results"
+    }
+  ],
+  "ABD3e7": [
+    {
+      "type": 0,
+      "value": "no"
+    }
+  ],
+  "CtcyS2": [
+    {
+      "type": 0,
+      "value": "previous"
+    }
+  ],
+  "FZLh9+": [
+    {
+      "type": 0,
+      "value": "go to page"
+    }
+  ],
+  "HMxYa4": [
+    {
+      "type": 0,
+      "value": "clear value"
+    }
+  ],
+  "Kma3/t": [
+    {
+      "type": 0,
+      "value": "pagination"
+    }
+  ],
+  "UQBNHO": [
+    {
+      "type": 0,
+      "value": "loading..."
+    }
+  ],
+  "YdBIB+": [
+    {
+      "type": 0,
+      "value": "result "
+    },
+    {
+      "type": 1,
+      "value": "pageStart"
+    },
+    {
+      "type": 0,
+      "value": " to "
+    },
+    {
+      "type": 1,
+      "value": "pageEnd"
+    },
+    {
+      "type": 0,
+      "value": " of "
+    },
+    {
+      "type": 1,
+      "value": "pageCount"
+    },
+    {
+      "type": 0,
+      "value": " pages"
+    }
+  ],
+  "aRdyNi": [
+    {
+      "type": 0,
+      "value": "next"
+    }
+  ],
+  "bkhUl1": [
+    {
+      "type": 0,
+      "value": "go to \""
+    },
+    {
+      "type": 1,
+      "value": "href"
+    },
+    {
+      "type": 0,
+      "value": "\""
+    }
+  ],
+  "dZ6TJw": [
+    {
+      "type": 0,
+      "value": "Maykin logo"
+    }
+  ],
+  "jsvU71": [
+    {
+      "type": 0,
+      "value": "yes"
+    }
+  ]
+}

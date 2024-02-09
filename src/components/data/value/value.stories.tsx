@@ -13,10 +13,6 @@ type Story = StoryObj<typeof meta>;
 export const Boolean: Story = {
   args: {
     value: true,
-    boolProps: {
-      labelTrue: "This value is true",
-      labelFalse: "This value is false",
-    },
   },
 };
 

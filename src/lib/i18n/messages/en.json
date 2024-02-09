@@ -1,0 +1,62 @@
+{
+  "1og5yd": {
+    "defaultMessage": "number of results",
+    "description": "components.Paginator: The page size (accessible) label",
+    "originalDefault": "aantal resultaten"
+  },
+  "ABD3e7": {
+    "defaultMessage": "no",
+    "description": "components.Bool: The accessible label when value is falsy",
+    "originalDefault": "nee"
+  },
+  "CtcyS2": {
+    "defaultMessage": "previous",
+    "description": "components.Paginator: The go to previous page (accessible) label",
+    "originalDefault": "vorige"
+  },
+  "FZLh9+": {
+    "defaultMessage": "go to page",
+    "description": "components.Paginator: The go to page (accessible) label",
+    "originalDefault": "naar pagina"
+  },
+  "HMxYa4": {
+    "defaultMessage": "clear value",
+    "description": "components.Select: The clear value (accessible) label",
+    "originalDefault": "waarde wissen"
+  },
+  "Kma3/t": {
+    "defaultMessage": "pagination",
+    "description": "components.Paginator: The pagination (accessible) label",
+    "originalDefault": "paginering"
+  },
+  "UQBNHO": {
+    "defaultMessage": "loading...",
+    "description": "components.Paginator: The loading (accessible) label",
+    "originalDefault": "bezig met laden..."
+  },
+  "YdBIB+": {
+    "defaultMessage": "result {pageStart} to {pageEnd} of {pageCount} pages",
+    "description": "components.Paginator: The current page range (accessible) label",
+    "originalDefault": "resultaat {pageStart} t/m {pageEnd} van {pageCount} pagina's"
+  },
+  "aRdyNi": {
+    "defaultMessage": "next",
+    "description": "components.Paginator: The go to next page (accessible) label",
+    "originalDefault": "volgende"
+  },
+  "bkhUl1": {
+    "defaultMessage": "go to \"{href}\"",
+    "description": "components.Logo: An aria-label describing the link action",
+    "originalDefault": "go to \"{href}\""
+  },
+  "dZ6TJw": {
+    "defaultMessage": "Maykin logo",
+    "description": "components.Logo: The aria-label to set on the SVG element",
+    "originalDefault": "Maykin logo"
+  },
+  "jsvU71": {
+    "defaultMessage": "yes",
+    "description": "components.Bool: The accessible label when value is truthy",
+    "originalDefault": "ja"
+  }
+}

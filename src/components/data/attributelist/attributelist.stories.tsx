@@ -23,6 +23,9 @@ export const AttributeListComponent: Story = {
       Zaaktype: "https://www.example.com",
       Versie: 2,
       Opmerkingen: null,
+      Actief: false,
+      Toekomstig: false,
+      Concept: true,
     },
   },
 };
@@ -31,27 +34,6 @@ export const AttributeListOnMobile: Story = {
   ...AttributeListComponent,
   parameters: {
     viewport: { defaultViewport: "mobile1" },
-  },
-};
-
-export const WithBool: Story = {
-  ...AttributeListComponent,
-  args: {
-    ...AttributeListComponent.args,
-    data: {
-      url: "https://www.example.com",
-      Omschrijving: "Afvalpas vervangen",
-      Zaaktype: "https://www.example.com",
-      Versie: 2,
-      Opmerkingen: null,
-      Actief: false,
-      Toekomstig: false,
-      Concept: true,
-    },
-    boolProps: {
-      labelTrue: "This value is true",
-      labelFalse: "This value is false",
-    },
   },
 };
 
@@ -68,7 +50,7 @@ export const SelectedFieldOnly: Story = {
 };
 
 export const MultipleAttributeLists: Story = {
-  ...WithBool,
+  ...AttributeListComponent,
   render: ({ ...args }) => (
     <Body>
       <Grid>

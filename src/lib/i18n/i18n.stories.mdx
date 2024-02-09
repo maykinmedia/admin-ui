@@ -1,0 +1,75 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Manual/Internationalization"/>
+
+Internationalization (i18n)
+===
+
+
+## Providing translations
+
+This UI library supports the following for scenarios:
+
+- An application with extensive Internationalization support
+  (using [react-intl](https://formatjs.io/docs/react-intl/).
+
+- An application with basic Internationalization using translates labels
+  passed as props.
+
+- No internalisation (default messages only).
+
+**Extensive Internationalization support (using [react-intl](https://formatjs.io/docs/react-intl/)**
+
+If react-intl is installed and `IntlContext` is provided by `<IntlProvider>`, this library will attempt to use it to
+obtain messages from it given that the messages are not explicitly provided using props (which takes precedence).
+
+The (compiled) messages are made available as JSON file in the dist/messages folder. The messages should be provided to
+`<IntlProvider>`.
+
+
+**Internationalization using translates labels passed as props**
+
+For basic use cased, translations can be passed using props. Please refer to the specific components for labels
+available for translations.
+
+
+**No internalisation (default messages only)**
+
+If react-intl is not installed or using `IntlContext` fails, a fallback implementation is used for providing translations.
+
+
+## Managing translations
+
+**Providing translatable strings (during development)**
+
+Components should implement a `label<key>` prop for each translations that should take precedence if it's passed. If
+it's left empty, a translation should be obtained using the `src/lib/i18n/useIntl.tsx` `useIntl`. This hook will return
+the correct "intl" implementation based on whether react-intl is available.
+
+`useIntl` take a locale as optional argument, if it's not set, an attempt is made for the body's `lang` attribute to be
+ used as locale. If no locale can be resolved "nl" is the default  value.
+
+ For pragmatic reasons: translation labels should be written in Dutch, the description should identify the component
+ and description of the prop.
+
+```tsx
+const intl = useIntl("en");  // locale can be left empty.
+
+
+// labelTrue is a prop.
+// _labelTrue is the rendered string.
+const _labelTrue =
+  labelTrue ||
+  intl.formatMessage({
+    description: "components.Bool: The accessible label when value is truthy",
+    defaultMessage: "ja",
+  });
+```
+
+**Extracting and compiling messages (before build)**
+
+Messages can be extracted by running `npm run makemessages` after which they end up in src/lib/i18n/messages, they can
+be compiled after translation using `npm run compilemessages`.
+
+Copying the messages to the dist folder should be handled as part of the `npm run build` command. This allows
+applications to consume the compiled translations.
