@@ -1,6 +1,6 @@
 /**
  * Replaces placeholders in the given template with corresponding values from the context.
- * TODO: Decide on future implementation.
+ * This is a fallback implementation where react-intl is not available.
  *
  * @param template - The input template containing placeholders in the format {key}.
  * @param context - An object with key-value pairs to replace the placeholders in the template.
@@ -14,9 +14,8 @@
  */
 export const formatMessage = (
   template: string,
-  context: Record<string, number | string>,
-): string => {
-  return Object.entries(context).reduce((acc, [key, value]) => {
+  context: Record<string, boolean | number | string>,
+): string =>
+  Object.entries(context).reduce((acc, [key, value]) => {
     return acc.replace(`{${key}}`, String(value));
   }, template);
-};

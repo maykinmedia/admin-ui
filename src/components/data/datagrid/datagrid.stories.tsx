@@ -26,10 +26,6 @@ type Story = StoryObj<typeof meta>;
 
 export const DataGridComponent = {
   args: {
-    boolProps: {
-      labelTrue: "This value is true",
-      labelFalse: "This value is false",
-    },
     paginatorProps: {
       count: 100,
       page: 1,
@@ -41,13 +37,6 @@ export const DataGridComponent = {
         { label: 40 },
         { label: 50 },
       ],
-      labelLoading: "Loading",
-      labelPagination: "pagination",
-      labelCurrentPageRange: "{pageStart} - {pageEnd} of {pageCount}",
-      labelGoToPage: "Go to",
-      labelPageSize: "Show rows",
-      labelPrevious: "Go to previous page",
-      labelNext: "Go to next page",
     },
     results: [
       {
@@ -164,10 +153,6 @@ export const SortedDataGrid: Story = {
 
 export const JSONPlaceholderExample: Story = {
   args: {
-    boolProps: {
-      labelTrue: "This value is true",
-      labelFalse: "This value is false",
-    },
     paginatorProps: {
       count: 100,
       page: 1,
@@ -179,13 +164,6 @@ export const JSONPlaceholderExample: Story = {
         { label: 40 },
         { label: 50 },
       ],
-      labelLoading: "Loading",
-      labelPagination: "pagination",
-      labelCurrentPageRange: "{pageStart} - {pageEnd} of {pageCount}",
-      labelGoToPage: "Go to",
-      labelPageSize: "Show rows",
-      labelPrevious: "Go to previous page",
-      labelNext: "Go to next page",
     },
     results: [],
     sort: true,

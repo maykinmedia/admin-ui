@@ -12,23 +12,11 @@ import { Bool, BoolProps } from "../../boolean";
 import { A, AProps, P, PProps } from "../../typography";
 
 export type ValueProps = {
+  value: Attribute;
   aProps?: AProps;
+  boolProps?: Omit<BoolProps, "value">;
   badgeProps?: BadgeProps;
   pProps?: PProps;
-} & BoolPropsRequiredIfValueBool;
-
-type BoolPropsRequiredIfValueBool = BoolValueProps | NotBoolValueProps;
-
-// `value` can possibly be `boolean`, mandatory `boolProps`.
-type BoolValueProps = {
-  value: Attribute;
-  boolProps: Omit<BoolProps, "value">;
-};
-
-// `value` can not be `boolean`, optional `boolProps`.
-type NotBoolValueProps = {
-  value: Exclude<Attribute, boolean>;
-  boolProps?: Omit<BoolProps, "value">;
 };
 
 /**
@@ -50,7 +38,7 @@ export const Value: React.FC<ValueProps> = ({
 }) => {
   if (isBool(value)) {
     // BoolProps must be provided if value can be bool.
-    return <Bool {...(boolProps as BoolProps)} value={value} />;
+    return <Bool {...boolProps} value={value} />;
   }
 
   if (isNumber(value)) {

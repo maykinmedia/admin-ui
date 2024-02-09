@@ -17,6 +17,9 @@ import {
 import clsx from "clsx";
 import React, { useEffect } from "react";
 
+import { ucFirst } from "../../../lib/format/string";
+import { formatMessage } from "../../../lib/i18n/formatmessage";
+import { useIntl } from "../../../lib/i18n/useIntl";
 import { Outline, Solid } from "../../icon";
 import { eventFactory } from "../eventFactory";
 import "./select.scss";
@@ -24,9 +27,6 @@ import "./select.scss";
 export type SelectProps = React.HTMLAttributes<HTMLDivElement> & {
   /** Can be used to generate `SelectOption` components from an array of objects. */
   options: Option[];
-
-  /** The clear value (accessible) label. */
-  labelClear?: string;
 
   /** Input name. */
   name?: string;
@@ -54,17 +54,10 @@ export type SelectProps = React.HTMLAttributes<HTMLDivElement> & {
 
   /** The variant (style) of the input. */
   variant?: "normal" | "transparent";
-} & SelectRequiredConditional;
 
-type SelectRequiredConditional =
-  | {
-      labelClear: string;
-      required?: false;
-    }
-  | {
-      labelClear?: string;
-      required: true;
-    };
+  /** The clear value (accessible) label. */
+  labelClear?: string;
+};
 
 /**
  * A single (select) option, can be passed to `Select  as array.
@@ -90,7 +83,7 @@ export const Select: React.FC<SelectProps> = ({
   name,
   options = [],
   onChange,
-  labelClear = "Clear value",
+  labelClear = "",
   placeholder = "",
   required = false,
   size,
@@ -98,6 +91,21 @@ export const Select: React.FC<SelectProps> = ({
   variant = "normal",
   ...props
 }) => {
+  const intl = useIntl();
+  const i18nContext = {
+    name: name || "",
+    placeholder: placeholder,
+    required,
+    value: (Array.isArray(value) ? value.join(", ") : value) as string,
+    variant,
+  };
+  const _labelClear = labelClear
+    ? formatMessage(labelClear, i18nContext)
+    : intl.formatMessage({
+        description: "components.Select: The clear value (accessible) label",
+        defaultMessage: "waarde wissen",
+      });
+
   const fakeInputRef = React.useRef<HTMLSelectElement>(null);
   const [isOpen, setIsOpen] = React.useState(false);
   const [activeIndex, setActiveIndex] = React.useState<number | null>(null);
@@ -213,7 +221,7 @@ export const Select: React.FC<SelectProps> = ({
           <button
             className="mykn-select__clear"
             type="button"
-            aria-label={labelClear}
+            aria-label={ucFirst(_labelClear)}
             onClick={(e) => handleChange(e, null)}
           >
             <Outline.XCircleIcon />

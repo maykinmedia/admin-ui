@@ -1,0 +1,106 @@
+{
+  "1og5yd": [
+    {
+      "type": 0,
+      "value": "aantal resultaten"
+    }
+  ],
+  "ABD3e7": [
+    {
+      "type": 0,
+      "value": "nee"
+    }
+  ],
+  "CtcyS2": [
+    {
+      "type": 0,
+      "value": "vorige"
+    }
+  ],
+  "FZLh9+": [
+    {
+      "type": 0,
+      "value": "naar pagina"
+    }
+  ],
+  "HMxYa4": [
+    {
+      "type": 0,
+      "value": "waarde wissen"
+    }
+  ],
+  "Kma3/t": [
+    {
+      "type": 0,
+      "value": "paginering"
+    }
+  ],
+  "UQBNHO": [
+    {
+      "type": 0,
+      "value": "bezig met laden..."
+    }
+  ],
+  "YdBIB+": [
+    {
+      "type": 0,
+      "value": "resultaat "
+    },
+    {
+      "type": 1,
+      "value": "pageStart"
+    },
+    {
+      "type": 0,
+      "value": " t/m "
+    },
+    {
+      "type": 1,
+      "value": "pageEnd"
+    },
+    {
+      "type": 0,
+      "value": " van "
+    },
+    {
+      "type": 1,
+      "value": "pageCount"
+    },
+    {
+      "type": 0,
+      "value": " pagina's"
+    }
+  ],
+  "aRdyNi": [
+    {
+      "type": 0,
+      "value": "volgende"
+    }
+  ],
+  "bkhUl1": [
+    {
+      "type": 0,
+      "value": "go to \""
+    },
+    {
+      "type": 1,
+      "value": "href"
+    },
+    {
+      "type": 0,
+      "value": "\""
+    }
+  ],
+  "dZ6TJw": [
+    {
+      "type": 0,
+      "value": "Maykin logo"
+    }
+  ],
+  "jsvU71": [
+    {
+      "type": 0,
+      "value": "ja"
+    }
+  ]
+}

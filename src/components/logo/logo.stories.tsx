@@ -14,17 +14,11 @@ type Story = StoryObj<typeof meta>;
 export const LogoComponent: Story = {
   args: {
     href: "/?path=/story/brand-logo--logo-component",
-    hrefLabel: "Navigate to story page",
-    label: "Maykin logo",
   },
 };
 
 export const LogoAnimatesOnHoverAndClick: Story = {
-  args: {
-    href: "/?path=/story/brand-logo--logo-component",
-    hrefLabel: "Navigate to story page",
-    label: "Maykin logo",
-  },
+  ...LogoComponent,
   play: async () => {
     await userEvent.tab({ delay: 10 });
   },
