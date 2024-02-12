@@ -82,32 +82,32 @@ export const Logo: React.FC<LogoProps> = ({
         />
         <path
           className="mykn-logo__text"
-          fill="#341a90"
+          fill="var(--page-color-logo, #341a90)"
           d="M23.56,13.81l4.88-9.55h3.37V21.78h-3.4V10.92L24.6,18.64H22.44L18.68,11V21.78H15.31V4.26h3.32Z"
         />
         <path
           className="mykn-logo__text"
-          fill="#341a90"
+          fill="var(--page-color-logo, #341a90)"
           d="M34.45,21.78,40.54,4.26H44L50,21.78H46.26l-1.07-3.32H39.33l-1.07,3.32Zm5.82-6.32h4l-2-6.17Z"
         />
         <path
           className="mykn-logo__text"
-          fill="#341a90"
+          fill="var(--page-color-logo, #341a90)"
           d="M53.9,4.26,57,10.79l3.15-6.53h4.09L58.8,14.62v7.16H55.25V14.62L49.79,4.26Z"
         />
         <path
           className="mykn-logo__text"
-          fill="#341a90"
+          fill="var(--page-color-logo, #341a90)"
           d="M77.28,21.78l-4.47-7.39-2.08,2.75v4.64H67.18V4.26h3.55v7.57l5.54-7.57h4.21l-5.35,7.09,6.4,10.43Z"
         />
         <path
           className="mykn-logo__text"
-          fill="#341a90"
+          fill="var(--page-color-logo, #341a90)"
           d="M88.38,21.78H84.82V4.26h3.56Z"
         />
         <path
           className="mykn-logo__text"
-          fill="#341a90"
+          fill="var(--page-color-logo, #341a90)"
           d="M106.28,4.26V21.78h-3L96.48,10.94V21.78H93.1V4.26H96l6.86,11v-11Z"
         />
       </svg>

@@ -1,0 +1,191 @@
+:root {
+  /* ANIMATION */
+  --animation-timing-function: ease-in-out;
+  --animation-duration-fast: 0.1s;
+  --animation-duration-medium: 0.3s;
+  --animation-duration-slow: 1s;
+
+  /* SPACING */
+  --border-radius-l: 12px;
+  --border-radius-m: 6px;
+  --border-radius-s: 4px;
+
+  --gutter-h-desktop: 64px;
+  --gutter-v-desktop: 24px;
+
+  --gutter-h-mobile: 12px;
+  --gutter-v-mobile: 12px;
+
+  --spacing-h-xs: 4px;
+  --spacing-v-xs: 4px;
+
+  --spacing-h-s: 12px;
+  --spacing-v-s: 6px;
+
+  --spacing-h-m: 8px;
+  --spacing-v-m: 8px;
+
+  --spacing-h-l: 16px;
+  --spacing-v-l: 16px;
+
+  --spacing-h-xl: 20px;
+  --spacing-v-xl: 50px;
+
+  --spacing-h-xxl: 32px;
+  --spacing-v-xxl: 32px;
+
+  --spacing-h-xxxl: 40px;
+
+  /* BUTTON */
+
+  /* Background color */
+  --button-color-background-primary: var(--page-color-primary);
+  --button-color-background-primary-hover: var(--page-color-primary-alt);
+  --button-color-background-primary-active: var(
+    --button-color-background-primary-hover
+  );
+
+  --button-color-background-outline: transparent;
+  --button-color-background-outline-hover: var(--theme-color-primary-100);
+  --button-color-background-outline-active: var(
+    --button-color-background-outline-hover
+  );
+
+  --button-color-background-transparent: transparent;
+  --button-color-background-transparent-hover: var(--theme-color-primary-100);
+  --button-color-background-transparent-active: var(
+    --button-color-background-transparent-hover
+  );
+
+  /* Border color */
+  --button-color-border-primary: transparent;
+  --button-color-border-primary-hover: var(--button-color-border-primary);
+  --button-color-border-primary-active: var(--button-color-border-primary);
+
+  --button-color-border-outline: var(--form-color-border);
+  --button-color-border-outline-hover: var(--button-color-background-primary);
+  --button-color-border-outline-active: var(
+    --button-color-border-outline-hover
+  );
+
+  --button-color-border-transparent: transparent;
+  --button-color-border-transparent-hover: var(
+    --button-color-border-transparent
+  );
+  --button-color-border-transparent-active: var(
+    --button-color-border-transparent-active
+  );
+
+  /* Shadow color */
+  --button-color-shadow-primary: var(--theme-shade-1000);
+  --button-color-shadow-primary-hover: var(--button-color-shadow-primary);
+  --button-color-shadow-primary-active: var(
+    --button-color-shadow-primary-hover
+  );
+
+  --button-color-shadow-outline: currentColor;
+  --button-color-shadow-outline-hover: var(--button-color-shadow-outline);
+  --button-color-shadow-outline-active: var(
+    --button-color-shadow-outline-hover
+  );
+
+  --button-color-shadow-transparent: currentColor;
+  --button-color-shadow-transparent-hover: var(
+    --button-color-shadow-transparent
+  );
+  --button-color-shadow-transparent-active: var(
+    --button-color-shadow-transparent-hover
+  );
+
+  /* Text color */
+  --button-color-text-primary: var(--typography-color-background);
+  --button-color-text-primary-hover: var(--button-color-text-primary);
+  --button-color-text-primary-active: var(--button-color-text-primary);
+
+  --button-color-text-outline: var(--form-color-border);
+  --button-color-text-outline-hover: var(--button-color-background-primary);
+  --button-color-text-outline-active: var(--button-color-text-outline);
+
+  --button-color-text-transparent: var(--typography-color-body);
+  --button-color-text-transparent-hover: var(--button-color-background-primary);
+  --button-color-text-transparent-active: var(--button-color-text-transparent);
+
+  /* FORM */
+  --form-color-border: var(--theme-shade-400);
+  --spacing-v-xxxl: 20px;
+
+  /* PAGE */
+  --page-color-background: var(--theme-color-primary-200);
+  --page-color-info: #56bcc9;
+  --page-color-info-background: var(--theme-shade-100);
+  --page-color-success: #56c956;
+  --page-color-success-background: #e9ffe9;
+  --page-color-danger: #c95656;
+  --page-color-danger-background: #ffe8e8;
+  --page-color-logo: inherit;
+  --page-color-primary: var(--theme-color-primary-800);
+  --page-color-primary-alt: var(--theme-color-primary-700);
+  --page-color-primary-contrast: var(--typography-color-background);
+  --page-color-shadow: var(--theme-shade-1000);
+
+  /* TYPOGRAPHY */
+  --typography-color-background: var(--theme-shade-0);
+  --typography-color-background-alt: var(--page-color-background);
+  --typography-color-h: var(--theme-shade-900);
+  --typography-color-body: var(--theme-shade-700);
+  --typography-color-border: var(--theme-shade-300);
+  --typography-color-muted: var(--theme-shade-600);
+
+  --typography-font-family-h: Inter, sans-serif;
+  --typography-font-family-body: Inter, sans-serif;
+
+  --typography-font-size-h1: 24px;
+  --typography-font-size-h2: 20px;
+  --typography-font-size-h3: 16px;
+  --typography-font-size-body-s: 14px;
+  --typography-font-size-body-xs: 12px;
+
+  --typography-font-weight-bold: 700;
+  --typography-font-weight-normal: 400;
+
+  --typography-line-height-h1: 24px;
+  --typography-line-height-h2: 24px;
+  --typography-line-height-h3: 24px;
+  --typography-line-height-body-s: 24px;
+  --typography-line-height-body-xs: 24px;
+
+  /* THEME */
+  /* DO NOT USE THIS COLORS DIRECTLY, MAP TO TOKENS. */
+  --theme-color-primary-800: #341a90;
+  --theme-color-primary-700: #5422b9;
+  --theme-color-primary-600: #8d75e6;
+  --theme-color-primary-400: #bdb0ed;
+  --theme-color-primary-200: #ecf1ff;
+  --theme-color-primary-100: #f2eeff;
+
+  --theme-color-tertiary-800: #0f172a;
+  --theme-color-tertiary-700: #1e293b;
+  --theme-color-tertiary-600: #334155;
+  --theme-color-tertiary-400: #475569;
+
+  --theme-shade-1000: #000;
+  --theme-shade-900: #272727;
+  --theme-shade-800: #4b4b4b;
+  --theme-shade-700: #545454;
+  --theme-shade-600: #727272;
+  --theme-shade-400: #b3b3b3;
+  --theme-shade-300: #eaeaea;
+  --theme-shade-200: #e6e6e6;
+  --theme-shade-100: #ffffff;
+  --theme-shade-50: #fcfcfc;
+  --theme-shade-0: #fff;
+}
+
+/* ASSETS */
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("/src/fonts/Inter-VariableFont_slnt,wght.ttf") format("truetype");
+}

@@ -1,0 +1,6 @@
+@use "tokens/base";
+@use "tokens/light";
+
+:root {
+  @include light.tokens;
+}

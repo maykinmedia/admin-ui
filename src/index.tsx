@@ -1,3 +1,3 @@
-import "./settings/tokens.css";
+import "./style/default.scss";
 
 export * from "./components";

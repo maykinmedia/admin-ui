@@ -1,0 +1,22 @@
+@mixin tokens {
+  --page-color-background: #252f3d;
+  --page-color-logo: #ffffff;
+  --page-color-info-background: transparent;
+  --page-color-success-background: transparent;
+  --page-color-danger-background: transparent;
+  --page-color-primary-contrast: var(--typography-color-body);
+
+  --typography-color-background: #313741;
+  --typography-color-background-alt: #252f3d;
+  --typography-color-h: #f3f3f3;
+  --typography-color-body: #f3f3f3;
+  --typography-color-border: #535353;
+
+  --button-color-text-outline: #f3f3f3;
+  --button-color-background-outline-hover: #f3f3f3;
+  --button-color-background-outline-active: #f3f3f3;
+  --button-color-text-primary: #f3f3f3;
+  --button-color-text-transparent-active: #313741;
+  --button-color-background-transparent-hover: #f3f3f3;
+  --button-color-background-transparent-active: #f3f3f3;
+}

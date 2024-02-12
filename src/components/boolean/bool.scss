@@ -3,18 +3,19 @@
   border-radius: var(--border-radius-m);
   display: inline-flex;
   font-size: var(--typography-font-size-body-s);
-  justify-content: center;
   height: var(--typography-line-height-body-s);
+  justify-content: center;
+  position: relative;
   width: var(--typography-line-height-body-s);
 
   &--value-true {
-    background-color: var(--theme-color-success-background);
-    color: var(--theme-color-success-body);
+    background-color: var(--page-color-success-background);
+    color: var(--page-color-success);
   }
 
   &--value-false {
-    background-color: var(--theme-color-danger-background);
-    color: var(--theme-color-danger-body);
+    background-color: var(--page-color-danger-background);
+    color: var(--page-color-danger);
   }
 
   &--value-false:not(#{&}--explicit) {
