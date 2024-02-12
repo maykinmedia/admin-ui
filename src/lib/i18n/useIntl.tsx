@@ -72,11 +72,10 @@ const getLocalizedFallbackIntl = (
     ) => {
       let messages: Record<string, MessageDescriptor> = {};
       try {
-        if (locale === "en") {
-          messages = require("./messages/en.json");
-        }
         if (locale === "nl") {
           messages = require("./messages/nl.json");
+        } else {
+          messages = require("./messages/en.json");
         }
       } catch (e) {
         // messages not loaded.
