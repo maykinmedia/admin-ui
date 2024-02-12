@@ -82,7 +82,7 @@ const getLocalizedFallbackIntl = (
         // messages not loaded.
       }
       const message =
-        messages[descriptor.id || ""].defaultMessage ||
+        messages[descriptor.id || ""]?.defaultMessage ||
         descriptor.defaultMessage;
       return formatMessage(message, context);
     },
