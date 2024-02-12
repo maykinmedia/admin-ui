@@ -13,15 +13,15 @@
     grid-auto-flow: column;
     gap: var(--spacing-v-xs);
     align-items: center;
-    color: var(--theme-shade-600);
+    color: var(--typography-color-body);
 
     &--last {
-      color: var(--theme-color-primary-800);
+      color: var(--page-color-primary);
     }
   }
 
   .mykn-icon {
-    color: var(--theme-color-primary-800);
+    color: var(--page-color-primary);
     margin: 0 var(--spacing-h-xs);
   }
 }

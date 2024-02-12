@@ -77,10 +77,10 @@
 
   .mykn-a {
     text-decoration: none;
-    color: var(--theme-color-body);
+    color: var(--typography-color-body);
 
     &[aria-current] {
-      color: var(--theme-color-primary-800);
+      color: var(--page-color-primary);
     }
 
     &:hover {

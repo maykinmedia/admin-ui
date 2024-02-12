@@ -6,7 +6,7 @@
   justify-content: center;
 
   &--open > .mykn-button {
-    outline: 1px solid var(--theme-color-primary-800);
+    outline: 1px solid var(--page-color-primary);
   }
 
   .mykn-a,
@@ -17,7 +17,7 @@
 
   &__dropdown {
     width: fit-content;
-    border: 1px solid var(--theme-color-primary-800);
+    border: 1px solid var(--page-color-primary);
     border-radius: var(--border-radius-m);
     box-sizing: border-box;
     padding: 2px;

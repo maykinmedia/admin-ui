@@ -108,7 +108,7 @@
       }
 
       &:before {
-        color: var(--theme-shade-700);
+        color: var(--typography-color-body);
         content: attr(aria-description);
         font-family: var(--typography-font-family-body);
         font-size: var(--typography-font-size-body-xs);

@@ -7,15 +7,15 @@
     align-items: center;
     gap: var(--spacing-v-l);
     box-sizing: border-box;
-    border: 1px solid var(--theme-shade-100);
+    border: 1px solid var(--typography-color-border);
     border-radius: var(--border-radius-s);
-    background-color: var(--theme-shade-50);
+    background-color: var(--typography-color-background);
     padding: var(--spacing-v-m) var(--spacing-h-xxxl);
     width: 100%;
   }
 
-  .mykn-p {
-    color: var(--theme-shade-200);
+  &__tablist .mykn-p {
+    color: var(--typography-color-border);
     user-select: none;
   }
 

@@ -1,7 +1,7 @@
 @use "../../settings/constants";
 
 .mykn-page {
-  background-color: var(--theme-color-primary-200);
+  background-color: var(--page-color-background);
   container-name: page;
   container-type: inline-size;
   box-sizing: border-box;

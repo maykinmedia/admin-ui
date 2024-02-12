@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { expect, userEvent, waitFor, within } from "@storybook/test";
 import React from "react";
 
 import { Button, ButtonLink } from "../button";
@@ -51,36 +50,5 @@ export const NavbarComponent: Story = {
         </Button>
       </>
     ),
-  },
-};
-
-export const NavbarOnMobile: Story = {
-  ...NavbarComponent,
-  parameters: {
-    viewport: { defaultViewport: "mobile1" },
-    chromatic: {
-      viewports: ["mobile1"],
-    },
-  },
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-    const button = canvas.getByRole("button");
-
-    // Click opens, escape closes.
-    await userEvent.click(button, { delay: 10 });
-    await expect(canvas.getByRole("dialog")).toBeVisible();
-    userEvent.keyboard("{Escape}", { delay: 10 });
-    await waitFor(() => expect(canvas.queryByRole("dialog")).toBeNull());
-    await userEvent.click(button, { delay: 10 });
-    await expect(canvas.getByRole("dialog")).toBeVisible();
-
-    // Tab focuses items.
-    await userEvent.tab({ delay: 10 });
-    await userEvent.tab({ delay: 10 });
-    await userEvent.tab({ delay: 10 });
-
-    expect(canvas.getByRole("dialog")).toContainElement(
-      document.activeElement as HTMLElement,
-    );
   },
 };

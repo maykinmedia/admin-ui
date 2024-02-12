@@ -1,0 +1,17 @@
+@use "tokens/base";
+@use "tokens/light";
+@use "tokens/dark";
+
+html {
+  @include light.tokens;
+}
+
+html.view--dark {
+  @include dark.tokens;
+}
+
+@media screen and (prefers-color-scheme: dark) {
+  html:not(.view--light) {
+    @include dark.tokens;
+  }
+}

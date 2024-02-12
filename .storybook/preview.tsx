@@ -1,10 +1,27 @@
+import { withThemeByClassName } from "@storybook/addon-themes";
 import type { Preview } from "@storybook/react";
 
-import "../src/settings/tokens.css";
+import "../src/style/default.scss";
+import { allModes } from "./modes";
 
 const preview: Preview = {
   parameters: {
     actions: { argTypesRegex: "^on[A-Z].*" },
+    chromatic: {
+      modes: {
+        "light desktop": allModes["light desktop"],
+        "light mobile": allModes["light mobile"],
+        "dark desktop": allModes["dark desktop"],
+        "dark mobile": allModes["dark mobile"],
+      },
+      controls: {
+        matchers: {
+          color: /(background|color)$/i,
+          date: /Date$/i,
+        },
+      },
+      layout: "fullscreen",
+    },
     controls: {
       matchers: {
         color: /(background|color)$/i,
@@ -13,6 +30,16 @@ const preview: Preview = {
     },
     layout: "fullscreen",
   },
+  decorators: [
+    withThemeByClassName({
+      themes: {
+        system: "view--system",
+        light: "view--light",
+        dark: "view--dark",
+      },
+      defaultTheme: "light",
+    }) as any,
+  ],
 };
 
 export default preview;

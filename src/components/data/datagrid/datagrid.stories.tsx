@@ -125,16 +125,6 @@ export const DataGridComponent = {
   },
 };
 
-export const DataGridOnMobile: Story = {
-  ...DataGridComponent,
-  parameters: {
-    viewport: { defaultViewport: "mobile1" },
-    chromatic: {
-      viewports: ["mobile1"],
-    },
-  },
-};
-
 export const SortableDataGrid: Story = {
   ...DataGridComponent,
   args: {

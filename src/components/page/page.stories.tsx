@@ -11,7 +11,7 @@ import { Column } from "../layout/column";
 import { Logo } from "../logo";
 import { Navbar } from "../navbar";
 import { Tab, Tabs } from "../tabs";
-import { Body, H1 } from "../typography";
+import { Body, H1, P } from "../typography";
 import { Hr } from "../typography/hr";
 import { Page } from "./page";
 
@@ -47,7 +47,7 @@ export const ListViewSamplePage: Story = {
         <Grid debug={debug}>
           <Column debug={debug} span={12}>
             <Logo
-              href="/?path=/story/building-blocks-page--sample-page"
+              href={window.location.toString()}
               hrefLabel="Navigate to story page"
               label="Maykin"
             />
@@ -99,6 +99,7 @@ export const ListViewSamplePage: Story = {
                   boolProps={{
                     labelFalse: "This value is false",
                     labelTrue: "This value is true",
+                    explicit: true,
                   }}
                   paginatorProps={{
                     count: 100,
@@ -218,7 +219,7 @@ export const DetailViewSamplePage: Story = {
         <Grid debug={debug}>
           <Column debug={debug} span={12}>
             <Logo
-              href="/?path=/story/building-blocks-page--sample-page"
+              href={window.location.toString()}
               hrefLabel="Navigate to story page"
               label="Maykin"
             />
@@ -262,7 +263,7 @@ export const DetailViewSamplePage: Story = {
                   <Tab label={"Structuur"}>
                     <Hr />
                     <br />
-                    Grid here...
+                    <P>The quick brown fox jumps over the lazy dog.</P>
                   </Tab>
                   <Tab label={"Basis"} />
                   <Tab label={"Statussen"} />

@@ -1,16 +1,19 @@
 .mykn-button {
   $self: &;
-  --mykn-button-color-background: var(--theme-color-primary-800);
-  --mykn-button-color-shadow: var(--theme-shade-1000);
-  --mykn-button-color-text: var(--theme-shade-0);
+
+  --mykn-button-color-background: var(--typography-color-background);
+  --mykn-button-color-border: var(--form-color-border);
+  --mykn-button-color-shadow: var(--page-color-shadow);
+  --mykn-button-color-text: var(--typography-color-body);
+
   --mykn-button-font-size: var(--typography-font-size-body-s);
   --mykn-button-font-weight: var(--typography-font-weight-normal);
   --mykn-button-line-height: var(--typography-line-height-body-s);
   --mykn-button-height: auto;
   --mykn-button-width: auto;
   --mykn-button-offset: 0px;
-  --mykn-button-padding-v: 0;
-  --mykn-button-padding-h: 0;
+  --mykn-button-padding-v: var(--spacing-v-s);
+  --mykn-button-padding-h: var(--spacing-h-s);
 
   align-items: center;
   appearance: none;
@@ -52,11 +55,13 @@
   }
 
   &--pad-h {
-    --mykn-button-padding-h: var(--spacing-h-s);
+    padding-inline-start: var(--mykn-button-padding-h);
+    padding-inline-end: var(--mykn-button-padding-h);
   }
 
   &--pad-v {
-    --mykn-button-padding-v: var(--spacing-v-s);
+    padding-block-start: var(--mykn-button-padding-h);
+    padding-block-end: var(--mykn-button-padding-h);
   }
 
   &--size-xs {
@@ -77,68 +82,91 @@
   }
 
   &--variant-primary {
-    &#{$self}--active, // TODO
-    &:focus,
-    &:hover {
-      --mykn-button-color-background: var(--theme-color-primary-700);
-    }
+    --mykn-button-color-background: var(--button-color-background-primary);
+    --mykn-button-color-border: var(--button-color-border-primary);
+    --mykn-button-color-shadow: var(--button-color-shadow-primary);
+    --mykn-button-color-text: var(--button-color-text-primary);
 
     &:focus,
     &:hover {
+      --mykn-button-color-background: var(
+        --button-color-background-primary-hover
+      );
+      --mykn-button-color-border: var(--button-color-border-primary-hover);
+      --mykn-button-color-shadow: var(--button-color-shadow-primary-hover);
+      --mykn-button-color-text: var(--button-color-text-primary-hover);
       --mykn-button-offset: -2px;
     }
 
     &[aria-expanded="true"],
-    &:active {
-      --mykn-button-color-background: var(--theme-color-primary-800);
+    &:active,
+    &#{$self}--active {
+      --mykn-button-color-background: var(
+        --button-color-background-primary-active
+      );
+      --mykn-button-color-border: var(--button-color-border-primary-active);
+      --mykn-button-color-shadow: var(--button-color-shadow-primary-active);
+      --mykn-button-color-text: var(--button-color-text-primary-active);
       --mykn-button-offset: 0px;
     }
   }
 
   &--variant-outline {
-    --mykn-button-color-background: transparent;
-    --mykn-button-color-border: var(--form-color-border);
-    --mykn-button-color-shadow: currentColor;
-    --mykn-button-color-text: var(--typography-color-body);
-
-    &#{$self}--active,
-    &:focus,
-    &:hover {
-      --mykn-button-color-background: var(--theme-color-primary-200);
-    }
+    --mykn-button-color-background: var(--button-color-background-outline);
+    --mykn-button-color-border: var(--button-color-border-outline);
+    --mykn-button-color-shadow: var(--button-color-shadow-outline);
+    --mykn-button-color-text: var(--button-color-text-outline);
 
     &:focus,
     &:hover {
+      --mykn-button-color-background: var(
+        --button-color-background-outline-hover
+      );
+      --mykn-button-color-border: var(--button-color-border-outline-hover);
+      --mykn-button-color-shadow: var(--button-color-shadow-outline-hover);
+      --mykn-button-color-text: var(--button-color-text-outline-hover);
       --mykn-button-offset: -2px;
     }
 
     &[aria-expanded="true"],
-    &:active {
-      --mykn-button-color-background: var(--typography-color-background);
+    &:active,
+    &#{$self}--active {
+      --mykn-button-color-background: var(
+        --button-color-background-outline-active
+      );
+      --mykn-button-color-border: var(--button-color-border-outline-active);
+      --mykn-button-color-shadow: var(--button-color-shadow-outline-active);
+      --mykn-button-color-text: var(--button-color-text-outline-active);
       --mykn-button-offset: 0px;
     }
   }
 
   &--variant-transparent {
-    --mykn-button-color-background: transparent;
-    --mykn-button-color-shadow: currentColor;
-    --mykn-button-color-text: var(--theme-shade-700);
-
-    &#{$self}--active,
-    &:focus,
-    &:hover {
-      --mykn-button-color-background: var(--theme-color-primary-100);
-      --mykn-button-color-text: var(--theme-color-primary-800);
-    }
+    --mykn-button-color-background: var(--button-color-background-transparent);
+    --mykn-button-color-border: var(--button-color-border-transparent);
+    --mykn-button-color-shadow: var(--button-color-shadow-transparent);
+    --mykn-button-color-text: var(--button-color-text-transparent);
 
     &:focus,
     &:hover {
+      --mykn-button-color-background: var(
+        --button-color-background-transparent-hover
+      );
+      --mykn-button-color-border: var(--button-color-border-transparent-hover);
+      --mykn-button-color-shadow: var(--button-color-shadow-transparent-hover);
+      --mykn-button-color-text: var(--button-color-text-transparent-hover);
       --mykn-button-offset: -2px;
     }
 
     &[aria-expanded="true"],
-    &:active {
-      --mykn-button-color-background: var(--typography-color-background);
+    &:active,
+    &#{$self}--active {
+      --mykn-button-color-background: var(
+        --button-color-background-transparent-active
+      );
+      --mykn-button-color-border: var(--button-color-border-transparent-active);
+      --mykn-button-color-shadow: var(--button-color-shadow-transparent-active);
+      --mykn-button-color-text: var(--button-color-text-transparent-active);
       --mykn-button-offset: 0px;
     }
   }

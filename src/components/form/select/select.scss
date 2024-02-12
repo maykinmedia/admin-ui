@@ -90,7 +90,7 @@
   }
 
   &#{&}--active {
-    --mykn-option-color-background: var(--theme-color-primary-800);
-    --mykn-option-color-body: var(--typography-color-background);
+    --mykn-option-color-background: var(--page-color-primary);
+    --mykn-option-color-body: var(--page-color-primary-contrast);
   }
 }
