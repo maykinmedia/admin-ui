@@ -8,10 +8,10 @@ import { formatMessage } from "./formatmessage";
 
   This UI library needs to support the following scenarios:
 
-  - An application with extensive Internationalization support
+  - An application with extensive internationalization support
     (using react-intl).
 
-  - An application with basic Internationalization using translated labels
+  - An application with basic internationalization using translated labels
     passed as props.
 
   - No internalisation (default messages only).
