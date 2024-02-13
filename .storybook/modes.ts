@@ -7,7 +7,10 @@ export const allModes = {
   "light mobile": {
     backgrounds: "light",
     theme: "light",
-    viewport: "small",
+    viewport: {
+      width: 320,
+      height: 568,
+    },
   },
   "dark desktop": {
     backgrounds: "dark",
@@ -17,6 +20,9 @@ export const allModes = {
   "dark mobile": {
     backgrounds: "dark",
     theme: "dark",
-    viewport: "small",
+    viewport: {
+      width: 320,
+      height: 568,
+    },
   },
 };
