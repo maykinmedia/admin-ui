@@ -57,8 +57,14 @@ export type DataGridProps = {
   /** Props for Bool. */
   boolProps?: Omit<BoolProps, "value">;
 
-  /** If set, the paginator is enabled. */
+  /**
+   * If set, the paginator is enabled.
+   * @see {PaginatorPropsAliases}
+   */
   paginatorProps?: PaginatorProps;
+
+  /** Defaults to whether paginatorProps is set. */
+  showPaginator?: boolean;
 
   /** Props for P. */
   pProps?: PProps;
@@ -67,6 +73,20 @@ export type DataGridProps = {
   title?: string;
 
   onSort?: (sort: string) => Promise<unknown> | void;
+} & PaginatorPropsAliases;
+
+/**
+ * A subset of `PaginatorProps` that act as aliases.
+ * @see {PaginatorProps}
+ */
+type PaginatorPropsAliases = {
+  count?: PaginatorProps["count"];
+  loading?: PaginatorProps["loading"];
+  page?: PaginatorProps["page"];
+  pageSize?: PaginatorProps["pageSize"];
+  pageSizeOptions?: PaginatorProps["pageSizeOptions"];
+  onPageChange?: PaginatorProps["onPageChange"];
+  onPageSizeChange?: PaginatorProps["onPageSizeChange"];
 };
 
 /**
@@ -78,10 +98,18 @@ export type DataGridProps = {
  * @param paginatorProps
  * @param results
  * @param fields
+ * @param showPaginator
  * @param pProps
  * @param sort
  * @param title
  * @param urlFields
+ * @param count
+ * @param loading
+ * @param page
+ * @param pageSize
+ * @param pageSizeOptions
+ * @param onPageChange
+ * @param onPageSizeChange
  * @param props
  * @constructor
  */
@@ -92,11 +120,20 @@ export const DataGrid: React.FC<DataGridProps> = ({
   results,
   fields = results?.length ? Object.keys(results[0]) : [],
   paginatorProps,
+  showPaginator = Boolean(paginatorProps),
   pProps,
   sort,
   title = "",
   urlFields = DEFAULT_URL_FIELDS,
   onSort,
+  // Aliases
+  count,
+  loading,
+  page,
+  pageSize,
+  pageSizeOptions,
+  onPageChange,
+  onPageSizeChange,
   ...props
 }) => {
   const id = useId();
@@ -140,6 +177,22 @@ export const DataGrid: React.FC<DataGridProps> = ({
     const fieldIndex = renderableFields.indexOf(field);
     const page = paginatorProps?.page;
     const key = `sort-${sortField}${sortDirection}-page-${page}-row-$${rowIndex}-column-${fieldIndex}`;
+
+    // Run assertions for aliased fields.
+    if (showPaginator) {
+      console.assert(
+        count || paginatorProps?.count,
+        "Either `count` or `paginatorProps.count` should be set when `showPaginator` is `true`.",
+      );
+      console.assert(
+        page || paginatorProps?.page,
+        "Either `page` or `paginatorProps.page` should be set when `showPaginator` is `true`.",
+      );
+      console.assert(
+        pageSize || paginatorProps?.pageSize,
+        "Either `pageSize` or `paginatorProps.pageSize` should be set when `showPaginator` is `true`.",
+      );
+    }
 
     return (
       <DataGridCell
@@ -236,7 +289,7 @@ export const DataGrid: React.FC<DataGridProps> = ({
         </tbody>
 
         {/* Paginator */}
-        {paginatorProps && (
+        {showPaginator && (
           <tfoot className="mykn-datagrid__foot">
             <tr className="mykn-datagrid__row">
               <th
@@ -244,7 +297,16 @@ export const DataGrid: React.FC<DataGridProps> = ({
                 colSpan={renderableFields.length}
               >
                 <Toolbar align="end" padH={true}>
-                  <Paginator {...paginatorProps} />
+                  <Paginator
+                    count={count as number}
+                    loading={loading}
+                    page={page as number}
+                    pageSize={pageSize as number}
+                    pageSizeOptions={pageSizeOptions}
+                    onPageChange={onPageChange}
+                    onPageSizeChange={onPageSizeChange}
+                    {...paginatorProps}
+                  />
                 </Toolbar>
               </th>
             </tr>
