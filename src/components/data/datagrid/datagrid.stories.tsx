@@ -1,9 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import React, { useEffect, useState } from "react";
 
-import { sortAttributeDataArray } from "../../../lib/data/attributedata";
+import { AttributeData } from "../../../lib/data/attributedata";
 import { Page } from "../../page";
-import { PaginatorProps } from "../paginator";
 import { DataGrid } from "./datagrid";
 
 const meta = {
@@ -143,19 +142,8 @@ export const SortedDataGrid: Story = {
 
 export const JSONPlaceholderExample: Story = {
   args: {
-    paginatorProps: {
-      count: 100,
-      page: 1,
-      pageSize: 10,
-      pageSizeOptions: [
-        { label: 10 },
-        { label: 20 },
-        { label: 30 },
-        { label: 40 },
-        { label: 50 },
-      ],
-    },
     results: [],
+    showPaginator: true,
     sort: true,
     title: "Posts",
   },
@@ -165,40 +153,28 @@ export const JSONPlaceholderExample: Story = {
     const [pageSize, setPageSize] = useState<number>(
       args.paginatorProps?.pageSize || 10,
     );
-    const [results, setResults] = useState(args.results);
+    const [results, setResults] = useState<AttributeData[]>([]);
     const [sort, setSort] = useState<string>("");
-    const paginatorProps = args.paginatorProps as PaginatorProps;
 
-    paginatorProps.pageSize = pageSize;
-
+    /**
+     * Fetches data from jsonplaceholder.typicode.com.
+     */
     useEffect(() => {
       setLoading(true);
-      const index = page - 1;
       const abortController = new AbortController();
+      const sortKey = sort.replace(/^-/, "");
+      const sortDirection = sort.startsWith("-") ? "desc" : "asc";
 
       // Process sorting and pagination locally in place for demonstration purposes.
-      fetch("https://jsonplaceholder.typicode.com/posts", {
-        signal: abortController.signal,
-      })
+      fetch(
+        `https://jsonplaceholder.typicode.com/posts?_page=${page}&_limit=${pageSize}&_sort=${sortKey}&_order=${sortDirection}`,
+        {
+          signal: abortController.signal,
+        },
+      )
         .then((response) => response.json())
-        .then((data) => {
-          // Sort.
-          const direction = String(sort).startsWith("-") ? "DESC" : "ASC";
-          const sorted = sort
-            ? sortAttributeDataArray(
-                data,
-                String(sort).replace(/^-/, ""),
-                direction,
-              )
-            : data;
-
-          // Paginate.
-          const posts = sorted.slice(
-            index * pageSize,
-            index * pageSize + pageSize,
-          );
-
-          setResults(posts);
+        .then((data: AttributeData[]) => {
+          setResults(data);
           setLoading(false);
         });
 
@@ -208,15 +184,24 @@ export const JSONPlaceholderExample: Story = {
       };
     }, [page, pageSize, sort]);
 
-    paginatorProps.loading = loading;
-    paginatorProps.onPageChange = (page) => setPage(page);
-    paginatorProps.onPageSizeChange = async (pageSize) => setPageSize(pageSize);
-
     return (
       <DataGrid
         {...args}
+        count={100}
         results={results}
         onSort={(field) => setSort(field)}
+        loading={loading}
+        page={page}
+        pageSize={pageSize}
+        pageSizeOptions={[
+          { label: 10 },
+          { label: 20 },
+          { label: 30 },
+          { label: 40 },
+          { label: 50 },
+        ]}
+        onPageChange={setPage}
+        onPageSizeChange={setPageSize}
       />
     );
   },
