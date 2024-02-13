@@ -98,13 +98,6 @@ export const DropdownComponent: Story = {
   },
 };
 
-export const DropdownOnMobile: Story = {
-  ...DropdownComponent,
-  parameters: {
-    viewport: { defaultViewport: "mobile1" },
-  },
-};
-
 export const ActivateOnHover: Story = {
   args: {
     activateOnHover: true,
