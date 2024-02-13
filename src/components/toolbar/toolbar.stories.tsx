@@ -55,13 +55,6 @@ export const ToolbarComponent: Story = {
   },
 };
 
-export const ToolbarOnMobile: Story = {
-  ...ToolbarComponent,
-  parameters: {
-    viewport: { defaultViewport: "mobile1" },
-  },
-};
-
 export const TransparentToolbar: Story = {
   ...ToolbarComponent,
   args: {

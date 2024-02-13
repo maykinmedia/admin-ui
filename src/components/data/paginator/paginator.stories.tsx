@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { expect, userEvent, waitFor, within } from "@storybook/test";
 import React from "react";
 
+import { allModes } from "../../../../.storybook/modes";
 import { Page } from "../../page";
 import { Paginator } from "./paginator";
 
@@ -39,20 +40,26 @@ export const PaginatorComponent: Story = {
   },
 };
 
-export const PaginatorOnMobile = {
-  ...PaginatorComponent,
-  parameters: {
-    viewport: { defaultViewport: "mobile1" },
-  },
-};
-
 export const PaginatorComponentWithSpinner: Story = {
   ...PaginatorComponent,
   args: {
     ...PaginatorComponent.args,
     onPageChange: () => new Promise((resolve) => setTimeout(resolve, 1000)),
   },
+  parameters: {
+    chromatic: {
+      modes: {
+        "light desktop": allModes["light desktop"],
+        "dark desktop": allModes["dark desktop"],
+      },
+    },
+  },
   play: async ({ canvasElement }) => {
+    // Spinner not supported on mobile.
+    if (window?.matchMedia("(max-width: 767px)").matches) {
+      return;
+    }
+
     const canvas = within(canvasElement);
     const pageInput = canvas.getByRole("spinbutton");
     const previousButton = canvas.getByLabelText("Previous");

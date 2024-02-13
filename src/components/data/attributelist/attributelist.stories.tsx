@@ -30,13 +30,6 @@ export const AttributeListComponent: Story = {
   },
 };
 
-export const AttributeListOnMobile: Story = {
-  ...AttributeListComponent,
-  parameters: {
-    viewport: { defaultViewport: "mobile1" },
-  },
-};
-
 export const SelectedFieldOnly: Story = {
   ...AttributeListComponent,
   args: {
