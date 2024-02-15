@@ -28,6 +28,10 @@
       &--debug#{&}--span-#{$i}:before {
         content: "Span #{$i}";
       }
+
+      &--start-#{$i} {
+        grid-column-start: $i;
+      }
     }
   }
 }
