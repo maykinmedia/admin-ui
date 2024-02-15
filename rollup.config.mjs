@@ -1,22 +1,30 @@
-import {transform} from '@formatjs/ts-transformer'
+import { transform } from "@formatjs/ts-transformer";
 import commonjs from "@rollup/plugin-commonjs";
 import terser from "@rollup/plugin-terser";
-import typescript from 'rollup-plugin-typescript2'
+import typescript from "rollup-plugin-typescript2";
 import peerDepsExternal from "rollup-plugin-peer-deps-external";
-import postcss from "rollup-plugin-postcss";
+import styles from "rollup-plugin-styler";
 import postcss_url from "postcss-url";
-import json from '@rollup/plugin-json';
+import json from "@rollup/plugin-json";
+import { dts } from "rollup-plugin-dts";
 
 export default [
   {
     external: ["@floating-ui/react", "@heroicons/react/24/outline", "@heroicons/react/24/solid", "clsx"],
     input: "src/index.tsx",
-    output: {
-      dir: "dist",
+    output: [{
+      assetFileNames: "[name][extname]",
+      dir: "dist/cjs",
       format: "cjs",
       sourcemap: true,
       preserveModules: true
-    },
+    }, {
+      assetFileNames: "[name][extname]",
+      dir: "dist/esm",
+      format: "esm",
+      sourcemap: true,
+      preserveModules: true
+    }],
     plugins: [
       peerDepsExternal(),
       commonjs(),
@@ -30,9 +38,8 @@ export default [
           ]
         }), tsconfig: "./tsconfig.json"
       }),
-      postcss({
-        autoModules: true,
-        extract: true,
+      styles({
+        mode: "extract",
         minimize: true,
         sourceMap: true,
         plugins: [
@@ -44,7 +51,12 @@ export default [
       }),
       terser()
     ]
+  }, {
+    input: "dist/esm/index.js",
+    output: [{ file: "dist/types/index.d.ts", format: "esm" }],
+    external: [/\.scss$/],
+    plugins: [dts()]
   },
-  {input: "src/lib/i18n/compiled/en.json", output: {dir: "dist/messages"}, plugins: [json()]},
-  {input: "src/lib/i18n/compiled/nl.json", output: {dir: "dist/messages"}, plugins: [json()]}
+  { input: "src/lib/i18n/compiled/en.json", output: { dir: "dist/messages" }, plugins: [json()] },
+  { input: "src/lib/i18n/compiled/nl.json", output: { dir: "dist/messages" }, plugins: [json()] }
 ];
