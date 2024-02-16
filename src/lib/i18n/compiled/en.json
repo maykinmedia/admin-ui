@@ -102,5 +102,11 @@
       "type": 0,
       "value": "yes"
     }
+  ],
+  "y0k/u3": [
+    {
+      "type": 0,
+      "value": "submit"
+    }
   ]
 }

@@ -15,7 +15,7 @@ export const FORM_TEST_DECORATOR: Decorator = (Story) => {
     >((acc, [key, value]) => ({ ...acc, [key]: value }), {});
   };
   return (
-    <form onChange={() => setCount(count + 1)} aria-label="form">
+    <form onChange={() => setCount(count + 1)} aria-label="form" style={{width: '100%'}}>
       <Story />
       <pre role="log">{JSON.stringify(getData())}</pre>
     </form>

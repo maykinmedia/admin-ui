@@ -10,7 +10,7 @@ export type ToolbarItem = ButtonProps | ButtonLinkProps | DropdownProps;
 export type ToolbarProps = React.PropsWithChildren<
   React.HTMLAttributes<HTMLElement> & {
     /** Aligns the contents based on the current direction. */
-    align?: "start" | "center" | "end";
+    align?: "start" | "center" | "end" | "space-between";
 
     /** Whether the toolbar shows items horizontally or vertically, mobile devices always use vertical. */
     direction?: "horizontal" | "vertical";

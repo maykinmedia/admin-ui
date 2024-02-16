@@ -1,0 +1,10 @@
+.mykn-form-control {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-v-m);
+
+  .mykn-input,
+  .mykn-select {
+    width: 100%;
+  }
+}

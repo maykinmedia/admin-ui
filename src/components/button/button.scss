@@ -42,6 +42,15 @@
   transform: translateY(var(--mykn-button-offset));
   width: var(--mykn-button-width);
 
+  &[disabled] {
+    --mykn-button-color-background: var(
+      --mykn-button-color-background-mute,
+      #ccc
+    ) !important;
+    --mykn-button-offset: 0 !important;
+    pointer-events: none;
+  }
+
   &--bold {
     --mykn-button-font-weight: var(--typography-font-weight-bold);
   }
