@@ -1,0 +1,10 @@
+.mykn-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-v-l);
+  width: 100%;
+
+  .mykn-toolbar .mykn-button {
+    justify-content: center;
+  }
+}

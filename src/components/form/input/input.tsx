@@ -8,14 +8,17 @@ export type InputProps = Omit<
   React.InputHTMLAttributes<HTMLInputElement>,
   "value"
 > & {
+  /** Input label. */
+  label?: string;
+
+  /** Input value. */
+  value?: string | number;
+
   /** The variant (style) of the input. */
   variant?: "normal" | "transparent";
 
   /** Gets called when the value is changed */
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
-
-  /** Input value. */
-  value?: string | number;
 };
 
 /**
@@ -25,6 +28,7 @@ export type InputProps = Omit<
  * @constructor
  */
 export const Input: React.FC<InputProps> = ({
+  label = "",
   type = "text",
   value,
   variant = "normal",
@@ -69,6 +73,7 @@ export const Input: React.FC<InputProps> = ({
       type={type}
       value={valueState}
       onChange={_onChange}
+      aria-label={label || undefined}
       {...props}
     />
   );

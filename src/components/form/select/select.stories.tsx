@@ -115,18 +115,17 @@ export const UsageWithFormik: Story = {
         {({ handleChange, handleSubmit, values }) => (
           <form onSubmit={handleSubmit}>
             <Select
-              value={values.school_year}
-              onChange={handleChange}
               {...args}
+              value={values.school_year}
+              onChange={(e) => handleChange(e)}
             ></Select>
             <pre role="log">{JSON.stringify(values)}</pre>
-            <Button type="submit">Verzenden</Button>
+            <Button type="submit">Verzenden</Button>;
           </form>
         )}
       </Formik>
     );
   },
-  decorators: [(Story) => <Story />],
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     const select = canvas.getByRole("combobox");

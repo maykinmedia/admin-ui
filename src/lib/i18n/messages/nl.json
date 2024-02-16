@@ -58,5 +58,10 @@
     "defaultMessage": "ja",
     "description": "components.Bool: The accessible label when value is truthy",
     "originalDefault": "ja"
+  },
+  "y0k/u3": {
+    "defaultMessage": "verzenden",
+    "description": "components.Form: The submit form label",
+    "originalDefault": "verzenden"
   }
 }

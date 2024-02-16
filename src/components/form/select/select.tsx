@@ -24,11 +24,17 @@ import { Outline, Solid } from "../../icon";
 import { eventFactory } from "../eventFactory";
 import "./select.scss";
 
-export type SelectProps = React.HTMLAttributes<HTMLDivElement> & {
+export type SelectProps = Omit<
+  React.HTMLAttributes<HTMLDivElement>,
+  "onChange"
+> & {
   /** Can be used to generate `SelectOption` components from an array of objects. */
   options: Option[];
 
-  /** Input name. */
+  /** Select label. */
+  label?: string;
+
+  /** Select name. */
   name?: string;
 
   /**
@@ -39,7 +45,7 @@ export type SelectProps = React.HTMLAttributes<HTMLDivElement> & {
    * native select (which in itself can be used to obtain the value without
    * the use of events).
    */
-  onChange?: (event: Event) => void;
+  onChange?: React.ChangeEventHandler<HTMLSelectElement>;
 
   /** Placeholder text. */
   placeholder?: string;
@@ -80,9 +86,11 @@ export type Option<
  * @constructor
  */
 export const Select: React.FC<SelectProps> = ({
+  id,
   name,
   options = [],
   onChange,
+  label = "",
   labelClear = "",
   placeholder = "",
   required = false,
@@ -176,7 +184,10 @@ export const Select: React.FC<SelectProps> = ({
         false,
       );
       fakeInput.dispatchEvent(changeEvent);
-      onChange && onChange(changeEvent);
+      onChange &&
+        onChange(
+          changeEvent as unknown as React.ChangeEvent<HTMLSelectElement>,
+        );
     });
   };
 
@@ -185,7 +196,9 @@ export const Select: React.FC<SelectProps> = ({
 
   const selectedOptionValue =
     selectedIndex !== null
-      ? options[selectedIndex].value || selectedOptionLabel
+      ? Object.prototype.hasOwnProperty.call(options[selectedIndex], "value")
+        ? options[selectedIndex].value
+        : selectedOptionLabel
       : "";
 
   return (
@@ -197,21 +210,23 @@ export const Select: React.FC<SelectProps> = ({
         })}
         tabIndex={0}
         ref={refs.setReference}
-        aria-labelledby="select-label" // fixme
+        title={label || undefined}
         aria-autocomplete="none"
         {...getReferenceProps()}
         {...props}
       >
         {/* This is here for compatibility with native forms, as well as a providing a target for change events. */}
         <select
+          id={id}
           ref={fakeInputRef}
           name={name}
           defaultValue={selectedOptionValue}
           hidden={true}
+          aria-label=""
         >
-          {selectedOptionValue && (
+          {(selectedOptionValue && (
             <option value={selectedOptionValue}>{selectedOptionLabel}</option>
-          )}
+          )) || <option value=""></option>}
         </select>
 
         <div className="mykn-select__label">

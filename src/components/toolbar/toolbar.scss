@@ -44,6 +44,12 @@
       text-align: center;
     }
 
+    &--align-space-between {
+      align-items: center;
+      justify-content: space-between;
+      text-align: center;
+    }
+
     &--direction-horizontal {
       align-items: center;
       flex-direction: row;
