@@ -59,6 +59,11 @@
     "description": "components.Bool: The accessible label when value is truthy",
     "originalDefault": "ja"
   },
+  "mm+twj": {
+    "defaultMessage": "login",
+    "description": "templates.Login: The login button label",
+    "originalDefault": "inloggen"
+  },
   "y0k/u3": {
     "defaultMessage": "submit",
     "description": "components.Form: The submit form label",

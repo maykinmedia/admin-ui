@@ -38,6 +38,7 @@
   "exports": {
     ".": "./dist/esm/index.js",
     "./components": "./dist/esm/componets/index.js",
+    "./templates": "./dist/esm/templates/index.js",
     "./style": "./dist/esm/index.css"
   },
   "types": "dist/esm/index.d.ts",
