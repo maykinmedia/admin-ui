@@ -2,7 +2,7 @@
 
 .mykn-grid {
   display: grid;
-  grid-template-columns: repeat(6, auto);
+  grid-template-columns: repeat(6, 1fr);
   gap: var(--gutter-v-mobile) var(--gutter-h-mobile);
   width: 100%;
 
@@ -15,7 +15,7 @@
     color: green;
     display: block;
     font-family: monospace;
-    grid-column: 1 / 12 span;
+    grid-column: 1 / 6 span;
     text-align: center;
   }
 
@@ -25,8 +25,12 @@
 
   @media screen and (min-width: constants.$breakpoint-desktop) {
     & {
-      grid-template-columns: repeat(12, auto);
+      grid-template-columns: repeat(12, 1fr);
       gap: var(--gutter-v-desktop) var(--gutter-h-desktop);
+    }
+
+    &--debug[data-testid]:before {
+      grid-column: 1 / 12 span;
     }
   }
 }
