@@ -3,6 +3,7 @@
 .mykn-toolbar {
   $self: &;
   background-color: var(--typography-color-background);
+  box-sizing: border-box;
   column-gap: 24px;
   display: flex;
   flex-direction: column;
@@ -10,6 +11,7 @@
   padding: var(--spacing-v-s) 0;
   row-gap: 12px;
   text-align: start;
+  width: 100%;
 
   &--variant-transparent {
     background-color: transparent;

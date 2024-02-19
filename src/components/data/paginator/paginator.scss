@@ -20,6 +20,8 @@
   }
 
   @media screen and (max-width: constants.$breakpoint-desktop - 1px) {
+    width: 100%;
+
     &__section--form {
       display: none;
     }
