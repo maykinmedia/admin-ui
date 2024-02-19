@@ -1,6 +1,8 @@
 @use "../../settings/constants";
 
 .mykn-tabs {
+  width: 100%;
+
   &__tablist {
     display: flex;
     flex-wrap: wrap;

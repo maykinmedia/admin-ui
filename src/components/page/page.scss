@@ -1,13 +1,20 @@
 @use "../../settings/constants";
 
 .mykn-page {
+  align-items: start;
   background-color: var(--page-color-background);
   container-name: page;
   container-type: inline-size;
+  display: flex;
+  flex-direction: column;
   box-sizing: border-box;
   padding: var(--spacing-h-xl);
   width: 100%;
   min-height: 100%;
+
+  &--valign-middle {
+    justify-content: center;
+  }
 
   @media screen and (min-width: constants.$breakpoint-desktop) {
     padding: var(--spacing-v-xl) var(--spacing-h-xl);
