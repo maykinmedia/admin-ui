@@ -49,8 +49,8 @@ the correct "intl" implementation based on whether react-intl is available.
 `useIntl` take a locale as optional argument, if it's not set, an attempt is made for the body's `lang` attribute to be
  used as locale. If no locale can be resolved "nl" is the default  value.
 
- For pragmatic reasons: translation labels should be written in Dutch, the description should identify the component
- and description of the prop.
+ For pragmatic reasons: translation labels should be written in Dutch and should provide an explicit id. Also: the
+ description should identify the component and description of the prop.
 
 ```tsx
 const intl = useIntl("en");  // locale can be left empty.
@@ -61,6 +61,7 @@ const intl = useIntl("en");  // locale can be left empty.
 const _labelTrue =
   labelTrue ||
   intl.formatMessage({
+    id: "components.Bool.labelTrue",
     description: "components.Bool: The accessible label when value is truthy",
     defaultMessage: "ja",
   });

@@ -1,47 +1,43 @@
 {
-  "1og5yd": [
-    {
-      "type": 0,
-      "value": "number of results"
-    }
-  ],
-  "ABD3e7": [
+  "components.Bool.labelFalse": [
     {
       "type": 0,
       "value": "no"
     }
   ],
-  "CtcyS2": [
+  "components.Bool.labelTrue": [
     {
       "type": 0,
-      "value": "previous"
+      "value": "yes"
     }
   ],
-  "FZLh9+": [
+  "components.Form.labelSubmit": [
     {
       "type": 0,
-      "value": "go to page"
+      "value": "submit"
     }
   ],
-  "HMxYa4": [
+  "components.Logo.hrefLabel": [
     {
       "type": 0,
-      "value": "clear value"
-    }
-  ],
-  "Kma3/t": [
+      "value": "go to \""
+    },
+    {
+      "type": 1,
+      "value": "href"
+    },
     {
       "type": 0,
-      "value": "pagination"
+      "value": "\""
     }
   ],
-  "UQBNHO": [
+  "components.Logo.label": [
     {
       "type": 0,
-      "value": "loading..."
+      "value": "Maykin logo"
     }
   ],
-  "YdBIB+": [
+  "components.Paginator.labelCurrentPageRange": [
     {
       "type": 0,
       "value": "result "
@@ -71,48 +67,52 @@
       "value": " pages"
     }
   ],
-  "aRdyNi": [
+  "components.Paginator.labelGoToPage": [
+    {
+      "type": 0,
+      "value": "go to page"
+    }
+  ],
+  "components.Paginator.labelLoading": [
+    {
+      "type": 0,
+      "value": "loading..."
+    }
+  ],
+  "components.Paginator.labelNext": [
     {
       "type": 0,
       "value": "next"
     }
   ],
-  "bkhUl1": [
+  "components.Paginator.labelPageSize": [
     {
       "type": 0,
-      "value": "go to \""
-    },
-    {
-      "type": 1,
-      "value": "href"
-    },
-    {
-      "type": 0,
-      "value": "\""
+      "value": "number of results"
     }
   ],
-  "dZ6TJw": [
+  "components.Paginator.labelPagination": [
     {
       "type": 0,
-      "value": "Maykin logo"
+      "value": "pagination"
     }
   ],
-  "jsvU71": [
+  "components.Paginator.labelPrevious": [
     {
       "type": 0,
-      "value": "yes"
+      "value": "previous"
+    }
+  ],
+  "components.Select.labelClear": [
+    {
+      "type": 0,
+      "value": "clear value"
     }
   ],
   "mm+twj": [
     {
       "type": 0,
       "value": "login"
-    }
-  ],
-  "y0k/u3": [
-    {
-      "type": 0,
-      "value": "submit"
     }
   ]
 }

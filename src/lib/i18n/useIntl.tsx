@@ -64,7 +64,7 @@ type Intl = {
  */
 const getLocalizedFallbackIntl = (
   locale = document?.documentElement?.lang || "nl",
-) => {
+): Intl => {
   return {
     formatMessage: (
       descriptor: MessageDescriptor,
@@ -80,9 +80,27 @@ const getLocalizedFallbackIntl = (
       } catch (e) {
         // messages not loaded.
       }
+
+      /*
+       FIXME: Fix Storybook/react-intl setup
+
+       In case @formatjs/ts-transformer is not set on the compiler, ids are not available. In our Storybook setup,
+       the transformer function is removed from the webpack config as it caused a build loop, resulting in undefined
+       `descriptor.id` values.
+
+
+       We mitigate this problem bu specifying id's explicitly, this should make translations easier to use and more
+       reliable. In a potential edge case happens where an id is not available, we attempt to find it using the
+       description.
+      */
+      const id =
+        descriptor.id ||
+        Object.entries(messages)?.find(
+          ([, message]) => message.description === descriptor.description,
+        )?.[0];
+
       const message =
-        messages[descriptor.id || ""]?.defaultMessage ||
-        descriptor.defaultMessage;
+        messages[id || ""]?.defaultMessage || descriptor.defaultMessage;
       return formatMessage(message, context);
     },
   };
@@ -94,7 +112,7 @@ const getLocalizedFallbackIntl = (
  */
 export const useIntl = (locale?: string) => {
   // Not breaking "rules of hooks" here, as dependencies should not change during runtime.
-  const context = IntlContext
+  const context: Intl = IntlContext
     ? useContext(IntlContext as React.Context<Intl>) // return `IntlContext` if react-intl is installed.
     : getLocalizedFallbackIntl(locale); // default if react-intl is not installed.
 
