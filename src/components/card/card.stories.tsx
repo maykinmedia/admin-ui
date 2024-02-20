@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import React from "react";
+import * as React from "react";
 
 import { Page } from "../page";
 import { Body, P } from "../typography";

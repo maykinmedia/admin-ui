@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { userEvent, within } from "@storybook/test";
 import { Formik } from "formik";
-import React from "react";
+import * as React from "react";
 
 import { formatMessage } from "../../../lib/i18n/formatmessage";
 import { Form } from "./form";

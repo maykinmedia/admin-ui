@@ -1,5 +1,5 @@
 import type { Meta } from "@storybook/react";
-import React from "react";
+import * as React from "react";
 
 import { H1 } from "./h1";
 import { H2 } from "./h2";

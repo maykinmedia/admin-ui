@@ -2,7 +2,7 @@ import { action } from "@storybook/addon-actions";
 import type { Meta, StoryFn, StoryObj } from "@storybook/react";
 import { expect, fn, userEvent, waitFor, within } from "@storybook/test";
 import { Formik } from "formik";
-import React from "react";
+import * as React from "react";
 
 import { Button } from "../../button";
 import { Page } from "../../page";

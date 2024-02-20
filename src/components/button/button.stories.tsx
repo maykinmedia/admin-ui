@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import React from "react";
+import * as React from "react";
 
 import { Toolbar } from "../toolbar";
 import { Button, ButtonLink } from "./button";
