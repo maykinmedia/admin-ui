@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { expect, userEvent, waitFor, within } from "@storybook/test";
-import React from "react";
+import * as React from "react";
 
 import { allModes } from "../../../../.storybook/modes";
 import { Page } from "../../page";

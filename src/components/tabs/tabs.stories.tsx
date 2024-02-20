@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from "@storybook/react";
-import React from "react";
+import * as React from "react";
 
 import { Card } from "../card";
 import { Page } from "../page";
