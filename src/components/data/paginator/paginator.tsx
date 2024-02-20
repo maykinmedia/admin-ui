@@ -128,6 +128,7 @@ export const Paginator: React.FC<PaginatorProps> = ({
     ? formatMessage(labelCurrentPageRange, context)
     : intl.formatMessage(
         {
+          id: "components.Paginator.labelCurrentPageRange",
           description:
             "components.Paginator: The current page range (accessible) label",
           defaultMessage:
@@ -140,6 +141,7 @@ export const Paginator: React.FC<PaginatorProps> = ({
     ? formatMessage(labelGoToPage, context)
     : intl.formatMessage(
         {
+          id: "components.Paginator.labelGoToPage",
           description:
             "components.Paginator: The go to page (accessible) label",
           defaultMessage: "naar pagina",
@@ -151,6 +153,7 @@ export const Paginator: React.FC<PaginatorProps> = ({
     ? formatMessage(labelPageSize, context)
     : intl.formatMessage(
         {
+          id: "components.Paginator.labelPageSize",
           description: "components.Paginator: The page size (accessible) label",
           defaultMessage: "aantal resultaten",
         },
@@ -161,6 +164,7 @@ export const Paginator: React.FC<PaginatorProps> = ({
     ? formatMessage(labelPagination, context)
     : intl.formatMessage(
         {
+          id: "components.Paginator.labelPagination",
           description:
             "components.Paginator: The pagination (accessible) label",
           defaultMessage: "paginering",
@@ -172,6 +176,7 @@ export const Paginator: React.FC<PaginatorProps> = ({
     ? formatMessage(labelPrevious, context)
     : intl.formatMessage(
         {
+          id: "components.Paginator.labelPrevious",
           description:
             "components.Paginator: The go to previous page (accessible) label",
           defaultMessage: "vorige",
@@ -183,6 +188,7 @@ export const Paginator: React.FC<PaginatorProps> = ({
     ? formatMessage(labelNext, context)
     : intl.formatMessage(
         {
+          id: "components.Paginator.labelNext",
           description:
             "components.Paginator: The go to next page (accessible) label",
           defaultMessage: "volgende",
@@ -194,6 +200,7 @@ export const Paginator: React.FC<PaginatorProps> = ({
     ? formatMessage(labelLoading, context)
     : intl.formatMessage(
         {
+          id: "components.Paginator.labelLoading",
           description: "components.Paginator: The loading (accessible) label",
           defaultMessage: "bezig met laden...",
         },

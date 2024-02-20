@@ -1,47 +1,43 @@
 {
-  "1og5yd": [
-    {
-      "type": 0,
-      "value": "aantal resultaten"
-    }
-  ],
-  "ABD3e7": [
+  "components.Bool.labelFalse": [
     {
       "type": 0,
       "value": "nee"
     }
   ],
-  "CtcyS2": [
+  "components.Bool.labelTrue": [
     {
       "type": 0,
-      "value": "vorige"
+      "value": "ja"
     }
   ],
-  "FZLh9+": [
+  "components.Form.labelSubmit": [
     {
       "type": 0,
-      "value": "naar pagina"
+      "value": "verzenden"
     }
   ],
-  "HMxYa4": [
+  "components.Logo.hrefLabel": [
     {
       "type": 0,
-      "value": "waarde wissen"
-    }
-  ],
-  "Kma3/t": [
+      "value": "go to \""
+    },
+    {
+      "type": 1,
+      "value": "href"
+    },
     {
       "type": 0,
-      "value": "paginering"
+      "value": "\""
     }
   ],
-  "UQBNHO": [
+  "components.Logo.label": [
     {
       "type": 0,
-      "value": "bezig met laden..."
+      "value": "Maykin logo"
     }
   ],
-  "YdBIB+": [
+  "components.Paginator.labelCurrentPageRange": [
     {
       "type": 0,
       "value": "resultaat "
@@ -71,48 +67,52 @@
       "value": " pagina's"
     }
   ],
-  "aRdyNi": [
+  "components.Paginator.labelGoToPage": [
+    {
+      "type": 0,
+      "value": "naar pagina"
+    }
+  ],
+  "components.Paginator.labelLoading": [
+    {
+      "type": 0,
+      "value": "bezig met laden..."
+    }
+  ],
+  "components.Paginator.labelNext": [
     {
       "type": 0,
       "value": "volgende"
     }
   ],
-  "bkhUl1": [
+  "components.Paginator.labelPageSize": [
     {
       "type": 0,
-      "value": "go to \""
-    },
-    {
-      "type": 1,
-      "value": "href"
-    },
-    {
-      "type": 0,
-      "value": "\""
+      "value": "aantal resultaten"
     }
   ],
-  "dZ6TJw": [
+  "components.Paginator.labelPagination": [
     {
       "type": 0,
-      "value": "Maykin logo"
+      "value": "paginering"
     }
   ],
-  "jsvU71": [
+  "components.Paginator.labelPrevious": [
     {
       "type": 0,
-      "value": "ja"
+      "value": "vorige"
+    }
+  ],
+  "components.Select.labelClear": [
+    {
+      "type": 0,
+      "value": "waarde wissen"
     }
   ],
   "mm+twj": [
     {
       "type": 0,
       "value": "inloggen"
-    }
-  ],
-  "y0k/u3": [
-    {
-      "type": 0,
-      "value": "verzenden"
     }
   ]
 }
