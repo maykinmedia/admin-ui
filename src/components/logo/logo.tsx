@@ -39,9 +39,9 @@ export const Logo: React.FC<LogoProps> = ({
     ? formatMessage(hrefLabel, context)
     : intl.formatMessage(
         {
-          id: "components.Logo.hrefLabel",
+          id: "mykn.components.Logo.hrefLabel",
           description:
-            "components.Logo: An aria-label describing the link action",
+            "mykn.components.Logo: An aria-label describing the link action",
           defaultMessage: 'go to "{href}"',
         },
         context,
@@ -50,9 +50,9 @@ export const Logo: React.FC<LogoProps> = ({
     ? formatMessage(label, context)
     : intl.formatMessage(
         {
-          id: "components.Logo.label",
+          id: "mykn.components.Logo.label",
           description:
-            "components.Logo: The aria-label to set on the SVG element",
+            "mykn.components.Logo: The aria-label to set on the SVG element",
           defaultMessage: "Maykin logo",
         },
         context,

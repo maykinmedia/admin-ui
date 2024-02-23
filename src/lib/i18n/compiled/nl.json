@@ -1,23 +1,23 @@
 {
-  "components.Bool.labelFalse": [
+  "mykn.components.Bool.labelFalse": [
     {
       "type": 0,
       "value": "nee"
     }
   ],
-  "components.Bool.labelTrue": [
+  "mykn.components.Bool.labelTrue": [
     {
       "type": 0,
       "value": "ja"
     }
   ],
-  "components.Form.labelSubmit": [
+  "mykn.components.Form.labelSubmit": [
     {
       "type": 0,
       "value": "verzenden"
     }
   ],
-  "components.Logo.hrefLabel": [
+  "mykn.components.Logo.hrefLabel": [
     {
       "type": 0,
       "value": "go to \""
@@ -31,13 +31,13 @@
       "value": "\""
     }
   ],
-  "components.Logo.label": [
+  "mykn.components.Logo.label": [
     {
       "type": 0,
       "value": "Maykin logo"
     }
   ],
-  "components.Paginator.labelCurrentPageRange": [
+  "mykn.components.Paginator.labelCurrentPageRange": [
     {
       "type": 0,
       "value": "resultaat "
@@ -67,43 +67,43 @@
       "value": " pagina's"
     }
   ],
-  "components.Paginator.labelGoToPage": [
+  "mykn.components.Paginator.labelGoToPage": [
     {
       "type": 0,
       "value": "naar pagina"
     }
   ],
-  "components.Paginator.labelLoading": [
+  "mykn.components.Paginator.labelLoading": [
     {
       "type": 0,
       "value": "bezig met laden..."
     }
   ],
-  "components.Paginator.labelNext": [
+  "mykn.components.Paginator.labelNext": [
     {
       "type": 0,
       "value": "volgende"
     }
   ],
-  "components.Paginator.labelPageSize": [
+  "mykn.components.Paginator.labelPageSize": [
     {
       "type": 0,
       "value": "aantal resultaten"
     }
   ],
-  "components.Paginator.labelPagination": [
+  "mykn.components.Paginator.labelPagination": [
     {
       "type": 0,
       "value": "paginering"
     }
   ],
-  "components.Paginator.labelPrevious": [
+  "mykn.components.Paginator.labelPrevious": [
     {
       "type": 0,
       "value": "vorige"
     }
   ],
-  "components.Select.labelClear": [
+  "mykn.components.Select.labelClear": [
     {
       "type": 0,
       "value": "waarde wissen"
