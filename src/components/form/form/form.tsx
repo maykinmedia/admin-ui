@@ -113,8 +113,8 @@ export const Form: React.FC<FormProps> = ({
   const _labelSubmit = labelSubmit
     ? labelSubmit
     : intl.formatMessage({
-        id: "components.Form.labelSubmit",
-        description: "components.Form: The submit form label",
+        id: "mykn.components.Form.labelSubmit",
+        description: "mykn.components.Form: The submit form label",
         defaultMessage: "verzenden",
       });
 

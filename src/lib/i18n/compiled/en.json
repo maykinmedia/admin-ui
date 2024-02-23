@@ -1,23 +1,23 @@
 {
-  "components.Bool.labelFalse": [
+  "mykn.components.Bool.labelFalse": [
     {
       "type": 0,
       "value": "no"
     }
   ],
-  "components.Bool.labelTrue": [
+  "mykn.components.Bool.labelTrue": [
     {
       "type": 0,
       "value": "yes"
     }
   ],
-  "components.Form.labelSubmit": [
+  "mykn.components.Form.labelSubmit": [
     {
       "type": 0,
       "value": "submit"
     }
   ],
-  "components.Logo.hrefLabel": [
+  "mykn.components.Logo.hrefLabel": [
     {
       "type": 0,
       "value": "go to \""
@@ -31,13 +31,13 @@
       "value": "\""
     }
   ],
-  "components.Logo.label": [
+  "mykn.components.Logo.label": [
     {
       "type": 0,
       "value": "Maykin logo"
     }
   ],
-  "components.Paginator.labelCurrentPageRange": [
+  "mykn.components.Paginator.labelCurrentPageRange": [
     {
       "type": 0,
       "value": "result "
@@ -67,43 +67,43 @@
       "value": " pages"
     }
   ],
-  "components.Paginator.labelGoToPage": [
+  "mykn.components.Paginator.labelGoToPage": [
     {
       "type": 0,
       "value": "go to page"
     }
   ],
-  "components.Paginator.labelLoading": [
+  "mykn.components.Paginator.labelLoading": [
     {
       "type": 0,
       "value": "loading..."
     }
   ],
-  "components.Paginator.labelNext": [
+  "mykn.components.Paginator.labelNext": [
     {
       "type": 0,
       "value": "next"
     }
   ],
-  "components.Paginator.labelPageSize": [
+  "mykn.components.Paginator.labelPageSize": [
     {
       "type": 0,
       "value": "number of results"
     }
   ],
-  "components.Paginator.labelPagination": [
+  "mykn.components.Paginator.labelPagination": [
     {
       "type": 0,
       "value": "pagination"
     }
   ],
-  "components.Paginator.labelPrevious": [
+  "mykn.components.Paginator.labelPrevious": [
     {
       "type": 0,
       "value": "previous"
     }
   ],
-  "components.Select.labelClear": [
+  "mykn.components.Select.labelClear": [
     {
       "type": 0,
       "value": "clear value"

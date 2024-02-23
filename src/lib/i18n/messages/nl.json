@@ -1,67 +1,67 @@
 {
-  "components.Bool.labelFalse": {
+  "mykn.components.Bool.labelFalse": {
     "defaultMessage": "nee",
-    "description": "components.Bool: The accessible label when value is falsy",
+    "description": "mykn.components.Bool: The accessible label when value is falsy",
     "originalDefault": "nee"
   },
-  "components.Bool.labelTrue": {
+  "mykn.components.Bool.labelTrue": {
     "defaultMessage": "ja",
-    "description": "components.Bool: The accessible label when value is truthy",
+    "description": "mykn.components.Bool: The accessible label when value is truthy",
     "originalDefault": "ja"
   },
-  "components.Form.labelSubmit": {
+  "mykn.components.Form.labelSubmit": {
     "defaultMessage": "verzenden",
-    "description": "components.Form: The submit form label",
+    "description": "mykn.components.Form: The submit form label",
     "originalDefault": "verzenden"
   },
-  "components.Logo.hrefLabel": {
+  "mykn.components.Logo.hrefLabel": {
     "defaultMessage": "go to \"{href}\"",
-    "description": "components.Logo: An aria-label describing the link action",
+    "description": "mykn.components.Logo: An aria-label describing the link action",
     "originalDefault": "go to \"{href}\""
   },
-  "components.Logo.label": {
+  "mykn.components.Logo.label": {
     "defaultMessage": "Maykin logo",
-    "description": "components.Logo: The aria-label to set on the SVG element",
+    "description": "mykn.components.Logo: The aria-label to set on the SVG element",
     "originalDefault": "Maykin logo"
   },
-  "components.Paginator.labelCurrentPageRange": {
+  "mykn.components.Paginator.labelCurrentPageRange": {
     "defaultMessage": "resultaat {pageStart} t/m {pageEnd} van {pageCount} pagina's",
-    "description": "components.Paginator: The current page range (accessible) label",
+    "description": "mykn.components.Paginator: The current page range (accessible) label",
     "originalDefault": "resultaat {pageStart} t/m {pageEnd} van {pageCount} pagina's"
   },
-  "components.Paginator.labelGoToPage": {
+  "mykn.components.Paginator.labelGoToPage": {
     "defaultMessage": "naar pagina",
-    "description": "components.Paginator: The go to page (accessible) label",
+    "description": "mykn.components.Paginator: The go to page (accessible) label",
     "originalDefault": "naar pagina"
   },
-  "components.Paginator.labelLoading": {
+  "mykn.components.Paginator.labelLoading": {
     "defaultMessage": "bezig met laden...",
-    "description": "components.Paginator: The loading (accessible) label",
+    "description": "mykn.components.Paginator: The loading (accessible) label",
     "originalDefault": "bezig met laden..."
   },
-  "components.Paginator.labelNext": {
+  "mykn.components.Paginator.labelNext": {
     "defaultMessage": "volgende",
-    "description": "components.Paginator: The go to next page (accessible) label",
+    "description": "mykn.components.Paginator: The go to next page (accessible) label",
     "originalDefault": "volgende"
   },
-  "components.Paginator.labelPageSize": {
+  "mykn.components.Paginator.labelPageSize": {
     "defaultMessage": "aantal resultaten",
-    "description": "components.Paginator: The page size (accessible) label",
+    "description": "mykn.components.Paginator: The page size (accessible) label",
     "originalDefault": "aantal resultaten"
   },
-  "components.Paginator.labelPagination": {
+  "mykn.components.Paginator.labelPagination": {
     "defaultMessage": "paginering",
-    "description": "components.Paginator: The pagination (accessible) label",
+    "description": "mykn.components.Paginator: The pagination (accessible) label",
     "originalDefault": "paginering"
   },
-  "components.Paginator.labelPrevious": {
+  "mykn.components.Paginator.labelPrevious": {
     "defaultMessage": "vorige",
-    "description": "components.Paginator: The go to previous page (accessible) label",
+    "description": "mykn.components.Paginator: The go to previous page (accessible) label",
     "originalDefault": "vorige"
   },
-  "components.Select.labelClear": {
+  "mykn.components.Select.labelClear": {
     "defaultMessage": "waarde wissen",
-    "description": "components.Select: The clear value (accessible) label",
+    "description": "mykn.components.Select: The clear value (accessible) label",
     "originalDefault": "waarde wissen"
   },
   "mm+twj": {

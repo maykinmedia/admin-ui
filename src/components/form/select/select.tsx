@@ -110,8 +110,9 @@ export const Select: React.FC<SelectProps> = ({
   const _labelClear = labelClear
     ? formatMessage(labelClear, i18nContext)
     : intl.formatMessage({
-        id: "components.Select.labelClear",
-        description: "components.Select: The clear value (accessible) label",
+        id: "mykn.components.Select.labelClear",
+        description:
+          "mykn.components.Select: The clear value (accessible) label",
         defaultMessage: "waarde wissen",
       });
 

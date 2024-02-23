@@ -38,15 +38,17 @@ export const Bool: React.FC<BoolProps> = ({
   const _labelTrue =
     labelTrue ||
     intl.formatMessage({
-      id: "components.Bool.labelTrue",
-      description: "components.Bool: The accessible label when value is truthy",
+      id: "mykn.components.Bool.labelTrue",
+      description:
+        "mykn.components.Bool: The accessible label when value is truthy",
       defaultMessage: "ja",
     });
   const _labelFalse =
     labelFalse ||
     intl.formatMessage({
-      id: "components.Bool.labelFalse",
-      description: "components.Bool: The accessible label when value is falsy",
+      id: "mykn.components.Bool.labelFalse",
+      description:
+        "mykn.components.Bool: The accessible label when value is falsy",
       defaultMessage: "nee",
     });
 

@@ -128,9 +128,9 @@ export const Paginator: React.FC<PaginatorProps> = ({
     ? formatMessage(labelCurrentPageRange, context)
     : intl.formatMessage(
         {
-          id: "components.Paginator.labelCurrentPageRange",
+          id: "mykn.components.Paginator.labelCurrentPageRange",
           description:
-            "components.Paginator: The current page range (accessible) label",
+            "mykn.components.Paginator: The current page range (accessible) label",
           defaultMessage:
             "resultaat {pageStart} t/m {pageEnd} van {pageCount} pagina's",
         },
@@ -141,9 +141,9 @@ export const Paginator: React.FC<PaginatorProps> = ({
     ? formatMessage(labelGoToPage, context)
     : intl.formatMessage(
         {
-          id: "components.Paginator.labelGoToPage",
+          id: "mykn.components.Paginator.labelGoToPage",
           description:
-            "components.Paginator: The go to page (accessible) label",
+            "mykn.components.Paginator: The go to page (accessible) label",
           defaultMessage: "naar pagina",
         },
         context,
@@ -153,8 +153,9 @@ export const Paginator: React.FC<PaginatorProps> = ({
     ? formatMessage(labelPageSize, context)
     : intl.formatMessage(
         {
-          id: "components.Paginator.labelPageSize",
-          description: "components.Paginator: The page size (accessible) label",
+          id: "mykn.components.Paginator.labelPageSize",
+          description:
+            "mykn.components.Paginator: The page size (accessible) label",
           defaultMessage: "aantal resultaten",
         },
         context,
@@ -164,9 +165,9 @@ export const Paginator: React.FC<PaginatorProps> = ({
     ? formatMessage(labelPagination, context)
     : intl.formatMessage(
         {
-          id: "components.Paginator.labelPagination",
+          id: "mykn.components.Paginator.labelPagination",
           description:
-            "components.Paginator: The pagination (accessible) label",
+            "mykn.components.Paginator: The pagination (accessible) label",
           defaultMessage: "paginering",
         },
         context,
@@ -176,9 +177,9 @@ export const Paginator: React.FC<PaginatorProps> = ({
     ? formatMessage(labelPrevious, context)
     : intl.formatMessage(
         {
-          id: "components.Paginator.labelPrevious",
+          id: "mykn.components.Paginator.labelPrevious",
           description:
-            "components.Paginator: The go to previous page (accessible) label",
+            "mykn.components.Paginator: The go to previous page (accessible) label",
           defaultMessage: "vorige",
         },
         context,
@@ -188,9 +189,9 @@ export const Paginator: React.FC<PaginatorProps> = ({
     ? formatMessage(labelNext, context)
     : intl.formatMessage(
         {
-          id: "components.Paginator.labelNext",
+          id: "mykn.components.Paginator.labelNext",
           description:
-            "components.Paginator: The go to next page (accessible) label",
+            "mykn.components.Paginator: The go to next page (accessible) label",
           defaultMessage: "volgende",
         },
         context,
@@ -200,8 +201,9 @@ export const Paginator: React.FC<PaginatorProps> = ({
     ? formatMessage(labelLoading, context)
     : intl.formatMessage(
         {
-          id: "components.Paginator.labelLoading",
-          description: "components.Paginator: The loading (accessible) label",
+          id: "mykn.components.Paginator.labelLoading",
+          description:
+            "mykn.components.Paginator: The loading (accessible) label",
           defaultMessage: "bezig met laden...",
         },
         context,
