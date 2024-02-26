@@ -27,6 +27,7 @@ export const Login: React.FC<LoginProps> = ({ labelSubmit, ...formProps }) => {
   const labelLogin = labelSubmit
     ? labelSubmit
     : intl.formatMessage({
+        id: "mykn.templates.Login.labelLogin",
         description: "templates.Login: The login button label",
         defaultMessage: "inloggen",
       });

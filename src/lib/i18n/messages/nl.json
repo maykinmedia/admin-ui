@@ -64,7 +64,7 @@
     "description": "mykn.components.Select: The clear value (accessible) label",
     "originalDefault": "waarde wissen"
   },
-  "mm+twj": {
+  "mykn.templates.Login.labelLogin": {
     "defaultMessage": "inloggen",
     "description": "templates.Login: The login button label",
     "originalDefault": "inloggen"
