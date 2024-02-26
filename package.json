@@ -44,16 +44,16 @@
   "types": "dist/esm/index.d.ts",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/maykinmedia/maykin-ui.git"
+    "url": "git+https://github.com/maykinmedia/admin-ui.git"
   },
   "author": {
     "name": "Maykin Media"
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/maykinmedia/maykin-ui/issues"
+    "url": "https://github.com/maykinmedia/admin-ui/issues"
   },
-  "homepage": "https://github.com/maykinmedia/maykin-ui#readme",
+  "homepage": "https://github.com/maykinmedia/admin-ui/#readme",
   "devDependencies": {
     "@commitlint/cli": "^18.4.4",
     "@formatjs/cli": "^6.2.7",
@@ -111,7 +111,6 @@
     "*.{js,jsx,ts,tsx,md}": "npm run lint:fix"
   },
   "readme": "ERROR: No README data found!",
-  "_id": "maykin-ui@0.0.0",
   "dependencies": {
     "@floating-ui/react": "^0.26.6",
     "@heroicons/react": "^2.1.1",
