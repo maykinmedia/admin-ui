@@ -75,7 +75,7 @@ export const FormComponent: Story = {
   },
 };
 
-export const usageWithFormik: Story = {
+export const UsageWithFormik: Story = {
   ...FormComponent,
   args: {
     ...FormComponent.args,
