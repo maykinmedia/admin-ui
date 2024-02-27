@@ -37,8 +37,11 @@ export const sortAttributeDataArray = <T = AttributeData>(
     const valueB = b[field];
 
     // Use String.localeCompare for strings.
-    if (typeof valueA === "string" && typeof valueB === "string") {
-      return multiplier * valueA.localeCompare(valueB);
+    if (typeof valueA === "string" || typeof valueB === "string") {
+      return (
+        multiplier *
+        ((valueA || "") as string).localeCompare((valueB || "") as string)
+      );
     }
 
     return (
