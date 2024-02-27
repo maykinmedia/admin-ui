@@ -46,7 +46,7 @@ export const Value: React.FC<ValueProps> = ({
   }
 
   if (isNull(value)) {
-    return "-";
+    return <P {...pProps}>-</P>;
   }
 
   const string = String(value);
