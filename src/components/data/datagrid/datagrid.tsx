@@ -72,6 +72,13 @@ export type DataGridProps = {
   /** A title for the datagrid. */
   title?: string;
 
+  /** Gets called when a result is selected. */
+  onClick?: (
+    event: React.MouseEvent<HTMLAnchorElement>,
+    attributeData: DataGridProps["results"][number],
+  ) => void;
+
+  /** Gets called when the results are sorted. */
   onSort?: (sort: string) => Promise<unknown> | void;
 } & PaginatorPropsAliases;
 
@@ -108,6 +115,7 @@ type PaginatorPropsAliases = {
  * @param page
  * @param pageSize
  * @param pageSizeOptions
+ * @param onClick
  * @param onPageChange
  * @param onPageSizeChange
  * @param props
@@ -132,6 +140,7 @@ export const DataGrid: React.FC<DataGridProps> = ({
   page,
   pageSize,
   pageSizeOptions,
+  onClick,
   onPageChange,
   onPageSizeChange,
   ...props
@@ -205,6 +214,7 @@ export const DataGrid: React.FC<DataGridProps> = ({
         field={field}
         fields={fields}
         urlFields={urlFields}
+        onClick={onClick}
       />
     );
   };
@@ -326,6 +336,7 @@ export type DataGridCellProps = {
   field: string;
   fields: DataGridProps["fields"];
   urlFields: DataGridProps["urlFields"];
+  onClick: DataGridProps["onClick"];
 };
 
 /**
@@ -338,6 +349,7 @@ export type DataGridCellProps = {
  * @param fields
  * @param rowData
  * @param urlFields
+ * @param onClick
  * @constructor
  * @private
  */
@@ -350,10 +362,11 @@ export const DataGridCell: React.FC<DataGridCellProps> = ({
   fields = [],
   rowData,
   urlFields = DEFAULT_URL_FIELDS,
+  onClick,
 }) => {
   const renderableFields = fields.filter((f) => !urlFields.includes(f));
   const fieldIndex = renderableFields.indexOf(field);
-  const urlField = urlFields.find((f) => isLink(String(rowData[f])));
+  const urlField = urlFields.find((f) => rowData[f]);
   const rowUrl = urlField ? rowData[urlField] : null;
   const value = rowData[field];
   const type = isNull(value) ? "null" : typeof value;
@@ -370,7 +383,11 @@ export const DataGridCell: React.FC<DataGridCellProps> = ({
       aria-description={field2Caption(field as string)}
     >
       {link && (
-        <A href={link} aria-label={link}>
+        <A
+          href={link}
+          aria-label={link}
+          onClick={(e) => onClick && onClick(e, rowData)}
+        >
           <Outline.ArrowTopRightOnSquareIcon />
         </A>
       )}
