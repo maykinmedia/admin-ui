@@ -1,8 +1,8 @@
 import clsx from "clsx";
-import React, {useContext} from "react";
+import React, { useContext } from "react";
 
+import { ConfigContext } from "../../../contexts";
 import "./column.scss";
-import {ConfigContext} from "../../../contexts";
 
 export type ColumnProps = React.PropsWithChildren<{
   /** The number of columns to span. */
