@@ -20,19 +20,28 @@ const TYPE_ENUM = [
   "test",
 ];
 
+/**
+ * Simple commitlint plugin that allows a custom function to be executed.
+ * @type {{rules: {functionRule: (function(*, *, *): *)}}}
+ */
+const functionRulePlugin = {
+  rules: {
+    functionRule: (parsed, when, value) => {
+      if (typeof value !== "function") {
+        throw new Error(value, "is not a function!");
+      }
+      return value(parsed, when);
+    },
+  },
+};
+
 module.exports = {
-  plugins: ["commitlint-plugin-function-rules"],
+  plugins: [functionRulePlugin],
   rules: {
     "header-full-stop": [2, "never"],
-    "function-rules/header-max-length": [
-      2, // level: error
+    functionRule: [
+      2,
       "always",
-      /**
-       * Override header-max-length to provide pattern matching for commit headers.
-       * Format should be: ":gitmoji: #ticket - type: description
-       * @param header
-       * @return {[boolean,string]}
-       */
       ({ header }) => {
         const match = header.match(COMMIT_PATTERN);
 
@@ -52,7 +61,6 @@ module.exports = {
           false,
           "Commit message format invalid: \n\nFormat: <gitmoji>[ [ticket]] - <type>[([optional scope])]: <description>.\nExample: :sparkles: #1 - feat: implement new feature",
         ];
-        q;
       },
     ],
   },
