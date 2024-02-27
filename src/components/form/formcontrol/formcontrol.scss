@@ -7,4 +7,10 @@
   .mykn-select {
     width: 100%;
   }
+
+  &--direction-horizontal {
+    align-items: center;
+    flex-direction: row;
+    white-space: nowrap;
+  }
 }

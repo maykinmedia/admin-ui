@@ -4,6 +4,22 @@
   gap: var(--spacing-v-l);
   width: 100%;
 
+  &__fieldset {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-v-l);
+    width: 100%;
+  }
+
+  &--direction-horizontal {
+    width: auto;
+  }
+
+  &--direction-horizontal &__fieldset, {
+    flex-direction: row;
+    width: auto;
+  }
+
   .mykn-toolbar .mykn-button {
     justify-content: center;
   }

@@ -30,6 +30,9 @@ export type FormProps = React.ComponentProps<"form"> & {
   /** If set, show `valuesState`. */
   debug?: boolean;
 
+  /** The direction in which to render the form. */
+  direction?: "vertical" | "horizontal";
+
   /** The initial form values, only applies on initial render. */
   initialValues?: AttributeData<Attribute | Attribute[]>;
 
@@ -74,6 +77,7 @@ export type FormProps = React.ComponentProps<"form"> & {
  * Generic form component, capable of auto rendering `fields` based on their shape.
  * @param children
  * @param debug
+ * @param direction
  * @param errors
  * @param fields
  * @param initialValues
@@ -92,6 +96,7 @@ export type FormProps = React.ComponentProps<"form"> & {
 export const Form: React.FC<FormProps> = ({
   children,
   debug = false,
+  direction = "vertical",
   errors,
   fields = [],
   initialValues = {},
@@ -108,6 +113,7 @@ export const Form: React.FC<FormProps> = ({
 }) => {
   const { debug: contextDebug } = useContext(ConfigContext);
   const _debug = debug || contextDebug;
+  const _nonFieldErrors = forceArray(nonFieldErrors);
 
   const [valuesState, setValuesState] = useState(initialValues);
   useEffect(() => values && setValuesState(values), [values]);
@@ -180,31 +186,44 @@ export const Form: React.FC<FormProps> = ({
   };
 
   return (
-    <form className="mykn-form" onSubmit={defaultOnSubmit} {...props}>
-      {forceArray(nonFieldErrors)?.map((error) => (
-        <ErrorMessage key={error}>{error}</ErrorMessage>
-      ))}
+    <form
+      className={clsx("mykn-form", `mykn-form--direction-${direction}`)}
+      onSubmit={defaultOnSubmit}
+      {...props}
+    >
+      {_nonFieldErrors?.length && (
+        <div className="mykn-form__non-field-errors">
+          {_nonFieldErrors?.map((error) => (
+            <ErrorMessage key={error}>{error}</ErrorMessage>
+          ))}
+        </div>
+      )}
 
-      {fields.map((field, index) => {
-        const value =
-          (field.value as string) ||
-          getValueFromFormData(fields, valuesState, field);
+      {Boolean(fields?.length) && (
+        <div className="mykn-form__fieldset">
+          {fields.map((field, index) => {
+            const value =
+              (field.value as string) ||
+              getValueFromFormData(fields, valuesState, field);
 
-        const error = getErrorFromErrors(fields, errorsState, field);
-        const change = defaultOnChange;
+            const error = getErrorFromErrors(fields, errorsState, field);
+            const change = defaultOnChange;
 
-        return (
-          <FormControl
-            key={field.id || index}
-            error={error}
-            value={value}
-            onChange={change as ChangeEventHandler}
-            {...field}
-          ></FormControl>
-        );
-      })}
+            return (
+              <FormControl
+                key={field.id || index}
+                direction={direction}
+                error={error}
+                value={value}
+                onChange={change as ChangeEventHandler}
+                {...field}
+              ></FormControl>
+            );
+          })}
+        </div>
+      )}
 
-      {children}
+      {children && <div className="mykn-form__fieldset">{children}</div>}
 
       {_debug && <pre role="log">{JSON.stringify(valuesState)}</pre>}
 
