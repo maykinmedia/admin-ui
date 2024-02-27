@@ -2,7 +2,7 @@
   container-name: container;
   container-type: inline-size;
   margin: 0 auto;
-  max-width: 1240px;
+  max-width: var(--page-container-size);
   width: 100%;
 
   &--debug {
