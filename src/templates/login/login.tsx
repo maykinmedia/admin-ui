@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 
 import {
   Body,
@@ -12,16 +12,25 @@ import {
   Logo,
   Page,
 } from "../../components";
+import { ConfigContext } from "../../contexts";
 import { ucFirst } from "../../lib/format/string";
 import { useIntl } from "../../lib/i18n/useIntl";
 
-export type LoginProps = FormProps;
+export type LoginProps = FormProps & {
+  /** Logo (JSX) slot. */
+  slotLogo?: React.ReactNode;
+};
 
 /**
  * Login template
  * @constructor
  */
-export const Login: React.FC<LoginProps> = ({ labelSubmit, ...formProps }) => {
+export const Login: React.FC<LoginProps> = ({
+  labelSubmit,
+  slotLogo,
+  ...formProps
+}) => {
+  const { logo: CustomLogo } = useContext(ConfigContext);
   const intl = useIntl();
 
   const labelLogin = labelSubmit
@@ -39,7 +48,7 @@ export const Login: React.FC<LoginProps> = ({ labelSubmit, ...formProps }) => {
           <Column start={5} span={4}>
             <Card>
               <Body>
-                <Logo />
+                {slotLogo || CustomLogo || <Logo />}
                 <Hr />
                 <Form labelSubmit={ucFirst(labelLogin)} {...formProps} />
               </Body>

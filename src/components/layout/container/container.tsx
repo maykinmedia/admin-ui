@@ -1,6 +1,7 @@
 import clsx from "clsx";
-import React from "react";
+import React, { useContext } from "react";
 
+import { ConfigContext } from "../../../contexts";
 import "./container.scss";
 
 export type ContainerProps = React.PropsWithChildren<{
@@ -22,11 +23,16 @@ export const Container: React.FC<ContainerProps> = ({
   children,
   debug,
   ...props
-}) => (
-  <div
-    className={clsx("mykn-container", { "mykn-container--debug": debug })}
-    {...props}
-  >
-    {children}
-  </div>
-);
+}) => {
+  const { debug: contextDebug } = useContext(ConfigContext);
+  const _debug = debug || contextDebug;
+
+  return (
+    <div
+      className={clsx("mykn-container", { "mykn-container--debug": _debug })}
+      {...props}
+    >
+      {children}
+    </div>
+  );
+};
