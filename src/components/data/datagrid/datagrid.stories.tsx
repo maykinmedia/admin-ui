@@ -151,7 +151,7 @@ export const JSONPlaceholderExample: Story = {
     const [loading, setLoading] = useState(false);
     const [page, setPage] = useState<number>(args.paginatorProps?.page || 1);
     const [pageSize, setPageSize] = useState<number>(
-      args.paginatorProps?.pageSize || 10,
+      args.pageSize || 10,
     );
     const [results, setResults] = useState<AttributeData[]>([]);
     const [sort, setSort] = useState<string>("");

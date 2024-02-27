@@ -194,7 +194,6 @@ export const UsageWithFormik: Story = {
     type: "text",
   },
   argTypes: {
-    // @ts-expect-error - Using FormikProps here while SelectProps is expected.
     validate: { action: "validate" },
     onSubmit: { action: "onSubmit" },
   },
