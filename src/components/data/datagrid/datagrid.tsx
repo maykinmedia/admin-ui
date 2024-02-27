@@ -164,7 +164,7 @@ export const DataGrid: React.FC<DataGridProps> = ({
   const sortedResults =
     !onSort && sortField && sortDirection
       ? sortAttributeDataArray(results, sortField, sortDirection)
-      : results;
+      : results || [];
 
   /**
    * Get called when a column is sorted.

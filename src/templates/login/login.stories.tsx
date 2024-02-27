@@ -25,6 +25,6 @@ export const LoginTemplate: Story = {
       },
     ],
     labelSubmit: "Log in",
-    nonFieldErrors: ["Username or password invalid"],
+    nonFieldErrors: ["Gebruikersnaam of wachtwoord onjuist"],
   },
 };
