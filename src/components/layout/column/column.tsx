@@ -1,7 +1,8 @@
 import clsx from "clsx";
-import React from "react";
+import React, {useContext} from "react";
 
 import "./column.scss";
+import {ConfigContext} from "../../../contexts";
 
 export type ColumnProps = React.PropsWithChildren<{
   /** The number of columns to span. */
@@ -33,10 +34,13 @@ export const Column: React.FC<ColumnProps> = ({
   start,
   ...props
 }) => {
+  const { debug: contextDebug } = useContext(ConfigContext);
+  const _debug = debug || contextDebug;
+
   return (
     <div
       className={clsx("mykn-column", `mykn-column--span-${span}`, {
-        "mykn-column--debug": debug,
+        "mykn-column--debug": _debug,
         [`mykn-column--start-${start}`]: start,
       })}
       {...props}

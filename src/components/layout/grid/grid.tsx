@@ -1,6 +1,7 @@
 import clsx from "clsx";
-import React from "react";
+import React, { useContext } from "react";
 
+import { ConfigContext } from "../../../contexts";
 import "./grid.scss";
 
 export type GridProps = React.PropsWithChildren<{
@@ -18,8 +19,16 @@ export type GridProps = React.PropsWithChildren<{
  * @param props
  * @constructor
  */
-export const Grid: React.FC<GridProps> = ({ children, debug, ...props }) => (
-  <div className={clsx("mykn-grid", { "mykn-grid--debug": debug })} {...props}>
-    {children}
-  </div>
-);
+export const Grid: React.FC<GridProps> = ({ children, debug, ...props }) => {
+  const { debug: contextDebug } = useContext(ConfigContext);
+  const _debug = debug || contextDebug;
+
+  return (
+    <div
+      className={clsx("mykn-grid", { "mykn-grid--debug": _debug })}
+      {...props}
+    >
+      {children}
+    </div>
+  );
+};

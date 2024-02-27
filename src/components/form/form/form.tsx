@@ -1,10 +1,13 @@
+import clsx from "clsx";
 import React, {
   ChangeEventHandler,
   FormEvent,
+  useContext,
   useEffect,
   useState,
 } from "react";
 
+import { ConfigContext } from "../../../contexts";
 import { Attribute, AttributeData } from "../../../lib/data/attributedata";
 import { FormField } from "../../../lib/form/typeguards";
 import {
@@ -103,6 +106,9 @@ export const Form: React.FC<FormProps> = ({
   values,
   ...props
 }) => {
+  const { debug: contextDebug } = useContext(ConfigContext);
+  const _debug = debug || contextDebug;
+
   const [valuesState, setValuesState] = useState(initialValues);
   useEffect(() => values && setValuesState(values), [values]);
   const [errorsState, setErrorsState] = useState(errors || {});
@@ -200,7 +206,7 @@ export const Form: React.FC<FormProps> = ({
 
       {children}
 
-      {debug && <pre role="log">{JSON.stringify(valuesState)}</pre>}
+      {_debug && <pre role="log">{JSON.stringify(valuesState)}</pre>}
 
       {showActions && (
         <Toolbar
