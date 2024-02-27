@@ -2,7 +2,7 @@ import React from "react";
 
 import "./errormessage.scss";
 
-export type ErrorMessageProps = React.ComponentProps<"span">;
+export type ErrorMessageProps = React.ComponentProps<"div">;
 
 /**
  * ErrorMessage component
@@ -14,7 +14,7 @@ export const ErrorMessage: React.FC<ErrorMessageProps> = ({
   children,
   ...props
 }) => (
-  <span className="mykn-errormessage" role={"alert"} {...props}>
+  <div className="mykn-errormessage" role={"alert"} {...props}>
     {children}
-  </span>
+  </div>
 );
