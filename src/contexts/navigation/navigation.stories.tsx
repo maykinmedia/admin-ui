@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import * as React from "react";
 
 import { Button, ButtonLink, Navbar, Outline } from "../../components";
+import { List } from "../../templates";
 import { NavigationContext } from "./navigation";
 
 const meta = {
@@ -46,6 +47,7 @@ export const PrimaryNavigation: Story = {
         ),
       }}
     >
+      <List />
     </NavigationContext.Provider>
   ),
 };
