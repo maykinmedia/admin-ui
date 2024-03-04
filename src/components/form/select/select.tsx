@@ -388,18 +388,16 @@ const BaseSelectDropdown: React.FC<SelectDropdownProps> = ({
 
   return (
     open && (
-      <FloatingPortal>
-        <FloatingFocusManager context={context} modal={false}>
-          <div
-            ref={forwardedRef}
-            className="mykn-select__dropdown"
-            style={floatingStyles}
-            {...getFloatingProps()}
-          >
-            {renderOptions()}
-          </div>
-        </FloatingFocusManager>
-      </FloatingPortal>
+      <FloatingFocusManager context={context} modal={false}>
+        <div
+          ref={forwardedRef}
+          className="mykn-select__dropdown"
+          style={floatingStyles}
+          {...getFloatingProps()}
+        >
+          {renderOptions()}
+        </div>
+      </FloatingFocusManager>
     )
   );
 };
