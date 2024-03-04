@@ -1,16 +1,7 @@
-import React, { useContext } from "react";
+import React from "react";
 
-import {
-  Body,
-  Card,
-  Column,
-  DataGrid,
-  DataGridProps,
-  Grid,
-  Logo,
-  Page,
-} from "../../components";
-import { ConfigContext, NavigationContext } from "../../contexts";
+import { DataGrid, DataGridProps } from "../../components";
+import { BodyBase } from "../base/bodyBase";
 
 export type ListProps = DataGridProps &
   React.PropsWithChildren<{
@@ -30,28 +21,9 @@ export const List: React.FC<ListProps> = ({
   slotLogo,
   slotPrimaryNavigation,
   ...props
-}) => {
-  const { logo: CustomLogo } = useContext(ConfigContext);
-  const { primaryNavigation } = useContext(NavigationContext);
-
-  return (
-    <Page>
-      <Grid>
-        <Column span={12}>
-          {slotLogo || CustomLogo || <Logo />}
-          {slotPrimaryNavigation || primaryNavigation}
-        </Column>
-
-        <Column span={12}>
-          {children}
-
-          <Card>
-            <Body>
-              <DataGrid {...props} />
-            </Body>
-          </Card>
-        </Column>
-      </Grid>
-    </Page>
-  );
-};
+}) => (
+  <BodyBase slotLogo={slotLogo} slotPrimaryNavigation={slotPrimaryNavigation}>
+    {children}
+    <DataGrid {...props} />
+  </BodyBase>
+);
