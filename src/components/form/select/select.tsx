@@ -247,20 +247,19 @@ export const Select: React.FC<SelectProps> = ({
         <Solid.ChevronDownIcon />
       </div>
 
-      <FloatingPortal root={refs.reference.current as HTMLDivElement}>
-        <SelectDropdown
-          ref={refs.setFloating}
-          activeIndex={activeIndex}
-          selectedIndex={selectedIndex}
-          context={context}
-          floatingStyles={floatingStyles}
-          handleChange={handleChange}
-          open={isOpen}
-          options={options}
-          setActiveIndex={setActiveIndex}
-          setSelectedIndex={setSelectedIndex}
-        />
-      </FloatingPortal>
+      <SelectDropdown
+        ref={refs.setFloating}
+        activeIndex={activeIndex}
+        selectedIndex={selectedIndex}
+        context={context}
+        floatingStyles={floatingStyles}
+        handleChange={handleChange}
+        open={isOpen}
+        options={options}
+        portalRoot={refs.reference.current as HTMLDivElement}
+        setActiveIndex={setActiveIndex}
+        setSelectedIndex={setSelectedIndex}
+      />
     </>
   );
 };
@@ -271,10 +270,11 @@ export type SelectDropdownProps = React.PropsWithChildren<{
   selectedIndex: number | null;
   setSelectedIndex: (index: number | null) => void;
   context: FloatingContext;
-  open: boolean;
   floatingStyles: React.CSSProperties;
-  handleChange: (event: React.UIEvent, index: number) => void;
+  open: boolean;
   options: Option[];
+  portalRoot: HTMLElement;
+  handleChange: (event: React.UIEvent, index: number) => void;
   forwardedRef?: React.ForwardedRef<HTMLDivElement>;
 }>;
 
@@ -288,6 +288,7 @@ export type SelectDropdownProps = React.PropsWithChildren<{
  * @param handleChange
  * @param open
  * @param options
+ * @param portalRoot
  * @param setActiveIndex
  * @param setSelectedIndex
  * @private
@@ -302,6 +303,7 @@ const BaseSelectDropdown: React.FC<SelectDropdownProps> = ({
   handleChange,
   open,
   options = [],
+  portalRoot,
   setActiveIndex,
   setSelectedIndex,
 }) => {
@@ -388,16 +390,18 @@ const BaseSelectDropdown: React.FC<SelectDropdownProps> = ({
 
   return (
     open && (
-      <FloatingFocusManager context={context} modal={false}>
-        <div
-          ref={forwardedRef}
-          className="mykn-select__dropdown"
-          style={floatingStyles}
-          {...getFloatingProps()}
-        >
-          {renderOptions()}
-        </div>
-      </FloatingFocusManager>
+      <FloatingPortal root={portalRoot}>
+        <FloatingFocusManager context={context} modal={false}>
+          <div
+            ref={forwardedRef}
+            className="mykn-select__dropdown"
+            style={floatingStyles}
+            {...getFloatingProps()}
+          >
+            {renderOptions()}
+          </div>
+        </FloatingFocusManager>
+      </FloatingPortal>
     )
   );
 };
