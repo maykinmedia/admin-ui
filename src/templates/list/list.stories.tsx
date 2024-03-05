@@ -2,7 +2,6 @@ import type { Meta, StoryObj } from "@storybook/react";
 import * as React from "react";
 import { useEffect, useState } from "react";
 
-import { P } from "../../components";
 import { AttributeData } from "../../lib/data/attributedata";
 import { List } from "./list";
 
@@ -17,7 +16,6 @@ type Story = StoryObj<typeof meta>;
 
 export const ListTemplate: Story = {
   args: {
-    children: <P>The quick brown fox jumps over the lazy dog.</P>,
     pageSize: 50,
     results: [],
     showPaginator: true,
