@@ -31,7 +31,10 @@ const DEFAULT_URL_FIELDS = [
 ];
 
 export type DataGridProps = {
-  /** The results (after pagination), only primitive types supported for now. */
+  /**
+   * The results (after pagination), only primitive types supported for now.
+   * TODO: Rename to Django-like name (objectList?)
+   */
   results: AttributeData[];
 
   /** A `string[]` containing the keys in `results` to show data for. */
