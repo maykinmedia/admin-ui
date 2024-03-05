@@ -30,7 +30,7 @@ export const ListTemplate: Story = {
     const [sort, setSort] = useState<string>("");
 
     /**
-     * Fetches data from jsonplaceholder.typicode.com.
+     * Fetches object from jsonplaceholder.typicode.com.
      */
     useEffect(() => {
       setLoading(true);

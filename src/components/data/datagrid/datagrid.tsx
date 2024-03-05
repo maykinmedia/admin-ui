@@ -37,7 +37,7 @@ export type DataGridProps = {
    */
   results: AttributeData[];
 
-  /** A `string[]` containing the keys in `results` to show data for. */
+  /** A `string[]` containing the keys in `results` to show object for. */
   fields?: string[];
 
   /** Whether to allow sorting/the field to sort on. */
@@ -45,7 +45,7 @@ export type DataGridProps = {
 
   /**
    *  A `string[]` containing the fields which should be used to detect the url
-   *  of a row. Fields specified in this data won't be rendered, instead: the
+   *  of a row. Fields specified in this object won't be rendered, instead: the
    *  first (non url) field is rendered as link (`A`) with `href` set to the
    *  resolved url of the row.
    */

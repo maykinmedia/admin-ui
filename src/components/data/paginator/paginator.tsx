@@ -65,7 +65,7 @@ export type PaginatorProps = React.HTMLAttributes<HTMLElement> & {
 
 /**
  * Paginator component, can be used to show and manipulate information about the
- * current page and pages in a set of data.
+ * current page and pages in a set of object.
  *
  * The `onPageChange` callback is debounced and provided a mechanism for a
  * spinner to appear during load (see docs).

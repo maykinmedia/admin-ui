@@ -17,7 +17,7 @@ type Story = StoryObj<typeof meta>;
 export const AttributeListComponent: Story = {
   args: {
     title: "Eigenschappen",
-    data: {
+    object: {
       url: "https://www.example.com",
       Omschrijving: "Afvalpas vervangen",
       Zaaktype: "https://www.example.com",
@@ -34,7 +34,7 @@ export const SelectedFieldOnly: Story = {
   ...AttributeListComponent,
   args: {
     ...AttributeListComponent.args,
-    data: {
+    object: {
       ...AttributeListComponent.args.data,
       userId: 1,
     },
