@@ -7,9 +7,10 @@ import { Value } from "../value";
 import "./attributelist.scss";
 
 export type AttributeListProps = React.ComponentPropsWithoutRef<"div"> & {
-  data: AttributeData;
+  /** The object to show object attributes of. */
+  object: AttributeData;
 
-  /** The fields in data to show. */
+  /** The fields in object to show. */
   fields?: Array<keyof AttributeData>;
 
   /** A title for the attribute list. */
@@ -17,7 +18,7 @@ export type AttributeListProps = React.ComponentPropsWithoutRef<"div"> & {
 };
 
 /**
- * AttributeList component
+ * AttributeList component, shows multiple `fields` in `object`.
  * TODO: tooltip
  * @param title
  * @param data
@@ -27,8 +28,8 @@ export type AttributeListProps = React.ComponentPropsWithoutRef<"div"> & {
  */
 export const AttributeList: React.FC<AttributeListProps> = ({
   title = "",
-  data = {},
-  fields = Object.keys(data),
+  object = {},
+  fields = Object.keys(object),
   ...props
 }) => (
   <div className="mykn-attributelist" {...props}>
@@ -36,14 +37,14 @@ export const AttributeList: React.FC<AttributeListProps> = ({
 
     <dl className="mykn-attributelist__list">
       {fields.map((f) => (
-        <AttributePair key={f} data={data} field={f} />
+        <AttributePair key={f} object={object} field={f} />
       ))}
     </dl>
   </div>
 );
 
 export type AttributePairProps = {
-  data: AttributeData;
+  object: AttributeData;
   field: keyof AttributeData;
 };
 
@@ -56,14 +57,14 @@ export type AttributePairProps = {
  * @private
  */
 export const AttributePair: React.FC<AttributePairProps> = ({
-  data,
+  object,
   field,
 }) => {
   return (
     <>
       <dt className="mykn-attributelist__key">{field2Title(field)}</dt>
       <dd className="mykn-attributelist__value">
-        <Value value={data[field]} />
+        <Value value={object[field]} />
       </dd>
     </>
   );
