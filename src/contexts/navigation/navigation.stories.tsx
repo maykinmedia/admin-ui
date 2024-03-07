@@ -1,8 +1,15 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import * as React from "react";
 
-import { Button, ButtonLink, Navbar, Outline } from "../../components";
-import { List } from "../../templates";
+import {
+  Breadcrumbs,
+  Button,
+  ButtonLink,
+  Navbar,
+  Outline,
+  P,
+} from "../../components";
+import { BodyBase } from "../../templates";
 import { NavigationContext } from "./navigation";
 
 const meta = {
@@ -14,7 +21,7 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const PrimaryNavigation: Story = {
+export const Navigation: Story = {
   render: () => (
     <NavigationContext.Provider
       value={{
@@ -45,9 +52,19 @@ export const PrimaryNavigation: Story = {
             </Button>
           </Navbar>
         ),
+        breadcrumbs: (
+          <Breadcrumbs
+            items={[
+              { label: "Zaaktype", href: "#1" },
+              { label: "Zaaktype detail", href: "#2" },
+            ]}
+          />
+        ),
       }}
     >
-      <List />
+      <BodyBase>
+        <P>The quick brown fox jumps over the lazy dog.</P>
+      </BodyBase>
     </NavigationContext.Provider>
   ),
 };
