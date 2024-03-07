@@ -18,6 +18,9 @@ export type BaseProps = Partial<ColumnProps> &
     /** Whether to show the primary navigation. */
     showHeader?: boolean;
 
+    /** Breadcrumbs navigation (JSX) slot. */
+    slotBreadcrumbs?: React.ReactNode;
+
     /** Logo (JSX) slot. */
     slotLogo?: React.ReactNode;
 
@@ -33,20 +36,24 @@ export const Base: React.FC<BaseProps> = ({
   children,
   container = false,
   showHeader = true,
+  slotBreadcrumbs,
   slotLogo,
   slotPrimaryNavigation,
   ...props
 }) => {
   const { logo: CustomLogo } = useContext(ConfigContext);
-  const { primaryNavigation } = useContext(NavigationContext);
+  const { breadcrumbs, primaryNavigation } = useContext(NavigationContext);
 
   const renderContent = () => (
     <Grid>
       {showHeader && (
-        <Column span={12}>
-          {slotLogo || CustomLogo || <Logo />}
-          {slotPrimaryNavigation || primaryNavigation}
-        </Column>
+        <>
+          <Column span={12}>
+            {slotLogo || CustomLogo || <Logo />}
+            {slotPrimaryNavigation || primaryNavigation}
+          </Column>
+          <Column span={12}>{slotBreadcrumbs || breadcrumbs}</Column>
+        </>
       )}
 
       <Column span={12} {...props}>

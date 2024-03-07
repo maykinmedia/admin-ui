@@ -5,6 +5,9 @@ import { Base } from "./base";
 
 export type CardBaseProps = CardProps &
   React.PropsWithChildren<{
+    /** Breadcrumbs navigation (JSX) slot. */
+    slotBreadcrumbs?: React.ReactNode;
+
     /** Logo (JSX) slot. */
     slotLogo?: React.ReactNode;
 
@@ -18,11 +21,16 @@ export type CardBaseProps = CardProps &
  */
 export const CardBase: React.FC<CardBaseProps> = ({
   children,
+  slotBreadcrumbs,
   slotLogo,
   slotPrimaryNavigation,
   ...props
 }) => (
-  <Base slotLogo={slotLogo} slotPrimaryNavigation={slotPrimaryNavigation}>
+  <Base
+    slotBreadcrumbs={slotBreadcrumbs}
+    slotLogo={slotLogo}
+    slotPrimaryNavigation={slotPrimaryNavigation}
+  >
     <Card {...props}>{children}</Card>
   </Base>
 );
