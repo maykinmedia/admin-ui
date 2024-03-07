@@ -5,6 +5,9 @@ import { BodyBase } from "../base/bodyBase";
 
 export type ListProps = DataGridProps &
   React.PropsWithChildren<{
+    /** Breadcrumbs navigation (JSX) slot. */
+    slotBreadcrumbs?: React.ReactNode;
+
     /** Logo (JSX) slot. */
     slotLogo?: React.ReactNode;
 
@@ -18,11 +21,16 @@ export type ListProps = DataGridProps &
  */
 export const List: React.FC<ListProps> = ({
   children,
+  slotBreadcrumbs,
   slotLogo,
   slotPrimaryNavigation,
   ...props
 }) => (
-  <BodyBase slotLogo={slotLogo} slotPrimaryNavigation={slotPrimaryNavigation}>
+  <BodyBase
+    slotBreadcrumbs={slotBreadcrumbs}
+    slotLogo={slotLogo}
+    slotPrimaryNavigation={slotPrimaryNavigation}
+  >
     {children}
     <DataGrid {...props} />
   </BodyBase>
