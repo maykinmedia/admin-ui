@@ -10,13 +10,13 @@ export type BreadcrumbItem = {
   /** The label of the item. */
   label: string;
 
-  /** The path of the item. */
-  path: string;
+  /** The href of the item. */
+  href: string;
 };
 
 export type BreadcrumbsProps = {
-  /** The path */
-  pathItems: BreadcrumbItem[];
+  /** The href */
+  items: BreadcrumbItem[];
 
   /** Optional onClick handler, gets called when the item is clicked. */
   onClick?: (path: string) => void;
@@ -24,29 +24,29 @@ export type BreadcrumbsProps = {
 
 /**
  * Breadcrumbs component
- * @param pathItems the path items to display
+ * @param pathItems the href items to display
  * @param onClick the onClick handler that will be called when the item is clicked
  * @param props the Toolbar props
  * @constructor
  */
 export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
-  pathItems,
+  items,
   onClick,
   ...props
 }) => {
   return (
     <nav className="mykn-breadcrumbs" {...props}>
       <Ol inline listStyle="none">
-        {pathItems.map((item, index) => {
-          const isLastItem = index === pathItems.length - 1;
+        {items.map((item, index) => {
+          const isLastItem = index === items.length - 1;
 
           return (
-            <Li key={item.path} size="xs">
+            <Li key={item.href} size="xs">
               <A
-                href={item.path}
+                href={item.href}
                 muted={!isLastItem}
                 textDecoration="none"
-                onClick={() => onClick?.(item.path)}
+                onClick={() => onClick?.(item.href)}
               >
                 {item.label}
               </A>
