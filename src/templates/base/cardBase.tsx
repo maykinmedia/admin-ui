@@ -1,19 +1,12 @@
 import React from "react";
 
 import { Card, CardProps } from "../../components";
-import { Base } from "./base";
+import { Base, BaseProps } from "./base";
 
-export type CardBaseProps = CardProps &
-  React.PropsWithChildren<{
-    /** Breadcrumbs navigation (JSX) slot. */
-    slotBreadcrumbs?: React.ReactNode;
-
-    /** Logo (JSX) slot. */
-    slotLogo?: React.ReactNode;
-
-    /** Primary navigation (JSX) slot. */
-    slotPrimaryNavigation?: React.ReactNode;
-  }>;
+export type CardBaseProps = BaseProps & {
+  /** Card props.*/
+  cardProps?: CardProps;
+};
 
 /**
  * BodyBase template, renders children within card component.
@@ -21,16 +14,12 @@ export type CardBaseProps = CardProps &
  */
 export const CardBase: React.FC<CardBaseProps> = ({
   children,
-  slotBreadcrumbs,
-  slotLogo,
-  slotPrimaryNavigation,
+  cardProps,
   ...props
 }) => (
-  <Base
-    slotBreadcrumbs={slotBreadcrumbs}
-    slotLogo={slotLogo}
-    slotPrimaryNavigation={slotPrimaryNavigation}
-  >
-    <Card {...props}>{children}</Card>
+  <Base {...props}>
+    <Card {...cardProps}>
+      {children}
+    </Card>
   </Base>
 );
