@@ -1,23 +1,8 @@
 .mykn-breadcrumbs {
   display: flex;
 
-  &__list {
-    display: grid;
-    grid-auto-flow: column;
-    gap: var(--spacing-v-m);
-    list-style: none;
-  }
-
-  &__item {
-    display: grid;
-    grid-auto-flow: column;
-    gap: var(--spacing-v-xs);
-    align-items: center;
-    color: var(--typography-color-body);
-
-    &--last {
-      color: var(--page-color-primary);
-    }
+  .mykn-ol {
+    margin-block: 0;
   }
 
   .mykn-icon {

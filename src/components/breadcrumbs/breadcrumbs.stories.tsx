@@ -21,7 +21,7 @@ type Story = StoryObj<typeof meta>;
 
 export const BreadcrumbsComponent: Story = {
   args: {
-    pathItems: [
+    items: [
       {
         label: "Home",
         path: "/",
