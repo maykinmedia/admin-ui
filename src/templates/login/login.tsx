@@ -4,9 +4,15 @@ import { Body, Card, Form, FormProps, Hr, Logo } from "../../components";
 import { ConfigContext } from "../../contexts";
 import { ucFirst } from "../../lib/format/string";
 import { useIntl } from "../../lib/i18n/useIntl";
-import { Base } from "../base";
+import { Base, BaseProps } from "../base";
 
-export type LoginProps = FormProps & {
+export type LoginProps = BaseProps & {
+  /** Form props. */
+  formProps: FormProps;
+
+  /** The login form label. */
+  labelLogin?: string;
+
   /** Logo (JSX) slot. */
   slotLogo?: React.ReactNode;
 };
@@ -16,15 +22,16 @@ export type LoginProps = FormProps & {
  * @constructor
  */
 export const Login: React.FC<LoginProps> = ({
-  labelSubmit,
+  labelLogin,
   slotLogo,
-  ...formProps
+  formProps,
+  ...props
 }) => {
   const { logo: CustomLogo } = useContext(ConfigContext);
   const intl = useIntl();
 
-  const labelLogin = labelSubmit
-    ? labelSubmit
+  const _labelLogin = labelLogin
+    ? labelLogin
     : intl.formatMessage({
         id: "mykn.templates.Login.labelLogin",
         description: "templates.Login: The login button label",
@@ -32,12 +39,12 @@ export const Login: React.FC<LoginProps> = ({
       });
 
   return (
-    <Base showHeader={false} start={5} span={4}>
+    <Base showHeader={false} columnProps={{ start: 5, span: 4 }} {...props}>
       <Card>
         <Body>
           {slotLogo || CustomLogo || <Logo />}
           <Hr />
-          <Form labelSubmit={ucFirst(labelLogin)} {...formProps} />
+          <Form labelSubmit={ucFirst(_labelLogin)} {...formProps} />
         </Body>
       </Card>
     </Base>

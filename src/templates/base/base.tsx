@@ -10,23 +10,25 @@ import {
 } from "../../components";
 import { ConfigContext, NavigationContext } from "../../contexts";
 
-export type BaseProps = Partial<ColumnProps> &
-  React.PropsWithChildren<{
-    /** Whether to limit the content width using a container. */
-    container?: boolean;
+export type BaseProps = React.PropsWithChildren & {
+  /** Column props. */
+  columnProps?: ColumnProps;
 
-    /** Whether to show the primary navigation. */
-    showHeader?: boolean;
+  /** Whether to limit the content width using a container. */
+  container?: boolean;
 
-    /** Breadcrumbs navigation (JSX) slot. */
-    slotBreadcrumbs?: React.ReactNode;
+  /** Whether to show the primary navigation. */
+  showHeader?: boolean;
 
-    /** Logo (JSX) slot. */
-    slotLogo?: React.ReactNode;
+  /** Breadcrumbs navigation (JSX) slot. */
+  slotBreadcrumbs?: React.ReactNode;
 
-    /** Primary navigation (JSX) slot. */
-    slotPrimaryNavigation?: React.ReactNode;
-  }>;
+  /** Logo (JSX) slot. */
+  slotLogo?: React.ReactNode;
+
+  /** Primary navigation (JSX) slot. */
+  slotPrimaryNavigation?: React.ReactNode;
+};
 
 /**
  * Base template
@@ -34,12 +36,12 @@ export type BaseProps = Partial<ColumnProps> &
  */
 export const Base: React.FC<BaseProps> = ({
   children,
+  columnProps,
   container = false,
   showHeader = true,
   slotBreadcrumbs,
   slotLogo,
   slotPrimaryNavigation,
-  ...props
 }) => {
   const { logo: CustomLogo } = useContext(ConfigContext);
   const { breadcrumbs, primaryNavigation } = useContext(NavigationContext);
@@ -56,7 +58,7 @@ export const Base: React.FC<BaseProps> = ({
         </>
       )}
 
-      <Column span={12} {...props}>
+      <Column span={12} {...columnProps}>
         {children}
       </Column>
     </Grid>
