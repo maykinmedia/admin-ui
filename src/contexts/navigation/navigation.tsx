@@ -2,6 +2,7 @@ import React, { createContext } from "react";
 
 export type NavigationContextType = {
   primaryNavigation: React.ReactNode;
+  breadcrumbs?: React.ReactNode;
 };
 
 /**
@@ -10,4 +11,5 @@ export type NavigationContextType = {
  */
 export const NavigationContext = createContext<NavigationContextType>({
   primaryNavigation: null,
+  breadcrumbs: null,
 });
