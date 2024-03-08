@@ -17,7 +17,7 @@ type Story = StoryObj<typeof meta>;
 export const ListTemplate: Story = {
   args: {
     pageSize: 50,
-    results: [],
+    objectList: [],
     showPaginator: true,
     sort: true,
     title: "Lijstweergave",
@@ -26,7 +26,7 @@ export const ListTemplate: Story = {
     const [loading, setLoading] = useState(false);
     const [page, setPage] = useState<number>(args.paginatorProps?.page || 1);
     const [pageSize, setPageSize] = useState<number>(args.pageSize || 10);
-    const [results, setResults] = useState<AttributeData[]>([]);
+    const [objectList, setObjectList] = useState<AttributeData[]>([]);
     const [sort, setSort] = useState<string>("");
 
     /**
@@ -47,7 +47,7 @@ export const ListTemplate: Story = {
       )
         .then((response) => response.json())
         .then((data: AttributeData[]) => {
-          setResults(data);
+          setObjectList(data);
           setLoading(false);
         });
 
@@ -61,7 +61,7 @@ export const ListTemplate: Story = {
       <List
         {...args}
         count={100}
-        results={results}
+        objectList={objectList}
         onSort={(field) => setSort(field)}
         loading={loading}
         page={page}

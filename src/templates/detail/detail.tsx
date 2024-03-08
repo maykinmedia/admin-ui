@@ -4,7 +4,9 @@ import { AttributeGrid, AttributeGridProps } from "../../components";
 import { BodyBase, BodyBaseProps } from "../base/bodyBase";
 
 export type DetailProps = BodyBaseProps & {
-  attributeGridProps: AttributeGridProps;
+  attributeGridProps?: Partial<AttributeGridProps>;
+  object: AttributeGridProps["object"];
+  fieldsets: AttributeGridProps["fieldsets"];
 };
 
 /**
@@ -14,10 +16,16 @@ export type DetailProps = BodyBaseProps & {
 export const Detail: React.FC<DetailProps> = ({
   children,
   attributeGridProps,
+  object,
+  fieldsets,
   ...props
 }) => (
   <BodyBase {...props}>
     {children}
-    <AttributeGrid {...attributeGridProps} />
+    <AttributeGrid
+      {...attributeGridProps}
+      object={object}
+      fieldsets={fieldsets}
+    />
   </BodyBase>
 );

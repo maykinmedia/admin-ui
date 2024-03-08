@@ -7,11 +7,13 @@ import { useIntl } from "../../lib/i18n/useIntl";
 import { Base, BaseProps } from "../base";
 
 export type LoginProps = BaseProps & {
+  fields?: FormProps["fields"];
+
   /** Form props. */
   formProps: FormProps;
 
   /** The login form label. */
-  labelLogin?: string;
+  labelLogin?: FormProps["labelSubmit"];
 
   /** Logo (JSX) slot. */
   slotLogo?: React.ReactNode;
@@ -22,9 +24,10 @@ export type LoginProps = BaseProps & {
  * @constructor
  */
 export const Login: React.FC<LoginProps> = ({
+  fields,
+  formProps,
   labelLogin,
   slotLogo,
-  formProps,
   ...props
 }) => {
   const { logo: CustomLogo } = useContext(ConfigContext);
@@ -44,7 +47,11 @@ export const Login: React.FC<LoginProps> = ({
         <Body>
           {slotLogo || CustomLogo || <Logo />}
           <Hr />
-          <Form labelSubmit={ucFirst(_labelLogin)} {...formProps} />
+          <Form
+            fields={fields}
+            labelSubmit={ucFirst(_labelLogin)}
+            {...formProps}
+          />
         </Body>
       </Card>
     </Base>
