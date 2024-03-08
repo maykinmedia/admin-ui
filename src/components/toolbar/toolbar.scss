@@ -12,6 +12,10 @@
   text-align: start;
   width: 100%;
 
+  &--compact {
+    gap: 0;
+  }
+
   &--variant-transparent {
     background-color: transparent;
   }
@@ -93,7 +97,6 @@
 
   &--pad-v {
     padding-block: var(--spacing-v-s);
-
   }
 
   .mykn-a {

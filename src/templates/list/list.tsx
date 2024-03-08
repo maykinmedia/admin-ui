@@ -1,7 +1,7 @@
 import React from "react";
 
 import { DataGrid, DataGridProps } from "../../components";
-import { BodyBase } from "../base";
+import { CardBase } from "../base";
 import { BodyBaseProps } from "../base/bodyBase";
 
 export type ListProps = BodyBaseProps & {
@@ -41,7 +41,7 @@ export const List: React.FC<ListProps> = ({
   title,
   ...props
 }) => (
-  <BodyBase {...props}>
+  <CardBase {...props}>
     {children}
     <DataGrid
       {...dataGridProps}
@@ -58,5 +58,5 @@ export const List: React.FC<ListProps> = ({
       onPageChange={onPageChange}
       onPageSizeChange={onPageSizeChange}
     />
-  </BodyBase>
+  </CardBase>
 );
