@@ -7,12 +7,16 @@ import {
   Grid,
   Logo,
   Page,
+  PageProps,
 } from "../../components";
 import { ConfigContext, NavigationContext } from "../../contexts";
 
 export type BaseProps = React.PropsWithChildren & {
   /** Column props. */
   columnProps?: ColumnProps;
+
+  /** Page props. */
+  pageProps?: PageProps;
 
   /** Whether to limit the content width using a container. */
   container?: boolean;
@@ -40,6 +44,7 @@ export type BaseProps = React.PropsWithChildren & {
 export const Base: React.FC<BaseProps> = ({
   children,
   columnProps,
+  pageProps,
   container = false,
   showHeader = true,
   slotBreadcrumbs,
@@ -71,7 +76,7 @@ export const Base: React.FC<BaseProps> = ({
   );
 
   return (
-    <Page>
+    <Page {...pageProps}>
       {container ? <Container>{renderContent()}</Container> : renderContent()}
     </Page>
   );
