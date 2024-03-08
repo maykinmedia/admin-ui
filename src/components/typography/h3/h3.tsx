@@ -2,9 +2,7 @@ import React from "react";
 
 import "./h3.scss";
 
-export type H3Props = React.PropsWithChildren<
-  React.HTMLAttributes<HTMLHeadingElement>
->;
+export type H3Props = React.ComponentProps<"h3">;
 
 /**
  * H3 component

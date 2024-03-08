@@ -1,6 +1,6 @@
 import React from "react";
 
-import { FieldSet, attributeDataByFieldsets } from "../../../lib";
+import { FieldSet, attributeDataByFieldsets, slugify } from "../../../lib";
 import { Column, Grid } from "../../layout";
 import { Body, Hr } from "../../typography";
 import { AttributeList, AttributeListProps } from "../attributelist";
@@ -8,17 +8,21 @@ import "./attributegrid.scss";
 
 export type AttributeGridProps = AttributeListProps & {
   fieldsets: FieldSet[];
+  generateTitleIds?: boolean;
 };
 
 /**
  * AttributeGrid component, renders multiple `AttributeList`s in a `Grid` component based on `fieldsets`.
- * @param children
+ * @param object
+ * @param fieldsets
+ * @param generateTitleIds
  * @param props
  * @constructor
  */
 export const AttributeGrid: React.FC<AttributeGridProps> = ({
   object,
   fieldsets,
+  generateTitleIds = false,
   ...props
 }) => {
   const objectList =
@@ -60,7 +64,15 @@ export const AttributeGrid: React.FC<AttributeGridProps> = ({
             <Grid>
               {row.map(([span, props], colIndex) => (
                 <Column key={colIndex} span={span}>
-                  <AttributeList key={colIndex} {...props} />
+                  <AttributeList
+                    key={colIndex}
+                    titleId={
+                      generateTitleIds && props.title
+                        ? slugify(props.title)
+                        : undefined
+                    }
+                    {...props}
+                  />
                 </Column>
               ))}
             </Grid>
