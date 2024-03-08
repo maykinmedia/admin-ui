@@ -5,6 +5,7 @@
   "scripts": {
     "create-component": "./bin/create_component.sh",
     "build": "npm run rollup",
+    "watch": "npm run rollup:watch",
     "rebuild": "npm run clean && npm run build",
     "clean": "rm -rf ./dist",
     "makemessages": "npm run makemessages-en & npm run makemessages-nl",
@@ -21,6 +22,7 @@
     "chromatic": "npx chromatic",
     "commitlint": "commitlint --edit",
     "rollup": "rollup -c",
+    "rollup:watch": "rollup -cw",
     "prepare": "husky install"
   },
   "main": "dist/cjs/index.js",
