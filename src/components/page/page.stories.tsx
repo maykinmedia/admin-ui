@@ -132,7 +132,7 @@ export const ListViewSamplePage: Story = {
                       },
                     ],
                   }}
-                  results={[
+                  objectList={[
                     {
                       Omschrijving: "Afvalpas vervangen",
                       Versie: 2,

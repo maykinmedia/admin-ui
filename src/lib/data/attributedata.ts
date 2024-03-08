@@ -73,19 +73,19 @@ export const attributeDataByFields = (
   );
 
 /**
- * Sorts `results` by `field` based on `direction`.
- * @param results
+ * Sorts `objectList` by `field` based on `direction`.
+ * @param objectList
  * @param field
  * @param direction can be "ASC" or "DESC".
  */
 export const sortAttributeDataArray = <T = AttributeData>(
-  results: T[],
+  objectList: T[],
   field: keyof T,
   direction: "ASC" | "DESC",
 ): T[] => {
   const multiplier = direction === "ASC" ? 1 : -1;
 
-  return results.sort((a, b) => {
+  return objectList.sort((a, b) => {
     const valueA = a[field];
     const valueB = b[field];
 

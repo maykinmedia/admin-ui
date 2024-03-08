@@ -31,13 +31,10 @@ const DEFAULT_URL_FIELDS = [
 ];
 
 export type DataGridProps = {
-  /**
-   * The results (after pagination), only primitive types supported for now.
-   * TODO: Rename to Django-like name (objectList?)
-   */
-  results: AttributeData[];
+  /** The object list (after pagination), only primitive types supported for now. */
+  objectList: AttributeData[];
 
-  /** A `string[]` containing the keys in `results` to show object for. */
+  /** A `string[]` containing the keys in `objectList` to show object for. */
   fields?: string[];
 
   /** Whether to allow sorting/the field to sort on. */
@@ -75,13 +72,13 @@ export type DataGridProps = {
   /** A title for the datagrid. */
   title?: string;
 
-  /** Gets called when a result is selected. */
+  /** Gets called when an object is selected. */
   onClick?: (
     event: React.MouseEvent<HTMLAnchorElement>,
-    attributeData: DataGridProps["results"][number],
+    attributeData: DataGridProps["objectList"][number],
   ) => void;
 
-  /** Gets called when the results are sorted. */
+  /** Gets called when the object list is sorted. */
   onSort?: (sort: string) => Promise<unknown> | void;
 } & PaginatorPropsAliases;
 
@@ -104,9 +101,9 @@ type PaginatorPropsAliases = {
  * @param aProps
  * @param badgeProps
  * @param boolProps
+ * @param objectList
  * @param onSort
  * @param paginatorProps
- * @param results
  * @param fields
  * @param showPaginator
  * @param pProps
@@ -128,8 +125,8 @@ export const DataGrid: React.FC<DataGridProps> = ({
   aProps,
   badgeProps,
   boolProps,
-  results,
-  fields = results?.length ? Object.keys(results[0]) : [],
+  objectList,
+  fields = objectList?.length ? Object.keys(objectList[0]) : [],
   paginatorProps,
   showPaginator = Boolean(paginatorProps),
   pProps,
@@ -164,10 +161,10 @@ export const DataGrid: React.FC<DataGridProps> = ({
   const sortDirection = sortState?.[1];
   const titleId = title ? `${id}-caption` : undefined;
 
-  const sortedResults =
+  const sortedObjectList =
     !onSort && sortField && sortDirection
-      ? sortAttributeDataArray(results, sortField, sortDirection)
-      : results || [];
+      ? sortAttributeDataArray(objectList, sortField, sortDirection)
+      : objectList || [];
 
   /**
    * Get called when a column is sorted.
@@ -185,7 +182,7 @@ export const DataGrid: React.FC<DataGridProps> = ({
    * @param field
    */
   const renderCell = (rowData: AttributeData, field: string) => {
-    const rowIndex = sortedResults.indexOf(rowData);
+    const rowIndex = sortedObjectList.indexOf(rowData);
     const fieldIndex = renderableFields.indexOf(field);
     const page = paginatorProps?.page;
     const key = `sort-${sortField}${sortDirection}-page-${page}-row-$${rowIndex}-column-${fieldIndex}`;
@@ -241,7 +238,7 @@ export const DataGrid: React.FC<DataGridProps> = ({
           <tr className="mykn-datagrid__row" role="row">
             {renderableFields.map((field) => {
               const caption = field2Caption(field);
-              const data = results?.[0]?.[field];
+              const data = objectList?.[0]?.[field];
               const type = typeof data;
               const isSorted = sortField === field;
 
@@ -292,7 +289,7 @@ export const DataGrid: React.FC<DataGridProps> = ({
 
         {/* Cells */}
         <tbody className="mykn-datagrid__body" role="rowgroup">
-          {sortedResults.map((rowData, index) => (
+          {sortedObjectList.map((rowData, index) => (
             <tr key={`${id}-row-${index}`} className="mykn-datagrid__row">
               {renderableFields.map((field) =>
                 renderCell(rowData, String(field)),
