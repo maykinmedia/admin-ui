@@ -306,7 +306,7 @@ export const DataGrid: React.FC<DataGridProps> = ({
                 className="mykn-datagrid__cell"
                 colSpan={renderableFields.length}
               >
-                <Toolbar align="end" padH={true}>
+                <Toolbar align="end" pad={true}>
                   <Paginator
                     count={count as number}
                     loading={loading}

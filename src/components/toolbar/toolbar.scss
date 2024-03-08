@@ -8,7 +8,6 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  padding: var(--spacing-v-s) 0;
   row-gap: 12px;
   text-align: start;
   width: 100%;
@@ -84,8 +83,12 @@
   }
 
   &--pad-h {
-    padding-inline-start: var(--spacing-h-m);
-    padding-inline-end: var(--spacing-h-m);
+    padding-inline: var(--spacing-h-m);
+  }
+
+  &--pad-v {
+    padding-block: var(--spacing-v-s);
+
   }
 
   .mykn-a {
