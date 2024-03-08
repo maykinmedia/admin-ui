@@ -11,7 +11,8 @@ import {
   ToolbarItem,
 } from "../../components";
 import { slugify } from "../../lib";
-import { BodyBase, BodyBaseProps } from "../base/bodyBase";
+import { CardBase } from "../base";
+import { BodyBaseProps } from "../base/bodyBase";
 
 export type DetailProps = BodyBaseProps & {
   attributeGridProps?: Partial<AttributeGridProps>;
@@ -57,7 +58,7 @@ export const Detail: React.FC<DetailProps> = ({
   const sidebarItems = [...attributeGridSidebarItems, ...inlinesSidebarItems];
 
   return (
-    <BodyBase
+    <CardBase
       slotSidebar={
         showSidebar && (
           <Toolbar
@@ -85,6 +86,6 @@ export const Detail: React.FC<DetailProps> = ({
           </Body>
         );
       })}
-    </BodyBase>
+    </CardBase>
   );
 };

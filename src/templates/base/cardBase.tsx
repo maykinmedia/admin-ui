@@ -25,6 +25,7 @@ export const CardBase: React.FC<CardBaseProps> = ({
       {actions && (
         <Toolbar
           align="end"
+          compact={true}
           pad={false}
           variant="transparent"
           items={actions.map((toolbarItem) => ({

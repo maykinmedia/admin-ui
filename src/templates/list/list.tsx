@@ -1,7 +1,8 @@
 import React from "react";
 
 import { DataGrid, DataGridProps } from "../../components";
-import { BodyBase, BodyBaseProps } from "../base/bodyBase";
+import { CardBase } from "../base";
+import { BodyBaseProps } from "../base/bodyBase";
 
 export type ListProps = BodyBaseProps & {
   dataGridProps?: Partial<DataGridProps>;
@@ -20,8 +21,8 @@ export const List: React.FC<ListProps> = ({
   fields,
   ...props
 }) => (
-  <BodyBase {...props}>
+  <CardBase {...props}>
     {children}
     <DataGrid {...dataGridProps} objectList={objectList} fields={fields} />
-  </BodyBase>
+  </CardBase>
 );
