@@ -2,6 +2,7 @@
   background-color: var(--typography-color-background);
   border-radius: var(--border-radius-l);
   box-sizing: border-box;
+  overflow: clip;
   width: 100%;
 
   & + & {
