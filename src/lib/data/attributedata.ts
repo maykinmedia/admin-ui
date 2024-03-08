@@ -34,6 +34,10 @@ export const isString = (value: unknown): value is string =>
 /** Typeguard for null. */
 export const isNull = (value: unknown): value is null => value === null;
 
+/** Typeguard for undefined. */
+export const isUndefined = (value: unknown): value is undefined =>
+  typeof value === "undefined";
+
 /**
  * Creates an array of new objects containing only the specified fields from the provided object,
  * based on the given fieldsets.

@@ -5,6 +5,8 @@ import {
   isBool,
   isNull,
   isNumber,
+  isString,
+  isUndefined,
 } from "../../../lib/data/attributedata";
 import { isLink } from "../../../lib/format/string";
 import { Badge, BadgeProps } from "../../badge";
@@ -45,21 +47,23 @@ export const Value: React.FC<ValueProps> = ({
     return <Badge {...badgeProps}>{value}</Badge>;
   }
 
-  if (isNull(value)) {
+  if (isNull(value) || isUndefined(value)) {
     return <P {...pProps}>-</P>;
   }
 
-  const string = String(value);
+  if (isString(value)) {
+    const string = String(value);
 
-  if (isLink(string)) {
-    return (
-      <P {...pProps}>
-        <A {...aProps} href={string}>
-          {string}
-        </A>
-      </P>
-    );
+    if (isLink(string)) {
+      return (
+        <P {...pProps}>
+          <A {...aProps} href={string}>
+            {string}
+          </A>
+        </P>
+      );
+    }
+
+    return <P>{string || "-"}</P>;
   }
-
-  return <P>{string}</P>;
 };
