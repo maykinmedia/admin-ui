@@ -15,12 +15,16 @@ export type AttributeListProps = React.ComponentPropsWithoutRef<"div"> & {
 
   /** A title for the attribute list. */
   title?: string;
+
+  /** An optional id for the title. */
+  titleId?: string;
 };
 
 /**
  * AttributeList component, shows multiple `fields` in `object`.
  * TODO: tooltip
  * @param title
+ * @param titleId
  * @param data
  * @param fields
  * @param props
@@ -28,12 +32,13 @@ export type AttributeListProps = React.ComponentPropsWithoutRef<"div"> & {
  */
 export const AttributeList: React.FC<AttributeListProps> = ({
   title = "",
+  titleId,
   object = {},
   fields = Object.keys(object),
   ...props
 }) => (
   <div className="mykn-attributelist" {...props}>
-    {title && <H2>{title}</H2>}
+    {title && <H2 id={titleId}>{title}</H2>}
 
     <dl className="mykn-attributelist__list">
       {fields.map((f) => (
