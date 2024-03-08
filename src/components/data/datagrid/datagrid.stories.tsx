@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import React, { useEffect, useState } from "react";
+import * as React from "react";
+import { useEffect, useState } from "react";
 
 import { AttributeData } from "../../../lib/data/attributedata";
 import { Page } from "../../page";
@@ -37,7 +38,7 @@ export const DataGridComponent = {
         { label: 50 },
       ],
     },
-    results: [
+    objectList: [
       {
         url: "https://www.example.com",
         Omschrijving: "Afvalpas vervangen",
@@ -142,7 +143,7 @@ export const SortedDataGrid: Story = {
 
 export const JSONPlaceholderExample: Story = {
   args: {
-    results: [],
+    objectList: [],
     showPaginator: true,
     sort: true,
     title: "Posts",
@@ -151,7 +152,7 @@ export const JSONPlaceholderExample: Story = {
     const [loading, setLoading] = useState(false);
     const [page, setPage] = useState<number>(args.paginatorProps?.page || 1);
     const [pageSize, setPageSize] = useState<number>(args.pageSize || 10);
-    const [results, setResults] = useState<AttributeData[]>([]);
+    const [objectList, setObjectList] = useState<AttributeData[]>([]);
     const [sort, setSort] = useState<string>("");
 
     /**
@@ -172,7 +173,7 @@ export const JSONPlaceholderExample: Story = {
       )
         .then((response) => response.json())
         .then((data: AttributeData[]) => {
-          setResults(data);
+          setObjectList(data);
           setLoading(false);
         });
 
@@ -186,7 +187,7 @@ export const JSONPlaceholderExample: Story = {
       <DataGrid
         {...args}
         count={100}
-        results={results}
+        objectList={objectList}
         onSort={(field) => setSort(field)}
         loading={loading}
         page={page}
