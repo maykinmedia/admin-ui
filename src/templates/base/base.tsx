@@ -28,6 +28,9 @@ export type BaseProps = React.PropsWithChildren & {
 
   /** Primary navigation (JSX) slot. */
   slotPrimaryNavigation?: React.ReactNode;
+
+  /** Sidebar (JSX) slot. */
+  slotSidebar?: React.ReactNode;
 };
 
 /**
@@ -42,6 +45,7 @@ export const Base: React.FC<BaseProps> = ({
   slotBreadcrumbs,
   slotLogo,
   slotPrimaryNavigation,
+  slotSidebar,
 }) => {
   const { logo: CustomLogo } = useContext(ConfigContext);
   const { breadcrumbs, primaryNavigation } = useContext(NavigationContext);
@@ -58,9 +62,11 @@ export const Base: React.FC<BaseProps> = ({
         </>
       )}
 
-      <Column span={12} {...columnProps}>
+      <Column span={slotSidebar ? 10 : 12} {...columnProps}>
         {children}
       </Column>
+
+      {slotSidebar ? <Column span={2}>{slotSidebar}</Column> : undefined}
     </Grid>
   );
 
