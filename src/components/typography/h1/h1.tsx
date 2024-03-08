@@ -2,9 +2,7 @@ import React from "react";
 
 import "./h1.scss";
 
-export type H1Props = React.PropsWithChildren<{
-  // Props here.
-}>;
+export type H1Props = React.ComponentProps<"h1">;
 
 /**
  * H1 component
