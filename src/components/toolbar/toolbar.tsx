@@ -3,9 +3,14 @@ import React from "react";
 
 import { Button, ButtonLink, ButtonLinkProps, ButtonProps } from "../button";
 import { Dropdown, DropdownProps } from "../dropdown";
+import { A, AProps } from "../typography";
 import "./toolbar.scss";
 
-export type ToolbarItem = ButtonProps | ButtonLinkProps | DropdownProps;
+export type ToolbarItem =
+  | AProps
+  | ButtonProps
+  | ButtonLinkProps
+  | DropdownProps;
 
 export type ToolbarProps = React.PropsWithChildren<
   React.HTMLAttributes<HTMLElement> & {
@@ -57,6 +62,9 @@ export const Toolbar: React.FC<ToolbarProps> = ({
   items = [],
   ...props
 }) => {
+  const isItemAProps = (item: ToolbarItem): item is AProps =>
+    Object.hasOwn(item, "textDecoration");
+
   const isItemButtonLinkProps = (item: ToolbarItem): item is ButtonLinkProps =>
     Object.hasOwn(item, "href");
 
@@ -71,6 +79,10 @@ export const Toolbar: React.FC<ToolbarProps> = ({
    * @param item
    */
   const getItemComponent = (item: ToolbarItem): React.FC => {
+    if (isItemAProps(item)) {
+      return A;
+    }
+
     if (isItemButtonLinkProps(item)) {
       return ButtonLink;
     }
