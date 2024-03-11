@@ -3,7 +3,7 @@ import * as React from "react";
 
 import { Button, ButtonLink } from "../button";
 import { Outline } from "../icon";
-import { Page } from "../page";
+import { Page } from "../layout";
 import { A } from "../typography";
 import { Toolbar } from "./toolbar";
 

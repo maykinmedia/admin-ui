@@ -2,7 +2,7 @@ import { Meta, StoryObj } from "@storybook/react";
 import * as React from "react";
 
 import { Card } from "../card";
-import { Page } from "../page";
+import { Page } from "../layout";
 import { Tab, Tabs } from "./tabs";
 
 const meta: Meta<typeof Tabs> = {

@@ -1,0 +1,26 @@
+import type { Meta, StoryObj } from "@storybook/react";
+import * as React from "react";
+
+import { Page } from "./page";
+
+type PagePropsAndCustomArgs = React.ComponentProps<typeof Page> & {
+  debug?: boolean;
+};
+
+const meta = {
+  title: "Layout/Page",
+  component: Page,
+  parameters: {
+    ignoreGlobalDecorator: true,
+    layout: "fullscreen",
+  },
+} satisfies Meta<PagePropsAndCustomArgs>;
+
+export default meta;
+type Story = StoryObj<PagePropsAndCustomArgs>;
+
+export const PageComponent: Story = {
+  args: {
+    children: "The quick brown fox jumps over the lazy dog.",
+  },
+};

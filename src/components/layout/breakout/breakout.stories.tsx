@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import * as React from "react";
 
-import { Page } from "../../page";
 import { Column } from "../column";
+import { Page } from "../page";
 import { Breakout } from "./breakout";
 
 const meta = {

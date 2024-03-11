@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import * as React from "react";
 
-import { Page } from "../page";
+import { Page } from "../layout";
 import { Body, P } from "../typography";
 import { Card } from "./card";
 

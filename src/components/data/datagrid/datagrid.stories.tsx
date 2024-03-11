@@ -3,7 +3,7 @@ import * as React from "react";
 import { useEffect, useState } from "react";
 
 import { AttributeData } from "../../../lib/data/attributedata";
-import { Page } from "../../page";
+import { Page } from "../../layout";
 import { DataGrid } from "./datagrid";
 
 const meta = {

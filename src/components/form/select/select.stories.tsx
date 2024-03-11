@@ -5,7 +5,7 @@ import { Formik } from "formik";
 import * as React from "react";
 
 import { Button } from "../../button";
-import { Page } from "../../page";
+import { Page } from "../../layout";
 import { FORM_TEST_DECORATOR } from "../.storybook/decorators";
 import { Select } from "./select";
 
@@ -101,7 +101,6 @@ export const UsageWithFormik: Story = {
     placeholder: "Select school year",
   },
   argTypes: {
-    // @ts-expect-error - Using FormikProps here while SelectProps is expected.
     validate: { action: "validate" },
     onSubmit: { action: "onSubmit" },
   },
