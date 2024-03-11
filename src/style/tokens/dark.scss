@@ -1,4 +1,7 @@
+@use "./base";
+
 @mixin tokens {
+  @include base.tokens;
   --page-color-background: #252f3d;
   --page-color-logo: #ffffff;
   --page-color-info-background: transparent;
