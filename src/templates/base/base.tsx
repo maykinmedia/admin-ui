@@ -63,7 +63,9 @@ export const Base: React.FC<BaseProps> = ({
             {slotLogo || CustomLogo || <Logo />}
             {slotPrimaryNavigation || primaryNavigation}
           </Column>
-          <Column span={12}>{slotBreadcrumbs || breadcrumbs}</Column>
+          {Boolean(slotBreadcrumbs || breadcrumbs) && (
+            <Column span={12}>{slotBreadcrumbs || breadcrumbs}</Column>
+          )}
         </>
       )}
 
