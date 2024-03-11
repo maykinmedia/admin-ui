@@ -12,8 +12,8 @@
   --mykn-button-height: auto;
   --mykn-button-width: auto;
   --mykn-button-offset: 0px;
-  --mykn-button-padding-v: var(--spacing-v-s);
-  --mykn-button-padding-h: var(--spacing-h-s);
+  --mykn-button-padding-v: var(--spacing-v);
+  --mykn-button-padding-h: var(--spacing-h);
 
   align-items: center;
   appearance: none;
@@ -80,10 +80,10 @@
 
   &--square {
     --mykn-button-height: calc(
-      var(--typography-line-height-body-s) + 2 * var(--spacing-v-s)
+      var(--typography-line-height-body-s) + 2 * var(--spacing-v)
     );
     --mykn-button-width: calc(
-      var(--typography-line-height-body-s) + 2 * var(--spacing-v-s)
+      var(--typography-line-height-body-s) + 2 * var(--spacing-v)
     );
     --mykn-button-padding-v: 0;
     --mykn-button-padding-h: 0;

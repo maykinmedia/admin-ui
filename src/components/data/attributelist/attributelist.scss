@@ -7,7 +7,7 @@
 
   &__list {
     display: grid;
-    gap: 0 var(--spacing-v-l) var(--gutter-h-mobile);
+    gap: 0 var(--spacing-v) var(--gutter-h-mobile);
     grid-template-columns: 1fr;
     margin: 0;
   }
@@ -31,7 +31,7 @@
 
   @media screen and (min-width: constants.$breakpoint-desktop) {
     &__list {
-      gap: var(--spacing-v-l) var(--gutter-h-desktop);
+      gap: var(--spacing-v) var(--gutter-h-desktop);
       grid-template-columns: 1fr 1fr;
     }
   }
