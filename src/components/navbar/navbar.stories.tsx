@@ -5,7 +5,7 @@ import * as React from "react";
 import { allModes } from "../../../.storybook/modes";
 import { Button, ButtonLink } from "../button";
 import { Outline } from "../icon";
-import { Page } from "../page";
+import { Page } from "../layout";
 import { Navbar } from "./navbar";
 
 const meta = {

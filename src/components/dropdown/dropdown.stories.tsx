@@ -4,7 +4,7 @@ import * as React from "react";
 
 import { Button, ButtonLink } from "../button";
 import { Outline } from "../icon";
-import { Page } from "../page";
+import { Page } from "../layout";
 import { Toolbar } from "../toolbar";
 import { Dropdown } from "./dropdown";
 

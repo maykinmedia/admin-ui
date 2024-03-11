@@ -3,7 +3,7 @@ import { expect, userEvent, waitFor, within } from "@storybook/test";
 import * as React from "react";
 
 import { allModes } from "../../../../.storybook/modes";
-import { Page } from "../../page";
+import { Page } from "../../layout";
 import { Paginator } from "./paginator";
 
 const meta = {
