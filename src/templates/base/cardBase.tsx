@@ -1,10 +1,19 @@
 import React from "react";
 
-import { Card, CardProps, Toolbar, ToolbarItem } from "../../components";
+import {
+  Breakout,
+  Card,
+  CardProps,
+  Toolbar,
+  ToolbarItem,
+} from "../../components";
 import { Base, BaseProps } from "./base";
 
 export type CardBaseProps = BaseProps & {
   actions?: ToolbarItem[];
+
+  /** When set to true, a breakout component is applied to remove the page padding to  the card. */
+  breakout?: boolean;
 
   /** Card props.*/
   cardProps?: CardProps;
@@ -16,11 +25,12 @@ export type CardBaseProps = BaseProps & {
  */
 export const CardBase: React.FC<CardBaseProps> = ({
   actions,
+  breakout = false,
   children,
   cardProps,
   ...props
-}) => (
-  <Base {...props}>
+}) => {
+  const renderCard = () => (
     <Card {...cardProps}>
       {actions && (
         <Toolbar
@@ -37,5 +47,11 @@ export const CardBase: React.FC<CardBaseProps> = ({
       )}
       {children}
     </Card>
-  </Base>
-);
+  );
+
+  return (
+    <Base {...props}>
+      {breakout ? <Breakout>{renderCard()}</Breakout> : renderCard()}
+    </Base>
+  );
+};
