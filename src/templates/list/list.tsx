@@ -5,7 +5,7 @@ import {
   DataGridProps,
   Form,
   FormProps,
-  H1,
+  H2,
   Toolbar,
 } from "../../components";
 import { CardBase } from "../base";
@@ -58,7 +58,7 @@ export const List: React.FC<ListProps> = ({
     {children}
     {Boolean(title || formProps) && (
       <Toolbar align="space-between" pad={true} sticky="top">
-        {title && <H1>{title}</H1>}
+        {title && <H2>{title}</H2>}
         {formProps && <Form direction="horizontal" {...formProps} />}
       </Toolbar>
     )}
