@@ -1,2 +1,5 @@
+@use "./base";
+
 @mixin tokens {
+  @include base.tokens;
 }
