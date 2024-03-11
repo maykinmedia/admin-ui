@@ -1,6 +1,13 @@
 import React from "react";
 
-import { DataGrid, DataGridProps } from "../../components";
+import {
+  DataGrid,
+  DataGridProps,
+  Form,
+  FormProps,
+  H1,
+  Toolbar,
+} from "../../components";
 import { CardBase } from "../base";
 import { BodyBaseProps } from "../base/bodyBase";
 
@@ -14,10 +21,15 @@ export type ListProps = BodyBaseProps & {
   pageSizeOptions?: DataGridProps["pageSizeOptions"];
   showPaginator?: DataGridProps["showPaginator"];
   sort?: DataGridProps["sort"];
-  title?: DataGridProps["title"];
   onClick?: DataGridProps["onClick"];
   onPageChange?: DataGridProps["onPageChange"];
   onPageSizeChange?: DataGridProps["onPageSizeChange"];
+
+  /** Allows a page title to be specified. */
+  title?: React.ReactNode;
+
+  /** Allows a form to be added next to the title. */
+  formProps?: FormProps;
 };
 
 /**
@@ -28,6 +40,7 @@ export const List: React.FC<ListProps> = ({
   children,
   dataGridProps,
   fields,
+  formProps,
   objectList,
   count = objectList.length,
   loading,
@@ -43,6 +56,12 @@ export const List: React.FC<ListProps> = ({
 }) => (
   <CardBase {...props}>
     {children}
+    {Boolean(title || formProps) && (
+      <Toolbar align="space-between" pad={true} variant="transparent">
+        {title && <H1>{title}</H1>}
+        {formProps && <Form direction="horizontal" {...formProps} />}
+      </Toolbar>
+    )}
     <DataGrid
       {...dataGridProps}
       count={count}
@@ -53,7 +72,6 @@ export const List: React.FC<ListProps> = ({
       pageSizeOptions={pageSizeOptions}
       showPaginator={showPaginator}
       sort={sort}
-      title={title}
       onClick={onClick}
       onPageChange={onPageChange}
       onPageSizeChange={onPageSizeChange}
