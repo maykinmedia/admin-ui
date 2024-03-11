@@ -54,7 +54,7 @@ export const List: React.FC<ListProps> = ({
   title,
   ...props
 }) => (
-  <CardBase {...props}>
+  <CardBase breakout={true} {...props}>
     {children}
     {Boolean(title || formProps) && (
       <Toolbar align="space-between" pad={true} variant="transparent">

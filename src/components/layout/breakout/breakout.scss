@@ -1,0 +1,10 @@
+@use "../../../settings/constants";
+
+.mykn-breakout {
+  margin-left: calc(-1 * var(--spacing-h));
+  width: calc(100% + 2 * var(--spacing-h));
+
+  &--debug {
+    outline: 1px solid orange;
+  }
+}
