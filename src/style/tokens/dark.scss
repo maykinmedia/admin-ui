@@ -8,19 +8,23 @@
 
   --typography-color-background: #313741;
   --typography-color-background-alt: #252f3d;
-  --typography-color-body: #f3f3f3;
+  --typography-color-body: #e3e5e8;
   --typography-color-border: #535353;
-  --typography-color-h: #f3f3f3;
+  --typography-color-h: #e3e5e8;
   --typography-color-link: var(--page-color-info);
-  --typography-color-muted: var(--theme-shade-400);
 
   --button-color-text-outline: #f3f3f3;
+  --button-color-background-primary: var(--page-color-info);
+  --button-color-background-primary-hover: var(--page-color-info);
+  --button-color-shadow-primary-hover: var(--page-color-info);
+  --button-color-text-primary: #313741;
+
   --button-color-background-outline-hover: #f3f3f3;
   --button-color-background-outline-active: #f3f3f3;
+  --button-color-text-outline-active: #313741;
+
   --button-color-background-transparent-hover: tranparent;
   --button-color-border-transparent-hover: #f3f3f3;
   --button-color-border-transparent-active: #f3f3f3;
-  --button-color-text-primary: #f3f3f3;
-  --button-color-text-outline-active: #313741;
   --button-color-text-transparent-hover: #f3f3f3;
 }

@@ -26,19 +26,19 @@
 
   /* Background color */
   --button-color-background-primary: var(--page-color-primary);
-  --button-color-background-primary-hover: var(--page-color-primary-alt);
+  --button-color-background-primary-hover: var(--page-color-primary);
   --button-color-background-primary-active: var(
     --button-color-background-primary-hover
   );
 
   --button-color-background-outline: transparent;
-  --button-color-background-outline-hover: var(--theme-color-primary-100);
+  --button-color-background-outline-hover: #f2eeff;
   --button-color-background-outline-active: var(
     --button-color-background-outline-hover
   );
 
   --button-color-background-transparent: transparent;
-  --button-color-background-transparent-hover: var(--theme-color-primary-100);
+  --button-color-background-transparent-hover: transparent;
   --button-color-background-transparent-active: var(
     --button-color-background-transparent-hover
   );
@@ -63,7 +63,7 @@
   );
 
   /* Shadow color */
-  --button-color-shadow-primary: var(--theme-shade-1000);
+  --button-color-shadow-primary: #000;
   --button-color-shadow-primary-hover: var(--button-color-shadow-primary);
   --button-color-shadow-primary-active: var(
     --button-color-shadow-primary-hover
@@ -97,32 +97,30 @@
   --button-color-text-transparent-active: var(--button-color-text-transparent);
 
   /* FORM */
-  --form-color-border: var(--theme-shade-400);
-  --spacing-v-xxxl: 20px;
+  --form-color-border: var(--typography-color-border);
 
   /* PAGE */
-  --page-color-background: var(--theme-color-primary-200);
-  --page-color-info: #56bcc9;
-  --page-color-info-background: var(--theme-shade-100);
+  --page-color-background: #ecf1ff;
+  --page-color-info: #00bfcb;
+  --page-color-info-background: #fff;
   --page-color-success: #56c956;
   --page-color-success-background: #e9ffe9;
   --page-color-danger: #c95656;
   --page-color-danger-background: #ffe8e8;
   --page-color-logo: inherit;
-  --page-color-primary: var(--theme-color-primary-800);
-  --page-color-primary-alt: var(--theme-color-primary-700);
+  --page-color-primary: #2b157b;
   --page-color-primary-contrast: var(--typography-color-background);
-  --page-color-shadow: var(--theme-shade-1000);
+  --page-color-shadow: #000;
   --page-container-size: 1240px;
 
   /* TYPOGRAPHY */
-  --typography-color-background: var(--theme-shade-0);
+  --typography-color-background: #fff;
   --typography-color-background-alt: var(--page-color-background);
-  --typography-color-h: var(--theme-shade-900);
-  --typography-color-body: var(--theme-shade-700);
-  --typography-color-border: var(--theme-shade-300);
+  --typography-color-h: #0d0d0d;
+  --typography-color-body: #5b5b5b;
+  --typography-color-border: #ebebeb;
   --typography-color-link: var(--page-color-primary);
-  --typography-color-muted: var(--theme-shade-600);
+  --typography-color-muted: #9d9d9d;
 
   --typography-font-family-h: Inter, sans-serif;
   --typography-font-family-body: Inter, sans-serif;
@@ -141,32 +139,6 @@
   --typography-line-height-h3: 24px;
   --typography-line-height-body-s: 24px;
   --typography-line-height-body-xs: 24px;
-
-  /* THEME */
-  /* DO NOT USE THIS COLORS DIRECTLY, MAP TO TOKENS. */
-  --theme-color-primary-800: #341a90;
-  --theme-color-primary-700: #5422b9;
-  --theme-color-primary-600: #8d75e6;
-  --theme-color-primary-400: #bdb0ed;
-  --theme-color-primary-200: #ecf1ff;
-  --theme-color-primary-100: #f2eeff;
-
-  --theme-color-tertiary-800: #0f172a;
-  --theme-color-tertiary-700: #1e293b;
-  --theme-color-tertiary-600: #334155;
-  --theme-color-tertiary-400: #475569;
-
-  --theme-shade-1000: #000;
-  --theme-shade-900: #272727;
-  --theme-shade-800: #4b4b4b;
-  --theme-shade-700: #545454;
-  --theme-shade-600: #727272;
-  --theme-shade-400: #b3b3b3;
-  --theme-shade-300: #eaeaea;
-  --theme-shade-200: #e6e6e6;
-  --theme-shade-100: #ffffff;
-  --theme-shade-50: #fcfcfc;
-  --theme-shade-0: #fff;
 }
 
 /* ASSETS */
