@@ -155,4 +155,13 @@
       display: none;
     }
   }
+
+  // FIXME: Improve this...
+  .mykn-toolbar--sticky-top + & &__head {
+    top: calc(var(--typography-line-height-h1) + 2 * var(--spacing-v));
+  }
+
+  .mykn-toolbar--sticky-top:has(.mykn-form) + & &__head {
+    top: calc(42px + 2 * var(--spacing-v));
+  }
 }
