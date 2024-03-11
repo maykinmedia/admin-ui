@@ -3,12 +3,12 @@
 .mykn-paginator {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--spacing-v-m);
+  gap: var(--spacing-v);
 
   &__section {
     align-items: center;
     display: flex;
-    gap: var(--spacing-h-m);
+    gap: var(--spacing-h);
   }
 
   &__section .mykn-p:not(:last-child) {

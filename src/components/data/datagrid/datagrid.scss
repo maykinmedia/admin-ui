@@ -11,7 +11,7 @@
   }
 
   &__caption {
-    padding: var(--spacing-v-m) var(--spacing-h-m);
+    padding: var(--spacing-v) var(--spacing-h);
     text-align: start;
   }
 
@@ -26,16 +26,16 @@
   }
 
   &__head &__cell {
-    padding: var(--spacing-v-m) var(--spacing-h-l);
+    padding: var(--spacing-v) var(--spacing-h);
   }
 
   &__cell {
     border-bottom: 1px solid var(--typography-color-border);
     box-sizing: border-box;
-    padding: var(--spacing-v-l) var(--spacing-h-l);
+    padding: var(--spacing-v) var(--spacing-h);
 
     .mykn-a:not(:last-child) {
-      margin-inline-end: var(--spacing-h-xs);
+      margin-inline-end: var(--spacing-h);
 
       + .mykn-p {
         display: inline;
@@ -99,7 +99,7 @@
     &__cell {
       display: flex;
       flex-direction: column;
-      gap: var(--spacing-h-m);
+      gap: var(--spacing-h);
       width: 100%;
       position: relative;
 
@@ -129,7 +129,7 @@
     &__cell--type-number {
       flex-direction: row;
       justify-content: space-between;
-      padding: var(--spacing-v-l) var(--spacing-h-l);
+      padding: var(--spacing-v) var(--spacing-h);
       width: 100%;
     }
 

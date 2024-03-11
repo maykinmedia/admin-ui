@@ -7,12 +7,12 @@
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: var(--spacing-v-l);
+    gap: var(--spacing-v);
     box-sizing: border-box;
     border: 1px solid var(--typography-color-border);
     border-radius: var(--border-radius-s);
     background-color: var(--typography-color-background);
-    padding: var(--spacing-v-m) var(--spacing-h-xxxl);
+    padding: var(--spacing-v) var(--spacing-h);
     width: 100%;
   }
 
@@ -22,7 +22,7 @@
   }
 
   &__content {
-    margin-block-start: var(--spacing-h-l);
+    margin-block-start: var(--spacing-h);
   }
 
   @media screen and (max-width: constants.$breakpoint-desktop) {

@@ -8,7 +8,7 @@
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
-  padding: var(--spacing-h-xl);
+  padding: var(--spacing-h);
   width: 100%;
   min-height: 100%;
 
@@ -17,6 +17,6 @@
   }
 
   @media screen and (min-width: constants.$breakpoint-desktop) {
-    padding: var(--spacing-v-xl) var(--spacing-h-xl);
+    padding: var(--spacing-v) var(--spacing-h);
   }
 }

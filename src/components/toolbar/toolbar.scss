@@ -88,15 +88,15 @@
 
   &--pad-a .mykn-a {
     box-sizing: border-box;
-    padding: var(--spacing-v-s) var(--spacing-h-s);
+    padding: var(--spacing-v) var(--spacing-h);
   }
 
   &--pad-h {
-    padding-inline: var(--spacing-h-m);
+    padding-inline: var(--spacing-h);
   }
 
   &--pad-v {
-    padding-block: var(--spacing-v-s);
+    padding-block: var(--spacing-v);
   }
 
   .mykn-a {
