@@ -5,6 +5,12 @@
   --animation-duration-medium: 0.3s;
   --animation-duration-slow: 1s;
 
+  @media (prefers-reduced-motion) {
+    --animation-duration-fast: 0s;
+    --animation-duration-medium: 0s;
+    --animation-duration-slow: 0s;
+  }
+
   /* SPACING */
   --border-radius: 8px;
 
