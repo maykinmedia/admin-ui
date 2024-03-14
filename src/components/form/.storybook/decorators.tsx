@@ -1,5 +1,8 @@
 import { Decorator } from "@storybook/react";
-import React, { useState } from "react";
+import * as React from "react";
+import { useState } from "react";
+
+import { serializeForm } from "../../../lib";
 
 export const FORM_TEST_DECORATOR: Decorator = (Story) => {
   // Solely here to force re-rendering story on change.
@@ -7,15 +10,15 @@ export const FORM_TEST_DECORATOR: Decorator = (Story) => {
 
   const getData = () => {
     const form = document.forms[0];
-    const formData = new FormData(form);
-
-    // Convert FormData to JSON using Array.from and reduce
-    return Array.from(formData.entries()).reduce<
-      Record<string, FormDataEntryValue>
-    >((acc, [key, value]) => ({ ...acc, [key]: value }), {});
+    return serializeForm(form);
   };
+
   return (
-    <form onChange={() => setCount(count + 1)} aria-label="form" style={{width: '100%'}}>
+    <form
+      onChange={() => setCount(count + 1)}
+      aria-label="form"
+      style={{ width: "100%" }}
+    >
       <Story />
       <pre role="log">{JSON.stringify(getData())}</pre>
     </form>
