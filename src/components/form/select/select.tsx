@@ -106,15 +106,15 @@ export const Select: React.FC<SelectProps> = ({
   const { getReferenceProps } = useInteractions([dismiss, role, click]);
 
   useEffect(() => {
-    const index = options.findIndex((o) =>
-      o.value ? o.value === value : o.label === value,
+    const index = options.findIndex(
+      (o) => o.selected || (o.value ? o.value === value : o.label === value),
     );
 
     if (index === -1) {
       return;
     }
     setSelectedIndex(index);
-  }, [value]);
+  }, [value, options]);
 
   /**
    * Handles a change of the selected (option) index.
