@@ -17,17 +17,22 @@ export const serializeForm = (form: HTMLFormElement): SerializedFormData => {
 
   return entries.reduce<
     Record<string, FormDataEntryValue | FormDataEntryValue[]>
-  >((acc, [key, value]) => {
-    if (Object.prototype.hasOwnProperty.call(acc, key)) {
-      // Key is already set on (serialized) `acc`, replace it with an `Array`.
-      const existingValue = acc[key];
+  >((acc, [name, value]) => {
+    const nameMultipleTimesInForm =
+      form.querySelectorAll(`[name=${name}]`).length > 1;
 
-      acc[key] = Array.isArray(existingValue)
-        ? [...existingValue, value]
-        : [existingValue, value];
+    if (nameMultipleTimesInForm) {
+      // Key is already set on (serialized) `acc`, replace it with an `Array`.
+      const existingValue = acc[name];
+
+      acc[name] = existingValue
+        ? Array.isArray(existingValue)
+          ? [...existingValue, value]
+          : [existingValue, value]
+        : [value];
     } else {
       // Key is not yet set in (serialized) `acc`, set it.
-      acc[key] = value;
+      acc[name] = value;
     }
 
     return acc;
@@ -46,21 +51,15 @@ export const getValueFromFormData = (
   field: FormField,
 ): number | string | undefined => {
   // Support Formik array field names (field[1]).
-  const regexFormikArrayFieldName = /\[(\d)+\]/; // Matches field[1] syntax.
-  const formikFieldNameMatch = field.name?.match(regexFormikArrayFieldName);
+  const [name, formikIndex] = parseFieldName(field.name);
 
   // Get value from values.
-  const value =
-    field.name && Object.prototype.hasOwnProperty.call(values, field.name)
-      ? values[field.name]
-      : formikFieldNameMatch
-        ? values[(field.name as string).replace(regexFormikArrayFieldName, "")] // Get name from Formik name.
-        : undefined;
+  const value = name && values[name];
 
   // Get value from array of values.
   if (Array.isArray(value)) {
-    const arrayIndex = formikFieldNameMatch
-      ? parseInt(formikFieldNameMatch[1])
+    const arrayIndex = formikIndex
+      ? formikIndex
       : fields
           .filter((f) => f.name === field.name)
           .findIndex((f) => f === field);
@@ -93,39 +92,26 @@ export const attribute2Value = (
 };
 
 /**
- * Returns the (JSX friendly) value for `field`.
- * @param fields
- * @param errors
- * @param field
+ * Parses `name` as Formik array field name (field[0]) to ["field", 0]. If `name` does not have such a format,
+ * ["field", undefined] format will be used.
+ * @param name
  */
-export const getErrorFromErrors = (
-  fields: FormField[],
-  errors: Record<string, string | string[]>,
-  field: FormField,
-): string | undefined => {
-  // Support Formik array field names (field[1]).
-  const regexFormikArrayFieldName = /\[(\d)+\]/; // Matches field[1] syntax.
-  const formikFieldNameMatch = field.name?.match(regexFormikArrayFieldName);
-
-  // Get value from values.
-  const error =
-    field.name && Object.prototype.hasOwnProperty.call(errors, field.name)
-      ? errors[field.name]
-      : formikFieldNameMatch
-        ? errors[(field.name as string).replace(regexFormikArrayFieldName, "")] // Get name from Formik name.
-        : undefined;
-
-  // Get value from array of values.
-  if (Array.isArray(error)) {
-    const arrayIndex = formikFieldNameMatch
-      ? parseInt(formikFieldNameMatch[1])
-      : fields
-          .filter((f) => f.name === field.name)
-          .findIndex((f) => f === field);
-
-    const _value = error[arrayIndex];
-    return _value;
+export const parseFieldName = (
+  name: string | undefined,
+): [string | undefined, number | undefined] => {
+  if (typeof name === "undefined") {
+    return [undefined, undefined];
   }
 
-  return error;
+  // Support Formik array field names (field[1]).
+  const regexFormikArrayFieldName = /\[(\d)+\]/; // Matches field[1] syntax.
+  const formikFieldNameMatch = name?.match(regexFormikArrayFieldName);
+
+  // Normalize (Formik array) name.
+  return formikFieldNameMatch
+    ? [
+        name?.replace(regexFormikArrayFieldName, ""),
+        parseInt(formikFieldNameMatch[1]),
+      ]
+    : [name, undefined];
 };

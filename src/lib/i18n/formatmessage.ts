@@ -12,10 +12,7 @@
  * const formattedMessage = formatMessage(template, context);
  * // Result: "Hello, John! Your score is 85."
  */
-export const formatMessage = (
-  template: string,
-  context: Record<string, boolean | number | string>,
-): string =>
+export const formatMessage = (template: string, context: object): string =>
   Object.entries(context).reduce((acc, [key, value]) => {
     return acc.replace(`{${key}}`, String(value));
   }, template);
