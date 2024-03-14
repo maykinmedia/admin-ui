@@ -1,4 +1,4 @@
-import { InputProps, SelectProps } from "../../components";
+import { ChoiceFieldProps, InputProps, SelectProps } from "../../components";
 
 export type FormField = InputProps | SelectProps;
 
@@ -7,8 +7,15 @@ export type FormField = InputProps | SelectProps;
  * TODO: KEEP IN SYNC WITH OTHER TYPEGUARDS!
  **/
 export const isInput = (props: FormField): props is InputProps =>
-  !isSelect(props);
+  !isChoiceField(props);
 
-/** Typeguard for SelectProps. */
-export const isSelect = (props: FormField): props is SelectProps =>
+/** Typeguard for ChoiceFieldProps. */
+export const isChoiceField = (props: FormField): props is ChoiceFieldProps =>
   Object.prototype.hasOwnProperty.call(props, "options");
+
+/** Typeguard for ChoiceFieldProps. */
+export const isCheckboxGroup = (props: FormField): props is ChoiceFieldProps =>
+  isChoiceField(props) &&
+  Object.hasOwn(props, "type") &&
+  // @ts-expect-error - "type" is set.
+  props.type === "checkbox";
