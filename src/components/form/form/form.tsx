@@ -10,11 +10,8 @@ import React, {
 import { ConfigContext } from "../../../contexts";
 import { Attribute, AttributeData } from "../../../lib/data/attributedata";
 import { FormField } from "../../../lib/form/typeguards";
-import {
-  getErrorFromErrors,
-  getValueFromFormData,
-  serializeForm,
-} from "../../../lib/form/utils";
+import { getValueFromFormData, serializeForm } from "../../../lib/form/utils";
+import { getErrorFromErrors } from "../../../lib/form/validation";
 import { forceArray } from "../../../lib/format/array";
 import { ucFirst } from "../../../lib/format/string";
 import { useIntl } from "../../../lib/i18n/useIntl";

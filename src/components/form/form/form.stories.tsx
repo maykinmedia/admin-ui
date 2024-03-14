@@ -3,7 +3,7 @@ import { userEvent, within } from "@storybook/test";
 import { Formik } from "formik";
 import * as React from "react";
 
-import { formatMessage } from "../../../lib/i18n/formatmessage";
+import { validateForm } from "../../../lib";
 import { Form } from "./form";
 
 const meta = {
@@ -18,11 +18,14 @@ export const FormComponent: Story = {
   args: {
     debug: true,
     fields: [
-      { label: "First name", name: "first_name" },
-      { label: "Last name", name: "last_name" },
+      { label: "First name", name: "first_name", required: true },
+      { label: "Last name", name: "last_name", required: true },
+      { label: "Address", name: "address", required: true },
+      { label: "Address (addition)", name: "address", required: true },
       {
         label: "Select school year",
         name: "school_year",
+        required: true,
         options: [
           { label: "Freshman" },
           { label: "Sophomore" },
@@ -31,22 +34,19 @@ export const FormComponent: Story = {
           { label: "Graduate" },
         ],
       },
-      { label: "Address", name: "address" },
-      { label: "Address (addition)", name: "address" },
+      {
+        label: "Select courses",
+        name: "courses",
+        type: "checkbox",
+        required: true,
+        options: [
+          { label: "English", value: "english" },
+          { label: "Math", value: "math" },
+          { label: "Science", value: "science" },
+        ],
+      },
     ],
-    validate: (values, fields) => {
-      const entries = Object.entries(values);
-      const emtpyEntries = entries.filter(([, value]) => !value);
-      const mappedEntries = emtpyEntries.map(([name]) => [
-        name,
-        formatMessage('Field "{name}" is required', {
-          name: (
-            fields?.find((f) => f.name === name)?.label || name
-          ).toLowerCase(),
-        }),
-      ]);
-      return Object.fromEntries(mappedEntries);
-    },
+    validate: validateForm,
     validateOnChange: true,
   },
   play: async ({ canvasElement }) => {
@@ -80,11 +80,12 @@ export const UsageWithFormik: Story = {
   args: {
     ...FormComponent.args,
     fields: [
-      { label: "First name", name: "first_name" },
-      { label: "Last name", name: "last_name" },
+      { label: "First name", name: "first_name", required: true },
+      { label: "Last name", name: "last_name", required: true },
       {
         label: "Select school year",
         name: "school_year",
+        required: true,
         options: [
           { label: "Freshman" },
           { label: "Sophomore" },
@@ -93,8 +94,19 @@ export const UsageWithFormik: Story = {
           { label: "Graduate" },
         ],
       },
-      { label: "Address", name: "address[0]" },
-      { label: "Address (addition)", name: "address[1]" },
+      { label: "Address", name: "address[0]", required: true },
+      { label: "Address (addition)", name: "address[1]", required: true },
+      {
+        label: "Select courses",
+        name: "courses",
+        type: "checkbox",
+        required: true,
+        options: [
+          { label: "English", value: "english" },
+          { label: "Math", value: "math" },
+          { label: "Science", value: "science" },
+        ],
+      },
     ],
   },
   render: (args) => {
