@@ -74,6 +74,15 @@ export const InputComponent: Story = {
   decorators: [FORM_TEST_DECORATOR],
 };
 
+export const InputTypeCheckbox: Story = {
+  args: {
+    name: "input",
+    type: "checkbox",
+  },
+  argTypes: FORM_TEST_ARG_TYPES,
+  decorators: [FORM_TEST_DECORATOR],
+};
+
 export const InputTypeColor: Story = {
   args: {
     name: "input",

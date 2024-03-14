@@ -60,20 +60,34 @@ export const Input: React.FC<InputProps> = ({
      * with forms.
      */
     const input = inputRef.current as HTMLInputElement;
-    const detail = type === "file" ? input.files : event.target.value;
-    const changeEvent = eventFactory("change", detail, true, false, false);
+    const value = type === "file" ? input.files : event.target.value;
+    const changeEvent = eventFactory("change", value, true, false, false);
     input.dispatchEvent(changeEvent);
     onChange && onChange(event);
   };
+
+  // Setting the value prop directly (even to undefined) results in events reflecting it's value as the input value.
+  // For checkboxes, this is problematic as it loses the "on" | "off" values.
+  // This conditionalizes the presence of the "value" props.
+  const valueProps =
+    type.toLowerCase() === "checkbox"
+      ? typeof value === "undefined"
+        ? {}
+        : {
+            value: value,
+          }
+      : {
+          value: valueState,
+        };
 
   return (
     <input
       ref={inputRef}
       className={clsx("mykn-input", `mykn-input--variant-${variant}`)}
       type={type}
-      value={valueState}
       onChange={_onChange}
       aria-label={label || undefined}
+      {...valueProps}
       {...props}
     />
   );
