@@ -2,6 +2,10 @@
   color: var(--typography-color-body);
   font-family: var(--typography-font-family-body);
   font-size: var(--typography-font-size-body-s);
-  font-weight: var(--typography-font-weight-bold);
+  font-weight: var(--typography-font-weight-normal);
   line-height: var(--typography-line-height-body-s);
+
+  &--bold {
+    font-weight: var(--typography-font-weight-bold);
+  }
 }

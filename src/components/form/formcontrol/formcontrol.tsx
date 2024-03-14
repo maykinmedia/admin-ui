@@ -1,11 +1,16 @@
 import clsx from "clsx";
 import React, { useId } from "react";
 
-import { FormField, isInput, isSelect } from "../../../lib/form/typeguards";
+import {
+  FormField,
+  isCheckboxGroup,
+  isChoiceField,
+  isInput,
+} from "../../../lib/form/typeguards";
+import { ChoiceField } from "../choicefield";
 import { ErrorMessage } from "../errormessage";
 import { Input } from "../input";
 import { Label } from "../label";
-import { Select } from "../select";
 import "./formcontrol.scss";
 
 export type FormControlProps = FormField & {
@@ -31,6 +36,8 @@ export const FormControl: React.FC<FormControlProps> = ({
 }) => {
   const id = useId();
   const _id = props.id || id;
+  // Keep in sync with CheckboxGroup, possibly add constant?
+  const htmlFor = isCheckboxGroup(props) ? `${_id}-choice-0` : _id;
   const idError = `${id}_error`;
 
   return (
@@ -40,7 +47,7 @@ export const FormControl: React.FC<FormControlProps> = ({
         `mykn-form-control--direction-${direction}`,
       )}
     >
-      {props.label && <Label htmlFor={_id}>{props.label}</Label>}
+      {props.label && <Label htmlFor={htmlFor}>{props.label}</Label>}
       <FormWidget
         id={_id}
         aria-invalid={!!error}
@@ -59,8 +66,8 @@ export const FormControl: React.FC<FormControlProps> = ({
  * @private
  */
 export const FormWidget: React.FC<FormField> = ({ ...props }) => {
-  if (isSelect(props)) {
-    return <Select {...props} />;
+  if (isChoiceField(props)) {
+    return <ChoiceField {...props} />;
   }
 
   if (isInput(props)) {

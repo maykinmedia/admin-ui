@@ -21,60 +21,25 @@ import { ucFirst } from "../../../lib/format/string";
 import { formatMessage } from "../../../lib/i18n/formatmessage";
 import { useIntl } from "../../../lib/i18n/useIntl";
 import { Outline, Solid } from "../../icon";
+import { ChoiceFieldProps, Option } from "../choicefield";
 import { eventFactory } from "../eventFactory";
 import "./select.scss";
 
-export type SelectProps = Omit<
-  React.HTMLAttributes<HTMLDivElement>,
-  "onChange"
-> & {
-  /** Can be used to generate `SelectOption` components from an array of objects. */
-  options: Option[];
-
+export type SelectProps = ChoiceFieldProps & {
   /** Select label. */
   label?: string;
-
-  /** Select name. */
-  name?: string;
-
-  /**
-   * Gets called when the selected option is changed
-   *
-   * A custom "change" event created with `detail` set to the selected option.
-   * The event is dispatched on `fakeInputRef.current` setting `target` to a
-   * native select (which in itself can be used to obtain the value without
-   * the use of events).
-   */
-  onChange?: React.ChangeEventHandler<HTMLSelectElement>;
-
-  /** Placeholder text. */
-  placeholder?: string;
 
   /** Whether a value is required, a required select can't be cleared. */
   required?: boolean;
 
+  /** Placeholder text. */
+  placeholder?: string;
+
   /** Can be set to `fit-content` to apply auto sizing based on content width. */
   size?: "fit-content";
 
-  value?: Option["value"] | null;
-
-  /** The variant (style) of the input. */
-  variant?: "normal" | "transparent";
-
   /** The clear value (accessible) label. */
   labelClear?: string;
-};
-
-/**
- * A single (select) option, can be passed to `Select  as array.
- */
-export type Option<
-  L = number | string,
-  V = React.OptionHTMLAttributes<HTMLOptionElement>["value"],
-> = {
-  label: L;
-  value?: V;
-  selected?: React.OptionHTMLAttributes<HTMLOptionElement>["selected"]; // TODO
 };
 
 /**
