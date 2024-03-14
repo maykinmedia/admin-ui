@@ -1,3 +1,4 @@
+export * from "./checkbox";
 export * from "./errormessage";
 export * from "./form";
 export * from "./formcontrol";
