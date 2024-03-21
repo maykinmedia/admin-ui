@@ -4,6 +4,7 @@
   @include base.tokens;
   --page-color-background: #252f3d;
   --page-color-logo: #ffffff;
+  --page-color-primary: var(--page-color-info);
   --page-color-info-background: transparent;
   --page-color-success-background: transparent;
   --page-color-danger-background: transparent;
@@ -14,12 +15,8 @@
   --typography-color-body: #e3e5e8;
   --typography-color-border: #535353;
   --typography-color-h: #e3e5e8;
-  --typography-color-link: var(--page-color-info);
 
   --button-color-text-outline: #f3f3f3;
-  --button-color-background-primary: var(--page-color-info);
-  --button-color-background-primary-hover: var(--page-color-info);
-  --button-color-shadow-primary-hover: var(--page-color-info);
   --button-color-text-primary: #313741;
 
   --button-color-background-outline-hover: #f3f3f3;
