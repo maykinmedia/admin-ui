@@ -395,7 +395,6 @@ export const DataGrid: React.FC<DataGridProps> = ({
                     <Button
                       active={isSorted}
                       bold
-                      justify
                       muted
                       pad="h"
                       size="xs"
