@@ -13,12 +13,18 @@ const meta = {
   title: "Form/Input",
   component: Input,
   play: async ({ canvasElement, args }) => {
-    const testValue =
+    let input;
+    let clearable = true;
+    let testValue =
       args.value || args.placeholder?.replace("e.g. ", "") || "Hello world!";
     const canvas = within(canvasElement);
-    let input;
 
     switch (args.type) {
+      case "checkbox":
+        input = await canvas.getByRole("checkbox");
+        clearable = false;
+        testValue = args.value || "on";
+        break;
       case "number":
         input = await canvas.getByRole("spinbutton");
         break;
@@ -34,7 +40,7 @@ const meta = {
     input.addEventListener("change", spy);
 
     await userEvent.click(input, { delay: 10 });
-    await userEvent.clear(input);
+    await (clearable ? userEvent.clear(input) : userEvent.click(input));
     await userEvent.type(input, String(testValue));
 
     // Test that event listener on the (custom) select gets called.
