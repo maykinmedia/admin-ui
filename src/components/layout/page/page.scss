@@ -8,15 +8,22 @@
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
-  padding: var(--spacing-h);
   width: 100%;
   min-height: 100%;
 
-  &--valign-middle {
-    justify-content: center;
+  &--pad-h {
+    padding-inline: var(--spacing-h);
   }
 
-  @media screen and (min-width: constants.$breakpoint-desktop) {
-    padding: var(--spacing-v) var(--spacing-h);
+  &--pad-v {
+    padding-block: var(--spacing-h);
+
+    @media screen and (min-width: constants.$breakpoint-desktop) {
+      padding-block: var(--spacing-v);
+    }
+  }
+
+  &--valign-middle {
+    justify-content: center;
   }
 }

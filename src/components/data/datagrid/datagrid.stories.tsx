@@ -11,7 +11,7 @@ const meta = {
   component: DataGrid,
   decorators: [
     (Story) => (
-      <Page>
+      <Page pad={false}>
         <Story />
       </Page>
     ),
