@@ -199,6 +199,10 @@ export const JSONPlaceholderExample: Story = {
           { label: 40 },
           { label: 50 },
         ]}
+        selected={
+          // SelectableRows story
+          objectList.length > 0 && [objectList[1], objectList[3], objectList[4]]
+        }
         onPageChange={setPage}
         onPageSizeChange={setPageSize}
       />
