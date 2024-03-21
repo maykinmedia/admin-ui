@@ -200,7 +200,7 @@ export const DataGrid: React.FC<DataGridProps> = ({
   // Aliases
   count,
   loading,
-  page,
+  page = paginatorProps?.page,
   pageSize,
   pageSizeOptions,
   onClick,
@@ -292,7 +292,6 @@ export const DataGrid: React.FC<DataGridProps> = ({
   const renderCell = (rowData: AttributeData, field: string) => {
     const rowIndex = sortedObjectList.indexOf(rowData);
     const fieldIndex = renderableFields.indexOf(field);
-    const page = paginatorProps?.page;
     const key = `sort-${sortField}${sortDirection}-page-${page}-row-$${rowIndex}-column-${fieldIndex}`;
 
     // Run assertions for aliased fields.
@@ -301,6 +300,7 @@ export const DataGrid: React.FC<DataGridProps> = ({
         count || paginatorProps?.count,
         "Either `count` or `paginatorProps.count` should be set when `showPaginator` is `true`.",
       );
+
       console.assert(
         page || paginatorProps?.page,
         "Either `page` or `paginatorProps.page` should be set when `showPaginator` is `true`.",
