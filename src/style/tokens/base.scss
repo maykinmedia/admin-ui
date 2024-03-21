@@ -101,6 +101,7 @@
 
   /* PAGE */
   --page-color-background: #f0f2fa; // #ecf1ff; (-50% saturation)
+  --page-color-highlight: var(--page-color-background);
   --page-color-info: #00bfcb;
   --page-color-info-background: #fff;
   --page-color-success: #56c956;
