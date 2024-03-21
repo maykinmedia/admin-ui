@@ -71,8 +71,24 @@ export type DataGridProps = {
   /** Props for P. */
   pProps?: PProps;
 
+  /** References to the selected items in `objectList`, setting this preselects the items. */
+  selected?: AttributeData[];
+
   /** A title for the datagrid. */
   title?: string;
+
+  /**
+   * Gets called when a selection is made, receives two arguments:
+   *
+   * - rows: an array containing:
+   *   - a single selected item (regular selection).
+   *   - all items on page (select all).
+   * - selected: boolean indicating whether the rows are selected (true) or deselected (false).
+   */
+  onSelect?: (rows: AttributeData[], selected: boolean) => void;
+
+  /** Gets called when the selection is changed, receives all currently selected items. */
+  onSelectionChange?: (rows: AttributeData[]) => void;
 
   /** Gets called when an object is selected. */
   onClick?: (
@@ -92,18 +108,6 @@ type DataGridSelectableConditional =
 type DataGridSelectableTrueProps = {
   /** Whether checkboxes should be shown for every row. */
   selectable: true;
-  /**
-   * Gets called when a selection is made, receives two arguments:
-   *
-   * - rows: an array containing:
-   *   - a single selected item (regular selection).
-   *   - all items on page (select all).
-   * - selected: boolean indicating whether the rows are selected (true) or deselected (false).
-   */
-  onSelect?: (rows: AttributeData[], selected: boolean) => void;
-
-  /** Gets called when the selection is changed, receives all currently selected items. */
-  onSelectionChange?: (rows: AttributeData[]) => void;
 
   /** The select item label. */
   labelSelect: string;
@@ -115,18 +119,6 @@ type DataGridSelectableTrueProps = {
 type DataGridSelectableFalseProps = {
   /** Whether checkboxes should be shown for every row. */
   selectable?: false;
-  /**
-   * Gets called when a selection is made, receives two arguments:
-   *
-   * - rows: an array containing:
-   *   - a single selected item (regular selection).
-   *   - all items on page (select all).
-   * - selected: boolean indicating whether the rows are selected (true) or deselected (false).
-   */
-  onSelect?: (rows: AttributeData[], selected: boolean) => void;
-
-  /** Gets called when the selection is changed, receives all currently selected items. */
-  onSelectionChange?: (rows: AttributeData[]) => void;
 
   /** The select item label. */
   labelSelect?: string;
@@ -160,6 +152,7 @@ type PaginatorPropsAliases = {
  * @param fields
  * @param showPaginator
  * @param pProps
+ * @param selected
  * @param sort
  * @param selectable
  * @param title
@@ -188,6 +181,7 @@ export const DataGrid: React.FC<DataGridProps> = ({
   paginatorProps,
   showPaginator = Boolean(paginatorProps),
   pProps,
+  selected,
   sort,
   selectable = false,
   title = "",
@@ -218,14 +212,21 @@ export const DataGrid: React.FC<DataGridProps> = ({
     [string, "ASC" | "DESC"] | undefined
   >();
 
+  // Trigger onSelectionChange when selectedState changes.
   useEffect(() => {
-    selectedState !== null &&
-      onSelectionChange?.(selectedState as AttributeData[]);
+    const dirty = selectedState && selected !== selectedState;
+    dirty && onSelectionChange?.(selectedState as AttributeData[]);
   }, [selectedState]);
 
+  // Update selectedState when selected prop changes.
+  useEffect(() => {
+    selected && setSelectedState(selected);
+  }, [selected]);
+
+  // Update sortState when sort prop changes.
   useEffect(() => {
     if (typeof sort === "string") {
-      setSortState([sort, "ASC"]); // TODO;
+      setSortState([sort, "ASC"]);
     }
   }, [sort]);
 
