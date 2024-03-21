@@ -426,7 +426,13 @@ export const DataGrid: React.FC<DataGridProps> = ({
         {/* Cells */}
         <tbody className="mykn-datagrid__body" role="rowgroup">
           {sortedObjectList.map((rowData, index) => (
-            <tr key={`${id}-row-${index}`} className="mykn-datagrid__row">
+            <tr
+              key={`${id}-row-${index}`}
+              className={clsx("mykn-datagrid__row", {
+                "mykn-datagrid__row--selected":
+                  selectedState?.includes(rowData),
+              })}
+            >
               {selectable && (
                 <td
                   className={clsx(

@@ -30,6 +30,10 @@
     padding: var(--spacing-v) var(--spacing-h);
   }
 
+  &__row--selected {
+    background-color: var(--page-color-highlight);
+  }
+
   &__cell {
     border-bottom: 1px solid var(--typography-color-border);
     box-sizing: border-box;
