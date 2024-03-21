@@ -11,6 +11,26 @@
       "value": "yes"
     }
   ],
+  "mykn.components.DataGrid.labelSelect": [
+    {
+      "type": 0,
+      "value": "(de)select row"
+    }
+  ],
+  "mykn.components.DataGrid.labelSelectAll": [
+    {
+      "type": 0,
+      "value": "(de)select "
+    },
+    {
+      "type": 1,
+      "value": "countPage"
+    },
+    {
+      "type": 0,
+      "value": " rows"
+    }
+  ],
   "mykn.components.Form.labelSubmit": [
     {
       "type": 0,

@@ -205,3 +205,15 @@ export const JSONPlaceholderExample: Story = {
     );
   },
 };
+
+export const SelectableRows: Story = {
+  ...JSONPlaceholderExample,
+  args: {
+    ...JSONPlaceholderExample.args,
+    selectable: true,
+  },
+  argTypes: {
+    onSelect: { action: "onSelect" },
+    onSelectionChange: { action: "onSelectionChange" },
+  },
+};

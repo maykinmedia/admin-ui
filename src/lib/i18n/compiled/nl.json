@@ -11,6 +11,26 @@
       "value": "ja"
     }
   ],
+  "mykn.components.DataGrid.labelSelect": [
+    {
+      "type": 0,
+      "value": "(de)selecteer rij"
+    }
+  ],
+  "mykn.components.DataGrid.labelSelectAll": [
+    {
+      "type": 0,
+      "value": "(de)selecteer "
+    },
+    {
+      "type": 1,
+      "value": "countPage"
+    },
+    {
+      "type": 0,
+      "value": " rijen"
+    }
+  ],
   "mykn.components.Form.labelSubmit": [
     {
       "type": 0,

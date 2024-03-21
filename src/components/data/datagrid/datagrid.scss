@@ -19,6 +19,7 @@
     background-color: var(--typography-color-background);
     position: sticky;
     top: 0;
+    z-index: 1;
   }
 
   &__head &__row:first-child &__cell {

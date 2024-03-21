@@ -15,7 +15,7 @@ export type ListProps = BodyBaseProps & {
   objectList: DataGridProps["objectList"];
   fields?: DataGridProps["fields"];
   count?: DataGridProps["count"];
-  dataGridProps?: Partial<DataGridProps>;
+  dataGridProps?: DataGridProps;
   loading?: DataGridProps["loading"];
   pageSize?: DataGridProps["pageSize"];
   pageSizeOptions?: DataGridProps["pageSizeOptions"];
