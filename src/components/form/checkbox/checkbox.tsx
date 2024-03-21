@@ -6,7 +6,7 @@ import "./checkbox.scss";
 
 export type CheckboxProps = InputProps & {
   /** The (optional) label to display next to the checkbox. */
-  children: React.ReactNode;
+  children?: React.ReactNode;
 };
 
 /**

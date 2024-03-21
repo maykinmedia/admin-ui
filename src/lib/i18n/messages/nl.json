@@ -9,6 +9,16 @@
     "description": "mykn.components.Bool: The accessible label when value is truthy",
     "originalDefault": "ja"
   },
+  "mykn.components.DataGrid.labelSelect": {
+    "defaultMessage": "(de)selecteer rij",
+    "description": "mykn.components.DataGrid: The select row (accessible) label",
+    "originalDefault": "(de)selecteer rij"
+  },
+  "mykn.components.DataGrid.labelSelectAll": {
+    "defaultMessage": "(de)selecteer {countPage} rijen",
+    "description": "mykn.components.DataGrid: The select row (accessible) label",
+    "originalDefault": "(de)selecteer {countPage} rijen"
+  },
   "mykn.components.Form.labelSubmit": {
     "defaultMessage": "verzenden",
     "description": "mykn.components.Form: The submit form label",
