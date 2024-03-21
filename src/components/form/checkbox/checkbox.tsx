@@ -10,7 +10,8 @@ export type CheckboxProps = InputProps & {
 };
 
 /**
- * Checkbox component
+ * Checkbox component, similar to Input with type set to "checkbox" but allows children to be passed
+ * to show an inline label.
  * @param children
  * @param props
  * @constructor
