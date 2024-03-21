@@ -28,6 +28,7 @@
 
   &__head &__cell {
     padding: var(--spacing-v) var(--spacing-h);
+    text-align: start;
   }
 
   &__row--selected {
