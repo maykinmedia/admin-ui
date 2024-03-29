@@ -10,7 +10,7 @@ export const FORM_TEST_DECORATOR: Decorator = (Story) => {
 
   const getData = () => {
     const form = document.forms[0];
-    return serializeForm(form);
+    return form && serializeForm(form);
   };
 
   return (

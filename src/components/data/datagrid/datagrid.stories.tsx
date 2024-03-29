@@ -188,7 +188,6 @@ export const JSONPlaceholderExample: Story = {
         {...args}
         count={100}
         objectList={objectList}
-        onSort={(field) => setSort(field)}
         loading={loading}
         page={page}
         pageSize={pageSize}
@@ -201,10 +200,32 @@ export const JSONPlaceholderExample: Story = {
         ]}
         selected={
           // SelectableRows story
+          args.selectable &&
           objectList.length > 0 && [objectList[1], objectList[3], objectList[4]]
         }
         onPageChange={setPage}
         onPageSizeChange={setPageSize}
+        onSort={(field) => setSort(field)}
+        onEdit={async (rowData: AttributeData) => {
+          setLoading(true);
+          await fetch(
+            `https://jsonplaceholder.typicode.com/posts/${rowData.id}`,
+            {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(rowData),
+            },
+          );
+          const index = objectList.findIndex(
+            (r) => Number(r.id) === rowData.id,
+          );
+          const newObjectList = [...objectList];
+          newObjectList[index] = rowData;
+          setObjectList(newObjectList);
+          setLoading(false);
+        }}
       />
     );
   },
@@ -214,10 +235,39 @@ export const SelectableRows: Story = {
   ...JSONPlaceholderExample,
   args: {
     ...JSONPlaceholderExample.args,
+    fields: ["userId", "id", "title"],
     selectable: true,
   },
   argTypes: {
     onSelect: { action: "onSelect" },
     onSelectionChange: { action: "onSelectionChange" },
+  },
+};
+
+export const EditableRows: Story = {
+  ...JSONPlaceholderExample,
+  args: {
+    ...JSONPlaceholderExample.args,
+    // editable: true,
+    fields: [
+      {
+        type: "number",
+        name: "userId",
+        options: [
+          { label: 1, value: 1 },
+          { label: 2, value: 2 },
+        ],
+        editable: true,
+      },
+      { name: "id", type: "number", editable: false },
+      "title",
+      {
+        type: "boolean",
+        name: "published",
+      },
+    ],
+  },
+  argTypes: {
+    onEdit: { action: "onEdit" },
   },
 };

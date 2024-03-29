@@ -75,6 +75,69 @@ export const FormComponent: Story = {
   },
 };
 
+export const TypedResults: Story = {
+  args: {
+    debug: true,
+    fields: [
+      { label: "Name", name: "name" },
+      { label: "Age", name: "age", type: "number" },
+      {
+        label: "Select school year",
+        name: "school_year",
+        options: [
+          { label: "Freshman" },
+          { label: "Sophomore" },
+          { label: "Junior" },
+          { label: "Senior" },
+          { label: "Graduate" },
+        ],
+      },
+      {
+        label: "Select courses",
+        name: "courses",
+        type: "checkbox",
+        required: true,
+        options: [
+          { label: "English", value: "english" },
+          { label: "Math", value: "math" },
+          { label: "Science", value: "science" },
+        ],
+      },
+      {
+        label: "Receive newsletter",
+        name: "subscribe_newsletter",
+        type: "checkbox",
+      },
+    ],
+    useTypedResults: true,
+    validate: validateForm,
+    validateOnChange: true,
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const name = canvas.getByLabelText("Name");
+    const age = canvas.getByLabelText("Age");
+    const schoolYear = canvas.getByLabelText("Select school year");
+    const english = canvas.getByLabelText("English");
+    const math = canvas.getByLabelText("Math");
+    const newsletter = canvas.getByLabelText("Receive newsletter");
+
+    await userEvent.clear(name);
+    await userEvent.type(name, "John", { delay: 10 });
+
+    await userEvent.clear(age);
+    await userEvent.type(age, "33", { delay: 10 });
+
+    await userEvent.click(schoolYear, { delay: 10 });
+    const junior = await canvas.findByText("Junior");
+    await userEvent.click(junior, { delay: 10 });
+
+    await userEvent.click(english, { delay: 10 });
+    await userEvent.click(math, { delay: 10 });
+    await userEvent.click(newsletter, { delay: 10 });
+  },
+};
+
 export const UsageWithFormik: Story = {
   ...FormComponent,
   args: {
