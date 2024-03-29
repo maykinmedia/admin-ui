@@ -13,8 +13,10 @@ export type ChoiceFieldProps<
   /** Form element name. */
   name?: string;
 
+  /** Gets called when the input is blurred. */
+  onBlur?: React.FormEventHandler<FormElement>;
+
   /**
-   * Gets called when the selected option is changed
    *
    * A custom "change" event created with `detail` set to the selected option.
    * The event is dispatched on `fakeInputRef.current` setting `target` to a

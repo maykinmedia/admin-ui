@@ -33,9 +33,7 @@
   font-family: var(--typography-font-family-body);
   font-size: var(--mykn-button-font-size);
   font-weight: var(--mykn-button-font-weight);
-  justify-content: center;
   line-height: var(--mykn-button-line-height);
-  text-align: center;
   text-decoration: none;
   transition: all var(--animation-duration-fast)
     var(--animation-timing-function);
@@ -49,6 +47,21 @@
     ) !important;
     --mykn-button-offset: 0 !important;
     pointer-events: none;
+  }
+
+  &--align-start {
+    justify-content: start;
+    text-align: start;
+  }
+
+  &--align-center {
+    justify-content: center;
+    text-align: center;
+  }
+
+  &--align-end {
+    justify-content: end;
+    text-align: end;
   }
 
   &--bold {

@@ -54,6 +54,12 @@ export type FormProps = React.ComponentProps<"form"> & {
   /** The submit form label. */
   labelSubmit?: string;
 
+  /**
+   * (Built-in serialization only), whether the convert results to type inferred from input type (e.g. checkbox value
+   * will be boolean).
+   */
+  useTypedResults?: boolean;
+
   /** A validation function. */
   validate?: (
     values: AttributeData,
@@ -81,9 +87,10 @@ export type FormProps = React.ComponentProps<"form"> & {
  * @param secondaryActions
  * @param labelSubmit
  * @param nonFieldErrors
- * @param showActions
  * @param onChange
  * @param onSubmit
+ * @param showActions
+ * @param useTypedResults
  * @param validate
  * @param validateOnChange
  * @param values
@@ -103,6 +110,7 @@ export const Form: React.FC<FormProps> = ({
   onChange,
   onSubmit,
   showActions = true,
+  useTypedResults = false,
   validate,
   validateOnChange = false,
   values,
@@ -150,7 +158,7 @@ export const Form: React.FC<FormProps> = ({
     const form = (event.target as HTMLInputElement).form;
 
     if (form && !onChange) {
-      const data = serializeForm(form) as AttributeData;
+      const data = serializeForm(form, useTypedResults) as AttributeData;
       setValuesState(data);
     }
   };
@@ -172,7 +180,7 @@ export const Form: React.FC<FormProps> = ({
     }
 
     const form = event.target as HTMLFormElement;
-    const data = serializeForm(form) as AttributeData;
+    const data = serializeForm(form, useTypedResults) as AttributeData;
 
     if (onSubmit) {
       onSubmit(event, data);

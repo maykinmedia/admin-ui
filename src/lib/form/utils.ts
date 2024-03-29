@@ -3,23 +3,26 @@ import { FormField } from "./typeguards";
 
 export type SerializedFormData = Record<
   string,
-  FormDataEntryValue | FormDataEntryValue[]
+  Attribute | File | Array<Attribute | File>
 >;
 
 /**
  * Basic `FormData` based serialization function.
  * Duplicate keys (input names) are merged into an `Array`.
  * @param form
+ * @param useTypedResults Whether the convert results to type inferred from input type (e.g. checkbox value will be boolean).
  */
-export const serializeForm = (form: HTMLFormElement): SerializedFormData => {
+export const serializeForm = (
+  form: HTMLFormElement,
+  useTypedResults = false,
+): SerializedFormData => {
   const formData = new FormData(form);
   const entries = Array.from(formData.entries());
 
-  return entries.reduce<
-    Record<string, FormDataEntryValue | FormDataEntryValue[]>
-  >((acc, [name, value]) => {
+  const data = entries.reduce<SerializedFormData>((acc, [name, value]) => {
     const nameMultipleTimesInForm =
-      form.querySelectorAll(`[name=${name}]`).length > 1;
+      [...form.elements].filter((n) => n.getAttribute("name") === name).length >
+      1;
 
     if (nameMultipleTimesInForm) {
       // Key is already set on (serialized) `acc`, replace it with an `Array`.
@@ -37,6 +40,50 @@ export const serializeForm = (form: HTMLFormElement): SerializedFormData => {
 
     return acc;
   }, {});
+
+  return useTypedResults ? typeSerializedFormData(form, data) : data;
+};
+
+/**
+ * Converts values in `data` to the type implied by the associated form control in `form`.
+ * @param form
+ * @param data
+ */
+const typeSerializedFormData = (
+  form: HTMLFormElement,
+  data: SerializedFormData,
+): SerializedFormData => {
+  return Object.fromEntries(
+    Object.entries(data).map(([key, value]) => {
+      const input = [...form.elements].find(
+        (n) => n.getAttribute("name") === key,
+      );
+      const typeAttribute = input?.getAttribute("type");
+      let constructor:
+        | ((value: Attribute | File) => Attribute | File)
+        | undefined;
+      let _value = value;
+
+      switch (typeAttribute) {
+        case "number":
+          constructor = Number;
+          break;
+        case "checkbox":
+          // If checkbox array is used, `true[]` might not be useful (only true values are serialized).
+          // TODO: Investigate more robust solution.
+          constructor = Array.isArray(value) ? undefined : Boolean;
+          break;
+      }
+
+      if (constructor) {
+        _value = Array.isArray(value)
+          ? value.map((v) => constructor?.(v) || v)
+          : constructor(value);
+      }
+
+      return [key, _value];
+    }),
+  );
 };
 
 /**

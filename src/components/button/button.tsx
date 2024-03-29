@@ -6,6 +6,9 @@ import "./button.scss";
 type BaseButtonProps = {
   active?: boolean;
 
+  /** Aligns the contents based on the current direction. */
+  align?: "start" | "center" | "end" | "space-between";
+
   /** Whether the text should be presented bold. */
   bold?: boolean;
 
@@ -40,6 +43,7 @@ export type ButtonLinkProps = React.AnchorHTMLAttributes<HTMLAnchorElement> &
 /**
  * Button component
  * @param active
+ * @param align
  * @param bold
  * @param justify
  * @param muted
@@ -50,10 +54,11 @@ export type ButtonLinkProps = React.AnchorHTMLAttributes<HTMLAnchorElement> &
  * @param wrap
  * @constructor
  */
-export const Button = React.forwardRef<HTMLAnchorElement, ButtonProps>(
+export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   (
     {
       active = false,
+      align = "center",
       bold = false,
       justify = false,
       muted = false,
@@ -71,6 +76,7 @@ export const Button = React.forwardRef<HTMLAnchorElement, ButtonProps>(
         ref={ref as LegacyRef<HTMLButtonElement>}
         className={clsx(
           "mykn-button",
+          `mykn-button--align-${align}`,
           `mykn-button--size-${size}`,
           `mykn-button--variant-${variant}`,
           {
@@ -96,6 +102,7 @@ Button.displayName = "Button";
 /**
  * Button component
  * @param active
+ * @param align
  * @param bold
  * @param justify
  * @param muted
@@ -110,6 +117,7 @@ export const ButtonLink = React.forwardRef<HTMLAnchorElement, ButtonLinkProps>(
   (
     {
       active = false,
+      align = "center",
       bold = false,
       justify = false,
       muted = false,
@@ -127,6 +135,7 @@ export const ButtonLink = React.forwardRef<HTMLAnchorElement, ButtonLinkProps>(
         ref={ref as LegacyRef<HTMLAnchorElement>}
         className={clsx(
           "mykn-button",
+          `mykn-button--align-${align}`,
           `mykn-button--size-${size}`,
           `mykn-button--variant-${variant}`,
           {

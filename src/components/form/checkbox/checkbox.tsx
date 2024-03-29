@@ -16,12 +16,17 @@ export type CheckboxProps = InputProps & {
  * @param props
  * @constructor
  */
-export const Checkbox: React.FC<CheckboxProps> = ({ children, ...props }) => {
+export const Checkbox: React.FC<CheckboxProps> = ({
+  children,
+  value,
+  ...props
+}) => {
   const id = useId();
   const _id = props.id || id;
+  const _props = value ? { ...props, value } : props;
   return (
     <div className="mykn-checkbox">
-      <Input id={_id} {...props} type="checkbox" />
+      <Input id={_id} {..._props} type="checkbox" />
       {children && (
         <Label bold={false} htmlFor={_id}>
           {children}

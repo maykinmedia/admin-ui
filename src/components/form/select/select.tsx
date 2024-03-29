@@ -40,6 +40,9 @@ export type SelectProps = ChoiceFieldProps & {
 
   /** The clear value (accessible) label. */
   labelClear?: string;
+
+  /** The associated form's id. */
+  form?: React.ComponentProps<"select">["form"];
 };
 
 /**
@@ -54,6 +57,7 @@ export const Select: React.FC<SelectProps> = ({
   id,
   name,
   options = [],
+  onBlur,
   onChange,
   label = "",
   labelClear = "",
@@ -62,6 +66,7 @@ export const Select: React.FC<SelectProps> = ({
   size,
   value = null,
   variant = "normal",
+  form,
   ...props
 }) => {
   const intl = useIntl();
@@ -107,7 +112,11 @@ export const Select: React.FC<SelectProps> = ({
 
   useEffect(() => {
     const index = options.findIndex(
-      (o) => o.selected || (o.value ? o.value === value : o.label === value),
+      (o) =>
+        o.selected ||
+        (o.value
+          ? o.value.toString() === value?.toString()
+          : o.label === value),
     );
 
     if (index === -1) {
@@ -115,6 +124,19 @@ export const Select: React.FC<SelectProps> = ({
     }
     setSelectedIndex(index);
   }, [value, options]);
+
+  /**
+   * Handles a blur.
+   * @param event
+   */
+  const handleBlur = (event: React.FocusEvent) => {
+    event.preventDefault();
+    setTimeout(() => {
+      const blurEvent = eventFactory("blur", undefined, false, false, false);
+      fakeInputRef?.current?.dispatchEvent(blurEvent);
+      onBlur?.(blurEvent as unknown as React.FocusEvent<HTMLSelectElement>);
+    });
+  };
 
   /**
    * Handles a change of the selected (option) index.
@@ -179,6 +201,7 @@ export const Select: React.FC<SelectProps> = ({
         ref={refs.setReference}
         title={label || undefined}
         aria-autocomplete="none"
+        onBlur={handleBlur}
         {...getReferenceProps()}
         {...props}
       >
@@ -190,6 +213,7 @@ export const Select: React.FC<SelectProps> = ({
           defaultValue={selectedOptionValue}
           hidden={true}
           aria-label=""
+          form={form}
         >
           {(selectedOptionValue && (
             <option value={selectedOptionValue}>{selectedOptionLabel}</option>

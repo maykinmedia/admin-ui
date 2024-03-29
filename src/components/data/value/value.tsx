@@ -13,7 +13,7 @@ import { Badge, BadgeProps } from "../../badge";
 import { Bool, BoolProps } from "../../boolean";
 import { A, AProps, P, PProps } from "../../typography";
 
-export type ValueProps = {
+export type ValueProps = React.HTMLAttributes<unknown> & {
   value: Attribute;
   aProps?: AProps;
   boolProps?: Omit<BoolProps, "value">;
@@ -29,6 +29,7 @@ export type ValueProps = {
  * @param boolProps
  * @param pProps
  * @param value
+ * @param props
  * @constructor
  */
 export const Value: React.FC<ValueProps> = ({
@@ -37,18 +38,27 @@ export const Value: React.FC<ValueProps> = ({
   boolProps,
   pProps,
   value,
+  ...props
 }) => {
   if (isBool(value)) {
     // BoolProps must be provided if value can be bool.
-    return <Bool {...boolProps} value={value} />;
+    return <Bool {...boolProps} value={value} {...props} />;
   }
 
   if (isNumber(value)) {
-    return <Badge {...badgeProps}>{value}</Badge>;
+    return (
+      <Badge {...badgeProps} {...props}>
+        {value}
+      </Badge>
+    );
   }
 
   if (isNull(value) || isUndefined(value)) {
-    return <P {...pProps}>-</P>;
+    return (
+      <P {...pProps} {...props}>
+        -
+      </P>
+    );
   }
 
   if (isString(value)) {
@@ -56,7 +66,7 @@ export const Value: React.FC<ValueProps> = ({
 
     if (isLink(string)) {
       return (
-        <P {...pProps}>
+        <P {...pProps} {...props}>
           <A {...aProps} href={string}>
             {string}
           </A>
@@ -64,6 +74,10 @@ export const Value: React.FC<ValueProps> = ({
       );
     }
 
-    return <P>{string || "-"}</P>;
+    return (
+      <P {...pProps} {...props}>
+        {string || "-"}
+      </P>
+    );
   }
 };

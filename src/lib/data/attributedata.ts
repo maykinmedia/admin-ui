@@ -1,3 +1,5 @@
+import { ChoiceFieldProps } from "../../components";
+
 /** An object with key/value pairs describing various attributes to be presented. */
 export type AttributeData<T = Attribute> = Record<string, T>;
 
@@ -6,6 +8,29 @@ export type Attribute = boolean | number | string | null;
 
 /** A key in `AttributeData`. */
 export type Field = keyof AttributeData;
+
+/** A key in `AttributeData` annotated with its type. */
+export type TypedField<T = Attribute> = {
+  /** The field name. */
+  name: Field;
+
+  /** The field's values type. */
+  type: T extends boolean
+    ? "boolean"
+    : T extends number
+      ? "number"
+      : T extends string
+        ? "string"
+        : T extends null
+          ? "null"
+          : unknown;
+
+  /** Whether the field should be editable. */
+  editable?: boolean;
+
+  /** Used by DataGrid when editable=true. */
+  options?: ChoiceFieldProps["options"];
+};
 
 /** A Django-admin like field_options definition. */
 export type FieldOptions = {
@@ -18,6 +43,13 @@ export type FieldOptions = {
 
 /** A Django-admin like fieldset definition. */
 export type FieldSet = [string | undefined, FieldOptions];
+
+/**
+ * Returns whether `value` is a primitive, acts as type guard for `<T = Attribute>` through generic.
+ * @param value
+ */
+export const isPrimitive = <T = Attribute>(value: unknown): value is T =>
+  Object(value) !== value;
 
 /** Typeguard for boolean. */
 export const isBool = (value: unknown): value is boolean =>
@@ -75,6 +107,58 @@ export const attributeDataByFields = (
     }),
     {},
   );
+
+/**
+ * Converts `Array<Field , TypedField>` to `Field[]`.
+ * @param optionallyTypedFields
+ */
+export const fieldsByTypedFields = (
+  optionallyTypedFields: Array<Field | TypedField>,
+): Field[] =>
+  optionallyTypedFields.map((field) =>
+    isPrimitive<Field>(field) ? field : (field.name as Field),
+  );
+
+/**
+ * Converts `Array<Field , TypedField>` to `TypedField[]` by inspecting `attributeDataArray`.
+ * @param optionallyTypedFields
+ * @param attributeDataArray
+ */
+export const typedFieldByFields = (
+  optionallyTypedFields: Array<Field | TypedField>,
+  attributeDataArray: AttributeData[],
+): TypedField[] => {
+  return optionallyTypedFields.map((field) =>
+    isPrimitive<Field>(field)
+      ? {
+          type: typeByAttributeDataArray(field, attributeDataArray),
+          name: field,
+        }
+      : field,
+  );
+};
+
+/**
+ * Attempts to find `field`'s type based on its presence in a row in `attributeDataArray`.
+ * @param field
+ * @param attributeDataArray
+ */
+export const typeByAttributeDataArray = (
+  field: Field,
+  attributeDataArray: AttributeData<unknown>[],
+): TypedField["type"] => {
+  const validTypes = ["string", "number", "boolean", "null"];
+  const fieldPopulatedRow = attributeDataArray.find(
+    (a) => a[field] && validTypes.includes(typeof a[field]),
+  );
+
+  if (!fieldPopulatedRow) {
+    return "null";
+  }
+
+  const fieldValue = fieldPopulatedRow[field];
+  return typeof fieldValue as TypedField["type"];
+};
 
 /**
  * Sorts `objectList` by `field` based on `direction`.

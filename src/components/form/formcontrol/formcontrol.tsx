@@ -3,13 +3,15 @@ import React, { useId } from "react";
 
 import {
   FormField,
+  isCheckbox,
   isCheckboxGroup,
   isChoiceField,
   isInput,
 } from "../../../lib/form/typeguards";
+import { Checkbox } from "../checkbox";
 import { ChoiceField } from "../choicefield";
 import { ErrorMessage } from "../errormessage";
-import { Input } from "../input";
+import { Input, InputProps } from "../input";
 import { Label } from "../label";
 import "./formcontrol.scss";
 
@@ -66,11 +68,15 @@ export const FormControl: React.FC<FormControlProps> = ({
  * @private
  */
 export const FormWidget: React.FC<FormField> = ({ ...props }) => {
+  if (isCheckbox(props)) {
+    return <Checkbox {...props} />;
+  }
+
   if (isChoiceField(props)) {
     return <ChoiceField {...props} />;
   }
 
   if (isInput(props)) {
-    return <Input {...props} />;
+    return <Input {...(props as InputProps)} />;
   }
 };
