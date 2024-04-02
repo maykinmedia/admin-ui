@@ -1,4 +1,14 @@
 /**
+ * Returns `array` with duplicates removed.
+ * Values are considered duplicate if `key` matches.
+ * @param array
+ * @param key
+ */
+export const distinctArray = <T = unknown[]>(array: T[], key: keyof T) => [
+  ...new Map(array.map((value) => [value[key], value])).values(),
+];
+
+/**
  * Returns `value` as `Array`.
  *  - If `value` is `undefined`, do nothing.
  *  - If `value` is already an `Array`, return it directly.
