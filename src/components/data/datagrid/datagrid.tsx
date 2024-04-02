@@ -705,7 +705,7 @@ export const DataGridContentCell: React.FC<DataGridContentCellProps> = ({
   const fieldEditable =
     typeof field.editable === "boolean" ? field.editable : editable;
   const renderableFields = getRenderableFields(fields, [rowData], urlFields);
-  const fieldIndex = renderableFields.indexOf(field);
+  const fieldIndex = renderableFields.findIndex((f) => f.name === field.name);
   const urlField = urlFields.find((f) => rowData[f]);
   const rowUrl = urlField ? rowData[urlField] : null;
   const value = rowData[field.name];
