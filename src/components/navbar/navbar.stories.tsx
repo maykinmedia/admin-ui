@@ -91,12 +91,23 @@ export const NavbarOnMobile: Story = {
     await expect(canvas.getByRole("dialog")).toBeVisible();
 
     // Tab focuses items.
-    await userEvent.tab({ delay: 10 });
-    await userEvent.tab({ delay: 10 });
-    await userEvent.tab({ delay: 10 });
+    await waitFor(async () => {
+      const toolbar = document.activeElement?.closest(
+        '[role="toolbar"]',
+      ) as HTMLElement;
+      const controls = toolbar.children;
+      const lastControl = controls[controls.length - 1];
+      const isLastControlActive = document.activeElement === lastControl;
 
-    expect(canvas.getByRole("dialog")).toContainElement(
+      if (!isLastControlActive) {
+        await userEvent.tab({ delay: 10 });
+        throw new Error("Last button not selected");
+      }
+    });
+
+    await expect(canvas.getByRole("dialog")).toContainElement(
       document.activeElement as HTMLElement,
     );
+    await expect(document.activeElement.textContent).toBe("Uitloggen");
   },
 };
