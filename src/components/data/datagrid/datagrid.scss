@@ -78,7 +78,14 @@
   }
 
   &__cell--editable:not(#{&}__cell--type-boolean) {
-    padding: 0;
+    padding-block: 0;
+  }
+  base &__cell--editable:not(#{&}__cell--type-boolean):not(#{&}__cell--link) {
+    padding-inline: 0;
+  }
+
+  &__cell--link .mykn-button {
+    width: calc(100% - 1em - 3 * var(--spacing-h));
   }
 
   &__foot {
