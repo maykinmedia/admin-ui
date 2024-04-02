@@ -802,6 +802,7 @@ export const DataGridContentCell: React.FC<DataGridContentCellProps> = ({
         {
           "mykn-datagrid__cell--editable": fieldEditable,
           "mykn-datagrid__cell--editing": isEditingField,
+          "mykn-datagrid__cell--link": link,
         },
       )}
       aria-description={field2Caption(field.name)}
