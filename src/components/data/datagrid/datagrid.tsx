@@ -6,7 +6,6 @@ import {
   SerializedFormData,
   TypedField,
   formatMessage,
-  isPrimitive,
   serializeForm,
   typedFieldByFields,
   useIntl,
@@ -111,6 +110,9 @@ export type DataGridProps = {
   ) => void;
 
   /** Gets called when a row value is edited. */
+  onChange?: (event: React.ChangeEvent) => void;
+
+  /** Gets called when a row value is edited. */
   onEdit?: (rowData: SerializedFormData) => void;
 
   /** Gets called when the object list is sorted. */
@@ -148,10 +150,11 @@ const getRenderableFields = (
   fields: Array<Field | TypedField>,
   objectList: AttributeData[],
   urlFields: string[],
+  editable: DataGridProps["editable"],
 ): TypedField[] =>
-  typedFieldByFields(fields, objectList).filter(
-    (f) => !urlFields.includes(String(f.name)),
-  );
+  typedFieldByFields(fields, objectList, {
+    editable: Boolean(editable),
+  }).filter((f) => !urlFields.includes(String(f.name)));
 
 /**
  * A subset of `PaginatorProps` that act as aliases.
@@ -176,7 +179,7 @@ export const DataGrid: React.FC<DataGridProps> = ({
   boolProps,
   objectList,
   fields = objectList?.length ? Object.keys(objectList[0]) : [],
-  editable = Boolean(fields.find((f) => !isPrimitive(f) && f.editable)),
+  editable = undefined,
   paginatorProps,
   showPaginator = Boolean(paginatorProps),
   pProps,
@@ -187,6 +190,7 @@ export const DataGrid: React.FC<DataGridProps> = ({
   urlFields = DEFAULT_URL_FIELDS,
   labelSelect,
   labelSelectAll,
+  onChange,
   onEdit,
   onSelect,
   onSelectionChange,
@@ -214,12 +218,6 @@ export const DataGrid: React.FC<DataGridProps> = ({
     [string, "ASC" | "DESC"] | undefined
   >();
 
-  // Trigger onSelectionChange when selectedState changes.
-  useEffect(() => {
-    const dirty = selectedState && selected !== selectedState;
-    dirty && onSelectionChange?.(selectedState as AttributeData[]);
-  }, [selectedState]);
-
   // Update selectedState when selected prop changes.
   useEffect(() => {
     selected && setSelectedState(selected);
@@ -232,7 +230,12 @@ export const DataGrid: React.FC<DataGridProps> = ({
     }
   }, [sort]);
 
-  const renderableFields = getRenderableFields(fields, objectList, urlFields);
+  const renderableFields = getRenderableFields(
+    fields,
+    objectList,
+    urlFields,
+    editable,
+  );
   const sortField = sortState?.[0];
   const sortDirection = sortState?.[1];
   const titleId = title ? `${id}-caption` : undefined;
@@ -253,20 +256,22 @@ export const DataGrid: React.FC<DataGridProps> = ({
     const value = allSelected ? [] : renderableRows;
     setSelectedState(value);
     onSelect?.(value, !allSelected);
+    onSelectionChange?.(value);
   };
 
   const handleSelect = (attributeData: AttributeData) => {
     const currentlySelected = selectedState || [];
+
     const isAttributeDataCurrentlySelected =
       currentlySelected.includes(attributeData);
 
-    setSelectedState(
-      isAttributeDataCurrentlySelected
-        ? [...currentlySelected].filter((a) => a !== attributeData)
-        : [...currentlySelected, attributeData],
-    );
+    const newSelectedState = isAttributeDataCurrentlySelected
+      ? [...currentlySelected].filter((a) => a !== attributeData)
+      : [...currentlySelected, attributeData];
 
+    setSelectedState(newSelectedState);
     onSelect?.([attributeData], !isAttributeDataCurrentlySelected);
+    onSelectionChange?.(newSelectedState);
   };
 
   /**
@@ -337,12 +342,12 @@ export const DataGrid: React.FC<DataGridProps> = ({
           amountSelected={selectedState?.length || 0}
           count={count || 0}
           dataGridId={id}
-          editable={editable}
+          editable={Boolean(renderableFields.find((f) => f.editable))}
           editingRow={editingState[0]}
           editingFieldIndex={editingState[1]}
-          fields={fields}
           handleSelect={handleSelect}
           labelSelect={labelSelect || ""}
+          onChange={onChange}
           onClick={onClick}
           onEdit={onEdit}
           page={page || 1}
@@ -350,7 +355,7 @@ export const DataGrid: React.FC<DataGridProps> = ({
           renderableRows={renderableRows}
           setEditingState={setEditingState}
           selectable={selectable}
-          selectedRows={selected || []}
+          selectedRows={selectedState || []}
           sortDirection={sortDirection}
           sortField={sortField}
           urlFields={urlFields}
@@ -458,9 +463,9 @@ export type DataGridBodyProps = {
   editable: boolean;
   editingRow: AttributeData | null;
   editingFieldIndex: number | null;
-  fields: Array<Field | TypedField>;
   handleSelect: (attributeData: AttributeData) => void;
   labelSelect: string;
+  onChange: DataGridProps["onChange"];
   onClick: DataGridProps["onClick"];
   onEdit: DataGridProps["onEdit"];
   page: number;
@@ -488,9 +493,9 @@ export const DataGridBody: React.FC<DataGridBodyProps> = ({
   editable,
   editingRow,
   editingFieldIndex,
-  fields,
   handleSelect,
   labelSelect,
+  onChange,
   onClick,
   onEdit,
   page,
@@ -545,8 +550,9 @@ export const DataGridBody: React.FC<DataGridBodyProps> = ({
               editingFieldIndex === renderableFields.indexOf(field)
             }
             field={field}
-            fields={fields}
+            renderableFields={renderableFields}
             urlFields={urlFields}
+            onChange={onChange}
             onClick={(e, rowData) => {
               if (editable) {
                 setEditingState([rowData, renderableFields.indexOf(field)]);
@@ -675,8 +681,9 @@ export type DataGridContentCellProps = {
   dataGridId: string;
   rowData: AttributeData;
   field: TypedField;
-  fields: DataGridProps["fields"];
+  renderableFields: TypedField[];
   urlFields: DataGridProps["urlFields"];
+  onChange: DataGridProps["onChange"];
   onClick: DataGridProps["onClick"];
   onEdit: DataGridProps["onEdit"];
 };
@@ -694,9 +701,10 @@ export const DataGridContentCell: React.FC<DataGridContentCellProps> = ({
   isEditingRow,
   isEditingField,
   field,
-  fields = [],
+  renderableFields = [],
   rowData,
   urlFields = DEFAULT_URL_FIELDS,
+  onChange,
   onClick,
   onEdit,
 }) => {
@@ -704,7 +712,6 @@ export const DataGridContentCell: React.FC<DataGridContentCellProps> = ({
 
   const fieldEditable =
     typeof field.editable === "boolean" ? field.editable : editable;
-  const renderableFields = getRenderableFields(fields, [rowData], urlFields);
   const fieldIndex = renderableFields.findIndex((f) => f.name === field.name);
   const urlField = urlFields.find((f) => rowData[f]);
   const rowUrl = urlField ? rowData[urlField] : null;
@@ -753,9 +760,15 @@ export const DataGridContentCell: React.FC<DataGridContentCellProps> = ({
         value={(value || "").toString()}
         form={`${dataGridId}-editable-form`}
         required={true}
-        onChange={() => setPristine(false)}
+        onChange={(e: React.ChangeEvent) => {
+          setPristine(false);
+          onChange?.(e);
+        }}
         onBlur={(e: React.FocusEvent<HTMLInputElement | HTMLSelectElement>) => {
-          const data = serializeForm(e.target.form as HTMLFormElement, true);
+          const data = Object.assign(
+            rowData,
+            serializeForm(e.target.form as HTMLFormElement, true),
+          );
           !pristine && onEdit?.(data);
         }}
       />
@@ -784,15 +797,20 @@ export const DataGridContentCell: React.FC<DataGridContentCellProps> = ({
   /**
    * Renders the value according to Value component
    */
-  const renderValue = () => (
-    <Value
-      aProps={aProps}
-      badgeProps={badgeProps}
-      boolProps={boolProps as BoolProps}
-      pProps={pProps}
-      value={value}
-    />
-  );
+  const renderValue = () => {
+    // Support label from select
+    const label = field.options?.find((o) => o.value === value)?.label;
+
+    return (
+      <Value
+        aProps={aProps}
+        badgeProps={badgeProps}
+        boolProps={boolProps as BoolProps}
+        pProps={pProps}
+        value={label || value}
+      />
+    );
+  };
 
   return (
     <td
@@ -807,12 +825,12 @@ export const DataGridContentCell: React.FC<DataGridContentCellProps> = ({
       )}
       aria-description={field2Caption(field.name)}
     >
+      {isEditingRow && !isEditingField && renderHiddenInput()}
       {link && (
         <A href={link} aria-label={link} onClick={(e) => onClick?.(e, rowData)}>
           <Outline.ArrowTopRightOnSquareIcon />
         </A>
       )}
-      {isEditingRow && !isEditingField && renderHiddenInput()}
       {isEditingField && renderFormControl()}
       {!isEditingField && fieldEditable && renderButton()}
       {!isEditingField && !fieldEditable && renderValue()}

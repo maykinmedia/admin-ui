@@ -17,6 +17,9 @@ export type ToolbarProps = React.PropsWithChildren<
     /** Aligns the contents based on the current direction. */
     align?: "start" | "center" | "end" | "space-between";
 
+    /** The position of `children` compared to `items`. */
+    childrenPosition?: "before" | "after";
+
     /** Whether the toolbar shows items horizontally or vertically, mobile devices always use vertical. */
     direction?: "horizontal" | "vertical";
 
@@ -44,6 +47,7 @@ export type ToolbarProps = React.PropsWithChildren<
  * A flexible and customizable toolbar component for arranging and aligning
  * various interactive elements such as `A`, `Button`, `ButtonLink` and `Dropdown`.
  * @param children
+ * @param childrenPosition
  * @param align
  * @param compact
  * @param direction
@@ -57,6 +61,7 @@ export type ToolbarProps = React.PropsWithChildren<
  */
 export const Toolbar: React.FC<ToolbarProps> = ({
   children,
+  childrenPosition = "after",
   align = "start",
   compact = false,
   direction = "horizontal",
@@ -128,8 +133,9 @@ export const Toolbar: React.FC<ToolbarProps> = ({
       role="toolbar"
       {...props}
     >
+      {childrenPosition === "before" && children}
       {items.map(renderItem)}
-      {children}
+      {childrenPosition === "after" && children}
     </nav>
   );
 };
