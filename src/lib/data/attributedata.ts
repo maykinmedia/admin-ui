@@ -123,20 +123,24 @@ export const fieldsByTypedFields = (
  * Converts `Array<Field , TypedField>` to `TypedField[]` by inspecting `attributeDataArray`.
  * @param optionallyTypedFields
  * @param attributeDataArray
+ * @param base
  */
 export const typedFieldByFields = (
   optionallyTypedFields: Array<Field | TypedField>,
   attributeDataArray: AttributeData[],
-): TypedField[] => {
-  return optionallyTypedFields.map((field) =>
-    isPrimitive<Field>(field)
-      ? {
-          type: typeByAttributeDataArray(field, attributeDataArray),
-          name: field,
-        }
-      : field,
+  base?: Partial<TypedField>,
+): TypedField[] =>
+  optionallyTypedFields.map((field) =>
+    Object.assign(
+      { ...base } || {},
+      isPrimitive<Field>(field)
+        ? {
+            type: typeByAttributeDataArray(field, attributeDataArray),
+            name: field,
+          }
+        : field,
+    ),
   );
-};
 
 /**
  * Attempts to find `field`'s type based on its presence in a row in `attributeDataArray`.

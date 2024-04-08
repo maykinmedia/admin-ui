@@ -359,9 +359,9 @@ const BaseSelectDropdown: React.FC<SelectDropdownProps> = ({
    * Renders the `SelectOption` components
    */
   const renderOptions = () =>
-    options.map(({ label }, i) => (
+    options.map(({ label, value }, i) => (
       <SelectOption
-        key={label}
+        key={`${label}-${value || label}`}
         ref={(node) => {
           listRef.current[i] = node;
         }}

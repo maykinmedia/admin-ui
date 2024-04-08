@@ -16,7 +16,7 @@ import { forceArray } from "../../../lib/format/array";
 import { ucFirst } from "../../../lib/format/string";
 import { useIntl } from "../../../lib/i18n/useIntl";
 import { Button } from "../../button";
-import { Toolbar, ToolbarItem } from "../../toolbar";
+import { Toolbar, ToolbarItem, ToolbarProps } from "../../toolbar";
 import { ErrorMessage } from "../errormessage";
 import { FormControl } from "../formcontrol";
 import { InputProps } from "../input";
@@ -50,6 +50,9 @@ export type FormProps = React.ComponentProps<"form"> & {
 
   /** Whether to show the form actions. */
   showActions?: boolean;
+
+  /** Props to pass to Toolbar. */
+  toolbarProps?: Partial<ToolbarProps>;
 
   /** The submit form label. */
   labelSubmit?: string;
@@ -90,6 +93,7 @@ export type FormProps = React.ComponentProps<"form"> & {
  * @param onChange
  * @param onSubmit
  * @param showActions
+ * @param toolbarProps
  * @param useTypedResults
  * @param validate
  * @param validateOnChange
@@ -110,6 +114,7 @@ export const Form: React.FC<FormProps> = ({
   onChange,
   onSubmit,
   showActions = true,
+  toolbarProps,
   useTypedResults = false,
   validate,
   validateOnChange = false,
@@ -237,6 +242,7 @@ export const Form: React.FC<FormProps> = ({
           align={secondaryActions.length ? "space-between" : "end"}
           variant={"transparent"}
           items={secondaryActions}
+          {...toolbarProps}
         >
           <Button
             type="submit"
