@@ -1,14 +1,51 @@
 .mykn-badge {
-  background-color: var(--page-color-info-background);
-  color: var(--page-color-info);
+  --mykn-badge-color: var(--page-color-info);
+
+  border: 1px solid;
+  color: var(--mykn-badge-color);
   align-items: center;
-  border-radius: var(--border-radius-l);
+  border-radius: var(--border-radius-s);
   display: inline-flex;
   font-family: var(--typography-font-family-body);
   font-size: var(--typography-font-size-body-xs);
-  font-weight: var(--typography-font-weight-normal);
+  font-weight: var(--typography-font-weight-bold);
   height: var(--typography-line-height-body-s);
   justify-content: center;
   line-height: var(--typography-line-height-body-xs);
   padding: 0 var(--spacing-h);
+  position: relative;
+  transform-style: preserve-3d;
+
+  &--level-success {
+    --mykn-badge-color: var(--page-color-success);
+  }
+
+  &--level-warning {
+    --mykn-badge-color: var(--page-color-warning);
+  }
+
+  &--level-danger {
+    --mykn-badge-color: var(--page-color-danger);
+  }
+
+  &:before,
+  &:after {
+    content: "";
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+  }
+
+  &:before {
+    background-color: white;
+    z-index: -2;
+  }
+
+  &:after {
+    z-index: -1;
+    background-color: var(--mykn-badge-color);
+    opacity: 0.025;
+  }
 }

@@ -57,20 +57,24 @@ export const BooleanInText: Story = {
   render: (args) => (
     <Body>
       <H1>
-        The quick brown fox jumps over the lazy dog <Bool {...args} />
+        The quick brown fox jumps over the lazy dog&nbsp;
+        <Bool {...args} />
       </H1>
       <H2>
-        The quick brown fox jumps over the lazy dog <Bool {...args} />
+        The quick brown fox jumps over the lazy dog&nbsp;
+        <Bool {...args} />
       </H2>
       <H3>
-        The quick brown fox jumps over the lazy dog <Bool {...args} />
+        The quick brown fox jumps over the lazy dog&nbsp;
+        <Bool {...args} />
       </H3>
       <P size="s">
-        The quick brown fox jumps over the lazy dog{" "}
+        The quick brown fox jumps over the lazy dog&nbsp;
         <Bool {...args} value={false} explicit />
       </P>
       <P size="xs">
-        The quick brown fox jumps over the lazy dog <Bool {...args} />
+        The quick brown fox jumps over the lazy dog&nbsp;
+        <Bool {...args} />
       </P>
     </Body>
   ),

@@ -1,24 +1,44 @@
 .mykn-bool {
+  --mykn-bool-color: var(--page-color-success);
+
   align-items: center;
-  border-radius: var(--border-radius-l);
+  color: var(--mykn-bool-color);
+  border-radius: var(--border-radius-s);
+  border: 1px solid;
   display: inline-flex;
   font-size: var(--typography-font-size-body-s);
   height: var(--typography-line-height-body-s);
   justify-content: center;
   position: relative;
+  transform-style: preserve-3d;
   width: var(--typography-line-height-body-s);
 
-  &--value-true {
-    background-color: var(--page-color-success-background);
-    color: var(--page-color-success);
-  }
-
   &--value-false {
-    background-color: var(--page-color-danger-background);
-    color: var(--page-color-danger);
+    --mykn-bool-color: var(--page-color-danger);
   }
 
   &--value-false:not(#{&}--explicit) {
     visibility: hidden;
+  }
+
+  &:before,
+  &:after {
+    content: "";
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+  }
+
+  &:before {
+    background-color: white;
+    z-index: -2;
+  }
+
+  &:after {
+    z-index: -1;
+    background-color: var(--mykn-bool-color);
+    opacity: 0.025;
   }
 }
