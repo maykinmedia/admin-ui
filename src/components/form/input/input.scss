@@ -3,7 +3,7 @@
   align-items: center;
   background: var(--typography-color-background);
   border: 1px solid var(--form-color-border);
-  border-radius: var(--border-radius-l);
+  border-radius: var(--border-radius-s);
   box-sizing: border-box;
   color: var(--typography-color-body);
   font-family: var(--typography-font-family-body);
@@ -21,7 +21,6 @@
   }
 
   &[type="checkbox"] {
-    border-radius: 2px;
     cursor: pointer;
     height: 16px;
     max-width: 16px;
