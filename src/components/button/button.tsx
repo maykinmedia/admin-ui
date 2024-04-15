@@ -12,6 +12,9 @@ type BaseButtonProps = {
   /** Whether the text should be presented bold. */
   bold?: boolean;
 
+  /** Additional class names. */
+  className?: string;
+
   /** Whether the buttons width should be set to 100%. */
   justify?: boolean;
 
@@ -42,17 +45,6 @@ export type ButtonLinkProps = React.AnchorHTMLAttributes<HTMLAnchorElement> &
 
 /**
  * Button component
- * @param active
- * @param align
- * @param bold
- * @param justify
- * @param muted
- * @param pad
- * @param size
- * @param square
- * @param variant
- * @param wrap
- * @constructor
  */
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   (
@@ -60,6 +52,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       active = false,
       align = "center",
       bold = false,
+      className,
       justify = false,
       muted = false,
       pad = true,
@@ -89,6 +82,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
             "mykn-button--square": square,
             "mykn-button--wrap": wrap,
           },
+          className,
         )}
         {...props}
       >
@@ -100,18 +94,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 Button.displayName = "Button";
 
 /**
- * Button component
- * @param active
- * @param align
- * @param bold
- * @param justify
- * @param muted
- * @param pad
- * @param size
- * @param square
- * @param variant
- * @param wrap
- * @constructor
+ * Button (link) )component
  */
 export const ButtonLink = React.forwardRef<HTMLAnchorElement, ButtonLinkProps>(
   (
@@ -119,6 +102,7 @@ export const ButtonLink = React.forwardRef<HTMLAnchorElement, ButtonLinkProps>(
       active = false,
       align = "center",
       bold = false,
+      className,
       justify = false,
       muted = false,
       pad = true,
@@ -133,22 +117,25 @@ export const ButtonLink = React.forwardRef<HTMLAnchorElement, ButtonLinkProps>(
     return (
       <a
         ref={ref as LegacyRef<HTMLAnchorElement>}
-        className={clsx(
-          "mykn-button",
-          `mykn-button--align-${align}`,
-          `mykn-button--size-${size}`,
-          `mykn-button--variant-${variant}`,
-          {
-            "mykn-button--active": active,
-            "mykn-button--bold": bold,
-            "mykn-button--justify": justify,
-            "mykn-button--muted": muted,
-            "mykn-button--pad-h": pad === true || pad === "h",
-            "mykn-button--pad-v": pad === true || pad === "v",
-            "mykn-button--square": square,
-            "mykn-button--wrap": wrap,
-          },
-        )}
+        className={
+          (clsx(
+            "mykn-button",
+            `mykn-button--align-${align}`,
+            `mykn-button--size-${size}`,
+            `mykn-button--variant-${variant}`,
+            {
+              "mykn-button--active": active,
+              "mykn-button--bold": bold,
+              "mykn-button--justify": justify,
+              "mykn-button--muted": muted,
+              "mykn-button--pad-h": pad === true || pad === "h",
+              "mykn-button--pad-v": pad === true || pad === "v",
+              "mykn-button--square": square,
+              "mykn-button--wrap": wrap,
+            },
+          ),
+          className)
+        }
         {...props}
       >
         {props.children}

@@ -38,6 +38,9 @@ export type SelectProps = ChoiceFieldProps & {
   /** Can be set to `fit-content` to apply auto sizing based on content width. */
   size?: "fit-content";
 
+  /** The size of the text. */
+  textSize?: "s" | "xs";
+
   /** The clear value (accessible) label. */
   labelClear?: string;
 
@@ -64,6 +67,7 @@ export const Select: React.FC<SelectProps> = ({
   placeholder = "",
   required = false,
   size,
+  textSize = "s",
   value = null,
   variant = "normal",
   form,
@@ -193,10 +197,14 @@ export const Select: React.FC<SelectProps> = ({
   return (
     <>
       <div
-        className={clsx("mykn-select", `mykn-select--variant-${variant}`, {
-          "mykn-select--selected": selectedIndex,
-          [`mykn-select--size-${size}`]: size,
-        })}
+        className={clsx(
+          "mykn-select",
+          `mykn-select--variant-${variant} mykn-select--text-size-${textSize}`,
+          {
+            "mykn-select--selected": selectedIndex,
+            [`mykn-select--size-${size}`]: size,
+          },
+        )}
         tabIndex={0}
         ref={refs.setReference}
         title={label || undefined}

@@ -23,6 +23,9 @@ export type ToolbarProps = React.PropsWithChildren<
     /** Whether the toolbar shows items horizontally or vertically, mobile devices always use vertical. */
     direction?: "horizontal" | "vertical";
 
+    /** Whether the direction is responsive. */
+    directionResponsive?: boolean;
+
     /** When set to true, gap between items is removed. */
     compact?: boolean;
 
@@ -51,6 +54,7 @@ export type ToolbarProps = React.PropsWithChildren<
  * @param align
  * @param compact
  * @param direction
+ * @param directionResponsive
  * @param pad
  * @param padA
  * @param sticky
@@ -65,6 +69,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
   align = "start",
   compact = false,
   direction = "horizontal",
+  directionResponsive = true,
   pad = "v",
   padA = false,
   sticky = false,
@@ -124,6 +129,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
         `mykn-toolbar--variant-${variant}`,
         {
           "mykn-toolbar--compact": compact,
+          "mykn-toolbar--direction-responsive": directionResponsive,
           "mykn-toolbar--pad-h": pad === true || pad === "h",
           "mykn-toolbar--pad-v": pad === true || pad === "v",
           "mykn-toolbar--pad-a": padA,

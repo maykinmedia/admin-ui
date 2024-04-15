@@ -4,8 +4,9 @@ import { ucFirst } from "../../../lib/format/string";
 import { formatMessage } from "../../../lib/i18n/formatmessage";
 import { useIntl } from "../../../lib/i18n/useIntl";
 import { Button } from "../../button";
-import { Input, Option, Select, SelectProps } from "../../form";
+import { Option, Select, SelectProps } from "../../form";
 import { Outline } from "../../icon";
+import { Toolbar } from "../../toolbar";
 import { P } from "../../typography";
 import "./paginator.scss";
 
@@ -69,21 +70,6 @@ export type PaginatorProps = React.HTMLAttributes<HTMLElement> & {
  *
  * The `onPageChange` callback is debounced and provided a mechanism for a
  * spinner to appear during load (see docs).
- *
- * All labels that are passed to this component may contain the following
- * placeholders:
- *
- * - {count}
- * - {index}
- * - {page}
- * - {pageCount}
- * - {pageStart}
- * - {pageEnd}
- * - {pageSize}
- *
- * @param children
- * @param props
- * @constructor
  */
 export const Paginator: React.FC<PaginatorProps> = ({
   count,
@@ -124,43 +110,6 @@ export const Paginator: React.FC<PaginatorProps> = ({
 
   const intl = useIntl();
 
-  const _labelCurrentPageRange = labelCurrentPageRange
-    ? formatMessage(labelCurrentPageRange, context)
-    : intl.formatMessage(
-        {
-          id: "mykn.components.Paginator.labelCurrentPageRange",
-          description:
-            "mykn.components.Paginator: The current page range (accessible) label",
-          defaultMessage:
-            "resultaat {pageStart} t/m {pageEnd} van {pageCount} pagina's",
-        },
-        context,
-      );
-
-  const _labelGoToPage = labelGoToPage
-    ? formatMessage(labelGoToPage, context)
-    : intl.formatMessage(
-        {
-          id: "mykn.components.Paginator.labelGoToPage",
-          description:
-            "mykn.components.Paginator: The go to page (accessible) label",
-          defaultMessage: "naar pagina",
-        },
-        context,
-      );
-
-  const _labelPageSize = labelPageSize
-    ? formatMessage(labelPageSize, context)
-    : intl.formatMessage(
-        {
-          id: "mykn.components.Paginator.labelPageSize",
-          description:
-            "mykn.components.Paginator: The page size (accessible) label",
-          defaultMessage: "aantal resultaten",
-        },
-        context,
-      );
-
   const _labelPagination = labelPagination
     ? formatMessage(labelPagination, context)
     : intl.formatMessage(
@@ -169,42 +118,6 @@ export const Paginator: React.FC<PaginatorProps> = ({
           description:
             "mykn.components.Paginator: The pagination (accessible) label",
           defaultMessage: "paginering",
-        },
-        context,
-      );
-
-  const _labelPrevious = labelPrevious
-    ? formatMessage(labelPrevious, context)
-    : intl.formatMessage(
-        {
-          id: "mykn.components.Paginator.labelPrevious",
-          description:
-            "mykn.components.Paginator: The go to previous page (accessible) label",
-          defaultMessage: "vorige",
-        },
-        context,
-      );
-
-  const _labelNext = labelNext
-    ? formatMessage(labelNext, context)
-    : intl.formatMessage(
-        {
-          id: "mykn.components.Paginator.labelNext",
-          description:
-            "mykn.components.Paginator: The go to next page (accessible) label",
-          defaultMessage: "volgende",
-        },
-        context,
-      );
-
-  const _labelLoading = labelLoading
-    ? formatMessage(labelLoading, context)
-    : intl.formatMessage(
-        {
-          id: "mykn.components.Paginator.labelLoading",
-          description:
-            "mykn.components.Paginator: The loading (accessible) label",
-          defaultMessage: "bezig met laden...",
         },
         context,
       );
@@ -249,30 +162,10 @@ export const Paginator: React.FC<PaginatorProps> = ({
 
   /**
    * Gets called when the page input is changed.
-   * @param event
+   * @param page
    */
-  const handlePageChange: React.ChangeEventHandler<HTMLInputElement> = (
-    event,
-  ) => {
-    const value = parseInt(event.target.value);
-    const sanitizedValue = Math.max(Math.min(value, pageCount), 1);
-    setPageState(sanitizedValue);
-  };
-
-  /**
-   * Gets called when the previous button is changed.
-   */
-  const handlePrevious: React.MouseEventHandler<HTMLButtonElement> = () => {
-    const sanitizedValue = Math.max(pageState - 1, 1);
-    setPageState(sanitizedValue);
-  };
-
-  /**
-   * Gets called when the page input is changed.
-   */
-  const handleNext: React.MouseEventHandler<HTMLButtonElement> = () => {
-    const sanitizedValue = Math.min(pageState + 1, pageCount);
-    setPageState(sanitizedValue);
+  const handlePageChange = (page: number) => {
+    setPageState(page);
   };
 
   // `loading` takes precedence over `loadingState` (derived from Promise).
@@ -284,61 +177,355 @@ export const Paginator: React.FC<PaginatorProps> = ({
       aria-label={ucFirst(_labelPagination)}
       {...props}
     >
-      <div className="mykn-paginator__section mykn-paginator__section--form">
-        {_labelLoading && (
-          <Outline.ArrowPathIcon
-            spin={true}
-            aria-hidden={!isLoading}
-            aria-label={isLoading ? ucFirst(_labelLoading) : ""}
-            hidden={!isLoading}
-          />
-        )}
-
-        {pageSizeOptions.length > 0 && (
-          <>
-            <P>{ucFirst(_labelPageSize)}</P>
-            <Select
-              options={pageSizeOptions}
-              required={true}
-              size="fit-content"
-              value={pageSizeState}
-              variant="transparent"
-              onChange={handlePageSizeChange}
-            />
-          </>
-        )}
-
-        <P>{ucFirst(_labelGoToPage)}</P>
-        <Input
-          min={1}
-          max={pageCount}
-          size={String(pageCount).length}
-          type="number"
-          value={pageState}
-          variant="transparent"
-          onChange={handlePageChange}
-        ></Input>
+      <div className="mykn-paginator__section mykn-paginator__section--nav">
+        <PaginatorNav
+          count={count}
+          currentPage={pageState}
+          labelGoToPage={labelGoToPage}
+          labelPrevious={labelPrevious}
+          labelNext={labelNext}
+          pageSize={pageSizeState}
+          onPageSizeChange={handlePageChange}
+        />
       </div>
 
-      <div className="mykn-paginator__section mykn-paginator__section--navigate">
-        <P>{ucFirst(_labelCurrentPageRange)}</P>
-        <Button
-          square
-          variant="outline"
-          aria-label={ucFirst(_labelPrevious)}
-          onClick={handlePrevious}
-        >
-          <Outline.ChevronLeftIcon />
-        </Button>
-        <Button
-          square
-          variant="outline"
-          aria-label={ucFirst(_labelNext)}
-          onClick={handleNext}
-        >
-          <Outline.ChevronRightIcon />
-        </Button>
+      <div className="mykn-paginator__section mykn-paginator__section--meta">
+        <PaginatorMeta
+          count={count}
+          page={pageState}
+          pageSize={pageSizeState}
+          labelCurrentPageRange={labelCurrentPageRange}
+          labelLoading={labelLoading}
+          loading={isLoading}
+        />
+      </div>
+
+      <div className="mykn-paginator__section mykn-paginator__section--options">
+        <PaginatorOptions
+          labelPageSize={labelPageSize}
+          pageSize={pageSizeState}
+          pageSizeOptions={pageSizeOptions}
+          onPageSizeChange={handlePageSizeChange}
+        />
       </div>
     </nav>
+  );
+};
+
+export type PaginatorNavProps = {
+  count: number;
+  currentPage: number;
+  labelGoToPage: string;
+  labelPrevious?: string;
+  labelNext?: string;
+  pageSize: number;
+  onPageSizeChange: (page: number) => void;
+};
+
+export const PaginatorNav: React.FC<PaginatorNavProps> = ({
+  count,
+  currentPage = 1,
+  labelGoToPage,
+  labelNext,
+  labelPrevious,
+  onPageSizeChange,
+  pageSize,
+}) => {
+  const intl = useIntl();
+
+  const maxOffset = 2;
+  const pageCount = Math.ceil(count / pageSize);
+
+  const previousPage = Math.max(0, currentPage - 1);
+  const nextPage = currentPage + 1 > pageCount ? 0 : currentPage + 1;
+
+  const startRange = Math.min(maxOffset, previousPage);
+  const endRange = Math.min(maxOffset, pageCount - currentPage);
+
+  const startPages = new Array(startRange)
+    .fill(0)
+    .map((_, i) => currentPage - (i + 1))
+    .reverse();
+  const endPages = new Array(endRange)
+    .fill(0)
+    .map((_, i) => currentPage + i + 1);
+
+  const pages = [...startPages, currentPage, ...endPages];
+
+  const context = {
+    count,
+    currentPage,
+    pageCount,
+    pageSize,
+    previousPage,
+    nextPage,
+  };
+
+  const _labelPrevious = labelPrevious
+    ? formatMessage(labelPrevious, context)
+    : intl.formatMessage(
+        {
+          id: "mykn.components.Paginator.labelPrevious",
+          description:
+            "mykn.components.Paginator: The go to previous page (accessible) label",
+          defaultMessage: "vorige",
+        },
+        context,
+      );
+
+  const _labelNext = labelNext
+    ? formatMessage(labelNext, context)
+    : intl.formatMessage(
+        {
+          id: "mykn.components.Paginator.labelNext",
+          description:
+            "mykn.components.Paginator: The go to next page (accessible) label",
+          defaultMessage: "volgende",
+        },
+        context,
+      );
+
+  const _labelGoToPage = labelGoToPage
+    ? formatMessage(labelGoToPage, context)
+    : intl.formatMessage(
+        {
+          id: "mykn.components.Paginator.labelGoToPage",
+          description:
+            "mykn.components.Paginator: The go to page (accessible) label",
+          defaultMessage: "naar pagina {page}",
+        },
+        context,
+      );
+
+  return (
+    <Toolbar directionResponsive={false} pad={false} variant="transparent">
+      <Button
+        className="mykn-paginator__button mykn-paginator__button--previous"
+        disabled={!previousPage}
+        size="xs"
+        variant="outline"
+        wrap={false}
+        onClick={() => onPageSizeChange(previousPage)}
+      >
+        <Outline.ChevronLeftIcon />
+        {ucFirst(_labelPrevious)}
+      </Button>
+
+      {startPages.length > 0 && !startPages.includes(1) && (
+        <>
+          <Button
+            active={currentPage === 1}
+            aria-label={formatMessage(_labelGoToPage, { page: 1 })}
+            aria-current={currentPage === 1}
+            className="mykn-paginator__button mykn-paginator__button--page"
+            size="xs"
+            square
+            variant="outline"
+            onClick={() => onPageSizeChange(1)}
+          >
+            1
+          </Button>
+          {!startPages.includes(2) && (
+            <Button
+              aria-hidden
+              className="mykn-paginator__ellipsis"
+              disabled
+              size="xs"
+              square
+              variant="outline"
+            >
+              …
+            </Button>
+          )}
+        </>
+      )}
+
+      {pages.map((page) => {
+        return (
+          <Button
+            key={page}
+            active={currentPage === page}
+            aria-current={currentPage === page}
+            aria-label={formatMessage(_labelGoToPage, { page })}
+            className="mykn-paginator__button mykn-paginator__button--page"
+            size="xs"
+            square
+            variant="outline"
+            onClick={() => onPageSizeChange(page)}
+          >
+            {page}
+          </Button>
+        );
+      })}
+
+      {endPages.length > 0 && !endPages.includes(pageCount) && (
+        <>
+          {!endPages.includes(pageCount - 1) && (
+            <Button
+              aria-hidden
+              className="mykn-paginator__ellipsis"
+              disabled
+              size="xs"
+              square
+              variant="outline"
+            >
+              …
+            </Button>
+          )}
+          <Button
+            active={currentPage === pageCount}
+            aria-current={currentPage === pageCount}
+            aria-label={formatMessage(_labelGoToPage, { page: pageCount })}
+            className="mykn-paginator__button mykn-paginator__button--page"
+            size="xs"
+            square
+            variant="outline"
+            onClick={() => onPageSizeChange(pageCount)}
+          >
+            {pageCount}
+          </Button>
+        </>
+      )}
+
+      <Button
+        className="mykn-paginator__button mykn-paginator__button--next"
+        disabled={!nextPage}
+        size="xs"
+        variant="outline"
+        wrap={false}
+        onClick={() => onPageSizeChange(nextPage)}
+      >
+        {ucFirst(_labelNext)}
+        <Outline.ChevronRightIcon />
+      </Button>
+    </Toolbar>
+  );
+};
+
+export type PaginatorMetaProps = {
+  count: number;
+  labelCurrentPageRange?: string;
+  labelLoading?: string;
+  loading: boolean;
+  page: number;
+  pageSize: number;
+};
+
+export const PaginatorMeta: React.FC<PaginatorMetaProps> = ({
+  count,
+  labelCurrentPageRange,
+  labelLoading,
+  loading,
+  page,
+  pageSize,
+}) => {
+  const intl = useIntl();
+
+  const index = page - 1;
+  const pageCount = Math.ceil(count / pageSize);
+  const pageStart = index * pageSize + 1;
+  const pageEnd = Math.min(pageStart + pageSize - 1, count);
+
+  const context = {
+    count,
+    index,
+    loading,
+    page,
+    pageCount,
+    pageStart,
+    pageEnd,
+    pageSize,
+  };
+
+  const _labelCurrentPageRange = labelCurrentPageRange
+    ? formatMessage(labelCurrentPageRange, context)
+    : intl.formatMessage(
+        {
+          id: "mykn.components.Paginator.labelCurrentPageRange",
+          description:
+            "mykn.components.Paginator: The current page range (accessible) label",
+          defaultMessage:
+            "resultaat {pageStart} t/m {pageEnd} van {pageCount} pagina's",
+        },
+        context,
+      );
+
+  const _labelLoading = labelLoading
+    ? formatMessage(labelLoading, context)
+    : intl.formatMessage(
+        {
+          id: "mykn.components.Paginator.labelLoading",
+          description:
+            "mykn.components.Paginator: The loading (accessible) label",
+          defaultMessage: "bezig met laden...",
+        },
+        context,
+      );
+
+  return (
+    <>
+      <P size="xs" title={ucFirst(_labelCurrentPageRange)}>
+        {`${pageStart}-${pageEnd} / ${count}`}
+      </P>
+      {_labelLoading && (
+        <Outline.ArrowPathIcon
+          spin={true}
+          aria-hidden={!loading}
+          aria-label={loading ? ucFirst(_labelLoading) : ""}
+          hidden={!loading}
+        />
+      )}
+    </>
+  );
+};
+
+export type PaginatorOptionsProps = {
+  labelPageSize?: string;
+  onPageSizeChange: React.ChangeEventHandler;
+  pageSize: number;
+  pageSizeOptions: Option<number, number>[];
+};
+
+export const PaginatorOptions: React.FC<PaginatorOptionsProps> = ({
+  labelPageSize,
+  onPageSizeChange,
+  pageSize,
+  pageSizeOptions = [],
+}) => {
+  const intl = useIntl();
+
+  if (pageSizeOptions.length === 0) {
+    return;
+  }
+
+  const context = {
+    pageSize,
+  };
+
+  const _labelPageSize = labelPageSize
+    ? formatMessage(labelPageSize, context)
+    : intl.formatMessage(
+        {
+          id: "mykn.components.Paginator.labelPageSize",
+          description:
+            "mykn.components.Paginator: The page size (accessible) label",
+          defaultMessage: "aantal resultaten",
+        },
+        context,
+      );
+
+  return (
+    <>
+      <P size="xs">{ucFirst(_labelPageSize)}</P>
+      <Select
+        options={pageSizeOptions}
+        required={true}
+        size="fit-content"
+        textSize="xs"
+        value={pageSize}
+        variant="transparent"
+        onChange={onPageSizeChange}
+      />
+    </>
   );
 };

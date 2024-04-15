@@ -604,7 +604,7 @@ export const DataGridFooter: React.FC<DataGridFooterProps> = ({
           selectable ? renderableFields.length + 1 : renderableFields.length
         }
       >
-        <Toolbar align="end" pad={true}>
+        <Toolbar pad={true}>
           <Paginator
             count={count}
             loading={loading}

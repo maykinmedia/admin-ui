@@ -3,7 +3,7 @@ import React from "react";
 
 import "./p.scss";
 
-export type PProps = React.PropsWithChildren<{
+export type PProps = React.ComponentProps<"p"> & {
   /** Whether the text should be presented bold. */
   bold?: boolean;
 
@@ -12,7 +12,7 @@ export type PProps = React.PropsWithChildren<{
 
   /** The size of the text. */
   size?: "s" | "xs";
-}>;
+};
 
 /**
  * Ul component

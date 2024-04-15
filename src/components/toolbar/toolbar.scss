@@ -4,17 +4,21 @@
   $self: &;
   background-color: var(--typography-color-background);
   box-sizing: border-box;
-  column-gap: 24px;
+  column-gap: var(--spacing-h);
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  row-gap: 12px;
+  row-gap: var(--spacing-v);
   text-align: start;
   width: 100%;
   z-index: 10;
 
   &--compact {
     gap: 0;
+  }
+
+  &:not(#{&}--direction-responsive)#{&}--direction-horizontal {
+    flex-direction: row;
   }
 
   &--variant-transparent {

@@ -42,7 +42,7 @@ try {
 }
 
 // Redefine (minimal) react-intl types.
-type MessageContext = Record<string, number | string>;
+type MessageContext = Record<string, boolean | number | string>;
 
 type MessageDescriptor = {
   id?: string;
@@ -68,7 +68,7 @@ const getLocalizedFallbackIntl = (
   return {
     formatMessage: (
       descriptor: MessageDescriptor,
-      context: Record<string, number | string> = {},
+      context: MessageContext = {},
     ) => {
       let messages: Record<string, MessageDescriptor> = {};
       try {
