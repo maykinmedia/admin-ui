@@ -1,13 +1,15 @@
 import clsx from "clsx";
-import React, { useEffect, useId, useState } from "react";
+import React, { useEffect, useId, useRef, useState } from "react";
 
 import {
   Field,
   SerializedFormData,
   TypedField,
+  filterAttributeDataArray,
   formatMessage,
   serializeForm,
   typedFieldByFields,
+  ucFirst,
   useIntl,
 } from "../../../lib";
 import {
@@ -44,13 +46,19 @@ export type DataGridProps = {
   objectList: AttributeData[];
 
   /**
-   * Whether values should be made editable, defaults is determined by whether any of `fields` is a `TypedField` and has
+   * Whether values should be made editable, default is determined by whether any of `fields` is a `TypedField` and has
    * `editable` set.
    */
   editable?: boolean;
 
   /** A `string[]` or `TypedField[]` containing the keys in `objectList` to show object for. */
   fields?: Array<Field | TypedField>;
+
+  /**
+   * Whether values should be made filterable, default is determined by whether any of `fields` is a `TypedField` and has
+   * `filterable` set.
+   */
+  filterable?: boolean;
 
   /** Whether to allow sorting/the field to sort on. */
   sort?: boolean | string;
@@ -84,6 +92,9 @@ export type DataGridProps = {
   /** Props for P. */
   pProps?: PProps;
 
+  /** The filter field (accessible) label */
+  labelFilterField?: string;
+
   /** References to the selected items in `objectList`, setting this preselects the items. */
   selected?: AttributeData[];
 
@@ -114,6 +125,12 @@ export type DataGridProps = {
 
   /** Gets called when a row value is edited. */
   onEdit?: (rowData: SerializedFormData) => void;
+
+  /**
+   *  Gets called when a row value is filtered.
+   *  This callback is debounced every 300 milliseconds.
+   */
+  onFilter?: (rowData: AttributeData) => void;
 
   /** Gets called when the object list is sorted. */
   onSort?: (sort: string) => Promise<unknown> | void;
@@ -151,9 +168,11 @@ const getRenderableFields = (
   objectList: AttributeData[],
   urlFields: string[],
   editable: DataGridProps["editable"],
+  filterable: DataGridProps["filterable"],
 ): TypedField[] =>
   typedFieldByFields(fields, objectList, {
     editable: Boolean(editable),
+    filterable: Boolean(filterable),
   }).filter((f) => !urlFields.includes(String(f.name)));
 
 /**
@@ -178,8 +197,9 @@ export const DataGrid: React.FC<DataGridProps> = ({
   badgeProps,
   boolProps,
   objectList,
-  fields = objectList?.length ? Object.keys(objectList[0]) : [],
   editable = undefined,
+  fields = objectList?.length ? Object.keys(objectList[0]) : [],
+  filterable = undefined,
   paginatorProps,
   showPaginator = Boolean(paginatorProps),
   pProps,
@@ -188,10 +208,12 @@ export const DataGrid: React.FC<DataGridProps> = ({
   selectable = false,
   title = "",
   urlFields = DEFAULT_URL_FIELDS,
+  labelFilterField,
   labelSelect,
   labelSelectAll,
   onChange,
   onEdit,
+  onFilter,
   onSelect,
   onSelectionChange,
   onSort,
@@ -207,10 +229,11 @@ export const DataGrid: React.FC<DataGridProps> = ({
   ...props
 }) => {
   const id = useId();
-
+  const onFilterTimeoutRef = useRef<NodeJS.Timeout>();
   const [editingState, setEditingState] = useState<
     [AttributeData | null, number | null]
   >([null, null]);
+  const [filterState, setFilterState] = useState<AttributeData | null>();
   const [selectedState, setSelectedState] = useState<AttributeData[] | null>(
     null,
   );
@@ -235,15 +258,20 @@ export const DataGrid: React.FC<DataGridProps> = ({
     objectList,
     urlFields,
     editable,
+    filterable,
   );
   const sortField = sortState?.[0];
   const sortDirection = sortState?.[1];
   const titleId = title ? `${id}-caption` : undefined;
 
+  const filteredObjectList = filterState
+    ? filterAttributeDataArray(objectList, filterState)
+    : objectList || [];
+
   const renderableRows =
     !onSort && sortField && sortDirection
-      ? sortAttributeDataArray(objectList, sortField, sortDirection)
-      : objectList || [];
+      ? sortAttributeDataArray(filteredObjectList, sortField, sortDirection)
+      : filteredObjectList;
 
   const allSelected =
     selectedState?.every((a) => renderableRows.includes(a)) &&
@@ -284,6 +312,25 @@ export const DataGrid: React.FC<DataGridProps> = ({
     onSort &&
       onSort(newSortDirection === "ASC" ? field.name : `-${field.name}`);
   };
+  /**
+   * Get called when a column is filtered.
+   * @param data
+   */
+  const handleFilter = (data: AttributeData) => {
+    if (onFilter) {
+      const handler = () => onFilter(data);
+      onFilterTimeoutRef.current && clearTimeout(onFilterTimeoutRef.current);
+      onFilterTimeoutRef.current = setTimeout(handler, 300);
+      setFilterState(null);
+      return;
+    }
+
+    if (Object.keys(data).filter((key) => data[key]).length === 0) {
+      setFilterState(null);
+    } else {
+      setFilterState(data);
+    }
+  };
 
   // Run assertions for aliased fields.
   if (showPaginator) {
@@ -322,8 +369,9 @@ export const DataGrid: React.FC<DataGridProps> = ({
           amountSelected={selectedState?.length || 0}
           count={count || 0}
           dataGridId={id}
-          handleSelectAll={handleSelectAll}
-          handleSort={handleSort}
+          filterable={Boolean(filterable)}
+          id={id}
+          labelFilterField={labelFilterField || ""}
           labelSelectAll={labelSelectAll || ""}
           renderableFields={renderableFields}
           renderableRows={renderableRows}
@@ -331,6 +379,9 @@ export const DataGrid: React.FC<DataGridProps> = ({
           sortable={Boolean(sort)}
           sortDirection={sortDirection}
           sortField={sortField}
+          onFilter={handleFilter}
+          onSelectAll={handleSelectAll}
+          onSort={handleSort}
         />
 
         {/* Body */}
@@ -377,6 +428,7 @@ export const DataGrid: React.FC<DataGridProps> = ({
           />
         )}
       </table>
+      {filterable && <form id={`${id}-filter-form`} />}
     </div>
   );
 };
@@ -387,14 +439,18 @@ export type DataGridHeadingProps = {
   selectable: boolean;
   count: number;
   dataGridId: string;
-  handleSelectAll: () => void;
-  handleSort: (field: TypedField) => void;
+  filterable: boolean;
+  id: string;
+  labelFilterField: string;
   labelSelectAll: string;
   renderableFields: TypedField[];
   renderableRows: AttributeData[];
   sortable: boolean;
   sortDirection: "ASC" | "DESC" | undefined;
   sortField: string | undefined;
+  onFilter: (data: AttributeData) => void;
+  onSelectAll: () => void;
+  onSort: (field: TypedField) => void;
 };
 
 /**
@@ -405,52 +461,126 @@ export const DataGridHeading: React.FC<DataGridHeadingProps> = ({
   amountSelected,
   dataGridId,
   count,
-  handleSelectAll,
-  handleSort,
+  filterable,
+  id,
+  labelFilterField,
   labelSelectAll,
+  onFilter,
+  onSelectAll,
+  onSort,
   renderableFields,
   renderableRows,
   selectable,
   sortable,
   sortDirection,
   sortField,
-}) => (
-  <thead className="mykn-datagrid__head" role="rowgroup">
-    <tr className="mykn-datagrid__row" role="row">
-      {selectable && (
-        <th
-          className={clsx(
-            "mykn-datagrid__cell",
-            "mykn-datagrid__cell--header",
-            "mykn-datagrid__cell--checkbox",
-          )}
-        >
-          <DataGridSelectionCheckbox
-            checked={allSelected || false}
-            count={count}
-            handleSelect={handleSelectAll}
-            labelSelect={labelSelectAll}
-            amountSelected={amountSelected}
-            sortedObjectList={renderableRows}
-          />
-        </th>
-      )}
+}) => {
+  const intl = useIntl();
 
-      {renderableFields.map((field) => (
-        <DataGridHeadingCell
-          key={`${dataGridId}-heading-${field2Caption(field.name)}`}
-          field={field}
-          handleSort={handleSort}
-          isSorted={sortField === field.name}
-          sortable={sortable}
-          sortDirection={sortDirection}
+  return (
+    <thead className="mykn-datagrid__head" role="rowgroup">
+      <tr className="mykn-datagrid__row mykn-datagrid__row--header" role="row">
+        {selectable && (
+          <th
+            className={clsx(
+              "mykn-datagrid__cell",
+              "mykn-datagrid__cell--header",
+              "mykn-datagrid__cell--checkbox",
+            )}
+          >
+            <DataGridSelectionCheckbox
+              checked={allSelected || false}
+              count={count}
+              handleSelect={onSelectAll}
+              labelSelect={labelSelectAll}
+              amountSelected={amountSelected}
+              sortedObjectList={renderableRows}
+            />
+          </th>
+        )}
+
+        {renderableFields.map((field) => (
+          <DataGridHeadingCell
+            key={`${dataGridId}-heading-${field2Caption(field.name)}`}
+            field={field}
+            onSort={onSort}
+            isSorted={sortField === field.name}
+            sortable={sortable}
+            sortDirection={sortDirection}
+          >
+            {field2Caption(field.name)}
+          </DataGridHeadingCell>
+        ))}
+      </tr>
+      {filterable && (
+        <tr
+          className="mykn-datagrid__row mykn-datagrid__row--filter"
+          role="row"
         >
-          {field2Caption(field.name)}
-        </DataGridHeadingCell>
-      ))}
-    </tr>
-  </thead>
-);
+          {selectable && (
+            <th
+              className={clsx(
+                "mykn-datagrid__cell",
+                "mykn-datagrid__cell--filter",
+                "mykn-datagrid__cell--checkbox",
+              )}
+            ></th>
+          )}
+          {renderableFields.map((field) => {
+            const placeholder = ucFirst(field.name);
+
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            const { options, ...context } = field;
+
+            const _labelFilterField = labelFilterField
+              ? formatMessage(labelFilterField, context)
+              : intl.formatMessage(
+                  {
+                    id: "mykn.components.DataGrid.labelFilterField",
+                    description:
+                      "mykn.components.DataGrid: The filter field (accessible) label",
+                    defaultMessage: 'filter veld "{name}"',
+                  },
+                  context,
+                );
+
+            return (
+              <th
+                key={`${dataGridId}-filter-${field2Caption(field.name)}`}
+                className={clsx(
+                  "mykn-datagrid__cell",
+                  "mykn-datagrid__cell--filter",
+                )}
+              >
+                <FormControl
+                  aria-label={_labelFilterField}
+                  icon={!field.options && <Outline.MagnifyingGlassIcon />}
+                  form={`${id}-filter-form`}
+                  name={field.name}
+                  options={field.options}
+                  min={
+                    !field.options && field.type === "number" ? 0 : undefined
+                  }
+                  placeholder={placeholder}
+                  type={field.type}
+                  onChange={(
+                    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+                  ) => {
+                    e.preventDefault();
+                    const data = serializeForm(
+                      e.target.form as HTMLFormElement,
+                    );
+                    onFilter(data as AttributeData);
+                  }}
+                />
+              </th>
+            );
+          })}
+        </tr>
+      )}
+    </thead>
+  );
+};
 
 export type DataGridBodyProps = {
   aProps: AProps | undefined;
@@ -622,11 +752,11 @@ export const DataGridFooter: React.FC<DataGridFooterProps> = ({
 );
 
 export type DataGridHeadingCellProps = React.PropsWithChildren<{
-  handleSort: (field: TypedField) => void;
   field: TypedField;
   isSorted: boolean;
   sortable: boolean;
   sortDirection: "ASC" | "DESC" | undefined;
+  onSort: (field: TypedField) => void;
 }>;
 
 /**
@@ -634,7 +764,7 @@ export type DataGridHeadingCellProps = React.PropsWithChildren<{
  */
 export const DataGridHeadingCell: React.FC<DataGridHeadingCellProps> = ({
   children,
-  handleSort,
+  onSort,
   field,
   isSorted,
   sortable,
@@ -655,7 +785,7 @@ export const DataGridHeadingCell: React.FC<DataGridHeadingCellProps> = ({
         size="xs"
         variant={"transparent"}
         wrap={false}
-        onClick={() => handleSort(field)}
+        onClick={() => onSort(field)}
       >
         {children}
         {isSorted && sortDirection === "ASC" && <Outline.ChevronUpIcon />}

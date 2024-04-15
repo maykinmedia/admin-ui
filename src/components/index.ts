@@ -11,6 +11,7 @@ export * from "./icon";
 export * from "./layout";
 export * from "./logo";
 export * from "./navbar";
+export * from "./stackctx";
 export * from "./tabs";
 export * from "./toolbar";
 export * from "./tooltip";

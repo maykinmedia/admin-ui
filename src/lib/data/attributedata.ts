@@ -28,6 +28,9 @@ export type TypedField<T = Attribute> = {
   /** Whether the field should be editable. */
   editable?: boolean;
 
+  /** Whether the field should be filterable. */
+  filterable?: boolean;
+
   /** Used by DataGrid when editable=true. */
   options?: ChoiceFieldProps["options"];
 };
@@ -162,6 +165,50 @@ export const typeByAttributeDataArray = (
 
   const fieldValue = fieldPopulatedRow[field];
   return typeof fieldValue as TypedField["type"];
+};
+
+/**
+ * Filters `objectList` by `data`
+ * @param objectList
+ * @param data
+ */
+export const filterAttributeDataArray = <T = AttributeData>(
+  objectList: T[],
+  data: Record<keyof T, Attribute>,
+): T[] => {
+  return objectList.filter((attributeData) => {
+    for (const key in data) {
+      const attributeValue = attributeData[key];
+      const filterValue = data[key];
+
+      switch (typeof attributeValue) {
+        case "undefined":
+          if (filterValue) {
+            return false;
+          }
+          break;
+        case "boolean":
+          if (attributeValue !== Boolean(filterValue)) {
+            return false;
+          }
+          break;
+
+        case "number":
+          if (attributeValue !== Number(filterValue)) {
+            return false;
+          }
+          break;
+
+        case "string":
+          if (!attributeValue.includes(String(filterValue))) {
+            return false;
+          }
+          break;
+      }
+
+      return true;
+    }
+  });
 };
 
 /**

@@ -85,4 +85,13 @@
   &--variant-transparent {
     background-color: transparent;
   }
+
+  .mykn-stackctx & + .mykn-icon {
+    pointer-events: none;
+    color: var(--typography-color-muted);
+    inset-block-start: 50%;
+    inset-inline-end: var(--spacing-h);
+    position: absolute;
+    transform: translateY(-50%);
+  }
 }
