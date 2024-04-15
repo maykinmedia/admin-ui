@@ -1,6 +1,7 @@
 import clsx from "clsx";
 import React, { useEffect, useState } from "react";
 
+import { StackCtx } from "../../stackctx";
 import { eventFactory } from "../eventFactory";
 import "./input.scss";
 
@@ -8,6 +9,9 @@ export type InputProps = Omit<
   React.InputHTMLAttributes<HTMLInputElement>,
   "value"
 > & {
+  /** Component to use as icon. */
+  icon?: React.ReactNode;
+
   /** Input label. */
   label?: string;
 
@@ -28,6 +32,7 @@ export type InputProps = Omit<
  * @constructor
  */
 export const Input: React.FC<InputProps> = ({
+  icon,
   label = "",
   type = "text",
   value,
@@ -80,7 +85,7 @@ export const Input: React.FC<InputProps> = ({
           value: valueState,
         };
 
-  return (
+  const input = (
     <input
       ref={inputRef}
       className={clsx("mykn-input", `mykn-input--variant-${variant}`)}
@@ -90,5 +95,14 @@ export const Input: React.FC<InputProps> = ({
       {...valueProps}
       {...props}
     />
+  );
+
+  return icon ? (
+    <StackCtx>
+      {input}
+      {icon}
+    </StackCtx>
+  ) : (
+    input
   );
 };

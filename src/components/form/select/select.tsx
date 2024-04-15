@@ -26,6 +26,9 @@ import { eventFactory } from "../eventFactory";
 import "./select.scss";
 
 export type SelectProps = ChoiceFieldProps & {
+  /** Component to use as icon. */
+  icon?: React.ReactNode;
+
   /** Select label. */
   label?: string;
 
@@ -57,6 +60,7 @@ export type SelectProps = ChoiceFieldProps & {
  * @constructor
  */
 export const Select: React.FC<SelectProps> = ({
+  icon,
   id,
   name,
   options = [],
@@ -241,7 +245,7 @@ export const Select: React.FC<SelectProps> = ({
             <Outline.XCircleIcon />
           </button>
         )}
-        <Solid.ChevronDownIcon />
+        {icon || <Solid.ChevronDownIcon />}
       </div>
 
       <SelectDropdown

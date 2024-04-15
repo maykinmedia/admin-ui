@@ -149,6 +149,7 @@ export const JSONPlaceholderExample: Story = {
     title: "Posts",
   },
   render: (args) => {
+    const [filterState, setFilterState] = useState<AttributeData>();
     const [loading, setLoading] = useState(false);
     const [page, setPage] = useState<number>(args.paginatorProps?.page || 1);
     const [pageSize, setPageSize] = useState<number>(args.pageSize || 10);
@@ -164,9 +165,18 @@ export const JSONPlaceholderExample: Story = {
       const sortKey = sort.replace(/^-/, "");
       const sortDirection = sort.startsWith("-") ? "desc" : "asc";
 
+      const filters = filterState
+        ? Object.fromEntries(
+            Object.entries(filterState)
+              .filter(([, value]) => value)
+              .map(([key, value]) => [key, String(value)]),
+          )
+        : {};
+      const searchParams = new URLSearchParams(filters);
+
       // Process sorting and pagination locally in place for demonstration purposes.
       fetch(
-        `https://jsonplaceholder.typicode.com/posts?_page=${page}&_limit=${pageSize}&_sort=${sortKey}&_order=${sortDirection}`,
+        `https://jsonplaceholder.typicode.com/posts?_page=${page}&_limit=${pageSize}&_sort=${sortKey}&_order=${sortDirection}&${searchParams}`,
         {
           signal: abortController.signal,
         },
@@ -181,7 +191,7 @@ export const JSONPlaceholderExample: Story = {
         abortController.abort();
         setLoading(false);
       };
-    }, [page, pageSize, sort]);
+    }, [filterState, page, pageSize, sort]);
 
     return (
       <DataGrid
@@ -226,6 +236,10 @@ export const JSONPlaceholderExample: Story = {
           setObjectList(newObjectList);
           setLoading(false);
         }}
+        onFilter={(data) => {
+          setPage(1);
+          setFilterState(data);
+        }}
       />
     );
   },
@@ -269,5 +283,29 @@ export const EditableRows: Story = {
   },
   argTypes: {
     onEdit: { action: "onEdit" },
+  },
+};
+
+export const FilterableRows: Story = {
+  ...JSONPlaceholderExample,
+  args: {
+    ...JSONPlaceholderExample.args,
+    filterable: true,
+    fields: [
+      {
+        type: "number",
+        name: "userId",
+        options: [
+          { label: 1, value: 1 },
+          { label: 2, value: 2 },
+        ],
+      },
+      { name: "id", type: "number", editable: false },
+      "title",
+      {
+        type: "boolean",
+        name: "published",
+      },
+    ],
   },
 };

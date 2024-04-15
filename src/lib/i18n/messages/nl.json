@@ -9,6 +9,11 @@
     "description": "mykn.components.Bool: The accessible label when value is truthy",
     "originalDefault": "ja"
   },
+  "mykn.components.DataGrid.labelFilterField": {
+    "defaultMessage": "filter veld \"{name}\"",
+    "description": "mykn.components.DataGrid: The filter field (accessible) label",
+    "originalDefault": "filter veld \"{name}\""
+  },
   "mykn.components.DataGrid.labelSelect": {
     "defaultMessage": "(de)selecteer rij",
     "description": "mykn.components.DataGrid: The select row (accessible) label",
