@@ -1,10 +1,12 @@
 import clsx from "clsx";
 import React from "react";
 
-import { PProps } from "../p";
 import "./ul.scss";
 
-export type UlProps = PProps;
+export type UlProps = React.ComponentProps<"ul"> & {
+  /** The size of the text. */
+  size?: "s" | "xs";
+};
 
 /**
  * Ul component
