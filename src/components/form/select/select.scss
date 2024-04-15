@@ -1,4 +1,8 @@
 .mykn-select {
+  --select-font-size: var(--typography-font-size-body-s);
+  --select-line-height: var(--typography-line-height-body-s);
+  --select-min-height: 38px;
+
   align-items: center;
   background: var(--typography-color-background);
   border: 1px solid var(--form-color-border);
@@ -9,18 +13,26 @@
   display: inline-flex;
   justify-content: space-between;
   font-family: var(--typography-font-family-body);
-  font-size: var(--typography-font-size-body-s);
+  font-size: var(--select-font-size);
   font-weight: var(--typography-font-weight-normal);
-  line-height: var(--typography-line-height-body-s);
-  padding: var(--spacing-v) var(--spacing-h);
+  line-height: var(--select-line-height);
+  padding: var(--mykn-select-padding-xs, var(--spacing-v))
+    var(--mykn-select-padding-xs, var(--spacing-h));
   width: min(320px, 100%);
-  min-height: 38px;
+  min-height: var(--select-min-height);
   max-width: 100%;
   position: relative;
   text-align: start;
 
   &--size-fit-content {
     width: fit-content;
+  }
+
+  &--text-size-xs {
+    --mykn-select-padding-xs: calc(var(--spacing-h) / 2);
+    --select-font-size: var(--typography-font-size-body-xs);
+    --select-line-height: var(--typography-line-height-body-xs);
+    --select-min-height: 0;
   }
 
   &--variant-transparent {
@@ -37,6 +49,8 @@
   }
 
   &__label {
+    font-size: var(--select-font-size);
+    line-height: var(--select-line-height);
     width: 100%;
     flex-grow: 0;
     white-space: nowrap;
@@ -81,9 +95,9 @@
   color: var(--mykn-option-color-body);
   cursor: pointer;
   font-family: var(--typography-font-family-body);
-  font-size: var(--typography-font-size-body-s);
+  font-size: var(--select-font-size);
   font-weight: var(--mykn-option-font-weight);
-  line-height: var(--typography-line-height-body-s);
+  line-height: var(--select-line-height);
   padding: 0 var(--spacing-h);
   text-align: start;
   white-space: nowrap;

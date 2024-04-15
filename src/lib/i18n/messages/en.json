@@ -42,7 +42,7 @@
   "mykn.components.Paginator.labelGoToPage": {
     "defaultMessage": "go to page",
     "description": "mykn.components.Paginator: The go to page (accessible) label",
-    "originalDefault": "naar pagina"
+    "originalDefault": "naar pagina {page}"
   },
   "mykn.components.Paginator.labelLoading": {
     "defaultMessage": "loading...",

@@ -2,37 +2,54 @@
 
 .mykn-paginator {
   display: flex;
-  flex-wrap: wrap;
+  justify-content: space-between;
   gap: var(--spacing-v);
+  position: relative;
+  width: 100%;
 
   &__section {
-    align-items: center;
     display: flex;
+    align-items: center;
     gap: var(--spacing-h);
   }
 
-  &__section .mykn-p:not(:last-child) {
-    margin-block-end: 0;
-  }
+  &__section--meta {
+    display: flex;
+    gap: var(--spacing-v);
+    inset-block-start: 50%;
+    inset-inline-start: 50%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    justify-content: center;
 
-  &__section--form .mykn-icon:first-child {
-    color: var(--typography-color-body);
+    > .mykn-icon {
+      inset-inline-start: 100%;
+      margin-inline-start: var(--spacing-h);
+      position: absolute;
+    }
   }
 
   @media screen and (max-width: constants.$breakpoint-desktop - 1px) {
-    width: 100%;
-
-    &__section--form {
-      display: none;
-    }
+    flex-wrap: wrap;
 
     &__section {
-      width: 100%;
-      justify-content: flex-end;
+      flex-basis: calc(50% - var(--spacing-v) / 2);
+      white-space: nowrap;
+    }
 
-      .mykn-button {
-        justify-content: center !important;
-      }
+    &__section--meta {
+      position: static;
+      text-align: end;
+      transform: none;
+    }
+
+    &__section--options {
+      flex-basis: 100%;
+    }
+
+    &__ellipsis,
+    &__button--page {
+      display: none;
     }
   }
 }

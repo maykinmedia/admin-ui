@@ -12,16 +12,18 @@
   --mykn-button-height: auto;
   --mykn-button-width: auto;
   --mykn-button-offset: 0px;
-  --mykn-button-padding-v: var(--spacing-v);
-  --mykn-button-padding-h: var(--spacing-h);
+
+  --mykn-button-padding-v: 0;
+  --mykn-button-padding-h: 0;
 
   align-items: center;
   appearance: none;
   margin: 0;
-  padding: 0;
+  padding-block: var(--mykn-button-padding-v);
+  padding-inline: var(--mykn-button-padding-h);
   background-color: var(--mykn-button-color-background);
   border: 1px solid var(--mykn-button-color-border);
-  border-radius: var(--border-radius-l);
+  border-radius: var(--border-radius-s);
   box-shadow: 0 calc(var(--mykn-button-offset) * -1)
     var(--mykn-button-color-shadow);
   box-sizing: border-box;
@@ -41,12 +43,9 @@
   width: var(--mykn-button-width);
 
   &[disabled] {
-    --mykn-button-color-background: var(
-      --mykn-button-color-background-mute,
-      #ccc
-    ) !important;
     --mykn-button-offset: 0 !important;
     pointer-events: none;
+    opacity: 0.4;
   }
 
   &--align-start {
@@ -77,29 +76,30 @@
   }
 
   &--pad-h {
-    padding-inline-start: var(--mykn-button-padding-h);
-    padding-inline-end: var(--mykn-button-padding-h);
+    --mykn-button-padding-h: var(--mykn-button-padding-xs, var(--spacing-h));
   }
 
   &--pad-v {
-    padding-block-start: var(--mykn-button-padding-h);
-    padding-block-end: var(--mykn-button-padding-h);
+    --mykn-button-padding-v: var(--mykn-button-padding-xs, var(--spacing-v));
   }
 
   &--size-xs {
     --mykn-button-font-size: var(--typography-font-size-body-xs);
     --mykn-button-line-height: var(--typography-line-height-body-xs);
+    --mykn-button-padding-xs: calc(var(--spacing-h) / 2);
   }
 
   &--square {
     --mykn-button-height: calc(
-      var(--typography-line-height-body-s) + 2 * var(--spacing-v)
+      var(--mykn-button-line-height) + 2 *
+        var(--mykn-button-padding-xs, var(--mykn-button-padding-v)) + 2px
     );
     --mykn-button-width: calc(
-      var(--typography-line-height-body-s) + 2 * var(--spacing-v)
+      var(--mykn-button-line-height) + 2 *
+        var(--mykn-button-padding-xs, var(--mykn-button-padding-v)) + 2px
     );
-    --mykn-button-padding-v: 0;
-    --mykn-button-padding-h: 0;
+    padding-block: 0;
+    padding-inline: 0;
     flex-shrink: 0;
   }
 
