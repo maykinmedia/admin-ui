@@ -38,7 +38,6 @@
   }
 
   &__head &__cell {
-    padding: var(--spacing-v) var(--spacing-h);
     text-align: start;
   }
 
@@ -50,7 +49,7 @@
     border-block-start: 1px solid transparent;
     border-block-end: 1px solid var(--typography-color-border);
     box-sizing: border-box;
-    padding: var(--spacing-v) var(--spacing-h);
+    padding: var(--spacing-v) calc(var(--spacing-h) * 2);
     position: relative;
 
     .mykn-a:not(:last-child) {
@@ -61,6 +60,9 @@
       }
     }
   }
+  &__cell--filter {
+    padding-inline: var(--spacing-h);
+  }
 
   &__cell--checkbox,
   &__cell--type-null,
@@ -70,17 +72,20 @@
     width: 0;
   }
 
+  &__cell--editable:not(#{&}__cell--editing) {
+    padding-inline: var(--spacing-h);
+  }
+
   &__cell--editable .mykn-button {
     border: none;
   }
 
   &__cell--editable:not(#{&}__cell--type-boolean) .mykn-form-control {
     height: 100%;
-    left: 50%;
+    left: var(--spacing-h);
     position: absolute;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    width: 100%;
+    top: 0;
+    width: calc(100% - var(--spacing-h) * 2);
     z-index: 1000;
 
     .mykn-input {
@@ -159,6 +164,7 @@
       flex-direction: column;
       gap: var(--spacing-h);
       width: 100%;
+      padding: var(--spacing-v) var(--spacing-h);
       position: relative;
 
       .mykn-p {
