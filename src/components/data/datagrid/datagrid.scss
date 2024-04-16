@@ -11,7 +11,14 @@
   }
 
   &__caption {
+    padding-block: var(--spacing-v);
+    padding-inline: var(--spacing-h);
     text-align: start;
+
+    > * {
+      float: inline-start;
+      margin-inline-end: var(--spacing-h);
+    }
   }
 
   &__head {
@@ -19,10 +26,6 @@
     position: sticky;
     top: 0;
     z-index: 1;
-  }
-
-  &__head &__row:first-child &__cell {
-    border-block-start: 1px solid var(--typography-color-border);
   }
 
   &__head &__row--filter {
@@ -119,6 +122,10 @@
       background-color: var(--typography-color-background);
       border-radius: var(--border-radius-l);
       display: block;
+
+      > * {
+        float: none;
+      }
     }
 
     &__head {
