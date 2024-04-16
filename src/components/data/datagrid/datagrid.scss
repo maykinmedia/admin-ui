@@ -60,6 +60,11 @@
       }
     }
   }
+
+  &__body &__row:last-child &__cell {
+    border-block-end: none;
+  }
+
   &__cell--filter {
     padding-inline: var(--spacing-h);
   }
