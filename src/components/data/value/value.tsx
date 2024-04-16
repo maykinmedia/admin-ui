@@ -14,8 +14,15 @@ import { Bool, BoolProps } from "../../boolean";
 import { A, AProps, P, PProps } from "../../typography";
 
 export type ValueProps = React.HTMLAttributes<unknown> & {
+  /** Value to render. */
   value: Attribute;
+
+  /** Whether to use a "decorative" component instead of `<P>` if applicable. */
+  decorate?: boolean;
+
+  /** Is set, renders an `<A>` with `href` set. */
   href?: string;
+
   aProps?: AProps;
   boolProps?: Omit<BoolProps, "value">;
   badgeProps?: BadgeProps;
@@ -29,12 +36,21 @@ export const Value: React.FC<ValueProps> = ({
   aProps,
   badgeProps,
   boolProps,
+  decorate = false,
   pProps,
   href = "",
   value,
   ...props
 }) => {
-  if (isString(value)) {
+  if (isNull(value) || isUndefined(value)) {
+    return (
+      <P {...pProps} {...props}>
+        -
+      </P>
+    );
+  }
+
+  if (isString(value) || (isNumber(value) && !decorate)) {
     const string = String(value);
 
     if (href || isLink(string)) {
@@ -55,8 +71,15 @@ export const Value: React.FC<ValueProps> = ({
   }
 
   if (isBool(value)) {
-    // BoolProps must be provided if value can be bool.
-    return <Bool {...boolProps} value={value} {...props} />;
+    return (
+      <Bool
+        pProps={pProps}
+        {...boolProps}
+        decorate={decorate}
+        value={value}
+        {...props}
+      />
+    );
   }
 
   if (isNumber(value)) {
@@ -64,14 +87,6 @@ export const Value: React.FC<ValueProps> = ({
       <Badge {...badgeProps} {...props}>
         {value}
       </Badge>
-    );
-  }
-
-  if (isNull(value) || isUndefined(value)) {
-    return (
-      <P {...pProps} {...props}>
-        -
-      </P>
     );
   }
 };

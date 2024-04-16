@@ -125,6 +125,14 @@ export const DataGridComponent = {
   },
 };
 
+export const DecoratedDataGrid: Story = {
+  ...DataGridComponent,
+  args: {
+    ...DataGridComponent.args,
+    decorate: true,
+  },
+};
+
 export const SortableDataGrid: Story = {
   ...DataGridComponent,
   args: {

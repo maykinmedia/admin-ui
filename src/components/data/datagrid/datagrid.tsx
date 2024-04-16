@@ -45,6 +45,9 @@ export type DataGridProps = {
   /** The object list (after pagination), only primitive types supported for now. */
   objectList: AttributeData[];
 
+  /** Whether to use a "decorative" component instead of `<P>` if applicable. */
+  decorate?: boolean;
+
   /**
    * Whether values should be made editable, default is determined by whether any of `fields` is a `TypedField` and has
    * `editable` set.
@@ -196,6 +199,7 @@ export const DataGrid: React.FC<DataGridProps> = ({
   aProps,
   badgeProps,
   boolProps,
+  decorate,
   objectList,
   editable = undefined,
   fields = objectList?.length ? Object.keys(objectList[0]) : [],
@@ -393,6 +397,7 @@ export const DataGrid: React.FC<DataGridProps> = ({
           amountSelected={selectedState?.length || 0}
           count={count || 0}
           dataGridId={id}
+          decorate={decorate}
           editable={Boolean(renderableFields.find((f) => f.editable))}
           editingRow={editingState[0]}
           editingFieldIndex={editingState[1]}
@@ -590,6 +595,7 @@ export type DataGridBodyProps = {
   amountSelected: number;
   count: number;
   dataGridId: string;
+  decorate?: boolean;
   editable: boolean;
   editingRow: AttributeData | null;
   editingFieldIndex: number | null;
@@ -620,6 +626,7 @@ export const DataGridBody: React.FC<DataGridBodyProps> = ({
   amountSelected,
   count,
   dataGridId,
+  decorate,
   editable,
   editingRow,
   editingFieldIndex,
@@ -672,6 +679,7 @@ export const DataGridBody: React.FC<DataGridBodyProps> = ({
             boolProps={boolProps}
             pProps={pProps}
             dataGridId={dataGridId}
+            decorate={decorate}
             rowData={rowData}
             editable={editable}
             isEditingRow={editingRow === rowData}
@@ -806,6 +814,7 @@ export type DataGridContentCellProps = {
   aProps: DataGridProps["aProps"];
   badgeProps: DataGridProps["badgeProps"];
   boolProps: DataGridProps["boolProps"];
+  decorate?: boolean;
   editable: boolean;
   isEditingRow: boolean;
   isEditingField: boolean;
@@ -829,6 +838,7 @@ export const DataGridContentCell: React.FC<DataGridContentCellProps> = ({
   boolProps,
   pProps,
   dataGridId,
+  decorate,
   editable,
   isEditingRow,
   isEditingField,
@@ -939,8 +949,9 @@ export const DataGridContentCell: React.FC<DataGridContentCellProps> = ({
         badgeProps={badgeProps}
         boolProps={boolProps as BoolProps}
         pProps={pProps}
-        value={label || value}
         href={link}
+        decorate={decorate}
+        value={label || (field.type === "boolean" ? Boolean(value) : value)}
       />
     );
   };
