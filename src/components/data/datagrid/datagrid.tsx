@@ -23,7 +23,7 @@ import { Button } from "../../button";
 import { Checkbox, FormControl } from "../../form";
 import { Outline } from "../../icon";
 import { Toolbar } from "../../toolbar";
-import { A, AProps, H3, P, PProps } from "../../typography";
+import { AProps, H3, P, PProps } from "../../typography";
 import { Paginator, PaginatorProps } from "../paginator";
 import { Value } from "../value";
 import "./datagrid.scss";
@@ -940,6 +940,7 @@ export const DataGridContentCell: React.FC<DataGridContentCellProps> = ({
         boolProps={boolProps as BoolProps}
         pProps={pProps}
         value={label || value}
+        href={link}
       />
     );
   };
@@ -958,11 +959,6 @@ export const DataGridContentCell: React.FC<DataGridContentCellProps> = ({
       aria-description={field2Caption(field.name)}
     >
       {isEditingRow && !isEditingField && renderHiddenInput()}
-      {link && (
-        <A href={link} aria-label={link} onClick={(e) => onClick?.(e, rowData)}>
-          <Outline.ArrowTopRightOnSquareIcon />
-        </A>
-      )}
       {isEditingField && renderFormControl()}
       {!isEditingField && fieldEditable && renderButton()}
       {!isEditingField && !fieldEditable && renderValue()}
