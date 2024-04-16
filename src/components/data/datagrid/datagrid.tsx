@@ -779,7 +779,9 @@ export const DataGridHeadingCell: React.FC<DataGridHeadingCellProps> = ({
     {sortable ? (
       <Button
         active={isSorted}
-        bold
+        align="space-between"
+        bold={isSorted}
+        justify={true}
         muted
         pad="h"
         size="xs"
@@ -793,7 +795,7 @@ export const DataGridHeadingCell: React.FC<DataGridHeadingCellProps> = ({
         {!isSorted && <Outline.ChevronUpDownIcon />}
       </Button>
     ) : (
-      <P bold muted size="xs">
+      <P muted size="xs">
         {children}
       </P>
     )}
