@@ -1,4 +1,6 @@
-.mykn-checkbox:has(.mykn-label) {
+.mykn-checkbox {
   display: flex;
+  align-items: center;
+  height: var(--typography-line-height-body-s);
   gap: var(--spacing-h);
 }

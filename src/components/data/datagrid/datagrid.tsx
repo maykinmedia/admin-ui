@@ -361,30 +361,35 @@ export const DataGrid: React.FC<DataGridProps> = ({
         role="grid"
         aria-labelledby={titleId}
       >
-        {title && (
+        {(title || selectable) && (
           <caption className="mykn-datagrid__caption">
-            <H3 id={titleId as string}>{title}</H3>
+            {title && <H3 id={titleId as string}>{title}</H3>}
+            {selectable && (
+              <DataGridSelectionCheckbox
+                checked={allSelected || false}
+                count={count}
+                handleSelect={handleSelectAll}
+                labelSelect={labelSelectAll}
+                amountSelected={selectedState?.length || 0}
+                selectAll={true}
+                sortedObjectList={renderableRows}
+              />
+            )}
           </caption>
         )}
 
         {/* Heading */}
         <DataGridHeading
-          allSelected={Boolean(allSelected)}
-          amountSelected={selectedState?.length || 0}
-          count={count || 0}
           dataGridId={id}
           filterable={Boolean(filterable)}
           id={id}
           labelFilterField={labelFilterField || ""}
-          labelSelectAll={labelSelectAll || ""}
           renderableFields={renderableFields}
-          renderableRows={renderableRows}
           selectable={selectable}
           sortable={Boolean(sort)}
           sortDirection={sortDirection}
           sortField={sortField}
           onFilter={handleFilter}
-          onSelectAll={handleSelectAll}
           onSort={handleSort}
         />
 
@@ -439,22 +444,16 @@ export const DataGrid: React.FC<DataGridProps> = ({
 };
 
 export type DataGridHeadingProps = {
-  allSelected: boolean;
-  amountSelected: number;
   selectable: boolean;
-  count: number;
   dataGridId: string;
   filterable: boolean;
   id: string;
   labelFilterField: string;
-  labelSelectAll: string;
   renderableFields: TypedField[];
-  renderableRows: AttributeData[];
   sortable: boolean;
   sortDirection: "ASC" | "DESC" | undefined;
   sortField: string | undefined;
   onFilter: (data: AttributeData) => void;
-  onSelectAll: () => void;
   onSort: (field: TypedField) => void;
 };
 
@@ -462,19 +461,13 @@ export type DataGridHeadingProps = {
  * DataGrid heading
  */
 export const DataGridHeading: React.FC<DataGridHeadingProps> = ({
-  allSelected,
-  amountSelected,
   dataGridId,
-  count,
   filterable,
   id,
   labelFilterField,
-  labelSelectAll,
   onFilter,
-  onSelectAll,
   onSort,
   renderableFields,
-  renderableRows,
   selectable,
   sortable,
   sortDirection,
@@ -485,26 +478,7 @@ export const DataGridHeading: React.FC<DataGridHeadingProps> = ({
   return (
     <thead className="mykn-datagrid__head" role="rowgroup">
       <tr className="mykn-datagrid__row mykn-datagrid__row--header" role="row">
-        {selectable && (
-          <th
-            className={clsx(
-              "mykn-datagrid__cell",
-              "mykn-datagrid__cell--header",
-              "mykn-datagrid__cell--checkbox",
-            )}
-          >
-            <DataGridSelectionCheckbox
-              checked={allSelected || false}
-              count={count}
-              handleSelect={onSelectAll}
-              labelSelect={labelSelectAll}
-              amountSelected={amountSelected}
-              sortedObjectList={renderableRows}
-            />
-          </th>
-        )}
-
-        {renderableFields.map((field) => (
+        {renderableFields.map((field, index) => (
           <DataGridHeadingCell
             key={`${dataGridId}-heading-${field2Caption(field.name)}`}
             field={field}
@@ -512,6 +486,7 @@ export const DataGridHeading: React.FC<DataGridHeadingProps> = ({
             isSorted={sortField === field.name}
             sortable={sortable}
             sortDirection={sortDirection}
+            span={selectable && index === 0 ? 2 : undefined}
           >
             {field2Caption(field.name)}
           </DataGridHeadingCell>
@@ -764,6 +739,7 @@ export type DataGridHeadingCellProps = React.PropsWithChildren<{
   isSorted: boolean;
   sortable: boolean;
   sortDirection: "ASC" | "DESC" | undefined;
+  span?: number;
   onSort: (field: TypedField) => void;
 }>;
 
@@ -777,12 +753,14 @@ export const DataGridHeadingCell: React.FC<DataGridHeadingCellProps> = ({
   isSorted,
   sortable,
   sortDirection,
+  span,
 }) => (
   <th
     className={clsx("mykn-datagrid__cell", "mykn-datagrid__cell--header", [
       `mykn-datagrid__cell--type-${field.type}`,
     ])}
     role="columnheader"
+    colSpan={span}
   >
     {sortable ? (
       <Button
@@ -1047,6 +1025,8 @@ export const DataGridSelectionCheckbox: React.FC<
       checked={checked}
       onChange={() => handleSelect(rowData || {})}
       aria-label={label}
-    />
+    >
+      {selectAll && label}
+    </Checkbox>
   );
 };
