@@ -139,6 +139,36 @@
     }
   }
 
+  &--variant-secondary {
+    --mykn-button-color-background: var(--button-color-background-secondary);
+    --mykn-button-color-border: var(--button-color-border-secondary);
+    --mykn-button-color-shadow: var(--button-color-shadow-secondary);
+    --mykn-button-color-text: var(--button-color-text-secondary);
+
+    &:focus,
+    &:hover {
+      --mykn-button-color-background: var(
+        --button-color-background-secondary-hover
+      );
+      --mykn-button-color-border: var(--button-color-border-secondary-hover);
+      --mykn-button-color-shadow: var(--button-color-shadow-secondary-hover);
+      --mykn-button-color-text: var(--button-color-text-secondary-hover);
+      --mykn-button-offset: -2px;
+    }
+
+    &[aria-expanded="true"],
+    &:active,
+    &#{$self}--active {
+      --mykn-button-color-background: var(
+        --button-color-background-secondary-active
+      );
+      --mykn-button-color-border: var(--button-color-border-secondary-active);
+      --mykn-button-color-shadow: var(--button-color-shadow-secondary-active);
+      --mykn-button-color-text: var(--button-color-text-secondary-active);
+      --mykn-button-offset: 0px;
+    }
+  }
+
   &--variant-outline {
     --mykn-button-color-background: var(--button-color-background-outline);
     --mykn-button-color-border: var(--button-color-border-outline);
