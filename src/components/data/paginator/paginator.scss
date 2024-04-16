@@ -30,20 +30,31 @@
   }
 
   @media screen and (max-width: constants.$breakpoint-desktop - 1px) {
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-areas:
+      "nav meta"
+      "options options";
+    grid-template-columns: auto auto;
+    grid-template-rows: auto auto;
 
     &__section {
       flex-basis: calc(50% - var(--spacing-v) / 2);
       white-space: nowrap;
     }
 
+    &__section--nav {
+      grid-area: nav;
+    }
+
     &__section--meta {
+      grid-area: meta;
       position: static;
       text-align: end;
       transform: none;
     }
 
     &__section--options {
+      grid-area: options;
       flex-basis: 100%;
     }
 
