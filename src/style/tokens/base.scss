@@ -32,6 +32,12 @@
     --button-color-background-primary-hover
   );
 
+  --button-color-background-secondary: var(--page-color-secondary);
+  --button-color-background-secondary-hover: var(--page-color-secondary);
+  --button-color-background-secondary-active: var(
+    --button-color-background-secondary-hover
+  );
+
   --button-color-background-outline: transparent;
   --button-color-background-outline-hover: #f2eeff;
   --button-color-background-outline-active: var(
@@ -48,6 +54,10 @@
   --button-color-border-primary: transparent;
   --button-color-border-primary-hover: var(--button-color-border-primary);
   --button-color-border-primary-active: var(--button-color-border-primary);
+
+  --button-color-border-secondary: transparent;
+  --button-color-border-secondary-hover: var(--button-color-border-secondary);
+  --button-color-border-secondary-active: var(--button-color-border-secondary);
 
   --button-color-border-outline: var(--form-color-border);
   --button-color-border-outline-hover: var(--button-color-background-primary);
@@ -70,6 +80,12 @@
     --button-color-shadow-primary-hover
   );
 
+  --button-color-shadow-secondary: #000;
+  --button-color-shadow-secondary-hover: var(--button-color-shadow-secondary);
+  --button-color-shadow-secondary-active: var(
+    --button-color-shadow-secondary-hover
+  );
+
   --button-color-shadow-outline: currentColor;
   --button-color-shadow-outline-hover: var(--button-color-shadow-outline);
   --button-color-shadow-outline-active: var(
@@ -88,6 +104,10 @@
   --button-color-text-primary: var(--typography-color-background);
   --button-color-text-primary-hover: var(--button-color-text-primary);
   --button-color-text-primary-active: var(--button-color-text-primary);
+
+  --button-color-text-secondary: var(--typography-color-body);
+  --button-color-text-secondary-hover: var(--button-color-text-secondary);
+  --button-color-text-secondary-active: var(--button-color-text-secondary);
 
   --button-color-text-outline: var(--typography-color-body);
   --button-color-text-outline-hover: var(--button-color-background-primary);
@@ -110,6 +130,8 @@
   --page-color-logo: inherit;
   --page-color-primary: #2b157b;
   --page-color-primary-contrast: var(--typography-color-background);
+  --page-color-secondary: #eeeeee;
+  --page-color-secondary-contrast: var(--typography-color-body);
   --page-color-shadow: #000;
   --page-container-size: 1240px;
 

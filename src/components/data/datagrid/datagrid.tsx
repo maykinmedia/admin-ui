@@ -19,7 +19,7 @@ import {
 import { field2Caption, isLink } from "../../../lib/format/string";
 import { BadgeProps } from "../../badge";
 import { BoolProps } from "../../boolean";
-import { Button } from "../../button";
+import { Button, ButtonProps } from "../../button";
 import { Checkbox, FormControl } from "../../form";
 import { Outline } from "../../icon";
 import { Toolbar } from "../../toolbar";
@@ -100,6 +100,11 @@ export type DataGridProps = {
 
   /** References to the selected items in `objectList`, setting this preselects the items. */
   selected?: AttributeData[];
+
+  /** Renders buttons allowing to perform actions on selection, `onClick` is called with selection array. */
+  selectionActions: (ButtonProps & {
+    onClick: (selection: AttributeData[]) => void;
+  })[];
 
   /** A title for the datagrid. */
   title?: string;
@@ -210,6 +215,7 @@ export const DataGrid: React.FC<DataGridProps> = ({
   selected,
   sort,
   selectable = false,
+  selectionActions = [],
   title = "",
   urlFields = DEFAULT_URL_FIELDS,
   labelFilterField,
@@ -375,6 +381,20 @@ export const DataGrid: React.FC<DataGridProps> = ({
                 sortedObjectList={renderableRows}
               />
             )}
+            {selectionActions.map((buttonProps, index) => (
+              <Button
+                key={buttonProps.name || index}
+                pad="h"
+                variant="secondary"
+                {...buttonProps}
+                onClick={
+                  buttonProps.onClick
+                    ? () =>
+                        buttonProps.onClick(selectedState as AttributeData[])
+                    : undefined
+                }
+              />
+            ))}
           </caption>
         )}
 

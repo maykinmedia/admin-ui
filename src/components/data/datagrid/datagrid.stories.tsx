@@ -259,6 +259,13 @@ export const SelectableRows: Story = {
     ...JSONPlaceholderExample.args,
     fields: ["userId", "id", "title"],
     selectable: true,
+    selectionActions: [
+      {
+        children: "Aanmaken",
+        name: "create",
+        onClick: (selection) => alert(`${selection.length} items selected.`),
+      },
+    ],
   },
   argTypes: {
     onSelect: { action: "onSelect" },
