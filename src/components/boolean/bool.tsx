@@ -4,11 +4,15 @@ import React from "react";
 import { Outline } from "../../components/icon";
 import { ucFirst } from "../../lib/format/string";
 import { useIntl } from "../../lib/i18n/useIntl";
+import { P, PProps } from "../typography";
 import "./bool.scss";
 
 export type BoolProps = {
   /** The value. */
   value: boolean;
+
+  /** Whether to use a "decorative" component instead of `<P>` if applicable. */
+  decorate?: boolean;
 
   /** Show an icon, even if value is false. */
   explicit?: boolean;
@@ -18,20 +22,25 @@ export type BoolProps = {
 
   /** The accessible label when value is falsy. */
   labelFalse?: string;
+
+  pProps?: PProps;
 };
 
 /**
- * Bool component, shows a checkmark if `value` is `true`. If `value` is
- * `false` the icon is hidden, unless `explicit` is `true`.
- * @param children
- * @param props
- * @constructor
+ * Bool component,
+ *
+ * If `decorate` is `true: shows a checkmark if `value` is `true`. If `value` is `false` the icon is hidden, unless
+ *  `explicit` is `true`.
+ *
+ * If `decorate` is `false: shows a human-readable representation of `value`.
  */
 export const Bool: React.FC<BoolProps> = ({
+  decorate = true,
   explicit = false,
   value,
   labelTrue = "",
   labelFalse = "",
+  pProps,
   ...props
 }) => {
   const intl = useIntl();
@@ -51,6 +60,15 @@ export const Bool: React.FC<BoolProps> = ({
         "mykn.components.Bool: The accessible label when value is falsy",
       defaultMessage: "nee",
     });
+
+  if (!decorate) {
+    const label = ucFirst(value ? _labelTrue : labelFalse);
+    return (
+      <P aria-label={label} {...pProps}>
+        {explicit || value ? label : ""}
+      </P>
+    );
+  }
 
   return (
     <span
