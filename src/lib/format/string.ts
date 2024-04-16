@@ -16,11 +16,11 @@ export const addSpaces = (string: string) =>
   string.replaceAll(/(?<=[a-z])([A-Z])/g, (match) => " " + match);
 
 /**
- * Converts "field_name" to "FIELD NAME".
+ * Converts "fieldName" to "Field name".
  * @param field
  */
 export const field2Caption = (field: string): string =>
-  unHyphen(field).toUpperCase();
+  ucFirst(unHyphen(addSpaces(field)));
 
 /**
  * Converts "field_name" to "Field name".
