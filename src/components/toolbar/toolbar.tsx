@@ -35,6 +35,9 @@ export type ToolbarProps = React.PropsWithChildren<
     /** When set to true, padding is applied to A components to match Button component's height. */
     padA?: boolean;
 
+    /** Can be set to `fit-content` to apply auto sizing based on content width. */
+    size?: "fit-content";
+
     /** When set tot true, toolbar will be positioned using display: sticky. */
     sticky?: false | "top";
 
@@ -49,19 +52,6 @@ export type ToolbarProps = React.PropsWithChildren<
 /**
  * A flexible and customizable toolbar component for arranging and aligning
  * various interactive elements such as `A`, `Button`, `ButtonLink` and `Dropdown`.
- * @param children
- * @param childrenPosition
- * @param align
- * @param compact
- * @param direction
- * @param directionResponsive
- * @param pad
- * @param padA
- * @param sticky
- * @param variant
- * @param items
- * @param props
- * @constructor
  */
 export const Toolbar: React.FC<ToolbarProps> = ({
   children,
@@ -72,6 +62,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
   directionResponsive = true,
   pad = "v",
   padA = false,
+  size = "",
   sticky = false,
   variant = "normal",
   items = [],
@@ -133,6 +124,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
           "mykn-toolbar--pad-h": pad === true || pad === "h",
           "mykn-toolbar--pad-v": pad === true || pad === "v",
           "mykn-toolbar--pad-a": padA,
+          [`mykn-toolbar--size-${size}`]: size,
           [`mykn-toolbar--sticky-${sticky}`]: sticky,
         },
       )}

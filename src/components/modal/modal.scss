@@ -1,0 +1,52 @@
+.mykn-modal {
+  border: 1px solid var(--typography-color-border);
+  background: transparent;
+  border-radius: var(--border-radius-l);
+  display: block;
+  transition: transform var(--animation-duration-medium)
+    var(--animation-timing-function);
+  margin: 0;
+  max-height: 100%;
+  padding: 0;
+
+  &::backdrop {
+    background-color: var(--page-color-shadow);
+  }
+
+  &--position-float {
+    margin: auto;
+    opacity: 0;
+    transform: translateY(-100%);
+
+    &[open] {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  // TODO: RTL support
+  &--position-side {
+    left: 100%;
+    position: fixed;
+    right: 0;
+    transform: translateX(0);
+    top: 0;
+    height: 100%;
+
+    &[open] {
+      transform: translateX(-100%);
+    }
+  }
+
+  &--size-m {
+    width: 470px;
+  }
+
+  &--size-s {
+    width: 280px;
+  }
+
+  .mykn-card {
+    height: 100%;
+  }
+}
