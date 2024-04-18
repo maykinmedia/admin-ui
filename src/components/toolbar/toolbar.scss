@@ -25,6 +25,10 @@
     background-color: transparent;
   }
 
+  &--size-fit-content {
+    width: fit-content;
+  }
+
   &--sticky-top {
     position: sticky;
     top: 0;

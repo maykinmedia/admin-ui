@@ -10,6 +10,7 @@ export * from "./form";
 export * from "./icon";
 export * from "./layout";
 export * from "./logo";
+export * from "./modal";
 export * from "./navbar";
 export * from "./stackctx";
 export * from "./tabs";

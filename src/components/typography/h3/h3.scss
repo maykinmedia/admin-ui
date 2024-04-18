@@ -2,7 +2,8 @@
   align-items: center;
   color: var(--typography-color-h);
   display: flex;
-  font-family: var(--typography-font-family-h);
+  //font-family: var(--typography-font-family-h);
+  font-family: var(--typography-font-family-body); // TODO: Configurable?
   font-size: var(--typography-font-size-h3);
   font-weight: var(--typography-font-weight-bold);
   line-height: var(--typography-line-height-h3);
