@@ -324,3 +324,32 @@ export const FilterableRows: Story = {
     ],
   },
 };
+
+export const FieldsSelectable: Story = {
+  ...JSONPlaceholderExample,
+  args: {
+    ...JSONPlaceholderExample.args,
+    filterable: true,
+    fields: [
+      {
+        type: "number",
+        name: "userId",
+        options: [
+          { label: 1, value: 1 },
+          { label: 2, value: 2 },
+        ],
+      },
+      { name: "id", type: "number", editable: false },
+      "title",
+      {
+        active: false,
+        type: "boolean",
+        name: "published",
+      },
+    ],
+    fieldsSelectable: true,
+  },
+  argTypes: {
+    onFieldsChange: { action: "onFieldsChange" },
+  },
+};

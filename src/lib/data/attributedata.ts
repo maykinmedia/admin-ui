@@ -25,6 +25,9 @@ export type TypedField<T = Attribute> = {
           ? "null"
           : unknown;
 
+  /** Whether the field should be active by default. */
+  active?: boolean;
+
   /** Whether the field should be editable. */
   editable?: boolean;
 

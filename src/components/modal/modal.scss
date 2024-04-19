@@ -8,6 +8,7 @@
   margin: 0;
   max-height: 100%;
   padding: 0;
+  z-index: 9999;
 
   &::backdrop {
     background-color: var(--page-color-shadow);
@@ -26,6 +27,8 @@
 
   // TODO: RTL support
   &--position-side {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
     left: 100%;
     position: fixed;
     right: 0;
@@ -35,6 +38,22 @@
 
     &[open] {
       transform: translateX(-100%);
+    }
+
+    > .mykn-card {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+
+    // TODO: Investiage improvement.
+    .mykn-card > .mykn-body,
+    .mykn-card > .mykn-body .mykn-form,
+    .mykn-card > .mykn-body .mykn-form__fieldset:first-of-type:last-of-type {
+      height: 100%;
+    }
+
+    .mykn-card > .mykn-body .mykn-button:first-child:last-child {
+      width: 100%;
     }
   }
 

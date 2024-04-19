@@ -34,7 +34,6 @@ export const Navbar: React.FC<NavbarProps> = ({ children, ...props }) => {
         <Dropdown
           label={<Outline.Bars2Icon />}
           aria-label="Menu openen/sluiten"
-          {...props}
           variant={"transparent"}
         >
           {children}

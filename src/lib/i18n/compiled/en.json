@@ -11,6 +11,26 @@
       "value": "yes"
     }
   ],
+  "mykn.components.DataGrid.labelFilterField": [
+    {
+      "type": 0,
+      "value": "filter field \""
+    },
+    {
+      "type": 1,
+      "value": "name"
+    },
+    {
+      "type": 0,
+      "value": "\""
+    }
+  ],
+  "mykn.components.DataGrid.labelSaveFieldSelection": [
+    {
+      "type": 0,
+      "value": "save column selection"
+    }
+  ],
   "mykn.components.DataGrid.labelSelect": [
     {
       "type": 0,
@@ -29,6 +49,12 @@
     {
       "type": 0,
       "value": " rows"
+    }
+  ],
+  "mykn.components.DataGrid.labelSelectFields": [
+    {
+      "type": 0,
+      "value": "select columns"
     }
   ],
   "mykn.components.Form.labelSubmit": [
@@ -55,6 +81,12 @@
     {
       "type": 0,
       "value": "Maykin logo"
+    }
+  ],
+  "mykn.components.Modal.labelClose": [
+    {
+      "type": 0,
+      "value": "Sluiten"
     }
   ],
   "mykn.components.Paginator.labelCurrentPageRange": [
@@ -90,7 +122,11 @@
   "mykn.components.Paginator.labelGoToPage": [
     {
       "type": 0,
-      "value": "go to page"
+      "value": "go to page "
+    },
+    {
+      "type": 1,
+      "value": "page"
     }
   ],
   "mykn.components.Paginator.labelLoading": [

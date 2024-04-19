@@ -1,11 +1,5 @@
 import clsx from "clsx";
-import React, {
-  ChangeEventHandler,
-  FormEvent,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import React, { FormEvent, useContext, useEffect, useState } from "react";
 
 import { ConfigContext } from "../../../contexts";
 import { Attribute, AttributeData } from "../../../lib/data/attributedata";
@@ -19,11 +13,9 @@ import { Button } from "../../button";
 import { Toolbar, ToolbarItem, ToolbarProps } from "../../toolbar";
 import { ErrorMessage } from "../errormessage";
 import { FormControl } from "../formcontrol";
-import { InputProps } from "../input";
-import { SelectProps } from "../select";
 import "./form.scss";
 
-export type FormProps = React.ComponentProps<"form"> & {
+export type FormProps = Omit<React.ComponentProps<"form">, "onChange"> & {
   /** If set, show `valuesState`. */
   debug?: boolean;
 
@@ -73,7 +65,7 @@ export type FormProps = React.ComponentProps<"form"> & {
   validateOnChange?: boolean;
 
   /** Gets passed to `fields` if they don't specify their own handler. */
-  onChange?: InputProps["onChange"] | SelectProps["onChange"];
+  onChange?: React.ChangeEventHandler<HTMLInputElement | HTMLSelectElement>;
 
   /** Gets called when the form is submitted, setting this overrides default implementation. */
   onSubmit?: (event: FormEvent<HTMLFormElement>, data: AttributeData) => void;
@@ -81,25 +73,6 @@ export type FormProps = React.ComponentProps<"form"> & {
 
 /**
  * Generic form component, capable of auto rendering `fields` based on their shape.
- * @param children
- * @param debug
- * @param direction
- * @param errors
- * @param fields
- * @param initialValues
- * @param secondaryActions
- * @param labelSubmit
- * @param nonFieldErrors
- * @param onChange
- * @param onSubmit
- * @param showActions
- * @param toolbarProps
- * @param useTypedResults
- * @param validate
- * @param validateOnChange
- * @param values
- * @param props
- * @constructor
  */
 export const Form: React.FC<FormProps> = ({
   children,
@@ -154,9 +127,9 @@ export const Form: React.FC<FormProps> = ({
    * Defaults event handler for form submission.
    * @param event
    */
-  const defaultOnChange: FormProps["onChange"] = (event: React.FormEvent) => {
+  const defaultOnChange: FormProps["onChange"] = (event) => {
     if (onChange) {
-      onChange(event as FormEvent<HTMLFormElement>);
+      onChange(event);
       return;
     }
 
@@ -217,15 +190,13 @@ export const Form: React.FC<FormProps> = ({
               getValueFromFormData(fields, valuesState, field);
 
             const error = getErrorFromErrors(fields, errorsState, field);
-            const change = defaultOnChange;
-
             return (
               <FormControl
                 key={field.id || index}
                 direction={direction}
                 error={error}
                 value={value}
-                onChange={change as ChangeEventHandler}
+                onChange={defaultOnChange}
                 {...field}
               ></FormControl>
             );
