@@ -3,7 +3,7 @@ import React, { LegacyRef } from "react";
 
 import "./button.scss";
 
-type BaseButtonProps = {
+type BaseButtonProps<E> = {
   active?: boolean;
 
   /** Aligns the contents based on the current direction. */
@@ -35,17 +35,23 @@ type BaseButtonProps = {
 
   /** Whether wrapping should be allowed. */
   wrap?: boolean;
+
+  /** Get called when the button is clicked. */
+  onClick?: (event: E) => void;
 };
 
-export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> &
-  BaseButtonProps;
+export type ButtonProps<E = Event> = Omit<
+  React.ButtonHTMLAttributes<HTMLButtonElement>,
+  "onClick"
+> &
+  BaseButtonProps<E>;
 
-export type ButtonLinkProps = React.AnchorHTMLAttributes<HTMLAnchorElement> &
-  BaseButtonProps;
+export type ButtonLinkProps<E = Event> = Omit<
+  React.AnchorHTMLAttributes<HTMLAnchorElement>,
+  "onClick"
+> &
+  BaseButtonProps<E>;
 
-/**
- * Button component
- */
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   (
     {
@@ -60,6 +66,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       square = false,
       variant = "primary",
       wrap = true,
+      onClick,
       ...props
     },
     ref,
@@ -84,6 +91,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           },
           className,
         )}
+        onClick={(e) => onClick?.(e as unknown as Event)}
         {...props}
       >
         {props.children}
@@ -93,9 +101,6 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 );
 Button.displayName = "Button";
 
-/**
- * Button (link) )component
- */
 export const ButtonLink = React.forwardRef<HTMLAnchorElement, ButtonLinkProps>(
   (
     {
@@ -110,6 +115,7 @@ export const ButtonLink = React.forwardRef<HTMLAnchorElement, ButtonLinkProps>(
       square = false,
       variant = "primary",
       wrap = true,
+      onClick,
       ...props
     },
     ref,
@@ -117,25 +123,24 @@ export const ButtonLink = React.forwardRef<HTMLAnchorElement, ButtonLinkProps>(
     return (
       <a
         ref={ref as LegacyRef<HTMLAnchorElement>}
-        className={
-          (clsx(
-            "mykn-button",
-            `mykn-button--align-${align}`,
-            `mykn-button--size-${size}`,
-            `mykn-button--variant-${variant}`,
-            {
-              "mykn-button--active": active,
-              "mykn-button--bold": bold,
-              "mykn-button--justify": justify,
-              "mykn-button--muted": muted,
-              "mykn-button--pad-h": pad === true || pad === "h",
-              "mykn-button--pad-v": pad === true || pad === "v",
-              "mykn-button--square": square,
-              "mykn-button--wrap": wrap,
-            },
-          ),
-          className)
-        }
+        className={clsx(
+          "mykn-button",
+          `mykn-button--align-${align}`,
+          `mykn-button--size-${size}`,
+          `mykn-button--variant-${variant}`,
+          {
+            "mykn-button--active": active,
+            "mykn-button--bold": bold,
+            "mykn-button--justify": justify,
+            "mykn-button--muted": muted,
+            "mykn-button--pad-h": pad === true || pad === "h",
+            "mykn-button--pad-v": pad === true || pad === "v",
+            "mykn-button--square": square,
+            "mykn-button--wrap": wrap,
+          },
+          className,
+        )}
+        onClick={(e) => onClick?.(e as unknown as Event)}
         {...props}
       >
         {props.children}

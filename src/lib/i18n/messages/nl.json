@@ -14,6 +14,11 @@
     "description": "mykn.components.DataGrid: The filter field (accessible) label",
     "originalDefault": "filter veld \"{name}\""
   },
+  "mykn.components.DataGrid.labelSaveFieldSelection": {
+    "defaultMessage": "kolommen opslaan",
+    "description": "mykn.components.Modal: The datagrid save selection label",
+    "originalDefault": "kolommen opslaan"
+  },
   "mykn.components.DataGrid.labelSelect": {
     "defaultMessage": "(de)selecteer rij",
     "description": "mykn.components.DataGrid: The select row (accessible) label",
@@ -23,6 +28,11 @@
     "defaultMessage": "(de)selecteer {countPage} rijen",
     "description": "mykn.components.DataGrid: The select row (accessible) label",
     "originalDefault": "(de)selecteer {countPage} rijen"
+  },
+  "mykn.components.DataGrid.labelSelectFields": {
+    "defaultMessage": "selecteer kolommen",
+    "description": "mykn.components.Modal: The datagrid select fields label",
+    "originalDefault": "selecteer kolommen"
   },
   "mykn.components.Form.labelSubmit": {
     "defaultMessage": "verzenden",
@@ -38,6 +48,11 @@
     "defaultMessage": "Maykin logo",
     "description": "mykn.components.Logo: The aria-label to set on the SVG element",
     "originalDefault": "Maykin logo"
+  },
+  "mykn.components.Modal.labelClose": {
+    "defaultMessage": "Sluiten",
+    "description": "mykn.components.Modal: The modal close (accessible) label",
+    "originalDefault": "Sluiten"
   },
   "mykn.components.Paginator.labelCurrentPageRange": {
     "defaultMessage": "resultaat {pageStart} t/m {pageEnd} van {pageCount} pagina's",

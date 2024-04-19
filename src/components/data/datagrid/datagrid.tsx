@@ -20,10 +20,11 @@ import { field2Caption, isLink } from "../../../lib/format/string";
 import { BadgeProps } from "../../badge";
 import { BoolProps } from "../../boolean";
 import { Button, ButtonProps } from "../../button";
-import { Checkbox, FormControl } from "../../form";
+import { Checkbox, Form, FormControl } from "../../form";
 import { Outline } from "../../icon";
+import { Modal } from "../../modal";
 import { Toolbar } from "../../toolbar";
-import { AProps, H3, P, PProps } from "../../typography";
+import { AProps, Body, H3, P, PProps } from "../../typography";
 import { Paginator, PaginatorProps } from "../paginator";
 import { Value } from "../value";
 import "./datagrid.scss";
@@ -56,6 +57,9 @@ export type DataGridProps = {
 
   /** A `string[]` or `TypedField[]` containing the keys in `objectList` to show object for. */
   fields?: Array<Field | TypedField>;
+
+  /** Whether the fields should be selectable. */
+  fieldsSelectable?: boolean;
 
   /**
    * Whether values should be made filterable, default is determined by whether any of `fields` is a `TypedField` and has
@@ -95,19 +99,26 @@ export type DataGridProps = {
   /** Props for P. */
   pProps?: PProps;
 
-  /** The filter field (accessible) label */
+  /** The save selection label .*/
+  labelSaveFieldSelection?: string;
+
+  /** The select fields label .*/
+  labelSelectFields?: string;
+
+  /** The filter field (accessible) label .*/
   labelFilterField?: string;
 
   /** References to the selected items in `objectList`, setting this preselects the items. */
   selected?: AttributeData[];
 
   /** Renders buttons allowing to perform actions on selection, `onClick` is called with selection array. */
-  selectionActions: (ButtonProps & {
-    onClick: (selection: AttributeData[]) => void;
-  })[];
+  selectionActions?: ButtonProps[];
 
   /** A title for the datagrid. */
   title?: string;
+
+  /** Get called to when the active field selection is changed. */
+  onFieldsChange?: (typedFields: TypedField[]) => void;
 
   /**
    * Gets called when a selection is made, receives two arguments:
@@ -171,7 +182,7 @@ type DataGridSelectableFalseProps = {
   labelSelectAll?: string;
 };
 
-const getRenderableFields = (
+const getTypedFields = (
   fields: Array<Field | TypedField>,
   objectList: AttributeData[],
   urlFields: string[],
@@ -207,22 +218,26 @@ export const DataGrid: React.FC<DataGridProps> = ({
   decorate,
   objectList,
   editable = undefined,
-  fields = objectList?.length ? Object.keys(objectList[0]) : [],
+  fields,
   filterable = undefined,
   paginatorProps,
   showPaginator = Boolean(paginatorProps),
   pProps,
-  selected,
-  sort,
   selectable = false,
+  fieldsSelectable = false,
+  selected,
   selectionActions = [],
+  sort,
   title = "",
   urlFields = DEFAULT_URL_FIELDS,
+  labelSaveFieldSelection,
   labelFilterField,
   labelSelect,
+  labelSelectFields,
   labelSelectAll,
   onChange,
   onEdit,
+  onFieldsChange,
   onFilter,
   onSelect,
   onSelectionChange,
@@ -250,6 +265,7 @@ export const DataGrid: React.FC<DataGridProps> = ({
   const [sortState, setSortState] = useState<
     [string, "ASC" | "DESC"] | undefined
   >();
+  const [fieldsState, setFieldsState] = useState<Array<Field | TypedField>>([]);
 
   // Update selectedState when selected prop changes.
   useEffect(() => {
@@ -263,13 +279,22 @@ export const DataGrid: React.FC<DataGridProps> = ({
     }
   }, [sort]);
 
-  const renderableFields = getRenderableFields(
-    fields,
+  // Update fieldsState when fields prop changes.
+  useEffect(() => {
+    const _fields =
+      fields || (objectList?.length ? Object.keys(objectList[0]) : []);
+    return setFieldsState(_fields);
+  }, [fields]);
+
+  const typedFieldsState = getTypedFields(
+    fieldsState,
     objectList,
     urlFields,
     editable,
     filterable,
   );
+
+  const renderableFields = typedFieldsState.filter((f) => f.active !== false);
   const sortField = sortState?.[0];
   const sortDirection = sortState?.[1];
   const titleId = title ? `${id}-caption` : undefined;
@@ -283,17 +308,13 @@ export const DataGrid: React.FC<DataGridProps> = ({
       ? sortAttributeDataArray(filteredObjectList, sortField, sortDirection)
       : filteredObjectList;
 
-  const allSelected =
-    selectedState?.every((a) => renderableRows.includes(a)) &&
-    renderableRows.every((a) => selectedState.includes(a));
-
   /**
    * Gets called when tha select all checkbox is clicked.
    */
-  const handleSelectAll = () => {
-    const value = allSelected ? [] : renderableRows;
+  const handleSelectAll = (selected: boolean) => {
+    const value = selected ? renderableRows : [];
     setSelectedState(value);
-    onSelect?.(value, !allSelected);
+    onSelect?.(value, selected);
     onSelectionChange?.(value);
   };
 
@@ -361,41 +382,32 @@ export const DataGrid: React.FC<DataGridProps> = ({
 
   return (
     <div className="mykn-datagrid" {...props}>
-      {/* Caption */}
       <table
         className="mykn-datagrid__table"
         role="grid"
         aria-labelledby={titleId}
       >
-        {(title || selectable) && (
-          <caption className="mykn-datagrid__caption">
-            {title && <H3 id={titleId as string}>{title}</H3>}
-            {selectable && (
-              <DataGridSelectionCheckbox
-                checked={allSelected || false}
-                count={count}
-                handleSelect={handleSelectAll}
-                labelSelect={labelSelectAll}
-                amountSelected={selectedState?.length || 0}
-                selectAll={true}
-                sortedObjectList={renderableRows}
-              />
-            )}
-            {selectionActions.map((buttonProps, index) => (
-              <Button
-                key={buttonProps.name || index}
-                pad="h"
-                variant="secondary"
-                {...buttonProps}
-                onClick={
-                  buttonProps.onClick
-                    ? () =>
-                        buttonProps.onClick(selectedState as AttributeData[])
-                    : undefined
-                }
-              />
-            ))}
-          </caption>
+        {/* Caption */}
+        {(title || selectable || fieldsSelectable) && (
+          <DataGridCaption
+            count={count || 0}
+            fields={typedFieldsState}
+            fieldsSelectable={fieldsSelectable}
+            renderableRows={renderableRows}
+            selectable={selectable}
+            selectedRows={selectedState}
+            selectionActions={selectionActions}
+            title={title}
+            titleId={titleId}
+            labelSaveFieldSelection={labelSaveFieldSelection}
+            labelSelectAll={labelSelectAll}
+            labelSelectFields={labelSelectFields}
+            onFieldsChange={(typedFields: TypedField[]) => {
+              setFieldsState(typedFields);
+              onFieldsChange?.(typedFields);
+            }}
+            onSelectAll={handleSelectAll}
+          />
         )}
 
         {/* Heading */}
@@ -460,6 +472,157 @@ export const DataGrid: React.FC<DataGridProps> = ({
       </table>
       {filterable && <form id={`${id}-filter-form`} />}
     </div>
+  );
+};
+
+export type DataGridCaptionProps = {
+  count: number;
+  fields: TypedField[];
+  fieldsSelectable: boolean;
+  labelSaveFieldSelection?: string;
+  labelSelectAll?: string;
+  renderableRows: AttributeData[];
+  selectable: boolean;
+  selectedRows: AttributeData[] | null;
+  selectionActions?: ButtonProps[];
+  title: string;
+  titleId?: string;
+  labelSelectFields?: string;
+  onFieldsChange: (typedFields: TypedField[]) => void;
+  onSelectAll: (selected: boolean) => void;
+};
+
+export const DataGridCaption: React.FC<DataGridCaptionProps> = ({
+  count,
+  fields,
+  fieldsSelectable,
+  labelSaveFieldSelection,
+  labelSelectAll,
+  labelSelectFields,
+  renderableRows,
+  selectable,
+  selectionActions,
+  selectedRows,
+  title,
+  titleId,
+  onFieldsChange,
+  onSelectAll,
+}) => {
+  const [selectFieldsModalState, setSelectFieldsModalState] = useState(false);
+  const intl = useIntl();
+
+  const allSelected =
+    selectedRows?.every((a) => renderableRows.includes(a)) &&
+    renderableRows.every((a) => selectedRows.includes(a));
+
+  const context = {
+    open: Boolean(selectFieldsModalState),
+  };
+
+  const _labelSelectFields = labelSelectFields
+    ? formatMessage(labelSelectFields, context)
+    : intl.formatMessage(
+        {
+          id: "mykn.components.DataGrid.labelSelectFields",
+          description:
+            "mykn.components.Modal: The datagrid select fields label",
+          defaultMessage: "selecteer kolommen",
+        },
+        context,
+      );
+
+  const _labelSaveFieldSelection = labelSaveFieldSelection
+    ? formatMessage(labelSaveFieldSelection, context)
+    : intl.formatMessage(
+        {
+          id: "mykn.components.DataGrid.labelSaveFieldSelection",
+          description:
+            "mykn.components.Modal: The datagrid save selection label",
+          defaultMessage: "kolommen opslaan",
+        },
+        context,
+      );
+
+  return (
+    <caption className="mykn-datagrid__caption">
+      <Toolbar size="fit-content" pad={false}>
+        {title && <H3 id={titleId as string}>{title}</H3>}
+        {selectable && (
+          <DataGridSelectionCheckbox
+            checked={allSelected || false}
+            count={count}
+            handleSelect={() => onSelectAll(!allSelected)}
+            labelSelect={labelSelectAll}
+            amountSelected={selectedRows?.length || 0}
+            selectAll={true}
+            sortedObjectList={renderableRows}
+          />
+        )}
+        {selectionActions?.map((buttonProps, index) => (
+          <Button
+            key={buttonProps.name || index}
+            size="xs"
+            variant="secondary"
+            {...buttonProps}
+            onClick={() => {
+              if (typeof buttonProps.onClick === "function") {
+                const customEvent = new CustomEvent("click", {
+                  detail: selectedRows,
+                });
+                buttonProps.onClick(customEvent);
+              }
+            }}
+          />
+        ))}
+      </Toolbar>
+      {fieldsSelectable && (
+        <Toolbar size="fit-content" pad={false}>
+          <Button
+            size="xs"
+            variant="outline"
+            onClick={() => setSelectFieldsModalState(true)}
+          >
+            <Outline.ViewColumnsIcon />
+            {ucFirst(_labelSelectFields)}
+          </Button>
+          <Modal
+            open={selectFieldsModalState}
+            position="side"
+            size="s"
+            title={<H3>{ucFirst(_labelSelectFields)}</H3>}
+            onClose={() => setSelectFieldsModalState(false)}
+          >
+            <Body>
+              <Form
+                fields={[
+                  {
+                    name: "fields",
+                    options: fields.map((f) => ({
+                      label: field2Caption(f.name),
+                      value: f.name,
+                      selected: f.active !== false,
+                    })),
+                    type: "checkbox",
+                  },
+                ]}
+                labelSubmit={ucFirst(_labelSaveFieldSelection)}
+                onSubmit={(e) => {
+                  const form = e.target as HTMLFormElement;
+                  const data = serializeForm(form);
+                  const selectedFields = (data.fields || []) as string[];
+                  const newTypedFieldsState = fields.map((f) => ({
+                    ...f,
+                    active: selectedFields.includes(f.name),
+                  }));
+                  onFieldsChange?.(newTypedFieldsState);
+                  setSelectFieldsModalState(false);
+                }}
+              />
+            </Body>
+          </Modal>
+        </Toolbar>
+      )}
+    </caption>
   );
 };
 

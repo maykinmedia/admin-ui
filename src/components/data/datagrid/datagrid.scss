@@ -15,10 +15,20 @@
     padding-inline: var(--spacing-h);
     text-align: start;
 
-    > * {
-      float: inline-start;
-      margin-inline-end: var(--spacing-h);
+    &:after {
+      clear: both;
+      content: "";
+      display: block;
     }
+  }
+
+  &__caption .mykn-toolbar {
+    float: inline-start;
+    min-height: calc(var(--spacing-h) + var(--typography-line-height-body-xs));
+  }
+
+  &__caption .mykn-toolbar:not(:first-child):last-child {
+    float: inline-end;
   }
 
   &__head {
@@ -101,6 +111,7 @@
   &__cell--editable:not(#{&}__cell--type-boolean) {
     padding-block: 0;
   }
+
   base &__cell--editable:not(#{&}__cell--type-boolean):not(#{&}__cell--link) {
     padding-inline: 0;
   }

@@ -125,7 +125,7 @@ export const Dropdown: React.FC<DropdownProps> = ({
 
   return (
     <div className={clsx("mykn-dropdown", { "mykn-dropdown--open": isOpen })}>
-      <Button ref={refs.setReference} {...getReferenceProps()} {...props}>
+      <Button {...props} ref={refs.setReference} {...getReferenceProps()}>
         {label}
       </Button>
       {isOpen && (
