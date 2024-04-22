@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import React from "react";
 
 import { formatMessage } from "../../lib/i18n/formatmessage";
@@ -14,6 +15,9 @@ export type LogoProps = {
   /** An aria-label describing the link action. */
   hrefLabel?: string;
 
+  /** Logo variant. */
+  variant?: "normal" | "compact";
+
   /** Gets passed as props. */
   [index: string]: unknown;
 };
@@ -28,8 +32,10 @@ export const Logo: React.FC<LogoProps> = ({
   label,
   href,
   hrefLabel,
+  variant = "normal",
   ...props
 }) => {
+  const viewBoxWidth = variant === "normal" ? 122 : 47;
   const context = {
     href: href || "",
   };
@@ -42,7 +48,7 @@ export const Logo: React.FC<LogoProps> = ({
           id: "mykn.components.Logo.hrefLabel",
           description:
             "mykn.components.Logo: An aria-label describing the link action",
-          defaultMessage: 'go to "{href}"',
+          defaultMessage: 'Navigeer naar "{href}"',
         },
         context,
       );
@@ -61,7 +67,9 @@ export const Logo: React.FC<LogoProps> = ({
 
   return (
     <Tag
-      className="mykn-logo"
+      className={clsx("mykn-logo", {
+        [`mykn-logo--variant-${variant}`]: variant,
+      })}
       href={href}
       aria-label={href && _hrefLabel}
       {...props}
@@ -69,7 +77,7 @@ export const Logo: React.FC<LogoProps> = ({
       <svg
         className="mykn-logo__image"
         xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 121.8 26.41"
+        viewBox={`0 0 ${viewBoxWidth} 26.41`}
         aria-label={_label}
       >
         <path
@@ -81,34 +89,35 @@ export const Logo: React.FC<LogoProps> = ({
           className="mykn-logo__handle mykn-logo__handle--right"
           fill="#00bfcb"
           d="M114,23.89h1.23a1.76,1.76,0,0,0,1.07-.3,1.89,1.89,0,0,0,.63-.77,3.44,3.44,0,0,0,.29-1.06,9.23,9.23,0,0,0,.07-1.18V17.52a10.16,10.16,0,0,1,.26-2.34,3.62,3.62,0,0,1,1.28-1.95,3.49,3.49,0,0,1-1.28-1.91,10.46,10.46,0,0,1-.26-2.38V5.83a9.39,9.39,0,0,0-.07-1.19,3.38,3.38,0,0,0-.29-1,1.85,1.85,0,0,0-.63-.78,1.83,1.83,0,0,0-1.07-.3H114V0h1.49a4.29,4.29,0,0,1,2.26.53,3.87,3.87,0,0,1,1.33,1.34,5.35,5.35,0,0,1,.63,1.8,12.47,12.47,0,0,1,.15,1.87V8.66a7.67,7.67,0,0,0,.1,1.2,4.37,4.37,0,0,0,.3,1,2.06,2.06,0,0,0,.52.69,1.12,1.12,0,0,0,.74.25h.29v2.86h-.29a1.13,1.13,0,0,0-.74.26,2,2,0,0,0-.52.68,4.37,4.37,0,0,0-.3,1,7.77,7.77,0,0,0-.1,1.2v3.06a12.43,12.43,0,0,1-.15,1.89,5.32,5.32,0,0,1-.63,1.78,3.9,3.9,0,0,1-1.33,1.35,4.29,4.29,0,0,1-2.26.53H114Z"
+          transform={variant === "compact" ? "translate(-75)" : undefined}
         />
         <path
-          className="mykn-logo__text"
+          className="mykn-logo__text mykn-logo__text--m"
           fill="var(--page-color-logo, #341a90)"
           d="M23.56,13.81l4.88-9.55h3.37V21.78h-3.4V10.92L24.6,18.64H22.44L18.68,11V21.78H15.31V4.26h3.32Z"
         />
         <path
-          className="mykn-logo__text"
+          className="mykn-logo__text mykn-logo__text--a"
           fill="var(--page-color-logo, #341a90)"
           d="M34.45,21.78,40.54,4.26H44L50,21.78H46.26l-1.07-3.32H39.33l-1.07,3.32Zm5.82-6.32h4l-2-6.17Z"
         />
         <path
-          className="mykn-logo__text"
+          className="mykn-logo__text mykn-logo__text--y"
           fill="var(--page-color-logo, #341a90)"
           d="M53.9,4.26,57,10.79l3.15-6.53h4.09L58.8,14.62v7.16H55.25V14.62L49.79,4.26Z"
         />
         <path
-          className="mykn-logo__text"
+          className="mykn-logo__text mykn-logo__text--k"
           fill="var(--page-color-logo, #341a90)"
           d="M77.28,21.78l-4.47-7.39-2.08,2.75v4.64H67.18V4.26h3.55v7.57l5.54-7.57h4.21l-5.35,7.09,6.4,10.43Z"
         />
         <path
-          className="mykn-logo__text"
+          className="mykn-logo__text mykn-logo__text--i"
           fill="var(--page-color-logo, #341a90)"
           d="M88.38,21.78H84.82V4.26h3.56Z"
         />
         <path
-          className="mykn-logo__text"
+          className="mykn-logo__text mykn-logo__text--n"
           fill="var(--page-color-logo, #341a90)"
           d="M106.28,4.26V21.78h-3L96.48,10.94V21.78H93.1V4.26H96l6.86,11v-11Z"
         />

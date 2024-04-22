@@ -1,5 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
+import * as React from "react";
 
+import { Badge } from "../../components";
 import { Detail } from "./detail";
 
 const meta = {
@@ -13,6 +15,7 @@ type Story = StoryObj<typeof meta>;
 
 export const DetailTemplate: Story = {
   args: {
+    pad: true,
     fieldsets: [
       [
         "Statussen",
@@ -42,5 +45,55 @@ export const DetailTemplate: Story = {
       "uitgevoerd afgerond": "Afgehandeld",
       "voorstel voor besluitvorming opgesteld": "In behandeling genomen",
     },
+  },
+};
+
+export const WithSidebar = {
+  ...DetailTemplate,
+  args: {
+    ...DetailTemplate.args,
+    sidebarItems: [
+      {
+        active: true,
+        align: "space-between",
+        children: (
+          <>
+            Lorem ipsum<Badge level="success">Verwerkt</Badge>
+          </>
+        ),
+        justify: true,
+        variant: "transparent",
+      },
+      {
+        align: "space-between",
+        children: (
+          <>
+            Dolor<Badge level="warning">In behandeling</Badge>
+          </>
+        ),
+        justify: true,
+        variant: "transparent",
+      },
+      {
+        align: "space-between",
+        children: (
+          <>
+            Sit<Badge level="danger">Actie vereist</Badge>
+          </>
+        ),
+        justify: true,
+        variant: "transparent",
+      },
+      {
+        align: "space-between",
+        children: (
+          <>
+            Amet<Badge level="warning">In behandeling</Badge>
+          </>
+        ),
+        justify: true,
+        variant: "transparent",
+      },
+    ],
   },
 };

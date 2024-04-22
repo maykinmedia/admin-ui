@@ -1,6 +1,8 @@
 @use "../../../settings/constants";
 
 .mykn-column {
+  container-name: column;
+  container-type: inline-size;
   grid-column: auto / 6 span;
 
   &--debug {
@@ -17,6 +19,16 @@
 
   &--debug[data-testid]:before {
     content: attr(data-testid) !important;
+  }
+
+  &--direction-column {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &--direction-row {
+    display: flex;
+    flex-direction: row;
   }
 
   @media screen and (min-width: constants.$breakpoint-desktop) {

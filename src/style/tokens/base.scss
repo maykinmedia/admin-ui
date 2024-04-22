@@ -38,14 +38,14 @@
     --button-color-background-secondary-hover
   );
 
-  --button-color-background-outline: transparent;
+  --button-color-background-outline: var(--typography-color-background);
   --button-color-background-outline-hover: #f2eeff;
   --button-color-background-outline-active: var(
     --button-color-background-outline-hover
   );
 
   --button-color-background-transparent: transparent;
-  --button-color-background-transparent-hover: transparent;
+  --button-color-background-transparent-hover: #f2eeff;
   --button-color-background-transparent-active: var(
     --button-color-background-transparent-hover
   );

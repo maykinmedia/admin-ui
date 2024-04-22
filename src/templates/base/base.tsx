@@ -69,11 +69,10 @@ export const Base: React.FC<BaseProps> = ({
         </>
       )}
 
-      <Column span={slotSidebar ? 10 : 12} {...columnProps}>
+      <Column direction="row" span={12} {...columnProps}>
+        {slotSidebar}
         {children}
       </Column>
-
-      {slotSidebar ? <Column span={2}>{slotSidebar}</Column> : undefined}
     </Grid>
   );
 

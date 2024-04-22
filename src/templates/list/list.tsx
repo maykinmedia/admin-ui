@@ -9,7 +9,9 @@ import {
   Form,
   FormProps,
   H2,
+  Sidebar,
   Toolbar,
+  ToolbarItem,
 } from "../../components";
 import { forceArray } from "../../lib";
 import { CardBase } from "../base";
@@ -27,7 +29,9 @@ export type ListProps = BodyBaseProps & {
   pageSize?: DataGridProps["pageSize"];
   pageSizeOptions?: DataGridProps["pageSizeOptions"];
   showPaginator?: DataGridProps["showPaginator"];
+  showSidebar?: boolean;
   selected?: DataGridProps["selected"];
+  sidebarItems?: ToolbarItem[];
   sort?: DataGridProps["sort"];
   onChange?: DataGridProps["onChange"];
   onClick?: DataGridProps["onClick"];
@@ -92,11 +96,16 @@ export const List: React.FC<ListProps> = ({
   onPageSizeChange,
   onSelect,
   onSelectionChange,
+  pageProps,
   pageSize,
   pageSizeOptions,
+  sidebarItems = [],
+  showHeader,
   showPaginator,
+  showSidebar = sidebarItems.length > 0,
   selectable,
   selected,
+  slotSidebar,
   labelSelect,
   labelSelectAll,
   sort,
@@ -104,8 +113,30 @@ export const List: React.FC<ListProps> = ({
   ...props
 }) => {
   const _errors = forceArray(errors);
+  const _showSidebar = slotSidebar || showSidebar;
+  const _showHeader =
+    typeof showHeader === "boolean" ? showHeader : !_showSidebar;
+
   return (
-    <CardBase breakout={true} {...props}>
+    <CardBase
+      pageProps={{ pad: !showSidebar, ...pageProps }}
+      showHeader={_showHeader}
+      slotSidebar={
+        slotSidebar ||
+        (showSidebar && (
+          <Sidebar expanded>
+            <Toolbar
+              align="space-between"
+              direction="vertical"
+              pad={true}
+              items={sidebarItems}
+              variant="transparent"
+            />
+          </Sidebar>
+        ))
+      }
+      {...props}
+    >
       {_errors && _errors.length > 0 && (
         <Body>
           {_errors.map((e) => (
