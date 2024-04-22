@@ -283,8 +283,17 @@ export const DataGrid: React.FC<DataGridProps> = ({
   useEffect(() => {
     const _fields =
       fields || (objectList?.length ? Object.keys(objectList[0]) : []);
-    return setFieldsState(_fields);
+    setFieldsState(_fields);
   }, [fields]);
+
+  // Update fieldsState when objectList prop changes.
+  useEffect(() => {
+    if (!fieldsState.length) {
+      const _fields =
+        fields || (objectList?.length ? Object.keys(objectList[0]) : []);
+      setFieldsState(_fields);
+    }
+  }, [objectList]);
 
   const typedFieldsState = getTypedFields(
     fieldsState,
@@ -569,7 +578,9 @@ export const DataGridCaption: React.FC<DataGridCaptionProps> = ({
                 const customEvent = new CustomEvent("click", {
                   detail: selectedRows,
                 });
-                buttonProps.onClick(customEvent);
+                buttonProps.onClick(
+                  customEvent as unknown as React.MouseEvent<HTMLButtonElement>,
+                );
               }
             }}
           />

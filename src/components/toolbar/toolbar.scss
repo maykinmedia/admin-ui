@@ -34,14 +34,6 @@
     top: 0;
   }
 
-  @media screen and (max-width: constants.$breakpoint-desktop - 1px) {
-    .mykn-a,
-    .mykn-button,
-    .mykn-dropdown {
-      justify-content: start;
-    }
-  }
-
   @media screen and (min-width: constants.$breakpoint-desktop) {
     &--align-start {
       align-items: start;

@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import * as React from "react";
 import { useEffect, useState } from "react";
 
+import { Badge } from "../../components";
 import { AttributeData } from "../../lib/data/attributedata";
 import { List } from "./list";
 
@@ -61,6 +62,10 @@ export const ListTemplate: Story = {
       <List
         {...args}
         count={100}
+        dataGridProps={{
+          filterable: true,
+          fieldsSelectable: true,
+        }}
         objectList={objectList}
         onSort={(field) => setSort(field)}
         loading={loading}
@@ -77,5 +82,55 @@ export const ListTemplate: Story = {
         onPageSizeChange={setPageSize}
       />
     );
+  },
+};
+
+export const WithSidebar = {
+  ...ListTemplate,
+  args: {
+    ...ListTemplate.args,
+    sidebarItems: [
+      {
+        active: true,
+        align: "space-between",
+        children: (
+          <>
+            Lorem ipsum<Badge level="success">Verwerkt</Badge>
+          </>
+        ),
+        justify: true,
+        variant: "transparent",
+      },
+      {
+        align: "space-between",
+        children: (
+          <>
+            Dolor<Badge level="warning">In behandeling</Badge>
+          </>
+        ),
+        justify: true,
+        variant: "transparent",
+      },
+      {
+        align: "space-between",
+        children: (
+          <>
+            Sit<Badge level="danger">Actie vereist</Badge>
+          </>
+        ),
+        justify: true,
+        variant: "transparent",
+      },
+      {
+        align: "space-between",
+        children: (
+          <>
+            Amet<Badge level="warning">In behandeling</Badge>
+          </>
+        ),
+        justify: true,
+        variant: "transparent",
+      },
+    ],
   },
 };

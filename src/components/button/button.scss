@@ -22,7 +22,7 @@
   padding-block: var(--mykn-button-padding-v);
   padding-inline: var(--mykn-button-padding-h);
   background-color: var(--mykn-button-color-background);
-  border: 1px solid var(--mykn-button-color-border);
+  border: 1px solid var(--mykn-button-color-border, transparent);
   border-radius: var(--border-radius-s);
   box-shadow: 0 calc(var(--mykn-button-offset) * -1)
     var(--mykn-button-color-shadow);
@@ -93,6 +93,10 @@
     --mykn-button-font-size: var(--typography-font-size-body-xs);
     --mykn-button-line-height: var(--typography-line-height-body-xs);
     --mykn-button-padding-xs: calc(var(--spacing-h) / 2);
+  }
+
+  &--rounded {
+    border-radius: 100%;
   }
 
   &--square {

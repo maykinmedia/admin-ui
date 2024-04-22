@@ -2,6 +2,12 @@
   height: 1em;
   vertical-align: middle;
   width: 1em;
+  transition: all var(--animation-duration-medium)
+    var(--animation-timing-function);
+
+  &--flip-x {
+    transform: rotate(180deg);
+  }
 
   &--hidden {
     visibility: hidden;

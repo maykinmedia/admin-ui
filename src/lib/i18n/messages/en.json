@@ -40,9 +40,9 @@
     "originalDefault": "verzenden"
   },
   "mykn.components.Logo.hrefLabel": {
-    "defaultMessage": "go to \"{href}\"",
+    "defaultMessage": "Go to \"{href}\"",
     "description": "mykn.components.Logo: An aria-label describing the link action",
-    "originalDefault": "go to \"{href}\""
+    "originalDefault": "Navigeer naar \"{href}\""
   },
   "mykn.components.Logo.label": {
     "defaultMessage": "Maykin logo",
@@ -93,6 +93,16 @@
     "defaultMessage": "clear value",
     "description": "mykn.components.Select: The clear value (accessible) label",
     "originalDefault": "waarde wissen"
+  },
+  "mykn.components.Sidebar.collapse": {
+    "defaultMessage": "Collapse sidebar",
+    "description": "mykn.components.Sidebar: An aria-label describing the collapse action",
+    "originalDefault": "Zijbalk inklappen"
+  },
+  "mykn.components.Sidebar.expand": {
+    "defaultMessage": "Expand sidebar",
+    "description": "mykn.components.Sidebar: An aria-label describing the expand action",
+    "originalDefault": "Zijbalk uitklappen"
   },
   "mykn.templates.Login.labelLogin": {
     "defaultMessage": "inloggen",

@@ -263,7 +263,9 @@ export const SelectableRows: Story = {
       {
         children: "Aanmaken",
         name: "create",
-        onClick: (selection) => alert(`${selection.length} items selected.`),
+        onClick: ({ detail }) => {
+          alert(`${detail.length} items selected.`);
+        },
       },
     ],
   },

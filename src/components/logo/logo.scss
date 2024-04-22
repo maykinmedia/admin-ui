@@ -1,7 +1,7 @@
 .mykn-logo {
   height: 34px;
+
   &__image {
-    height: 100%;
     max-width: 155px;
     object-fit: contain;
     overflow: visible;
@@ -9,7 +9,8 @@
   }
 
   & &__handle {
-    transition: transform var(--animation-duration-fast) var(--animation-timing-function);
+    transition: transform var(--animation-duration-fast)
+      var(--animation-timing-function);
   }
 
   &[href]:hover &__handle--left,
@@ -28,5 +29,13 @@
 
   &[href]:active &__handle--right {
     transform: translateX(-2px);
+  }
+
+  &--variant-compact &__text--a,
+  &--variant-compact &__text--y,
+  &--variant-compact &__text--k,
+  &--variant-compact &__text--i,
+  &--variant-compact &__text--n {
+    display: none;
   }
 }

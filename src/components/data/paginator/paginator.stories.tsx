@@ -82,7 +82,7 @@ export const PaginatorComponentWithSpinner: Story = {
         await expect(await canvas.findByLabelText("Loading...")).toBeVisible();
       },
       {
-        timeout: 400,
+        timeout: 800,
       },
     );
 

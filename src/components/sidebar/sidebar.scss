@@ -1,0 +1,108 @@
+@use "../../settings/constants";
+
+.mykn-sidebar {
+  --mykn-sidebar-width: 280px;
+  $self: &;
+
+  display: flex;
+  flex-direction: column;
+  height: 100cqh; // Height of container (probably Page component)
+  max-width: 280px;
+  position: sticky;
+  top: 0;
+  transition: all var(--animation-duration-medium)
+    var(--animation-timing-function);
+  width: var(--mykn-sidebar-width);
+  z-index: 1000;
+
+  &--position-start &__header &__toggle,
+  &--position-end &__header &__toggle {
+    inset-block-start: 100%;
+    position: absolute;
+    transform-origin: center;
+  }
+
+  &--position-start &__header &__toggle {
+    inset-inline-start: 100%;
+    transform: translate(-50%, -50%); // TODO: RTL support.
+  }
+
+  &--position-end &__header &__toggle {
+    inset-inline-end: 100%;
+    transform: translate(50%, -50%); // TODO: RTL support.
+  }
+
+  .mykn-page > &--position-end {
+    align-self: flex-end;
+  }
+
+  &__header,
+  &__body {
+    border-inline-end: 1px solid var(--typography-color-border);
+    width: var(--mykn-sidebar-width);
+    transition: all var(--animation-duration-medium)
+      var(--animation-timing-function);
+  }
+
+  &__header {
+    border-block-end: 1px solid var(--typography-color-border);
+    flex-shrink: 0;
+    overflow-y: visible;
+    z-index: 10;
+  }
+
+  &__header .mykn-body {
+    display: flex;
+    justify-content: center;
+  }
+
+  &__body {
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+  }
+
+  &__body .mykn-card,
+  &__header .mykn-card {
+    height: 100%;
+    position: sticky;
+    inset-block-start: 0;
+    inset-inline-start: 0;
+  }
+
+  &__header .mykn-card {
+    overflow: visible;
+  }
+
+  &__body .mykn-card {
+    width: var(--mykn-sidebar-width);
+  }
+
+  /// Collapsed state
+  &:not([aria-expanded="true"]) {
+    width: calc(
+      var(--typography-line-height-body-xs) + 2 * var(--spacing-h) + 2px
+    );
+
+    #{$self}__header,
+    #{$self}__body {
+      width: calc(
+        var(--typography-line-height-body-xs) + 2 * var(--spacing-h) + 2px
+      );
+    }
+
+    #{$self}__header .mykn-body {
+      padding-inline: calc(0.5 * var(--spacing-h));
+    }
+
+    .mykn-logo .mykn-logo__handle {
+      transition: none;
+    }
+  }
+
+  @media screen and (max-width: constants.$breakpoint-desktop - 1px) {
+    width: calc(
+      var(--typography-line-height-body-xs) + 2 * var(--spacing-h) + 2.1px
+    );
+  }
+}

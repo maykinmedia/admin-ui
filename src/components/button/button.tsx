@@ -3,7 +3,7 @@ import React, { LegacyRef } from "react";
 
 import "./button.scss";
 
-type BaseButtonProps<E> = {
+type BaseButtonProps = {
   active?: boolean;
 
   /** Aligns the contents based on the current direction. */
@@ -24,6 +24,9 @@ type BaseButtonProps<E> = {
   /** Whether to apply padding to the button. */
   pad?: boolean | "h" | "v";
 
+  /** Whether to the button should be rounded. */
+  rounded?: boolean;
+
   /** The size of the text. */
   size?: "s" | "xs";
 
@@ -37,20 +40,20 @@ type BaseButtonProps<E> = {
   wrap?: boolean;
 
   /** Get called when the button is clicked. */
-  onClick?: (event: E) => void;
+  onClick?: React.MouseEventHandler;
 };
 
-export type ButtonProps<E = Event> = Omit<
+export type ButtonProps = Omit<
   React.ButtonHTMLAttributes<HTMLButtonElement>,
   "onClick"
 > &
-  BaseButtonProps<E>;
+  BaseButtonProps;
 
-export type ButtonLinkProps<E = Event> = Omit<
+export type ButtonLinkProps = Omit<
   React.AnchorHTMLAttributes<HTMLAnchorElement>,
   "onClick"
 > &
-  BaseButtonProps<E>;
+  BaseButtonProps;
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   (
@@ -62,6 +65,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       justify = false,
       muted = false,
       pad = true,
+      rounded = false,
       size = "s",
       square = false,
       variant = "primary",
@@ -86,12 +90,13 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
             "mykn-button--muted": muted,
             "mykn-button--pad-h": pad === true || pad === "h",
             "mykn-button--pad-v": pad === true || pad === "v",
+            "mykn-button--rounded": rounded,
             "mykn-button--square": square,
             "mykn-button--wrap": wrap,
           },
           className,
         )}
-        onClick={(e) => onClick?.(e as unknown as Event)}
+        onClick={(e) => onClick?.(e)}
         {...props}
       >
         {props.children}
@@ -140,7 +145,7 @@ export const ButtonLink = React.forwardRef<HTMLAnchorElement, ButtonLinkProps>(
           },
           className,
         )}
-        onClick={(e) => onClick?.(e as unknown as Event)}
+        onClick={(e) => onClick?.(e)}
         {...props}
       >
         {props.children}

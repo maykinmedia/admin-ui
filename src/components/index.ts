@@ -12,6 +12,7 @@ export * from "./layout";
 export * from "./logo";
 export * from "./modal";
 export * from "./navbar";
+export * from "./sidebar";
 export * from "./stackctx";
 export * from "./tabs";
 export * from "./toolbar";

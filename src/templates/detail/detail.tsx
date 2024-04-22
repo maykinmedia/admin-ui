@@ -7,6 +7,7 @@ import {
   DataGrid,
   DataGridProps,
   H2,
+  Sidebar,
   Toolbar,
   ToolbarItem,
 } from "../../components";
@@ -18,6 +19,7 @@ export type DetailProps = BodyBaseProps & {
   attributeGridProps?: Partial<AttributeGridProps>;
   object: AttributeGridProps["object"];
   fieldsets: AttributeGridProps["fieldsets"];
+  sidebarItems?: ToolbarItem[];
   showSidebar?: boolean;
   inlines?: DataGridProps[];
 };
@@ -31,43 +33,35 @@ export const Detail: React.FC<DetailProps> = ({
   attributeGridProps,
   object,
   fieldsets,
-  showSidebar = true,
+  pageProps,
+  sidebarItems = [],
+  showHeader,
+  showSidebar = sidebarItems.length > 0,
+  slotSidebar,
   inlines = [],
   ...props
 }) => {
-  const attributeGridSidebarItems: ToolbarItem[] = fieldsets
-    .filter((fieldset) => fieldset[0])
-    .map((fieldset) => ({
-      children: fieldset[0],
-      href: `#${slugify(fieldset[0] || "")}`,
-      pad: "h",
-      variant: "transparent",
-      textDecoration: "none",
-    }));
-
-  const inlinesSidebarItems: ToolbarItem[] = inlines
-    .filter((datagridProps) => datagridProps.title)
-    .map((datagridProps) => ({
-      children: datagridProps.title,
-      href: `#${slugify(datagridProps.title as string)}`,
-      pad: "h",
-      variant: "transparent",
-      textDecoration: "none",
-    }));
-
-  const sidebarItems = [...attributeGridSidebarItems, ...inlinesSidebarItems];
+  const _showSidebar = slotSidebar || showSidebar;
+  const _showHeader =
+    typeof showHeader === "boolean" ? showHeader : !_showSidebar;
 
   return (
     <CardBase
+      pageProps={{ pad: !_showSidebar, ...pageProps }}
+      showHeader={_showHeader}
       slotSidebar={
-        showSidebar && (
-          <Toolbar
-            direction="vertical"
-            items={sidebarItems}
-            sticky="top"
-            variant="transparent"
-          />
-        )
+        slotSidebar ||
+        (showSidebar && (
+          <Sidebar expanded>
+            <Toolbar
+              align="space-between"
+              direction="vertical"
+              pad={true}
+              items={sidebarItems}
+              variant="transparent"
+            />
+          </Sidebar>
+        ))
       }
       {...props}
     >

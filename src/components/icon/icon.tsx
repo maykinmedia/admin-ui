@@ -11,6 +11,9 @@ export type IconProps = React.SVGProps<SVGElement> & {
 
   /** Whether the icon should spin. */
   spin?: boolean;
+
+  /** Whether the icon should be flipped. */
+  flipX?: boolean;
 };
 
 /**
@@ -21,9 +24,10 @@ export type IconProps = React.SVGProps<SVGElement> & {
 const mapIcons = (heroIcons: { [index: string]: React.FC }) =>
   Object.fromEntries(
     Object.entries(heroIcons).map(([name, Component]) => {
-      const Icon = ({ hidden, spin, ...props }: IconProps) => (
+      const Icon = ({ flipX, hidden, spin, ...props }: IconProps) => (
         <Component
           className={clsx("mykn-icon", {
+            "mykn-icon--flip-x": flipX,
             "mykn-icon--hidden": hidden,
             "mykn-icon--spin": spin,
           })}
