@@ -6,6 +6,7 @@
   grid-column: auto / 6 span;
 
   &--debug {
+    min-height: 1rem;
     outline: 1px solid blue;
   }
 
@@ -15,6 +16,12 @@
     display: block;
     font-family: monospace;
     text-align: center;
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    white-space: nowrap;
+    z-index: 10;
   }
 
   &--debug[data-testid]:before {
