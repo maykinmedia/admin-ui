@@ -2,7 +2,7 @@ import React from "react";
 
 import { AttributeData } from "../../../lib/data/attributedata";
 import { field2Title } from "../../../lib/format/string";
-import { H2 } from "../../typography";
+import { H3 } from "../../typography";
 import { Value } from "../value";
 import "./attributelist.scss";
 
@@ -23,12 +23,6 @@ export type AttributeListProps = React.ComponentPropsWithoutRef<"div"> & {
 /**
  * AttributeList component, shows multiple `fields` in `object`.
  * TODO: tooltip
- * @param title
- * @param titleId
- * @param data
- * @param fields
- * @param props
- * @constructor
  */
 export const AttributeList: React.FC<AttributeListProps> = ({
   title = "",
@@ -38,7 +32,7 @@ export const AttributeList: React.FC<AttributeListProps> = ({
   ...props
 }) => (
   <div className="mykn-attributelist" {...props}>
-    {title && <H2 id={titleId}>{title}</H2>}
+    {title && <H3 id={titleId}>{title}</H3>}
 
     <dl className="mykn-attributelist__list">
       {fields.map((f) => (
@@ -55,11 +49,6 @@ export type AttributePairProps = {
 
 /**
  * A single attribute in an AttributeList
- * @param boolProps
- * @param data
- * @param field
- * @constructor
- * @private
  */
 export const AttributePair: React.FC<AttributePairProps> = ({
   object,

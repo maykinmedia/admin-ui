@@ -16,6 +16,7 @@ type Story = StoryObj<typeof meta>;
 export const DetailTemplate: Story = {
   args: {
     pad: true,
+    title: "Detailweergave",
     fieldsets: [
       [
         "Statussen",

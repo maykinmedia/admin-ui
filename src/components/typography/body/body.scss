@@ -15,6 +15,6 @@
   }
 
   @media screen and (min-width: constants.$breakpoint-desktop) {
-    padding: calc(var(--spacing-v) * 2) calc(var(--spacing-h) * 2);
+    padding: var(--spacing-v) var(--spacing-h);
   }
 }
