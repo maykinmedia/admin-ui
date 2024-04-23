@@ -59,7 +59,7 @@
     border-block-start: 1px solid transparent;
     border-block-end: 1px solid var(--typography-color-border);
     box-sizing: border-box;
-    padding: var(--spacing-v) calc(var(--spacing-h) * 2);
+    padding: var(--spacing-v) var(--spacing-h);
     position: relative;
 
     .mykn-a:not(:last-child) {

@@ -963,7 +963,7 @@ export const DataGridHeadingCell: React.FC<DataGridHeadingCellProps> = ({
         bold={isSorted}
         justify={true}
         muted
-        pad="h"
+        pad={false}
         size="xs"
         variant={"transparent"}
         wrap={false}
