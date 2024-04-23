@@ -3,6 +3,7 @@
 .mykn-attributelist {
   align-items: flex-start;
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   gap: var(--spacing-h);
 
@@ -36,6 +37,8 @@
   }
 
   @media screen and (min-width: constants.$breakpoint-desktop) {
+    flex-direction: row;
+
     &__list {
       gap: var(--spacing-v) var(--gutter-h-desktop);
     }
