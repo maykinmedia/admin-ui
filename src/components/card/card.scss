@@ -10,7 +10,7 @@
   &__header {
     display: flex;
     justify-content: space-between;
-    padding-block-start: calc(var(--spacing-v) * 2);
+    padding-block-start: var(--spacing-v);
   }
 
   & + & {
