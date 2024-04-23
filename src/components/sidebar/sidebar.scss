@@ -45,7 +45,6 @@
   }
 
   &__header {
-    border-block-end: 1px solid var(--typography-color-border);
     flex-shrink: 0;
     overflow-y: visible;
     z-index: 10;
@@ -53,6 +52,7 @@
 
   &__header .mykn-body {
     display: flex;
+    height: calc(var(--typography-line-height-h2));
     justify-content: center;
   }
 

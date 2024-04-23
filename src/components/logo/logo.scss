@@ -1,7 +1,10 @@
 .mykn-logo {
-  height: 34px;
+  display: inline-block;
+
+  font-size: 0;
 
   &__image {
+    height: 100%;
     max-width: 155px;
     object-fit: contain;
     overflow: visible;
