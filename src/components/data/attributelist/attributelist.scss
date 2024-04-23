@@ -1,8 +1,13 @@
 @use "../../../settings/constants";
 
 .mykn-attributelist {
-  .mykn-h2 {
-    margin-block-end: 16px;
+  align-items: flex-start;
+  display: flex;
+  justify-content: space-between;
+  gap: var(--spacing-h);
+
+  .mykn-h3 {
+    width: 33%;
   }
 
   &__list {
@@ -10,6 +15,7 @@
     gap: 0 var(--spacing-v) var(--gutter-h-mobile);
     grid-template-columns: 1fr;
     margin: 0;
+    width: 66%;
   }
 
   &__key,
@@ -22,17 +28,16 @@
   }
 
   &__key {
-    color: var(--typography-color-muted);
+    font-weight: var(--typography-font-weight-bold);
   }
 
   &__value {
-    color: var(--typography-color-body);
+    color: var(--typography-color-muted);
   }
 
   @media screen and (min-width: constants.$breakpoint-desktop) {
     &__list {
       gap: var(--spacing-v) var(--gutter-h-desktop);
-      grid-template-columns: 1fr 1fr;
     }
   }
 }
