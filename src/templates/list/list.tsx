@@ -8,7 +8,6 @@ import {
   ErrorMessageProps,
   Form,
   FormProps,
-  H2,
   Sidebar,
   Toolbar,
   ToolbarItem,
@@ -147,17 +146,18 @@ export const List: React.FC<ListProps> = ({
         </Body>
       )}
       {children}
-      {Boolean(title || formProps) && (
-        <Toolbar align="space-between" pad={true} sticky="top">
-          {title && <H2>{title}</H2>}
-          {formProps && (
-            <Form
-              direction="horizontal"
-              toolbarProps={{ pad: false }}
-              {...formProps}
-            />
-          )}
-        </Toolbar>
+      {Boolean(formProps) && (
+        <Body>
+          <Toolbar align="space-between" pad={true} sticky="top">
+            {formProps && (
+              <Form
+                direction="horizontal"
+                toolbarProps={{ pad: false }}
+                {...formProps}
+              />
+            )}
+          </Toolbar>
+        </Body>
       )}
       {/* @ts-expect-error - presumable unable to detect selectable=true option for DataGrid.*/}
       <DataGrid
@@ -173,6 +173,7 @@ export const List: React.FC<ListProps> = ({
         showPaginator={showPaginator}
         selectable={selectable}
         selected={selected}
+        title={title}
         labelSelect={labelSelect}
         labelSelectAll={labelSelectAll}
         onSelect={onSelect}

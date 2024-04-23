@@ -24,7 +24,7 @@ import { Checkbox, Form, FormControl } from "../../form";
 import { Outline } from "../../icon";
 import { Modal } from "../../modal";
 import { Toolbar } from "../../toolbar";
-import { AProps, Body, H3, P, PProps } from "../../typography";
+import { AProps, Body, H2, H3, P, PProps } from "../../typography";
 import { Paginator, PaginatorProps } from "../paginator";
 import { Value } from "../value";
 import "./datagrid.scss";
@@ -115,7 +115,7 @@ export type DataGridProps = {
   selectionActions?: ButtonProps[];
 
   /** A title for the datagrid. */
-  title?: string;
+  title?: React.ReactNode;
 
   /** Get called to when the active field selection is changed. */
   onFieldsChange?: (typedFields: TypedField[]) => void;
@@ -494,7 +494,7 @@ export type DataGridCaptionProps = {
   selectable: boolean;
   selectedRows: AttributeData[] | null;
   selectionActions?: ButtonProps[];
-  title: string;
+  title: React.ReactNode;
   titleId?: string;
   labelSelectFields?: string;
   onFieldsChange: (typedFields: TypedField[]) => void;
@@ -555,7 +555,12 @@ export const DataGridCaption: React.FC<DataGridCaptionProps> = ({
   return (
     <caption className="mykn-datagrid__caption">
       <Toolbar size="fit-content" pad={false}>
-        {title && <H3 id={titleId as string}>{title}</H3>}
+        {title &&
+          (typeof title === "string" ? (
+            <H2 id={titleId as string}>{title}</H2>
+          ) : (
+            title
+          ))}
         {selectable && (
           <DataGridSelectionCheckbox
             checked={allSelected || false}

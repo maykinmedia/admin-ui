@@ -1,28 +1,32 @@
 import React from "react";
 
-import { FieldSet, attributeDataByFieldsets, slugify } from "../../../lib";
+import {
+  AttributeData,
+  FieldSet,
+  attributeDataByFieldsets,
+  slugify,
+} from "../../../lib";
 import { Column, Grid } from "../../layout";
-import { Body, Hr } from "../../typography";
+import { Toolbar } from "../../toolbar";
+import { Body, H2, Hr } from "../../typography";
 import { AttributeList, AttributeListProps } from "../attributelist";
 import "./attributegrid.scss";
 
-export type AttributeGridProps = AttributeListProps & {
+export type AttributeGridProps = {
+  object: AttributeData;
   fieldsets: FieldSet[];
   generateTitleIds?: boolean;
+  title?: React.ReactNode;
 };
 
 /**
  * AttributeGrid component, renders multiple `AttributeList`s in a `Grid` component based on `fieldsets`.
- * @param object
- * @param fieldsets
- * @param generateTitleIds
- * @param props
- * @constructor
  */
 export const AttributeGrid: React.FC<AttributeGridProps> = ({
   object,
   fieldsets,
   generateTitleIds = false,
+  title,
   ...props
 }) => {
   const objectList =
@@ -58,6 +62,11 @@ export const AttributeGrid: React.FC<AttributeGridProps> = ({
 
   return (
     <div className="mykn-attributegrid" {...props}>
+      {title && (
+        <Toolbar pad={true}>
+          {typeof title === "string" ? <H2>{title}</H2> : title}
+        </Toolbar>
+      )}
       <Body>
         {rowArray.map((row, rowIndex) => (
           <React.Fragment key={rowIndex}>

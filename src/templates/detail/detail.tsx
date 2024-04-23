@@ -21,6 +21,7 @@ export type DetailProps = BodyBaseProps & {
   fieldsets: AttributeGridProps["fieldsets"];
   sidebarItems?: ToolbarItem[];
   showSidebar?: boolean;
+  title?: React.ReactNode;
   inlines?: DataGridProps[];
 };
 
@@ -38,6 +39,7 @@ export const Detail: React.FC<DetailProps> = ({
   showHeader,
   showSidebar = sidebarItems.length > 0,
   slotSidebar,
+  title,
   inlines = [],
   ...props
 }) => {
@@ -71,11 +73,14 @@ export const Detail: React.FC<DetailProps> = ({
         {...attributeGridProps}
         object={object}
         fieldsets={fieldsets}
+        title={title}
       />
       {inlines.map(({ title, ...props }, index) => {
         return (
-          <Body key={title}>
-            <H2 id={title && slugify(title)}>{title}</H2>
+          <Body key={typeof title === "string" ? title : index}>
+            <H2 id={typeof title === "string" ? slugify(title) : undefined}>
+              {title}
+            </H2>
             <DataGrid key={index} {...props} />
           </Body>
         );
