@@ -95,6 +95,14 @@
     --mykn-button-padding-xs: calc(var(--spacing-h) / 2);
   }
 
+  &--size-xxs {
+    --mykn-button-font-size: var(--typography-font-size-body-xs);
+    --mykn-button-line-height: var(--typography-line-height-body-xs);
+    --mykn-button-padding-xs: calc(var(--spacing-h) / 2);
+    --mykn-button-height: calc(3 * var(--spacing-h) + 2px) !important;
+    --mykn-button-width: calc(3 * var(--spacing-h) + 2px) !important;
+  }
+
   &--rounded {
     border-radius: 100%;
   }

@@ -118,7 +118,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 className="mykn-sidebar__toggle"
                 aria-controls={id}
                 title={expandedState ? _labelCollapse : _labelExpand}
-                size="xs"
+                size="xxs"
                 pad={false}
                 rounded
                 square
