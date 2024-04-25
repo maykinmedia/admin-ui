@@ -10,7 +10,7 @@ const meta = {
   component: Card,
   decorators: [
     (Story) => (
-      <Page>
+      <Page pad={true}>
         <Story />
       </Page>
     ),

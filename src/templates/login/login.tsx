@@ -43,7 +43,6 @@ export const Login: React.FC<LoginProps> = ({
 
   return (
     <Base
-      showHeader={false}
       columnProps={{ start: 5, span: 4 }}
       pageProps={{ valign: "middle" }}
       {...props}

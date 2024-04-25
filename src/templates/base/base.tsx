@@ -5,11 +5,14 @@ import {
   ColumnProps,
   Container,
   Grid,
-  Logo,
+  Navbar,
   Page,
   PageProps,
+  Sidebar,
+  Toolbar,
+  ToolbarItem,
 } from "../../components";
-import { ConfigContext, NavigationContext } from "../../contexts";
+import { NavigationContext } from "../../contexts";
 
 export type BaseProps = React.PropsWithChildren & {
   /** Column props. */
@@ -21,14 +24,11 @@ export type BaseProps = React.PropsWithChildren & {
   /** Whether to limit the content width using a container. */
   container?: boolean;
 
-  /** Whether to show the primary navigation. */
-  showHeader?: boolean;
+  /** Primary navigation items. */
+  primaryNavigationItems?: ToolbarItem[];
 
-  /** Breadcrumbs navigation (JSX) slot. */
-  slotBreadcrumbs?: React.ReactNode;
-
-  /** Logo (JSX) slot. */
-  slotLogo?: React.ReactNode;
+  /** Sidebar items. */
+  sidebarItems?: ToolbarItem[];
 
   /** Primary navigation (JSX) slot. */
   slotPrimaryNavigation?: React.ReactNode;
@@ -46,31 +46,49 @@ export const Base: React.FC<BaseProps> = ({
   columnProps,
   pageProps,
   container = false,
-  showHeader = true,
-  slotBreadcrumbs,
-  slotLogo,
+  primaryNavigationItems = [],
+  sidebarItems = [],
   slotPrimaryNavigation,
   slotSidebar,
 }) => {
-  const { logo: CustomLogo } = useContext(ConfigContext);
-  const { breadcrumbs, primaryNavigation } = useContext(NavigationContext);
+  const {
+    primaryNavigation,
+    primaryNavigationItems: _primaryNavigationItems,
+    sidebar,
+    sidebarItems: _sidebarItems,
+  } = useContext(NavigationContext);
 
-  const renderContent = () => (
+  const contextNavigation =
+    primaryNavigation ||
+    (primaryNavigationItems.length || _primaryNavigationItems?.length ? (
+      <Navbar
+        items={
+          primaryNavigationItems.length
+            ? primaryNavigationItems
+            : _primaryNavigationItems
+        }
+      />
+    ) : null);
+
+  const contextSidebar =
+    sidebar ||
+    (sidebarItems.length || _sidebarItems?.length ? (
+      <Sidebar expanded>
+        <Toolbar
+          align="space-between"
+          direction="vertical"
+          pad={true}
+          items={(sidebarItems.length ? sidebarItems : _sidebarItems) || []}
+          variant="transparent"
+        />
+      </Sidebar>
+    ) : null);
+
+  const content = (
     <Grid>
-      {showHeader && (
-        <>
-          <Column span={12}>
-            {slotLogo || CustomLogo || <Logo />}
-            {slotPrimaryNavigation || primaryNavigation}
-          </Column>
-          {Boolean(slotBreadcrumbs || breadcrumbs) && (
-            <Column span={12}>{slotBreadcrumbs || breadcrumbs}</Column>
-          )}
-        </>
-      )}
-
       <Column direction="row" span={12} {...columnProps}>
-        {slotSidebar}
+        {slotPrimaryNavigation || contextNavigation}
+        {slotSidebar || contextSidebar}
         {children}
       </Column>
     </Grid>
@@ -78,7 +96,7 @@ export const Base: React.FC<BaseProps> = ({
 
   return (
     <Page {...pageProps}>
-      {container ? <Container>{renderContent()}</Container> : renderContent()}
+      {container ? <Container>{content}</Container> : content}
     </Page>
   );
 };

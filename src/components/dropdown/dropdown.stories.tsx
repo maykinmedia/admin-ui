@@ -13,7 +13,7 @@ const meta = {
   component: Dropdown,
   decorators: [
     (Story) => (
-      <Page>
+      <Page pad={true}>
         <Story />
       </Page>
     ),

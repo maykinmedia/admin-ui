@@ -11,10 +11,7 @@
     width: 100%;
   }
 
-  &--direction-horizontal {
-    width: auto;
-  }
-
+  &--direction-horizontal,
   &--direction-horizontal &__fieldset {
     flex-direction: row;
     width: auto;

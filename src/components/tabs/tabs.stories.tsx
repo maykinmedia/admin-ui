@@ -10,7 +10,7 @@ const meta: Meta<typeof Tabs> = {
   component: Tabs,
   decorators: [
     (Story) => (
-      <Page>
+      <Page pad={true}>
         <Story />
       </Page>
     ),

@@ -1,23 +1,28 @@
-import React from "react";
+import React, { useContext } from "react";
 
 import {
   Body,
+  BreadcrumbItem,
+  Breadcrumbs,
+  BreadcrumbsProps,
   DataGrid,
   DataGridProps,
   ErrorMessage,
   ErrorMessageProps,
   Form,
   FormProps,
-  Sidebar,
   Toolbar,
   ToolbarItem,
 } from "../../components";
+import { NavigationContext } from "../../contexts";
 import { forceArray } from "../../lib";
 import { CardBase } from "../base";
 import { BodyBaseProps } from "../base/bodyBase";
 
 export type ListProps = BodyBaseProps & {
   objectList: DataGridProps["objectList"];
+  breadcrumbItems?: BreadcrumbItem[];
+  breadcrumbsProps?: BreadcrumbsProps;
   fields?: DataGridProps["fields"];
   count?: DataGridProps["count"];
   dataGridProps?: DataGridProps;
@@ -78,6 +83,8 @@ type ListSelectableFalseProps = {
  * @constructor
  */
 export const List: React.FC<ListProps> = ({
+  breadcrumbItems = [],
+  breadcrumbsProps,
   children,
   dataGridProps,
   editable,
@@ -95,16 +102,11 @@ export const List: React.FC<ListProps> = ({
   onPageSizeChange,
   onSelect,
   onSelectionChange,
-  pageProps,
   pageSize,
   pageSizeOptions,
-  sidebarItems = [],
-  showHeader,
   showPaginator,
-  showSidebar = sidebarItems.length > 0,
   selectable,
   selected,
-  slotSidebar,
   labelSelect,
   labelSelectAll,
   sort,
@@ -112,30 +114,22 @@ export const List: React.FC<ListProps> = ({
   ...props
 }) => {
   const _errors = forceArray(errors);
-  const _showSidebar = slotSidebar || showSidebar;
-  const _showHeader =
-    typeof showHeader === "boolean" ? showHeader : !_showSidebar;
+  const { breadcrumbs, breadcrumbItems: _breadcrumbItems } =
+    useContext(NavigationContext);
+
+  const contextBreadcrumbs =
+    breadcrumbs ||
+    (breadcrumbItems.length || _breadcrumbItems?.length ? (
+      <Breadcrumbs
+        items={
+          (breadcrumbItems.length ? breadcrumbItems : _breadcrumbItems) || []
+        }
+        {...breadcrumbsProps}
+      />
+    ) : null);
 
   return (
-    <CardBase
-      pageProps={{ pad: !showSidebar, ...pageProps }}
-      showHeader={_showHeader}
-      slotSidebar={
-        slotSidebar ||
-        (showSidebar && (
-          <Sidebar expanded>
-            <Toolbar
-              align="space-between"
-              direction="vertical"
-              pad={true}
-              items={sidebarItems}
-              variant="transparent"
-            />
-          </Sidebar>
-        ))
-      }
-      {...props}
-    >
+    <CardBase {...props}>
       {_errors && _errors.length > 0 && (
         <Body>
           {_errors.map((e) => (
@@ -146,17 +140,18 @@ export const List: React.FC<ListProps> = ({
         </Body>
       )}
       {children}
-      {Boolean(formProps) && (
+      {(contextBreadcrumbs || formProps) && (
         <Body>
-          <Toolbar align="space-between" pad={true} sticky="top">
-            {formProps && (
+          {contextBreadcrumbs}
+          {formProps && (
+            <Toolbar align="space-between" pad={true} sticky="top">
               <Form
                 direction="horizontal"
                 toolbarProps={{ pad: false }}
                 {...formProps}
               />
-            )}
-          </Toolbar>
+            </Toolbar>
+          )}
         </Body>
       )}
       {/* @ts-expect-error - presumable unable to detect selectable=true option for DataGrid.*/}

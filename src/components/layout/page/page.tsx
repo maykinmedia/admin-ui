@@ -13,15 +13,10 @@ export type PageProps = React.PropsWithChildren<{
 
 /**
  * Provides the base theme for a page.
- * @param children
- * @param pad
- * @param valign
- * @param props
- * @constructor
  */
 export const Page: React.FC<PageProps> = ({
   children,
-  pad = true,
+  pad = false,
   valign,
   ...props
 }) => (

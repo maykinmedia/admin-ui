@@ -11,7 +11,7 @@ const meta = {
   component: Modal,
   decorators: [
     (Story) => (
-      <Page>
+      <Page pad={true}>
         <Story />
       </Page>
     ),

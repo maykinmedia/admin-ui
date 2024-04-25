@@ -7,18 +7,31 @@
   column-gap: var(--spacing-h);
   display: flex;
   flex-direction: column;
+  max-height: 100cqh;
   justify-content: flex-start;
   row-gap: var(--spacing-v);
   text-align: start;
-  width: 100%;
   z-index: 10;
 
   &--compact {
     gap: 0;
   }
 
-  &:not(#{&}--direction-responsive)#{&}--direction-horizontal {
+  &--justify-h {
+    width: 100%;
+  }
+
+  &--justify-v {
+    height: 100cqh;
+  }
+
+  &:not(#{&}--direction-responsive)#{&} --direction-horizontal {
+    max-height: 100%;
     flex-direction: row;
+  }
+
+  &--variant-primary {
+    background-color: var(--page-color-primary);
   }
 
   &--variant-transparent {
@@ -62,6 +75,7 @@
     &--direction-horizontal {
       align-items: center;
       flex-direction: row;
+      max-height: 100%;
     }
 
     &--direction-vertical#{&}--align-start .mykn-a,

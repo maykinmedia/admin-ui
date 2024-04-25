@@ -1,10 +1,18 @@
-import React from "react";
+import React, { useContext } from "react";
 
-import { Body, BodyProps } from "../../components";
+import {
+  Body,
+  BodyProps,
+  BreadcrumbItem,
+  Breadcrumbs,
+  BreadcrumbsProps,
+} from "../../components";
+import { NavigationContext } from "../../contexts";
 import { CardBase, CardBaseProps } from "./cardBase";
 
 export type BodyBaseProps = CardBaseProps & {
-  /** Body props. */
+  breadcrumbItems?: BreadcrumbItem[];
+  breadcrumbsProps?: BreadcrumbsProps;
   bodyProps?: BodyProps;
 };
 
@@ -13,11 +21,30 @@ export type BodyBaseProps = CardBaseProps & {
  * @constructor
  */
 export const BodyBase: React.FC<BodyBaseProps> = ({
+  breadcrumbItems = [],
+  breadcrumbsProps,
   children,
   bodyProps,
   ...props
-}) => (
-  <CardBase {...props}>
-    <Body {...bodyProps}>{children}</Body>
-  </CardBase>
-);
+}) => {
+  const { breadcrumbs, breadcrumbItems: _breadcrumbItems } =
+    useContext(NavigationContext);
+
+  const contextBreadcrumbs =
+    breadcrumbs ||
+    (breadcrumbItems.length || _breadcrumbItems?.length ? (
+      <Breadcrumbs
+        items={
+          (breadcrumbItems.length ? breadcrumbItems : _breadcrumbItems) || []
+        }
+        {...breadcrumbsProps}
+      />
+    ) : null);
+
+  return (
+    <CardBase {...props}>
+      {contextBreadcrumbs && <Body>{contextBreadcrumbs}</Body>}
+      <Body {...bodyProps}>{children}</Body>
+    </CardBase>
+  );
+};
