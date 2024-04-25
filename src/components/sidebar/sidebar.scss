@@ -79,7 +79,9 @@
   }
 
   /// Collapsed state
-  &:not([aria-expanded="true"]) {
+  &:not([aria-expanded="true"]):not(
+      :has(:not(.mykn-sidebar__toggle):focus)
+    ):not(:has(&__body:hover)) {
     width: calc(
       var(--typography-line-height-body-xs) + 2 * var(--spacing-h) + 2px
     );
@@ -97,6 +99,23 @@
 
     .mykn-logo .mykn-logo__handle {
       transition: none;
+    }
+  }
+
+  &:not([aria-expanded="true"]):has(:not(.mykn-sidebar__toggle):focus),
+  &:not([aria-expanded="true"]):has(&__body:hover) {
+    width: calc(
+      var(--typography-line-height-body-xs) + 2 * var(--spacing-h) + 2px
+    );
+  }
+
+  &:not([aria-expanded="true"]):has(&__body:hover) {
+    transition-delay: 1s;
+
+    #{$self}__header,
+    #{$self}__header .mykn-body,
+    #{$self}__body {
+      transition-delay: 1s;
     }
   }
 
