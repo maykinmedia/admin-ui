@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import * as React from "react";
 import { useEffect, useState } from "react";
 
-import { Badge } from "../../components";
+import { Badge, Outline } from "../../components";
 import { AttributeData } from "../../lib/data/attributedata";
 import { List } from "./list";
 
@@ -21,7 +21,18 @@ export const ListTemplate: Story = {
     objectList: [],
     showPaginator: true,
     sort: true,
-    title: "Lijstweergave",
+    title: "List template",
+    fields: ["userId", "id", "title", { active: false, name: "body" }],
+    breadcrumbItems: [
+      { label: "Home", href: "/" },
+      { label: "Templates", href: "#" },
+      { label: "List template", href: "#" },
+    ],
+    primaryNavigationItems: [
+      { children: <Outline.HomeIcon />, title: "Home" },
+      { children: <Outline.CogIcon />, title: "Instellingen" },
+      { children: <Outline.ArrowRightOnRectangleIcon />, title: "Uitloggen" },
+    ],
   },
   render: (args) => {
     const [loading, setLoading] = useState(false);

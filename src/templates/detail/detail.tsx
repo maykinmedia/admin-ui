@@ -1,26 +1,27 @@
-import React from "react";
+import React, { useContext } from "react";
 
 import {
   AttributeGrid,
   AttributeGridProps,
   Body,
+  BreadcrumbItem,
+  Breadcrumbs,
+  BreadcrumbsProps,
   DataGrid,
   DataGridProps,
   H2,
-  Sidebar,
-  Toolbar,
-  ToolbarItem,
 } from "../../components";
+import { NavigationContext } from "../../contexts";
 import { slugify } from "../../lib";
 import { CardBase } from "../base";
 import { BodyBaseProps } from "../base/bodyBase";
 
 export type DetailProps = BodyBaseProps & {
-  attributeGridProps?: Partial<AttributeGridProps>;
   object: AttributeGridProps["object"];
+  breadcrumbItems?: BreadcrumbItem[];
+  breadcrumbsProps?: BreadcrumbsProps;
+  attributeGridProps?: Partial<AttributeGridProps>;
   fieldsets: AttributeGridProps["fieldsets"];
-  sidebarItems?: ToolbarItem[];
-  showSidebar?: boolean;
   title?: React.ReactNode;
   inlines?: DataGridProps[];
 };
@@ -30,43 +31,32 @@ export type DetailProps = BodyBaseProps & {
  * @constructor
  */
 export const Detail: React.FC<DetailProps> = ({
+  breadcrumbItems = [],
+  breadcrumbsProps,
   children,
   attributeGridProps,
   object,
   fieldsets,
-  pageProps,
-  sidebarItems = [],
-  showHeader,
-  showSidebar = sidebarItems.length > 0,
-  slotSidebar,
   title,
   inlines = [],
   ...props
 }) => {
-  const _showSidebar = slotSidebar || showSidebar;
-  const _showHeader =
-    typeof showHeader === "boolean" ? showHeader : !_showSidebar;
+  const { breadcrumbs, breadcrumbItems: _breadcrumbItems } =
+    useContext(NavigationContext);
 
+  const contextBreadcrumbs =
+    breadcrumbs ||
+    (breadcrumbItems.length || _breadcrumbItems?.length ? (
+      <Breadcrumbs
+        items={
+          (breadcrumbItems.length ? breadcrumbItems : _breadcrumbItems) || []
+        }
+        {...breadcrumbsProps}
+      />
+    ) : null);
   return (
-    <CardBase
-      pageProps={{ pad: !_showSidebar, ...pageProps }}
-      showHeader={_showHeader}
-      slotSidebar={
-        slotSidebar ||
-        (showSidebar && (
-          <Sidebar expanded>
-            <Toolbar
-              align="space-between"
-              direction="vertical"
-              pad={true}
-              items={sidebarItems}
-              variant="transparent"
-            />
-          </Sidebar>
-        ))
-      }
-      {...props}
-    >
+    <CardBase {...props}>
+      {contextBreadcrumbs && <Body>{contextBreadcrumbs}</Body>}
       {children}
       <AttributeGrid
         generateTitleIds={true}

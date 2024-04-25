@@ -12,7 +12,7 @@ const meta = {
   component: Toolbar,
   decorators: [
     (Story) => (
-      <Page>
+      <Page pad={true}>
         <Story />
       </Page>
     ),

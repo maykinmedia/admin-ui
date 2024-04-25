@@ -11,7 +11,7 @@ const meta = {
   component: Sidebar,
   decorators: [
     (Story) => (
-      <Page pad={false}>
+      <Page>
         <Story />
       </Page>
     ),

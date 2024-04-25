@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import * as React from "react";
 
-import { Badge } from "../../components";
+import { Badge, Outline } from "../../components";
 import { Detail } from "./detail";
 
 const meta = {
@@ -43,6 +43,16 @@ export const DetailTemplate: Story = {
       "uitgevoerd afgerond": "Afgehandeld",
       "voorstel voor besluitvorming opgesteld": "In behandeling genomen",
     },
+    breadcrumbItems: [
+      { label: "Home", href: "/" },
+      { label: "Templates", href: "#" },
+      { label: "Detail template", href: "#" },
+    ],
+    primaryNavigationItems: [
+      { children: <Outline.HomeIcon />, title: "Home" },
+      { children: <Outline.CogIcon />, title: "Instellingen" },
+      { children: <Outline.ArrowRightOnRectangleIcon />, title: "Uitloggen" },
+    ],
   },
 };
 

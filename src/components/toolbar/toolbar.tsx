@@ -29,6 +29,9 @@ export type ToolbarProps = React.PropsWithChildren<
     /** When set to true, gap between items is removed. */
     compact?: boolean;
 
+    /** Whether to stretch this component. */
+    justify?: "h" | "v";
+
     /** Whether to apply padding to the toolbar. */
     pad?: "v" | "h" | boolean;
 
@@ -42,7 +45,7 @@ export type ToolbarProps = React.PropsWithChildren<
     sticky?: false | "top";
 
     /** The variant (style) of the toolbar. */
-    variant?: "normal" | "transparent";
+    variant?: "normal" | "primary" | "transparent";
 
     /** The items shown inside the toolbar, alternatively, can opt to use children instead. */
     items?: ToolbarItem[];
@@ -60,6 +63,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
   compact = false,
   direction = "horizontal",
   directionResponsive = true,
+  justify = "h",
   pad = "v",
   padA = false,
   size = "",
@@ -121,6 +125,8 @@ export const Toolbar: React.FC<ToolbarProps> = ({
         {
           "mykn-toolbar--compact": compact,
           "mykn-toolbar--direction-responsive": directionResponsive,
+          "mykn-toolbar--justify-h": justify === "h",
+          "mykn-toolbar--justify-v": justify === "v",
           "mykn-toolbar--pad-h": pad === true || pad === "h",
           "mykn-toolbar--pad-v": pad === true || pad === "v",
           "mykn-toolbar--pad-a": padA,

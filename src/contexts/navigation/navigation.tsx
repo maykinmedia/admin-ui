@@ -1,8 +1,14 @@
 import React, { createContext } from "react";
 
+import { BreadcrumbItem, ToolbarItem } from "../../components";
+
 export type NavigationContextType = {
-  primaryNavigation: React.ReactNode;
   breadcrumbs?: React.ReactNode;
+  breadcrumbItems?: BreadcrumbItem[];
+  primaryNavigation?: React.ReactNode;
+  primaryNavigationItems?: ToolbarItem[];
+  sidebar?: React.ReactNode;
+  sidebarItems?: ToolbarItem[];
 };
 
 /**
@@ -10,6 +16,10 @@ export type NavigationContextType = {
  * should have a sane default. Components should also expose prop overrides.
  */
 export const NavigationContext = createContext<NavigationContextType>({
-  primaryNavigation: null,
   breadcrumbs: null,
+  breadcrumbItems: [],
+  primaryNavigation: null,
+  primaryNavigationItems: [],
+  sidebar: null,
+  sidebarItems: [],
 });

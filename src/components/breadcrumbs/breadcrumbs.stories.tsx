@@ -9,7 +9,7 @@ const meta = {
   component: Breadcrumbs,
   decorators: [
     (Story) => (
-      <Page>
+      <Page pad={true}>
         <Story />
       </Page>
     ),
