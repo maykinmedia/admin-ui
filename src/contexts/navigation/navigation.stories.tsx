@@ -18,18 +18,19 @@ export const Navigation: Story = {
   render: () => (
     <NavigationContext.Provider
       value={{
+        breadcrumbItems: [
+          { label: "Home", href: "/" },
+          { label: "Contexts", href: "#" },
+          { label: "Navigation context", href: "#" },
+        ],
         primaryNavigationItems: [
           { children: <Outline.HomeIcon />, title: "Home" },
+          "spacer",
           { children: <Outline.CogIcon />, title: "Instellingen" },
           {
             children: <Outline.ArrowRightOnRectangleIcon />,
             title: "Uitloggen",
           },
-        ],
-        breadcrumbItems: [
-          { label: "Home", href: "/" },
-          { label: "Contexts", href: "#" },
-          { label: "Navigation context", href: "#" },
         ],
         sidebarItems: [
           {

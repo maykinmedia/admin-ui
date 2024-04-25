@@ -10,7 +10,7 @@ const meta = {
   component: Navbar,
   decorators: [
     (Story) => (
-      <Page pad={true}>
+      <Page>
         <Story />
       </Page>
     ),
@@ -24,6 +24,7 @@ export const NavbarComponent: Story = {
   args: {
     items: [
       { children: <Outline.HomeIcon />, title: "Home" },
+      "spacer",
       { children: <Outline.CogIcon />, title: "Instellingen" },
       { children: <Outline.ArrowRightOnRectangleIcon />, title: "Uitloggen" },
     ],
