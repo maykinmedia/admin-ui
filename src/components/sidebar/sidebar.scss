@@ -82,15 +82,11 @@
   &:not([aria-expanded="true"]):not(
       :has(:not(.mykn-sidebar__toggle):focus)
     ):not(:has(&__body:hover)) {
-    width: calc(
-      var(--typography-line-height-body-xs) + 2 * var(--spacing-h) + 2px
-    );
+    width: calc(var(--typography-line-height-body-xs) + 2 * var(--spacing-h));
 
     #{$self}__header,
     #{$self}__body {
-      width: calc(
-        var(--typography-line-height-body-xs) + 2 * var(--spacing-h) + 2px
-      );
+      width: calc(var(--typography-line-height-body-xs) + 2 * var(--spacing-h));
     }
 
     #{$self}__header .mykn-body {
@@ -104,9 +100,7 @@
 
   &:not([aria-expanded="true"]):has(:not(.mykn-sidebar__toggle):focus),
   &:not([aria-expanded="true"]):has(&__body:hover) {
-    width: calc(
-      var(--typography-line-height-body-xs) + 2 * var(--spacing-h) + 2px
-    );
+    width: calc(var(--typography-line-height-body-xs) + 2 * var(--spacing-h));
   }
 
   &:not([aria-expanded="true"]):has(&__body:hover) {

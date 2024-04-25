@@ -13,6 +13,8 @@ export const Navbar: React.FC<NavbarProps> = ({ children, ...props }) => {
     <Toolbar
       direction="vertical"
       justify="v"
+      pad
+      padSize="xs"
       variant="primary"
       sticky="top"
       {...props}
