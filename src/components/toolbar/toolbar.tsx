@@ -36,6 +36,9 @@ export type ToolbarProps = React.PropsWithChildren<
     /** Whether to apply padding to the toolbar. */
     pad?: "v" | "h" | boolean;
 
+    /** The size of the padding. */
+    padSize?: "s" | "xs";
+
     /** When set to true, padding is applied to A components to match Button component's height. */
     padA?: boolean;
 
@@ -67,6 +70,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
   justify = "h",
   pad = "v",
   padA = false,
+  padSize = "s",
   size = "",
   sticky = false,
   variant = "normal",
@@ -136,6 +140,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
           "mykn-toolbar--pad-h": pad === true || pad === "h",
           "mykn-toolbar--pad-v": pad === true || pad === "v",
           "mykn-toolbar--pad-a": padA,
+          [`mykn-toolbar--pad-size-${padSize}`]: padSize,
           [`mykn-toolbar--size-${size}`]: size,
           [`mykn-toolbar--sticky-${sticky}`]: sticky,
         },

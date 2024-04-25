@@ -126,8 +126,16 @@
     padding-inline: var(--spacing-h);
   }
 
+  &--pad-size-xs#{&}--pad-h {
+    padding-inline: calc(var(--spacing-h) / 2);
+  }
+
   &--pad-v {
     padding-block: var(--spacing-v);
+  }
+
+  &--pad-size-xs-#{&}--pad-v {
+    padding-inline: calc(var(--spacing-v) / 2);
   }
 
   .mykn-a {
