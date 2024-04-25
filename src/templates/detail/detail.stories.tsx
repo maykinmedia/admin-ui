@@ -50,6 +50,7 @@ export const DetailTemplate: Story = {
     ],
     primaryNavigationItems: [
       { children: <Outline.HomeIcon />, title: "Home" },
+      "spacer",
       { children: <Outline.CogIcon />, title: "Instellingen" },
       { children: <Outline.ArrowRightOnRectangleIcon />, title: "Uitloggen" },
     ],

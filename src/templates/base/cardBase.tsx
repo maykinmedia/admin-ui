@@ -38,11 +38,14 @@ export const CardBase: React.FC<CardBaseProps> = ({
           compact={true}
           pad={false}
           variant="transparent"
-          items={actions.map((toolbarItem) => ({
-            pad: "h",
-            variant: "transparent",
-            ...toolbarItem,
-          }))}
+          items={actions.map((toolbarItem) => {
+            const props = typeof toolbarItem === "string" ? {} : toolbarItem;
+            return {
+              pad: "h",
+              variant: "transparent",
+              ...props,
+            };
+          })}
         ></Toolbar>
       )}
       {children}

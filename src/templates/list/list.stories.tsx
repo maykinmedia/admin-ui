@@ -30,6 +30,7 @@ export const ListTemplate: Story = {
     ],
     primaryNavigationItems: [
       { children: <Outline.HomeIcon />, title: "Home" },
+      "spacer",
       { children: <Outline.CogIcon />, title: "Instellingen" },
       { children: <Outline.ArrowRightOnRectangleIcon />, title: "Uitloggen" },
     ],

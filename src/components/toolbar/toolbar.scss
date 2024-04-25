@@ -28,6 +28,10 @@
   &:not(#{&}--direction-responsive)#{&} --direction-horizontal {
     max-height: 100%;
     flex-direction: row;
+
+    #{$self}__spacer {
+      width: 100%;
+    }
   }
 
   &--variant-primary {
@@ -45,6 +49,10 @@
   &--sticky-top {
     position: sticky;
     top: 0;
+  }
+
+  &__spacer {
+    height: 100%;
   }
 
   @media screen and (min-width: constants.$breakpoint-desktop) {
@@ -98,6 +106,14 @@
     &--direction-vertical#{&}--align-center .mykn-button,
     &--direction-vertical#{&}--align-center .mykn-dropdown {
       width: 100%;
+    }
+
+    &--direction-horizontal &__spacer {
+      width: 100%;
+    }
+
+    &--direction-vertical &__spacer {
+      height: 100%;
     }
   }
 

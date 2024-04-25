@@ -10,7 +10,8 @@ export type ToolbarItem =
   | AProps
   | ButtonProps
   | ButtonLinkProps
-  | DropdownProps;
+  | DropdownProps
+  | "spacer";
 
 export type ToolbarProps = React.PropsWithChildren<
   React.HTMLAttributes<HTMLElement> & {
@@ -73,22 +74,26 @@ export const Toolbar: React.FC<ToolbarProps> = ({
   ...props
 }) => {
   const isItemAProps = (item: ToolbarItem): item is AProps =>
-    Object.hasOwn(item, "textDecoration");
+    Object.hasOwn(Object(item), "textDecoration");
 
   const isItemButtonLinkProps = (item: ToolbarItem): item is ButtonLinkProps =>
-    Object.hasOwn(item, "href");
+    Object.hasOwn(Object(item), "href");
 
   const isItemDropdownProps = (item: ToolbarItem): item is DropdownProps =>
-    Object.hasOwn(item, "items"); // Mandatory on Dropdown if passed to toolbar items.
+    Object.hasOwn(Object(item), "items"); // Mandatory on Dropdown if passed to toolbar items.
 
   const isItemButtonProps = (item: ToolbarItem): item is ButtonProps =>
-    !Object.hasOwn(item, "href");
+    !Object.hasOwn(Object(item), "href");
 
   /**
-   * Returns the React.FC for the item based on it's shape.
+   * Returns the React.FC for the item based on its shape.
    * @param item
    */
   const getItemComponent = (item: ToolbarItem): React.FC => {
+    if (item === "spacer") {
+      return ToolbarSpacer;
+    }
+
     if (isItemAProps(item)) {
       return A;
     }
@@ -111,8 +116,9 @@ export const Toolbar: React.FC<ToolbarProps> = ({
    * @param index
    */
   const renderItem = (item: ToolbarItem, index: number) => {
+    const props = typeof item === "string" ? {} : item;
     const Component = getItemComponent(item);
-    return <Component key={index} {...item}></Component>;
+    return <Component key={index} {...props}></Component>;
   };
 
   return (
@@ -143,3 +149,12 @@ export const Toolbar: React.FC<ToolbarProps> = ({
     </nav>
   );
 };
+
+export type ToolbarSpacerProps = React.ComponentProps<"div">;
+
+/**
+ * Toolbar "spacer" separates items in a toolbar.
+ */
+export const ToolbarSpacer = (props: ToolbarSpacerProps) => (
+  <div className="mykn-toolbar__spacer" {...props}></div>
+);
