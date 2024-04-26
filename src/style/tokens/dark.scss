@@ -2,9 +2,12 @@
 
 @mixin tokens {
   @include base.tokens;
+  --brand-color-hue: 184deg;
+  --brand-color-saturisation: 100%;
+  --brand-color-lightness: 40%;
+
   --page-color-background: #252f3d;
   --page-color-logo: #ffffff;
-  --page-color-primary: var(--page-color-info);
   --page-color-primary-contrast: var(--typography-color-body);
 
   --typography-color-background: #313741;
