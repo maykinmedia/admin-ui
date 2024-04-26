@@ -1,4 +1,13 @@
 @mixin tokens {
+  /* BRANDING */
+  $purple-rain: #341a90;
+  $blue-suede-shoes: #00bfcb;
+  $brand-color: $purple-rain;
+
+  --brand-color-hue: #{hue($brand-color)};
+  --brand-color-saturisation: #{saturation($brand-color)};
+  --brand-color-lightness: #{lightness($brand-color)};
+
   /* ANIMATION */
   --animation-timing-function: ease-in-out;
   --animation-duration-fast: 0.1s;
@@ -101,7 +110,7 @@
   );
 
   /* Text color */
-  --button-color-text-primary: var(--typography-color-background);
+  --button-color-text-primary: var(--page-color-primary-contrast);
   --button-color-text-primary-hover: var(--button-color-text-primary);
   --button-color-text-primary-active: var(--button-color-text-primary);
 
@@ -121,7 +130,7 @@
   --form-color-border: #b1b1b1;
 
   /* PAGE */
-  --page-color-accent: #f2eeff;
+  --page-color-accent: hsl(var(--brand-color-hue) 100% 95%);
   --page-color-background: #f5f7fd;
   --page-color-highlight: var(--page-color-background);
   --page-color-info: #00bfcb;
@@ -129,7 +138,11 @@
   --page-color-warning: #ec9700;
   --page-color-danger: #ff4949;
   --page-color-logo: inherit;
-  --page-color-primary: #2b157b;
+  --page-color-primary: hsl(
+    var(--brand-color-hue),
+    var(--brand-color-saturisation),
+    var(--brand-color-lightness)
+  );
   --page-color-primary-contrast: var(--typography-color-background);
   --page-color-secondary: #eeeeee;
   --page-color-secondary-contrast: var(--typography-color-body);
@@ -227,6 +240,7 @@
   font-weight: 800;
   src: url("/src/fonts/roboto-slab-v34-latin-800.woff2") format("woff2");
 }
+
 @font-face {
   font-display: swap;
   font-family: "Roboto Slab";
