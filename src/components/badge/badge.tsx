@@ -14,12 +14,11 @@ export type BadgeProps = React.PropsWithChildren<{
  * @param props
  * @constructor
  */
-export const Badge: React.FC<BadgeProps> = ({
-  children,
-  level = "info",
-  ...props
-}) => (
-  <span className={clsx("mykn-badge", `mykn-badge--level-${level}`)} {...props}>
+export const Badge: React.FC<BadgeProps> = ({ children, level, ...props }) => (
+  <span
+    className={clsx("mykn-badge", { [`mykn-badge--level-${level}`]: level })}
+    {...props}
+  >
     {children}
   </span>
 );

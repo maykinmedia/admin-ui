@@ -1,6 +1,5 @@
 .mykn-badge {
-  --mykn-badge-color: var(--page-color-info);
-
+  --mykn-badge-color: var(--typography-color-muted);
   border: 1px solid;
   color: var(--mykn-badge-color);
   align-items: center;
@@ -15,6 +14,11 @@
   padding: 0 var(--spacing-h);
   position: relative;
   transform-style: preserve-3d;
+  white-space: nowrap;
+
+  &--level-info {
+    --mykn-badge-color: var(--page-color-info);
+  }
 
   &--level-success {
     --mykn-badge-color: var(--page-color-success);
@@ -28,8 +32,8 @@
     --mykn-badge-color: var(--page-color-danger);
   }
 
-  &:before,
-  &:after {
+  &[class*="level"]:before,
+  &[class*="level"]:after {
     content: "";
     height: 100%;
     left: 0;

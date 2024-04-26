@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import React from "react";
 
 import { Outline } from "../icon";
@@ -18,6 +19,9 @@ export type BreadcrumbsProps = {
   /** The href */
   items: BreadcrumbItem[];
 
+  /** Whether to stretch this component. */
+  justify?: "h" | boolean;
+
   /** Optional onClick handler, gets called when the item is clicked. */
   onClick?: (path: string) => void;
 };
@@ -31,11 +35,17 @@ export type BreadcrumbsProps = {
  */
 export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
   items,
+  justify,
   onClick,
   ...props
 }) => {
   return (
-    <nav className="mykn-breadcrumbs" {...props}>
+    <nav
+      className={clsx("mykn-breadcrumbs", {
+        "mykn-breadcrumbs--justify-h": justify === "h",
+      })}
+      {...props}
+    >
       <Ol inline listStyle="none">
         {items.map((item, index) => {
           const isLastItem = index === items.length - 1;

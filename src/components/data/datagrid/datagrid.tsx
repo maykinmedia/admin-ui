@@ -108,6 +108,15 @@ export type DataGridProps = {
   /** The filter field (accessible) label .*/
   labelFilterField?: string;
 
+  /** The select item label. */
+  labelSelect?: string;
+
+  /** The select all items label. */
+  labelSelectAll?: string;
+
+  /** Whether checkboxes should be shown for every row. */
+  selectable?: boolean;
+
   /** References to the selected items in `objectList`, setting this preselects the items. */
   selected?: AttributeData[];
 
@@ -153,34 +162,7 @@ export type DataGridProps = {
 
   /** Gets called when the object list is sorted. */
   onSort?: (sort: string) => Promise<unknown> | void;
-} & PaginatorPropsAliases &
-  DataGridSelectableConditional;
-
-type DataGridSelectableConditional =
-  | DataGridSelectableTrueProps
-  | DataGridSelectableFalseProps;
-
-type DataGridSelectableTrueProps = {
-  /** Whether checkboxes should be shown for every row. */
-  selectable: true;
-
-  /** The select item label. */
-  labelSelect: string;
-
-  /** The select all items label. */
-  labelSelectAll: string;
-};
-
-type DataGridSelectableFalseProps = {
-  /** Whether checkboxes should be shown for every row. */
-  selectable?: false;
-
-  /** The select item label. */
-  labelSelect?: string;
-
-  /** The select all items label. */
-  labelSelectAll?: string;
-};
+} & PaginatorPropsAliases;
 
 const getTypedFields = (
   fields: Array<Field | TypedField>,

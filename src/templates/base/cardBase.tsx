@@ -1,12 +1,23 @@
-import React from "react";
+import React, { useContext } from "react";
 
 import {
+  Body,
+  BreadcrumbItem,
+  Breadcrumbs,
+  BreadcrumbsProps,
   Breakout,
   Card,
   CardProps,
+  Column,
+  ErrorMessage,
+  ErrorMessageProps,
+  Form,
+  FormProps,
   Toolbar,
   ToolbarItem,
 } from "../../components";
+import { NavigationContext } from "../../contexts";
+import { forceArray } from "../../lib";
 import { Base, BaseProps } from "./base";
 
 export type CardBaseProps = BaseProps & {
@@ -17,6 +28,26 @@ export type CardBaseProps = BaseProps & {
 
   /** Card props.*/
   cardProps?: CardProps;
+
+  /** Breadcrumb items to show. */
+  breadcrumbItems?: BreadcrumbItem[];
+
+  /** Breadcrumbs props. */
+  breadcrumbsProps?: BreadcrumbsProps;
+
+  /** ErrorMessage props. */
+  errorMessageProps?: ErrorMessageProps;
+
+  errors?: ErrorMessageProps["children"] | ErrorMessageProps["children"][];
+
+  /** Form props. */
+  formProps?: FormProps;
+
+  /** Secondary navigation items to show. */
+  secondaryNavigationItems?: ToolbarItem[];
+
+  /** Secondary navigation (JSX) slot. */
+  slotSecondaryNavigation?: React.ReactNode;
 };
 
 /**
@@ -28,8 +59,61 @@ export const CardBase: React.FC<CardBaseProps> = ({
   breakout = false,
   children,
   cardProps,
+
+  breadcrumbItems = [],
+  breadcrumbsProps,
+  errorMessageProps,
+  errors = [],
+  formProps,
+  secondaryNavigationItems = [],
+  slotSecondaryNavigation,
   ...props
 }) => {
+  const _errors = forceArray(errors);
+  const {
+    breadcrumbs,
+    secondaryNavigation,
+    secondaryNavigationItems: _secondaryNavigationItems,
+    breadcrumbItems: _breadcrumbItems,
+  } = useContext(NavigationContext);
+
+  const contextBreadcrumbs =
+    breadcrumbs ||
+    (breadcrumbItems.length || _breadcrumbItems?.length ? (
+      <Breadcrumbs
+        items={
+          (breadcrumbItems.length ? breadcrumbItems : _breadcrumbItems) || []
+        }
+        {...breadcrumbsProps}
+      />
+    ) : null);
+
+  const contextSecondaryNavigation =
+    formProps ||
+    secondaryNavigation ||
+    secondaryNavigationItems.length ||
+    _secondaryNavigationItems?.length ? (
+      <Toolbar
+        align="end"
+        direction="horizontal"
+        items={
+          (secondaryNavigationItems.length
+            ? secondaryNavigationItems
+            : _secondaryNavigationItems) || []
+        }
+        pad={true}
+        variant="accent"
+      >
+        {formProps && (
+          <Form
+            direction="horizontal"
+            toolbarProps={{ pad: false }}
+            {...Object(formProps)}
+          />
+        )}
+      </Toolbar>
+    ) : null;
+
   const renderCard = () => (
     <Card {...cardProps}>
       {actions && (
@@ -48,6 +132,22 @@ export const CardBase: React.FC<CardBaseProps> = ({
           })}
         ></Toolbar>
       )}
+      {_errors && _errors.length > 0 && (
+        <Body>
+          {_errors.map((e) => (
+            <ErrorMessage key={String(e)} {...errorMessageProps}>
+              {e}
+            </ErrorMessage>
+          ))}
+        </Body>
+      )}
+      {slotSecondaryNavigation ||
+        (contextSecondaryNavigation && (
+          <Column direction={"row"} span={12}>
+            {contextSecondaryNavigation}
+          </Column>
+        ))}
+      {contextBreadcrumbs && <Body>{contextBreadcrumbs}</Body>}
       {children}
     </Card>
   );

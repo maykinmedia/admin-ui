@@ -11,6 +11,7 @@
   justify-content: flex-start;
   row-gap: var(--spacing-v);
   text-align: start;
+  width: fit-content;
   z-index: 10;
 
   &--compact {
@@ -36,6 +37,10 @@
 
   &--variant-primary {
     background-color: var(--page-color-primary);
+  }
+
+  &--variant-accent {
+    background-color: var(--page-color-accent);
   }
 
   &--variant-transparent {

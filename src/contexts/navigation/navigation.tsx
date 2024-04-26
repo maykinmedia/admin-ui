@@ -7,6 +7,8 @@ export type NavigationContextType = {
   breadcrumbItems?: BreadcrumbItem[];
   primaryNavigation?: React.ReactNode;
   primaryNavigationItems?: ToolbarItem[];
+  secondaryNavigation?: React.ReactNode;
+  secondaryNavigationItems?: ToolbarItem[];
   sidebar?: React.ReactNode;
   sidebarItems?: ToolbarItem[];
 };
@@ -20,6 +22,8 @@ export const NavigationContext = createContext<NavigationContextType>({
   breadcrumbItems: [],
   primaryNavigation: null,
   primaryNavigationItems: [],
+  secondaryNavigation: null,
+  secondaryNavigationItems: [],
   sidebar: null,
   sidebarItems: [],
 });
