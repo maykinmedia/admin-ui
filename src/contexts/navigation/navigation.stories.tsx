@@ -32,6 +32,32 @@ export const Navigation: Story = {
             title: "Uitloggen",
           },
         ],
+        secondaryNavigationItems: [
+          <Badge key="badge">In bewerking</Badge>,
+          "spacer",
+          {
+            children: (
+              <>
+                <Outline.CloudArrowUpIcon />
+                Tussentijds Opslaan
+              </>
+            ),
+            pad: "h",
+            variant: "transparent",
+            wrap: false,
+          },
+          {
+            children: (
+              <>
+                <Outline.CheckIcon />
+                Opslaan en afsluiten
+              </>
+            ),
+            pad: "h",
+            variant: "primary",
+            wrap: false,
+          },
+        ],
         sidebarItems: [
           {
             active: true,
