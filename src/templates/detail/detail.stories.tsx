@@ -106,3 +106,36 @@ export const WithSidebar = {
     ],
   },
 };
+
+export const WithSecondaryNavigation = {
+  ...WithSidebar,
+  args: {
+    ...WithSidebar.args,
+    secondaryNavigationItems: [
+      <Badge key="badge">In bewerking</Badge>,
+      "spacer",
+      {
+        children: (
+          <>
+            <Outline.CloudArrowUpIcon />
+            Tussentijds Opslaan
+          </>
+        ),
+        pad: "h",
+        variant: "transparent",
+        wrap: false,
+      },
+      {
+        children: (
+          <>
+            <Outline.CheckIcon />
+            Opslaan en afsluiten
+          </>
+        ),
+        pad: "h",
+        variant: "primary",
+        wrap: false,
+      },
+    ],
+  },
+};

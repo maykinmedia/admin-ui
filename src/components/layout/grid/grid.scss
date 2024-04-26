@@ -3,7 +3,6 @@
 .mykn-grid {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
-  gap: var(--gutter-v-mobile) var(--gutter-h-mobile);
   width: 100%;
 
   &--debug {
@@ -23,14 +22,37 @@
     content: attr(data-testid);
   }
 
+  &--gutter-true {
+    gap: var(--gutter-v-mobile) var(--gutter-h-mobile);
+  }
+
+  &--gutter-h {
+    gap: 0 var(--gutter-h-mobile);
+  }
+
+  &--gutter-v {
+    gap: var(--gutter-v-mobile) 0;
+  }
+
   @media screen and (min-width: constants.$breakpoint-desktop) {
     & {
       grid-template-columns: repeat(12, 1fr);
-      gap: var(--gutter-v-desktop) var(--gutter-h-desktop);
     }
 
     &--debug[data-testid]:before {
       grid-column: 1 / 12 span;
+    }
+
+    &--gutter-true {
+      gap: var(--gutter-v-desktop) var(--gutter-h-desktop);
+    }
+
+    &--gutter-h {
+      gap: 0 var(--gutter-h-desktop);
+    }
+
+    &--gutter-v {
+      gap: var(--gutter-v-desktop) 0;
     }
   }
 }

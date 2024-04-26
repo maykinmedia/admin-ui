@@ -31,7 +31,7 @@ export type ToolbarProps = React.PropsWithChildren<
     compact?: boolean;
 
     /** Whether to stretch this component. */
-    justify?: "h" | "v";
+    justify?: "h" | "v" | boolean;
 
     /** Whether to apply padding to the toolbar. */
     pad?: "v" | "h" | boolean;
@@ -49,7 +49,7 @@ export type ToolbarProps = React.PropsWithChildren<
     sticky?: false | "top";
 
     /** The variant (style) of the toolbar. */
-    variant?: "normal" | "primary" | "transparent";
+    variant?: "normal" | "primary" | "accent" | "transparent";
 
     /** The items shown inside the toolbar, alternatively, can opt to use children instead. */
     items?: ToolbarItem[];
@@ -87,7 +87,8 @@ export const Toolbar: React.FC<ToolbarProps> = ({
     Object.hasOwn(Object(item), "items"); // Mandatory on Dropdown if passed to toolbar items.
 
   const isItemButtonProps = (item: ToolbarItem): item is ButtonProps =>
-    !Object.hasOwn(Object(item), "href");
+    !Object.hasOwn(Object(item), "href") &&
+    Object.hasOwn(Object(item), "children"); // Does button always have children?
 
   /**
    * Returns the React.FC for the item based on its shape.
@@ -111,7 +112,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
     if (isItemButtonProps(item)) {
       return Button;
     }
-    return () => null;
+    return () => item;
   };
 
   /**

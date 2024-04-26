@@ -39,13 +39,13 @@
   );
 
   --button-color-background-outline: var(--typography-color-background);
-  --button-color-background-outline-hover: #f2eeff;
+  --button-color-background-outline-hover: var(--page-color-accent);
   --button-color-background-outline-active: var(
     --button-color-background-outline-hover
   );
 
   --button-color-background-transparent: transparent;
-  --button-color-background-transparent-hover: #f2eeff;
+  --button-color-background-transparent-hover: var(--page-color-accent);
   --button-color-background-transparent-active: var(
     --button-color-background-transparent-hover
   );
@@ -121,6 +121,7 @@
   --form-color-border: #b1b1b1;
 
   /* PAGE */
+  --page-color-accent: #f2eeff;
   --page-color-background: #f5f7fd;
   --page-color-highlight: var(--page-color-background);
   --page-color-info: #00bfcb;
