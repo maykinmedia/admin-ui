@@ -1,5 +1,17 @@
 import { ChoiceFieldProps } from "../../components";
 
+/**
+ * The default URL fields,
+ */
+export const DEFAULT_URL_FIELDS = [
+  "absolute_url",
+  "get_absolute_url",
+  "href",
+  "get_href",
+  "url",
+  "get_url",
+];
+
 /** An object with key/value pairs describing various attributes to be presented. */
 export type AttributeData<T = Attribute> = Record<string, T>;
 
@@ -40,10 +52,13 @@ export type TypedField<T = Attribute> = {
 
 /** A Django-admin like field_options definition. */
 export type FieldOptions = {
-  /** The fields to include in this fieldset/ */
+  /** The fields to include in this fieldset. */
   fields: Field[];
 
-  /** When shown in a grid: the span to use for this fieldset. */
+  /** When shown in an Itemgrid: the field to use as title. */
+  title?: Field;
+
+  /** When shown in an AttributeGrid: the span to use for this fieldset. */
   span?: number;
 };
 
