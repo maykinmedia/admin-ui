@@ -2,6 +2,7 @@ import clsx from "clsx";
 import React, { useEffect, useId, useRef, useState } from "react";
 
 import {
+  DEFAULT_URL_FIELDS,
   Field,
   SerializedFormData,
   TypedField,
@@ -28,19 +29,6 @@ import { AProps, Body, H2, H3, P, PProps } from "../../typography";
 import { Paginator, PaginatorProps } from "../paginator";
 import { Value } from "../value";
 import "./datagrid.scss";
-
-/**
- * The default URL fields,
- * @see DataGridProps.urlFields
- */
-const DEFAULT_URL_FIELDS = [
-  "absolute_url",
-  "get_absolute_url",
-  "href",
-  "get_href",
-  "url",
-  "get_url",
-];
 
 export type DataGridProps = {
   /** The object list (after pagination), only primitive types supported for now. */

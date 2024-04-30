@@ -38,6 +38,20 @@
     flex-direction: row;
   }
 
+  @for $i from 1 through 6 {
+    &--mobile-span-#{$i} {
+      grid-column: auto / span #{$i};
+    }
+
+    &--debug#{&}--mobile-span-#{$i}:before {
+      content: "Span #{$i}";
+    }
+
+    &--start-#{$i} {
+      grid-column-start: $i;
+    }
+  }
+
   @media screen and (min-width: constants.$breakpoint-desktop) {
     @for $i from 1 through 12 {
       &--span-#{$i} {

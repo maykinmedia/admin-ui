@@ -17,6 +17,9 @@ export type ColumnProps = React.PropsWithChildren<{
   /** If set, show the Outline of the column. */
   debug?: boolean;
 
+  /** The number of columns to span on mobile. */
+  mobileSpan?: number;
+
   /** Gets passed as props. */
   [index: string]: unknown;
 }>;
@@ -28,6 +31,7 @@ export const Column: React.FC<ColumnProps> = ({
   children,
   debug,
   direction,
+  mobileSpan = 6,
   span,
   start,
   ...props
@@ -41,6 +45,7 @@ export const Column: React.FC<ColumnProps> = ({
         "mykn-column--debug": _debug,
         [`mykn-column--direction-${direction}`]: direction,
         [`mykn-column--start-${start}`]: start,
+        [`mykn-column--mobile-span-${mobileSpan}`]: mobileSpan,
       })}
       {...props}
     >
