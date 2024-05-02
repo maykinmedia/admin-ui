@@ -83,7 +83,7 @@ export type ItemGridGroupByProps = {
 /**
  * Itemgrid component
  */
-export const Itemgrid: React.FC<ItemGridProps> = ({
+export const ItemGrid: React.FC<ItemGridProps> = ({
   buttonProps,
   buttonLinkProps,
   fieldset,

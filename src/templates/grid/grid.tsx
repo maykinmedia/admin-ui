@@ -1,9 +1,9 @@
 import React from "react";
 
 import {
+  ItemGrid,
   ItemGridConfigurationProps,
   ItemGridItemProps,
-  Itemgrid,
 } from "../../components";
 import { AttributeData, FieldSet } from "../../lib";
 import { CardBase } from "../base";
@@ -54,7 +54,7 @@ export const Grid: React.FC<GridProps> = ({
   <CardBase {...props}>
     {children}
     {groupBy ? (
-      <Itemgrid
+      <ItemGrid
         objectList={objectList}
         fieldset={fieldset}
         groupBy={groupBy}
@@ -64,9 +64,9 @@ export const Grid: React.FC<GridProps> = ({
         onClick={onClick}
       >
         {children}
-      </Itemgrid>
+      </ItemGrid>
     ) : (
-      <Itemgrid
+      <ItemGrid
         objectLists={objectLists as AttributeData[][]}
         fieldsets={fieldsets as FieldSet[]}
         renderPreview={renderPreview}
@@ -75,7 +75,7 @@ export const Grid: React.FC<GridProps> = ({
         onClick={onClick}
       >
         {children}
-      </Itemgrid>
+      </ItemGrid>
     )}
   </CardBase>
 );

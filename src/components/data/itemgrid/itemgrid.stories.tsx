@@ -4,11 +4,11 @@ import { useEffect, useState } from "react";
 
 import { AttributeData } from "../../../lib";
 import { Page } from "../../layout";
-import { Itemgrid } from "./itemgrid";
+import { ItemGrid } from "./itemgrid";
 
 const meta = {
   title: "Data/Itemgrid",
-  component: Itemgrid,
+  component: ItemGrid,
   decorators: [
     (Story) => (
       <Page>
@@ -16,7 +16,7 @@ const meta = {
       </Page>
     ),
   ],
-} satisfies Meta<typeof Itemgrid>;
+} satisfies Meta<typeof ItemGrid>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
@@ -54,9 +54,9 @@ export const ItemGridComponent: Story = {
     const odd = objectList.filter((o, index) => index % 2 !== 0);
 
     return "groupBy" in args ? (
-      <Itemgrid objectList={objectList} {...args} />
+      <ItemGrid objectList={objectList} {...args} />
     ) : (
-      <Itemgrid objectLists={[even, odd]} {...args} />
+      <ItemGrid objectLists={[even, odd]} {...args} />
     );
   },
 };
