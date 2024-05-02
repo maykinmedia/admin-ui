@@ -1,14 +1,14 @@
 import React from "react";
 
-import { ItemGrid, ItemGridItemProps } from "../../components";
+import { Kanban as KanbanComponent } from "../../components";
 import { AttributeData, FieldSet } from "../../lib";
 import { GroupedAttributeDataConfigurationProps } from "../../lib/data/groupedattributedata";
 import { CardBase } from "../base";
 import { BodyBaseProps } from "../base/bodyBase";
 
-export type GridProps = BodyBaseProps & {
-  /** Itemgrid props. */
-  itemGridProps?: ItemGridItemProps;
+export type KanbanProps = BodyBaseProps & {
+  /** Kanban props. */
+  kanbanProps?: KanbanProps;
 
   /** A `Function` that is used to create the preview for an object. */
   renderPreview?: (attributeData: AttributeData) => React.ReactNode;
@@ -35,7 +35,7 @@ export type GridProps = BodyBaseProps & {
  * grid template
  * @constructor
  */
-export const Grid: React.FC<GridProps> = ({
+export const Kanban: React.FC<KanbanProps> = ({
   children,
   fieldset,
   fieldsets,
@@ -51,7 +51,7 @@ export const Grid: React.FC<GridProps> = ({
   <CardBase {...props}>
     {children}
     {groupBy ? (
-      <ItemGrid
+      <KanbanComponent
         objectList={objectList}
         fieldset={fieldset}
         groupBy={groupBy}
@@ -61,9 +61,9 @@ export const Grid: React.FC<GridProps> = ({
         onClick={onClick}
       >
         {children}
-      </ItemGrid>
+      </KanbanComponent>
     ) : (
-      <ItemGrid
+      <KanbanComponent
         objectLists={objectLists as AttributeData[][]}
         fieldsets={fieldsets as FieldSet[]}
         renderPreview={renderPreview}
@@ -72,7 +72,7 @@ export const Grid: React.FC<GridProps> = ({
         onClick={onClick}
       >
         {children}
-      </ItemGrid>
+      </KanbanComponent>
     )}
   </CardBase>
 );

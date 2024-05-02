@@ -14,6 +14,9 @@ export type ColumnProps = React.PropsWithChildren<{
   /** If set, flex children in direction. */
   direction?: "column" | "row";
 
+  /** If set, add spacing between children (only if direction is set). */
+  gap?: boolean;
+
   /** If set, show the Outline of the column. */
   debug?: boolean;
 
@@ -31,6 +34,7 @@ export const Column: React.FC<ColumnProps> = ({
   children,
   debug,
   direction,
+  gap = false,
   mobileSpan = 6,
   span,
   start,
@@ -43,6 +47,7 @@ export const Column: React.FC<ColumnProps> = ({
     <div
       className={clsx("mykn-column", `mykn-column--span-${span}`, {
         "mykn-column--debug": _debug,
+        "mykn-column--gap": direction && gap,
         [`mykn-column--direction-${direction}`]: direction,
         [`mykn-column--start-${start}`]: start,
         [`mykn-column--mobile-span-${mobileSpan}`]: mobileSpan,

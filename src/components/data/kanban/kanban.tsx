@@ -13,14 +13,14 @@ import {
 import { Button, ButtonLink, ButtonLinkProps, ButtonProps } from "../../button";
 import { Column, Grid } from "../../layout";
 import { Body, H1, H2, H3, P } from "../../typography";
-import "./itemgrid.scss";
+import "./kanban.scss";
 
-export type ItemGridProps = GroupedAttributeDataProps;
+export type KanbanProps = GroupedAttributeDataProps;
 
 /**
- * ItemGrid component
+ * Kanban component
  */
-export const ItemGrid: React.FC<ItemGridProps> = ({
+export const Kanban: React.FC<KanbanProps> = ({
   buttonProps,
   buttonLinkProps,
   fieldset,
@@ -43,29 +43,33 @@ export const ItemGrid: React.FC<ItemGridProps> = ({
   );
 
   return (
-    <div className="mykn-itemgrid" {...props}>
+    <div className="mykn-kanban" {...props}>
       {title && (
-        <Body>
+        <Body className="mykn-kanban__header">
           <H2>{title}</H2>
         </Body>
       )}
-      {_fieldsets.map((fieldset, index) => (
-        <ItemGridSection
-          key={fieldset[0] ? fieldset[0] : index}
-          buttonLinkProps={buttonLinkProps}
-          buttonProps={buttonProps}
-          fieldset={fieldset}
-          objectList={_objectLists[index]}
-          renderPreview={renderPreview}
-          urlFields={urlFields}
-          onClick={onClick}
-        />
-      ))}
+      <Body className="mykn-kanban__body">
+        <Grid cols={_fieldsets.length}>
+          {_fieldsets.map((fieldset, index) => (
+            <KanbanSection
+              key={fieldset[0] ? fieldset[0] : index}
+              buttonLinkProps={buttonLinkProps}
+              buttonProps={buttonProps}
+              fieldset={fieldset}
+              objectList={_objectLists[index]}
+              renderPreview={renderPreview}
+              urlFields={urlFields}
+              onClick={onClick}
+            />
+          ))}
+        </Grid>
+      </Body>
     </div>
   );
 };
 
-export type ItemGridSectionProps = Omit<
+export type KanbanSectionProps = Omit<
   React.ComponentProps<"section">,
   "onClick"
 > & {
@@ -74,57 +78,53 @@ export type ItemGridSectionProps = Omit<
   fieldset: FieldSet;
   objectList: AttributeData[];
   renderPreview?: (attributeData: AttributeData) => React.ReactNode;
-  urlFields: (keyof ItemGridSectionProps["objectList"][number])[];
+  urlFields: (keyof KanbanSectionProps["objectList"][number])[];
   onClick?: (event: React.MouseEvent, attributeData: AttributeData) => void;
 };
 
-export const ItemGridSection: React.FC<ItemGridSectionProps> = ({
-  buttonLinkProps,
+export const KanbanSection: React.FC<KanbanSectionProps> = ({
   buttonProps,
+  buttonLinkProps,
   fieldset,
   objectList,
   renderPreview,
   urlFields,
   onClick,
 }) => (
-  <section className="mykn-itemgrid__section">
-    <Body>
-      <Grid>
-        {fieldset[0] && (
-          <Column span={12}>
-            <H3>{fieldset[0]}</H3>
-          </Column>
-        )}
-        {objectList.map((o, index) => (
-          <ItemGridItem
-            key={index}
-            buttonLinkProps={buttonLinkProps}
-            buttonProps={buttonProps}
-            fieldset={fieldset}
-            object={o}
-            renderPreview={renderPreview}
-            urlFields={urlFields}
-            onClick={onClick}
-          />
-        ))}
-      </Grid>
-    </Body>
-  </section>
+  <Column direction="column" gap={true} span={1}>
+    {fieldset[0] && (
+      <Body>
+        <H3>{fieldset[0]}</H3>
+      </Body>
+    )}
+    {objectList.map((o, index) => (
+      <KanbanItem
+        key={index}
+        buttonLinkProps={buttonLinkProps}
+        buttonProps={buttonProps}
+        fieldset={fieldset}
+        object={o}
+        renderPreview={renderPreview}
+        urlFields={urlFields}
+        onClick={onClick}
+      />
+    ))}
+  </Column>
 );
 
-export type ItemGridItemProps = Omit<React.ComponentProps<"li">, "onClick"> & {
+export type KanbanItemProps = Omit<React.ComponentProps<"li">, "onClick"> & {
   buttonLinkProps?: ButtonLinkProps;
   buttonProps?: ButtonProps;
   fieldset: FieldSet;
   object: AttributeData;
   renderPreview?: (attributeData: AttributeData) => React.ReactNode;
-  urlFields: (keyof ItemGridItemProps["object"])[];
+  urlFields: (keyof KanbanItemProps["object"])[];
   onClick?: (event: React.MouseEvent, attributeData: AttributeData) => void;
 };
 
-export const ItemGridItem: React.FC<ItemGridItemProps> = ({
-  buttonLinkProps,
+export const KanbanItem: React.FC<KanbanItemProps> = ({
   buttonProps,
+  buttonLinkProps,
   fieldset,
   object,
   renderPreview,
@@ -142,16 +142,15 @@ export const ItemGridItem: React.FC<ItemGridItemProps> = ({
   );
 
   return (
-    <Column direction="column" span={1} mobileSpan={2}>
-      <ItemGridButton
-        buttonLinkProps={buttonLinkProps}
-        buttonProps={buttonProps}
-        href={href}
-        object={object}
-        renderPreview={renderPreview}
-        title={String(title)}
-        onClick={onClick}
-      ></ItemGridButton>
+    <KanbanButton
+      buttonLinkProps={buttonLinkProps}
+      buttonProps={buttonProps}
+      href={href}
+      object={object}
+      renderPreview={renderPreview}
+      title={String(title)}
+      onClick={onClick}
+    >
       <P bold size="xs">
         {field2Title(String(title))}
       </P>
@@ -161,13 +160,14 @@ export const ItemGridItem: React.FC<ItemGridItemProps> = ({
           {object[field]}
         </P>
       ))}
-    </Column>
+    </KanbanButton>
   );
 };
 
-export type ItemGridButtonProps = {
+export type KanbanButtonProps = {
   buttonLinkProps?: ButtonLinkProps;
   buttonProps?: ButtonProps;
+  children: React.ReactNode;
   href?: string;
   object: AttributeData;
   renderPreview?: (attributeData: AttributeData) => React.ReactNode;
@@ -175,9 +175,10 @@ export type ItemGridButtonProps = {
   onClick?: (event: React.MouseEvent, attributeData: AttributeData) => void;
 };
 
-export const ItemGridButton: React.FC<ItemGridButtonProps> = ({
-  buttonLinkProps,
+export const KanbanButton: React.FC<KanbanButtonProps> = ({
   buttonProps,
+  buttonLinkProps,
+  children,
   href,
   title,
   object,
@@ -188,22 +189,30 @@ export const ItemGridButton: React.FC<ItemGridButtonProps> = ({
 
   return href ? (
     <ButtonLink
+      align="start"
       href={href}
+      justify
       title={title}
       variant="outline"
+      wrap={false}
       {...buttonLinkProps}
       onClick={(e) => onClick?.(e, object)}
     >
-      <span className="mykn-itemgrid__preview">{content}</span>
+      <span className="mykn-kanban__preview">{content}</span>
+      {children}
     </ButtonLink>
   ) : (
     <Button
+      align="start"
+      justify
       title={title}
       variant="outline"
+      wrap={false}
       {...buttonProps}
       onClick={(e) => onClick?.(e, object)}
     >
-      <span className="mykn-itemgrid__preview">{content}</span>
+      <span className="mykn-kanban__preview">{content}</span>
+      {children}
     </Button>
   );
 };
