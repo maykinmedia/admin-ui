@@ -38,6 +38,14 @@
     flex-direction: row;
   }
 
+  &--direction-column#{&}--gap {
+    gap: var(--spacing-v);
+  }
+
+  &--direction-row#{&}--gap {
+    gap: var(--spacing-h);
+  }
+
   @for $i from 1 through 6 {
     &--mobile-span-#{$i} {
       grid-column: auto / span #{$i};

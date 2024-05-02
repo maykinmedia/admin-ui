@@ -5,6 +5,12 @@
   grid-template-columns: repeat(6, 1fr);
   width: 100%;
 
+  @for $i from 1 through 12 {
+    &--cols-#{$i} {
+      grid-template-columns: repeat($i, 1fr) !important;
+    }
+  }
+
   &--debug {
     outline: 1px solid green;
   }
