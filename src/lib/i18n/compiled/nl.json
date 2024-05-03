@@ -63,6 +63,18 @@
       "value": "verzenden"
     }
   ],
+  "mykn.components.Kanban.labelMoveObject": [
+    {
+      "type": 0,
+      "value": "wijzig positie van onderdeel"
+    }
+  ],
+  "mykn.components.Kanban.labelSelectColumn": [
+    {
+      "type": 0,
+      "value": "verplaats onderdeel naar kolom"
+    }
+  ],
   "mykn.components.Logo.hrefLabel": [
     {
       "type": 0,

@@ -61,9 +61,17 @@ export const KanbanTemplate: Story = {
     const odd = objectList.filter((o, index) => index % 2 !== 0);
 
     return "groupBy" in args ? (
-      <Kanban objectList={objectList} {...args} />
+      <Kanban
+        onObjectChange={() => console.log("foo")}
+        objectList={objectList}
+        {...args}
+      />
     ) : (
-      <Kanban objectLists={[even, odd, [], []]} {...args} />
+      <Kanban
+        onObjectChange={() => console.log("bar")}
+        objectLists={[even, odd, [], []]}
+        {...args}
+      />
     );
   },
 };
@@ -158,5 +166,18 @@ export const WithCustomPreview = {
     renderPreview: (attributeData) => (
       <img alt={attributeData.title} src={attributeData.thumbnailUrl} />
     ),
+  },
+};
+
+export const Draggable = {
+  ...WithSecondaryNavigation,
+  args: {
+    ...WithSecondaryNavigation.args,
+    draggable: true,
+  },
+  argTypes: {
+    onFieldsetsChange: { action: "onFieldsetsChange" },
+    onObjectListsChange: { action: "onObjectListsChange" },
+    onObjectChange: { action: "onObjectChange" },
   },
 };

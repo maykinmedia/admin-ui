@@ -39,6 +39,16 @@
     "description": "mykn.components.Form: The submit form label",
     "originalDefault": "verzenden"
   },
+  "mykn.components.Kanban.labelMoveObject": {
+    "defaultMessage": "wijzig positie van onderdeel",
+    "description": "mykn.components.Kanban: The kanban \"move object position\" (accessible) label",
+    "originalDefault": "wijzig positie van onderdeel"
+  },
+  "mykn.components.Kanban.labelSelectColumn": {
+    "defaultMessage": "verplaats onderdeel naar kolom",
+    "description": "mykn.components.Kanban: The kanban \"change column\" (accessible) label",
+    "originalDefault": "verplaats onderdeel naar kolom"
+  },
   "mykn.components.Logo.hrefLabel": {
     "defaultMessage": "Navigeer naar \"{href}\"",
     "description": "mykn.components.Logo: An aria-label describing the link action",
