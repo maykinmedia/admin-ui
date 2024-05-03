@@ -21,7 +21,7 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const ItemGridComponent: Story = {
+export const KanbanComponent: Story = {
   args: {
     title: "The quick brown fox jumps over the lazy dog.",
     fieldsets: [
@@ -64,9 +64,9 @@ export const ItemGridComponent: Story = {
 };
 
 export const WithCustomPreview = {
-  ...ItemGridComponent,
+  ...KanbanComponent,
   args: {
-    ...ItemGridComponent.args,
+    ...KanbanComponent.args,
     renderPreview: (attributeData) => (
       <img alt={attributeData.title} src={attributeData.thumbnailUrl} />
     ),
@@ -74,7 +74,7 @@ export const WithCustomPreview = {
 };
 
 export const GroupBy = {
-  ...ItemGridComponent,
+  ...KanbanComponent,
   args: {
     fieldset: [`{group}`, { fields: ["title"], title: "title" }],
     groupBy: "alphaIndex",
