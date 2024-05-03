@@ -63,6 +63,18 @@
       "value": "submit"
     }
   ],
+  "mykn.components.Kanban.labelMoveObject": [
+    {
+      "type": 0,
+      "value": "change position of item"
+    }
+  ],
+  "mykn.components.Kanban.labelSelectColumn": [
+    {
+      "type": 0,
+      "value": "move item to column"
+    }
+  ],
   "mykn.components.Logo.hrefLabel": [
     {
       "type": 0,

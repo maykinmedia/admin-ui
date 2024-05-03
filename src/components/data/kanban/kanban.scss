@@ -26,6 +26,19 @@
     width: 100%;
   }
 
+  &__body &__drop-indicator {
+    background-color: var(--page-color-accent);
+    border: 1px dashed var(--page-color-primary);
+    box-sizing: content-box;
+    height: calc(var(--typography-line-height-body-s) * 2);
+    padding-block: var(--spacing-v);
+  }
+
+  &__body &__drop-target {
+    border-color: var(--page-color-primary);
+    border-style: dashed;
+  }
+
   &__body .mykn-column > .mykn-h3 {
     position: sticky;
     top: 0;
@@ -34,6 +47,10 @@
 
   &__body .mykn-column > .mykn-button {
     white-space: normal;
+
+    &:focus-within {
+      z-index: 100;
+    }
   }
 
   &__body &__preview {
@@ -43,5 +60,24 @@
     justify-content: center;
     overflow: hidden;
     width: calc(var(--typography-line-height-body-s) * 2);
+  }
+
+  &__body .mykn-column > .mykn-button > .mykn-select {
+    inset-block-end: var(--spacing-v);
+    inset-inline-end: var(--spacing-h);
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+    width: 50%;
+
+    &:focus-within {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    &:focus-visible {
+      //background-color: green;
+      visibility: visible;
+    }
   }
 }

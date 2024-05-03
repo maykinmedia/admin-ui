@@ -51,7 +51,7 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
           const isLastItem = index === items.length - 1;
 
           return (
-            <Li key={item.href} size="xs">
+            <Li key={index} size="xs">
               <A
                 href={item.href}
                 muted={!isLastItem}

@@ -11,6 +11,9 @@ export type ColumnProps = React.PropsWithChildren<{
   /** If set, the column to start on. */
   start?: number;
 
+  /** Additional class names. */
+  className?: string;
+
   /** If set, flex children in direction. */
   direction?: "column" | "row";
 
@@ -32,6 +35,7 @@ export type ColumnProps = React.PropsWithChildren<{
  */
 export const Column: React.FC<ColumnProps> = ({
   children,
+  className,
   debug,
   direction,
   gap = false,
@@ -45,13 +49,18 @@ export const Column: React.FC<ColumnProps> = ({
 
   return (
     <div
-      className={clsx("mykn-column", `mykn-column--span-${span}`, {
-        "mykn-column--debug": _debug,
-        "mykn-column--gap": direction && gap,
-        [`mykn-column--direction-${direction}`]: direction,
-        [`mykn-column--start-${start}`]: start,
-        [`mykn-column--mobile-span-${mobileSpan}`]: mobileSpan,
-      })}
+      className={clsx(
+        "mykn-column",
+        `mykn-column--span-${span}`,
+        {
+          "mykn-column--debug": _debug,
+          "mykn-column--gap": direction && gap,
+          [`mykn-column--direction-${direction}`]: direction,
+          [`mykn-column--start-${start}`]: start,
+          [`mykn-column--mobile-span-${mobileSpan}`]: mobileSpan,
+        },
+        className,
+      )}
       {...props}
     >
       {children}
