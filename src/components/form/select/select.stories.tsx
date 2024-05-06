@@ -9,10 +9,10 @@ import { Page } from "../../layout";
 import { FORM_TEST_DECORATOR } from "../.storybook/decorators";
 import { Select } from "./select";
 
-const meta = {
+const meta: Meta<typeof Select> = {
   title: "Form/Select",
   component: Select,
-} satisfies Meta<typeof Select>;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;

@@ -6,7 +6,7 @@ import { AttributeData } from "../../../lib";
 import { Page } from "../../layout";
 import { Kanban } from "./kanban";
 
-const meta = {
+const meta: Meta<typeof Kanban> = {
   title: "Data/Kanban",
   component: Kanban,
   decorators: [
@@ -16,7 +16,7 @@ const meta = {
       </Page>
     ),
   ],
-} satisfies Meta<typeof Kanban>;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;

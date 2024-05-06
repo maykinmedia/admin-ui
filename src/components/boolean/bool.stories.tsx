@@ -5,10 +5,10 @@ import * as React from "react";
 import { Body, H1, H2, H3, P } from "../typography";
 import { Bool } from "./bool";
 
-const meta = {
+const meta: Meta<typeof Bool> = {
   title: "Icon/Bool",
   component: Bool,
-} satisfies Meta<typeof Bool>;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;

@@ -2,10 +2,10 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 import { AttributeList } from "./attributelist";
 
-const meta = {
+const meta: Meta<typeof AttributeList> = {
   title: "Data/AttributeList",
   component: AttributeList,
-} satisfies Meta<typeof AttributeList>;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;
@@ -31,7 +31,7 @@ export const SelectedFieldOnly: Story = {
   args: {
     ...AttributeListComponent.args,
     object: {
-      ...AttributeListComponent.args.data,
+      ...AttributeListComponent?.args?.object,
       userId: 1,
     },
     fields: ["Omschrijving", "url"],

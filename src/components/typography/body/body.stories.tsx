@@ -12,10 +12,10 @@ import { P } from "../p";
 import { Ul } from "../ul";
 import { Body } from "./body";
 
-const meta = {
+const meta: Meta<typeof Body> = {
   title: "Typography/Body",
   component: Body,
-} satisfies Meta<typeof Body>;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;

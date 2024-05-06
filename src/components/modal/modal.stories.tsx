@@ -6,7 +6,7 @@ import { Page } from "../layout";
 import { Body, H3 } from "../typography";
 import { Modal } from "./modal";
 
-const meta = {
+const meta: Meta<typeof Modal> = {
   title: "Building Blocks/Modal",
   component: Modal,
   decorators: [
@@ -16,7 +16,7 @@ const meta = {
       </Page>
     ),
   ],
-} satisfies Meta<typeof Modal>;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;

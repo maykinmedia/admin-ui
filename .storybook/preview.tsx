@@ -6,7 +6,6 @@ import { allModes } from "./modes";
 
 const preview: Preview = {
   parameters: {
-    actions: { argTypesRegex: "^on[A-Z].*" },
     chromatic: {
       modes: {
         "light desktop": allModes["light desktop"],

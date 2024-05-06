@@ -5,7 +5,7 @@ import { Outline } from "../icon";
 import { Page } from "../layout";
 import { Navbar } from "./navbar";
 
-const meta = {
+const meta: Meta<typeof Navbar> = {
   title: "Controls/Navbar",
   component: Navbar,
   decorators: [
@@ -15,7 +15,7 @@ const meta = {
       </Page>
     ),
   ],
-} satisfies Meta<typeof Navbar>;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;

@@ -8,6 +8,8 @@ const config: StorybookConfig = {
     "@storybook/addon-essentials",
     "@storybook/addon-interactions",
     "@storybook/addon-themes",
+    "@storybook/addon-webpack5-compiler-swc",
+    "@chromatic-com/storybook",
   ],
   core: {
     disableTelemetry: true,
@@ -15,16 +17,14 @@ const config: StorybookConfig = {
   framework: {
     name: "@storybook/react-webpack5",
     options: {
-      builder: {
-        useSWC: true,
-      },
+      builder: {},
     },
   },
   docs: {
     autodocs: true,
   },
   webpackFinal: async (config) => {
-    config.module.rules.push({
+    config?.module?.rules?.push({
       test: /\.scss$/,
       use: ["style-loader", "css-loader", "sass-loader"],
       include: path.resolve(__dirname, "../"),

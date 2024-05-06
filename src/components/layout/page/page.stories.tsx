@@ -7,14 +7,14 @@ type PagePropsAndCustomArgs = React.ComponentProps<typeof Page> & {
   debug?: boolean;
 };
 
-const meta = {
+const meta: Meta<typeof PagePropsAndCustomArgs> = {
   title: "Layout/Page",
   component: Page,
   parameters: {
     ignoreGlobalDecorator: true,
     layout: "fullscreen",
   },
-} satisfies Meta<PagePropsAndCustomArgs>;
+};
 
 export default meta;
 type Story = StoryObj<PagePropsAndCustomArgs>;

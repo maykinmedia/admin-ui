@@ -2,10 +2,10 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 import { H2 } from "./h2";
 
-const meta = {
+const meta: Meta<typeof H2> = {
   title: "Typography/H2",
   component: H2,
-} satisfies Meta<typeof H2>;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;

@@ -2,10 +2,10 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 import { ErrorMessage } from "./errormessage";
 
-const meta = {
+const meta: Meta<typeof ErrorMessage> = {
   title: "Form/ErrorMessage",
   component: ErrorMessage,
-} satisfies Meta<typeof ErrorMessage>;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;

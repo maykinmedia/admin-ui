@@ -4,7 +4,7 @@ import * as React from "react";
 import { Page } from "../layout";
 import { Breadcrumbs } from "./breadcrumbs";
 
-const meta = {
+const meta: Meta<typeof Breadcrumbs> = {
   title: "Controls/Breadcrumbs",
   component: Breadcrumbs,
   decorators: [
@@ -14,7 +14,7 @@ const meta = {
       </Page>
     ),
   ],
-} satisfies Meta<typeof Breadcrumbs>;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;

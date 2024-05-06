@@ -3,10 +3,10 @@ import * as React from "react";
 
 import { Badge } from "./badge";
 
-const meta = {
+const meta: Meta<typeof Badge> = {
   title: "Typography/Badge",
   component: Badge,
-} satisfies Meta<typeof Badge>;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;

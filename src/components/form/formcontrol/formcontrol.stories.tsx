@@ -2,10 +2,10 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 import { FormControl } from "./formcontrol";
 
-const meta = {
+const meta: Meta<typeof FormControl> = {
   title: "Form/Formcontrol",
   component: FormControl,
-} satisfies Meta<typeof FormControl>;
+};
 
 export default meta;
 type Story = StoryObj<typeof FormControl>;

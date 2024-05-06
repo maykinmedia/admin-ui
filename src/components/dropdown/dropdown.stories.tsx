@@ -8,7 +8,7 @@ import { Page } from "../layout";
 import { Toolbar } from "../toolbar";
 import { Dropdown } from "./dropdown";
 
-const meta = {
+const meta: Meta<typeof Dropdown> = {
   title: "Controls/Dropdown",
   component: Dropdown,
   decorators: [
@@ -53,7 +53,7 @@ const meta = {
       );
     }
   },
-} satisfies Meta<typeof Dropdown>;
+};
 
 const DEFAULT_CHILDREN = (
   <>

@@ -4,7 +4,7 @@ import * as React from "react";
 import { Toolbar } from "../toolbar";
 import { Button, ButtonLink } from "./button";
 
-const meta = {
+const meta: Meta<typeof Button> = {
   title: "Controls/Button",
   component: Button,
   render: ({ ...args }) => (
@@ -20,7 +20,7 @@ const meta = {
       </Button>
     </Toolbar>
   ),
-} satisfies Meta<typeof Button>;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;

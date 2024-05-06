@@ -5,7 +5,7 @@ import { Column } from "./column";
 import { Container } from "./container";
 import { Grid } from "./grid";
 
-const meta = {
+const meta: Meta<typeof Column> = {
   title: "Layout/Reference",
   render: (args) => (
     <Container debug={args.debug}>
@@ -46,7 +46,7 @@ const meta = {
       </Grid>
     </Container>
   ),
-} satisfies Meta<typeof Column>;
+};
 
 export default meta;
 

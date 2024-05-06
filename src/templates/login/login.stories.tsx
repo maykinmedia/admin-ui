@@ -2,11 +2,11 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 import { Login } from "./login";
 
-const meta = {
+const meta: Meta<typeof Login> = {
   title: "Templates/Login",
   component: Login,
   argTypes: { onSubmit: { action: "onSubmit" } },
-} satisfies Meta<typeof Login>;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;

@@ -4,10 +4,10 @@ import { expect, userEvent, within } from "@storybook/test";
 import { FORM_TEST_DECORATOR } from "../.storybook/decorators";
 import { Checkbox } from "./checkbox";
 
-const meta = {
+const meta: Meta<typeof Checkbox> = {
   title: "Form/Checkbox",
   component: Checkbox,
-} satisfies Meta<typeof Checkbox>;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;

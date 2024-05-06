@@ -1,3 +1,6 @@
+import { StoryFn } from "@storybook/react";
+import { Page } from "playwright";
+
 const { getStoryContext } = require("@storybook/test-runner");
 const { MINIMAL_VIEWPORTS } = require("@storybook/addon-viewport");
 
@@ -10,7 +13,7 @@ module.exports = {
    * @param page
    * @param story
    */
-  async preRender(page, story) {
+  async preRender(page: Page, story: StoryFn) {
     const context = await getStoryContext(page, story);
     const vpName =
       context.parameters?.viewport?.defaultViewport ?? "responsive";

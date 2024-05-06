@@ -5,7 +5,7 @@ import { Page } from "../layout";
 import { Body, P } from "../typography";
 import { Card } from "./card";
 
-const meta = {
+const meta: Meta<typeof Card> = {
   title: "Building Blocks/Card",
   component: Card,
   decorators: [
@@ -18,7 +18,7 @@ const meta = {
   parameters: {
     layout: "fullscreen",
   },
-} satisfies Meta<typeof Card>;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;

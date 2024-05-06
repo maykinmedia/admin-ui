@@ -2,10 +2,10 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 import { AttributeGrid } from "./attributegrid";
 
-const meta = {
+const meta: Meta<typeof AttributeGrid> = {
   title: "Data/AttributeGrid",
   component: AttributeGrid,
-} satisfies Meta<typeof AttributeGrid>;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;

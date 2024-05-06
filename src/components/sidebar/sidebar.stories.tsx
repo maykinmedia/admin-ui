@@ -6,7 +6,7 @@ import { Page } from "../layout";
 import { Toolbar } from "../toolbar";
 import { Sidebar } from "./sidebar";
 
-const meta = {
+const meta: Meta<typeof Sidebar> = {
   title: "Building Blocks/Sidebar",
   component: Sidebar,
   decorators: [
@@ -16,7 +16,7 @@ const meta = {
       </Page>
     ),
   ],
-} satisfies Meta<typeof Sidebar>;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;

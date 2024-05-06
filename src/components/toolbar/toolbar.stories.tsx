@@ -7,7 +7,7 @@ import { Page } from "../layout";
 import { A } from "../typography";
 import { Toolbar } from "./toolbar";
 
-const meta = {
+const meta: Meta<typeof Toolbar> = {
   title: "Controls/Toolbar",
   component: Toolbar,
   decorators: [
@@ -17,7 +17,7 @@ const meta = {
       </Page>
     ),
   ],
-} satisfies Meta<typeof Toolbar>;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;

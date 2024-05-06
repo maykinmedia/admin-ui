@@ -6,10 +6,10 @@ import { Base } from "./base";
 import { BodyBase } from "./bodyBase";
 import { CardBase } from "./cardBase";
 
-const meta = {
+const meta: Meta<typeof Base> = {
   title: "Templates/Base",
   component: Base,
-} satisfies Meta<typeof Base>;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;

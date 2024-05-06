@@ -5,7 +5,7 @@ import { Column } from "../column";
 import { Page } from "../page";
 import { Breakout } from "./breakout";
 
-const meta = {
+const meta: Meta<typeof Breakout> = {
   title: "Layout/Breakout",
   component: Breakout,
   parameters: {
@@ -19,7 +19,7 @@ const meta = {
       </Breakout>
     </Page>
   ),
-} satisfies Meta<typeof Breakout>;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;

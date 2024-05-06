@@ -2,10 +2,10 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 import { Value } from "./value";
 
-const meta = {
+const meta: Meta<typeof Value> = {
   title: "Data/Value",
   component: Value,
-} satisfies Meta<typeof Value>;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;
