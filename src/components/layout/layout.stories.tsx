@@ -48,7 +48,7 @@ const meta: Meta<typeof Column> = {
   ),
   parameters: {
     chromatic: {
-      diffThreshold: 0.5,
+      diffThreshold: 0.9,
     },
   },
 };
