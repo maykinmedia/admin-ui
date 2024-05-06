@@ -5,7 +5,7 @@ import { ConfigContext } from "../../../contexts";
 import { Attribute, AttributeData } from "../../../lib/data/attributedata";
 import { FormField } from "../../../lib/form/typeguards";
 import { getValueFromFormData, serializeForm } from "../../../lib/form/utils";
-import { getErrorFromErrors } from "../../../lib/form/validation";
+import { Validator, getErrorFromErrors } from "../../../lib/form/validation";
 import { forceArray } from "../../../lib/format/array";
 import { ucFirst } from "../../../lib/format/string";
 import { useIntl } from "../../../lib/i18n/useIntl";
@@ -58,11 +58,15 @@ export type FormProps = Omit<React.ComponentProps<"form">, "onChange"> & {
   /** A validation function. */
   validate?: (
     values: AttributeData,
-    fields: FormProps["fields"],
+    fields: FormField[],
+    validators?: Validator[],
   ) => FormProps["errors"] | void;
 
   /** Whether to run validation on every change. */
   validateOnChange?: boolean;
+
+  /** If set, use this custom set of `Validator`s. */
+  validators?: Validator[];
 
   /** Gets passed to `fields` if they don't specify their own handler. */
   onChange?: React.ChangeEventHandler<HTMLInputElement | HTMLSelectElement>;
@@ -91,6 +95,7 @@ export const Form: React.FC<FormProps> = ({
   useTypedResults = false,
   validate,
   validateOnChange = false,
+  validators,
   values,
   ...props
 }) => {
@@ -118,7 +123,7 @@ export const Form: React.FC<FormProps> = ({
    */
   useEffect(() => {
     if (validateOnChange && validate) {
-      const errors = validate(valuesState as AttributeData, fields);
+      const errors = validate(valuesState as AttributeData, fields, validators);
       setErrorsState(errors || {});
     }
   }, [valuesState]);
@@ -149,7 +154,7 @@ export const Form: React.FC<FormProps> = ({
     event.preventDefault();
 
     if (validate) {
-      const errors = validate(valuesState as AttributeData, fields);
+      const errors = validate(valuesState as AttributeData, fields, validators);
       setErrorsState(errors || {});
 
       if (errors && Object.keys(errors).length) {

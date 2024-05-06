@@ -1,6 +1,7 @@
+import { AttributeData } from "../data";
 import { formatMessage } from "../i18n";
 import { FormField } from "./typeguards";
-import { SerializedFormData, parseFieldName } from "./utils";
+import { parseFieldName } from "./utils";
 
 export type Validator = (
   value: unknown,
@@ -38,7 +39,7 @@ export const validateRequired: Validator = (
  * @param validators
  */
 export const validateForm = (
-  values: SerializedFormData,
+  values: AttributeData,
   fields: FormField[],
   validators: Validator[] = [validateRequired],
 ) => {
