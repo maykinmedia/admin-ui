@@ -6,7 +6,7 @@ import { AttributeData } from "../../../lib/data/attributedata";
 import { Page } from "../../layout";
 import { DataGrid } from "./datagrid";
 
-const meta = {
+const meta: Meta<typeof DataGrid> = {
   title: "Data/DataGrid",
   component: DataGrid,
   decorators: [
@@ -19,7 +19,7 @@ const meta = {
   parameters: {
     actions: [], // Prevent auto mocked callback functions.
   },
-} satisfies Meta<typeof DataGrid>;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;

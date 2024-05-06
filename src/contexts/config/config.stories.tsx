@@ -4,11 +4,11 @@ import * as React from "react";
 import { Login } from "../../templates";
 import { ConfigContext, ConfigContextType } from "./config";
 
-const meta = {
+const meta: Meta<typeof ConfigContext> = {
   title: "Contexts/ConfigContext",
   // @ts-expect-error - not a component but a context
   component: ConfigContext,
-} satisfies Meta<typeof ConfigContext>;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;

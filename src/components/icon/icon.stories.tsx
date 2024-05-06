@@ -5,7 +5,7 @@ import { Button, ButtonLink } from "../button";
 import { Body, H1, H2, H3, P } from "../typography";
 import { Outline, Solid } from "./icon";
 
-const meta = {
+const meta: Meta = {
   title: "Icon/Icon",
   parameters: {
     docs: {
@@ -21,7 +21,7 @@ const meta = {
       },
     },
   },
-} satisfies Meta;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;

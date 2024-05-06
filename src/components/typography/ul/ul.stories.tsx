@@ -5,10 +5,10 @@ import { A } from "../a";
 import { Li } from "../li";
 import { Ul } from "./ul";
 
-const meta = {
+const meta: Meta<typeof Ul> = {
   title: "Typography/Ul",
   component: Ul,
-} satisfies Meta<typeof Ul>;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;

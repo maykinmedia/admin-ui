@@ -5,7 +5,7 @@ import { Container } from "../container";
 import { Grid } from "../grid";
 import { Column } from "./column";
 
-const meta = {
+const meta: Meta<typeof Column> = {
   title: "Layout/Column",
   component: Column,
   parameters: {
@@ -29,7 +29,7 @@ const meta = {
       </Grid>
     </Container>
   ),
-} satisfies Meta<typeof Column>;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;

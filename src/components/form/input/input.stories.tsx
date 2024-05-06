@@ -9,7 +9,7 @@ import { Page } from "../../layout";
 import { FORM_TEST_DECORATOR } from "../.storybook/decorators";
 import { Input } from "./input";
 
-const meta = {
+const meta: Meta<typeof Input> = {
   title: "Form/Input",
   component: Input,
   play: async ({ canvasElement, args }) => {
@@ -61,7 +61,7 @@ const meta = {
       await expect(data.input).toBe(testValue);
     }
   },
-} satisfies Meta<typeof Input>;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;

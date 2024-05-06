@@ -6,7 +6,7 @@ import { allModes } from "../../../../.storybook/modes";
 import { Page } from "../../layout";
 import { Paginator } from "./paginator";
 
-const meta = {
+const meta: Meta<typeof Paginator> = {
   title: "Data/Paginator",
   component: Paginator,
   argTypes: {
@@ -20,7 +20,7 @@ const meta = {
       </Page>
     ),
   ],
-} satisfies Meta<typeof Paginator>;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;

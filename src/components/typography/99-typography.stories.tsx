@@ -6,7 +6,7 @@ import { H2 } from "./h2";
 import { H3 } from "./h3";
 import { P } from "./p";
 
-const meta = {
+const meta: Meta = {
   title: "Typography/Reference",
   render: (args) => (
     <>
@@ -17,7 +17,7 @@ const meta = {
       <P size="xs">{args.children}</P>
     </>
   ),
-} satisfies Meta;
+};
 
 export default meta;
 

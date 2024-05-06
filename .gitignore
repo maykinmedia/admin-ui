@@ -1,6 +1,7 @@
 .DS_STORE
 .idea
 build-storybook.log
+doctor-storybook.log
 dist
 node_modules
 maykin-ui-*.*.*.tgz

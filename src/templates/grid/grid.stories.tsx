@@ -7,11 +7,11 @@ import { AttributeData } from "../../lib";
 import { List } from "../list";
 import { Grid } from "./grid";
 
-const meta = {
+const meta: Meta<typeof List> = {
   title: "Templates/Grid",
   component: Grid,
   argTypes: { onClick: { action: "onClick" } },
-} satisfies Meta<typeof List>;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;

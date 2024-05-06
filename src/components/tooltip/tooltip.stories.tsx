@@ -5,7 +5,7 @@ import { Button } from "../button";
 import { Outline } from "../icon";
 import { Tooltip } from "./tooltip";
 
-const meta = {
+const meta: Meta<typeof Tooltip> = {
   title: "Controls/Tooltip",
   component: Tooltip,
   decorators: [
@@ -15,7 +15,7 @@ const meta = {
       </div>
     ),
   ],
-} satisfies Meta<typeof Tooltip>;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;

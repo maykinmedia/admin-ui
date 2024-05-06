@@ -4,11 +4,11 @@ import * as React from "react";
 import { Badge, Outline } from "../../components";
 import { Detail } from "./detail";
 
-const meta = {
+const meta: Meta<typeof Detail> = {
   title: "Templates/Detail",
   component: Detail,
   argTypes: { onSubmit: { action: "onSubmit" } },
-} satisfies Meta<typeof Detail>;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;

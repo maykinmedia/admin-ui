@@ -6,10 +6,10 @@ import * as React from "react";
 import { validateForm } from "../../../lib";
 import { Form } from "./form";
 
-const meta = {
+const meta: Meta<typeof Form> = {
   title: "Form/Form",
   component: Form,
-} satisfies Meta<typeof Form>;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;

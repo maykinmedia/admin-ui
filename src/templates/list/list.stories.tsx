@@ -6,11 +6,11 @@ import { Badge, Outline } from "../../components";
 import { AttributeData } from "../../lib/data/attributedata";
 import { List } from "./list";
 
-const meta = {
+const meta: Meta<typeof List> = {
   title: "Templates/List",
   component: List,
   argTypes: { onSubmit: { action: "onSubmit" } },
-} satisfies Meta<typeof List>;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;

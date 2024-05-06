@@ -5,11 +5,11 @@ import { Badge, Outline, P } from "../../components";
 import { BodyBase } from "../../templates";
 import { NavigationContext } from "./navigation";
 
-const meta = {
+const meta: Meta<typeof NavigationContext> = {
   title: "Contexts/NavigationContext",
   // @ts-expect-error - not a component but a context
   component: NavigationContext,
-} satisfies Meta<typeof NavigationContext>;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;

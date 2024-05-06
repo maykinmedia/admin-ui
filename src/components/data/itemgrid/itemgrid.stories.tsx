@@ -6,7 +6,7 @@ import { AttributeData } from "../../../lib";
 import { Page } from "../../layout";
 import { ItemGrid } from "./itemgrid";
 
-const meta = {
+const meta: Meta<typeof ItemGrid> = {
   title: "Data/Itemgrid",
   component: ItemGrid,
   decorators: [
@@ -16,7 +16,7 @@ const meta = {
       </Page>
     ),
   ],
-} satisfies Meta<typeof ItemGrid>;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;

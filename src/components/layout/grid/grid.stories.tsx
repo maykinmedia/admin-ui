@@ -4,7 +4,7 @@ import * as React from "react";
 import { Container } from "../container";
 import { Grid } from "./grid";
 
-const meta = {
+const meta: Meta<typeof Grid> = {
   title: "Layout/Grid",
   component: Grid,
   parameters: {
@@ -15,7 +15,7 @@ const meta = {
       <Grid {...args}></Grid>
     </Container>
   ),
-} satisfies Meta<typeof Grid>;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;
