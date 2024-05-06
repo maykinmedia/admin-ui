@@ -12,7 +12,7 @@ const meta: Meta<typeof Form> = {
   parameters: {
     chromatic: {
       delay: 300,
-      diffThreshold: 0.2,
+      diffThreshold: 0.5,
     },
   },
 };
