@@ -9,6 +9,12 @@ import { Form } from "./form";
 const meta: Meta<typeof Form> = {
   title: "Form/Form",
   component: Form,
+  parameters: {
+    chromatic: {
+      delay: 300,
+      diffThreshold: 0.2,
+    },
+  },
 };
 
 export default meta;
