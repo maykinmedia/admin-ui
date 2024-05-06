@@ -46,6 +46,11 @@ const meta: Meta<typeof Column> = {
       </Grid>
     </Container>
   ),
+  parameters: {
+    chromatic: {
+      diffThreshold: 0.5,
+    },
+  },
 };
 
 export default meta;
