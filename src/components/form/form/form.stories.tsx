@@ -184,7 +184,7 @@ export const UsageWithFormik: Story = {
         initialValues={{}}
         onSubmit={(data) => console.log(data)}
         validate={(values) =>
-          args.validate && args.validate(values, args.fields)
+          args.validate && args.validate(values, args.fields || [])
         }
         validateOnChange={args.validateOnChange}
       >
