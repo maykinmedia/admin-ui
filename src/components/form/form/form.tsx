@@ -15,7 +15,10 @@ import { ErrorMessage } from "../errormessage";
 import { FormControl } from "../formcontrol";
 import "./form.scss";
 
-export type FormProps = Omit<React.ComponentProps<"form">, "onChange"> & {
+export type FormProps = Omit<
+  React.ComponentProps<"form">,
+  "onChange" | "onSubmit"
+> & {
   /** If set, show `valuesState`. */
   debug?: boolean;
 
