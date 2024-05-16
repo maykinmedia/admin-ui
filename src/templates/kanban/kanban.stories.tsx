@@ -4,19 +4,28 @@ import { useEffect, useState } from "react";
 
 import { Badge, Outline } from "../../components";
 import { AttributeData } from "../../lib";
-import { Kanban } from "./kanban";
+import { KanbanTemplate } from "./kanban";
 
-const meta: Meta<typeof Kanban> = {
+const meta: Meta<typeof KanbanTemplate> = {
   title: "Templates/Kanban",
-  component: Kanban,
+  component: KanbanTemplate,
   argTypes: { onClick: { action: "onClick" } },
 };
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const KanbanTemplate: Story = {
+export const kanbanTemplate: Story = {
   args: {
+    kanbanProps: {
+      title: "The quick brown fox jumps over the lazy dog.",
+      fieldsets: [
+        ["Todo", { fields: ["title"], title: "title" }],
+        ["In Progress", { fields: ["title"], title: "title" }],
+        ["In Review", { fields: ["title"], title: "title" }],
+        ["Done", { fields: ["title"], title: "title" }],
+      ],
+    },
     breadcrumbItems: [
       { label: "Home", href: "/" },
       { label: "Templates", href: "#" },
@@ -27,13 +36,6 @@ export const KanbanTemplate: Story = {
       "spacer",
       { children: <Outline.CogIcon />, title: "Instellingen" },
       { children: <Outline.ArrowRightOnRectangleIcon />, title: "Uitloggen" },
-    ],
-    title: "The quick brown fox jumps over the lazy dog.",
-    fieldsets: [
-      ["Todo", { fields: ["title"], title: "title" }],
-      ["In Progress", { fields: ["title"], title: "title" }],
-      ["In Review", { fields: ["title"], title: "title" }],
-      ["Done", { fields: ["title"], title: "title" }],
     ],
   },
   render: (args) => {
@@ -60,25 +62,31 @@ export const KanbanTemplate: Story = {
     const odd = objectList.filter((o, index) => index % 2 !== 0);
 
     return "groupBy" in args ? (
-      <Kanban
-        onObjectChange={() => console.log("foo")}
-        objectList={objectList}
+      <KanbanTemplate
         {...args}
+        kanbanProps={{
+          ...args.kanbanProps,
+          onObjectChange: () => console.log("foo"),
+          objectList: objectList,
+        }}
       />
     ) : (
-      <Kanban
-        onObjectChange={() => console.log("bar")}
-        objectLists={[even, odd, [], []]}
+      <KanbanTemplate
         {...args}
+        kanbanProps={{
+          ...args.kanbanProps,
+          onObjectChange: () => console.log("foo"),
+          objectLists: [even, odd, [], []],
+        }}
       />
     );
   },
 };
 
-export const WithSidebar = {
-  ...KanbanTemplate,
+export const WithSidebar: Story = {
+  ...kanbanTemplate,
   args: {
-    ...KanbanTemplate.args,
+    ...kanbanTemplate.args,
     sidebarItems: [
       {
         active: true,
@@ -125,7 +133,7 @@ export const WithSidebar = {
   },
 };
 
-export const WithSecondaryNavigation = {
+export const WithSecondaryNavigation: Story = {
   ...WithSidebar,
   args: {
     ...WithSidebar.args,
@@ -158,25 +166,26 @@ export const WithSecondaryNavigation = {
   },
 };
 
-export const WithCustomPreview = {
+export const WithCustomPreview: Story = {
   ...WithSecondaryNavigation,
   args: {
     ...WithSecondaryNavigation.args,
-    renderPreview: (attributeData) => (
-      <img alt={attributeData.title} src={attributeData.thumbnailUrl} />
-    ),
+    kanbanProps: {
+      ...WithSecondaryNavigation.args.kanbanProps,
+      renderPreview: (attributeData) => (
+        <img alt={attributeData.title} src={attributeData.thumbnailUrl} />
+      ),
+    },
   },
 };
 
-export const Draggable = {
+export const Draggable: Story = {
   ...WithSecondaryNavigation,
   args: {
     ...WithSecondaryNavigation.args,
-    draggable: true,
-  },
-  argTypes: {
-    onFieldsetsChange: { action: "onFieldsetsChange" },
-    onObjectListsChange: { action: "onObjectListsChange" },
-    onObjectChange: { action: "onObjectChange" },
+    kanbanProps: {
+      ...WithSecondaryNavigation.args.kanbanProps,
+      draggable: true,
+    },
   },
 };

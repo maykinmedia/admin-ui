@@ -42,7 +42,7 @@ export type GroupedAttributeDataConfigurationProps =
  */
 export type GroupedAttributeDataFieldsetProps = {
   /** The field to sort by, if `undefined`: `fieldsets` and `objectLists` are used for manual segmentation. */
-  groupBy?: undefined;
+  groupBy?: never;
 
   /** The fieldsets to render. */
   fieldsets: FieldSet[];
@@ -50,8 +50,8 @@ export type GroupedAttributeDataFieldsetProps = {
   /** The object lists to show, each index should match `fieldsets` index. */
   objectLists: AttributeData[][];
 
-  fieldset?: undefined;
-  objectList?: undefined;
+  fieldset?: never;
+  objectList?: never;
 };
 
 export type GroupedAttributeDataGroupByProps = {
@@ -68,8 +68,8 @@ export type GroupedAttributeDataGroupByProps = {
   /** The objects to show. */
   objectList: AttributeData[];
 
-  fieldsets?: undefined;
-  objectLists?: undefined;
+  fieldsets?: never;
+  objectLists?: never;
 };
 
 /**
