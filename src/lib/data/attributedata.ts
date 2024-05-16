@@ -52,6 +52,12 @@ export type TypedField<T = Attribute> = {
    */
   filterLookup?: string;
 
+  /**
+   * The "lookup" (dot separated) to use for this field while filtering (e.g.
+   * "._expand.zaaktype.omschrijving").
+   */
+  valueLookup?: string;
+
   /** Used by DataGrid when editable=true. */
   options?: ChoiceFieldProps["options"];
 };

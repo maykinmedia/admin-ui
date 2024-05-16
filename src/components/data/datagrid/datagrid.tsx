@@ -2,6 +2,7 @@ import clsx from "clsx";
 import React, { useEffect, useId, useRef, useState } from "react";
 
 import {
+  Attribute,
   DEFAULT_URL_FIELDS,
   Field,
   SerializedFormData,
@@ -17,6 +18,7 @@ import {
   AttributeData,
   sortAttributeDataArray,
 } from "../../../lib/data/attributedata";
+import { getByDotSeparatedPath } from "../../../lib/data/getByDotSeparatedPath";
 import { field2Caption, isLink } from "../../../lib/format/string";
 import { BadgeProps } from "../../badge";
 import { BoolProps } from "../../boolean";
@@ -1004,7 +1006,10 @@ export const DataGridContentCell: React.FC<DataGridContentCellProps> = ({
   const fieldIndex = renderableFields.findIndex((f) => f.name === field.name);
   const urlField = urlFields.find((f) => rowData[f]);
   const rowUrl = urlField ? rowData[urlField] : null;
-  const value = rowData[field.name];
+  const value = getByDotSeparatedPath<Attribute>(
+    rowData,
+    field.valueLookup || field.name,
+  );
 
   const isImplicitLink = rowUrl && fieldIndex === 0 && !isLink(String(value));
   const link = isImplicitLink ? String(rowUrl) : "";
