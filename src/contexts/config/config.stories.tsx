@@ -16,16 +16,18 @@ type Story = StoryObj<typeof meta>;
 const BASE_RENDER = (args: ConfigContextType) => (
   <ConfigContext.Provider value={args}>
     <LoginTemplate
-      fields={[
-        {
-          label: "Gebruikersnaam",
-          name: "username",
-        },
-        {
-          label: "Wachtwoord",
-          name: "password",
-        },
-      ]}
+      formProps={{
+        fields: [
+          {
+            label: "Gebruikersnaam",
+            name: "username",
+          },
+          {
+            label: "Wachtwoord",
+            name: "password",
+          },
+        ],
+      }}
     />
   </ConfigContext.Provider>
 );
