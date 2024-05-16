@@ -681,7 +681,7 @@ export const DataGridHeading: React.FC<DataGridHeadingProps> = ({
             const placeholder = ucFirst(field.name);
 
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            const { options, ...context } = field;
+            const { options, valueTransform, ...context } = field;
 
             const _labelFilterField = labelFilterField
               ? formatMessage(labelFilterField, context)
@@ -1006,10 +1006,11 @@ export const DataGridContentCell: React.FC<DataGridContentCellProps> = ({
   const fieldIndex = renderableFields.findIndex((f) => f.name === field.name);
   const urlField = urlFields.find((f) => rowData[f]);
   const rowUrl = urlField ? rowData[urlField] : null;
-  const value = getByDotSeparatedPath<Attribute>(
+  const resolvedValue = getByDotSeparatedPath<Attribute>(
     rowData,
     field.valueLookup || field.name,
   );
+  const value = field.valueTransform?.(rowData) || resolvedValue;
 
   const isImplicitLink = rowUrl && fieldIndex === 0 && !isLink(String(value));
   const link = isImplicitLink ? String(rowUrl) : "";
