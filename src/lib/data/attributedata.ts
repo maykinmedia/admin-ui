@@ -46,6 +46,12 @@ export type TypedField<T = Attribute> = {
   /** Whether the field should be filterable. */
   filterable?: boolean;
 
+  /**
+   * The "lookup" (query parameter) to use for this field while filtering (e.g.
+   * "omschrijving__icontains").
+   */
+  filterLookup?: string;
+
   /** Used by DataGrid when editable=true. */
   options?: ChoiceFieldProps["options"];
 };
