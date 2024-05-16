@@ -58,6 +58,12 @@ export type TypedField<T = Attribute> = {
    */
   valueLookup?: string;
 
+  /**
+   * A function transforming `AttributeData` to an attribute.
+   * This can be used to computed values dynamically.
+   */
+  valueTransform?: (value: AttributeData) => Attribute;
+
   /** Used by DataGrid when editable=true. */
   options?: ChoiceFieldProps["options"];
 };
