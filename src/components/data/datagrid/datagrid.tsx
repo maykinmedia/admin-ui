@@ -703,27 +703,31 @@ export const DataGridHeading: React.FC<DataGridHeadingProps> = ({
                   "mykn-datagrid__cell--filter",
                 )}
               >
-                <FormControl
-                  aria-label={_labelFilterField}
-                  icon={!field.options && <Outline.MagnifyingGlassIcon />}
-                  form={`${id}-filter-form`}
-                  name={field.filterLookup || field.name}
-                  options={field.options}
-                  min={
-                    !field.options && field.type === "number" ? 0 : undefined
-                  }
-                  placeholder={placeholder}
-                  type={field.type}
-                  onChange={(
-                    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
-                  ) => {
-                    e.preventDefault();
-                    const data = serializeForm(
-                      e.target.form as HTMLFormElement,
-                    );
-                    onFilter(data as AttributeData);
-                  }}
-                />
+                {field.filterable !== false && (
+                  <FormControl
+                    aria-label={_labelFilterField}
+                    icon={!field.options && <Outline.MagnifyingGlassIcon />}
+                    form={`${id}-filter-form`}
+                    name={field.filterLookup || field.name}
+                    options={field.options}
+                    min={
+                      !field.options && field.type === "number" ? 0 : undefined
+                    }
+                    placeholder={placeholder}
+                    type={field.type}
+                    onChange={(
+                      e: React.ChangeEvent<
+                        HTMLInputElement | HTMLSelectElement
+                      >,
+                    ) => {
+                      e.preventDefault();
+                      const data = serializeForm(
+                        e.target.form as HTMLFormElement,
+                      );
+                      onFilter(data as AttributeData);
+                    }}
+                  />
+                )}
               </th>
             );
           })}
