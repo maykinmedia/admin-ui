@@ -52,6 +52,9 @@ export type TypedField<T = Attribute> = {
    */
   filterLookup?: string;
 
+  /** The value for this field's filter. */
+  filterValue?: string | number;
+
   /**
    * The "lookup" (dot separated) to use for this field while filtering (e.g.
    * "._expand.zaaktype.omschrijving").
