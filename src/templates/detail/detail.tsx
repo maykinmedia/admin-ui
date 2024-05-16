@@ -12,11 +12,8 @@ import { slugify } from "../../lib";
 import { CardBase } from "../base";
 import { BodyBaseProps } from "../base/bodyBase";
 
-export type DetailProps = BodyBaseProps & {
-  object: AttributeGridProps["object"];
-  attributeGridProps?: Partial<AttributeGridProps>;
-  fieldsets: AttributeGridProps["fieldsets"];
-  title?: React.ReactNode;
+export type DetailTemplateProps = BodyBaseProps & {
+  attributeGridProps: AttributeGridProps;
   inlines?: DataGridProps[];
 };
 
@@ -24,24 +21,15 @@ export type DetailProps = BodyBaseProps & {
  * Detail template
  * @constructor
  */
-export const Detail: React.FC<DetailProps> = ({
+export const DetailTemplate: React.FC<DetailTemplateProps> = ({
   children,
   attributeGridProps,
-  object,
-  fieldsets,
-  title,
   inlines = [],
   ...props
 }) => (
   <CardBase {...props}>
     {children}
-    <AttributeGrid
-      generateTitleIds={true}
-      {...attributeGridProps}
-      object={object}
-      fieldsets={fieldsets}
-      title={title}
-    />
+    <AttributeGrid generateTitleIds={true} {...attributeGridProps} />
     {inlines.map(({ title, ...props }, index) => {
       return (
         <Body key={typeof title === "string" ? title : index}>

@@ -2,46 +2,48 @@ import type { Meta, StoryObj } from "@storybook/react";
 import * as React from "react";
 
 import { Badge, Outline } from "../../components";
-import { Detail } from "./detail";
+import { DetailTemplate } from "./detail";
 
-const meta: Meta<typeof Detail> = {
+const meta: Meta<typeof DetailTemplate> = {
   title: "Templates/Detail",
-  component: Detail,
+  component: DetailTemplate,
   argTypes: { onSubmit: { action: "onSubmit" } },
 };
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const DetailTemplate: Story = {
+export const detailTemplate: Story = {
   args: {
-    pad: true,
-    title: "Detailweergave",
-    fieldsets: [
-      [
-        "Statussen",
-        {
-          fields: [
-            "uitgevoerd afgerond",
-            "voorstel voor besluitvorming opgesteld",
-          ],
-          // span: 6,
-        },
+    attributeGridProps: {
+      pad: true,
+      title: "Detailweergave",
+      fieldsets: [
+        [
+          "Statussen",
+          {
+            fields: [
+              "uitgevoerd afgerond",
+              "voorstel voor besluitvorming opgesteld",
+            ],
+            // span: 6,
+          },
+        ],
+        ["Rollen", { fields: ["klantcontacter", "behandelaar"] }],
+        ["Eigenschappen", { fields: ["einde", "begin", "datum vergadering"] }],
+        ["Resultaten", { fields: ["goedgekeurd", "afgekeurd"] }],
       ],
-      ["Rollen", { fields: ["klantcontacter", "behandelaar"] }],
-      ["Eigenschappen", { fields: ["einde", "begin", "datum vergadering"] }],
-      ["Resultaten", { fields: ["goedgekeurd", "afgekeurd"] }],
-    ],
-    object: {
-      afgekeurd: "Goedgekeurd",
-      begin: "Erfpacht aanvraag wijzigen (2023-10-28)",
-      behandelaar: "Initiator",
-      "datum vergadering": "BInG aanvraag behandelen (2023-10-28)",
-      einde: "Erfpacht aanvraag wijzigen (2023-10-28)",
-      goedgekeurd: "Ingetrokken",
-      klantcontacter: "Beslisser",
-      "uitgevoerd afgerond": "Afgehandeld",
-      "voorstel voor besluitvorming opgesteld": "In behandeling genomen",
+      object: {
+        afgekeurd: "Goedgekeurd",
+        begin: "Erfpacht aanvraag wijzigen (2023-10-28)",
+        behandelaar: "Initiator",
+        "datum vergadering": "BInG aanvraag behandelen (2023-10-28)",
+        einde: "Erfpacht aanvraag wijzigen (2023-10-28)",
+        goedgekeurd: "Ingetrokken",
+        klantcontacter: "Beslisser",
+        "uitgevoerd afgerond": "Afgehandeld",
+        "voorstel voor besluitvorming opgesteld": "In behandeling genomen",
+      },
     },
     breadcrumbItems: [
       { label: "Home", href: "/" },
@@ -58,9 +60,9 @@ export const DetailTemplate: Story = {
 };
 
 export const WithSidebar = {
-  ...DetailTemplate,
+  ...detailTemplate,
   args: {
-    ...DetailTemplate.args,
+    ...detailTemplate.args,
     sidebarItems: [
       {
         active: true,
