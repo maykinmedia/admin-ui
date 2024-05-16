@@ -4,9 +4,9 @@ import { Body, Card, Form, FormProps, Hr, Logo } from "../../components";
 import { ConfigContext } from "../../contexts";
 import { ucFirst } from "../../lib/format/string";
 import { useIntl } from "../../lib/i18n/useIntl";
-import { Base, BaseProps } from "../base";
+import { BaseTemplate, BaseTemplateProps } from "../base";
 
-export type LoginTemplateProps = BaseProps & {
+export type LoginTemplateProps = BaseTemplateProps & {
   fields?: FormProps["fields"];
 
   /** Form props. */
@@ -41,7 +41,7 @@ export const LoginTemplate: React.FC<LoginTemplateProps> = ({
       });
 
   return (
-    <Base
+    <BaseTemplate
       columnProps={{ start: 5, span: 4 }}
       pageProps={{ valign: "middle" }}
       container={true}
@@ -54,6 +54,6 @@ export const LoginTemplate: React.FC<LoginTemplateProps> = ({
           <Form labelSubmit={ucFirst(_labelLogin)} {...formProps} />
         </Body>
       </Card>
-    </Base>
+    </BaseTemplate>
   );
 };

@@ -3,10 +3,10 @@ import React from "react";
 import { Kanban as KanbanComponent } from "../../components";
 import { AttributeData, FieldSet } from "../../lib";
 import { GroupedAttributeDataConfigurationProps } from "../../lib/data/groupedattributedata";
-import { CardBase } from "../base";
-import { BodyBaseProps } from "../base/bodyBase";
+import { CardBaseTemplate } from "../base";
+import { BodyBaseTemplateProps } from "../base/bodyBase";
 
-export type KanbanProps = BodyBaseProps & {
+export type KanbanProps = BodyBaseTemplateProps & {
   /** If set, items are `draggable` allowing the user to rearrange them (across) columns). */
   draggable?: boolean;
 
@@ -70,7 +70,7 @@ export const Kanban: React.FC<KanbanProps> = ({
   onObjectChange,
   ...props
 }) => (
-  <CardBase {...props}>
+  <CardBaseTemplate {...props}>
     {children}
     {groupBy ? (
       <KanbanComponent
@@ -106,5 +106,5 @@ export const Kanban: React.FC<KanbanProps> = ({
         {children}
       </KanbanComponent>
     )}
-  </CardBase>
+  </CardBaseTemplate>
 );

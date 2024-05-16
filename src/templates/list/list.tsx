@@ -1,10 +1,10 @@
 import React from "react";
 
 import { DataGrid, DataGridProps, ToolbarItem } from "../../components";
-import { CardBase } from "../base";
-import { BodyBaseProps } from "../base/bodyBase";
+import { CardBaseTemplate } from "../base";
+import { BodyBaseTemplateProps } from "../base/bodyBase";
 
-export type ListTemplateProps = BodyBaseProps & {
+export type ListTemplateProps = BodyBaseTemplateProps & {
   dataGridProps: DataGridProps;
   sidebarItems?: ToolbarItem[];
 };
@@ -18,8 +18,8 @@ export const ListTemplate: React.FC<ListTemplateProps> = ({
   dataGridProps,
   ...props
 }) => (
-  <CardBase {...props}>
+  <CardBaseTemplate {...props}>
     {children}
     <DataGrid {...dataGridProps} />
-  </CardBase>
+  </CardBaseTemplate>
 );

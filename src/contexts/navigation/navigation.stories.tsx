@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import * as React from "react";
 
 import { Badge, Outline, P } from "../../components";
-import { BodyBase } from "../../templates";
+import { BodyBaseTemplate } from "../../templates";
 import { NavigationContext } from "./navigation";
 
 const meta: Meta<typeof NavigationContext> = {
@@ -103,9 +103,9 @@ export const Navigation: Story = {
         ],
       }}
     >
-      <BodyBase>
+      <BodyBaseTemplate>
         <P>The quick brown fox jumps over the lazy dog.</P>
-      </BodyBase>
+      </BodyBaseTemplate>
     </NavigationContext.Provider>
   ),
 };
