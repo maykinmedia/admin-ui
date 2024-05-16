@@ -242,13 +242,17 @@ export const PaginatorNav: React.FC<PaginatorNavProps> = ({
   const startRange = Math.min(maxOffset, previousPage);
   const endRange = Math.min(maxOffset, pageCount - currentPage);
 
-  const startPages = new Array(startRange)
-    .fill(0)
-    .map((_, i) => currentPage - (i + 1))
-    .reverse();
-  const endPages = new Array(endRange)
-    .fill(0)
-    .map((_, i) => currentPage + i + 1);
+  const startPages =
+    startRange > 0
+      ? new Array(startRange)
+          .fill(0)
+          .map((_, i) => currentPage - (i + 1))
+          .reverse()
+      : [];
+  const endPages =
+    endRange > 0
+      ? new Array(endRange).fill(0).map((_, i) => currentPage + i + 1)
+      : [];
 
   const pages = [...startPages, currentPage, ...endPages];
 
