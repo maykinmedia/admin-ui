@@ -6,7 +6,7 @@ import { ucFirst } from "../../lib/format/string";
 import { useIntl } from "../../lib/i18n/useIntl";
 import { Base, BaseProps } from "../base";
 
-export type LoginProps = BaseProps & {
+export type LoginTemplateProps = BaseProps & {
   fields?: FormProps["fields"];
 
   /** Form props. */
@@ -23,8 +23,7 @@ export type LoginProps = BaseProps & {
  * Login template
  * @constructor
  */
-export const Login: React.FC<LoginProps> = ({
-  fields,
+export const LoginTemplate: React.FC<LoginTemplateProps> = ({
   formProps,
   labelLogin,
   slotLogo,
@@ -45,17 +44,14 @@ export const Login: React.FC<LoginProps> = ({
     <Base
       columnProps={{ start: 5, span: 4 }}
       pageProps={{ valign: "middle" }}
+      container={true}
       {...props}
     >
       <Card>
         <Body>
           {slotLogo || CustomLogo || <Logo />}
           <Hr />
-          <Form
-            fields={fields}
-            labelSubmit={ucFirst(_labelLogin)}
-            {...formProps}
-          />
+          <Form labelSubmit={ucFirst(_labelLogin)} {...formProps} />
         </Body>
       </Card>
     </Base>

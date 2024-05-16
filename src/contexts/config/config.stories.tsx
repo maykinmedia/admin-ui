@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import * as React from "react";
 
-import { Login } from "../../templates";
+import { LoginTemplate } from "../../templates";
 import { ConfigContext, ConfigContextType } from "./config";
 
 const meta: Meta<typeof ConfigContext> = {
@@ -15,7 +15,7 @@ type Story = StoryObj<typeof meta>;
 
 const BASE_RENDER = (args: ConfigContextType) => (
   <ConfigContext.Provider value={args}>
-    <Login
+    <LoginTemplate
       fields={[
         {
           label: "Gebruikersnaam",
