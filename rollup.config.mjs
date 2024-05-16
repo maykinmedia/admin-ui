@@ -10,7 +10,7 @@ import json from "@rollup/plugin-json";
 
 export default [
   {
-    external: ["@floating-ui/react", "@heroicons/react/24/outline", "@heroicons/react/24/solid", "clsx"],
+    external: ["react", "react-dom", "@floating-ui/react", "@heroicons/react/24/outline", "@heroicons/react/24/solid", "clsx"],
     input: "src/index.ts",
     output: [{
       assetFileNames: "[name][extname]",
