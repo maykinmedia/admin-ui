@@ -716,6 +716,7 @@ export const DataGridHeading: React.FC<DataGridHeadingProps> = ({
                     }
                     placeholder={placeholder}
                     type={field.type}
+                    value={field.filterValue}
                     onChange={(
                       e: React.ChangeEvent<
                         HTMLInputElement | HTMLSelectElement
