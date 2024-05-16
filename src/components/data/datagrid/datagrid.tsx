@@ -347,7 +347,8 @@ export const DataGrid: React.FC<DataGridProps> = ({
   // Run assertions for aliased fields.
   if (showPaginator) {
     console.assert(
-      count || paginatorProps?.count,
+      typeof count !== "undefined" ||
+        typeof paginatorProps?.count !== "undefined",
       "Either `count` or `paginatorProps.count` should be set when `showPaginator` is `true`.",
     );
 
