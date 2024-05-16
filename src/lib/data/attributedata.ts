@@ -148,17 +148,6 @@ export const attributeDataByFields = (
   );
 
 /**
- * Converts `Array<Field , TypedField>` to `Field[]`.
- * @param optionallyTypedFields
- */
-export const fieldsByTypedFields = (
-  optionallyTypedFields: Array<Field | TypedField>,
-): Field[] =>
-  optionallyTypedFields.map((field) =>
-    isPrimitive<Field>(field) ? field : (field.name as Field),
-  );
-
-/**
  * Converts `Array<Field , TypedField>` to `TypedField[]` by inspecting `attributeDataArray`.
  * @param optionallyTypedFields
  * @param attributeDataArray
