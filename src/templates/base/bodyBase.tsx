@@ -1,9 +1,9 @@
 import React from "react";
 
 import { Body, BodyProps } from "../../components";
-import { CardBase, CardBaseProps } from "./cardBase";
+import { CardBaseTemplate, CardBaseTemplateProps } from "./cardBase";
 
-export type BodyBaseProps = CardBaseProps & {
+export type BodyBaseTemplateProps = CardBaseTemplateProps & {
   bodyProps?: BodyProps;
 };
 
@@ -11,12 +11,12 @@ export type BodyBaseProps = CardBaseProps & {
  * BodyBase template, renders children within body component.
  * @constructor
  */
-export const BodyBase: React.FC<BodyBaseProps> = ({
+export const BodyBaseTemplate: React.FC<BodyBaseTemplateProps> = ({
   children,
   bodyProps,
   ...props
 }) => (
-  <CardBase {...props}>
+  <CardBaseTemplate {...props}>
     <Body {...bodyProps}>{children}</Body>
-  </CardBase>
+  </CardBaseTemplate>
 );

@@ -9,10 +9,10 @@ import {
   H2,
 } from "../../components";
 import { slugify } from "../../lib";
-import { CardBase } from "../base";
-import { BodyBaseProps } from "../base/bodyBase";
+import { CardBaseTemplate } from "../base";
+import { BodyBaseTemplateProps } from "../base/bodyBase";
 
-export type DetailTemplateProps = BodyBaseProps & {
+export type DetailTemplateProps = BodyBaseTemplateProps & {
   attributeGridProps: AttributeGridProps;
   inlines?: DataGridProps[];
 };
@@ -27,7 +27,7 @@ export const DetailTemplate: React.FC<DetailTemplateProps> = ({
   inlines = [],
   ...props
 }) => (
-  <CardBase {...props}>
+  <CardBaseTemplate {...props}>
     {children}
     <AttributeGrid generateTitleIds={true} {...attributeGridProps} />
     {inlines.map(({ title, ...props }, index) => {
@@ -40,5 +40,5 @@ export const DetailTemplate: React.FC<DetailTemplateProps> = ({
         </Body>
       );
     })}
-  </CardBase>
+  </CardBaseTemplate>
 );

@@ -14,7 +14,7 @@ import {
 } from "../../components";
 import { NavigationContext } from "../../contexts";
 
-export type BaseProps = React.PropsWithChildren & {
+export type BaseTemplateProps = React.PropsWithChildren & {
   /** Column props. */
   columnProps?: ColumnProps;
 
@@ -41,7 +41,7 @@ export type BaseProps = React.PropsWithChildren & {
  * Base template
  * @constructor
  */
-export const Base: React.FC<BaseProps> = ({
+export const BaseTemplate: React.FC<BaseTemplateProps> = ({
   children,
   columnProps,
   pageProps,

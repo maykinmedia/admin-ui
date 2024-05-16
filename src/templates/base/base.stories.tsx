@@ -2,34 +2,34 @@ import type { Meta, StoryObj } from "@storybook/react";
 import * as React from "react";
 
 import { P } from "../../components";
-import { Base } from "./base";
-import { BodyBase } from "./bodyBase";
-import { CardBase } from "./cardBase";
+import { BaseTemplate } from "./base";
+import { BodyBaseTemplate } from "./bodyBase";
+import { CardBaseTemplate } from "./cardBase";
 
-const meta: Meta<typeof Base> = {
+const meta: Meta<typeof BaseTemplate> = {
   title: "Templates/Base",
-  component: Base,
+  component: BaseTemplate,
 };
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const BaseTemplate: Story = {
+export const baseTemplate: Story = {
   args: {
     children: <P>The quick brown fox jumps over the lazy dog.</P>,
   },
 };
 
-export const CardBaseTemplate: Story = {
+export const cardBaseTemplate: Story = {
   args: {
     children: <P>The quick brown fox jumps over the lazy dog.</P>,
   },
-  render: (args) => <CardBase {...args} />,
+  render: (args) => <CardBaseTemplate {...args} />,
 };
 
-export const BodyBaseTemplate: Story = {
+export const bodyBaseTemplate: Story = {
   args: {
     children: <P>The quick brown fox jumps over the lazy dog.</P>,
   },
-  render: (args) => <BodyBase {...args} />,
+  render: (args) => <BodyBaseTemplate {...args} />,
 };

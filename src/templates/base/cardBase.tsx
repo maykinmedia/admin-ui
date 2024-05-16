@@ -18,9 +18,9 @@ import {
 } from "../../components";
 import { NavigationContext } from "../../contexts";
 import { forceArray } from "../../lib";
-import { Base, BaseProps } from "./base";
+import { BaseTemplate, BaseTemplateProps } from "./base";
 
-export type CardBaseProps = BaseProps & {
+export type CardBaseTemplateProps = BaseTemplateProps & {
   actions?: ToolbarItem[];
 
   /** When set to true, a breakout component is applied to remove the page padding to  the card. */
@@ -54,7 +54,7 @@ export type CardBaseProps = BaseProps & {
  * BodyBase template, renders children within card component.
  * @constructor
  */
-export const CardBase: React.FC<CardBaseProps> = ({
+export const CardBaseTemplate: React.FC<CardBaseTemplateProps> = ({
   actions,
   breakout = false,
   children,
@@ -153,8 +153,8 @@ export const CardBase: React.FC<CardBaseProps> = ({
   );
 
   return (
-    <Base {...props}>
+    <BaseTemplate {...props}>
       {breakout ? <Breakout>{renderCard()}</Breakout> : renderCard()}
-    </Base>
+    </BaseTemplate>
   );
 };
