@@ -4,25 +4,35 @@ import { useEffect, useState } from "react";
 
 import { Badge, Outline } from "../../components";
 import { AttributeData } from "../../lib/data/attributedata";
-import { List } from "./list";
+import { ListTemplate } from "./list";
 
-const meta: Meta<typeof List> = {
+const meta: Meta<typeof ListTemplate> = {
   title: "Templates/List",
-  component: List,
-  argTypes: { onSubmit: { action: "onSubmit" } },
+  component: ListTemplate,
 };
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const ListTemplate: Story = {
+export const listTemplate: Story = {
   args: {
-    pageSize: 50,
-    objectList: [],
-    showPaginator: true,
-    sort: true,
-    title: "List template",
-    fields: ["userId", "id", "title", { active: false, name: "body" }],
+    dataGridProps: {
+      pageSize: 50,
+      objectList: [],
+      showPaginator: true,
+      sort: true,
+      title: "List template",
+      fields: ["userId", "id", "title", { active: false, name: "body" }],
+      filterable: true,
+      fieldsSelectable: true,
+      pageSizeOptions: [
+        { label: 10 },
+        { label: 20 },
+        { label: 30 },
+        { label: 40 },
+        { label: 50 },
+      ],
+    },
     breadcrumbItems: [
       { label: "Home", href: "/" },
       { label: "Templates", href: "#" },
@@ -37,8 +47,12 @@ export const ListTemplate: Story = {
   },
   render: (args) => {
     const [loading, setLoading] = useState(false);
-    const [page, setPage] = useState<number>(args.paginatorProps?.page || 1);
-    const [pageSize, setPageSize] = useState<number>(args.pageSize || 10);
+    const [page, setPage] = useState<number>(
+      args.dataGridProps.paginatorProps?.page || 1,
+    );
+    const [pageSize, setPageSize] = useState<number>(
+      args.dataGridProps.pageSize || 10,
+    );
     const [objectList, setObjectList] = useState<AttributeData[]>([]);
     const [sort, setSort] = useState<string>("");
 
@@ -71,36 +85,29 @@ export const ListTemplate: Story = {
     }, [page, pageSize, sort]);
 
     return (
-      <List
+      <ListTemplate
         {...args}
-        count={100}
+        // count={100}
         dataGridProps={{
-          filterable: true,
-          fieldsSelectable: true,
+          ...args.dataGridProps,
+          count: 100,
+          objectList: objectList,
+          loading: loading,
+          page: page,
+          pageSize: pageSize,
+          onPageChange: setPage,
+          onPageSizeChange: setPageSize,
+          onSort: (field) => setSort(field),
         }}
-        objectList={objectList}
-        onSort={(field) => setSort(field)}
-        loading={loading}
-        page={page}
-        pageSize={pageSize}
-        pageSizeOptions={[
-          { label: 10 },
-          { label: 20 },
-          { label: 30 },
-          { label: 40 },
-          { label: 50 },
-        ]}
-        onPageChange={setPage}
-        onPageSizeChange={setPageSize}
       />
     );
   },
 };
 
-export const WithSidebar = {
-  ...ListTemplate,
+export const WithSidebar: Story = {
+  ...listTemplate,
   args: {
-    ...ListTemplate.args,
+    ...listTemplate.args,
     sidebarItems: [
       {
         active: true,
@@ -147,7 +154,7 @@ export const WithSidebar = {
   },
 };
 
-export const WithSecondaryNavigation = {
+export const WithSecondaryNavigation: Story = {
   ...WithSidebar,
   args: {
     ...WithSidebar.args,

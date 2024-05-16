@@ -4,10 +4,9 @@ import { useEffect, useState } from "react";
 
 import { Badge, Outline } from "../../components";
 import { AttributeData } from "../../lib";
-import { List } from "../list";
 import { Kanban } from "./kanban";
 
-const meta: Meta<typeof List> = {
+const meta: Meta<typeof Kanban> = {
   title: "Templates/Kanban",
   component: Kanban,
   argTypes: { onClick: { action: "onClick" } },
@@ -21,7 +20,7 @@ export const KanbanTemplate: Story = {
     breadcrumbItems: [
       { label: "Home", href: "/" },
       { label: "Templates", href: "#" },
-      { label: "List template", href: "#" },
+      { label: "Kanban template", href: "#" },
     ],
     primaryNavigationItems: [
       { children: <Outline.HomeIcon />, title: "Home" },

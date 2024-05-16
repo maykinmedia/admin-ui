@@ -4,10 +4,9 @@ import { useEffect, useState } from "react";
 
 import { Badge, Outline } from "../../components";
 import { AttributeData } from "../../lib";
-import { List } from "../list";
 import { Grid } from "./grid";
 
-const meta: Meta<typeof List> = {
+const meta: Meta<typeof Grid> = {
   title: "Templates/Grid",
   component: Grid,
   argTypes: { onClick: { action: "onClick" } },
@@ -21,7 +20,7 @@ export const GridTemplate: Story = {
     breadcrumbItems: [
       { label: "Home", href: "/" },
       { label: "Templates", href: "#" },
-      { label: "List template", href: "#" },
+      { label: "Grid template", href: "#" },
     ],
     primaryNavigationItems: [
       { children: <Outline.HomeIcon />, title: "Home" },
