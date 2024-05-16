@@ -58,6 +58,8 @@ export const Base: React.FC<BaseProps> = ({
     sidebarItems: _sidebarItems,
   } = useContext(NavigationContext);
 
+  console.log(">", primaryNavigationItems);
+
   const contextNavigation =
     primaryNavigation ||
     (primaryNavigationItems.length || _primaryNavigationItems?.length ? (

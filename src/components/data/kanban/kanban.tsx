@@ -21,10 +21,10 @@ import "./kanban.scss";
 export type KanbanProps = GroupedAttributeDataProps & {
   /** If set, items are `draggable` allowing the user to rearrange them (across) columns). */
   draggable?: boolean;
-  /** The kanban "change column" (accessible) label */
+  /** The kanban-template "change column" (accessible) label */
   labelSelectColumn?: string;
 
-  /** The kanban "move object position" (accessible) label. */
+  /** The kanban-template "move object position" (accessible) label. */
   labelMoveObject?: string;
 
   /** Get called when the fieldsets change. */
@@ -402,7 +402,7 @@ export const KanbanItem: React.FC<KanbanItemProps> = ({
         {
           id: "mykn.components.Kanban.labelSelectColumn",
           description:
-            'mykn.components.Kanban: The kanban "change column" (accessible) label',
+            'mykn.components.Kanban: The kanban-template "change column" (accessible) label',
           defaultMessage: "verplaats onderdeel naar kolom",
         },
         object as Record<string, string>,
@@ -414,7 +414,7 @@ export const KanbanItem: React.FC<KanbanItemProps> = ({
         {
           id: "mykn.components.Kanban.labelMoveObject",
           description:
-            'mykn.components.Kanban: The kanban "move object position" (accessible) label',
+            'mykn.components.Kanban: The kanban-template "move object position" (accessible) label',
           defaultMessage: "wijzig positie van onderdeel",
         },
         object as Record<string, string>,

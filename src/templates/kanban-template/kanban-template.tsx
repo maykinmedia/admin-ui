@@ -6,7 +6,7 @@ import { GroupedAttributeDataConfigurationProps } from "../../lib/data/groupedat
 import { CardBase } from "../base";
 import { BodyBaseProps } from "../base/bodyBase";
 
-export type KanbanProps = BodyBaseProps & {
+export type KanbanTemplateProps = BodyBaseProps & {
   /** If set, items are `draggable` allowing the user to rearrange them (across) columns). */
   draggable?: boolean;
 
@@ -38,7 +38,7 @@ export type KanbanProps = BodyBaseProps & {
   onObjectListsChange?: (objectLists: AttributeData[][]) => void;
 
   /** Kanban props. */
-  kanbanProps?: KanbanProps;
+  kanbanProps?: KanbanTemplateProps;
 
   /** Get called when an object is dropped onto a column. */
   onObjectChange?: (
@@ -52,7 +52,7 @@ export type KanbanProps = BodyBaseProps & {
  * grid template
  * @constructor
  */
-export const Kanban: React.FC<KanbanProps> = ({
+export const KanbanTemplate: React.FC<KanbanTemplateProps> = ({
   children,
   draggable,
   fieldset,

@@ -4,19 +4,18 @@ import { useEffect, useState } from "react";
 
 import { Badge, Outline } from "../../components";
 import { AttributeData } from "../../lib";
-import { List } from "../list";
-import { Kanban } from "./kanban";
+import { KanbanTemplate } from "./kanban-template";
 
-const meta: Meta<typeof List> = {
+const meta: Meta<typeof KanbanTemplate> = {
   title: "Templates/Kanban",
-  component: Kanban,
+  component: KanbanTemplate,
   argTypes: { onClick: { action: "onClick" } },
 };
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const KanbanTemplate: Story = {
+export const kanbanTemplate: Story = {
   args: {
     breadcrumbItems: [
       { label: "Home", href: "/" },
@@ -61,13 +60,13 @@ export const KanbanTemplate: Story = {
     const odd = objectList.filter((o, index) => index % 2 !== 0);
 
     return "groupBy" in args ? (
-      <Kanban
+      <KanbanTemplate
         onObjectChange={() => console.log("foo")}
         objectList={objectList}
         {...args}
       />
     ) : (
-      <Kanban
+      <KanbanTemplate
         onObjectChange={() => console.log("bar")}
         objectLists={[even, odd, [], []]}
         {...args}
