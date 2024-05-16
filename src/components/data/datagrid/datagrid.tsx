@@ -705,7 +705,7 @@ export const DataGridHeading: React.FC<DataGridHeadingProps> = ({
                   aria-label={_labelFilterField}
                   icon={!field.options && <Outline.MagnifyingGlassIcon />}
                   form={`${id}-filter-form`}
-                  name={field.name}
+                  name={field.filterLookup || field.name}
                   options={field.options}
                   min={
                     !field.options && field.type === "number" ? 0 : undefined
