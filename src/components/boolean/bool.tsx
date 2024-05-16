@@ -62,7 +62,7 @@ export const Bool: React.FC<BoolProps> = ({
     });
 
   if (!decorate) {
-    const label = ucFirst(value ? _labelTrue : labelFalse);
+    const label = ucFirst(value ? _labelTrue : _labelFalse);
     return (
       <P aria-label={label} {...pProps}>
         {explicit || value ? label : ""}
