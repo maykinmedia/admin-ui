@@ -33,19 +33,25 @@ const meta: Meta<typeof Dropdown> = {
     await waitFor(() => expect(canvas.queryByRole("dialog")).toBeNull());
     await userEvent.click(button, { delay: 10 });
 
-    await waitFor(async () => {
-      const _list = document.activeElement?.closest(
-        '[role="dialog"]',
-      ) as HTMLElement;
-      const buttons = await within(_list).findAllByRole("button");
-      const lastButton = buttons[buttons.length - 1];
-      const lastButtonActive = document.activeElement === lastButton;
+    await waitFor(
+      async () => {
+        const _list = document.activeElement?.closest(
+          '[role="dialog"]',
+        ) as HTMLElement;
+        const buttons = await within(_list).findAllByRole("button");
+        const lastButton = buttons[buttons.length - 1];
+        const lastButtonActive = document.activeElement === lastButton;
 
-      if (!lastButtonActive) {
-        await userEvent.tab({ delay: 10 });
-        throw new Error("Last button not selected");
-      }
-    });
+        if (!lastButtonActive) {
+          await userEvent.tab({ delay: 10 });
+          throw new Error("Last button not selected");
+        }
+      },
+      {
+        interval: 100,
+        timeout: 2000,
+      },
+    );
 
     if (parameters.lastButtonText) {
       await expect(document.activeElement?.textContent).toBe(
@@ -120,20 +126,25 @@ export const ActivateOnHover: Story = {
     await waitFor(() => expect(canvas.queryByRole("dialog")).toBeNull());
     await userEvent.hover(button, { delay: 10 });
 
-    await waitFor(async () => {
-      const _list = document.activeElement?.closest(
-        '[role="dialog"]',
-      ) as HTMLElement;
-      const buttons = await within(_list).findAllByRole("button");
-      const lastButton = buttons[buttons.length - 1];
-      const lastButtonActive = document.activeElement === lastButton;
+    await waitFor(
+      async () => {
+        const _list = document.activeElement?.closest(
+          '[role="dialog"]',
+        ) as HTMLElement;
+        const buttons = await within(_list).findAllByRole("button");
+        const lastButton = buttons[buttons.length - 1];
+        const lastButtonActive = document.activeElement === lastButton;
 
-      if (!lastButtonActive) {
-        await userEvent.tab({ delay: 10 });
-        throw new Error("Last button not selected");
-      }
-    });
-
+        if (!lastButtonActive) {
+          await userEvent.tab({ delay: 10 });
+          throw new Error("Last button not selected");
+        }
+      },
+      {
+        interval: 100,
+        timeout: 2000,
+      },
+    );
     if (parameters.lastButtonText) {
       await expect(document.activeElement?.textContent).toBe(
         parameters.lastButtonText,
@@ -157,19 +168,25 @@ export const ActivateOnFocus: Story = {
     await userEvent.tab({ shift: true, delay: 10 });
     await userEvent.tab({ delay: 10 });
 
-    await waitFor(async () => {
-      const _list = document.activeElement?.closest(
-        '[role="dialog"]',
-      ) as HTMLElement;
-      const buttons = await within(_list).findAllByRole("button");
-      const lastButton = buttons[buttons.length - 1];
-      const lastButtonActive = document.activeElement === lastButton;
+    await waitFor(
+      async () => {
+        const _list = document.activeElement?.closest(
+          '[role="dialog"]',
+        ) as HTMLElement;
+        const buttons = await within(_list).findAllByRole("button");
+        const lastButton = buttons[buttons.length - 1];
+        const lastButtonActive = document.activeElement === lastButton;
 
-      if (!lastButtonActive) {
-        await userEvent.tab({ delay: 10 });
-        throw new Error("Last button not selected");
-      }
-    });
+        if (!lastButtonActive) {
+          await userEvent.tab({ delay: 10 });
+          throw new Error("Last button not selected");
+        }
+      },
+      {
+        interval: 100,
+        timeout: 2000,
+      },
+    );
 
     if (parameters.lastButtonText) {
       await expect(document.activeElement?.textContent).toBe(
