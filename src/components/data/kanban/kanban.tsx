@@ -1,127 +1,72 @@
 import React, { useEffect, useState } from "react";
 
-import {
-  AttributeData,
-  DEFAULT_URL_FIELDS,
-  FieldSet,
-  field2Title,
-  formatMessage,
-  useIntl,
-} from "../../../lib";
-import {
-  GroupedAttributeDataProps,
-  getContextData,
-} from "../../../lib/data/groupedattributedata";
-import { Button, ButtonLink, ButtonLinkProps, ButtonProps } from "../../button";
+import { Button, ButtonProps } from "../../button";
 import { Select } from "../../form";
 import { Column, Grid } from "../../layout";
-import { Body, H1, H2, H3, P } from "../../typography";
+import { Body, H2, H3 } from "../../typography";
 import "./kanban.scss";
 
-export type KanbanProps = GroupedAttributeDataProps & {
-  /** If set, items are `draggable` allowing the user to rearrange them (across) columns). */
+export type KanbanProps = {
+  /** If set, items are `draggable` allowing the user to rearrange them (across columns). */
   draggable?: boolean;
-  /** The kanban "change column" (accessible) label */
+  /** The kanban-template "change column" (accessible) label */
   labelSelectColumn?: string;
 
-  /** The kanban "move object position" (accessible) label. */
+  /** The kanban-template "move object position" (accessible) label. */
   labelMoveObject?: string;
 
-  /** Get called when the fieldsets change. */
-  onFieldsetsChange?: (fieldsets: FieldSet[]) => void;
+  /** Get called when the componentList changes. */
+  onComponentListChange?: (componentList: KanbanColumn[]) => void;
 
-  /** Get called when the objectLists change. */
-  onObjectListsChange?: (objectLists: AttributeData[][]) => void;
+  /** The new componentList prop defining columns and their items */
+  componentList: KanbanColumn[];
 
-  /** Get called when an object is dropped onto a column. */
-  onObjectChange?: (
-    object: AttributeData,
-    sourceColumnIndex: number,
-    targetColumnIndex: number,
-    sourceObjectIndex: number,
-    targetObjectIndex: number,
-  ) => void;
+  /** The title of the kanban */
+  title?: string;
+};
+
+export type KanbanColumn = {
+  title: string;
+  items: React.ReactNode[];
 };
 
 export type KanbanDragData = {
   sourceColumnIndex: number;
   sourceObjectIndex: number;
-  object: AttributeData;
 };
 
-/**
- * Kanban component, shows item over various columns. Items can be made `draggable` allowing the user to rearrange them
- * (across columns).
- */
 export const Kanban: React.FC<KanbanProps> = ({
-  buttonProps,
-  buttonLinkProps,
+  componentList,
   draggable = false,
-  fieldset,
-  fieldsets,
-  groupBy,
   labelSelectColumn,
   labelMoveObject,
-  objectList,
-  objectLists,
-  renderPreview,
+  onComponentListChange,
   title,
-  urlFields = DEFAULT_URL_FIELDS,
-  onClick,
-  onFieldsetsChange,
-  onObjectListsChange,
-  onObjectChange,
   ...props
 }) => {
   const [dragIndexState, setDragIndexState] = useState<[number, number] | null>(
     null,
   );
-  const [fieldsetsState, setFieldsetsState] = useState<FieldSet[]>([]);
-  const [objectListsState, setObjectListsState] = useState<AttributeData[][]>(
-    [],
-  );
+  const [componentListState, setComponentListState] =
+    useState<KanbanColumn[]>(componentList);
 
   useEffect(() => {
-    const [_fieldsets, _objectLists] = getContextData(
-      groupBy,
-      fieldset,
-      fieldsets,
-      objectList,
-      objectLists,
-    );
-    setFieldsetsState(_fieldsets);
-    setObjectListsState(_objectLists);
-    onFieldsetsChange?.(_fieldsets);
-    onObjectListsChange?.(_objectLists);
-  }, [groupBy, fieldset, fieldsets, objectList, objectLists]);
+    setComponentListState(componentList);
+  }, [componentList]);
 
-  /**
-   * Gets called when the user drags an item over a column.
-   * Updates `setDragIndexState` with column/object index.
-   * @param e
-   */
   const handleDragOver: React.DragEventHandler = (e) => {
     e.preventDefault();
-    const currentTarget: HTMLElement = e.currentTarget as HTMLElement;
-    const target: HTMLElement = e.currentTarget as HTMLElement;
-    if (target.className !== e.currentTarget.className) {
-      return;
-    }
-
-    const siblings = [...currentTarget.children].filter((child) =>
-      child.getAttribute("draggable"),
-    );
-
+    const currentTarget = e.currentTarget as HTMLElement;
     const columnIndex = parseInt(currentTarget.dataset.columnIndex || "0");
-    const insertIndex = getInsertIndex(siblings, e.nativeEvent.clientY);
+    const insertIndex = getInsertIndex(
+      Array.from(currentTarget.children),
+      e.clientY,
+    );
     setDragIndexState([columnIndex, insertIndex]);
   };
 
-  /**
-   * Gets called when the user drops an item on a colum.
-   * @param e
-   */
   const handleDrop: React.DragEventHandler = (e) => {
+    e.preventDefault();
     const [targetColumnIndex, targetObjectIndex] = dragIndexState || [0, 0];
     setDragIndexState(null);
 
@@ -131,7 +76,8 @@ export const Kanban: React.FC<KanbanProps> = ({
       : {};
 
     if (typeof sourceColumnIndex !== "undefined") {
-      const object = objectListsState[sourceColumnIndex][sourceObjectIndex];
+      const object =
+        componentListState[sourceColumnIndex].items[sourceObjectIndex];
       moveObject(
         object,
         sourceColumnIndex,
@@ -142,71 +88,29 @@ export const Kanban: React.FC<KanbanProps> = ({
     }
   };
 
-  const handleObjectChange = (
-    object: AttributeData,
-    sourceColumnIndex: number,
-    targetColumnIndex: number,
-    sourceObjectIndex: number,
-    targetObjectIndex: number,
-  ) =>
-    moveObject(
-      object,
-      sourceColumnIndex,
-      targetColumnIndex,
-      sourceObjectIndex,
-      targetObjectIndex,
-    );
-
-  /**
-   * Moves `object` to column/position at given indices and updates `objectListsState`.
-   * on`onObjectChange` and `onObjectListsChange` are called subsequently.
-   * @param object
-   * @param sourceColumnIndex
-   * @param targetColumnIndex
-   * @param sourceObjectIndex
-   * @param targetObjectIndex
-   */
   const moveObject = (
-    object: AttributeData,
+    object: React.ReactNode,
     sourceColumnIndex: number,
     targetColumnIndex: number,
     sourceObjectIndex: number,
     targetObjectIndex: number,
   ) => {
-    const newObjectListsState = [...objectListsState];
-    const sourceObjectList = newObjectListsState[sourceColumnIndex];
-    const targetObjectList = newObjectListsState[targetColumnIndex] || [];
+    const newComponentListState = [...componentListState];
+    const sourceItems = newComponentListState[sourceColumnIndex].items;
+    const targetItems = newComponentListState[targetColumnIndex].items;
     const _targetObjectIndex =
-      targetObjectIndex === -1 ? targetObjectList.length : targetObjectIndex;
+      targetObjectIndex === -1 ? targetItems.length : targetObjectIndex;
 
-    // Remove item from source column
-    sourceObjectList.splice(sourceObjectIndex, 1);
+    sourceItems.splice(sourceObjectIndex, 1);
+    targetItems.splice(_targetObjectIndex, 0, object);
 
-    // Add item to target column
-    targetObjectList.splice(_targetObjectIndex, 0, object);
-
-    // Update objectListsState
-    setObjectListsState(newObjectListsState);
-
-    // Call callbacks
-    onObjectChange?.(
-      object,
-      sourceColumnIndex,
-      targetColumnIndex,
-      sourceObjectIndex,
-      _targetObjectIndex,
-    );
-    onObjectListsChange?.(newObjectListsState);
+    setComponentListState(newComponentListState);
+    onComponentListChange?.(newComponentListState);
   };
 
-  /**
-   * Returns the `index` required to insert a new (HTML) sibling in `children` at closes to `y`.
-   * @param children
-   * @param y Y position based on the viewport.
-   */
-  const getInsertIndex = (children: ArrayLike<Element>, y: number): number => {
+  const getInsertIndex = (children: Element[], y: number): number => {
     const yPositions = Array.from(children).map(
-      (n) => n.getBoundingClientRect().y,
+      (n) => n.getBoundingClientRect().top,
     );
     const lastIndex = yPositions.findIndex((p) => p >= y);
     return lastIndex === -1 ? children.length : lastIndex;
@@ -220,359 +124,207 @@ export const Kanban: React.FC<KanbanProps> = ({
         </Body>
       )}
       <Body className="mykn-kanban__body">
-        <Grid cols={fieldsetsState.length}>
-          {fieldsetsState.map((fieldset, index) => (
-            <KanbanSection
-              key={fieldset[0] ? fieldset[0] : index}
-              columnIndex={index}
-              buttonLinkProps={buttonLinkProps}
-              buttonProps={buttonProps}
-              draggable={draggable}
-              dragIndex={dragIndexState}
-              fieldset={fieldset}
-              fieldsets={fieldsetsState}
-              fieldsetIndex={index}
-              labelSelectColumn={labelSelectColumn}
-              labelMoveObject={labelMoveObject}
-              objectList={objectListsState[index]}
-              renderPreview={renderPreview}
-              urlFields={urlFields}
-              onClick={onClick}
-              onDragOver={handleDragOver}
-              onDrop={handleDrop}
-              onObjectChange={handleObjectChange}
-            />
-          ))}
+        <Grid cols={componentListState.length}>
+          {componentListState.map((column, columnIndex) => {
+            const count = column.items.length;
+            return (
+              <div key={columnIndex}>
+                <Body>
+                  <H3>
+                    {column.title}
+                    <div className="mykn-kanban__count">{count}</div>
+                  </H3>
+                </Body>
+                <KanbanSection
+                  columnIndex={columnIndex}
+                  items={column.items}
+                  draggable={draggable}
+                  dragIndex={dragIndexState}
+                  labelSelectColumn={labelSelectColumn}
+                  labelMoveObject={labelMoveObject}
+                  onDragOver={handleDragOver}
+                  onDrop={handleDrop}
+                  moveObject={moveObject}
+                  componentListState={componentListState}
+                />
+              </div>
+            );
+          })}
         </Grid>
       </Body>
     </div>
   );
 };
 
-export type KanbanSectionProps = Omit<
-  React.ComponentProps<"section">,
-  "onClick"
-> & {
-  buttonLinkProps?: ButtonLinkProps;
-  buttonProps?: ButtonProps;
+export type KanbanSectionProps = {
   columnIndex: number;
+  items: React.ReactNode[];
   draggable?: boolean;
   dragIndex: [number, number] | null;
-  fieldset: FieldSet;
-  fieldsets: FieldSet[];
-  fieldsetIndex: number;
   labelSelectColumn?: string;
   labelMoveObject?: string;
-  objectList: AttributeData[];
-  renderPreview?: (attributeData: AttributeData) => React.ReactNode;
-  urlFields: (keyof KanbanSectionProps["objectList"][number])[];
-  onClick?: (event: React.MouseEvent, attributeData: AttributeData) => void;
   onDragOver: React.DragEventHandler;
   onDrop: React.DragEventHandler;
-  onObjectChange?: (
-    object: AttributeData,
+  moveObject: (
+    object: React.ReactNode,
     sourceColumnIndex: number,
     targetColumnIndex: number,
     sourceObjectIndex: number,
     targetObjectIndex: number,
   ) => void;
+  componentListState: KanbanColumn[];
 };
 
 export const KanbanSection: React.FC<KanbanSectionProps> = ({
-  buttonProps,
-  buttonLinkProps,
   columnIndex,
+  items,
   draggable,
   dragIndex,
-  fieldset,
-  fieldsets,
-  fieldsetIndex,
-  labelSelectColumn,
-  labelMoveObject,
-  objectList,
-  renderPreview,
-  urlFields,
-  onClick,
   onDragOver,
   onDrop,
-  onObjectChange,
+  moveObject,
+  labelSelectColumn,
+  labelMoveObject,
+  componentListState,
 }) => {
   const isDragging = Boolean(dragIndex && dragIndex[0] === columnIndex);
+
   return (
     <Column
-      className={isDragging ? "mykn-kanban__drop-target" : undefined}
+      span={1}
       direction="column"
       gap={true}
-      span={1}
+      className={isDragging ? "mykn-kanban__drop-target" : undefined}
       onDragOver={onDragOver}
       onDrop={onDrop}
       data-column-index={columnIndex}
     >
-      {fieldset[0] && (
-        <Body>
-          <H3>{fieldset[0]}</H3>
-        </Body>
-      )}
-      {objectList.map((o, index) => (
-        <React.Fragment key={index}>
-          {isDragging && dragIndex?.[1] === index && (
-            <div className="mykn-kanban__drop-indicator" aria-hidden />
-          )}
-          <KanbanItem
-            key={index}
-            buttonLinkProps={buttonLinkProps}
-            buttonProps={buttonProps}
-            draggable={draggable}
-            fieldset={fieldset}
-            fieldsets={fieldsets}
-            fieldsetIndex={fieldsetIndex}
-            labelSelectColumn={labelSelectColumn}
-            labelMoveObject={labelMoveObject}
-            object={o}
-            objectIndex={index}
-            objectList={objectList}
-            renderPreview={renderPreview}
-            urlFields={urlFields}
-            onClick={onClick}
-            onObjectChange={onObjectChange}
-          />
-        </React.Fragment>
+      {items.map((item, index) => (
+        <KanbanItem
+          key={index}
+          item={item}
+          draggable={draggable}
+          columnIndex={columnIndex}
+          objectIndex={index}
+          moveObject={moveObject}
+          labelSelectColumn={labelSelectColumn}
+          labelMoveObject={labelMoveObject}
+          componentListState={componentListState}
+        />
       ))}
-      {isDragging && (dragIndex?.[1] || 0) >= objectList.length && (
+      {isDragging && (dragIndex?.[1] || 0) >= items.length && (
         <div className="mykn-kanban__drop-indicator" aria-hidden />
       )}
     </Column>
   );
 };
-
-export type KanbanItemProps = Omit<React.ComponentProps<"li">, "onClick"> & {
-  buttonLinkProps?: ButtonLinkProps;
+export type KanbanItemProps = {
   buttonProps?: ButtonProps;
   draggable?: boolean;
-  fieldset: FieldSet;
-  fieldsets: FieldSet[];
-  fieldsetIndex: number;
-  labelSelectColumn?: string;
-  labelMoveObject?: string;
-  object: AttributeData;
+  item: React.ReactNode;
+  columnIndex: number;
   objectIndex: number;
-  objectList: AttributeData[];
-  renderPreview?: (attributeData: AttributeData) => React.ReactNode;
-  urlFields: (keyof KanbanItemProps["object"])[];
-  onClick?: (event: React.MouseEvent, attributeData: AttributeData) => void;
-  onObjectChange?: (
-    object: AttributeData,
+  moveObject: (
+    object: React.ReactNode,
     sourceColumnIndex: number,
     targetColumnIndex: number,
     sourceObjectIndex: number,
     targetObjectIndex: number,
   ) => void;
+  labelSelectColumn?: string;
+  labelMoveObject?: string;
+  componentListState: KanbanColumn[];
 };
 
 export const KanbanItem: React.FC<KanbanItemProps> = ({
   buttonProps,
-  buttonLinkProps,
   draggable,
-  fieldset,
-  fieldsets,
-  fieldsetIndex,
-  labelSelectColumn,
-  labelMoveObject,
-  object,
+  item,
+  columnIndex,
   objectIndex,
-  objectList,
-  renderPreview,
-  urlFields,
-  onClick,
-  onObjectChange,
+  moveObject,
+  labelSelectColumn = "Select column",
+  labelMoveObject = "Select position",
+  componentListState,
 }) => {
-  const intl = useIntl();
-  const fields = fieldset[1].fields;
-  const titleField = fieldset[1].title || Object.keys(object)[0];
-  const urlField = urlFields.find((f) => object[f]);
+  const [selectedColumn, setSelectedColumn] = useState(columnIndex);
+  const [selectedPosition, setSelectedPosition] = useState(objectIndex);
 
-  const title = field2Title(String(object[titleField]));
-  const href = urlField ? String(object[urlField]) || undefined : undefined;
-  const otherFields = fields.filter(
-    (field) => ![...urlFields, titleField].includes(field),
-  );
-  const _labelSelectColumn = labelSelectColumn
-    ? formatMessage(labelSelectColumn, object)
-    : intl.formatMessage(
-        {
-          id: "mykn.components.Kanban.labelSelectColumn",
-          description:
-            'mykn.components.Kanban: The kanban "change column" (accessible) label',
-          defaultMessage: "verplaats onderdeel naar kolom",
-        },
-        object as Record<string, string>,
-      );
-
-  const _labelMoveObject = labelMoveObject
-    ? formatMessage(labelMoveObject, object)
-    : intl.formatMessage(
-        {
-          id: "mykn.components.Kanban.labelMoveObject",
-          description:
-            'mykn.components.Kanban: The kanban "move object position" (accessible) label',
-          defaultMessage: "wijzig positie van onderdeel",
-        },
-        object as Record<string, string>,
-      );
-
-  /**
-   * Gets called when the user starts dragging the item.
-   * Populates the datatransfer with stringified `KanbanDragData`.
-   * @param e
-   */
-  const onDragStart: React.DragEventHandler = (e) => {
+  const onDragStart = (
+    e: React.DragEvent,
+    columnIndex: number,
+    objectIndex: number,
+  ) => {
     const data: KanbanDragData = {
-      sourceColumnIndex: fieldsetIndex,
+      sourceColumnIndex: columnIndex,
       sourceObjectIndex: objectIndex,
-      object,
     };
-    e.dataTransfer.dropEffect = "move";
-    e.dataTransfer.setData("text/plain", title);
     e.dataTransfer.setData("application/json", JSON.stringify(data));
-    href && e.dataTransfer.setData("text/uri-list", href);
   };
 
-  return (
-    <KanbanButton
-      buttonLinkProps={buttonLinkProps}
-      buttonProps={buttonProps}
-      draggable={draggable}
-      href={href}
-      object={object}
-      renderPreview={renderPreview}
-      title={title}
-      onClick={onClick}
-      onDragStart={onDragStart}
-    >
-      <P bold size="xs">
-        {title}
-      </P>
+  const handleColumnChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const targetColumnIndex = parseInt(e.target.value);
+    setSelectedColumn(targetColumnIndex);
+    moveObject(item, columnIndex, targetColumnIndex, objectIndex, -1);
+  };
 
-      {otherFields.map((field) => (
-        <P key={field} muted size="xs">
-          {object[field]}
-        </P>
-      ))}
+  const handlePositionChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const targetPositionIndex = parseInt(e.target.value);
+    setSelectedPosition(targetPositionIndex);
+    moveObject(
+      item,
+      columnIndex,
+      selectedColumn,
+      objectIndex,
+      targetPositionIndex,
+    );
+  };
 
-      {/* A11y column selector. */}
-      {draggable && (
-        <>
-          <Select
-            aria-label={_labelSelectColumn}
-            options={fieldsets.map((fieldset, index) => {
-              const option = {
-                label: fieldset[0] || "",
-                selected: index === fieldsetIndex,
-                value: index,
-              };
-              return option;
-            })}
-            required
-            textSize="xs"
-            onClick={(e) => e.preventDefault()}
-            onChange={(e) =>
-              onObjectChange?.(
-                object,
-                fieldsetIndex,
-                parseInt(e.target.value),
-                objectIndex,
-                -1,
-              )
-            }
-          />
+  const columnOptions = componentListState.map((column, index) => ({
+    label: column.title,
+    value: index.toString(),
+  }));
 
-          {/* A11y position selector. */}
-          <Select
-            aria-label={_labelMoveObject}
-            options={objectList.map((o, index) => {
-              const option = {
-                label: String(o[titleField] || index),
-                selected: o === object,
-                value: index,
-              };
-              return option;
-            })}
-            required
-            textSize="xs"
-            onClick={(e) => e.preventDefault()}
-            onChange={(e) =>
-              onObjectChange?.(
-                object,
-                fieldsetIndex,
-                fieldsetIndex,
-                objectIndex,
-                parseInt(e.target.value),
-              )
-            }
-          />
-        </>
-      )}
-    </KanbanButton>
+  const positionOptions = componentListState[selectedColumn].items.map(
+    (_, index) => ({
+      label: `Position ${index + 1}`,
+      value: index.toString(),
+    }),
   );
-};
 
-export type KanbanButtonProps = {
-  buttonLinkProps?: ButtonLinkProps;
-  buttonProps?: ButtonProps;
-  children: React.ReactNode;
-  draggable?: boolean;
-  href?: string;
-  object: AttributeData;
-  renderPreview?: (attributeData: AttributeData) => React.ReactNode;
-  title: string;
-  onClick?: (event: React.MouseEvent, attributeData: AttributeData) => void;
-  onDragStart: React.DragEventHandler;
-};
-
-export const KanbanButton: React.FC<KanbanButtonProps> = ({
-  buttonProps,
-  buttonLinkProps,
-  children,
-  draggable,
-  href,
-  title,
-  object,
-  renderPreview = () => <H1 aria-hidden>{title[0].toUpperCase()}</H1>,
-  onClick,
-  onDragStart,
-}) => {
-  const content = renderPreview(object);
-
-  return href ? (
-    <ButtonLink
-      align="start"
-      draggable={draggable}
-      href={href}
-      justify
-      title={title}
-      variant="outline"
-      wrap={false}
-      {...buttonLinkProps}
-      onClick={(e) => onClick?.(e, object)}
-      onDragStart={onDragStart}
-    >
-      <span className="mykn-kanban__preview">{content}</span>
-      {children}
-    </ButtonLink>
-  ) : (
+  return (
     <Button
       align="start"
       draggable={draggable}
       justify
-      title={title}
-      variant="outline"
+      variant="transparent"
       wrap={false}
       {...buttonProps}
-      onClick={(e) => onClick?.(e, object)}
-      onDragStart={onDragStart}
+      onDragStart={(e) => onDragStart(e, columnIndex, objectIndex)}
     >
-      <span className="mykn-kanban__preview">{content}</span>
-      {children}
+      <div className="mykn-kanban__item">{item}</div>
+      {draggable && (
+        <>
+          <Select
+            aria-label={labelSelectColumn}
+            value={selectedColumn.toString()}
+            options={columnOptions}
+            required
+            textSize="xs"
+            onClick={(e) => e.preventDefault()}
+            onChange={handleColumnChange}
+          />
+          <Select
+            aria-label={labelMoveObject}
+            value={selectedPosition.toString()}
+            options={positionOptions}
+            required
+            textSize="xs"
+            onClick={(e) => e.preventDefault()}
+            onChange={handlePositionChange}
+          />
+        </>
+      )}
     </Button>
   );
 };
