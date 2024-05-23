@@ -12,25 +12,29 @@
     height: 100%;
   }
 
-  &__body .mykn-column {
+  &__count {
+    margin-left: var(--spacing-h);
+    border-radius: 10px;
     border: 1px solid var(--typography-color-border);
-    overflow-y: auto;
+    background-color: #fafafa;
+    padding: 0 6px;
+    color: var(--typography-color-muted);
   }
 
-  &__body .mykn-column:before {
-    background-color: var(--typography-color-border);
-    opacity: 0.1;
-    content: "";
-    height: 100%;
-    position: absolute;
-    width: 100%;
+  &__body .mykn-column {
+    border: 1px solid var(--typography-color-border);
+    border-radius: var(--border-radius-l);
+    background-color: var(--page-color-background-alt);
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 18px 16px;
   }
 
   &__body &__drop-indicator {
     background-color: var(--page-color-accent);
     border: 1px dashed var(--page-color-primary);
     box-sizing: content-box;
-    height: calc(var(--typography-line-height-body-s) * 2);
+    height: calc(var(--typography-line-height-body-s) * 3);
     padding-block: var(--spacing-v);
   }
 
@@ -39,27 +43,24 @@
     border-style: dashed;
   }
 
-  &__body .mykn-column > .mykn-h3 {
-    position: sticky;
-    top: 0;
-    z-index: 10;
-  }
-
   &__body .mykn-column > .mykn-button {
+    border: 1px solid var(--typography-color-border);
+    border-radius: var(--border-radius-l);
     white-space: normal;
+    background-color: var(--typography-color-background);
+    padding: 16px;
 
     &:focus-within {
       z-index: 100;
     }
   }
 
-  &__body &__preview {
-    display: flex;
-    flex-shrink: 0;
-    height: calc(var(--typography-line-height-body-s) * 2);
-    justify-content: center;
-    overflow: hidden;
-    width: calc(var(--typography-line-height-body-s) * 2);
+  &__body .mykn-column > .mykn-button:hover,
+  &__body .mykn-column > .mykn-button:focus {
+    border: 1px solid var(--page-color-primary);
+    scale: 100%;
+    box-shadow: unset;
+    background-color: var(--typography-color-background-alt);
   }
 
   &__body .mykn-column > .mykn-button > .mykn-select {
@@ -79,5 +80,9 @@
       //background-color: green;
       visibility: visible;
     }
+  }
+
+  &__item {
+    width: 100%;
   }
 }
