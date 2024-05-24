@@ -1,21 +1,28 @@
-import React from "react";
+import React, { ReactNode } from "react";
 
-import { AttributeData } from "../../../lib";
-import { field2Title } from "../../../lib/format/string";
+import { Attribute } from "../../../lib";
 import { Value } from "../value";
 import "./attributetable.scss";
 
-export type AttributeTableProps = {
-  object: AttributeData;
-  fields?: Array<keyof AttributeData>;
+export type ValueType = ReactNode;
+export type LabelType = string | ReactNode;
+export type FieldData = {
+  label: LabelType;
+  value: ValueType;
+};
+export type ObjectData<T = FieldData> = Record<string, T>;
+
+export type ObjectTableProps = {
+  object: ObjectData;
+  fields?: Array<keyof ObjectData>;
 };
 
-export type AttributeTableRowProps = {
-  object: AttributeData;
-  field: keyof AttributeData;
+export type ObjectTableRowProps = {
+  object: ObjectData;
+  field: keyof ObjectData;
 };
 
-export const AttributeTable: React.FC<AttributeTableProps> = ({
+export const AttributeTable: React.FC<ObjectTableProps> = ({
   object = {},
   fields = Object.keys(object),
   ...props
@@ -27,16 +34,24 @@ export const AttributeTable: React.FC<AttributeTableProps> = ({
   </div>
 );
 
-export const AttributeTableRow: React.FC<AttributeTableRowProps> = ({
+export const AttributeTableRow: React.FC<ObjectTableRowProps> = ({
   object,
   field,
-}) => (
-  <div className="mykn-attributetable__row">
-    <div className="mykn-attributetable__cell mykn-attributetable__key">
-      {field2Title(field)}
+}) => {
+  let value = object[field].value;
+  if (
+    ["boolean", "number", "string"].includes(typeof value) ||
+    value === null
+  ) {
+    value = <Value value={value as Attribute} />;
+  }
+
+  return (
+    <div className="mykn-attributetable__row">
+      <div className="mykn-attributetable__cell mykn-attributetable__key">
+        {object[field].label}
+      </div>
+      <div className="mykn-attributetable__cell">{value}</div>
     </div>
-    <div className="mykn-attributetable__cell">
-      <Value value={object[field]} />
-    </div>
-  </div>
-);
+  );
+};
