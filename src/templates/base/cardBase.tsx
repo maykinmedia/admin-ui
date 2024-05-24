@@ -9,15 +9,14 @@ import {
   Card,
   CardProps,
   Column,
-  ErrorMessage,
   ErrorMessageProps,
+  Errors,
   Form,
   FormProps,
   Toolbar,
   ToolbarItem,
 } from "../../components";
 import { NavigationContext } from "../../contexts";
-import { forceArray } from "../../lib";
 import { BaseTemplate, BaseTemplateProps } from "./base";
 
 export type CardBaseTemplateProps = BaseTemplateProps & {
@@ -69,7 +68,6 @@ export const CardBaseTemplate: React.FC<CardBaseTemplateProps> = ({
   slotSecondaryNavigation,
   ...props
 }) => {
-  const _errors = forceArray(errors);
   const {
     breadcrumbs,
     secondaryNavigation,
@@ -132,15 +130,7 @@ export const CardBaseTemplate: React.FC<CardBaseTemplateProps> = ({
           })}
         ></Toolbar>
       )}
-      {_errors && _errors.length > 0 && (
-        <Body>
-          {_errors.map((e) => (
-            <ErrorMessage key={String(e)} {...errorMessageProps}>
-              {e}
-            </ErrorMessage>
-          ))}
-        </Body>
-      )}
+      <Errors errors={errors} errorMessageProps={errorMessageProps} />
       {slotSecondaryNavigation ||
         (contextSecondaryNavigation && (
           <Column direction={"row"} span={12}>
