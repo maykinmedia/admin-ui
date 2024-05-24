@@ -160,9 +160,6 @@ export const WithCustomPreview: Story = {
     ...WithSecondaryNavigation.args,
     kanbanProps: {
       ...WithSecondaryNavigation.args.kanbanProps,
-      renderPreview: (attributeData) => (
-        <img alt={attributeData.title} src={attributeData.thumbnailUrl} />
-      ),
     },
   },
 };
