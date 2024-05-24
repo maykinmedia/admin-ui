@@ -1,8 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import * as React from "react";
-import { useEffect, useState } from "react";
 
-import { AttributeData } from "../../../lib";
 import { Page } from "../../layout";
 import { Kanban } from "./kanban";
 
@@ -21,62 +19,37 @@ const meta: Meta<typeof Kanban> = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+const generateComponentList = (count: number) => {
+  const randomLorenIpsum = [
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    "Ut enim ad minim veniam, quis nostrud exercitation ullamco.",
+    "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+    "Excepteur sint occaecat cupidatat non proident, sunt in.",
+  ];
+  return Array.from({ length: count }, (_, i) => (
+    <div key={i} style={{ display: "flex", flexDirection: "column" }}>
+      <span>20 days</span>
+      <span>{randomLorenIpsum[i % randomLorenIpsum.length]}</span>
+      <span>Some more data</span>
+    </div>
+  ));
+};
+
+// Define the component list
+const componentList = [
+  { title: "Todo", items: generateComponentList(10) },
+  { title: "In Progress", items: generateComponentList(10) },
+  { title: "In Review", items: generateComponentList(10) },
+  { title: "Done", items: generateComponentList(10) },
+];
+
 export const KanbanComponent: Story = {
   args: {
     title: "The quick brown fox jumps over the lazy dog.",
-    fieldsets: [
-      ["Todo", { fields: ["title"], title: "title" }],
-      ["In Progress", { fields: ["title"], title: "title" }],
-      ["In Review", { fields: ["title"], title: "title" }],
-      ["Done", { fields: ["title"], title: "title" }],
-    ],
+    componentList,
   },
   render: (args) => {
-    const abortController = new AbortController();
-    const [objectList, setObjectList] = useState<AttributeData[]>([]);
-    // Process sorting and pagination locally in place for demonstration purposes.
-
-    useEffect(() => {
-      const limit = 11;
-      fetch(`https://jsonplaceholder.typicode.com/photos?_limit=${limit}`, {
-        signal: abortController.signal,
-      })
-        .then((response) => response.json())
-        .then((data: AttributeData[]) => {
-          setObjectList(
-            data.map((d) => ({
-              ...d,
-              alphaIndex: String(d.title[0]).toUpperCase(),
-            })),
-          );
-        });
-    }, [args]);
-
-    const even = objectList.filter((o, index) => index % 2 === 0);
-    const odd = objectList.filter((o, index) => index % 2 !== 0);
-
-    return "groupBy" in args ? (
-      <Kanban objectList={objectList} {...args} />
-    ) : (
-      <Kanban objectLists={[even, odd, [], []]} {...args} />
-    );
-  },
-};
-
-export const WithCustomPreview = {
-  ...KanbanComponent,
-  args: {
-    ...KanbanComponent.args,
-    renderPreview: (attributeData) => (
-      <img alt={attributeData.title} src={attributeData.thumbnailUrl} />
-    ),
-  },
-};
-
-export const GroupBy = {
-  ...KanbanComponent,
-  args: {
-    fieldset: [`{group}`, { fields: ["title"], title: "title" }],
-    groupBy: "alphaIndex",
+    return <Kanban {...args} />;
   },
 };
