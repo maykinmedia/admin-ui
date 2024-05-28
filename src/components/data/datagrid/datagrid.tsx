@@ -110,6 +110,12 @@ export type DataGridProps = {
   /** References to the selected items in `objectList`, setting this preselects the items. */
   selected?: AttributeData[];
 
+  /** Can be used to specify how to compare the selected items and the items in the data grid */
+  customComparisonFunction?: (
+    item1: AttributeData,
+    item2: AttributeData,
+  ) => boolean;
+
   /** Renders buttons allowing to perform actions on selection, `onClick` is called with selection array. */
   selectionActions?: ButtonProps[];
 
@@ -198,6 +204,7 @@ export const DataGrid: React.FC<DataGridProps> = ({
   selectable = false,
   fieldsSelectable = false,
   selected,
+  customComparisonFunction = (item1, item2) => item1 === item2,
   selectionActions = [],
   sort,
   title = "",
@@ -302,11 +309,14 @@ export const DataGrid: React.FC<DataGridProps> = ({
   const handleSelect = (attributeData: AttributeData) => {
     const currentlySelected = selectedState || [];
 
-    const isAttributeDataCurrentlySelected =
-      currentlySelected.includes(attributeData);
+    const isAttributeDataCurrentlySelected = currentlySelected.find((element) =>
+      customComparisonFunction(element, attributeData),
+    );
 
     const newSelectedState = isAttributeDataCurrentlySelected
-      ? [...currentlySelected].filter((a) => a !== attributeData)
+      ? [...currentlySelected].filter(
+          (a) => !customComparisonFunction(a, attributeData),
+        )
       : [...currentlySelected, attributeData];
 
     setSelectedState(newSelectedState);
@@ -431,6 +441,7 @@ export const DataGrid: React.FC<DataGridProps> = ({
           setEditingState={setEditingState}
           selectable={selectable}
           selectedRows={selectedState || []}
+          customComparisonFunction={customComparisonFunction}
           sortDirection={sortDirection}
           sortField={sortField}
           urlFields={urlFields}
@@ -765,6 +776,10 @@ export type DataGridBodyProps = {
   sortDirection: "ASC" | "DESC" | undefined;
   sortField: string | undefined;
   urlFields: string[];
+  customComparisonFunction?: (
+    item1: AttributeData,
+    item2: AttributeData,
+  ) => boolean;
 };
 
 /**
@@ -792,6 +807,7 @@ export const DataGridBody: React.FC<DataGridBodyProps> = ({
   renderableRows,
   selectable,
   selectedRows,
+  customComparisonFunction = (item1, item2) => item1 === item2,
   setEditingState,
   sortDirection,
   sortField,
@@ -802,7 +818,9 @@ export const DataGridBody: React.FC<DataGridBodyProps> = ({
       <tr
         key={`${dataGridId}-row-${index}`}
         className={clsx("mykn-datagrid__row", {
-          "mykn-datagrid__row--selected": selectedRows?.includes(rowData),
+          "mykn-datagrid__row--selected": !!selectedRows.find((element) =>
+            customComparisonFunction(element, rowData),
+          ),
         })}
       >
         {selectable && (
@@ -814,7 +832,11 @@ export const DataGridBody: React.FC<DataGridBodyProps> = ({
           >
             <DataGridSelectionCheckbox
               amountSelected={amountSelected}
-              checked={selectedRows?.includes(rowData) || false}
+              checked={
+                !!selectedRows.find((element) =>
+                  customComparisonFunction(element, rowData),
+                ) || false
+              }
               count={count}
               handleSelect={handleSelect}
               labelSelect={labelSelect}
