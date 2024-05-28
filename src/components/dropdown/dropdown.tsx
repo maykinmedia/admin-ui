@@ -15,7 +15,7 @@ import {
   useRole,
 } from "@floating-ui/react";
 import clsx from "clsx";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
 import { Button, ButtonProps } from "../button";
 import { ToolbarProps, ToolbarSpacerProps } from "../toolbar";
@@ -71,18 +71,20 @@ export const Dropdown: React.FC<DropdownProps> = ({
   toolbarProps,
   ...props
 }) => {
+  // FIXME: Experimental approach for avoiding circular dependency.
   const [toolbarModuleState, setToolbarModuleState] =
     useState<TOOLBAR_MODULE_STUB | null>(null);
 
+  const loadToolbarModule = useCallback(async () => {
+    if (!toolbarModuleState) {
+      const toolbarModule = await import("../toolbar/toolbar");
+      setToolbarModuleState(toolbarModule as TOOLBAR_MODULE_STUB);
+    }
+  }, [toolbarModuleState]);
+
   useEffect(() => {
-    import("../toolbar/toolbar")
-      .then((toolbarModule) =>
-        setToolbarModuleState(toolbarModule as TOOLBAR_MODULE_STUB),
-      )
-      .catch((error) => {
-        console.error("Error loading toolbar module:", error);
-      });
-  }, []);
+    loadToolbarModule();
+  }, [loadToolbarModule]);
 
   const [isOpen, setIsOpen] = useState(false);
 
