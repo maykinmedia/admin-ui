@@ -71,15 +71,18 @@ export const Dropdown: React.FC<DropdownProps> = ({
   toolbarProps,
   ...props
 }) => {
-  // FIXME: Experimental approach for avoiding circular dependency.
   const [toolbarModuleState, setToolbarModuleState] =
     useState<TOOLBAR_MODULE_STUB | null>(null);
 
-  if (!toolbarModuleState) {
-    import("../toolbar/toolbar").then((toolbarModule) =>
-      setToolbarModuleState(toolbarModule as TOOLBAR_MODULE_STUB),
-    );
-  }
+  useEffect(() => {
+    import("../toolbar/toolbar")
+      .then((toolbarModule) =>
+        setToolbarModuleState(toolbarModule as TOOLBAR_MODULE_STUB),
+      )
+      .catch((error) => {
+        console.error("Error loading toolbar module:", error);
+      });
+  }, []);
 
   const [isOpen, setIsOpen] = useState(false);
 
