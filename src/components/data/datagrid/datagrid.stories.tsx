@@ -218,9 +218,15 @@ export const JSONPlaceholderExample: Story = {
         ]}
         selected={
           // SelectableRows story
-          args.selectable &&
-          objectList.length > 0 && [objectList[1], objectList[3], objectList[4]]
+          args.selected ||
+          (args.selectable &&
+            objectList.length > 0 && [
+              objectList[1],
+              objectList[3],
+              objectList[4],
+            ])
         }
+        customComparisonFunction={args.customComparisonFunction}
         onPageChange={setPage}
         onPageSizeChange={setPageSize}
         onSort={(field) => setSort(field)}
@@ -268,6 +274,44 @@ export const SelectableRows: Story = {
         },
       },
     ],
+  },
+  argTypes: {
+    onSelect: { action: "onSelect" },
+    onSelectionChange: { action: "onSelectionChange" },
+  },
+};
+
+export const SelectableRowsWithCustomMatchFunction: Story = {
+  ...JSONPlaceholderExample,
+  args: {
+    ...JSONPlaceholderExample.args,
+    fields: ["userId", "id", "title"],
+    selectable: true,
+    selectionActions: [
+      {
+        children: "Aanmaken",
+        name: "create",
+        onClick: ({ detail }) => {
+          alert(`${detail.length} items selected.`);
+        },
+      },
+    ],
+    selected: [
+      {
+        userId: 1,
+        id: 1,
+        title:
+          "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
+        body: "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto",
+      },
+      {
+        userId: 1,
+        id: 5,
+        title: "nesciunt quas odio",
+        body: "repudiandae veniam quaerat sunt sed\nalias aut fugiat sit autem sed est\nvoluptatem omnis possimus esse voluptatibus quis\nest aut tenetur dolor neque",
+      },
+    ],
+    customComparisonFunction: (item1, item2) => item1.id === item2.id,
   },
   argTypes: {
     onSelect: { action: "onSelect" },
