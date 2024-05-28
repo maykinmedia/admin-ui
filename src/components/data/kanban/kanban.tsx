@@ -9,10 +9,10 @@ import "./kanban.scss";
 export type KanbanProps = {
   /** If set, items are `draggable` allowing the user to rearrange them (across columns). */
   draggable?: boolean;
-  /** The kanban-template "change column" (accessible) label */
+  /** The kanban "change column" (accessible) label. It will be shown as an accessible label when selecting columns */
   labelSelectColumn?: string;
 
-  /** The kanban-template "move object position" (accessible) label. */
+  /** The kanban "move object position" (accessible) label. It will be shown as an accessible label on dragging */
   labelMoveObject?: string;
 
   /** Get called when the componentList changes. */
@@ -129,12 +129,10 @@ export const Kanban: React.FC<KanbanProps> = ({
             const count = column.items.length;
             return (
               <div key={columnIndex}>
-                <Body>
-                  <H3>
-                    {column.title}
-                    <div className="mykn-kanban__count">{count}</div>
-                  </H3>
-                </Body>
+                <H3>
+                  {column.title}
+                  <div className="mykn-kanban__count">{count}</div>
+                </H3>
                 <KanbanSection
                   columnIndex={columnIndex}
                   items={column.items}
@@ -155,7 +153,6 @@ export const Kanban: React.FC<KanbanProps> = ({
     </div>
   );
 };
-
 export type KanbanSectionProps = {
   columnIndex: number;
   items: React.ReactNode[];

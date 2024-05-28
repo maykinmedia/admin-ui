@@ -19,19 +19,31 @@ const meta: Meta<typeof Kanban> = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-const generateComponentList = (count: number) => {
+export const generateComponentList = (count: number) => {
   const randomLorenIpsum = [
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    "Ut enim ad minim veniam, quis nostrud exercitation ullamco.",
-    "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-    "Excepteur sint occaecat cupidatat non proident, sunt in.",
+    "This is a card",
+    "The card has the purpose to show some data",
+    "The data can either be super duper long, or also very short and concise",
+    "This is just the title",
   ];
+
+  const randomDays = ["20 days", "30 days", "40 days", "50 days", "60 days"];
+
+  const randomData = [
+    "Some random test",
+    "Some more test data to differentiate",
+    "And slightly more so that we can see the difference",
+  ];
+
+  const getRandomInt = (max: number) => {
+    return Math.floor(Math.random() * max);
+  };
+
   return Array.from({ length: count }, (_, i) => (
     <div key={i} style={{ display: "flex", flexDirection: "column" }}>
-      <span>20 days</span>
-      <span>{randomLorenIpsum[i % randomLorenIpsum.length]}</span>
-      <span>Some more data</span>
+      <span>{randomDays[getRandomInt(randomDays.length)]}</span>
+      <span>{randomLorenIpsum[getRandomInt(randomLorenIpsum.length)]}</span>
+      <span>{randomData[getRandomInt(randomData.length)]}</span>
     </div>
   ));
 };
