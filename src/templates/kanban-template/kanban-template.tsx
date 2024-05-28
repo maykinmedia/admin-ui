@@ -9,8 +9,7 @@ export type KanbanTemplateProps = BodyBaseTemplateProps & {
 };
 
 /**
- * grid template
- * @constructor
+ * Kanban template
  */
 export const KanbanTemplate: React.FC<KanbanTemplateProps> = ({
   children,
