@@ -39,21 +39,24 @@ export const generateComponentList = (count: number) => {
     return Math.floor(Math.random() * max);
   };
 
-  return Array.from({ length: count }, (_, i) => (
-    <div key={i} style={{ display: "flex", flexDirection: "column" }}>
-      <span>{randomDays[getRandomInt(randomDays.length)]}</span>
-      <span>{randomLorenIpsum[getRandomInt(randomLorenIpsum.length)]}</span>
-      <span>{randomData[getRandomInt(randomData.length)]}</span>
-    </div>
-  ));
+  return Array.from({ length: count }, (_, i) => ({
+    id: i.toString(),
+    content: (
+      <div style={{ display: "flex", flexDirection: "column" }}>
+        <span>{randomDays[getRandomInt(randomDays.length)]}</span>
+        <span>{randomLorenIpsum[getRandomInt(randomLorenIpsum.length)]}</span>
+        <span>{randomData[getRandomInt(randomData.length)]}</span>
+      </div>
+    ),
+  }));
 };
 
 // Define the component list
 const componentList = [
-  { title: "Todo", items: generateComponentList(10) },
-  { title: "In Progress", items: generateComponentList(10) },
-  { title: "In Review", items: generateComponentList(10) },
-  { title: "Done", items: generateComponentList(10) },
+  { title: "Todo", id: "1", items: generateComponentList(10) },
+  { title: "In Progress", id: "2", items: generateComponentList(10) },
+  { title: "In Review", id: "3", items: generateComponentList(10) },
+  { title: "Done", id: "4", items: generateComponentList(10) },
 ];
 
 export const KanbanComponent: Story = {
