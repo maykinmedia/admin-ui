@@ -14,10 +14,10 @@ const meta: Meta<typeof KanbanTemplate> = {
 
 // Define the component list
 const componentList = [
-  { title: "Todo", items: generateComponentList(10) },
-  { title: "In Progress", items: generateComponentList(10) },
-  { title: "In Review", items: generateComponentList(10) },
-  { title: "Done", items: generateComponentList(10) },
+  { title: "Todo", id: "1", items: generateComponentList(10) },
+  { title: "In Progress", id: "2", items: generateComponentList(10) },
+  { title: "In Review", id: "3", items: generateComponentList(10) },
+  { title: "Done", id: "4", items: generateComponentList(10) },
 ];
 
 export default meta;
