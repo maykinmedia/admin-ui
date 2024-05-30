@@ -20,7 +20,7 @@ export type KanbanProps = {
 
   /** Get called when a component changes columns. */
   onComponentChange?: (
-    movedComponent: React.ReactNode,
+    movedComponent: KanbanColumnItem,
     sourceColumnIndex: number,
     sourceObjectIndex: number,
     targetColumnIndex: number,
@@ -36,7 +36,13 @@ export type KanbanProps = {
 
 export type KanbanColumn = {
   title: string;
-  items: React.ReactNode[];
+  id: string;
+  items: KanbanColumnItem[];
+};
+
+export type KanbanColumnItem = {
+  id: string;
+  content: React.ReactNode;
 };
 
 export type KanbanDragData = {
@@ -99,7 +105,7 @@ export const Kanban: React.FC<KanbanProps> = ({
   };
 
   const moveObject = (
-    object: React.ReactNode,
+    object: KanbanColumnItem,
     sourceColumnIndex: number,
     targetColumnIndex: number,
     sourceObjectIndex: number,
@@ -145,7 +151,7 @@ export const Kanban: React.FC<KanbanProps> = ({
           {componentListState.map((column, columnIndex) => {
             const count = column.items.length;
             return (
-              <div key={columnIndex}>
+              <div key={column.id}>
                 <H3>
                   {column.title}
                   <div className="mykn-kanban__count">{count}</div>
@@ -172,7 +178,7 @@ export const Kanban: React.FC<KanbanProps> = ({
 };
 export type KanbanSectionProps = {
   columnIndex: number;
-  items: React.ReactNode[];
+  items: KanbanColumnItem[];
   draggable?: boolean;
   dragIndex: [number, number] | null;
   labelSelectColumn?: string;
@@ -180,7 +186,7 @@ export type KanbanSectionProps = {
   onDragOver: React.DragEventHandler;
   onDrop: React.DragEventHandler;
   moveObject: (
-    object: React.ReactNode,
+    object: KanbanColumnItem,
     sourceColumnIndex: number,
     targetColumnIndex: number,
     sourceObjectIndex: number,
@@ -235,11 +241,11 @@ export const KanbanSection: React.FC<KanbanSectionProps> = ({
 export type KanbanItemProps = {
   buttonProps?: ButtonProps;
   draggable?: boolean;
-  item: React.ReactNode;
+  item: KanbanColumnItem;
   columnIndex: number;
   objectIndex: number;
   moveObject: (
-    object: React.ReactNode,
+    object: KanbanColumnItem,
     sourceColumnIndex: number,
     targetColumnIndex: number,
     sourceObjectIndex: number,
@@ -316,7 +322,7 @@ export const KanbanItem: React.FC<KanbanItemProps> = ({
       {...buttonProps}
       onDragStart={(e) => onDragStart(e, columnIndex, objectIndex)}
     >
-      <div className="mykn-kanban__item">{item}</div>
+      <div className="mykn-kanban__item">{item.content}</div>
       {draggable && (
         <>
           <Select
