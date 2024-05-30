@@ -50,6 +50,21 @@ export const kanbanTemplate: Story = {
           onComponentListChange: (componentList) => {
             action("onComponentListChange")(componentList);
           },
+          onComponentChange: (
+            movedComponentData,
+            sourceColumnIndex,
+            sourceObjectIndex,
+            targetColumnIndex,
+            targetObjectIndex,
+          ) => {
+            action("onComponentChange")({
+              movedComponentData,
+              sourceColumnIndex,
+              sourceObjectIndex,
+              targetColumnIndex,
+              targetObjectIndex,
+            });
+          },
         }}
       />
     );
