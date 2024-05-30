@@ -18,6 +18,15 @@ export type KanbanProps = {
   /** Get called when the componentList changes. */
   onComponentListChange?: (componentList: KanbanColumn[]) => void;
 
+  /** Get called when a component changes columns. */
+  onComponentChange?: (
+    movedComponent: React.ReactNode,
+    sourceColumnIndex: number,
+    sourceObjectIndex: number,
+    targetColumnIndex: number,
+    targetObjectIndex: number,
+  ) => void;
+
   /** The new componentList prop defining columns and their items */
   componentList: KanbanColumn[];
 
@@ -42,6 +51,7 @@ export const Kanban: React.FC<KanbanProps> = ({
   labelMoveObject,
   onComponentListChange,
   title,
+  onComponentChange,
   ...props
 }) => {
   const [dragIndexState, setDragIndexState] = useState<[number, number] | null>(
@@ -106,6 +116,13 @@ export const Kanban: React.FC<KanbanProps> = ({
 
     setComponentListState(newComponentListState);
     onComponentListChange?.(newComponentListState);
+    onComponentChange?.(
+      object,
+      sourceColumnIndex,
+      sourceObjectIndex,
+      targetColumnIndex,
+      _targetObjectIndex,
+    );
   };
 
   const getInsertIndex = (children: Element[], y: number): number => {
