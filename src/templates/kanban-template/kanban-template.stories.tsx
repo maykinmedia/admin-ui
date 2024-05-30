@@ -47,24 +47,8 @@ export const kanbanTemplate: Story = {
         {...args}
         kanbanProps={{
           ...args.kanbanProps,
-          onComponentListChange: (componentList) => {
-            action("onComponentListChange")(componentList);
-          },
-          onComponentChange: (
-            movedComponentData,
-            sourceColumnIndex,
-            sourceObjectIndex,
-            targetColumnIndex,
-            targetObjectIndex,
-          ) => {
-            action("onComponentChange")({
-              movedComponentData,
-              sourceColumnIndex,
-              sourceObjectIndex,
-              targetColumnIndex,
-              targetObjectIndex,
-            });
-          },
+          onComponentListChange: action("onComponentListChange"),
+          onComponentChange: action("onComponentChange"),
         }}
       />
     );
