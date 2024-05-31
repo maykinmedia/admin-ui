@@ -33,31 +33,13 @@ const meta: Meta<typeof Dropdown> = {
     await waitFor(() => expect(canvas.queryByRole("dialog")).toBeNull());
     await userEvent.click(button, { delay: 10 });
 
-    await waitFor(
-      async () => {
-        const _list = document.activeElement?.closest(
-          '[role="dialog"]',
-        ) as HTMLElement;
-        const buttons = await within(_list).findAllByRole("button");
-        const lastButton = buttons[buttons.length - 1];
-        const lastButtonActive = document.activeElement === lastButton;
-
-        if (!lastButtonActive) {
-          await userEvent.tab({ delay: 10 });
-          throw new Error("Last button not selected");
-        }
-      },
-      {
-        interval: 100,
-        timeout: 2000,
-      },
-    );
-
-    if (parameters.lastButtonText) {
-      await expect(document.activeElement?.textContent).toBe(
-        parameters.lastButtonText,
-      );
+    for (let counter = 0; counter < 3; counter++) {
+      await userEvent.tab({ delay: 10 });
     }
+
+    await expect(document.activeElement?.textContent).toBe(
+      parameters.lastButtonText,
+    );
   },
 };
 
@@ -122,34 +104,20 @@ export const ActivateOnHover: Story = {
     // Click opens, escape closes.
     await userEvent.hover(button, { delay: 10 });
     await waitFor(() => canvas.findByRole("dialog"), { timeout: 300 });
-    await userEvent.keyboard("{Escape}");
+    await userEvent.keyboard("{Escape}", { delay: 10 });
     await waitFor(() => expect(canvas.queryByRole("dialog")).toBeNull());
     await userEvent.hover(button, { delay: 10 });
-
-    await waitFor(
-      async () => {
-        const _list = document.activeElement?.closest(
-          '[role="dialog"]',
-        ) as HTMLElement;
-        const buttons = await within(_list).findAllByRole("button");
-        const lastButton = buttons[buttons.length - 1];
-        const lastButtonActive = document.activeElement === lastButton;
-
-        if (!lastButtonActive) {
-          await userEvent.tab({ delay: 10 });
-          throw new Error("Last button not selected");
-        }
-      },
-      {
-        interval: 100,
-        timeout: 2000,
-      },
+    await waitFor(() =>
+      expect(document.activeElement?.textContent).toBe("Zaaktypen"),
     );
-    if (parameters.lastButtonText) {
-      await expect(document.activeElement?.textContent).toBe(
-        parameters.lastButtonText,
-      );
+
+    for (let counter = 0; counter < 3; counter++) {
+      await userEvent.tab({ delay: 20 });
     }
+
+    await expect(document.activeElement?.textContent).toBe(
+      parameters.lastButtonText,
+    );
   },
 };
 
@@ -166,33 +134,23 @@ export const ActivateOnFocus: Story = {
     await userEvent.keyboard("{Escape}");
     await waitFor(() => expect(canvas.queryByRole("dialog")).toBeNull());
     await userEvent.tab({ shift: true, delay: 10 });
-    await userEvent.tab({ delay: 10 });
 
-    await waitFor(
-      async () => {
-        const _list = document.activeElement?.closest(
-          '[role="dialog"]',
-        ) as HTMLElement;
-        const buttons = await within(_list).findAllByRole("button");
-        const lastButton = buttons[buttons.length - 1];
-        const lastButtonActive = document.activeElement === lastButton;
-
-        if (!lastButtonActive) {
-          await userEvent.tab({ delay: 10 });
-          throw new Error("Last button not selected");
-        }
-      },
-      {
-        interval: 100,
-        timeout: 2000,
-      },
+    await waitFor(() =>
+      expect(document.activeElement?.textContent).not.toBe("Hover me!"),
     );
 
-    if (parameters.lastButtonText) {
-      await expect(document.activeElement?.textContent).toBe(
-        parameters.lastButtonText,
-      );
+    await userEvent.tab({ delay: 10 });
+    await waitFor(() =>
+      expect(document.activeElement?.textContent).toBe("Zaaktypen"),
+    );
+
+    for (let counter = 0; counter < 3; counter++) {
+      await userEvent.tab({ delay: 20 });
     }
+
+    await expect(document.activeElement?.textContent).toBe(
+      parameters.lastButtonText,
+    );
   },
 };
 
@@ -340,6 +298,38 @@ export const NestedDropdown: Story = {
         </Dropdown>
       </>
     ),
+  },
+  play: async ({ canvasElement, parameters }) => {
+    const canvas = within(canvasElement);
+    const button = canvas.getByText("Click me!");
+
+    // Click opens, escape closes.
+    await userEvent.click(button, { delay: 10 });
+    await expect(await canvas.findByRole("dialog")).toBeVisible();
+    await userEvent.keyboard("{Escape}");
+    await waitFor(() => expect(canvas.queryByRole("dialog")).toBeNull());
+    await userEvent.click(button, { delay: 10 });
+    await waitFor(() =>
+      expect(document.activeElement?.textContent).toBe("Zaaktypen"),
+    );
+
+    await userEvent.tab({ delay: 20 });
+
+    await waitFor(() =>
+      expect(document.activeElement?.textContent).toBe("Documenttypen"),
+    );
+
+    await userEvent.tab({ delay: 20 });
+
+    await waitFor(() =>
+      expect(document.activeElement?.textContent).toBe("Admin"),
+    );
+
+    await userEvent.tab({ delay: 20 });
+
+    await expect(document.activeElement?.textContent).toBe(
+      parameters.lastButtonText,
+    );
   },
 };
 
