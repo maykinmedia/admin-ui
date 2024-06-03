@@ -15,7 +15,7 @@ import {
   useRole,
 } from "@floating-ui/react";
 import clsx from "clsx";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
 import { Button, ButtonProps } from "../button";
 import { ToolbarProps, ToolbarSpacerProps } from "../toolbar";
@@ -75,11 +75,16 @@ export const Dropdown: React.FC<DropdownProps> = ({
   const [toolbarModuleState, setToolbarModuleState] =
     useState<TOOLBAR_MODULE_STUB | null>(null);
 
-  if (!toolbarModuleState) {
-    import("../toolbar/toolbar").then((toolbarModule) =>
-      setToolbarModuleState(toolbarModule as TOOLBAR_MODULE_STUB),
-    );
-  }
+  const loadToolbarModule = useCallback(async () => {
+    if (!toolbarModuleState) {
+      const toolbarModule = await import("../toolbar/toolbar");
+      setToolbarModuleState(toolbarModule as TOOLBAR_MODULE_STUB);
+    }
+  }, [toolbarModuleState]);
+
+  useEffect(() => {
+    loadToolbarModule();
+  }, [loadToolbarModule]);
 
   const [isOpen, setIsOpen] = useState(false);
 

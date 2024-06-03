@@ -55,6 +55,22 @@
     background-color: var(--page-color-highlight);
   }
 
+  @keyframes skeleton-loading {
+    0% {
+      background-color: var(--typography-color-background);
+    }
+
+    100% {
+      background-color: var(--page-color-secondary);
+    }
+  }
+
+  &__row--loading {
+    height: 42px;
+    width: 100%;
+    animation: skeleton-loading 1s linear infinite alternate;
+  }
+
   &__cell {
     border-block-start: 1px solid transparent;
     border-block-end: 1px solid var(--typography-color-border);

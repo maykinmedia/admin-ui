@@ -434,6 +434,7 @@ export const DataGrid: React.FC<DataGridProps> = ({
           sortDirection={sortDirection}
           sortField={sortField}
           urlFields={urlFields}
+          loading={loading}
         ></DataGridBody>
 
         {/* Paginator */}
@@ -765,6 +766,7 @@ export type DataGridBodyProps = {
   sortDirection: "ASC" | "DESC" | undefined;
   sortField: string | undefined;
   urlFields: string[];
+  loading?: boolean;
 };
 
 /**
@@ -796,65 +798,73 @@ export const DataGridBody: React.FC<DataGridBodyProps> = ({
   sortDirection,
   sortField,
   urlFields,
+  loading,
 }) => (
   <tbody className="mykn-datagrid__body" role="rowgroup">
-    {renderableRows.map((rowData, index) => (
-      <tr
-        key={`${dataGridId}-row-${index}`}
-        className={clsx("mykn-datagrid__row", {
-          "mykn-datagrid__row--selected": selectedRows?.includes(rowData),
-        })}
-      >
-        {selectable && (
-          <td
-            className={clsx(
-              "mykn-datagrid__cell",
-              `mykn-datagrid__cell--checkbox`,
-            )}
-          >
-            <DataGridSelectionCheckbox
-              amountSelected={amountSelected}
-              checked={selectedRows?.includes(rowData) || false}
-              count={count}
-              handleSelect={handleSelect}
-              labelSelect={labelSelect}
+    {loading ? (
+      <DataGridSkeletonRows
+        fields={renderableFields.length}
+        rows={renderableRows.length}
+      />
+    ) : (
+      renderableRows.map((rowData, index) => (
+        <tr
+          key={`${dataGridId}-row-${index}`}
+          className={clsx("mykn-datagrid__row", {
+            "mykn-datagrid__row--selected": selectedRows?.includes(rowData),
+          })}
+        >
+          {selectable && (
+            <td
+              className={clsx(
+                "mykn-datagrid__cell",
+                `mykn-datagrid__cell--checkbox`,
+              )}
+            >
+              <DataGridSelectionCheckbox
+                amountSelected={amountSelected}
+                checked={selectedRows?.includes(rowData) || false}
+                count={count}
+                handleSelect={handleSelect}
+                labelSelect={labelSelect}
+                rowData={rowData}
+                sortedObjectList={renderableRows}
+              />
+            </td>
+          )}
+          {renderableFields.map((field) => (
+            <DataGridContentCell
+              key={`sort-${sortField}${sortDirection}-page-${page}-row-${renderableRows.indexOf(rowData)}-column-${renderableFields.indexOf(field)}`}
+              aProps={aProps}
+              badgeProps={badgeProps}
+              boolProps={boolProps}
+              pProps={pProps}
+              dataGridId={dataGridId}
+              decorate={decorate}
               rowData={rowData}
-              sortedObjectList={renderableRows}
-            />
-          </td>
-        )}
-        {renderableFields.map((field) => (
-          <DataGridContentCell
-            key={`sort-${sortField}${sortDirection}-page-${page}-row-${renderableRows.indexOf(rowData)}-column-${renderableFields.indexOf(field)}`}
-            aProps={aProps}
-            badgeProps={badgeProps}
-            boolProps={boolProps}
-            pProps={pProps}
-            dataGridId={dataGridId}
-            decorate={decorate}
-            rowData={rowData}
-            editable={editable}
-            isEditingRow={editingRow === rowData}
-            isEditingField={
-              editingRow === rowData &&
-              editingFieldIndex === renderableFields.indexOf(field)
-            }
-            field={field}
-            renderableFields={renderableFields}
-            urlFields={urlFields}
-            onChange={onChange}
-            onClick={(e, rowData) => {
-              if (editable) {
-                setEditingState([rowData, renderableFields.indexOf(field)]);
-                e.preventDefault();
+              editable={editable}
+              isEditingRow={editingRow === rowData}
+              isEditingField={
+                editingRow === rowData &&
+                editingFieldIndex === renderableFields.indexOf(field)
               }
-              e.currentTarget.nodeName === "A" && onClick?.(e, rowData);
-            }}
-            onEdit={onEdit}
-          />
-        ))}
-      </tr>
-    ))}
+              field={field}
+              renderableFields={renderableFields}
+              urlFields={urlFields}
+              onChange={onChange}
+              onClick={(e, rowData) => {
+                if (editable) {
+                  setEditingState([rowData, renderableFields.indexOf(field)]);
+                  e.preventDefault();
+                }
+                e.currentTarget.nodeName === "A" && onClick?.(e, rowData);
+              }}
+              onEdit={onEdit}
+            />
+          ))}
+        </tr>
+      ))
+    )}
   </tbody>
 );
 
@@ -1135,6 +1145,37 @@ export const DataGridContentCell: React.FC<DataGridContentCellProps> = ({
     </td>
   );
 };
+
+export type DataGridSkeletonCellsProps = {
+  fields?: number;
+  rows?: number;
+};
+
+/**
+ * DataGrid skeleton rows
+ */
+export const DataGridSkeletonRows: React.FC<DataGridSkeletonCellsProps> = ({
+  fields = 1,
+  rows = 5,
+}) =>
+  Array.from({ length: rows }).map((_, rowIndex) => (
+    <tr
+      key={rowIndex}
+      className={clsx("mykn-datagrid__row", "mykn-datagrid__row--loading")}
+    >
+      {Array.from({ length: fields }).map((_, colIndex) => (
+        <td
+          key={colIndex}
+          className={clsx(
+            "mykn-datagrid__cell",
+            "mykn-datagrid__cell--loading",
+          )}
+        >
+          <P></P>
+        </td>
+      ))}
+    </tr>
+  ));
 
 export type DataGridSelectionCheckboxProps = {
   amountSelected: number;
