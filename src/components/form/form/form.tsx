@@ -5,7 +5,11 @@ import { ConfigContext } from "../../../contexts";
 import { Attribute, AttributeData } from "../../../lib/data/attributedata";
 import { FormField } from "../../../lib/form/typeguards";
 import { getValueFromFormData, serializeForm } from "../../../lib/form/utils";
-import { Validator, getErrorFromErrors } from "../../../lib/form/validation";
+import {
+  Validator,
+  getErrorFromErrors,
+  validateForm,
+} from "../../../lib/form/validation";
 import { forceArray } from "../../../lib/format/array";
 import { ucFirst } from "../../../lib/format/string";
 import { useIntl } from "../../../lib/i18n/useIntl";
@@ -96,7 +100,7 @@ export const Form: React.FC<FormProps> = ({
   showActions = true,
   toolbarProps,
   useTypedResults = false,
-  validate,
+  validate = validateForm,
   validateOnChange = false,
   validators,
   values,
@@ -203,6 +207,7 @@ export const Form: React.FC<FormProps> = ({
                 key={field.id || index}
                 direction={direction}
                 error={error}
+                forceShowError={!validateOnChange}
                 value={value}
                 onChange={defaultOnChange}
                 {...field}
