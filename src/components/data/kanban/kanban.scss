@@ -12,29 +12,16 @@
     height: 100%;
   }
 
-  &__count {
-    margin-left: var(--spacing-h);
-    border-radius: 10px;
-    border: 1px solid var(--typography-color-border);
-    background-color: #fafafa;
-    padding: 0 6px;
-    color: var(--typography-color-muted);
-  }
-
   &__body .mykn-column {
-    border: 1px solid var(--typography-color-border);
-    border-radius: var(--border-radius-l);
-    background-color: var(--page-color-background-alt);
+    box-sizing: border-box;
     overflow-y: auto;
-    overflow-x: hidden;
-    padding: 18px 16px;
   }
 
   &__body &__drop-indicator {
     background-color: var(--page-color-accent);
     border: 1px dashed var(--page-color-primary);
     box-sizing: content-box;
-    height: calc(var(--typography-line-height-body-s) * 3);
+    height: calc(var(--typography-line-height-body-s) * 2);
     padding-block: var(--spacing-v);
   }
 
@@ -43,27 +30,54 @@
     border-style: dashed;
   }
 
-  &__body .mykn-column > .mykn-button {
+  &__body .mykn-column > .mykn-body > .mykn-h3 {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+
+  &__body .mykn-column .mykn-badge {
+    margin-inline-start: var(--spacing-h);
+  }
+
+  &__track {
     border: 1px solid var(--typography-color-border);
-    border-radius: var(--border-radius-l);
+    display: flex;
+    flex-direction: column;
+    gap: calc(2 * var(--spacing-v));
+    padding: calc(2 * var(--spacing-v)) calc(2 * var(--spacing-h)) !important;
+    position: relative;
+  }
+
+  &__track:before {
+    background-color: var(--typography-color-border);
+    content: "";
+    height: 100%;
+    inset-block-start: 0;
+    inset-inline-start: calc(-2 * var(--spacing-h));
+    opacity: 0.1;
+    position: absolute;
+    width: calc(100% + 2 * var(--spacing-h));
+  }
+
+  &__body &__button {
     white-space: normal;
-    background-color: var(--typography-color-background);
-    padding: 16px;
 
     &:focus-within {
       z-index: 100;
     }
   }
 
-  &__body .mykn-column > .mykn-button:hover,
-  &__body .mykn-column > .mykn-button:focus {
-    border: 1px solid var(--page-color-primary);
-    scale: 100%;
-    box-shadow: unset;
-    background-color: var(--typography-color-background-alt);
+  &__body &__preview {
+    display: flex;
+    flex-shrink: 0;
+    height: calc(var(--typography-line-height-body-s) * 2);
+    justify-content: center;
+    overflow: hidden;
+    width: calc(var(--typography-line-height-body-s) * 2);
   }
 
-  &__body .mykn-column > .mykn-button > .mykn-select {
+  &__select {
     inset-block-end: var(--spacing-v);
     inset-inline-end: var(--spacing-h);
     position: absolute;
@@ -80,9 +94,5 @@
       //background-color: green;
       visibility: visible;
     }
-  }
-
-  &__item {
-    width: 100%;
   }
 }

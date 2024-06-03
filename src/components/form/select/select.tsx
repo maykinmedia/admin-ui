@@ -60,6 +60,7 @@ export type SelectProps = ChoiceFieldProps & {
  * @constructor
  */
 export const Select: React.FC<SelectProps> = ({
+  className,
   icon,
   id,
   name,
@@ -208,6 +209,7 @@ export const Select: React.FC<SelectProps> = ({
             "mykn-select--selected": selectedIndex,
             [`mykn-select--size-${size}`]: size,
           },
+          className,
         )}
         tabIndex={0}
         ref={refs.setReference}
