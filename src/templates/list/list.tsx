@@ -1,12 +1,11 @@
 import React from "react";
 
-import { DataGrid, DataGridProps, ToolbarItem } from "../../components";
+import { DataGrid, DataGridProps } from "../../components";
 import { CardBaseTemplate } from "../base";
 import { BodyBaseTemplateProps } from "../base/bodyBase";
 
 export type ListTemplateProps = BodyBaseTemplateProps & {
   dataGridProps: DataGridProps;
-  sidebarItems?: ToolbarItem[];
 };
 
 /**
