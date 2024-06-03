@@ -1,42 +1,65 @@
 import React from "react";
 
-import { AttributeData } from "../../../lib";
-import { field2Title } from "../../../lib/format/string";
+import {
+  Attribute,
+  AttributeData,
+  LabeledAttributeData,
+  field2Title,
+  isPrimitive,
+} from "../../../lib";
 import { Value } from "../value";
 import "./attributetable.scss";
 
 export type AttributeTableProps = {
-  object: AttributeData;
-  fields?: Array<keyof AttributeData>;
+  object?: AttributeData;
+  labeledObject?: LabeledAttributeData;
+  fields?: Array<keyof LabeledAttributeData | keyof AttributeData>;
 };
 
 export type AttributeTableRowProps = {
-  object: AttributeData;
-  field: keyof AttributeData;
+  object?: AttributeData;
+  labeledObject?: LabeledAttributeData;
+  field: keyof LabeledAttributeData | keyof AttributeData;
 };
 
 export const AttributeTable: React.FC<AttributeTableProps> = ({
   object = {},
-  fields = Object.keys(object),
+  labeledObject = {},
+  fields = Object.keys(object).concat(Object.keys(labeledObject)),
   ...props
 }) => (
   <div className="mykn-attributetable" {...props}>
     {fields.map((field) => (
-      <AttributeTableRow key={field} field={field} object={object} />
+      <AttributeTableRow
+        key={field}
+        field={field}
+        object={object}
+        labeledObject={labeledObject}
+      />
     ))}
   </div>
 );
 
 export const AttributeTableRow: React.FC<AttributeTableRowProps> = ({
-  object,
+  object = {},
+  labeledObject = {},
   field,
-}) => (
-  <div className="mykn-attributetable__row">
-    <div className="mykn-attributetable__cell mykn-attributetable__key">
-      {field2Title(field)}
+}) => {
+  const fieldInObject = Object.keys(object).includes(field);
+  let value = fieldInObject ? object[field] : labeledObject[field].value;
+
+  if (isPrimitive(value) || value === null) {
+    value = <Value value={value as Attribute} />;
+  }
+
+  const label = fieldInObject ? field2Title(field) : labeledObject[field].label;
+
+  return (
+    <div className="mykn-attributetable__row">
+      <div className="mykn-attributetable__cell mykn-attributetable__key">
+        {label}
+      </div>
+      <div className="mykn-attributetable__cell">{value}</div>
     </div>
-    <div className="mykn-attributetable__cell">
-      <Value value={object[field]} />
-    </div>
-  </div>
-);
+  );
+};
