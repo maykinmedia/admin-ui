@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import React, { ReactNode } from "react";
 
 import { ChoiceFieldProps } from "../../components";
 
@@ -86,11 +86,15 @@ export type FieldOptions = {
   /** The fields to include in this fieldset. */
   fields: Field[];
 
-  /** When shown in an Itemgrid: the field to use as title. */
+  /** When shown in an ItemGrid: the field to use as title. */
   title?: Field;
 
   /** When shown in an AttributeGrid: the span to use for this fieldset. */
   span?: number;
+
+  /** When shown in a Kanban: the component to render. */
+  // eslint-disable-next-line
+  component?: React.ComponentType<any>;
 };
 
 /** A Django-admin like fieldset definition. */
