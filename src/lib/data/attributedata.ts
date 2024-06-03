@@ -1,3 +1,5 @@
+import { ReactNode } from "react";
+
 import { ChoiceFieldProps } from "../../components";
 
 /**
@@ -14,6 +16,14 @@ export const DEFAULT_URL_FIELDS = [
 
 /** An object with key/value pairs describing various attributes to be presented. */
 export type AttributeData<T = Attribute> = Record<string, T>;
+
+/** An attribute with its corresponding label */
+export type LabeledAttribute = {
+  label: string | ReactNode;
+  value: Attribute | ReactNode;
+};
+
+export type LabeledAttributeData<T = LabeledAttribute> = Record<string, T>;
 
 /** A value in `AttributeData`. */
 export type Attribute = boolean | number | string | null;

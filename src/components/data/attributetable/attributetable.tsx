@@ -1,55 +1,63 @@
-import React, { ReactNode } from "react";
+import React from "react";
 
-import { Attribute } from "../../../lib";
+import {
+  Attribute,
+  AttributeData,
+  LabeledAttributeData,
+  field2Title,
+  isPrimitive,
+} from "../../../lib";
 import { Value } from "../value";
 import "./attributetable.scss";
 
-export type ValueType = ReactNode;
-export type LabelType = string | ReactNode;
-export type FieldData = {
-  label: LabelType;
-  value: ValueType;
-};
-export type ObjectData<T = FieldData> = Record<string, T>;
-
-export type ObjectTableProps = {
-  object: ObjectData;
-  fields?: Array<keyof ObjectData>;
+export type AttributeTableProps = {
+  object?: AttributeData;
+  labeledObject?: LabeledAttributeData;
+  fields?: Array<keyof LabeledAttributeData | keyof AttributeData>;
 };
 
-export type ObjectTableRowProps = {
-  object: ObjectData;
-  field: keyof ObjectData;
+export type AttributeTableRowProps = {
+  object?: AttributeData;
+  labeledObject?: LabeledAttributeData;
+  field: keyof LabeledAttributeData | keyof AttributeData;
 };
 
-export const AttributeTable: React.FC<ObjectTableProps> = ({
+export const AttributeTable: React.FC<AttributeTableProps> = ({
   object = {},
-  fields = Object.keys(object),
+  labeledObject = {},
+  fields = Object.keys(object).concat(Object.keys(labeledObject)),
   ...props
 }) => (
   <div className="mykn-attributetable" {...props}>
     {fields.map((field) => (
-      <AttributeTableRow key={field} field={field} object={object} />
+      <AttributeTableRow
+        key={field}
+        field={field}
+        object={object}
+        labeledObject={labeledObject}
+      />
     ))}
   </div>
 );
 
-export const AttributeTableRow: React.FC<ObjectTableRowProps> = ({
-  object,
+export const AttributeTableRow: React.FC<AttributeTableRowProps> = ({
+  object = {},
+  labeledObject = {},
   field,
 }) => {
-  let value = object[field].value;
-  if (
-    ["boolean", "number", "string"].includes(typeof value) ||
-    value === null
-  ) {
+  const fieldInObject = Object.keys(object).includes(field);
+  let value = fieldInObject ? object[field] : labeledObject[field].value;
+
+  if (isPrimitive(value) || value === null) {
     value = <Value value={value as Attribute} />;
   }
+
+  const label = fieldInObject ? field2Title(field) : labeledObject[field].label;
 
   return (
     <div className="mykn-attributetable__row">
       <div className="mykn-attributetable__cell mykn-attributetable__key">
-        {object[field].label}
+        {label}
       </div>
       <div className="mykn-attributetable__cell">{value}</div>
     </div>

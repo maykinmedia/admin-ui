@@ -226,7 +226,7 @@ export const JSONPlaceholderExample: Story = {
               objectList[4],
             ])
         }
-        customComparisonFunction={args.customComparisonFunction}
+        equalityChecker={args.equalityChecker}
         onPageChange={setPage}
         onPageSizeChange={setPageSize}
         onSort={(field) => setSort(field)}
@@ -311,7 +311,7 @@ export const SelectableRowsWithCustomMatchFunction: Story = {
         body: "repudiandae veniam quaerat sunt sed\nalias aut fugiat sit autem sed est\nvoluptatem omnis possimus esse voluptatibus quis\nest aut tenetur dolor neque",
       },
     ],
-    customComparisonFunction: (item1, item2) => item1.id === item2.id,
+    equalityChecker: (item1, item2) => item1.id === item2.id,
   },
   argTypes: {
     onSelect: { action: "onSelect" },

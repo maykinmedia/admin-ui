@@ -13,9 +13,9 @@ const meta: Meta<typeof AttributeTable> = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const AttributeTableComponent: Story = {
+export const LabeledAttributeTableComponent: Story = {
   args: {
-    object: {
+    labeledObject: {
       url: { label: "Url", value: "https://www.example.com" },
       omschrijving: { label: "Omschrijving", value: "Afvalpas vervangen" },
       zaaktype: { label: "Zaaktype", value: "https://www.example.com" },
@@ -28,9 +28,9 @@ export const AttributeTableComponent: Story = {
   },
 };
 
-export const AttributeTableComponentWithNodes: Story = {
+export const LabeledAttributeTableComponentWithNodes: Story = {
   args: {
-    object: {
+    labeledObject: {
       button: {
         label: "A button!",
         value: (
@@ -52,6 +52,21 @@ export const AttributeTableComponentWithNodes: Story = {
         ),
         value: "Some value",
       },
+    },
+  },
+};
+
+export const AttributeTableComponent: Story = {
+  args: {
+    object: {
+      url: "https://www.example.com",
+      omschrijving: "Afvalpas vervangen",
+      zaaktype: "https://www.example.com",
+      versie: 2,
+      opmerkingen: null,
+      actief: false,
+      toekomstig: false,
+      concept: true,
     },
   },
 };
