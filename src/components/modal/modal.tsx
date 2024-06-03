@@ -1,10 +1,11 @@
 import clsx from "clsx";
 import React, { useEffect, useRef, useState } from "react";
 
-import { formatMessage, useIntl } from "../../lib";
+import { formatMessage, isPrimitive, useIntl } from "../../lib";
 import { ButtonProps } from "../button";
 import { Card } from "../card";
 import { Outline } from "../icon";
+import { H2 } from "../typography";
 import "./modal.scss";
 
 export type ModalProps = Omit<React.ComponentProps<"dialog">, "title"> & {
@@ -79,7 +80,10 @@ export const Modal: React.FC<ModalProps> = ({
       onClose={handleClose}
       {...props}
     >
-      <Card controls={controls} title={title}>
+      <Card
+        controls={controls}
+        title={isPrimitive(title) ? <H2>{title}</H2> : title}
+      >
         {children}
       </Card>
     </dialog>
