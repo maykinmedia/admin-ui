@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import React, { useId } from "react";
+import React, { useId, useState } from "react";
 
 import {
   FormField,
@@ -21,6 +21,9 @@ export type FormControlProps = FormField & {
 
   /** An error message to show. */
   error?: string;
+
+  /** Whether to forcefully show the error (if set), this skips the dirty check. */
+  forceShowError?: boolean;
 };
 
 /**
@@ -28,14 +31,17 @@ export type FormControlProps = FormField & {
  * label and `error` message.
  * @param direction
  * @param error
+ * @param forceShowError
  * @param props
  * @constructor
  */
 export const FormControl: React.FC<FormControlProps> = ({
   direction = "vertical",
   error = "",
+  forceShowError,
   ...props
 }) => {
+  const [isDirty, setIsDirty] = useState(false);
   const id = useId();
   const _id = props.id || id;
   // Keep in sync with CheckboxGroup, possibly add constant?
@@ -55,8 +61,16 @@ export const FormControl: React.FC<FormControlProps> = ({
         aria-invalid={!!error}
         aria-describedby={error ? idError : undefined}
         {...props}
+        onChange={(
+          e: React.ChangeEvent<HTMLInputElement & HTMLSelectElement>,
+        ) => {
+          setIsDirty(true);
+          props.onChange?.(e);
+        }}
       />
-      {error && <ErrorMessage id={idError}>{error}</ErrorMessage>}
+      {(isDirty || forceShowError) && error && (
+        <ErrorMessage id={idError}>{error}</ErrorMessage>
+      )}
     </div>
   );
 };
