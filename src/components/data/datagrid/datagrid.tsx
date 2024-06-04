@@ -497,7 +497,23 @@ export const DataGridCaption: React.FC<DataGridCaptionProps> = ({
   onSelectAll,
 }) => {
   const [selectFieldsModalState, setSelectFieldsModalState] = useState(false);
+  const [selectFieldsActiveState, setSelectFieldsActiveState] = useState<
+    Record<string, boolean>
+  >({});
   const intl = useIntl();
+
+  // Create map mapping `field.name` to active state.
+  useEffect(() => {
+    setSelectFieldsActiveState(
+      fields.reduce(
+        (acc, field) => ({
+          ...acc,
+          [field.name]: field.active !== false,
+        }),
+        {},
+      ),
+    );
+  }, [fields]);
 
   const allSelected =
     selectedRows?.every((a) => renderableRows.includes(a)) &&
@@ -595,9 +611,16 @@ export const DataGridCaption: React.FC<DataGridCaptionProps> = ({
                     options: fields.map((f) => ({
                       label: field2Caption(f.name),
                       value: f.name,
-                      selected: f.active !== false,
+                      selected: Boolean(selectFieldsActiveState[f.name]),
                     })),
                     type: "checkbox",
+                    onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+                      const name = e.target.value;
+                      setSelectFieldsActiveState({
+                        ...selectFieldsActiveState,
+                        [name]: !selectFieldsActiveState[name],
+                      });
+                    },
                   },
                 ]}
                 labelSubmit={ucFirst(_labelSaveFieldSelection)}
