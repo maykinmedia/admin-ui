@@ -28,6 +28,7 @@ export const FormComponent: Story = {
       { label: "Last name", name: "last_name", required: true },
       { label: "Address", name: "address", required: true },
       { label: "Address (addition)", name: "address", required: true },
+      { label: "Date of birth", name: "date_of_birth", type: "date" },
       {
         label: "Select school year",
         name: "school_year",
@@ -62,6 +63,9 @@ export const FormComponent: Story = {
     const schoolYear = canvas.getByLabelText("Select school year");
     const address = canvas.getByLabelText("Address");
     const address_addition = canvas.getByLabelText("Address (addition)");
+    const dateOfBirth = canvas.getByLabelText("Date of birth");
+    const english = canvas.getByLabelText("English");
+    const math = canvas.getByLabelText("Math");
 
     await userEvent.clear(firstName);
     await userEvent.type(firstName, "John", { delay: 10 });
@@ -78,6 +82,13 @@ export const FormComponent: Story = {
 
     await userEvent.clear(address_addition);
     await userEvent.type(address_addition, "2", { delay: 10 });
+
+    await userEvent.clear(dateOfBirth);
+    await userEvent.type(dateOfBirth, "2023-09-15", { delay: 10 });
+    await userEvent.type(dateOfBirth, "{enter}");
+
+    await userEvent.click(english, { delay: 10 });
+    await userEvent.click(math, { delay: 10 });
   },
 };
 
@@ -165,6 +176,8 @@ export const UsageWithFormik: Story = {
       },
       { label: "Address", name: "address[0]", required: true },
       { label: "Address (addition)", name: "address[1]", required: true },
+      { label: "Date of birth", name: "date_of_birth", type: "date" },
+
       {
         label: "Select courses",
         name: "courses",

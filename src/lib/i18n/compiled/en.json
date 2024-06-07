@@ -57,6 +57,72 @@
       "value": "select columns"
     }
   ],
+  "mykn.components.DatePicker.labelChooseDayPrefix": [
+    {
+      "type": 0,
+      "value": "Choose day"
+    }
+  ],
+  "mykn.components.DatePicker.labelClose": [
+    {
+      "type": 0,
+      "value": "Close"
+    }
+  ],
+  "mykn.components.DatePicker.labelDisabledDayPrefix": [
+    {
+      "type": 0,
+      "value": "Disabled day"
+    }
+  ],
+  "mykn.components.DatePicker.labelMonthPrefix": [
+    {
+      "type": 0,
+      "value": "Month"
+    }
+  ],
+  "mykn.components.DatePicker.labelNextMonth": [
+    {
+      "type": 0,
+      "value": "Next month"
+    }
+  ],
+  "mykn.components.DatePicker.labelNextYear": [
+    {
+      "type": 0,
+      "value": "Next year"
+    }
+  ],
+  "mykn.components.DatePicker.labelPreviousMonth": [
+    {
+      "type": 0,
+      "value": "Previous month"
+    }
+  ],
+  "mykn.components.DatePicker.labelPreviousYear": [
+    {
+      "type": 0,
+      "value": "Previous year"
+    }
+  ],
+  "mykn.components.DatePicker.labelTimeInput": [
+    {
+      "type": 0,
+      "value": "Choose time:"
+    }
+  ],
+  "mykn.components.DatePicker.labelWeek": [
+    {
+      "type": 0,
+      "value": "Week"
+    }
+  ],
+  "mykn.components.DatePicker.labelWeekPrefix": [
+    {
+      "type": 0,
+      "value": "Week"
+    }
+  ],
   "mykn.components.Form.labelSubmit": [
     {
       "type": 0,

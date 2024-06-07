@@ -6,10 +6,12 @@ import {
   isCheckbox,
   isCheckboxGroup,
   isChoiceField,
+  isDatePicker,
   isInput,
 } from "../../../lib/form/typeguards";
 import { Checkbox } from "../checkbox";
 import { ChoiceField } from "../choicefield";
+import { DatePicker } from "../datepicker";
 import { ErrorMessage } from "../errormessage";
 import { Input, InputProps } from "../input";
 import { Label } from "../label";
@@ -84,6 +86,10 @@ export const FormControl: React.FC<FormControlProps> = ({
 export const FormWidget: React.FC<FormField> = ({ ...props }) => {
   if (isCheckbox(props)) {
     return <Checkbox {...props} />;
+  }
+
+  if (isDatePicker(props)) {
+    return <DatePicker {...props} />;
   }
 
   if (isChoiceField(props)) {

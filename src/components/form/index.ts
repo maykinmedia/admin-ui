@@ -1,5 +1,6 @@
 export * from "./checkbox";
 export * from "./choicefield";
+export * from "./datepicker";
 export * from "./errormessage";
 export * from "./form";
 export * from "./formcontrol";

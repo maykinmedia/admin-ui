@@ -57,6 +57,72 @@
       "value": "selecteer kolommen"
     }
   ],
+  "mykn.components.DatePicker.labelChooseDayPrefix": [
+    {
+      "type": 0,
+      "value": "Kies dag"
+    }
+  ],
+  "mykn.components.DatePicker.labelClose": [
+    {
+      "type": 0,
+      "value": "Sluiten"
+    }
+  ],
+  "mykn.components.DatePicker.labelDisabledDayPrefix": [
+    {
+      "type": 0,
+      "value": "Uitgeschakelde dag"
+    }
+  ],
+  "mykn.components.DatePicker.labelMonthPrefix": [
+    {
+      "type": 0,
+      "value": "maand"
+    }
+  ],
+  "mykn.components.DatePicker.labelNextMonth": [
+    {
+      "type": 0,
+      "value": "Volgende maand"
+    }
+  ],
+  "mykn.components.DatePicker.labelNextYear": [
+    {
+      "type": 0,
+      "value": "Volgend jaar"
+    }
+  ],
+  "mykn.components.DatePicker.labelPreviousMonth": [
+    {
+      "type": 0,
+      "value": "Vorige maand"
+    }
+  ],
+  "mykn.components.DatePicker.labelPreviousYear": [
+    {
+      "type": 0,
+      "value": "Vorig jaar"
+    }
+  ],
+  "mykn.components.DatePicker.labelTimeInput": [
+    {
+      "type": 0,
+      "value": "Kies tijd:"
+    }
+  ],
+  "mykn.components.DatePicker.labelWeek": [
+    {
+      "type": 0,
+      "value": "Week"
+    }
+  ],
+  "mykn.components.DatePicker.labelWeekPrefix": [
+    {
+      "type": 0,
+      "value": "week"
+    }
+  ],
   "mykn.components.Form.labelSubmit": [
     {
       "type": 0,
