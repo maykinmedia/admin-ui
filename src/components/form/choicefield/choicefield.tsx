@@ -6,15 +6,24 @@ import { Select, SelectProps } from "../select";
 export type ChoiceFieldProps<
   Element = HTMLDivElement,
   FormElement = HTMLSelectElement,
-> = Omit<React.HTMLAttributes<Element>, "onChange"> & {
+> = Omit<React.HTMLAttributes<Element>, "onChange" | "value"> & {
   /** Can be used to generate `SelectOption` components from an array of objects. */
   options: Option[];
 
   /** Form element name. */
   name?: string;
 
+  /** Form element type. */
+  type?: string;
+
   /** Gets called when the input is blurred. */
   onBlur?: React.FormEventHandler<FormElement>;
+
+  /** Value of the form element */
+  value?: Option["value"] | null;
+
+  /** The variant (style) of the form element. */
+  variant?: "normal" | "transparent";
 
   /**
    *
@@ -24,11 +33,6 @@ export type ChoiceFieldProps<
    * the use of events).
    */
   onChange?: React.ChangeEventHandler<FormElement>;
-
-  value?: Option["value"] | null;
-
-  /** The variant (style) of the form element. */
-  variant?: "normal" | "transparent";
 };
 /**
  * A single (select) option, can be passed to `Select as array.
@@ -45,12 +49,7 @@ export type Option<L = number | string, V = string | number | undefined> = {
  * @param props
  * @constructor
  */
-export const ChoiceField: React.FC<
-  ChoiceFieldProps & {
-    /** Can be set to `checkbox` to render as checkbox group. */
-    type?: "checkbox" | "select";
-  }
-> = ({ type, ...props }) => {
+export const ChoiceField: React.FC<ChoiceFieldProps> = ({ type, ...props }) => {
   if (type === "checkbox") {
     return <CheckboxGroup {...(props as CheckboxGroupProps)}></CheckboxGroup>;
   }

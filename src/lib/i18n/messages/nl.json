@@ -34,6 +34,61 @@
     "description": "mykn.components.Modal: The datagrid select fields label",
     "originalDefault": "selecteer kolommen"
   },
+  "mykn.components.DatePicker.labelChooseDayPrefix": {
+    "defaultMessage": "Kies dag",
+    "description": "mykn.components.DatePicker: The choose day prefix",
+    "originalDefault": "Kies dag"
+  },
+  "mykn.components.DatePicker.labelClose": {
+    "defaultMessage": "Sluiten",
+    "description": "mykn.components.DatePicker: The datepicker close label",
+    "originalDefault": "Sluiten"
+  },
+  "mykn.components.DatePicker.labelDisabledDayPrefix": {
+    "defaultMessage": "Uitgeschakelde dag",
+    "description": "mykn.components.DatePicker: The disabled day prefix",
+    "originalDefault": "Uitgeschakelde dag"
+  },
+  "mykn.components.DatePicker.labelMonthPrefix": {
+    "defaultMessage": "maand",
+    "description": "mykn.components.DatePicker: The month prefix",
+    "originalDefault": "maand"
+  },
+  "mykn.components.DatePicker.labelNextMonth": {
+    "defaultMessage": "Volgende maand",
+    "description": "mykn.components.DatePicker: The datepicker next month label",
+    "originalDefault": "Volgende maand"
+  },
+  "mykn.components.DatePicker.labelNextYear": {
+    "defaultMessage": "Volgend jaar",
+    "description": "mykn.components.DatePicker: The datepicker next year label",
+    "originalDefault": "Volgend jaar"
+  },
+  "mykn.components.DatePicker.labelPreviousMonth": {
+    "defaultMessage": "Vorige maand",
+    "description": "mykn.components.DatePicker: The datepicker previous month label",
+    "originalDefault": "Vorige maand"
+  },
+  "mykn.components.DatePicker.labelPreviousYear": {
+    "defaultMessage": "Vorig jaar",
+    "description": "mykn.components.DatePicker: The datepicker previous year label",
+    "originalDefault": "Vorig jaar"
+  },
+  "mykn.components.DatePicker.labelTimeInput": {
+    "defaultMessage": "Kies tijd:",
+    "description": "mykn.components.DatePicker: The time input label",
+    "originalDefault": "Kies tijd:"
+  },
+  "mykn.components.DatePicker.labelWeek": {
+    "defaultMessage": "Week",
+    "description": "mykn.components.DatePicker: The week label",
+    "originalDefault": "Week"
+  },
+  "mykn.components.DatePicker.labelWeekPrefix": {
+    "defaultMessage": "week",
+    "description": "mykn.components.DatePicker: The week prefix",
+    "originalDefault": "week"
+  },
   "mykn.components.Form.labelSubmit": {
     "defaultMessage": "verzenden",
     "description": "mykn.components.Form: The submit form label",

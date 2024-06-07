@@ -144,7 +144,6 @@ export const Form: React.FC<FormProps> = ({
       onChange(event);
       return;
     }
-
     const form = (event.target as HTMLInputElement).form;
 
     if (form && !onChange) {
