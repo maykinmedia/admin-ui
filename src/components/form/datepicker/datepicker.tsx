@@ -25,6 +25,9 @@ export type DatePickerProps = Omit<
   /** DatePicker label. */
   label?: string;
 
+  /** Placeholder. */
+  placeholder?: string;
+
   /** Can be a `Date` `[Date, Date]` or a (date) `string` or a (time) `number`. */
   value?: DatePickerValue | string | number;
 
@@ -56,6 +59,8 @@ export const DatePicker: React.FC<DatePickerProps> = ({
   type = "daterange",
   locale = nl,
   name,
+  placeholderText,
+  placeholder = placeholderText,
   value = null,
   required,
   labelNextYear,
@@ -360,6 +365,7 @@ export const DatePicker: React.FC<DatePickerProps> = ({
         className="mykn-datepicker mykn-input"
         isClearable={!required}
         locale={locale}
+        placeholderText={placeholder}
         selected={date}
         selectsRange={type === "daterange"}
         startDate={dateRange[0]}
