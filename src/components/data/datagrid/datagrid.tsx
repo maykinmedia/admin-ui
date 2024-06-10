@@ -711,7 +711,8 @@ export const DataGridHeading: React.FC<DataGridHeadingProps> = ({
             const placeholder = ucFirst(field.name);
 
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            const { options, valueTransform, ...context } = field;
+            const { options, filterTransform, valueTransform, ...context } =
+              field;
 
             const _labelFilterField = labelFilterField
               ? formatMessage(labelFilterField, context)
@@ -755,7 +756,10 @@ export const DataGridHeading: React.FC<DataGridHeadingProps> = ({
                       const data = serializeForm(
                         e.target.form as HTMLFormElement,
                       );
-                      onFilter(data as AttributeData);
+                      const _data = field.filterTransform
+                        ? field.filterTransform(data as AttributeData)
+                        : data;
+                      onFilter(_data as AttributeData);
                     }}
                   />
                 )}

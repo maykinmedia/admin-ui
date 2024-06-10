@@ -66,6 +66,12 @@ export type TypedField<T = Attribute> = {
   filterValue?: string | number;
 
   /**
+   * A function transforming the filter values.
+   * This can be used to adjust filter input to an API spec.
+   */
+  filterTransform?: (value: AttributeData) => AttributeData;
+
+  /**
    * The "lookup" (dot separated) to use for this field while filtering (e.g.
    * "._expand.zaaktype.omschrijving").
    */
