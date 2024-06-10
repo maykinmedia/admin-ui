@@ -416,17 +416,17 @@ export const DateRangeFilter: Story = {
         type: "string",
       },
       {
-        filterTransform: (data) => {
-          const { dateOfBirth, _data } = data;
-          const [dateOfBirth__gte = "", dateOfBirth__lte = ""] =
-            String(dateOfBirth).split("/");
-          return { dateOfBirth__gte, dateOfBirth__lte, ..._data };
-        },
         name: "dateOfBirth",
         type: "daterange",
       },
     ],
     filterable: true,
+    filterTransform: (data) => {
+      const { dateOfBirth, ..._data } = data;
+      const [dateOfBirth__gte = "", dateOfBirth__lte = ""] =
+        String(dateOfBirth).split("/");
+      return { dateOfBirth__gte, dateOfBirth__lte, ..._data };
+    },
     objectList: [
       {
         firstName: "Albert",
