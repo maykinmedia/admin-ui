@@ -219,12 +219,11 @@ export const JSONPlaceholderExample: Story = {
         selected={
           // SelectableRows story
           args.selected ||
-          (args.selectable &&
-            objectList.length > 0 && [
-              objectList[1],
-              objectList[3],
-              objectList[4],
-            ])
+          (args.selectable
+            ? objectList.length > 0
+              ? [objectList[1], objectList[3], objectList[4]]
+              : undefined
+            : undefined)
         }
         equalityChecker={args.equalityChecker}
         onPageChange={setPage}
@@ -397,5 +396,88 @@ export const FieldsSelectable: Story = {
   },
   argTypes: {
     onFieldsChange: { action: "onFieldsChange" },
+  },
+};
+
+export const DateRangeFilter: Story = {
+  argTypes: {
+    onFilter: {
+      action: "onFilter",
+    },
+  },
+  args: {
+    fields: [
+      {
+        name: "firstName",
+        type: "string",
+      },
+      {
+        name: "lastName",
+        type: "string",
+      },
+      {
+        filterTransform: (data) => {
+          const { dateOfBirth, _data } = data;
+          const [dateOfBirth__gte = "", dateOfBirth__lte = ""] =
+            String(dateOfBirth).split("/");
+          return { dateOfBirth__gte, dateOfBirth__lte, ..._data };
+        },
+        name: "dateOfBirth",
+        type: "daterange",
+      },
+    ],
+    filterable: true,
+    objectList: [
+      {
+        firstName: "Albert",
+        lastName: "Einstein",
+        dateOfBirth: "1879-03-14",
+      },
+      {
+        firstName: "Marie",
+        lastName: "Curie",
+        dateOfBirth: "1867-11-07",
+      },
+      {
+        firstName: "Martin",
+        lastName: "Luther King Jr.",
+        dateOfBirth: "1929-01-15",
+      },
+      {
+        firstName: "Nelson",
+        lastName: "Mandela",
+        dateOfBirth: "1918-07-18",
+      },
+      {
+        firstName: "Isaac",
+        lastName: "Newton",
+        dateOfBirth: "1643-01-04",
+      },
+      {
+        firstName: "Mahatma",
+        lastName: "Gandhi",
+        dateOfBirth: "1869-10-02",
+      },
+      {
+        firstName: "Ada",
+        lastName: "Lovelace",
+        dateOfBirth: "1815-12-10",
+      },
+      {
+        firstName: "Leonardo",
+        lastName: "da Vinci",
+        dateOfBirth: "1452-04-15",
+      },
+      {
+        firstName: "Galileo",
+        lastName: "Galilei",
+        dateOfBirth: "1564-02-15",
+      },
+      {
+        firstName: "Charles",
+        lastName: "Darwin",
+        dateOfBirth: "1809-02-12",
+      },
+    ],
   },
 };
