@@ -708,7 +708,7 @@ export const DataGridHeading: React.FC<DataGridHeadingProps> = ({
             ></th>
           )}
           {renderableFields.map((field) => {
-            const placeholder = ucFirst(field.name);
+            const placeholder = field2Caption(field.name);
 
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
             const { options, filterTransform, valueTransform, ...context } =
