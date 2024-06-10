@@ -40,9 +40,9 @@ export type TypedField<T = Attribute> = {
   type: T extends boolean
     ? "boolean"
     : T extends number
-      ? "number"
+      ? "number" | "date" | "daterange"
       : T extends string
-        ? "string"
+        ? "string" | "date" | "daterange"
         : T extends null
           ? "null"
           : unknown;
