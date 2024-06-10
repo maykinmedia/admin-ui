@@ -57,6 +57,12 @@ export type DataGridProps = {
    */
   filterable?: boolean;
 
+  /**
+   * A function transforming the filter values.
+   * This can be used to adjust filter input to an API spec.
+   */
+  filterTransform?: (value: AttributeData) => AttributeData;
+
   /** Whether to allow sorting/the field to sort on. */
   sort?: boolean | string;
 
@@ -195,6 +201,7 @@ export const DataGrid: React.FC<DataGridProps> = ({
   editable = undefined,
   fields,
   filterable = undefined,
+  filterTransform,
   paginatorProps,
   showPaginator = Boolean(paginatorProps),
   pProps,
@@ -401,6 +408,7 @@ export const DataGrid: React.FC<DataGridProps> = ({
         <DataGridHeading
           dataGridId={id}
           filterable={Boolean(filterable)}
+          filterTransform={filterTransform}
           id={id}
           labelFilterField={labelFilterField || ""}
           renderableFields={renderableFields}
@@ -648,6 +656,7 @@ export type DataGridHeadingProps = {
   selectable: boolean;
   dataGridId: string;
   filterable: boolean;
+  filterTransform?: (value: AttributeData) => AttributeData;
   id: string;
   labelFilterField: string;
   renderableFields: TypedField[];
@@ -664,6 +673,7 @@ export type DataGridHeadingProps = {
 export const DataGridHeading: React.FC<DataGridHeadingProps> = ({
   dataGridId,
   filterable,
+  filterTransform,
   id,
   labelFilterField,
   onFilter,
@@ -711,8 +721,7 @@ export const DataGridHeading: React.FC<DataGridHeadingProps> = ({
             const placeholder = field2Caption(field.name);
 
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            const { options, filterTransform, valueTransform, ...context } =
-              field;
+            const { options, valueTransform, ...context } = field;
 
             const _labelFilterField = labelFilterField
               ? formatMessage(labelFilterField, context)
@@ -755,11 +764,11 @@ export const DataGridHeading: React.FC<DataGridHeadingProps> = ({
                       e.preventDefault();
                       const data = serializeForm(
                         e.target.form as HTMLFormElement,
-                      );
-                      const _data = field.filterTransform
-                        ? field.filterTransform(data as AttributeData)
+                      ) as AttributeData;
+                      const _data = filterTransform
+                        ? filterTransform(data)
                         : data;
-                      onFilter(_data as AttributeData);
+                      onFilter(_data);
                     }}
                   />
                 )}
