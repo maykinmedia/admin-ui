@@ -155,7 +155,7 @@ export type DataGridProps = {
 
   /**
    *  Gets called when a row value is filtered.
-   *  This callback is debounced every 300 milliseconds.
+   *  This callback is debounced every 100 milliseconds.
    */
   onFilter?: (rowData: AttributeData) => void;
 
@@ -417,6 +417,7 @@ export const DataGrid: React.FC<DataGridProps> = ({
           sortDirection={sortDirection}
           sortField={sortField}
           onFilter={handleFilter}
+          onPageChange={onPageChange}
           onSort={handleSort}
         />
 
@@ -664,6 +665,7 @@ export type DataGridHeadingProps = {
   sortDirection: "ASC" | "DESC" | undefined;
   sortField: string | undefined;
   onFilter: (data: AttributeData) => void;
+  onPageChange: DataGridProps["onPageChange"];
   onSort: (field: TypedField) => void;
 };
 
@@ -677,6 +679,7 @@ export const DataGridHeading: React.FC<DataGridHeadingProps> = ({
   id,
   labelFilterField,
   onFilter,
+  onPageChange,
   onSort,
   renderableFields,
   selectable,
@@ -685,6 +688,18 @@ export const DataGridHeading: React.FC<DataGridHeadingProps> = ({
   sortField,
 }) => {
   const intl = useIntl();
+  const onFilterTimeoutRef = useRef<NodeJS.Timeout>();
+  const [filterState, setFilterState] = useState<AttributeData>();
+
+  // Debounce filter
+  useEffect(() => {
+    const handler = () => {
+      onPageChange?.(1);
+      onFilter(filterState || {});
+    };
+    onFilterTimeoutRef.current && clearTimeout(onFilterTimeoutRef.current);
+    setTimeout(handler, 100);
+  }, [filterState]);
 
   return (
     <thead className="mykn-datagrid__head" role="rowgroup">
@@ -768,7 +783,9 @@ export const DataGridHeading: React.FC<DataGridHeadingProps> = ({
                       const _data = filterTransform
                         ? filterTransform(data)
                         : data;
-                      onFilter(_data);
+
+                      // Reset page on filter (length of dataset may change).
+                      setFilterState(_data);
                     }}
                   />
                 )}

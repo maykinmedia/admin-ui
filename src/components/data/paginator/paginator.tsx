@@ -32,7 +32,7 @@ export type PaginatorProps = React.HTMLAttributes<HTMLElement> & {
    * If a `Promise` is returned and `labelLoading` is set: a spinner will be
    * shown after during the "pending" state of the returned `Promise`.
    *
-   * This callback is debounced every 300 milliseconds.
+   * This callback is debounced every 100 milliseconds.
    */
   onPageChange?: (page: number) => Promise<unknown> | void;
 
@@ -143,7 +143,7 @@ export const Paginator: React.FC<PaginatorProps> = ({
     onPageChangeTimeoutRef.current &&
       clearTimeout(onPageChangeTimeoutRef.current);
 
-    onPageChangeTimeoutRef.current = setTimeout(handler, 300);
+    onPageChangeTimeoutRef.current = setTimeout(handler, 100);
 
     return () => clearTimeout(onPageChangeTimeoutRef.current);
   }, [pageState]);
