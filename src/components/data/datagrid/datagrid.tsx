@@ -113,6 +113,9 @@ export type DataGridProps = {
   /** Whether checkboxes should be shown for every row. */
   selectable?: boolean;
 
+  /** Whether a select all checkbox should be shown (when `selectable=true`). */
+  allowSelectAll?: boolean;
+
   /** References to the selected items in `objectList`, setting this preselects the items. */
   selected?: AttributeData[];
 
@@ -206,6 +209,7 @@ export const DataGrid: React.FC<DataGridProps> = ({
   showPaginator = Boolean(paginatorProps),
   pProps,
   selectable = false,
+  allowSelectAll = true,
   fieldsSelectable = false,
   selected,
   equalityChecker = (item1, item2) => item1 === item2,
@@ -389,6 +393,7 @@ export const DataGrid: React.FC<DataGridProps> = ({
             fieldsSelectable={fieldsSelectable}
             renderableRows={renderableRows}
             selectable={selectable}
+            allowSelectAll={allowSelectAll}
             selectedRows={selectedState}
             selectionActions={selectionActions}
             title={title}
@@ -480,6 +485,7 @@ export type DataGridCaptionProps = {
   labelSelectAll?: string;
   renderableRows: AttributeData[];
   selectable: boolean;
+  allowSelectAll: boolean;
   selectedRows: AttributeData[] | null;
   selectionActions?: ButtonProps[];
   title: React.ReactNode;
@@ -498,6 +504,7 @@ export const DataGridCaption: React.FC<DataGridCaptionProps> = ({
   labelSelectFields,
   renderableRows,
   selectable,
+  allowSelectAll,
   selectionActions,
   selectedRows,
   title,
@@ -565,7 +572,7 @@ export const DataGridCaption: React.FC<DataGridCaptionProps> = ({
           ) : (
             title
           ))}
-        {selectable && (
+        {selectable && allowSelectAll && (
           <DataGridSelectionCheckbox
             checked={allSelected || false}
             count={count}
