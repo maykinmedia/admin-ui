@@ -38,7 +38,6 @@ export const ModalComponent: Story = {
                 { label: "Zaaktype", selected: true },
                 { label: "Omschrijving", selected: true },
                 { label: "Looptijd", selected: true },
-                { label: "Looptijd", selected: true },
                 { label: "Resultaattype", selected: true },
                 { label: "Versie" },
               ],
@@ -49,6 +48,11 @@ export const ModalComponent: Story = {
       </Body>
     ),
   },
+};
+
+export const NonClosable: Story = {
+  ...ModalComponent,
+  args: { ...ModalComponent.args, allowClose: false },
 };
 
 export const SideModal: Story = {

@@ -9,6 +9,7 @@ import { H2 } from "../typography";
 import "./modal.scss";
 
 export type ModalProps = Omit<React.ComponentProps<"dialog">, "title"> & {
+  allowClose?: boolean;
   labelClose?: string;
   open?: React.ComponentProps<"dialog">["open"];
   onClose?: React.ComponentProps<"dialog">["onClose"];
@@ -21,6 +22,7 @@ export type ModalProps = Omit<React.ComponentProps<"dialog">, "title"> & {
  * Modal component (mode dialog).
  */
 export const Modal: React.FC<ModalProps> = ({
+  allowClose = true,
   children,
   open,
   onClose,
@@ -60,14 +62,16 @@ export const Modal: React.FC<ModalProps> = ({
         context,
       );
 
-  const controls: ButtonProps[] = [
-    {
-      "aria-label": _labelClose,
-      children: <Outline.XMarkIcon />,
-      variant: "transparent",
-      onClick: () => dialogRef.current?.close(),
-    },
-  ];
+  const controls: ButtonProps[] | undefined = allowClose
+    ? [
+        {
+          "aria-label": _labelClose,
+          children: <Outline.XMarkIcon />,
+          variant: "transparent",
+          onClick: () => dialogRef.current?.close(),
+        },
+      ]
+    : undefined;
 
   return (
     <dialog
