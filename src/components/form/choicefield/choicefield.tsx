@@ -40,7 +40,12 @@ export type ChoiceFieldProps<
 export type Option<L = number | string, V = string | number | undefined> = {
   label: L;
   value?: V;
-  selected?: React.OptionHTMLAttributes<HTMLOptionElement>["selected"]; // TODO
+
+  /** (Managed) Checkbox/Select */
+  selected?: boolean;
+
+  /** Unmanaged checkbox */
+  defaultChecked?: boolean;
 };
 
 /**

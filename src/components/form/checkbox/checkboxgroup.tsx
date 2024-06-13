@@ -27,6 +27,7 @@ export const CheckboxGroup: React.FC<CheckboxGroupProps> = ({
         return (
           <Checkbox
             checked={option.selected}
+            defaultChecked={option.defaultChecked}
             id={checkboxId}
             key={option.value || option.label || index}
             name={name}
