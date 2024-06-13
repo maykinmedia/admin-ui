@@ -63,6 +63,7 @@ export const Select: React.FC<SelectProps> = ({
   className,
   icon,
   id,
+  hidden,
   name,
   options = [],
   onBlur,
@@ -215,6 +216,7 @@ export const Select: React.FC<SelectProps> = ({
         ref={refs.setReference}
         title={label || undefined}
         aria-autocomplete="none"
+        aria-hidden={hidden}
         onBlur={handleBlur}
         {...getReferenceProps()}
         {...props}

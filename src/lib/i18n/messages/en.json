@@ -1,4 +1,14 @@
 {
+  "mykn.components.AttributeTable.labelCancel": {
+    "defaultMessage": "Cancel",
+    "description": "mykn.components.AttributeTable: The cancel label",
+    "originalDefault": "Annuleren"
+  },
+  "mykn.components.AttributeTable.labelEdit": {
+    "defaultMessage": "Edit \"{label}\"",
+    "description": "mykn.components.AttributeTable: The edit value (accessible) label",
+    "originalDefault": "Bewerk \"{label}\""
+  },
   "mykn.components.Bool.labelFalse": {
     "defaultMessage": "no",
     "description": "mykn.components.Bool: The accessible label when value is falsy",
@@ -34,7 +44,7 @@
     "description": "mykn.components.Modal: The datagrid select fields label",
     "originalDefault": "selecteer kolommen"
   },
-"mykn.components.DatePicker.labelChooseDayPrefix": {
+  "mykn.components.DatePicker.labelChooseDayPrefix": {
     "defaultMessage": "Choose day",
     "description": "mykn.components.DatePicker: The choose day prefix",
     "originalDefault": "Kies dag"

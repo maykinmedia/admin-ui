@@ -1,24 +1,23 @@
 .mykn-attributetable {
   display: table;
 
-  &__row {
-    display: table-row;
+  &__body {
+    display: grid;
+    grid-template-columns: auto auto;
+    column-gap: var(--spacing-h);
   }
 
   &__cell {
-    display: table-cell;
-    font-family: var(--typography-font-family-body);
+    display: flex;
+    align-items: center;
+    font-family: var(--typography-font-family-body), sans-serif;
     font-size: var(--typography-font-size-body-s);
     font-weight: var(--typography-font-weight-normal);
     line-height: var(--typography-line-height-body-s);
     margin: 0;
-
-    &:not(:last-child) {
-      padding-right: var(--spacing-h);
-    }
   }
 
-  &__key {
+  &__cell--key {
     font-weight: var(--typography-font-weight-bold);
   }
 }

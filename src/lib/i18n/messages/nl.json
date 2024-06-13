@@ -1,4 +1,14 @@
 {
+  "mykn.components.AttributeTable.labelCancel": {
+    "defaultMessage": "Annuleren",
+    "description": "mykn.components.AttributeTable: The cancel label",
+    "originalDefault": "Annuleren"
+  },
+  "mykn.components.AttributeTable.labelEdit": {
+    "defaultMessage": "Bewerk \"{label}\"",
+    "description": "mykn.components.AttributeTable: The edit value (accessible) label",
+    "originalDefault": "Bewerk \"{label}\""
+  },
   "mykn.components.Bool.labelFalse": {
     "defaultMessage": "nee",
     "description": "mykn.components.Bool: The accessible label when value is falsy",
