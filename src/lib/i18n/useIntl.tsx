@@ -42,7 +42,7 @@ try {
 }
 
 // Redefine (minimal) react-intl types.
-type MessageContext = Record<string, boolean | number | string>;
+type MessageContext = Record<string, unknown>;
 
 type MessageDescriptor = {
   id?: string;

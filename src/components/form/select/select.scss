@@ -24,6 +24,10 @@
   position: relative;
   text-align: start;
 
+  &[aria-hidden="true"] {
+    display: none;
+  }
+
   &--size-fit-content {
     width: fit-content;
   }

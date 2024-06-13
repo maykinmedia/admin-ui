@@ -23,13 +23,14 @@ export type LabeledAttribute = {
   value: Attribute | ReactNode;
 };
 
+// TODO: Deprecate in favor of using TypedField for labels in the future?
 export type LabeledAttributeData<T = LabeledAttribute> = Record<string, T>;
 
 /** A value in `AttributeData`. */
 export type Attribute = boolean | number | string | null;
 
 /** A key in `AttributeData`. */
-export type Field = keyof AttributeData;
+export type Field = keyof (AttributeData | LabeledAttributeData);
 
 /** A key in `AttributeData` annotated with its type. */
 export type TypedField<T = Attribute> = {

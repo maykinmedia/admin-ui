@@ -29,6 +29,9 @@ export type FormProps = Omit<
   /** The direction in which to render the form. */
   direction?: "vertical" | "horizontal";
 
+  /** The classname to use for the fieldset. */
+  fieldsetClassName?: string;
+
   /** The initial form values, only applies on initial render. */
   initialValues?: AttributeData<Attribute | Attribute[]>;
 
@@ -91,6 +94,7 @@ export const Form: React.FC<FormProps> = ({
   direction = "vertical",
   errors,
   fields = [],
+  fieldsetClassName = "mykn-form__fieldset",
   initialValues = {},
   secondaryActions = [],
   labelSubmit = "",
@@ -194,7 +198,7 @@ export const Form: React.FC<FormProps> = ({
       )}
 
       {Boolean(fields?.length) && (
-        <div className="mykn-form__fieldset">
+        <div className={fieldsetClassName}>
           {fields.map((field, index) => {
             const value =
               (field.value as string) ||
@@ -216,7 +220,7 @@ export const Form: React.FC<FormProps> = ({
         </div>
       )}
 
-      {children && <div className="mykn-form__fieldset">{children}</div>}
+      {children && <div className={fieldsetClassName}>{children}</div>}
 
       {_debug && <pre role="log">{JSON.stringify(valuesState)}</pre>}
 

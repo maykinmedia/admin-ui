@@ -1,4 +1,24 @@
 {
+  "mykn.components.AttributeTable.labelCancel": [
+    {
+      "type": 0,
+      "value": "Cancel"
+    }
+  ],
+  "mykn.components.AttributeTable.labelEdit": [
+    {
+      "type": 0,
+      "value": "Edit \""
+    },
+    {
+      "type": 1,
+      "value": "label"
+    },
+    {
+      "type": 0,
+      "value": "\""
+    }
+  ],
   "mykn.components.Bool.labelFalse": [
     {
       "type": 0,
