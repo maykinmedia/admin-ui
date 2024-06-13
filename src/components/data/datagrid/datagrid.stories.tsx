@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import * as React from "react";
 import { useEffect, useState } from "react";
 
+import { SerializedFormData } from "../../../lib";
 import { AttributeData } from "../../../lib/data/attributedata";
 import { Page } from "../../layout";
 import { DataGrid } from "./datagrid";
@@ -229,7 +230,7 @@ export const JSONPlaceholderExample: Story = {
         onPageChange={setPage}
         onPageSizeChange={setPageSize}
         onSort={(field) => setSort(field)}
-        onEdit={async (rowData: AttributeData) => {
+        onEdit={async (rowData: SerializedFormData) => {
           setLoading(true);
           await fetch(
             `https://jsonplaceholder.typicode.com/posts/${rowData.id}`,
@@ -245,7 +246,7 @@ export const JSONPlaceholderExample: Story = {
             (r) => Number(r.id) === rowData.id,
           );
           const newObjectList = [...objectList];
-          newObjectList[index] = rowData;
+          newObjectList[index] = rowData as AttributeData;
           setObjectList(newObjectList);
           setLoading(false);
         }}
@@ -264,11 +265,13 @@ export const SelectableRows: Story = {
     ...JSONPlaceholderExample.args,
     fields: ["userId", "id", "title"],
     selectable: true,
+    allowSelectAll: false,
     selectionActions: [
       {
         children: "Aanmaken",
         name: "create",
         onClick: ({ detail }) => {
+          // @ts-expect-error - TODO: type should be fixed
           alert(`${detail.length} items selected.`);
         },
       },
@@ -291,6 +294,7 @@ export const SelectableRowsWithCustomMatchFunction: Story = {
         children: "Aanmaken",
         name: "create",
         onClick: ({ detail }) => {
+          // @ts-expect-error: TODO: type should be fixed
           alert(`${detail.length} items selected.`);
         },
       },
