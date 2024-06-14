@@ -158,7 +158,7 @@ export type DataGridProps = {
 
   /**
    *  Gets called when a row value is filtered.
-   *  This callback is debounced every 100 milliseconds.
+   *  This callback is debounced every 300 milliseconds.
    */
   onFilter?: (rowData: AttributeData) => void;
 
@@ -424,7 +424,6 @@ export const DataGrid: React.FC<DataGridProps> = ({
           sortDirection={sortDirection}
           sortField={sortField}
           onFilter={handleFilter}
-          onPageChange={onPageChange}
           onSort={handleSort}
         />
 
@@ -674,7 +673,6 @@ export type DataGridHeadingProps = {
   sortDirection: "ASC" | "DESC" | undefined;
   sortField: string | undefined;
   onFilter: (data: AttributeData) => void;
-  onPageChange: DataGridProps["onPageChange"];
   onSort: (field: TypedField) => void;
 };
 
@@ -688,7 +686,6 @@ export const DataGridHeading: React.FC<DataGridHeadingProps> = ({
   id,
   labelFilterField,
   onFilter,
-  onPageChange,
   onSort,
   renderableFields,
   selectable,
@@ -703,11 +700,14 @@ export const DataGridHeading: React.FC<DataGridHeadingProps> = ({
   // Debounce filter
   useEffect(() => {
     const handler = () => {
-      onPageChange?.(1);
+      // No filter state.
+      if (filterState === undefined) {
+        return;
+      }
       onFilter(filterState || {});
     };
     onFilterTimeoutRef.current && clearTimeout(onFilterTimeoutRef.current);
-    setTimeout(handler, 100);
+    onFilterTimeoutRef.current = setTimeout(handler, 300);
   }, [filterState]);
 
   return (
