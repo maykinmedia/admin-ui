@@ -32,7 +32,7 @@ export type PaginatorProps = React.HTMLAttributes<HTMLElement> & {
    * If a `Promise` is returned and `labelLoading` is set: a spinner will be
    * shown after during the "pending" state of the returned `Promise`.
    *
-   * This callback is debounced every 100 milliseconds.
+   * This callback is debounced every 300 milliseconds.
    */
   onPageChange?: (page: number) => Promise<unknown> | void;
 
@@ -126,29 +126,6 @@ export const Paginator: React.FC<PaginatorProps> = ({
   useEffect(() => setPageSizeState(pageSize), [pageSize]);
 
   /**
-   * Denounces onPageChange callback.
-   */
-  useEffect(() => {
-    const handler = () => {
-      if (!onPageChange) {
-        return;
-      }
-      const result = onPageChange(pageState);
-      if (result) {
-        setLoadingState(true);
-      }
-      Promise.resolve(result).finally(() => setLoadingState(false));
-    };
-
-    onPageChangeTimeoutRef.current &&
-      clearTimeout(onPageChangeTimeoutRef.current);
-
-    onPageChangeTimeoutRef.current = setTimeout(handler, 100);
-
-    return () => clearTimeout(onPageChangeTimeoutRef.current);
-  }, [pageState]);
-
-  /**
    * Gets called when the page size dropdown is changed.
    * @param event
    */
@@ -158,6 +135,7 @@ export const Paginator: React.FC<PaginatorProps> = ({
     setPageSizeState(value);
     setPageState(1);
     onPageSizeChange && onPageSizeChange(value);
+    emitPageChange(page);
   };
 
   /**
@@ -166,6 +144,23 @@ export const Paginator: React.FC<PaginatorProps> = ({
    */
   const handlePageChange = (page: number) => {
     setPageState(page);
+
+    clearTimeout(onPageChangeTimeoutRef.current);
+    emitPageChange(page);
+  };
+
+  /**
+   * Calles the debounce `onPageChange` callback.
+   * @param page
+   */
+  const emitPageChange = (page: number) => {
+    const handler = async () => {
+      setLoadingState(true);
+      await onPageChange?.(page);
+      setLoadingState(false);
+    };
+    clearTimeout(onPageChangeTimeoutRef.current);
+    onPageChangeTimeoutRef.current = setTimeout(handler, 300);
   };
 
   // `loading` takes precedence over `loadingState` (derived from Promise).
