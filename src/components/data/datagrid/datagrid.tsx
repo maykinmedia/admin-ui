@@ -262,7 +262,9 @@ export const DataGrid: React.FC<DataGridProps> = ({
   // Update sortState when sort prop changes.
   useEffect(() => {
     if (typeof sort === "string") {
-      setSortState([sort, "ASC"]);
+      const direction = sort.startsWith("-") ? "DESC" : "ASC";
+      const field = sort.replace(/^-/, "");
+      setSortState([field, direction]);
     }
   }, [sort]);
 
