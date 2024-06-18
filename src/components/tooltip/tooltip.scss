@@ -4,7 +4,7 @@
   opacity: 0;
   border-radius: var(--border-radius-l);
   background-color: var(--typography-color-background);
-  border: 1px solid var(--page-color-info);
+  border: 2px solid var(--typography-color-border);
 
   &--open {
     opacity: 1;
@@ -12,7 +12,7 @@
   }
 
   &__arrow {
-    fill: var(--page-color-info);
+    fill: var(--typography-color-border);
   }
 
   &__content {
