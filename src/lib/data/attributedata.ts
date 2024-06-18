@@ -27,7 +27,7 @@ export type LabeledAttribute = {
 export type LabeledAttributeData<T = LabeledAttribute> = Record<string, T>;
 
 /** A value in `AttributeData`. */
-export type Attribute = boolean | number | string | null;
+export type Attribute = unknown;
 
 /** A key in `AttributeData`. */
 export type Field = keyof (AttributeData | LabeledAttributeData);
@@ -46,7 +46,7 @@ export type TypedField<T = Attribute> = {
         ? "string" | "date" | "daterange"
         : T extends null
           ? "null"
-          : unknown;
+          : string;
 
   /** Whether the field should be active by default. */
   active?: boolean;
@@ -101,11 +101,14 @@ export type FieldOptions = {
 /** A Django-admin like fieldset definition. */
 export type FieldSet = [string | undefined, FieldOptions];
 
+/** Supported primitive values. */
+export type Primitive = boolean | number | string | null;
+
 /**
  * Returns whether `value` is a primitive, acts as type guard for `<T = Attribute>` through generic.
  * @param value
  */
-export const isPrimitive = <T = Attribute>(value: unknown): value is T =>
+export const isPrimitive = <T = Primitive>(value: unknown): value is T =>
   Object(value) !== value;
 
 /** Typeguard for boolean. */

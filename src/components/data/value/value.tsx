@@ -42,6 +42,10 @@ export const Value: React.FC<ValueProps> = ({
   value,
   ...props
 }) => {
+  if (React.isValidElement(value)) {
+    return value;
+  }
+
   if (isNull(value) || isUndefined(value)) {
     return (
       <P {...pProps} {...props}>

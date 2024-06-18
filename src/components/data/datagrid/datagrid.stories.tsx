@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 
 import { SerializedFormData } from "../../../lib";
 import { AttributeData } from "../../../lib/data/attributedata";
+import { Button } from "../../button";
 import { Page } from "../../layout";
 import { DataGrid } from "./datagrid";
 
@@ -481,6 +482,23 @@ export const DateRangeFilter: Story = {
         firstName: "Charles",
         lastName: "Darwin",
         dateOfBirth: "1809-02-12",
+      },
+    ],
+  },
+};
+
+export const JSXAsValue: Story = {
+  args: {
+    objectList: [
+      {
+        Id: 1,
+        Name: "Some product",
+        action: <Button variant="secondary">Buy!</Button>,
+      },
+      {
+        Id: 2,
+        Name: "Some other product",
+        action: <Button variant="secondary">Buy!</Button>,
       },
     ],
   },
