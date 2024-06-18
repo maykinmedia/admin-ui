@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
+import { userEvent, within } from "@storybook/test";
 import * as React from "react";
 
 import { Button } from "../button";
@@ -15,6 +16,11 @@ const meta: Meta<typeof Tooltip> = {
       </div>
     ),
   ],
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const button = canvas.getByRole("button");
+    await userEvent.hover(button);
+  },
 };
 
 export default meta;
