@@ -1,13 +1,11 @@
 import React, { useId, useState } from "react";
 
 import {
-  Attribute,
   AttributeData,
   Field,
   LabeledAttributeData,
   TypedField,
   field2Title,
-  isPrimitive,
   typedFieldByFields,
   useIntl,
 } from "../../../lib";
@@ -155,11 +153,7 @@ export const AttributeTableRow: React.FC<AttributeTableRowProps> = ({
   };
 
   const renderDisplayValue = () => {
-    if (isPrimitive(rawValue) || rawValue === null) {
-      return <Value value={rawValue as Attribute} />;
-    }
-
-    return rawValue;
+    return <Value value={rawValue} />;
   };
 
   const renderInput = () => {

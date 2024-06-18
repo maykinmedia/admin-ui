@@ -9,6 +9,7 @@ import {
   TypedField,
   filterAttributeDataArray,
   formatMessage,
+  isPrimitive,
   serializeForm,
   typedFieldByFields,
   ucFirst,
@@ -1093,6 +1094,7 @@ export const DataGridContentCell: React.FC<DataGridContentCellProps> = ({
     field.valueLookup || field.name,
   );
   const value = field.valueTransform?.(rowData) || resolvedValue;
+  const valueIsPrimitive = isPrimitive(value);
 
   const isImplicitLink = rowUrl && fieldIndex === 0 && !isLink(String(value));
   const link = isImplicitLink ? String(rowUrl) : "";
@@ -1204,9 +1206,12 @@ export const DataGridContentCell: React.FC<DataGridContentCellProps> = ({
       )}
       aria-description={field2Caption(field.name)}
     >
-      {isEditingRow && !isEditingField && renderHiddenInput()}
-      {isEditingField && renderFormControl()}
-      {!isEditingField && fieldEditable && renderButton()}
+      {valueIsPrimitive &&
+        isEditingRow &&
+        !isEditingField &&
+        renderHiddenInput()}
+      {valueIsPrimitive && isEditingField && renderFormControl()}
+      {valueIsPrimitive && !isEditingField && fieldEditable && renderButton()}
       {!isEditingField && !fieldEditable && renderValue()}
     </td>
   );

@@ -1,4 +1,9 @@
-import { Attribute, AttributeData } from "../data/attributedata";
+import {
+  Attribute,
+  AttributeData,
+  Primitive,
+  isPrimitive,
+} from "../data/attributedata";
 import { FormField } from "./typeguards";
 
 export type SerializedFormData = Record<
@@ -134,7 +139,9 @@ export const attribute2Value = (
       return String(value);
 
     default:
-      return value;
+      return isPrimitive<Exclude<Primitive, boolean>>(value)
+        ? value
+        : String(value || "");
   }
 };
 

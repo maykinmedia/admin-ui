@@ -13,6 +13,7 @@ import {
 import { Button, ButtonLink, ButtonLinkProps, ButtonProps } from "../../button";
 import { Column, Grid } from "../../layout";
 import { Body, H1, H2, H3, P } from "../../typography";
+import { Value } from "../value";
 import "./itemgrid.scss";
 
 export type ItemGridProps = GroupedAttributeDataProps;
@@ -158,7 +159,7 @@ export const ItemGridItem: React.FC<ItemGridItemProps> = ({
 
       {otherFields.map((field) => (
         <P key={field} muted size="xs">
-          {object[field]}
+          <Value value={object[field]} />
         </P>
       ))}
     </Column>

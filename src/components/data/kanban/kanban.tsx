@@ -17,6 +17,7 @@ import { Button, ButtonLink, ButtonLinkProps, ButtonProps } from "../../button";
 import { Select } from "../../form";
 import { Column, Grid } from "../../layout";
 import { Body, H1, H2, H3, P } from "../../typography";
+import { Value } from "../value";
 import "./kanban.scss";
 
 export type KanbanProps = GroupedAttributeDataProps & {
@@ -469,7 +470,7 @@ export const KanbanItem: React.FC<KanbanItemProps> = ({
 
           {otherFields.map((field) => (
             <P key={field} muted size="xs">
-              {object[field]}
+              <Value value={object[field]}></Value>
             </P>
           ))}
         </>
