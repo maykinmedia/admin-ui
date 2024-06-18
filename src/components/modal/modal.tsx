@@ -41,9 +41,24 @@ export const Modal: React.FC<ModalProps> = ({
     [open],
   );
 
+  /**
+   * Gets called when to modal is closed.
+   * @param e
+   */
   const handleClose: React.ReactEventHandler<HTMLDialogElement> = (e) => {
     setOpenState(false);
     onClose?.(e);
+  };
+
+  /**
+   * Get called when a key is pressed, prevents the default action if key is "Escape" and closing is not allowed.
+   * @param e
+   */
+  const handleKeyDown: React.KeyboardEventHandler = (e) => {
+    if (allowClose || e.key !== "Escape") {
+      return;
+    }
+    e.preventDefault();
   };
 
   const context = {
@@ -82,6 +97,7 @@ export const Modal: React.FC<ModalProps> = ({
         [`mykn-modal--position-${position}`]: position,
       })}
       onClose={handleClose}
+      onKeyDown={handleKeyDown}
       {...props}
     >
       <Card
