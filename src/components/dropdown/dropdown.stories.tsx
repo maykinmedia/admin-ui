@@ -125,7 +125,7 @@ export const ActivateOnFocus: Story = {
   ...ActivateOnHover,
   play: async ({ canvasElement, parameters }) => {
     const canvas = within(canvasElement);
-    const button = await canvas.getByText("Hover me!");
+    const button = canvas.getByText("Hover me!");
 
     // Click opens, escape closes.
     await userEvent.tab({ delay: 10 });
