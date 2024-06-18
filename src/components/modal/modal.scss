@@ -43,6 +43,7 @@
     > .mykn-card {
       border-top-right-radius: 0;
       border-bottom-right-radius: 0;
+      height: 100%;
     }
 
     // TODO: Investiage improvement.
@@ -63,9 +64,5 @@
 
   &--size-s {
     width: 280px;
-  }
-
-  .mykn-card {
-    height: 100%;
   }
 }
