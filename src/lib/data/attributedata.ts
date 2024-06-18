@@ -26,7 +26,7 @@ export type LabeledAttribute = {
 // TODO: Deprecate in favor of using TypedField for labels in the future?
 export type LabeledAttributeData<T = LabeledAttribute> = Record<string, T>;
 
-/** A value in `AttributeData`. */
+/** A value in `AttributeData`, React.ReactNode's may be supported, other complex types may not be rendered. */
 export type Attribute = unknown;
 
 /** A key in `AttributeData`. */

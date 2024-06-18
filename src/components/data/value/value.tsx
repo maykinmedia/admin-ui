@@ -31,6 +31,11 @@ export type ValueProps = React.HTMLAttributes<unknown> & {
 
 /**
  * Generic wrapper rendering the appropriate component for `value` based on its type.
+ * Type can be:
+ *
+ *  - A primitive, rendered using appropriate subcomponent (see props).
+ *  - A React.ReactNode: rendered directly.
+ *  - Any other complex type is ignored.
  */
 export const Value: React.FC<ValueProps> = ({
   aProps,
