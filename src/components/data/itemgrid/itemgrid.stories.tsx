@@ -2,9 +2,10 @@ import type { Meta, StoryObj } from "@storybook/react";
 import * as React from "react";
 import { useEffect, useState } from "react";
 
-import { AttributeData } from "../../../lib";
+import { generateHexColor } from "../../../../.storybook/utils";
+import { AttributeData, FieldSet } from "../../../lib";
 import { Page } from "../../layout";
-import { ItemGrid } from "./itemgrid";
+import { ItemGrid, ItemGridProps } from "./itemgrid";
 
 const meta: Meta<typeof ItemGrid> = {
   title: "Data/Itemgrid",
@@ -22,6 +23,7 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const ItemGridComponent: Story = {
+  // @ts-expect-error - Fix never
   args: {
     title: "The quick brown fox jumps over the lazy dog.",
     fieldsets: [
@@ -29,7 +31,7 @@ export const ItemGridComponent: Story = {
       ["Odd", { fields: ["title"], title: "title" }],
     ],
   },
-  render: (args) => {
+  render: (args: ItemGridProps) => {
     const abortController = new AbortController();
     const [objectList, setObjectList] = useState<AttributeData[]>([]);
     // Process sorting and pagination locally in place for demonstration purposes.
@@ -42,10 +44,15 @@ export const ItemGridComponent: Story = {
         .then((response) => response.json())
         .then((data: AttributeData[]) => {
           setObjectList(
-            data.map((d) => ({
-              ...d,
-              alphaIndex: String(d.title[0]).toUpperCase(),
-            })),
+            data.map((d) => {
+              const url = `https://placehold.co/600x400/${generateHexColor(d.id as number)}/000`;
+              return {
+                ...d,
+                alphaIndex: String(d.title?.toString()[0]).toUpperCase(),
+                url: url,
+                thumbnailUrl: url,
+              };
+            }),
           );
         });
     }, [args]);
@@ -54,25 +61,40 @@ export const ItemGridComponent: Story = {
     const odd = objectList.filter((o, index) => index % 2 !== 0);
 
     return "groupBy" in args ? (
-      <ItemGrid objectList={objectList} {...args} />
+      <ItemGrid
+        {...args}
+        objectList={objectList}
+        objectLists={undefined}
+        fieldset={args.fieldset as FieldSet}
+        fieldsets={undefined}
+        groupBy={args.groupBy as string}
+      />
     ) : (
-      <ItemGrid objectLists={[even, odd]} {...args} />
+      <ItemGrid {...args} objectLists={[even, odd]} />
     );
   },
 };
 
-export const WithCustomPreview = {
+export const WithCustomPreview: Story = {
   ...ItemGridComponent,
+  // @ts-expect-error - Fix never
   args: {
-    ...ItemGridComponent.args,
-    renderPreview: (attributeData) => (
-      <img alt={attributeData.title} src={attributeData.thumbnailUrl} />
+    ...(ItemGridComponent.args as ItemGridProps),
+    renderPreview: (attributeData: AttributeData<string>) => (
+      <img
+        alt={attributeData.title}
+        src={attributeData.thumbnailUrl}
+        width="100%"
+        height="100%"
+        style={{ objectFit: "cover" }}
+      />
     ),
   },
 };
 
-export const GroupBy = {
+export const GroupBy: Story = {
   ...ItemGridComponent,
+  // @ts-expect-error - Fix never
   args: {
     fieldset: [`{group}`, { fields: ["title"], title: "title" }],
     groupBy: "alphaIndex",
