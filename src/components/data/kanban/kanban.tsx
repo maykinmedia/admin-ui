@@ -17,6 +17,7 @@ import { Button, ButtonLink, ButtonLinkProps, ButtonProps } from "../../button";
 import { Card } from "../../card";
 import { Select } from "../../form";
 import { Column, Grid } from "../../layout";
+import { StackCtx } from "../../stackctx";
 import { Toolbar } from "../../toolbar";
 import { Body, H2, H3, Hr, P } from "../../typography";
 import { Value } from "../value";
@@ -397,102 +398,6 @@ export const KanbanItem: React.FC<KanbanItemProps> = ({
   onClick,
   onObjectChange,
 }) => {
-  const titleField = fieldset[1].title || Object.keys(object)[0];
-  const urlField = urlFields.find((f) => object[f]);
-
-  const title = field2Title(String(object[titleField]));
-  const href = urlField ? String(object[urlField]) || undefined : undefined;
-
-  /**
-   * Gets called when the user starts dragging the item.
-   * Populates the datatransfer with stringified `KanbanDragData`.
-   * @param e
-   */
-  const onDragStart: React.DragEventHandler = (e) => {
-    const data: KanbanDragData = {
-      sourceColumnIndex: fieldsetIndex,
-      sourceObjectIndex: objectIndex,
-      object,
-    };
-    e.dataTransfer.dropEffect = "move";
-    e.dataTransfer.setData("text/plain", title);
-    e.dataTransfer.setData("application/json", JSON.stringify(data));
-    href && e.dataTransfer.setData("text/uri-list", href);
-  };
-
-  const Component = fieldset[1].component || KanbanButton;
-
-  return (
-    <Component
-      buttonLinkProps={buttonLinkProps}
-      buttonProps={buttonProps}
-      draggable={draggable}
-      fieldset={fieldset}
-      fieldsets={fieldsets}
-      fieldsetIndex={fieldsetIndex}
-      href={href}
-      labelMoveObject={labelMoveObject}
-      labelSelectColumn={labelSelectColumn}
-      object={object}
-      objectIndex={objectIndex}
-      objectList={objectList}
-      renderPreview={renderPreview}
-      urlFields={urlFields}
-      title={title}
-      onClick={onClick}
-      onDragStart={onDragStart}
-      onObjectChange={onObjectChange}
-    />
-  );
-};
-
-export type KanbanButtonProps = {
-  buttonLinkProps?: ButtonLinkProps;
-  buttonProps?: ButtonProps;
-  draggable?: boolean;
-  fieldset: FieldSet;
-  fieldsets: FieldSet[];
-  fieldsetIndex: number;
-  href?: string;
-  labelMoveObject?: string;
-  labelSelectColumn?: string;
-  object: AttributeData;
-  objectIndex: number;
-  objectList: AttributeData[];
-  renderPreview?: ((attributeData: AttributeData) => React.ReactNode) | false;
-  urlFields: (keyof KanbanItemProps["object"])[];
-  title: string;
-  onClick?: (event: React.MouseEvent, attributeData: AttributeData) => void;
-  onDragStart: React.DragEventHandler;
-  onObjectChange?: (
-    object: AttributeData,
-    sourceColumnIndex: number,
-    targetColumnIndex: number,
-    sourceObjectIndex: number,
-    targetObjectIndex: number,
-  ) => void;
-};
-
-export const KanbanButton: React.FC<KanbanButtonProps> = ({
-  buttonProps,
-  buttonLinkProps,
-  draggable,
-  fieldset,
-  fieldsets,
-  fieldsetIndex,
-  href,
-  title,
-  labelMoveObject,
-  labelSelectColumn,
-  object,
-  objectIndex,
-  objectList,
-  renderPreview = () => <Badge>{title[0].toUpperCase()}</Badge>,
-  urlFields,
-  onClick,
-  onDragStart,
-  onObjectChange,
-}) => {
   const intl = useIntl();
 
   const _labelSelectColumn = labelSelectColumn
@@ -518,24 +423,30 @@ export const KanbanButton: React.FC<KanbanButtonProps> = ({
         },
         object as Record<string, string>,
       );
-
-  const fields = fieldset[1].fields;
   const titleField = fieldset[1].title || Object.keys(object)[0];
-  const otherFields = fields.filter(
-    (field) => ![...urlFields, titleField].includes(field),
-  );
+  const urlField = urlFields.find((f) => object[f]);
 
-  const renderTitle = () => {
-    const preview = renderPreview && renderPreview(object);
-    return (
-      <>
-        <Toolbar pad={false} variant="transparent">
-          {preview}
-          <P>{title}</P>
-        </Toolbar>
-      </>
-    );
+  const title = field2Title(String(object[titleField]));
+  const href = urlField ? String(object[urlField]) || undefined : undefined;
+
+  /**
+   * Gets called when the user starts dragging the item.
+   * Populates the datatransfer with stringified `KanbanDragData`.
+   * @param e
+   */
+  const onDragStart: React.DragEventHandler = (e) => {
+    const data: KanbanDragData = {
+      sourceColumnIndex: fieldsetIndex,
+      sourceObjectIndex: objectIndex,
+      object,
+    };
+    e.dataTransfer.dropEffect = "move";
+    e.dataTransfer.setData("text/plain", title);
+    e.dataTransfer.setData("application/json", JSON.stringify(data));
+    href && e.dataTransfer.setData("text/uri-list", href);
   };
+
+  const Component = fieldset[1].component || KanbanButton;
 
   const renderContent = () => {
     if (!draggable) {
@@ -597,6 +508,74 @@ export const KanbanButton: React.FC<KanbanButtonProps> = ({
     );
   };
 
+  return (
+    <StackCtx>
+      <Component
+        buttonLinkProps={buttonLinkProps}
+        buttonProps={buttonProps}
+        draggable={draggable}
+        fieldset={fieldset}
+        href={href}
+        object={object}
+        renderPreview={renderPreview}
+        urlFields={urlFields}
+        title={title}
+        onClick={onClick}
+        onDragStart={onDragStart}
+      />
+      {renderContent()}
+    </StackCtx>
+  );
+};
+
+export type KanbanButtonProps = {
+  buttonLinkProps?: ButtonLinkProps;
+  buttonProps?: ButtonProps;
+  draggable?: boolean;
+  fieldset: FieldSet;
+  href?: string;
+  object: AttributeData;
+  renderPreview?: ((attributeData: AttributeData) => React.ReactNode) | false;
+  urlFields: (keyof KanbanItemProps["object"])[];
+  title: string;
+  onClick?: (event: React.MouseEvent, attributeData: AttributeData) => void;
+  onDragStart: React.DragEventHandler;
+};
+
+export const KanbanButton: React.FC<KanbanButtonProps> = ({
+  buttonProps,
+  buttonLinkProps,
+  draggable,
+  fieldset,
+  href,
+  title,
+  object,
+  renderPreview = () =>
+    title && (
+      <div>
+        <Badge>{title[0].toUpperCase()}</Badge>
+      </div>
+    ),
+  urlFields,
+  onClick,
+  onDragStart,
+}) => {
+  const fields = fieldset[1].fields;
+  const titleField = fieldset[1].title || Object.keys(object)[0];
+  const otherFields = fields.filter(
+    (field) => ![...urlFields, titleField].includes(field),
+  );
+
+  const renderTitle = () => {
+    const preview = renderPreview && renderPreview(object);
+    return (
+      <Toolbar justify="h" pad={false} variant="transparent">
+        {preview}
+        <P>{title}</P>
+      </Toolbar>
+    );
+  };
+
   const renderFooter = () => {
     if (!otherFields.length) {
       return;
@@ -608,14 +587,12 @@ export const KanbanButton: React.FC<KanbanButtonProps> = ({
         <Body>
           <Toolbar pad={false} variant="transparent">
             {otherFields.map((field) => (
-              <>
-                <span key={field}>{field}</span>
-                <Value
-                  decorate={true}
-                  pProps={{ size: "xs" }}
-                  value={object[field]}
-                />
-              </>
+              <Value
+                key={field}
+                decorate={true}
+                pProps={{ size: "xs" }}
+                value={object[field]}
+              />
             ))}
           </Toolbar>
         </Body>
@@ -639,7 +616,7 @@ export const KanbanButton: React.FC<KanbanButtonProps> = ({
       onDragStart={draggable ? onDragStart : undefined}
     >
       <Card title={renderTitle()}>
-        {renderContent()}
+        {object.children as React.ReactNode}
         {renderFooter()}
       </Card>
     </ButtonLink>
@@ -647,6 +624,7 @@ export const KanbanButton: React.FC<KanbanButtonProps> = ({
     <Button
       align="start"
       className="mykn-kanban__button"
+      disabled={!onClick}
       draggable={draggable}
       justify
       pad={false}
@@ -657,10 +635,8 @@ export const KanbanButton: React.FC<KanbanButtonProps> = ({
       onClick={(e) => onClick?.(e, object)}
       onDragStart={draggable ? onDragStart : undefined}
     >
-      <Card title={renderTitle()}>
-        {renderContent()}
-        {renderFooter()}
-      </Card>
+      {object.children as React.ReactNode}
+      <Card title={renderTitle()}>{renderFooter()}</Card>
     </Button>
   );
 };
