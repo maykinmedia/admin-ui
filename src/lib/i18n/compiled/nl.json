@@ -1,284 +1,39 @@
 {
-  "mykn.components.AttributeTable.labelCancel": [
-    {
-      "type": 0,
-      "value": "Annuleren"
-    }
-  ],
-  "mykn.components.AttributeTable.labelEdit": [
-    {
-      "type": 0,
-      "value": "Bewerk \""
-    },
-    {
-      "type": 1,
-      "value": "label"
-    },
-    {
-      "type": 0,
-      "value": "\""
-    }
-  ],
-  "mykn.components.Bool.labelFalse": [
-    {
-      "type": 0,
-      "value": "nee"
-    }
-  ],
-  "mykn.components.Bool.labelTrue": [
-    {
-      "type": 0,
-      "value": "ja"
-    }
-  ],
-  "mykn.components.DataGrid.labelFilterField": [
-    {
-      "type": 0,
-      "value": "filter veld \""
-    },
-    {
-      "type": 1,
-      "value": "name"
-    },
-    {
-      "type": 0,
-      "value": "\""
-    }
-  ],
-  "mykn.components.DataGrid.labelSaveFieldSelection": [
-    {
-      "type": 0,
-      "value": "kolommen opslaan"
-    }
-  ],
-  "mykn.components.DataGrid.labelSelect": [
-    {
-      "type": 0,
-      "value": "(de)selecteer rij"
-    }
-  ],
-  "mykn.components.DataGrid.labelSelectAll": [
-    {
-      "type": 0,
-      "value": "(de)selecteer "
-    },
-    {
-      "type": 1,
-      "value": "countPage"
-    },
-    {
-      "type": 0,
-      "value": " rijen"
-    }
-  ],
-  "mykn.components.DataGrid.labelSelectFields": [
-    {
-      "type": 0,
-      "value": "selecteer kolommen"
-    }
-  ],
-  "mykn.components.DatePicker.labelChooseDayPrefix": [
-    {
-      "type": 0,
-      "value": "Kies dag"
-    }
-  ],
-  "mykn.components.DatePicker.labelClose": [
-    {
-      "type": 0,
-      "value": "Sluiten"
-    }
-  ],
-  "mykn.components.DatePicker.labelDisabledDayPrefix": [
-    {
-      "type": 0,
-      "value": "Uitgeschakelde dag"
-    }
-  ],
-  "mykn.components.DatePicker.labelMonthPrefix": [
-    {
-      "type": 0,
-      "value": "maand"
-    }
-  ],
-  "mykn.components.DatePicker.labelNextMonth": [
-    {
-      "type": 0,
-      "value": "Volgende maand"
-    }
-  ],
-  "mykn.components.DatePicker.labelNextYear": [
-    {
-      "type": 0,
-      "value": "Volgend jaar"
-    }
-  ],
-  "mykn.components.DatePicker.labelPreviousMonth": [
-    {
-      "type": 0,
-      "value": "Vorige maand"
-    }
-  ],
-  "mykn.components.DatePicker.labelPreviousYear": [
-    {
-      "type": 0,
-      "value": "Vorig jaar"
-    }
-  ],
-  "mykn.components.DatePicker.labelTimeInput": [
-    {
-      "type": 0,
-      "value": "Kies tijd:"
-    }
-  ],
-  "mykn.components.DatePicker.labelWeek": [
-    {
-      "type": 0,
-      "value": "Week"
-    }
-  ],
-  "mykn.components.DatePicker.labelWeekPrefix": [
-    {
-      "type": 0,
-      "value": "week"
-    }
-  ],
-  "mykn.components.Form.labelSubmit": [
-    {
-      "type": 0,
-      "value": "verzenden"
-    }
-  ],
-  "mykn.components.Kanban.labelMoveObject": [
-    {
-      "type": 0,
-      "value": "wijzig positie van onderdeel"
-    }
-  ],
-  "mykn.components.Kanban.labelSelectColumn": [
-    {
-      "type": 0,
-      "value": "verplaats onderdeel naar kolom"
-    }
-  ],
-  "mykn.components.Logo.hrefLabel": [
-    {
-      "type": 0,
-      "value": "Navigeer naar \""
-    },
-    {
-      "type": 1,
-      "value": "href"
-    },
-    {
-      "type": 0,
-      "value": "\""
-    }
-  ],
-  "mykn.components.Logo.label": [
-    {
-      "type": 0,
-      "value": "Maykin logo"
-    }
-  ],
-  "mykn.components.Modal.labelClose": [
-    {
-      "type": 0,
-      "value": "Sluiten"
-    }
-  ],
-  "mykn.components.Paginator.labelCurrentPageRange": [
-    {
-      "type": 0,
-      "value": "resultaat "
-    },
-    {
-      "type": 1,
-      "value": "pageStart"
-    },
-    {
-      "type": 0,
-      "value": " t/m "
-    },
-    {
-      "type": 1,
-      "value": "pageEnd"
-    },
-    {
-      "type": 0,
-      "value": " van "
-    },
-    {
-      "type": 1,
-      "value": "pageCount"
-    },
-    {
-      "type": 0,
-      "value": " pagina's"
-    }
-  ],
-  "mykn.components.Paginator.labelGoToPage": [
-    {
-      "type": 0,
-      "value": "naar pagina "
-    },
-    {
-      "type": 1,
-      "value": "page"
-    }
-  ],
-  "mykn.components.Paginator.labelLoading": [
-    {
-      "type": 0,
-      "value": "bezig met laden..."
-    }
-  ],
-  "mykn.components.Paginator.labelNext": [
-    {
-      "type": 0,
-      "value": "volgende"
-    }
-  ],
-  "mykn.components.Paginator.labelPageSize": [
-    {
-      "type": 0,
-      "value": "aantal resultaten"
-    }
-  ],
-  "mykn.components.Paginator.labelPagination": [
-    {
-      "type": 0,
-      "value": "paginering"
-    }
-  ],
-  "mykn.components.Paginator.labelPrevious": [
-    {
-      "type": 0,
-      "value": "vorige"
-    }
-  ],
-  "mykn.components.Select.labelClear": [
-    {
-      "type": 0,
-      "value": "waarde wissen"
-    }
-  ],
-  "mykn.components.Sidebar.collapse": [
-    {
-      "type": 0,
-      "value": "Zijbalk inklappen"
-    }
-  ],
-  "mykn.components.Sidebar.expand": [
-    {
-      "type": 0,
-      "value": "Zijbalk uitklappen"
-    }
-  ],
-  "mykn.templates.Login.labelLogin": [
-    {
-      "type": 0,
-      "value": "inloggen"
-    }
-  ]
+  "mykn.components.AttributeTable.labelCancel": "Annuleren",
+  "mykn.components.AttributeTable.labelEdit": "Bewerk \"{label}\"",
+  "mykn.components.Bool.labelFalse": "nee",
+  "mykn.components.Bool.labelTrue": "ja",
+  "mykn.components.DataGrid.labelFilterField": "filter veld \"{name}\"",
+  "mykn.components.DataGrid.labelSaveFieldSelection": "kolommen opslaan",
+  "mykn.components.DataGrid.labelSelect": "(de)selecteer rij",
+  "mykn.components.DataGrid.labelSelectAll": "(de)selecteer {countPage} rijen",
+  "mykn.components.DataGrid.labelSelectFields": "selecteer kolommen",
+  "mykn.components.DatePicker.labelChooseDayPrefix": "Kies dag",
+  "mykn.components.DatePicker.labelClose": "Sluiten",
+  "mykn.components.DatePicker.labelDisabledDayPrefix": "Uitgeschakelde dag",
+  "mykn.components.DatePicker.labelMonthPrefix": "maand",
+  "mykn.components.DatePicker.labelNextMonth": "Volgende maand",
+  "mykn.components.DatePicker.labelNextYear": "Volgend jaar",
+  "mykn.components.DatePicker.labelPreviousMonth": "Vorige maand",
+  "mykn.components.DatePicker.labelPreviousYear": "Vorig jaar",
+  "mykn.components.DatePicker.labelTimeInput": "Kies tijd:",
+  "mykn.components.DatePicker.labelWeek": "Week",
+  "mykn.components.DatePicker.labelWeekPrefix": "week",
+  "mykn.components.Form.labelSubmit": "verzenden",
+  "mykn.components.Kanban.labelMoveObject": "wijzig positie van onderdeel",
+  "mykn.components.Kanban.labelSelectColumn": "verplaats onderdeel naar kolom",
+  "mykn.components.Logo.hrefLabel": "Navigeer naar \"{href}\"",
+  "mykn.components.Logo.label": "Maykin logo",
+  "mykn.components.Modal.labelClose": "Sluiten",
+  "mykn.components.Paginator.labelCurrentPageRange": "resultaat {pageStart} t/m {pageEnd} van {pageCount} pagina's",
+  "mykn.components.Paginator.labelGoToPage": "naar pagina {page}",
+  "mykn.components.Paginator.labelLoading": "bezig met laden...",
+  "mykn.components.Paginator.labelNext": "volgende",
+  "mykn.components.Paginator.labelPageSize": "aantal resultaten",
+  "mykn.components.Paginator.labelPagination": "paginering",
+  "mykn.components.Paginator.labelPrevious": "vorige",
+  "mykn.components.Select.labelClear": "waarde wissen",
+  "mykn.components.Sidebar.collapse": "Zijbalk inklappen",
+  "mykn.components.Sidebar.expand": "Zijbalk uitklappen",
+  "mykn.templates.Login.labelLogin": "inloggen"
 }

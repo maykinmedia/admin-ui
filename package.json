@@ -9,9 +9,9 @@
     "rebuild": "npm run clean && npm run build",
     "clean": "rm -rf ./dist",
     "makemessages": "npm run makemessages-en & npm run makemessages-nl",
-    "makemessages-en": "npm run extract -- 'src/**/*.ts*' --format src/lib/i18n/i18nformatter.js --ignore='**/*.d.ts' --out-file src/lib/i18n/messages/en.json",
-    "makemessages-nl": "npm run extract -- 'src/**/*.ts*' --format src/lib/i18n/i18nformatter.js --ignore='**/*.d.ts' --out-file src/lib/i18n/messages/nl.json",
-    "compilemessages": "formatjs compile-folder --ast src/lib/i18n/messages src/lib/i18n/compiled",
+    "makemessages-en": "npm run extract -- 'src/**/*.ts*' --format src/lib/i18n/format.mjs --ignore='**/*.d.ts' --out-file src/lib/i18n/messages/en.json",
+    "makemessages-nl": "npm run extract -- 'src/**/*.ts*' --format src/lib/i18n/format.mjs --ignore='**/*.d.ts' --out-file src/lib/i18n/messages/nl.json",
+    "compilemessages": "formatjs compile-folder --format src/lib/i18n/format.mjs src/lib/i18n/messages src/lib/i18n/compiled",
     "extract": "formatjs extract",
     "lint": "eslint .",
     "lint:fix": "eslint --fix src",
@@ -28,7 +28,7 @@
   "main": "dist/cjs/index.js",
   "module": "src/esm/index.js",
   "style": "dist/esm/index.css",
-  "lang": "dist/messages",
+  "lang": "dist/esm/lib/i18n/compiled",
   "supportedLocales": [
     "en",
     "nl"
