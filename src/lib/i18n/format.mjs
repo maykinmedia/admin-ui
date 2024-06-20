@@ -4,8 +4,9 @@ import yargs from "yargs";
 
 // load the existing catalog to prevent overwriting messages
 const argv = yargs(process.argv).argv;
+let existingCatalog;
 try {
-  const existingCatalog = JSON.parse(fs.readFileSync(argv.outFile, "utf-8"));
+  existingCatalog = JSON.parse(fs.readFileSync(argv.outFile, "utf-8"));
 } catch (e) {
   if (!process.argv.includes("compile-folder")) {
     console.error(e);
