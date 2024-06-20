@@ -43,7 +43,8 @@
   white-space: nowrap;
   width: var(--mykn-button-width);
 
-  &[disabled] {
+  &[disabled],
+  &--disabled {
     --mykn-button-offset: 0 !important;
     pointer-events: none;
     opacity: 0.4;

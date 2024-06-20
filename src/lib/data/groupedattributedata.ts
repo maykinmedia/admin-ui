@@ -6,7 +6,7 @@ import { AttributeData, FieldOptions, FieldSet } from "./attributedata";
 
 export type GroupedAttributeDataProps = Omit<
   React.ComponentProps<"div">,
-  "title" | "onClick"
+  "draggable" | "title" | "onClick"
 > & {
   /** A title for the datagrid. */
   title?: React.ReactNode;

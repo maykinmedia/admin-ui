@@ -14,9 +14,11 @@ import {
 } from "../../../lib/data/groupedattributedata";
 import { Badge } from "../../badge";
 import { Button, ButtonLink, ButtonLinkProps, ButtonProps } from "../../button";
+import { Card } from "../../card";
 import { Select } from "../../form";
 import { Column, Grid } from "../../layout";
-import { Body, H1, H2, H3, P } from "../../typography";
+import { Toolbar } from "../../toolbar";
+import { Body, H2, H3, Hr, P } from "../../typography";
 import { Value } from "../value";
 import "./kanban.scss";
 
@@ -110,9 +112,9 @@ export const Kanban: React.FC<KanbanProps> = ({
       return;
     }
 
-    const siblings = [...currentTarget.children].filter((child) =>
-      child.getAttribute("draggable"),
-    );
+    const siblings = [
+      ...currentTarget.querySelectorAll(".mykn-kanban__button"),
+    ].filter((child) => child.getAttribute("draggable"));
 
     const columnIndex = parseInt(currentTarget.dataset.columnIndex || "0");
     const insertIndex = getInsertIndex(siblings, e.nativeEvent.clientY);
@@ -211,6 +213,7 @@ export const Kanban: React.FC<KanbanProps> = ({
       (n) => n.getBoundingClientRect().y,
     );
     const lastIndex = yPositions.findIndex((p) => p >= y);
+
     return lastIndex === -1 ? children.length : lastIndex;
   };
 
@@ -219,6 +222,7 @@ export const Kanban: React.FC<KanbanProps> = ({
       {title && (
         <Body className="mykn-kanban__header">
           <H2>{title}</H2>
+          <br />
         </Body>
       )}
       <Body className="mykn-kanban__body">
@@ -313,12 +317,10 @@ export const KanbanSection: React.FC<KanbanSectionProps> = ({
       data-column-index={columnIndex}
     >
       {fieldset[0] && (
-        <Body>
-          <H3>
-            {fieldset[0]}
-            <Badge>{objectList.length}</Badge>
-          </H3>
-        </Body>
+        <Toolbar pad={false} variant="transparent">
+          <H3>{fieldset[0]}</H3>
+          <Badge>{objectList.length}</Badge>
+        </Toolbar>
       )}
       <Body className="mykn-kanban__track">
         {objectList.map((o, index) => (
@@ -395,16 +397,104 @@ export const KanbanItem: React.FC<KanbanItemProps> = ({
   onClick,
   onObjectChange,
 }) => {
-  const intl = useIntl();
-  const fields = fieldset[1].fields;
   const titleField = fieldset[1].title || Object.keys(object)[0];
   const urlField = urlFields.find((f) => object[f]);
 
   const title = field2Title(String(object[titleField]));
   const href = urlField ? String(object[urlField]) || undefined : undefined;
-  const otherFields = fields.filter(
-    (field) => ![...urlFields, titleField].includes(field),
+
+  /**
+   * Gets called when the user starts dragging the item.
+   * Populates the datatransfer with stringified `KanbanDragData`.
+   * @param e
+   */
+  const onDragStart: React.DragEventHandler = (e) => {
+    const data: KanbanDragData = {
+      sourceColumnIndex: fieldsetIndex,
+      sourceObjectIndex: objectIndex,
+      object,
+    };
+    e.dataTransfer.dropEffect = "move";
+    e.dataTransfer.setData("text/plain", title);
+    e.dataTransfer.setData("application/json", JSON.stringify(data));
+    href && e.dataTransfer.setData("text/uri-list", href);
+  };
+
+  const Component = fieldset[1].component || KanbanButton;
+
+  return (
+    <Component
+      buttonLinkProps={buttonLinkProps}
+      buttonProps={buttonProps}
+      draggable={draggable}
+      fieldset={fieldset}
+      fieldsets={fieldsets}
+      fieldsetIndex={fieldsetIndex}
+      href={href}
+      labelMoveObject={labelMoveObject}
+      labelSelectColumn={labelSelectColumn}
+      object={object}
+      objectIndex={objectIndex}
+      objectList={objectList}
+      renderPreview={renderPreview}
+      urlFields={urlFields}
+      title={title}
+      onClick={onClick}
+      onDragStart={onDragStart}
+      onObjectChange={onObjectChange}
+    />
   );
+};
+
+export type KanbanButtonProps = {
+  buttonLinkProps?: ButtonLinkProps;
+  buttonProps?: ButtonProps;
+  draggable?: boolean;
+  fieldset: FieldSet;
+  fieldsets: FieldSet[];
+  fieldsetIndex: number;
+  href?: string;
+  labelMoveObject?: string;
+  labelSelectColumn?: string;
+  object: AttributeData;
+  objectIndex: number;
+  objectList: AttributeData[];
+  renderPreview?: ((attributeData: AttributeData) => React.ReactNode) | false;
+  urlFields: (keyof KanbanItemProps["object"])[];
+  title: string;
+  onClick?: (event: React.MouseEvent, attributeData: AttributeData) => void;
+  onDragStart: React.DragEventHandler;
+  onObjectChange?: (
+    object: AttributeData,
+    sourceColumnIndex: number,
+    targetColumnIndex: number,
+    sourceObjectIndex: number,
+    targetObjectIndex: number,
+  ) => void;
+};
+
+export const KanbanButton: React.FC<KanbanButtonProps> = ({
+  buttonProps,
+  buttonLinkProps,
+  draggable,
+  fieldset,
+  fieldsets,
+  fieldsetIndex,
+  href,
+  title,
+  labelMoveObject,
+  labelSelectColumn,
+  object,
+  objectIndex,
+  objectList,
+  renderPreview = () => <Badge>{title[0].toUpperCase()}</Badge>,
+  urlFields,
+  onClick,
+  onDragStart,
+  onObjectChange,
+}) => {
+  const intl = useIntl();
+
   const _labelSelectColumn = labelSelectColumn
     ? formatMessage(labelSelectColumn, object)
     : intl.formatMessage(
@@ -429,138 +519,109 @@ export const KanbanItem: React.FC<KanbanItemProps> = ({
         object as Record<string, string>,
       );
 
-  /**
-   * Gets called when the user starts dragging the item.
-   * Populates the datatransfer with stringified `KanbanDragData`.
-   * @param e
-   */
-  const onDragStart: React.DragEventHandler = (e) => {
-    const data: KanbanDragData = {
-      sourceColumnIndex: fieldsetIndex,
-      sourceObjectIndex: objectIndex,
-      object,
-    };
-    e.dataTransfer.dropEffect = "move";
-    e.dataTransfer.setData("text/plain", title);
-    e.dataTransfer.setData("application/json", JSON.stringify(data));
-    href && e.dataTransfer.setData("text/uri-list", href);
+  const fields = fieldset[1].fields;
+  const titleField = fieldset[1].title || Object.keys(object)[0];
+  const otherFields = fields.filter(
+    (field) => ![...urlFields, titleField].includes(field),
+  );
+
+  const renderTitle = () => {
+    const preview = renderPreview && renderPreview(object);
+    return (
+      <>
+        <Toolbar pad={false} variant="transparent">
+          {preview}
+          <P>{title}</P>
+        </Toolbar>
+      </>
+    );
   };
 
-  const Component = fieldset[1].component;
+  const renderContent = () => {
+    if (!draggable) {
+      return;
+    }
+    return (
+      <>
+        <Select
+          aria-label={_labelSelectColumn}
+          className="mykn-kanban__select mykn-kanban__select--column"
+          options={fieldsets.map((fieldset, index) => {
+            const option = {
+              label: fieldset[0] || "",
+              selected: index === fieldsetIndex,
+              value: index,
+            };
+            return option;
+          })}
+          required
+          textSize="xs"
+          onClick={(e) => e.preventDefault()}
+          onChange={(e) =>
+            onObjectChange?.(
+              object,
+              fieldsetIndex,
+              parseInt(e.target.value),
+              objectIndex,
+              -1,
+            )
+          }
+        />
 
-  return (
-    <KanbanButton
-      buttonLinkProps={buttonLinkProps}
-      buttonProps={buttonProps}
-      draggable={draggable}
-      href={href}
-      object={object}
-      renderPreview={!Component && renderPreview}
-      title={title}
-      onClick={onClick}
-      onDragStart={onDragStart}
-    >
-      {Component && <Component {...object} />}
+        {/* A11y position selector. */}
+        <Select
+          aria-label={_labelMoveObject}
+          className="mykn-kanban__select mykn-kanban__select--position"
+          options={objectList.map((o, index) => {
+            const option = {
+              label: String(o[titleField] || index),
+              selected: o === object,
+              value: index,
+            };
+            return option;
+          })}
+          required
+          textSize="xs"
+          onClick={(e) => e.preventDefault()}
+          onChange={(e) =>
+            onObjectChange?.(
+              object,
+              fieldsetIndex,
+              fieldsetIndex,
+              objectIndex,
+              parseInt(e.target.value),
+            )
+          }
+        />
+      </>
+    );
+  };
 
-      {!Component && (
-        <>
-          <P bold size="xs">
-            {title}
-          </P>
+  const renderFooter = () => {
+    if (!otherFields.length) {
+      return;
+    }
 
-          {otherFields.map((field) => (
-            <P key={field} muted size="xs">
-              <Value value={object[field]}></Value>
-            </P>
-          ))}
-        </>
-      )}
-
-      {/* A11y column selector. */}
-      {draggable && (
-        <>
-          <Select
-            aria-label={_labelSelectColumn}
-            className="mykn-kanban__select mykn-kanban__select--column"
-            options={fieldsets.map((fieldset, index) => {
-              const option = {
-                label: fieldset[0] || "",
-                selected: index === fieldsetIndex,
-                value: index,
-              };
-              return option;
-            })}
-            required
-            textSize="xs"
-            onClick={(e) => e.preventDefault()}
-            onChange={(e) =>
-              onObjectChange?.(
-                object,
-                fieldsetIndex,
-                parseInt(e.target.value),
-                objectIndex,
-                -1,
-              )
-            }
-          />
-
-          {/* A11y position selector. */}
-          <Select
-            aria-label={_labelMoveObject}
-            className="mykn-kanban__select mykn-kanban__select--position"
-            options={objectList.map((o, index) => {
-              const option = {
-                label: String(o[titleField] || index),
-                selected: o === object,
-                value: index,
-              };
-              return option;
-            })}
-            required
-            textSize="xs"
-            onClick={(e) => e.preventDefault()}
-            onChange={(e) =>
-              onObjectChange?.(
-                object,
-                fieldsetIndex,
-                fieldsetIndex,
-                objectIndex,
-                parseInt(e.target.value),
-              )
-            }
-          />
-        </>
-      )}
-    </KanbanButton>
-  );
-};
-
-export type KanbanButtonProps = {
-  buttonLinkProps?: ButtonLinkProps;
-  buttonProps?: ButtonProps;
-  children: React.ReactNode;
-  draggable?: boolean;
-  href?: string;
-  object: AttributeData;
-  renderPreview?: ((attributeData: AttributeData) => React.ReactNode) | false;
-  title: string;
-  onClick?: (event: React.MouseEvent, attributeData: AttributeData) => void;
-  onDragStart: React.DragEventHandler;
-};
-
-export const KanbanButton: React.FC<KanbanButtonProps> = ({
-  buttonProps,
-  buttonLinkProps,
-  children,
-  draggable,
-  href,
-  title,
-  object,
-  renderPreview = () => <H1 aria-hidden>{title[0].toUpperCase()}</H1>,
-  onClick,
-  onDragStart,
-}) => {
-  const content = renderPreview ? renderPreview(object) : null;
+    return (
+      <>
+        <Hr size="xxl" />
+        <Body>
+          <Toolbar pad={false} variant="transparent">
+            {otherFields.map((field) => (
+              <>
+                <span key={field}>{field}</span>
+                <Value
+                  decorate={true}
+                  pProps={{ size: "xs" }}
+                  value={object[field]}
+                />
+              </>
+            ))}
+          </Toolbar>
+        </Body>
+      </>
+    );
+  };
 
   return href ? (
     <ButtonLink
@@ -569,6 +630,7 @@ export const KanbanButton: React.FC<KanbanButtonProps> = ({
       draggable={draggable}
       href={href}
       justify
+      pad={false}
       title={title}
       variant="outline"
       wrap={false}
@@ -576,8 +638,10 @@ export const KanbanButton: React.FC<KanbanButtonProps> = ({
       onClick={(e) => onClick?.(e, object)}
       onDragStart={draggable ? onDragStart : undefined}
     >
-      {content && <span className="mykn-kanban__preview">{content}</span>}
-      {children}
+      <Card title={renderTitle()}>
+        {renderContent()}
+        {renderFooter()}
+      </Card>
     </ButtonLink>
   ) : (
     <Button
@@ -585,6 +649,7 @@ export const KanbanButton: React.FC<KanbanButtonProps> = ({
       className="mykn-kanban__button"
       draggable={draggable}
       justify
+      pad={false}
       title={title}
       variant="outline"
       wrap={false}
@@ -592,8 +657,10 @@ export const KanbanButton: React.FC<KanbanButtonProps> = ({
       onClick={(e) => onClick?.(e, object)}
       onDragStart={draggable ? onDragStart : undefined}
     >
-      <span className="mykn-kanban__preview">{content}</span>
-      {children}
+      <Card title={renderTitle()}>
+        {renderContent()}
+        {renderFooter()}
+      </Card>
     </Button>
   );
 };
