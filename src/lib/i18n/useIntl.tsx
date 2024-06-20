@@ -70,37 +70,25 @@ const getLocalizedFallbackIntl = (
       descriptor: MessageDescriptor,
       context: MessageContext = {},
     ) => {
-      let messages: Record<string, MessageDescriptor> = {};
+      let messages: Record<string, string> = {};
       try {
         if (locale === "nl") {
-          messages = require("./messages/nl.json");
+          // eslint-disable-next-line @typescript-eslint/no-var-requires
+          messages = require("./compiled/nl");
         } else {
-          messages = require("./messages/en.json");
+          // eslint-disable-next-line @typescript-eslint/no-var-requires
+          messages = require("./compiled/en");
         }
       } catch (e) {
-        // messages not loaded.
+        console.warn(e);
       }
 
-      /*
-       FIXME: Fix Storybook/react-intl setup
+      // Fix cases where module and not values were imported.
+      if (messages.default) {
+        messages = messages.default as unknown as Record<string, string>;
+      }
 
-       In case @formatjs/ts-transformer is not set on the compiler, ids are not available. In our Storybook setup,
-       the transformer function is removed from the webpack config as it caused a build loop, resulting in undefined
-       `descriptor.id` values.
-
-
-       We mitigate this problem bu specifying id's explicitly, this should make translations easier to use and more
-       reliable. In a potential edge case happens where an id is not available, we attempt to find it using the
-       description.
-      */
-      const id =
-        descriptor.id ||
-        Object.entries(messages)?.find(
-          ([, message]) => message.description === descriptor.description,
-        )?.[0];
-
-      const message =
-        messages[id || ""]?.defaultMessage || descriptor.defaultMessage;
+      const message = messages[descriptor.id as string];
       return formatMessage(message, context);
     },
   };

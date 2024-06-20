@@ -1,284 +1,39 @@
 {
-  "mykn.components.AttributeTable.labelCancel": [
-    {
-      "type": 0,
-      "value": "Cancel"
-    }
-  ],
-  "mykn.components.AttributeTable.labelEdit": [
-    {
-      "type": 0,
-      "value": "Edit \""
-    },
-    {
-      "type": 1,
-      "value": "label"
-    },
-    {
-      "type": 0,
-      "value": "\""
-    }
-  ],
-  "mykn.components.Bool.labelFalse": [
-    {
-      "type": 0,
-      "value": "no"
-    }
-  ],
-  "mykn.components.Bool.labelTrue": [
-    {
-      "type": 0,
-      "value": "yes"
-    }
-  ],
-  "mykn.components.DataGrid.labelFilterField": [
-    {
-      "type": 0,
-      "value": "filter field \""
-    },
-    {
-      "type": 1,
-      "value": "name"
-    },
-    {
-      "type": 0,
-      "value": "\""
-    }
-  ],
-  "mykn.components.DataGrid.labelSaveFieldSelection": [
-    {
-      "type": 0,
-      "value": "save column selection"
-    }
-  ],
-  "mykn.components.DataGrid.labelSelect": [
-    {
-      "type": 0,
-      "value": "(de)select row"
-    }
-  ],
-  "mykn.components.DataGrid.labelSelectAll": [
-    {
-      "type": 0,
-      "value": "(de)select "
-    },
-    {
-      "type": 1,
-      "value": "countPage"
-    },
-    {
-      "type": 0,
-      "value": " rows"
-    }
-  ],
-  "mykn.components.DataGrid.labelSelectFields": [
-    {
-      "type": 0,
-      "value": "select columns"
-    }
-  ],
-  "mykn.components.DatePicker.labelChooseDayPrefix": [
-    {
-      "type": 0,
-      "value": "Choose day"
-    }
-  ],
-  "mykn.components.DatePicker.labelClose": [
-    {
-      "type": 0,
-      "value": "Close"
-    }
-  ],
-  "mykn.components.DatePicker.labelDisabledDayPrefix": [
-    {
-      "type": 0,
-      "value": "Disabled day"
-    }
-  ],
-  "mykn.components.DatePicker.labelMonthPrefix": [
-    {
-      "type": 0,
-      "value": "Month"
-    }
-  ],
-  "mykn.components.DatePicker.labelNextMonth": [
-    {
-      "type": 0,
-      "value": "Next month"
-    }
-  ],
-  "mykn.components.DatePicker.labelNextYear": [
-    {
-      "type": 0,
-      "value": "Next year"
-    }
-  ],
-  "mykn.components.DatePicker.labelPreviousMonth": [
-    {
-      "type": 0,
-      "value": "Previous month"
-    }
-  ],
-  "mykn.components.DatePicker.labelPreviousYear": [
-    {
-      "type": 0,
-      "value": "Previous year"
-    }
-  ],
-  "mykn.components.DatePicker.labelTimeInput": [
-    {
-      "type": 0,
-      "value": "Choose time:"
-    }
-  ],
-  "mykn.components.DatePicker.labelWeek": [
-    {
-      "type": 0,
-      "value": "Week"
-    }
-  ],
-  "mykn.components.DatePicker.labelWeekPrefix": [
-    {
-      "type": 0,
-      "value": "Week"
-    }
-  ],
-  "mykn.components.Form.labelSubmit": [
-    {
-      "type": 0,
-      "value": "submit"
-    }
-  ],
-  "mykn.components.Kanban.labelMoveObject": [
-    {
-      "type": 0,
-      "value": "change position of item"
-    }
-  ],
-  "mykn.components.Kanban.labelSelectColumn": [
-    {
-      "type": 0,
-      "value": "move item to column"
-    }
-  ],
-  "mykn.components.Logo.hrefLabel": [
-    {
-      "type": 0,
-      "value": "Go to \""
-    },
-    {
-      "type": 1,
-      "value": "href"
-    },
-    {
-      "type": 0,
-      "value": "\""
-    }
-  ],
-  "mykn.components.Logo.label": [
-    {
-      "type": 0,
-      "value": "Maykin logo"
-    }
-  ],
-  "mykn.components.Modal.labelClose": [
-    {
-      "type": 0,
-      "value": "Sluiten"
-    }
-  ],
-  "mykn.components.Paginator.labelCurrentPageRange": [
-    {
-      "type": 0,
-      "value": "result "
-    },
-    {
-      "type": 1,
-      "value": "pageStart"
-    },
-    {
-      "type": 0,
-      "value": " to "
-    },
-    {
-      "type": 1,
-      "value": "pageEnd"
-    },
-    {
-      "type": 0,
-      "value": " of "
-    },
-    {
-      "type": 1,
-      "value": "pageCount"
-    },
-    {
-      "type": 0,
-      "value": " pages"
-    }
-  ],
-  "mykn.components.Paginator.labelGoToPage": [
-    {
-      "type": 0,
-      "value": "go to page "
-    },
-    {
-      "type": 1,
-      "value": "page"
-    }
-  ],
-  "mykn.components.Paginator.labelLoading": [
-    {
-      "type": 0,
-      "value": "loading..."
-    }
-  ],
-  "mykn.components.Paginator.labelNext": [
-    {
-      "type": 0,
-      "value": "next"
-    }
-  ],
-  "mykn.components.Paginator.labelPageSize": [
-    {
-      "type": 0,
-      "value": "number of results"
-    }
-  ],
-  "mykn.components.Paginator.labelPagination": [
-    {
-      "type": 0,
-      "value": "pagination"
-    }
-  ],
-  "mykn.components.Paginator.labelPrevious": [
-    {
-      "type": 0,
-      "value": "previous"
-    }
-  ],
-  "mykn.components.Select.labelClear": [
-    {
-      "type": 0,
-      "value": "clear value"
-    }
-  ],
-  "mykn.components.Sidebar.collapse": [
-    {
-      "type": 0,
-      "value": "Collapse sidebar"
-    }
-  ],
-  "mykn.components.Sidebar.expand": [
-    {
-      "type": 0,
-      "value": "Expand sidebar"
-    }
-  ],
-  "mykn.templates.Login.labelLogin": [
-    {
-      "type": 0,
-      "value": "inloggen"
-    }
-  ]
+  "mykn.components.AttributeTable.labelCancel": "Cancel",
+  "mykn.components.AttributeTable.labelEdit": "Edit \"{label}\"",
+  "mykn.components.Bool.labelFalse": "no",
+  "mykn.components.Bool.labelTrue": "yes",
+  "mykn.components.DataGrid.labelFilterField": "filter field \"{name}\"",
+  "mykn.components.DataGrid.labelSaveFieldSelection": "save column selection",
+  "mykn.components.DataGrid.labelSelect": "(de)select row",
+  "mykn.components.DataGrid.labelSelectAll": "(de)select {countPage} rows",
+  "mykn.components.DataGrid.labelSelectFields": "select columns",
+  "mykn.components.DatePicker.labelChooseDayPrefix": "Choose day",
+  "mykn.components.DatePicker.labelClose": "Close",
+  "mykn.components.DatePicker.labelDisabledDayPrefix": "Disabled day",
+  "mykn.components.DatePicker.labelMonthPrefix": "Month",
+  "mykn.components.DatePicker.labelNextMonth": "Next month",
+  "mykn.components.DatePicker.labelNextYear": "Next year",
+  "mykn.components.DatePicker.labelPreviousMonth": "Previous month",
+  "mykn.components.DatePicker.labelPreviousYear": "Previous year",
+  "mykn.components.DatePicker.labelTimeInput": "Choose time:",
+  "mykn.components.DatePicker.labelWeek": "Week",
+  "mykn.components.DatePicker.labelWeekPrefix": "Week",
+  "mykn.components.Form.labelSubmit": "submit",
+  "mykn.components.Kanban.labelMoveObject": "change position of item",
+  "mykn.components.Kanban.labelSelectColumn": "move item to column",
+  "mykn.components.Logo.hrefLabel": "Go to \"{href}\"",
+  "mykn.components.Logo.label": "Maykin logo",
+  "mykn.components.Modal.labelClose": "Close",
+  "mykn.components.Paginator.labelCurrentPageRange": "result {pageStart} to {pageEnd} of {pageCount} pages",
+  "mykn.components.Paginator.labelGoToPage": "go to page {page}",
+  "mykn.components.Paginator.labelLoading": "loading...",
+  "mykn.components.Paginator.labelNext": "next",
+  "mykn.components.Paginator.labelPageSize": "number of results",
+  "mykn.components.Paginator.labelPagination": "pagination",
+  "mykn.components.Paginator.labelPrevious": "previous",
+  "mykn.components.Select.labelClear": "clear value",
+  "mykn.components.Sidebar.collapse": "Collapse sidebar",
+  "mykn.components.Sidebar.expand": "Expand sidebar",
+  "mykn.templates.Login.labelLogin": "inloggen"
 }

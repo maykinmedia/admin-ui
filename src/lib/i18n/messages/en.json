@@ -125,7 +125,7 @@
     "originalDefault": "Maykin logo"
   },
   "mykn.components.Modal.labelClose": {
-    "defaultMessage": "Sluiten",
+    "defaultMessage": "Close",
     "description": "mykn.components.Modal: The modal close (accessible) label",
     "originalDefault": "Sluiten"
   },
