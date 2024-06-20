@@ -36,10 +36,6 @@
     z-index: 10;
   }
 
-  &__body .mykn-column .mykn-badge {
-    margin-inline-start: var(--spacing-h);
-  }
-
   &__track {
     border: 1px solid var(--typography-color-border);
     display: flex;
@@ -68,15 +64,6 @@
     }
   }
 
-  &__body &__preview {
-    display: flex;
-    flex-shrink: 0;
-    height: calc(var(--typography-line-height-body-s) * 2);
-    justify-content: center;
-    overflow: hidden;
-    width: calc(var(--typography-line-height-body-s) * 2);
-  }
-
   &__select {
     inset-block-end: var(--spacing-v);
     inset-inline-end: var(--spacing-h);
@@ -91,7 +78,6 @@
     }
 
     &:focus-visible {
-      //background-color: green;
       visibility: visible;
     }
   }

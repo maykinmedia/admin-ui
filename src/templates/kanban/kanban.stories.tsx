@@ -2,13 +2,15 @@ import type { Meta, StoryObj } from "@storybook/react";
 import * as React from "react";
 import { useEffect, useState } from "react";
 
-import { Badge, Outline } from "../../components";
-import { AttributeData } from "../../lib";
-import { KanbanTemplate } from "./kanban";
+import { generateHexColor } from "../../../.storybook/utils";
+import { Badge, KanbanProps, Outline } from "../../components";
+import { AttributeData, FieldSet } from "../../lib";
+import { KanbanTemplate, KanbanTemplateProps } from "./kanban";
 
 const meta: Meta<typeof KanbanTemplate> = {
   title: "Templates/Kanban",
   component: KanbanTemplate,
+  // @ts-expect-error - Fix missing onClick on type
   argTypes: { onClick: { action: "onClick" } },
 };
 
@@ -25,7 +27,7 @@ export const kanbanTemplate: Story = {
         ["In Review", { fields: ["title"], title: "title" }],
         ["Done", { fields: ["title"], title: "title" }],
       ],
-    },
+    } as KanbanProps,
     breadcrumbItems: [
       { label: "Home", href: "/" },
       { label: "Templates", href: "#" },
@@ -38,7 +40,7 @@ export const kanbanTemplate: Story = {
       { children: <Outline.ArrowRightOnRectangleIcon />, title: "Uitloggen" },
     ],
   },
-  render: (args) => {
+  render: (args: KanbanTemplateProps) => {
     const abortController = new AbortController();
     const [objectList, setObjectList] = useState<AttributeData[]>([]);
     // Process sorting and pagination locally in place for demonstration purposes.
@@ -50,10 +52,15 @@ export const kanbanTemplate: Story = {
         .then((response) => response.json())
         .then((data: AttributeData[]) => {
           setObjectList(
-            data.map((d) => ({
-              ...d,
-              alphaIndex: String(d.title[0]).toUpperCase(),
-            })),
+            data.map((d) => {
+              const url = `https://placehold.co/600x400/${generateHexColor(d.id as number)}/000`;
+              return {
+                ...d,
+                alphaIndex: String(d.title?.toString()[0]).toUpperCase(),
+                url: url,
+                thumbnailUrl: url,
+              };
+            }),
           );
         });
     }, [args]);
@@ -61,13 +68,16 @@ export const kanbanTemplate: Story = {
     const even = objectList.filter((o, index) => index % 2 === 0);
     const odd = objectList.filter((o, index) => index % 2 !== 0);
 
-    return "groupBy" in args ? (
+    return "groupBy" in args.kanbanProps ? (
       <KanbanTemplate
         {...args}
         kanbanProps={{
           ...args.kanbanProps,
-          onObjectChange: () => console.log("foo"),
+          fieldset: args.kanbanProps.fieldset as FieldSet,
+          fieldsets: undefined,
+          groupBy: args.kanbanProps.groupBy as string,
           objectList: objectList,
+          objectLists: undefined,
         }}
       />
     ) : (
@@ -75,7 +85,6 @@ export const kanbanTemplate: Story = {
         {...args}
         kanbanProps={{
           ...args.kanbanProps,
-          onObjectChange: () => console.log("foo"),
           objectLists: [even, odd, [], []],
         }}
       />
@@ -171,11 +180,14 @@ export const WithCustomPreview: Story = {
   args: {
     ...WithSecondaryNavigation.args,
     kanbanProps: {
-      ...WithSecondaryNavigation.args?.kanbanProps,
+      ...(WithSecondaryNavigation.args!.kanbanProps as KanbanProps),
       renderPreview: (attributeData) => (
         <img
-          alt={attributeData.title || ""}
-          src={attributeData.thumbnailUrl || ""}
+          alt={attributeData.title as string}
+          src={attributeData.thumbnailUrl as string}
+          width="24"
+          height="24"
+          style={{ objectFit: "cover" }}
         />
       ),
     },
@@ -187,7 +199,7 @@ export const Draggable: Story = {
   args: {
     ...WithSecondaryNavigation.args,
     kanbanProps: {
-      ...WithSecondaryNavigation.args?.kanbanProps,
+      ...(WithSecondaryNavigation.args!.kanbanProps as KanbanProps),
       draggable: true,
     },
   },

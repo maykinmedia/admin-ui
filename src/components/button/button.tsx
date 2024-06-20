@@ -53,7 +53,9 @@ export type ButtonLinkProps = Omit<
   React.AnchorHTMLAttributes<HTMLAnchorElement>,
   "onClick"
 > &
-  BaseButtonProps;
+  BaseButtonProps & {
+    disabled?: boolean;
+  };
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   (
@@ -113,6 +115,7 @@ export const ButtonLink = React.forwardRef<HTMLAnchorElement, ButtonLinkProps>(
       align = "center",
       bold = false,
       className,
+      disabled,
       justify = false,
       muted = false,
       pad = true,
@@ -128,6 +131,7 @@ export const ButtonLink = React.forwardRef<HTMLAnchorElement, ButtonLinkProps>(
     return (
       <a
         ref={ref as LegacyRef<HTMLAnchorElement>}
+        aria-disabled={true}
         className={clsx(
           "mykn-button",
           `mykn-button--align-${align}`,
@@ -136,6 +140,7 @@ export const ButtonLink = React.forwardRef<HTMLAnchorElement, ButtonLinkProps>(
           {
             "mykn-button--active": active,
             "mykn-button--bold": bold,
+            "mykn-button--disabled": disabled,
             "mykn-button--justify": justify,
             "mykn-button--muted": muted,
             "mykn-button--pad-h": pad === true || pad === "h",
