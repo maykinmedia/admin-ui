@@ -98,4 +98,6 @@ export const Value: React.FC<ValueProps> = ({
       </Badge>
     );
   }
+
+  console.warn("Refusing to render complex value:", value);
 };

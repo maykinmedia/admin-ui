@@ -23,11 +23,13 @@ export const Card: React.FC<CardProps> = ({
     {(controls.length || title) && (
       <div className="mykn-card__header">
         <Body>{typeof title === "string" ? <H1>{title}</H1> : title}</Body>
-        <Toolbar align="end" size="fit-content" pad="h">
-          {controls.map((buttonProps, index) => (
-            <Button key={buttonProps.id || index} {...buttonProps} />
-          ))}
-        </Toolbar>
+        {Boolean(controls?.length) && (
+          <Toolbar align="end" size="fit-content" pad="h">
+            {controls.map((buttonProps, index) => (
+              <Button key={buttonProps.id || index} {...buttonProps} />
+            ))}
+          </Toolbar>
+        )}
       </div>
     )}
     {children}
