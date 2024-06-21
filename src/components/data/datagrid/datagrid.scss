@@ -41,6 +41,10 @@
   &__head &__row--filter {
     background-color: var(--typography-color-background-alt);
 
+    .mykn-form-control {
+      gap: 0;
+    }
+
     .mykn-input,
     .mykn-select {
       width: 100%;
