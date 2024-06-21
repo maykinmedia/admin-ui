@@ -18,8 +18,10 @@ const meta: Meta<typeof Tooltip> = {
   ],
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    const button = canvas.getByRole("button");
-    await userEvent.hover(button);
+    const buttons = canvas.getAllByRole("button");
+    buttons.forEach(async (button) => {
+      await userEvent.hover(button, { delay: 10 });
+    });
   },
 };
 
