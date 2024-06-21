@@ -101,3 +101,89 @@ export const TooltipBigText: Story = {
     ),
   },
 };
+
+export const TooltipStack: Story = {
+  render: () => (
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        gap: "1rem",
+        alignItems: "flex-start",
+      }}
+    >
+      <div style={{ width: "auto" }}>
+        <Tooltip {...TooltipComponent.args}>
+          <Button variant="transparent">
+            <Outline.InformationCircleIcon>
+              Hover me
+            </Outline.InformationCircleIcon>
+          </Button>
+        </Tooltip>
+      </div>
+      <div style={{ width: "auto" }}>
+        <Tooltip {...TooltipComponent.args} placement="top">
+          <Button variant="transparent">
+            <Outline.InformationCircleIcon>
+              Hover me (Top)
+            </Outline.InformationCircleIcon>
+          </Button>
+        </Tooltip>
+      </div>
+      <div style={{ width: "auto" }}>
+        <Tooltip {...TooltipComponent.args} placement="right">
+          <Button variant="transparent">
+            <Outline.InformationCircleIcon>
+              Hover me (Right)
+            </Outline.InformationCircleIcon>
+          </Button>
+        </Tooltip>
+      </div>
+      <div style={{ width: "auto" }}>
+        <Tooltip {...TooltipComponent.args} placement="bottom">
+          <Button variant="transparent">
+            <Outline.InformationCircleIcon>
+              Hover me (Bottom)
+            </Outline.InformationCircleIcon>
+          </Button>
+        </Tooltip>
+      </div>
+      <div style={{ width: "auto" }}>
+        <Tooltip {...TooltipComponent.args} placement="left">
+          <Button variant="transparent">
+            <Outline.InformationCircleIcon>
+              Hover me (Left)
+            </Outline.InformationCircleIcon>
+          </Button>
+        </Tooltip>
+      </div>
+      <div style={{ width: "auto" }}>
+        <Tooltip
+          {...TooltipComponent.args}
+          content={
+            <div>
+              <p>
+                This tooltip works by hovering over any react element, and it
+                can be placed in any direction.
+              </p>
+              <p>
+                This tooltip works by hovering over any react element, and it
+                can be placed in any direction.
+              </p>
+              <p>
+                This tooltip works by hovering over any react element, and it
+                can be placed in any direction.
+              </p>
+            </div>
+          }
+        >
+          <Button variant="transparent">
+            <Outline.InformationCircleIcon>
+              Hover me (Big Text)
+            </Outline.InformationCircleIcon>
+          </Button>
+        </Tooltip>
+      </div>
+    </div>
+  ),
+};
