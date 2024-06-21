@@ -5,10 +5,12 @@
   border-radius: var(--border-radius-l);
   background-color: var(--typography-color-background);
   border: 2px solid var(--typography-color-border);
+  z-index: -1 !important;
 
   &--open {
     opacity: 1;
     transform: scale(1);
+    z-index: 1 !important;
   }
 
   &__arrow {
