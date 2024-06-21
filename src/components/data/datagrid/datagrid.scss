@@ -91,6 +91,12 @@
     width: 0;
   }
 
+  &__cell--checkbox {
+    @media screen and (min-width: constants.$breakpoint-desktop) {
+      max-width: calc(var(--typography-line-height-body-s) + var(--spacing-h));
+    }
+  }
+
   &__cell--editable:not(#{&}__cell--editing) {
     padding-inline: var(--spacing-h);
   }
@@ -141,6 +147,10 @@
 
     &__table {
       display: block;
+    }
+
+    &__table--layout--fixed {
+      table-layout: fixed;
     }
 
     &__caption {

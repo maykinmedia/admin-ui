@@ -96,6 +96,15 @@ export type DataGridProps = {
   /** Props for P. */
   pProps?: PProps;
 
+  /** Whether checkboxes should be shown for every row. */
+  selectable?: boolean;
+
+  /** The table layout algorithm. */
+  tableLayout?: "auto" | "fixed";
+
+  /** A title for the datagrid. */
+  title?: React.ReactNode;
+
   /** The save selection label .*/
   labelSaveFieldSelection?: string;
 
@@ -111,9 +120,6 @@ export type DataGridProps = {
   /** The select all items label. */
   labelSelectAll?: string;
 
-  /** Whether checkboxes should be shown for every row. */
-  selectable?: boolean;
-
   /** Whether a select all checkbox should be shown (when `selectable=true`). */
   allowSelectAll?: boolean;
 
@@ -125,9 +131,6 @@ export type DataGridProps = {
 
   /** Renders buttons allowing to perform actions on selection, `onClick` is called with selection array. */
   selectionActions?: ButtonProps[];
-
-  /** A title for the datagrid. */
-  title?: React.ReactNode;
 
   /** Get called to when the active field selection is changed. */
   onFieldsChange?: (typedFields: TypedField[]) => void;
@@ -216,6 +219,7 @@ export const DataGrid: React.FC<DataGridProps> = ({
   equalityChecker = (item1, item2) => item1 === item2,
   selectionActions = [],
   sort,
+  tableLayout,
   title = "",
   urlFields = DEFAULT_URL_FIELDS,
   labelSaveFieldSelection,
@@ -384,7 +388,9 @@ export const DataGrid: React.FC<DataGridProps> = ({
   return (
     <div className="mykn-datagrid" {...props}>
       <table
-        className="mykn-datagrid__table"
+        className={clsx("mykn-datagrid__table", {
+          [`mykn-datagrid__table--layout-${tableLayout}`]: tableLayout,
+        })}
         role="grid"
         aria-labelledby={titleId}
       >
@@ -714,7 +720,8 @@ export const DataGridHeading: React.FC<DataGridHeadingProps> = ({
   return (
     <thead className="mykn-datagrid__head" role="rowgroup">
       <tr className="mykn-datagrid__row mykn-datagrid__row--header" role="row">
-        {renderableFields.map((field, index) => (
+        {selectable && <th className="mykn-datagrid__cell--checkbox"></th>}
+        {renderableFields.map((field) => (
           <DataGridHeadingCell
             key={`${dataGridId}-heading-${field2Caption(field.name)}`}
             field={field}
@@ -722,7 +729,6 @@ export const DataGridHeading: React.FC<DataGridHeadingProps> = ({
             isSorted={sortField === field.name}
             sortable={sortable}
             sortDirection={sortDirection}
-            span={selectable && index === 0 ? 2 : undefined}
           >
             {field2Caption(field.name)}
           </DataGridHeadingCell>
@@ -767,6 +773,7 @@ export const DataGridHeading: React.FC<DataGridHeadingProps> = ({
                   "mykn-datagrid__cell",
                   "mykn-datagrid__cell--filter",
                 )}
+                style={field.width ? { width: field.width } : {}}
               >
                 {field.filterable !== false && (
                   <FormControl
@@ -993,7 +1000,6 @@ export type DataGridHeadingCellProps = React.PropsWithChildren<{
   isSorted: boolean;
   sortable: boolean;
   sortDirection: "ASC" | "DESC" | undefined;
-  span?: number;
   onSort: (field: TypedField) => void;
 }>;
 
@@ -1007,14 +1013,12 @@ export const DataGridHeadingCell: React.FC<DataGridHeadingCellProps> = ({
   isSorted,
   sortable,
   sortDirection,
-  span,
 }) => (
   <th
     className={clsx("mykn-datagrid__cell", "mykn-datagrid__cell--header", [
       `mykn-datagrid__cell--type-${field.type}`,
     ])}
     role="columnheader"
-    colSpan={span}
   >
     {sortable ? (
       <Button
