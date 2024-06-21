@@ -78,8 +78,11 @@ export type TypedField<T = Attribute> = {
    */
   valueTransform?: (value: AttributeData) => Attribute;
 
-  /** Used by DataGrid when editable=true. */
+  /** Used by AttributeTable/DataGrid when editable=true. */
   options?: ChoiceFieldProps["options"];
+
+  /** Used by DataGrid to set column width. */
+  width?: string;
 };
 
 /** A Django-admin like field_options definition. */
