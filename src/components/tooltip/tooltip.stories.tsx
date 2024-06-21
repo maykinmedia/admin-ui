@@ -114,7 +114,7 @@ export const TooltipStack: Story = {
     >
       <div style={{ width: "auto" }}>
         <Tooltip {...TooltipComponent.args}>
-          <Button variant="transparent">
+          <Button variant="transparent" aria-label="tooltip-button-1">
             <Outline.InformationCircleIcon>
               Hover me
             </Outline.InformationCircleIcon>
@@ -123,7 +123,7 @@ export const TooltipStack: Story = {
       </div>
       <div style={{ width: "auto" }}>
         <Tooltip {...TooltipComponent.args} placement="top">
-          <Button variant="transparent">
+          <Button variant="transparent" aria-label="tooltip-button-2">
             <Outline.InformationCircleIcon>
               Hover me (Top)
             </Outline.InformationCircleIcon>
@@ -132,7 +132,7 @@ export const TooltipStack: Story = {
       </div>
       <div style={{ width: "auto" }}>
         <Tooltip {...TooltipComponent.args} placement="right">
-          <Button variant="transparent">
+          <Button variant="transparent" aria-label="tooltip-button-3">
             <Outline.InformationCircleIcon>
               Hover me (Right)
             </Outline.InformationCircleIcon>
@@ -141,7 +141,7 @@ export const TooltipStack: Story = {
       </div>
       <div style={{ width: "auto" }}>
         <Tooltip {...TooltipComponent.args} placement="bottom">
-          <Button variant="transparent">
+          <Button variant="transparent" aria-label="tooltip-button-4">
             <Outline.InformationCircleIcon>
               Hover me (Bottom)
             </Outline.InformationCircleIcon>
@@ -150,7 +150,7 @@ export const TooltipStack: Story = {
       </div>
       <div style={{ width: "auto" }}>
         <Tooltip {...TooltipComponent.args} placement="left">
-          <Button variant="transparent">
+          <Button variant="transparent" aria-label="tooltip-button-5">
             <Outline.InformationCircleIcon>
               Hover me (Left)
             </Outline.InformationCircleIcon>
@@ -177,7 +177,7 @@ export const TooltipStack: Story = {
             </div>
           }
         >
-          <Button variant="transparent">
+          <Button variant="transparent" aria-label="tooltip-button-6">
             <Outline.InformationCircleIcon>
               Hover me (Big Text)
             </Outline.InformationCircleIcon>
