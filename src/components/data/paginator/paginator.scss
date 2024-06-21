@@ -13,6 +13,10 @@
     gap: var(--spacing-h);
   }
 
+  &__section .mykn-p {
+    margin-block-end: 0 !important;
+  }
+
   &__section--meta {
     display: flex;
     gap: var(--spacing-v);
