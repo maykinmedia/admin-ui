@@ -163,11 +163,12 @@ export const AttributeTableRow: React.FC<AttributeTableRowProps> = ({
         defaultChecked={
           field.type === "boolean" ? Boolean(rawValue) : undefined
         }
+        hidden={!isEditing}
         name={name}
         options={field.options}
+        required={true}
         type={field.type === "number" ? "number" : undefined}
         value={rawValue?.toString()}
-        hidden={!isEditing}
       />
     );
   };
