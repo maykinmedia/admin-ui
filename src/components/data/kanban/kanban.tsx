@@ -318,7 +318,7 @@ export const KanbanSection: React.FC<KanbanSectionProps> = ({
       data-column-index={columnIndex}
     >
       {fieldset[0] && (
-        <Toolbar pad={false} variant="transparent">
+        <Toolbar directionResponsive={false} pad={false} variant="transparent">
           <H3>{fieldset[0]}</H3>
           <Badge>{objectList.length}</Badge>
         </Toolbar>
@@ -550,12 +550,7 @@ export const KanbanButton: React.FC<KanbanButtonProps> = ({
   href,
   title,
   object,
-  renderPreview = () =>
-    title && (
-      <div>
-        <Badge>{title[0].toUpperCase()}</Badge>
-      </div>
-    ),
+  renderPreview = () => title && <Badge>{title[0].toUpperCase()}</Badge>,
   urlFields,
   onClick,
   onDragStart,
@@ -569,7 +564,12 @@ export const KanbanButton: React.FC<KanbanButtonProps> = ({
   const renderTitle = () => {
     const preview = renderPreview && renderPreview(object);
     return (
-      <Toolbar justify="h" pad={false} variant="transparent">
+      <Toolbar
+        directionResponsive={false}
+        justify="h"
+        pad={false}
+        variant="transparent"
+      >
         {preview}
         <P>{title}</P>
       </Toolbar>
@@ -585,7 +585,11 @@ export const KanbanButton: React.FC<KanbanButtonProps> = ({
       <>
         <Hr size="xxl" />
         <Body>
-          <Toolbar pad={false} variant="transparent">
+          <Toolbar
+            directionResponsive={false}
+            pad={false}
+            variant="transparent"
+          >
             {otherFields.map((field) => (
               <Value
                 key={field}
