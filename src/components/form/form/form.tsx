@@ -123,11 +123,11 @@ export const Form: React.FC<FormProps> = ({
   const [errorsState, setErrorsState] = useState(errors || {});
 
   useEffect(() => {
-    return values && setValuesState(values);
+    values && setValuesState(values);
   }, [values]);
 
   useEffect(() => {
-    return errors && setErrorsState(errors);
+    errors && setErrorsState(errors);
   }, [errors]);
 
   const intl = useIntl();
