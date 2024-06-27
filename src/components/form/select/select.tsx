@@ -130,8 +130,10 @@ export const Select: React.FC<SelectProps> = ({
     );
 
     if (index === -1) {
+      setSelectedIndex(null);
       return;
     }
+
     setSelectedIndex(index);
   }, [value, options]);
 
