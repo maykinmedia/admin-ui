@@ -105,7 +105,7 @@
     "originalDefault": "verzenden"
   },
   "mykn.components.Form.labelValidationErrorRequired": {
-    "defaultMessage": "Veld {name} is verplicht",
+    "defaultMessage": "Field {name} is required",
     "description": "mykn.components.Form: The \"required\" validation error",
     "originalDefault": "Veld {name} is verplicht"
   },

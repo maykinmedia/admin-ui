@@ -6,6 +6,7 @@ import { Attribute, AttributeData } from "../../../lib/data/attributedata";
 import { FormField } from "../../../lib/form/typeguards";
 import { getValueFromFormData, serializeForm } from "../../../lib/form/utils";
 import {
+  DEFAULT_VALIDATION_ERROR_REQUIRED,
   Validator,
   getErrorFromErrors,
   validateForm,
@@ -218,7 +219,7 @@ export const Form: React.FC<FormProps> = ({
 
             const error = getErrorFromErrors(fields, errorsState, field);
             const message =
-              error === 'Veld "{name}" is verplicht'
+              error === DEFAULT_VALIDATION_ERROR_REQUIRED
                 ? _labelValidationErrorRequired
                 : error;
 
