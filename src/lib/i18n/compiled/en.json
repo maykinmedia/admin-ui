@@ -20,6 +20,7 @@
   "mykn.components.DatePicker.labelWeek": "Week",
   "mykn.components.DatePicker.labelWeekPrefix": "Week",
   "mykn.components.Form.labelSubmit": "submit",
+  "mykn.components.Form.labelValidationErrorRequired": "Field {name} is required",
   "mykn.components.Kanban.labelMoveObject": "change position of item",
   "mykn.components.Kanban.labelSelectColumn": "move item to column",
   "mykn.components.Logo.hrefLabel": "Go to \"{href}\"",
