@@ -59,6 +59,9 @@ export type FormProps = Omit<
   /** The submit form label. */
   labelSubmit?: string;
 
+  /** The validation error label */
+  labelValidationErrorRequired?: string;
+
   /**
    * (Built-in serialization only), whether the convert results to type inferred from input type (e.g. checkbox value
    * will be boolean).
@@ -98,6 +101,7 @@ export const Form: React.FC<FormProps> = ({
   initialValues = {},
   secondaryActions = [],
   labelSubmit = "",
+  labelValidationErrorRequired = "",
   nonFieldErrors,
   onChange,
   onSubmit,
@@ -127,6 +131,14 @@ export const Form: React.FC<FormProps> = ({
         id: "mykn.components.Form.labelSubmit",
         description: "mykn.components.Form: The submit form label",
         defaultMessage: "verzenden",
+      });
+
+  const _labelValidationErrorRequired = labelValidationErrorRequired
+    ? labelValidationErrorRequired
+    : intl.formatMessage({
+        id: "mykn.components.Form.labelValidationErrorRequired",
+        description: 'mykn.components.Form: The "required" validation error',
+        defaultMessage: "Veld {name} is verplicht",
       });
 
   /**
@@ -205,11 +217,16 @@ export const Form: React.FC<FormProps> = ({
               getValueFromFormData(fields, valuesState, field);
 
             const error = getErrorFromErrors(fields, errorsState, field);
+            const message =
+              error === 'Veld "{name}" is verplicht'
+                ? _labelValidationErrorRequired
+                : error;
+
             return (
               <FormControl
                 key={field.id || index}
                 direction={direction}
-                error={error}
+                error={message}
                 forceShowError={!validateOnChange}
                 value={value}
                 onChange={defaultOnChange}
