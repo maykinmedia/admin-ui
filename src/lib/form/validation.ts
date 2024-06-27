@@ -3,6 +3,8 @@ import { formatMessage } from "../i18n";
 import { FormField } from "./typeguards";
 import { parseFieldName } from "./utils";
 
+export const DEFAULT_VALIDATION_ERROR_REQUIRED = 'Veld "{name}" is verplicht';
+
 export type Validator = (
   value: unknown,
   field: FormField,
@@ -11,6 +13,7 @@ export type Validator = (
 
 /**
  * Validators whether `value` is set on `field` and `field` is required.
+ * If `message` is set, it will be used as error message, our `form` component has the option to set a custom message via props.
  * @param value
  * @param field
  * @param message
@@ -18,7 +21,7 @@ export type Validator = (
 export const validateRequired: Validator = (
   value,
   field,
-  message = 'Field "{name}" is required',
+  message = DEFAULT_VALIDATION_ERROR_REQUIRED,
 ) => {
   // Not required, don't validate.
   if (!field.required || value) {

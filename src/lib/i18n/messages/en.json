@@ -104,6 +104,11 @@
     "description": "mykn.components.Form: The submit form label",
     "originalDefault": "verzenden"
   },
+  "mykn.components.Form.labelValidationErrorRequired": {
+    "defaultMessage": "Field {name} is required",
+    "description": "mykn.components.Form: The \"required\" validation error",
+    "originalDefault": "Veld {name} is verplicht"
+  },
   "mykn.components.Kanban.labelMoveObject": {
     "defaultMessage": "change position of item",
     "description": "mykn.components.Kanban: The kanban \"move object position\" (accessible) label",

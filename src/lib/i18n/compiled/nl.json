@@ -20,6 +20,7 @@
   "mykn.components.DatePicker.labelWeek": "Week",
   "mykn.components.DatePicker.labelWeekPrefix": "week",
   "mykn.components.Form.labelSubmit": "verzenden",
+  "mykn.components.Form.labelValidationErrorRequired": "Veld {name} is verplicht",
   "mykn.components.Kanban.labelMoveObject": "wijzig positie van onderdeel",
   "mykn.components.Kanban.labelSelectColumn": "verplaats onderdeel naar kolom",
   "mykn.components.Logo.hrefLabel": "Navigeer naar \"{href}\"",
