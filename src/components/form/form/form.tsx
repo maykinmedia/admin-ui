@@ -120,9 +120,15 @@ export const Form: React.FC<FormProps> = ({
   const _nonFieldErrors = forceArray(nonFieldErrors);
 
   const [valuesState, setValuesState] = useState(initialValues);
-  useEffect(() => values && setValuesState(values), [values]);
   const [errorsState, setErrorsState] = useState(errors || {});
-  useEffect(() => errors && setErrorsState(errors), [errors]);
+
+  useEffect(() => {
+    return values && setValuesState(values);
+  }, [values]);
+
+  useEffect(() => {
+    return errors && setErrorsState(errors);
+  }, [errors]);
 
   const intl = useIntl();
 
@@ -161,6 +167,7 @@ export const Form: React.FC<FormProps> = ({
       onChange(event);
       return;
     }
+
     const form = (event.target as HTMLInputElement).form;
 
     if (form && !onChange) {
@@ -251,7 +258,9 @@ export const Form: React.FC<FormProps> = ({
         >
           <Button
             type="submit"
-            disabled={!errorsState || !!Object.keys(errorsState).length}
+            disabled={
+              validateOnChange && Boolean(Object.keys(errorsState).length)
+            }
           >
             {ucFirst(_labelSubmit)}
           </Button>
