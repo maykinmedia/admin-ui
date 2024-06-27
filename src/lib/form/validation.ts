@@ -18,7 +18,7 @@ export type Validator = (
 export const validateRequired: Validator = (
   value,
   field,
-  message = 'Field "{name}" is required',
+  message = 'Veld "{name}" is verplicht',
 ) => {
   // Not required, don't validate.
   if (!field.required || value) {
