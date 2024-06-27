@@ -191,11 +191,14 @@ export const Select: React.FC<SelectProps> = ({
   };
 
   const selectedOptionLabel =
-    selectedIndex !== null ? options[selectedIndex].label : undefined;
+    selectedIndex !== null ? options[selectedIndex]?.label : undefined;
 
   const selectedOptionValue =
     selectedIndex !== null
-      ? Object.prototype.hasOwnProperty.call(options[selectedIndex], "value")
+      ? Object.prototype.hasOwnProperty.call(
+          options[selectedIndex] || {},
+          "value",
+        )
         ? options[selectedIndex].value
         : selectedOptionLabel
       : "";
