@@ -9,6 +9,7 @@ import {
   isDatePicker,
   isInput,
   isRadio,
+  isRadioGroup,
 } from "../../../lib/form/typeguards";
 import { Checkbox } from "../checkbox";
 import { ChoiceField } from "../choicefield";
@@ -49,7 +50,8 @@ export const FormControl: React.FC<FormControlProps> = ({
   const id = useId();
   const _id = props.id || id;
   // Keep in sync with CheckboxGroup, possibly add constant?
-  const htmlFor = isCheckboxGroup(props) ? `${_id}-choice-0` : _id;
+  const htmlFor =
+    isCheckboxGroup(props) || isRadioGroup(props) ? `${_id}-choice-0` : _id;
   const idError = `${id}_error`;
 
   return (

@@ -20,6 +20,7 @@ export const CheckboxComponent: Story = {
   args: {
     children: "Click me!",
     name: "input",
+    value: "on",
   },
   argTypes: FORM_TEST_ARG_TYPES,
   decorators: [FORM_TEST_DECORATOR],

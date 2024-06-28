@@ -25,6 +25,11 @@ const meta: Meta<typeof Input> = {
         clearable = false;
         testValue = args.value || "on";
         break;
+      case "radio":
+        input = await canvas.getByRole("radio");
+        clearable = false;
+        testValue = args.value || "on";
+        break;
       case "number":
         input = await canvas.getByRole("spinbutton");
         break;
@@ -84,6 +89,17 @@ export const InputTypeCheckbox: Story = {
   args: {
     name: "input",
     type: "checkbox",
+    value: "true",
+  },
+  argTypes: FORM_TEST_ARG_TYPES,
+  decorators: [FORM_TEST_DECORATOR],
+};
+
+export const InputTypeRadio: Story = {
+  args: {
+    name: "input",
+    type: "radio",
+    value: "true",
   },
   argTypes: FORM_TEST_ARG_TYPES,
   decorators: [FORM_TEST_DECORATOR],
