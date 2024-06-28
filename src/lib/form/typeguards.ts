@@ -45,6 +45,9 @@ export const isChoiceField = (props: FormField): props is ChoiceFieldProps =>
 export const isCheckboxGroup = (props: FormField): props is ChoiceFieldProps =>
   isChoiceField(props) && props?.type === "checkbox";
 
+export const isRadioGroup = (props: FormField): props is ChoiceFieldProps =>
+  isChoiceField(props) && props?.type === "radio";
+
 /**
  * Typeguard for InputProps.
  */

@@ -20,6 +20,7 @@ export const RadioComponent: Story = {
   args: {
     children: "Click me!",
     name: "input",
+    value: "on",
   },
   argTypes: FORM_TEST_ARG_TYPES,
   decorators: [FORM_TEST_DECORATOR],
@@ -27,21 +28,10 @@ export const RadioComponent: Story = {
     const canvas = within(canvasElement);
     const pre = await canvas.findByRole("log");
     const input = canvas.getByLabelText(args.children);
-    let data;
 
     // On
     await userEvent.click(input);
-    data = JSON.parse(pre?.textContent || "{}");
-    await expect(data.input).toBe(args.value || "on");
-
-    // Off
-    await userEvent.click(input);
-    data = JSON.parse(pre?.textContent || "{}");
-    await expect(data.input).toBeUndefined();
-
-    // On
-    await userEvent.click(input);
-    data = JSON.parse(pre?.textContent || "{}");
+    const data = JSON.parse(pre?.textContent || "{}");
     await expect(data.input).toBe(args.value || "on");
   },
 };
