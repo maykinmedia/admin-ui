@@ -52,6 +52,16 @@ export const FormComponent: Story = {
           { label: "Science", value: "science" },
         ],
       },
+      {
+        label: "Receive newsletter",
+        name: "subscribe_newsletter",
+        type: "radio",
+        required: true,
+        options: [
+          { label: "Yes", value: "yes" },
+          { label: "No", value: "no" },
+        ],
+      },
     ],
     validate: validateForm,
     validateOnChange: true,
@@ -123,7 +133,12 @@ export const TypedResults: Story = {
       {
         label: "Receive newsletter",
         name: "subscribe_newsletter",
-        type: "checkbox",
+        type: "radio",
+        required: true,
+        options: [
+          { label: "Yes", value: "yes" },
+          { label: "No", value: "no" },
+        ],
       },
     ],
     useTypedResults: true,
@@ -187,6 +202,16 @@ export const UsageWithFormik: Story = {
           { label: "English", value: "english" },
           { label: "Math", value: "math" },
           { label: "Science", value: "science" },
+        ],
+      },
+      {
+        label: "Receive newsletter",
+        name: "subscribe_newsletter",
+        type: "radio",
+        required: true,
+        options: [
+          { label: "Yes", value: "yes" },
+          { label: "No", value: "no" },
         ],
       },
     ],

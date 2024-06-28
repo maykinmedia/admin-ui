@@ -1,4 +1,3 @@
-import clsx from "clsx";
 import React, { useEffect, useState } from "react";
 
 import { StackCtx } from "../../stackctx";
@@ -75,20 +74,14 @@ export const Input: React.FC<InputProps> = ({
   // For checkboxes, this is problematic as it loses the "on" | "off" values.
   // This conditionalizes the presence of the "value" props.
   const valueProps =
-    type.toLowerCase() === "checkbox"
-      ? typeof value === "undefined"
-        ? {}
-        : {
-            value: value,
-          }
-      : {
-          value: valueState,
-        };
+    type.toLowerCase() === "checkbox" || type.toLowerCase() === "radio"
+      ? { checked: props.checked, value: valueState }
+      : { value: valueState };
 
   const input = (
     <input
       ref={inputRef}
-      className={clsx("mykn-input", `mykn-input--variant-${variant}`)}
+      className={`mykn-input mykn-input--variant-${variant}`}
       type={type}
       onChange={_onChange}
       aria-label={label || undefined}

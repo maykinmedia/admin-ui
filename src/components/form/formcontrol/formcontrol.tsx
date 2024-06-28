@@ -8,6 +8,7 @@ import {
   isChoiceField,
   isDatePicker,
   isInput,
+  isRadio,
 } from "../../../lib/form/typeguards";
 import { Checkbox } from "../checkbox";
 import { ChoiceField } from "../choicefield";
@@ -15,6 +16,7 @@ import { DatePicker } from "../datepicker";
 import { ErrorMessage } from "../errormessage";
 import { Input, InputProps } from "../input";
 import { Label } from "../label";
+import { Radio } from "../radio";
 import "./formcontrol.scss";
 
 export type FormControlProps = FormField & {
@@ -86,6 +88,10 @@ export const FormControl: React.FC<FormControlProps> = ({
 export const FormWidget: React.FC<FormField> = ({ ...props }) => {
   if (isCheckbox(props)) {
     return <Checkbox {...props} />;
+  }
+
+  if (isRadio(props)) {
+    return <Radio {...props} />;
   }
 
   if (isDatePicker(props)) {

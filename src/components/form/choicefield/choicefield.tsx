@@ -1,6 +1,7 @@
 import React from "react";
 
 import { CheckboxGroup, CheckboxGroupProps } from "../checkbox/checkboxgroup";
+import { RadioGroup, RadioGroupProps } from "../radio";
 import { Select, SelectProps } from "../select";
 
 export type ChoiceFieldProps<
@@ -57,6 +58,9 @@ export type Option<L = number | string, V = string | number | undefined> = {
 export const ChoiceField: React.FC<ChoiceFieldProps> = ({ type, ...props }) => {
   if (type === "checkbox") {
     return <CheckboxGroup {...(props as CheckboxGroupProps)}></CheckboxGroup>;
+  }
+  if (type === "radio") {
+    return <RadioGroup {...(props as RadioGroupProps)}></RadioGroup>;
   }
   return <Select {...(props as SelectProps)} />;
 };
