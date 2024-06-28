@@ -106,7 +106,7 @@ export const Tooltip = ({
             context={context}
             className="mykn-tooltip__arrow"
           />
-          <P size="xs">{content}</P>
+          {React.isValidElement(content) ? content : <P size="xs">{content}</P>}
         </div>
       </div>
     </>

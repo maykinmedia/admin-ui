@@ -4,6 +4,8 @@ import * as React from "react";
 
 import { Button } from "../button";
 import { Outline } from "../icon";
+import { Breakout } from "../layout";
+import { Body, P } from "../typography";
 import { Tooltip } from "./tooltip";
 
 const meta: Meta<typeof Tooltip> = {
@@ -163,20 +165,22 @@ export const TooltipStack: Story = {
         <Tooltip
           {...TooltipComponent.args}
           content={
-            <div>
-              <p>
-                This tooltip works by hovering over any react element, and it
-                can be placed in any direction.
-              </p>
-              <p>
-                This tooltip works by hovering over any react element, and it
-                can be placed in any direction.
-              </p>
-              <p>
-                This tooltip works by hovering over any react element, and it
-                can be placed in any direction.
-              </p>
-            </div>
+            <Breakout>
+              <Body>
+                <P bold>
+                  This tooltip works by hovering over any react element, and it
+                  can be placed in any direction.
+                </P>
+                <P size="xs">
+                  This tooltip works by hovering over any react element, and it
+                  can be placed in any direction.
+                </P>
+                <P size="xs" muted>
+                  This tooltip works by hovering over any react element, and it
+                  can be placed in any direction.
+                </P>
+              </Body>
+            </Breakout>
           }
         >
           <Button variant="transparent" aria-label="tooltip-button-6">
