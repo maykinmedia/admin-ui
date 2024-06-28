@@ -1,9 +1,8 @@
 import { AttributeData } from "../data";
-import { formatMessage } from "../i18n";
 import { FormField } from "./typeguards";
 import { parseFieldName } from "./utils";
 
-export const DEFAULT_VALIDATION_ERROR_REQUIRED = 'Veld "{name}" is verplicht';
+export const DEFAULT_VALIDATION_ERROR_REQUIRED = "Dit veld is verplicht";
 
 export type Validator = (
   value: unknown,
@@ -29,10 +28,7 @@ export const validateRequired: Validator = (
   }
 
   // Return error message as no value is set.
-  return formatMessage(message, {
-    ...field,
-    name: parseFieldName(field.name)[0],
-  });
+  return message;
 };
 
 /**
