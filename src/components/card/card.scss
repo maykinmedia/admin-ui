@@ -4,7 +4,7 @@
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  overflow: clip;
+  //overflow: clip;  // Turned off for now to allow DatePicker to overflow Card and Modal.
   width: 100%;
 
   &__header {
