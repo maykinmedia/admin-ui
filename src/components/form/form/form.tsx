@@ -140,14 +140,6 @@ export const Form: React.FC<FormProps> = ({
         defaultMessage: "verzenden",
       });
 
-  const _labelValidationErrorRequired = labelValidationErrorRequired
-    ? labelValidationErrorRequired
-    : intl.formatMessage({
-        id: "mykn.components.Form.labelValidationErrorRequired",
-        description: 'mykn.components.Form: The "required" validation error',
-        defaultMessage: "Veld {name} is verplicht",
-      });
-
   /**
    * Revalidate on state change.
    */
@@ -220,9 +212,23 @@ export const Form: React.FC<FormProps> = ({
       {Boolean(fields?.length) && (
         <div className={fieldsetClassName}>
           {fields.map((field, index) => {
+            const label = field.label ?? field.name;
+
             const value =
               (field.value as string) ||
               getValueFromFormData(fields, valuesState, field);
+
+            const _labelValidationErrorRequired = labelValidationErrorRequired
+              ? labelValidationErrorRequired
+              : intl.formatMessage(
+                  {
+                    id: "mykn.components.Form.labelValidationErrorRequired",
+                    description:
+                      'mykn.components.Form: The "required" validation error',
+                    defaultMessage: "Veld {label} is verplicht",
+                  },
+                  { ...field, label, value },
+                );
 
             const error = getErrorFromErrors(fields, errorsState, field);
             const message =
