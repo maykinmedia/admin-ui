@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import React, { useId, useState } from "react";
 
 import {
@@ -15,23 +16,25 @@ import { Value } from "../value";
 import "./attributetable.scss";
 
 export type AttributeTableProps = {
-  editable?: boolean;
-  formProps?: FormProps;
   object?: AttributeData;
   labeledObject?: LabeledAttributeData;
-  labelEdit?: string;
-  labelCancel?: string;
+  editable?: boolean;
   fields?: Field[] | TypedField[];
+  formProps?: FormProps;
+  labelCancel?: string;
+  labelEdit?: string;
+  valign?: "middle" | "start";
 };
 
 export const AttributeTable: React.FC<AttributeTableProps> = ({
-  editable = false,
   object = {},
   labeledObject = {},
+  editable = false,
   fields = Object.keys(object).concat(Object.keys(labeledObject)),
   formProps,
-  labelEdit,
   labelCancel,
+  labelEdit,
+  valign = "middle",
   ...props
 }) => {
   const intl = useIntl();
@@ -82,7 +85,13 @@ export const AttributeTable: React.FC<AttributeTableProps> = ({
     ));
 
   return (
-    <div className="mykn-attributetable" {...props}>
+    <div
+      className={clsx(
+        "mykn-attributetable",
+        `mykn-attributetable--valign-${valign}`,
+      )}
+      {...props}
+    >
       {renderTable()}
     </div>
   );

@@ -17,6 +17,10 @@
     margin: 0;
   }
 
+  &--valign-start &__cell {
+    align-items: flex-start;
+  }
+
   &__cell--key {
     font-weight: var(--typography-font-weight-bold);
   }
