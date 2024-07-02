@@ -20,9 +20,7 @@ const config: StorybookConfig = {
       builder: {},
     },
   },
-  docs: {
-    autodocs: true,
-  },
+  docs: {},
   webpackFinal: async (config) => {
     config?.module?.rules?.push({
       test: /\.scss$/,
