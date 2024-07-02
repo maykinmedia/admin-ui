@@ -6,6 +6,30 @@ const { MINIMAL_VIEWPORTS } = require("@storybook/addon-viewport");
 
 const DEFAULT_VP_SIZE = { width: 1280, height: 720 };
 
+/**
+ * Attempt to solve: https://github.com/testing-library/web-testing-library/issues/3.
+ * GitHub's suggestions did not work at time of writing.
+ * @param page
+ * @param story
+ * @param attempt
+ * @param maxAttempts
+ */
+async function waitForStoryContext(
+  page: Page,
+  story: StoryFn,
+  attempt = 1,
+  maxAttempts = 20,
+) {
+  try {
+    return await getStoryContext(page, story);
+  } catch (e) {
+    if (attempt > maxAttempts) {
+      throw e;
+    }
+    return waitForStoryContext(page, story, attempt + 1);
+  }
+}
+
 module.exports = {
   /**
    * This makes sure the test runner respects the viewport.
@@ -13,8 +37,8 @@ module.exports = {
    * @param page
    * @param story
    */
-  async preRender(page: Page, story: StoryFn) {
-    const context = await getStoryContext(page, story);
+  async preVisit(page: Page, story: StoryFn) {
+    const context = await waitForStoryContext(page, story);
     const vpName =
       context.parameters?.viewport?.defaultViewport ?? "responsive";
     const vpParams = MINIMAL_VIEWPORTS[vpName];
@@ -22,9 +46,9 @@ module.exports = {
     if (vpParams) {
       const width = parseInt(vpParams.styles.width);
       const height = parseInt(vpParams.styles.height);
-      page.setViewportSize({ width, height });
+      return await page.setViewportSize({ width, height });
     } else {
-      page.setViewportSize(DEFAULT_VP_SIZE);
+      return await page.setViewportSize(DEFAULT_VP_SIZE);
     }
   },
 };
