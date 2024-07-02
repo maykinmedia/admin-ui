@@ -75,9 +75,14 @@ export const Input: React.FC<InputProps> = ({
   // This conditionalizes the presence of the "value" props.
   const valueProps =
     type.toLowerCase() === "checkbox" || type.toLowerCase() === "radio"
-      ? { checked: props.checked, value: valueState }
-      : { value: valueState };
-
+      ? typeof value === "undefined"
+        ? {}
+        : {
+            value: value,
+          }
+      : {
+          value: valueState,
+        };
   const input = (
     <input
       ref={inputRef}

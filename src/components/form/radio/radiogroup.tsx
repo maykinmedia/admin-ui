@@ -17,19 +17,19 @@ export const RadioGroup: React.FC<RadioGroupProps> = ({
 }) => {
   const reactId = useId();
   const _id = id || reactId;
-  const [selectedValue, setSelectedValue] = useState<
+  const [selectedValueState, setSelectedValueState] = useState<
     string | number | undefined
-  >(options.find((option) => option.selected)?.value);
+  >();
 
   useEffect(() => {
     const initialSelected = options.find((option) => option.selected)?.value;
     if (initialSelected !== undefined) {
-      setSelectedValue(initialSelected);
+      setSelectedValueState(initialSelected);
     }
   }, [options]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSelectedValue(event.target.value);
+    setSelectedValueState(event.target.value);
     onChange?.(event);
   };
 
@@ -46,7 +46,7 @@ export const RadioGroup: React.FC<RadioGroupProps> = ({
             name={name}
             value={optionValue}
             variant={variant}
-            checked={selectedValue === optionValue}
+            checked={selectedValueState === optionValue}
             onChange={handleChange}
           >
             {option.label}

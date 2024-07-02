@@ -25,11 +25,19 @@ export const serializeForm = (
   const entries = Array.from(formData.entries());
 
   const data = entries.reduce<SerializedFormData>((acc, [name, value]) => {
-    const nameMultipleTimesInForm =
-      [...form.elements].filter((n) => n.getAttribute("name") === name).length >
-      1;
+    const inputsMatchingName = [...form.elements].filter(
+      (n) => n.getAttribute("name") === name,
+    ) as Array<
+      | HTMLButtonElement
+      | HTMLInputElement
+      | HTMLSelectElement
+      | HTMLTextAreaElement
+    >;
+    const nameMultipleTimesInForm = inputsMatchingName.length > 1;
+    // Edge case: radio can possibly have more than one DOM element representing a single value.
+    const isRadio = inputsMatchingName.every((i) => i.type === "radio");
 
-    if (nameMultipleTimesInForm) {
+    if (nameMultipleTimesInForm && !isRadio) {
       // Key is already set on (serialized) `acc`, replace it with an `Array`.
       const existingValue = acc[name];
 
@@ -42,7 +50,6 @@ export const serializeForm = (
       // Key is not yet set in (serialized) `acc`, set it.
       acc[name] = value;
     }
-
     return acc;
   }, {});
 
@@ -57,38 +64,64 @@ export const serializeForm = (
 const typeSerializedFormData = (
   form: HTMLFormElement,
   data: SerializedFormData,
-): SerializedFormData => {
-  return Object.fromEntries(
+) =>
+  Object.fromEntries(
     Object.entries(data).map(([key, value]) => {
-      const input = [...form.elements].find(
-        (n) => n.getAttribute("name") === key,
-      );
-      const typeAttribute = input?.getAttribute("type");
-      let constructor:
-        | ((value: Attribute | File) => Attribute | File)
-        | undefined;
-      let _value = value;
-
-      switch (typeAttribute) {
-        case "number":
-          constructor = Number;
-          break;
-        case "checkbox":
-          // If checkbox array is used, `true[]` might not be useful (only true values are serialized).
-          // TODO: Investigate more robust solution.
-          constructor = Array.isArray(value) ? undefined : Boolean;
-          break;
+      if (Array.isArray(value)) {
+        const values = value.map((v, index) => {
+          const constructor = getInputTypeConstructor(form, key, value, index);
+          return constructor ? constructor(v) : v;
+        });
+        return [key, values];
       }
 
-      if (constructor) {
-        _value = Array.isArray(value)
-          ? value.map((v) => constructor?.(v) || v)
-          : constructor(value);
-      }
-
+      const constructor = getInputTypeConstructor(form, key, value);
+      const _value = constructor ? constructor(value) : value;
       return [key, _value];
     }),
   );
+
+/**
+ * Returns a Function providing a constructor for a typed value (e.g. input[type="number"] -> Number) at the `index`
+ * occurrence of input matching `name` in `form`.
+ * @param form
+ * @param name
+ * @param value
+ * @param index
+ */
+export const getInputTypeConstructor = (
+  form: HTMLFormElement,
+  name: string,
+  value: unknown | unknown[],
+  index?: number,
+) => {
+  const type = getInputType(form, name, index);
+  switch (type) {
+    case "number":
+      return Number;
+    case "checkbox":
+      return Array.isArray(value) ? undefined : Boolean;
+  }
+};
+
+/**
+ * Returns the type of the `index` occurrence of input matching `name` in `form`.
+ * @param form
+ * @param name
+ * @param index
+ */
+export const getInputType = (
+  form: HTMLFormElement,
+  name: string,
+  index?: number,
+) => {
+  const inputs = [...form.elements].filter(
+    (n) => n.getAttribute("name") === name,
+  );
+  if (typeof index !== "undefined" && inputs.length > 1) {
+    return inputs[index]?.getAttribute("type");
+  }
+  return inputs[0]?.getAttribute("type");
 };
 
 /**
