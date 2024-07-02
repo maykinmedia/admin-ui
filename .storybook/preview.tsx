@@ -29,6 +29,7 @@ const preview: Preview = {
     },
     layout: "fullscreen",
   },
+
   decorators: [
     withThemeByClassName({
       themes: {
@@ -39,6 +40,8 @@ const preview: Preview = {
       defaultTheme: "light",
     }) as any,
   ],
+
+  tags: ["autodocs", "autodocs"]
 };
 
 export default preview;
