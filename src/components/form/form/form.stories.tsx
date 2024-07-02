@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { userEvent, within } from "@storybook/test";
+import { expect, userEvent, within } from "@storybook/test";
 import { Formik } from "formik";
 import * as React from "react";
 
@@ -97,38 +97,51 @@ export const FormComponent: Story = {
 
     await userEvent.clear(firstName);
     await userEvent.type(firstName, "John", { delay: 10 });
+    expect(firstName).toHaveValue("John");
 
     await userEvent.clear(lastName);
     await userEvent.type(lastName, "Doe", { delay: 10 });
+    expect(lastName).toHaveValue("Doe");
 
     await userEvent.clear(age);
     await userEvent.type(age, "33", { delay: 10 });
+    expect(age).toHaveValue(33);
 
     await userEvent.click(schoolYear, { delay: 10 });
     const junior = await canvas.findByText("Junior");
     await userEvent.click(junior, { delay: 10 });
+    expect(schoolYear).toHaveTextContent("Junior");
 
     await userEvent.clear(address);
     await userEvent.type(address, "Keizersgracht 117", { delay: 10 });
+    expect(address).toHaveValue("Keizersgracht 117");
 
     await userEvent.clear(address_addition);
     await userEvent.type(address_addition, "2", { delay: 10 });
+    expect(address_addition).toHaveValue(2);
 
     await userEvent.clear(dateOfBirth);
     await userEvent.type(dateOfBirth, "2023-09-15", { delay: 10 });
     await userEvent.type(dateOfBirth, "{enter}");
+    expect(dateOfBirth).toHaveValue("09/15/2023");
 
     await userEvent.click(schoolYear);
     const senior = await canvas.findByText("Senior");
     await userEvent.click(senior);
+    expect(schoolYear).toHaveTextContent("Senior");
 
-    await userEvent.click(english, { delay: 10 });
-    await userEvent.click(math, { delay: 10 });
+    english.click();
+    expect(english).toBeChecked();
+    math.click();
+    expect(math).toBeChecked();
 
-    await userEvent.click(yes, { delay: 10 });
-    await userEvent.click(no, { delay: 10 });
+    yes.click();
+    expect(yes).toBeChecked();
+    no.click();
+    expect(no).toBeChecked();
 
-    await userEvent.click(acceptTos, { delay: 10 });
+    acceptTos.click();
+    expect(acceptTos).toBeChecked();
   },
 };
 
