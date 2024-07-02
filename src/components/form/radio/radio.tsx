@@ -16,17 +16,13 @@ export type RadioProps = InputProps & {
  * @param props
  * @constructor
  */
-export const Radio: React.FC<RadioProps> = ({
-  children,
-  value,
-  checked,
-  ...props
-}) => {
+export const Radio: React.FC<RadioProps> = ({ children, value, ...props }) => {
   const id = useId();
   const _id = props.id || id;
+  const _props = value ? { ...props, value } : props;
   return (
     <div className="mykn-radio">
-      <Input id={_id} {...props} type="radio" value={value} checked={checked} />
+      <Input id={_id} {..._props} type="radio" />
       {children && (
         <Label bold={false} htmlFor={_id}>
           {children}

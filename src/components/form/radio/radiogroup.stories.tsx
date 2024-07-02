@@ -42,7 +42,7 @@ export const RadioGroupComponent: Story = {
 
     data = JSON.parse(pre?.textContent || "{}");
 
-    await expect(data.school_year[0]).toEqual("Graduate");
+    await expect(data.school_year).toEqual("Graduate");
 
     await inputs
       .filter((_, i) => i % 2 !== 0)
@@ -53,6 +53,6 @@ export const RadioGroupComponent: Story = {
       );
 
     data = JSON.parse(pre?.textContent || "{}");
-    await expect(data.school_year[0]).toEqual("Senior");
+    await expect(data.school_year).toEqual("Senior");
   },
 };

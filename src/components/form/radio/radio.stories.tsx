@@ -27,7 +27,7 @@ export const RadioComponent: Story = {
   play: async ({ canvasElement, args }) => {
     const canvas = within(canvasElement);
     const pre = await canvas.findByRole("log");
-    const input = canvas.getByLabelText(args.children);
+    const input = canvas.getByLabelText(args.children as string);
 
     // On
     await userEvent.click(input);
