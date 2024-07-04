@@ -20,6 +20,125 @@ const meta: Meta<typeof Form> = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+const getParameterFromPre = (pre: HTMLElement, parameter: string) => {
+  const text = pre.textContent || "";
+  try {
+    const parsedText = JSON.parse(text);
+    const value = parsedText[parameter];
+    return value;
+  } catch (error) {
+    console.error("Error parsing JSON", error);
+  }
+};
+const getLogFromCanvas = (canvasElement: HTMLElement) => {
+  const canvas = within(canvasElement);
+  return canvas.getByRole("log");
+};
+
+const expectLogToBe = (
+  canvasElement: HTMLElement,
+  parameter: string,
+  value: unknown,
+) => {
+  const pre = getLogFromCanvas(canvasElement);
+  expect(getParameterFromPre(pre, parameter)).toEqual(value);
+};
+
+const playFormComponent = async ({
+  canvasElement,
+  typedResults = false,
+}: {
+  canvasElement: HTMLElement;
+  typedResults?: boolean;
+}) => {
+  const canvas = within(canvasElement);
+  const firstName = canvas.getByLabelText("First name");
+  const lastName = canvas.getByLabelText("Last name");
+  const age = canvas.getByLabelText("Age");
+  const schoolYear = canvas.getByLabelText("Select school year");
+  const address = canvas.getByLabelText("Address");
+  const address_addition = canvas.getByLabelText("Address (addition)");
+  const dateOfBirth = canvas.getByLabelText("Date of birth");
+  const english = canvas.getByLabelText("English");
+  const math = canvas.getByLabelText("Math");
+  const yes = canvas.getByLabelText("Yes");
+  const no = canvas.getByLabelText("No");
+  const acceptTos = canvas.getByLabelText(
+    "I have read and accept the terms and conditions",
+  );
+
+  await userEvent.clear(firstName);
+  await userEvent.type(firstName, "John", { delay: 10 });
+  expect(firstName).toHaveValue("John");
+  expectLogToBe(canvasElement, "first_name", typedResults ? "John" : "John");
+
+  await userEvent.clear(lastName);
+  await userEvent.type(lastName, "Doe", { delay: 10 });
+  expect(lastName).toHaveValue("Doe");
+  expectLogToBe(canvasElement, "last_name", typedResults ? "Doe" : "Doe");
+
+  await userEvent.clear(age);
+  await userEvent.type(age, "33", { delay: 10 });
+  expect(age).toHaveValue(33);
+  expectLogToBe(canvasElement, "age", typedResults ? 33 : "33");
+
+  await userEvent.click(schoolYear, { delay: 10 });
+  const junior = await canvas.findByText("Junior");
+  await userEvent.click(junior, { delay: 10 });
+  expect(schoolYear).toHaveTextContent("Junior");
+  expectLogToBe(
+    canvasElement,
+    "school_year",
+    typedResults ? "Junior" : "Junior",
+  );
+
+  await userEvent.clear(address);
+  await userEvent.type(address, "Keizersgracht 117", { delay: 10 });
+  expect(address).toHaveValue("Keizersgracht 117");
+
+  await userEvent.clear(address_addition);
+  await userEvent.type(address_addition, "2", { delay: 10 });
+  expect(address_addition).toHaveValue(2);
+  expectLogToBe(
+    canvasElement,
+    "address",
+    typedResults ? ["Keizersgracht 117", 2] : ["Keizersgracht 117", "2"],
+  );
+
+  await userEvent.clear(dateOfBirth);
+  await userEvent.type(dateOfBirth, "2023-09-15", { delay: 10 });
+  await userEvent.type(dateOfBirth, "{enter}");
+  expect(dateOfBirth).toHaveValue("09/15/2023");
+  expectLogToBe(
+    canvasElement,
+    "date_of_birth",
+    typedResults ? "2023-09-15" : "2023-09-15",
+  );
+
+  await userEvent.click(schoolYear);
+  const senior = await canvas.findByText("Senior");
+  await userEvent.click(senior);
+  expect(schoolYear).toHaveTextContent("Senior");
+  expectLogToBe(canvasElement, "school_year", "Senior");
+
+  english.click();
+  expect(english).toBeChecked();
+  math.click();
+  expect(math).toBeChecked();
+  expectLogToBe(canvasElement, "courses", ["english", "math"]);
+
+  yes.click();
+  expect(yes).toBeChecked();
+  expectLogToBe(canvasElement, "subscribe_newsletter", "yes");
+  no.click();
+  expect(no).toBeChecked();
+  expectLogToBe(canvasElement, "subscribe_newsletter", "no");
+
+  acceptTos.click();
+  expect(acceptTos).toBeChecked();
+  expectLogToBe(canvasElement, "accept_tos", typedResults ? true : "on");
+};
+
 export const FormComponent: Story = {
   args: {
     debug: true,
@@ -78,71 +197,7 @@ export const FormComponent: Story = {
     validate: validateForm,
     validateOnChange: true,
   },
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-    const firstName = canvas.getByLabelText("First name");
-    const lastName = canvas.getByLabelText("Last name");
-    const age = canvas.getByLabelText("Age");
-    const schoolYear = canvas.getByLabelText("Select school year");
-    const address = canvas.getByLabelText("Address");
-    const address_addition = canvas.getByLabelText("Address (addition)");
-    const dateOfBirth = canvas.getByLabelText("Date of birth");
-    const english = canvas.getByLabelText("English");
-    const math = canvas.getByLabelText("Math");
-    const yes = canvas.getByLabelText("Yes");
-    const no = canvas.getByLabelText("No");
-    const acceptTos = canvas.getByLabelText(
-      "I have read and accept the terms and conditions",
-    );
-
-    await userEvent.clear(firstName);
-    await userEvent.type(firstName, "John", { delay: 10 });
-    expect(firstName).toHaveValue("John");
-
-    await userEvent.clear(lastName);
-    await userEvent.type(lastName, "Doe", { delay: 10 });
-    expect(lastName).toHaveValue("Doe");
-
-    await userEvent.clear(age);
-    await userEvent.type(age, "33", { delay: 10 });
-    expect(age).toHaveValue(33);
-
-    await userEvent.click(schoolYear, { delay: 10 });
-    const junior = await canvas.findByText("Junior");
-    await userEvent.click(junior, { delay: 10 });
-    expect(schoolYear).toHaveTextContent("Junior");
-
-    await userEvent.clear(address);
-    await userEvent.type(address, "Keizersgracht 117", { delay: 10 });
-    expect(address).toHaveValue("Keizersgracht 117");
-
-    await userEvent.clear(address_addition);
-    await userEvent.type(address_addition, "2", { delay: 10 });
-    expect(address_addition).toHaveValue(2);
-
-    await userEvent.clear(dateOfBirth);
-    await userEvent.type(dateOfBirth, "2023-09-15", { delay: 10 });
-    await userEvent.type(dateOfBirth, "{enter}");
-    expect(dateOfBirth).toHaveValue("09/15/2023");
-
-    await userEvent.click(schoolYear);
-    const senior = await canvas.findByText("Senior");
-    await userEvent.click(senior);
-    expect(schoolYear).toHaveTextContent("Senior");
-
-    english.click();
-    expect(english).toBeChecked();
-    math.click();
-    expect(math).toBeChecked();
-
-    yes.click();
-    expect(yes).toBeChecked();
-    no.click();
-    expect(no).toBeChecked();
-
-    acceptTos.click();
-    expect(acceptTos).toBeChecked();
-  },
+  play: playFormComponent,
 };
 
 export const TypedResults: Story = {
@@ -150,6 +205,9 @@ export const TypedResults: Story = {
   args: {
     ...FormComponent.args,
     useTypedResults: true,
+  },
+  play: async ({ canvasElement }) => {
+    await playFormComponent({ canvasElement, typedResults: true });
   },
 };
 
@@ -211,6 +269,9 @@ export const UsageWithFormik: Story = {
     ],
     validate: validateForm,
     validateOnChange: true,
+  },
+  play: async ({ canvasElement }) => {
+    await playFormComponent({ canvasElement, typedResults: true });
   },
   render: (args) => {
     return (
