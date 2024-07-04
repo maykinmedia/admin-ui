@@ -47,9 +47,11 @@ const expectLogToBe = (
 const playFormComponent = async ({
   canvasElement,
   typedResults = false,
+  formik = false,
 }: {
   canvasElement: HTMLElement;
   typedResults?: boolean;
+  formik?: boolean;
 }) => {
   const canvas = within(canvasElement);
   const firstName = canvas.getByLabelText("First name");
@@ -121,22 +123,26 @@ const playFormComponent = async ({
   expect(schoolYear).toHaveTextContent("Senior");
   expectLogToBe(canvasElement, "school_year", "Senior");
 
-  english.click();
+  await userEvent.click(english);
   expect(english).toBeChecked();
-  math.click();
+  await userEvent.click(math);
   expect(math).toBeChecked();
   expectLogToBe(canvasElement, "courses", ["english", "math"]);
 
-  yes.click();
+  await userEvent.click(yes);
   expect(yes).toBeChecked();
   expectLogToBe(canvasElement, "subscribe_newsletter", "yes");
-  no.click();
+  await userEvent.click(no);
   expect(no).toBeChecked();
   expectLogToBe(canvasElement, "subscribe_newsletter", "no");
 
-  acceptTos.click();
+  await userEvent.click(acceptTos);
   expect(acceptTos).toBeChecked();
-  expectLogToBe(canvasElement, "accept_tos", typedResults ? true : "on");
+  if (formik) {
+    expectLogToBe(canvasElement, "accept_tos", ["on"]);
+  } else {
+    expectLogToBe(canvasElement, "accept_tos", typedResults ? true : "on");
+  }
 };
 
 export const FormComponent: Story = {
@@ -271,7 +277,11 @@ export const UsageWithFormik: Story = {
     validateOnChange: true,
   },
   play: async ({ canvasElement }) => {
-    await playFormComponent({ canvasElement, typedResults: true });
+    await playFormComponent({
+      canvasElement,
+      typedResults: true,
+      formik: true,
+    });
   },
   render: (args) => {
     return (
