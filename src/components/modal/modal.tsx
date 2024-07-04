@@ -36,10 +36,15 @@ export const Modal: React.FC<ModalProps> = ({
   const dialogRef = useRef<HTMLDialogElement>(null);
   const intl = useIntl();
 
-  useEffect(
-    () => (open ? dialogRef.current?.showModal() : dialogRef.current?.close()),
-    [open],
-  );
+  useEffect(() => {
+    if (open) {
+      dialogRef.current?.showModal();
+      setOpenState(true);
+    } else {
+      setOpenState(false);
+      dialogRef.current?.close();
+    }
+  }, [open]);
 
   /**
    * Gets called when to modal is closed.
@@ -90,7 +95,7 @@ export const Modal: React.FC<ModalProps> = ({
 
   return (
     <dialog
-      aria-hidden={openState ? undefined : true}
+      hidden={!openState}
       ref={dialogRef}
       className={clsx("mykn-modal", {
         [`mykn-modal--size-${size}`]: size,
