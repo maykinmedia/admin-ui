@@ -6,6 +6,9 @@ import "./body.scss";
 export type BodyProps = React.PropsWithChildren<{
   /** Additional class names. */
   className?: string;
+
+  /** Whether to stretch the body's width. */
+  stretch?: boolean;
 }>;
 
 /**
@@ -15,9 +18,13 @@ export type BodyProps = React.PropsWithChildren<{
 export const Body: React.FC<BodyProps> = ({
   children,
   className,
+  stretch = false,
   ...props
 }) => (
-  <div className={clsx("mykn-body", className)} {...props}>
+  <div
+    className={clsx("mykn-body", { "mykn-body--stretch": stretch }, className)}
+    {...props}
+  >
     {children}
   </div>
 );

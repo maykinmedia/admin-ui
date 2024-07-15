@@ -566,13 +566,14 @@ export const KanbanButton: React.FC<KanbanButtonProps> = ({
     const preview = renderPreview && renderPreview(object);
     return (
       <Toolbar
+        direction="vertical"
         directionResponsive={false}
         justify="h"
         pad={false}
         variant="transparent"
       >
         {preview}
-        <P>{title}</P>
+        <P wordBreak="break-word">{title}</P>
       </Toolbar>
     );
   };
