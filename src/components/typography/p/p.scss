@@ -19,4 +19,15 @@
     font-size: var(--typography-font-size-body-xs);
     line-height: var(--typography-line-height-body-xs);
   }
+
+  &--word-break-break-all {
+    word-break: break-all;
+  }
+
+  // https://developer.mozilla.org/en-US/docs/Web/CSS/word-break#syntax
+  // https://developer.mozilla.org/en-US/docs/Web/CSS/word-break#break-word
+  &--word-break-break-word {
+    overflow-wrap: anywhere;
+    word-break: normal;
+  }
 }

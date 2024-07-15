@@ -12,6 +12,9 @@ export type PProps = React.ComponentProps<"p"> & {
 
   /** The size of the text. */
   size?: "s" | "xs";
+
+  /** "word-break" CSS value. */
+  wordBreak?: React.CSSProperties["wordBreak"];
 };
 
 /**
@@ -20,6 +23,7 @@ export type PProps = React.ComponentProps<"p"> & {
  * @param children
  * @param muted
  * @param size
+ * @param wordBreak
  * @param props
  * @constructor
  */
@@ -28,12 +32,14 @@ export const P: React.FC<PProps> = ({
   children,
   muted = false,
   size = "s",
+  wordBreak,
   ...props
 }) => (
   <p
     className={clsx("mykn-p", `mykn-p--size-${size}`, {
       ["mykn-p--bold"]: bold,
       ["mykn-p--muted"]: muted,
+      [`mykn-p--word-break-${wordBreak}`]: wordBreak,
     })}
     {...props}
   >

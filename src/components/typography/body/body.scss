@@ -14,6 +14,10 @@
     }
   }
 
+  &--stretch {
+    width: 100%;
+  }
+
   @media screen and (min-width: constants.$breakpoint-desktop) {
     padding: var(--spacing-v) var(--spacing-h);
   }

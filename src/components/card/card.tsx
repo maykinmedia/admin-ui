@@ -22,7 +22,9 @@ export const Card: React.FC<CardProps> = ({
   <div className="mykn-card" {...props}>
     {(controls.length || title) && (
       <div className="mykn-card__header">
-        <Body>{typeof title === "string" ? <H1>{title}</H1> : title}</Body>
+        <Body stretch>
+          {typeof title === "string" ? <H1>{title}</H1> : title}
+        </Body>
         {Boolean(controls?.length) && (
           <Toolbar align="end" size="fit-content" pad="h">
             {controls.map((buttonProps, index) => (
