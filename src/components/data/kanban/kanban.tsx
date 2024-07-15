@@ -560,6 +560,7 @@ export const KanbanButton: React.FC<KanbanButtonProps> = ({
   const otherFields = fields.filter(
     (field) => ![...urlFields, titleField].includes(field),
   );
+  const _onClick = (object.onClick || onClick) as typeof onClick;
 
   const renderTitle = () => {
     const preview = renderPreview && renderPreview(object);
@@ -608,6 +609,11 @@ export const KanbanButton: React.FC<KanbanButtonProps> = ({
     <ButtonLink
       align="start"
       className="mykn-kanban__button"
+      disabled={
+        typeof object.disabled === "undefined"
+          ? !href
+          : Boolean(object.disabled)
+      }
       draggable={draggable}
       href={href}
       justify
@@ -616,7 +622,7 @@ export const KanbanButton: React.FC<KanbanButtonProps> = ({
       variant="outline"
       wrap={false}
       {...buttonLinkProps}
-      onClick={(e) => onClick?.(e, object)}
+      onClick={(e) => _onClick?.(e, object)}
       onDragStart={draggable ? onDragStart : undefined}
     >
       <Card title={renderTitle()}>
@@ -628,7 +634,11 @@ export const KanbanButton: React.FC<KanbanButtonProps> = ({
     <Button
       align="start"
       className="mykn-kanban__button"
-      disabled={!onClick}
+      disabled={
+        typeof object.disabled === "undefined"
+          ? !_onClick
+          : Boolean(object.disabled)
+      }
       draggable={draggable}
       justify
       pad={false}
@@ -636,7 +646,7 @@ export const KanbanButton: React.FC<KanbanButtonProps> = ({
       variant="outline"
       wrap={false}
       {...buttonProps}
-      onClick={(e) => onClick?.(e, object)}
+      onClick={(e) => _onClick?.(e, object)}
       onDragStart={draggable ? onDragStart : undefined}
     >
       {object.children as React.ReactNode}
