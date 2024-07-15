@@ -52,6 +52,10 @@ export const KanbanComponent: Story = {
                 alphaIndex: String(d.title?.toString()[0]).toUpperCase(),
                 url: url,
                 thumbnailUrl: url,
+                onClick: (e: Event) => {
+                  e.preventDefault();
+                  alert(d.id);
+                },
               };
             }),
           );
