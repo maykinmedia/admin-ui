@@ -18,6 +18,7 @@
 
   &::placeholder {
     color: var(--typography-color-muted);
+    opacity: 0.4;
   }
 
   &[size] {
