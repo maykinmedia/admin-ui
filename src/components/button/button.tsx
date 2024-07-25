@@ -34,7 +34,15 @@ type BaseButtonProps = {
   square?: boolean;
 
   /** The variant (style) of the button. */
-  variant?: "primary" | "secondary" | "outline" | "transparent";
+  variant?:
+    | "primary"
+    | "secondary"
+    | "outline"
+    | "transparent"
+    | "info"
+    | "success"
+    | "warning"
+    | "danger";
 
   /** Whether wrapping should be allowed. */
   wrap?: boolean;

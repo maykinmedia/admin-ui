@@ -242,6 +242,26 @@
     }
   }
 
+  @each $variant in ("info" "success" "warning" "danger") {
+    &--variant-#{$variant} {
+      --mykn-button-color-background: var(--page-color-#{$variant});
+      --mykn-button-color-border: var(--page-color-#{$variant});
+      --mykn-button-color-shadow: var(--page-color-shadow);
+      --mykn-button-color-text: var(--page-color-background);
+
+      &:focus,
+      &:hover {
+        --mykn-button-offset: -2px;
+      }
+
+      &[aria-expanded="true"],
+      &:active,
+      &#{$self}--active {
+        --mykn-button-offset: 0px;
+      }
+    }
+  }
+
   &--wrap {
     flex-wrap: wrap;
     white-space: normal;

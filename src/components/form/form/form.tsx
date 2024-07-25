@@ -14,7 +14,7 @@ import {
 import { forceArray } from "../../../lib/format/array";
 import { ucFirst } from "../../../lib/format/string";
 import { useIntl } from "../../../lib/i18n/useIntl";
-import { Button } from "../../button";
+import { Button, ButtonProps } from "../../button";
 import { Toolbar, ToolbarItem, ToolbarProps } from "../../toolbar";
 import { ErrorMessage } from "../errormessage";
 import { FormControl } from "../formcontrol";
@@ -24,6 +24,9 @@ export type FormProps = Omit<
   React.ComponentProps<"form">,
   "onChange" | "onSubmit"
 > & {
+  /** Props to pass to the (submit) button. */
+  buttonProps?: ButtonProps;
+
   /** If set, show `valuesState`. */
   debug?: boolean;
 
@@ -93,6 +96,7 @@ export type FormProps = Omit<
  * Generic form component, capable of auto rendering `fields` based on their shape.
  */
 export const Form: React.FC<FormProps> = ({
+  buttonProps,
   children,
   debug = false,
   direction = "vertical",
@@ -267,6 +271,7 @@ export const Form: React.FC<FormProps> = ({
             disabled={
               validateOnChange && Boolean(Object.keys(errorsState).length)
             }
+            {...buttonProps}
           >
             {ucFirst(_labelSubmit)}
           </Button>
