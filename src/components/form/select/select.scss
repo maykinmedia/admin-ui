@@ -32,6 +32,11 @@
     width: fit-content;
   }
 
+  // Empty state
+  &:has(option[selected][value=""]) {
+    color: var(--typography-color-muted);
+  }
+
   &--text-size-xs {
     --mykn-select-padding-xs: calc(var(--spacing-h) / 2);
     --select-font-size: var(--typography-font-size-body-xs);
