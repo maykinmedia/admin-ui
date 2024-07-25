@@ -88,12 +88,13 @@
   &__cell--type-boolean,
   &__cell--type-number {
     text-align: end;
-    width: 0;
+    width: 0; // TODO: Possibly 1px for WebKit (Safari)?
   }
 
   &__cell--checkbox {
     @media screen and (min-width: constants.$breakpoint-desktop) {
       max-width: calc(var(--typography-line-height-body-s) + var(--spacing-h));
+      width: 1px; // WebKit (Safari)?
     }
   }
 
