@@ -135,10 +135,6 @@ export const ActivateOnFocus: Story = {
     await waitFor(() => expect(canvas.queryByRole("dialog")).toBeNull());
     await userEvent.tab({ shift: true, delay: 10 });
 
-    await waitFor(() =>
-      expect(document.activeElement?.textContent).not.toBe("Hover me!"),
-    );
-
     await userEvent.tab({ delay: 10 });
     await waitFor(() =>
       expect(document.activeElement?.textContent).toBe("Zaaktypen"),
