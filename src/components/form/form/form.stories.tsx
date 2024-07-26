@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { expect, userEvent, within } from "@storybook/test";
+import { expect, userEvent, waitFor, within } from "@storybook/test";
 import { Formik } from "formik";
 import * as React from "react";
 
@@ -30,18 +30,23 @@ const getParameterFromPre = (pre: HTMLElement, parameter: string) => {
     console.error("Error parsing JSON", error);
   }
 };
-const getLogFromCanvas = (canvasElement: HTMLElement) => {
+const getLogFromCanvas = async (canvasElement: HTMLElement) => {
   const canvas = within(canvasElement);
-  return canvas.getByRole("log");
+  return await canvas.findByRole("log");
 };
 
-const expectLogToBe = (
+const expectLogToBe = async (
   canvasElement: HTMLElement,
   parameter: string,
   value: unknown,
 ) => {
-  const pre = getLogFromCanvas(canvasElement);
-  expect(getParameterFromPre(pre, parameter)).toEqual(value);
+  await waitFor(
+    async () => {
+      const pre = await getLogFromCanvas(canvasElement);
+      return expect(getParameterFromPre(pre, parameter)).toEqual(value);
+    },
+    { timeout: 3000 },
+  );
 };
 
 const playFormComponent = async ({
@@ -71,24 +76,28 @@ const playFormComponent = async ({
 
   await userEvent.clear(firstName);
   await userEvent.type(firstName, "John", { delay: 10 });
-  expect(firstName).toHaveValue("John");
-  expectLogToBe(canvasElement, "first_name", typedResults ? "John" : "John");
+  await expect(firstName).toHaveValue("John");
+  await expectLogToBe(
+    canvasElement,
+    "first_name",
+    typedResults ? "John" : "John",
+  );
 
   await userEvent.clear(lastName);
   await userEvent.type(lastName, "Doe", { delay: 10 });
-  expect(lastName).toHaveValue("Doe");
-  expectLogToBe(canvasElement, "last_name", typedResults ? "Doe" : "Doe");
+  await expect(lastName).toHaveValue("Doe");
+  await expectLogToBe(canvasElement, "last_name", typedResults ? "Doe" : "Doe");
 
   await userEvent.clear(age);
   await userEvent.type(age, "33", { delay: 10 });
-  expect(age).toHaveValue(33);
-  expectLogToBe(canvasElement, "age", typedResults ? 33 : "33");
+  await expect(age).toHaveValue(33);
+  await expectLogToBe(canvasElement, "age", typedResults ? 33 : "33");
 
   await userEvent.click(schoolYear, { delay: 10 });
   const junior = await canvas.findByText("Junior");
   await userEvent.click(junior, { delay: 10 });
-  expect(schoolYear).toHaveTextContent("Junior");
-  expectLogToBe(
+  await expect(schoolYear).toHaveTextContent("Junior");
+  await expectLogToBe(
     canvasElement,
     "school_year",
     typedResults ? "Junior" : "Junior",
@@ -96,12 +105,12 @@ const playFormComponent = async ({
 
   await userEvent.clear(address);
   await userEvent.type(address, "Keizersgracht 117", { delay: 10 });
-  expect(address).toHaveValue("Keizersgracht 117");
+  await expect(address).toHaveValue("Keizersgracht 117");
 
   await userEvent.clear(address_addition);
   await userEvent.type(address_addition, "2", { delay: 10 });
-  expect(address_addition).toHaveValue(2);
-  expectLogToBe(
+  await expect(address_addition).toHaveValue(2);
+  await expectLogToBe(
     canvasElement,
     "address",
     typedResults ? ["Keizersgracht 117", 2] : ["Keizersgracht 117", "2"],
@@ -110,8 +119,8 @@ const playFormComponent = async ({
   await userEvent.clear(dateOfBirth);
   await userEvent.type(dateOfBirth, "2023-09-15", { delay: 10 });
   await userEvent.type(dateOfBirth, "{enter}");
-  expect(dateOfBirth).toHaveValue("09/15/2023");
-  expectLogToBe(
+  await expect(dateOfBirth).toHaveValue("09/15/2023");
+  await expectLogToBe(
     canvasElement,
     "date_of_birth",
     typedResults ? "2023-09-15" : "2023-09-15",
@@ -120,28 +129,32 @@ const playFormComponent = async ({
   await userEvent.click(schoolYear);
   const senior = await canvas.findByText("Senior");
   await userEvent.click(senior);
-  expect(schoolYear).toHaveTextContent("Senior");
-  expectLogToBe(canvasElement, "school_year", "Senior");
+  await expect(schoolYear).toHaveTextContent("Senior");
+  await expectLogToBe(canvasElement, "school_year", "Senior");
 
   await userEvent.click(english);
-  expect(english).toBeChecked();
+  await expect(english).toBeChecked();
   await userEvent.click(math);
-  expect(math).toBeChecked();
-  expectLogToBe(canvasElement, "courses", ["english", "math"]);
+  await expect(math).toBeChecked();
+  await expectLogToBe(canvasElement, "courses", ["english", "math"]);
 
   await userEvent.click(yes);
-  expect(yes).toBeChecked();
-  expectLogToBe(canvasElement, "subscribe_newsletter", "yes");
+  await expect(yes).toBeChecked();
+  await expectLogToBe(canvasElement, "subscribe_newsletter", "yes");
   await userEvent.click(no);
-  expect(no).toBeChecked();
-  expectLogToBe(canvasElement, "subscribe_newsletter", "no");
+  await expect(no).toBeChecked();
+  await expectLogToBe(canvasElement, "subscribe_newsletter", "no");
 
   await userEvent.click(acceptTos);
-  expect(acceptTos).toBeChecked();
+  await expect(acceptTos).toBeChecked();
   if (formik) {
-    expectLogToBe(canvasElement, "accept_tos", ["on"]);
+    await expectLogToBe(canvasElement, "accept_tos", ["on"]);
   } else {
-    expectLogToBe(canvasElement, "accept_tos", typedResults ? true : "on");
+    await expectLogToBe(
+      canvasElement,
+      "accept_tos",
+      typedResults ? true : "on",
+    );
   }
 };
 
