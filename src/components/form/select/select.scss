@@ -35,7 +35,6 @@
   // Empty state
   &:has(option[selected][value=""]) &__label {
     color: var(--typography-color-muted);
-    opacity: 0.4;
   }
 
   &--text-size-xs {
