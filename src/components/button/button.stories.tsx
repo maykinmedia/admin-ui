@@ -50,6 +50,12 @@ export const JustifiedButtons: Story = {
   },
 };
 
+export const DisabledButtons: Story = {
+  args: {
+    disabled: true,
+  },
+};
+
 export const MutedButtons: Story = {
   args: {
     muted: true,
