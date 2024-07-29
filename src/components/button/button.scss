@@ -43,11 +43,16 @@
   white-space: nowrap;
   width: var(--mykn-button-width);
 
-  &[disabled],
-  &--disabled {
+  &:disabled,
+  &--disabled,
+  &--muted {
     --mykn-button-offset: 0 !important;
-    pointer-events: none;
     opacity: 0.4;
+  }
+
+  &:disabled,
+  &--disabled {
+    pointer-events: none;
   }
 
   &--align-start {
@@ -76,10 +81,6 @@
 
   &--justify {
     --mykn-button-width: 100%;
-  }
-
-  &--muted {
-    --mykn-button-color-text: var(--typography-color-muted) !important;
   }
 
   &--pad-h {
@@ -127,6 +128,15 @@
     --mykn-button-color-border: var(--button-color-border-primary);
     --mykn-button-color-shadow: var(--button-color-shadow-primary);
     --mykn-button-color-text: var(--button-color-text-primary);
+
+    &#{$self}:disabled,
+    &#{$self}--disabled,
+    &#{$self}--muted {
+      --mykn-button-color-background: var(--button-color-background-secondary);
+      --mykn-button-color-border: var(--button-color-border-secondary);
+      --mykn-button-color-shadow: var(--button-color-shadow-secondary);
+      --mykn-button-color-text: var(--button-color-text-secondary);
+    }
 
     &:focus,
     &:hover {
