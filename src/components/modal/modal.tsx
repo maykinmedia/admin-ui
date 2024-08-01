@@ -14,6 +14,7 @@ export type ModalProps = Omit<React.ComponentProps<"dialog">, "title"> & {
   open?: React.ComponentProps<"dialog">["open"];
   onClose?: React.ComponentProps<"dialog">["onClose"];
   position?: "float" | "side";
+  restoreAutofocus?: boolean;
   size?: "m" | "s";
   title?: string | React.ReactNode;
 };
@@ -27,6 +28,7 @@ export const Modal: React.FC<ModalProps> = ({
   open,
   onClose,
   position = "float",
+  restoreAutofocus = true,
   size,
   title,
   labelClose,
@@ -40,11 +42,25 @@ export const Modal: React.FC<ModalProps> = ({
     if (open) {
       dialogRef.current?.showModal();
       setOpenState(true);
+      if (restoreAutofocus) {
+        doRestoreAutofocus();
+      }
     } else {
       setOpenState(false);
       dialogRef.current?.close();
     }
   }, [open]);
+
+  /**
+   * Focuses the first child element with "autofocus" set.
+   */
+  const doRestoreAutofocus = () => {
+    setTimeout(() => {
+      const input =
+        dialogRef.current?.querySelector<HTMLInputElement>("[autofocus]");
+      input?.focus();
+    });
+  };
 
   /**
    * Gets called when to modal is closed.
