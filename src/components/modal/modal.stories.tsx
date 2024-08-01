@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
+import { expect, waitFor, within } from "@storybook/test";
 import * as React from "react";
 
 import { Form } from "../form";
@@ -60,5 +61,37 @@ export const SideModal: Story = {
   args: {
     ...ModalComponent.args,
     position: "side",
+  },
+};
+
+export const HiddenModal: Story = {
+  args: {
+    children: "The quick brown fox jumps over the lazy dog.",
+    open: false,
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = await within(canvasElement);
+    const modal = canvas.getByRole("dialog", { hidden: true });
+    const modalElement = canvasElement.querySelector(
+      "dialog",
+    ) as HTMLDialogElement;
+    await expect(modal).not.toBeVisible();
+    await expect(modalElement.checkVisibility()).toBeFalsy();
+  },
+};
+
+export const VisibleModal: Story = {
+  args: {
+    children: "The quick brown fox jumps over the lazy dog.",
+    open: true,
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = await within(canvasElement);
+    const modal = canvas.getByRole("dialog", { hidden: true });
+    const modalElement = canvasElement.querySelector(
+      "dialog",
+    ) as HTMLDialogElement;
+    await waitFor(() => expect(modal).toBeVisible());
+    await expect(modalElement.checkVisibility()).toBeTruthy();
   },
 };

@@ -3,13 +3,21 @@
   background: transparent;
   border-radius: var(--border-radius-l);
   display: block;
+  inset-block-start: 0;
+  inset-block-end: 0;
   transition: transform var(--animation-duration-medium)
     var(--animation-timing-function);
   margin: 0;
   max-height: 100%;
+  opacity: 0;
   overflow: visible; // Allow DatePicker to overflow Card and Modal.
   padding: 0;
+  position: fixed;
   z-index: 9999;
+
+  &[hidden] {
+    display: none;
+  }
 
   &::backdrop {
     background-color: var(--page-color-shadow);
@@ -17,29 +25,33 @@
 
   &--position-float {
     margin: auto;
-    opacity: 0;
-    transform: translateY(-100%);
 
     &[open] {
-      opacity: 1;
-      transform: translateY(0);
+      animation: slide-top-center;
+      animation-duration: var(--animation-duration-medium);
+      animation-timing-function: var(--animation-timing-function);
+      animation-direction: normal;
+      animation-fill-mode: forwards;
     }
   }
 
   // TODO: RTL support
   &--position-side {
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-    left: 100%;
-    position: fixed;
-    right: 0;
-    transform: translateX(0);
-    top: 0;
-    height: 100%;
+    inset-inline-start: 100%;
+    inset-inline-end: 0;
 
     &[open] {
-      transform: translateX(-100%);
+      animation: slide-side-center;
+      animation-duration: var(--animation-duration-medium);
+      animation-timing-function: var(--animation-timing-function);
+      animation-direction: normal;
+      animation-fill-mode: forwards;
     }
+
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    position: fixed;
+    height: 100%;
 
     > .mykn-card {
       border-top-right-radius: 0;
@@ -65,5 +77,27 @@
 
   &--size-s {
     width: 280px;
+  }
+}
+
+@keyframes slide-top-center {
+  from {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-side-center {
+  from {
+    opacity: 0;
+    transform: translateX(0%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-100%);
   }
 }
