@@ -7,6 +7,7 @@
   "mykn.components.DataGrid.labelSaveFieldSelection": "kolommen opslaan",
   "mykn.components.DataGrid.labelSelect": "(de)selecteer rij",
   "mykn.components.DataGrid.labelSelectAll": "(de)selecteer {countPage} rijen",
+  "mykn.components.DataGrid.labelSelectAllPages": "(de)selecteer {pages} pagina's",
   "mykn.components.DataGrid.labelSelectFields": "selecteer kolommen",
   "mykn.components.DatePicker.labelChooseDayPrefix": "Kies dag",
   "mykn.components.DatePicker.labelClose": "Sluiten",

@@ -39,6 +39,11 @@
     "description": "mykn.components.DataGrid: The select row (accessible) label",
     "originalDefault": "(de)selecteer {countPage} rijen"
   },
+  "mykn.components.DataGrid.labelSelectAllPages": {
+    "defaultMessage": "(de)selecteer {pages} pagina's",
+    "description": "mykn.components.DataGrid: The select all pages (accessible) label",
+    "originalDefault": "(de)selecteer {pages} pagina's"
+  },
   "mykn.components.DataGrid.labelSelectFields": {
     "defaultMessage": "selecteer kolommen",
     "description": "mykn.components.Modal: The datagrid select fields label",

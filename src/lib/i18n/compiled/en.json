@@ -7,6 +7,7 @@
   "mykn.components.DataGrid.labelSaveFieldSelection": "save column selection",
   "mykn.components.DataGrid.labelSelect": "(de)select row",
   "mykn.components.DataGrid.labelSelectAll": "(de)select {countPage} rows",
+  "mykn.components.DataGrid.labelSelectAllPages": "(de)select {pages} pages",
   "mykn.components.DataGrid.labelSelectFields": "select columns",
   "mykn.components.DatePicker.labelChooseDayPrefix": "Choose day",
   "mykn.components.DatePicker.labelClose": "Close",

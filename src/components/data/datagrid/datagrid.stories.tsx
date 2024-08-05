@@ -281,6 +281,7 @@ export const SelectableRows: Story = {
   argTypes: {
     onSelect: { action: "onSelect" },
     onSelectionChange: { action: "onSelectionChange" },
+    onSelectAllPages: { action: "onSelectAllPages" },
   },
 };
 
