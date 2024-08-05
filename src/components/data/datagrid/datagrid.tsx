@@ -99,6 +99,22 @@ export type DataGridProps = {
   /** Whether checkboxes should be shown for every row. */
   selectable?: boolean;
 
+  /** References to the selected items in `objectList`, setting this preselects the items. */
+  selected?: AttributeData[];
+
+  /** Whether a select all checkbox should be shown (when `selectable=true`). */
+  allowSelectAll?: boolean;
+
+  /**
+   * Whether a select all checkbox should be shown (when `selectable=true`) allowing to select all pages.
+   * NOTE: No actual implementation of multi-page selection (other than calling `onSelectAllPages(selected)`) and
+   * receiving `allPagesSelected` is provided.
+   */
+  allowSelectAllPages?: boolean;
+
+  /** Whether all pages are selected. */
+  allPagesSelected?: boolean;
+
   /** The table layout algorithm. */
   tableLayout?: "auto" | "fixed";
 
@@ -119,12 +135,6 @@ export type DataGridProps = {
 
   /** The select all items label. */
   labelSelectAll?: string;
-
-  /** Whether a select all checkbox should be shown (when `selectable=true`). */
-  allowSelectAll?: boolean;
-
-  /** References to the selected items in `objectList`, setting this preselects the items. */
-  selected?: AttributeData[];
 
   /** Can be used to specify how to compare the selected items and the items in the data grid */
   equalityChecker?: (item1: AttributeData, item2: AttributeData) => boolean;
@@ -147,6 +157,9 @@ export type DataGridProps = {
 
   /** Gets called when the selection is changed, receives all currently selected items. */
   onSelectionChange?: (rows: AttributeData[]) => void;
+
+  /** Gets called when the "select all pages" checkbox is clicked. */
+  onSelectAllPages?: (selected: boolean) => void;
 
   /** Gets called when an object is selected. */
   onClick?: (
@@ -214,6 +227,8 @@ export const DataGrid: React.FC<DataGridProps> = ({
   pProps,
   selectable = false,
   allowSelectAll = true,
+  allowSelectAllPages = false,
+  allPagesSelected = false,
   fieldsSelectable = false,
   selected,
   equalityChecker = (item1, item2) => item1 === item2,
@@ -233,6 +248,7 @@ export const DataGrid: React.FC<DataGridProps> = ({
   onFilter,
   onSelect,
   onSelectionChange,
+  onSelectAllPages,
   onSort,
   // Aliases
   count,
@@ -254,6 +270,8 @@ export const DataGrid: React.FC<DataGridProps> = ({
   const [selectedState, setSelectedState] = useState<AttributeData[] | null>(
     null,
   );
+  const [allPagesSelectedState, setAllPagesSelectedState] =
+    useState(allPagesSelected);
   const [sortState, setSortState] = useState<
     [string, "ASC" | "DESC"] | undefined
   >();
@@ -302,6 +320,12 @@ export const DataGrid: React.FC<DataGridProps> = ({
   const sortDirection = sortState?.[1];
   const titleId = title ? `${id}-caption` : undefined;
 
+  const _count = count || paginatorProps?.count || 0;
+  const _pageSize = pageSize || _count;
+  const _pages = Math.ceil(_count / _pageSize);
+  const _selectedRows =
+    (allPagesSelectedState ? objectList : selectedState) || [];
+
   const filteredObjectList = filterState
     ? filterAttributeDataArray(objectList, filterState)
     : objectList || [];
@@ -319,6 +343,14 @@ export const DataGrid: React.FC<DataGridProps> = ({
     setSelectedState(value);
     onSelect?.(value, selected);
     onSelectionChange?.(value);
+  };
+
+  /**
+   * Gets called when tha select all checkbox is clicked.
+   */
+  const handleSelectAllPages = (selected: boolean) => {
+    setAllPagesSelectedState(selected);
+    onSelectAllPages?.(selected);
   };
 
   const handleSelect = (attributeData: AttributeData) => {
@@ -384,7 +416,6 @@ export const DataGrid: React.FC<DataGridProps> = ({
       "Either `pageSize` or `paginatorProps.pageSize` should be set when `showPaginator` is `true`.",
     );
   }
-
   return (
     <div className="mykn-datagrid" {...props}>
       <table
@@ -397,13 +428,16 @@ export const DataGrid: React.FC<DataGridProps> = ({
         {/* Caption */}
         {(title || selectable || fieldsSelectable) && (
           <DataGridCaption
-            count={count || 0}
+            count={_count}
+            pages={_pages}
             fields={typedFieldsState}
             fieldsSelectable={fieldsSelectable}
             renderableRows={renderableRows}
             selectable={selectable}
             allowSelectAll={allowSelectAll}
-            selectedRows={selectedState}
+            allowSelectAllPages={allowSelectAllPages}
+            allPagesSelected={allPagesSelectedState}
+            selectedRows={_selectedRows}
             selectionActions={selectionActions}
             title={title}
             titleId={titleId}
@@ -415,6 +449,7 @@ export const DataGrid: React.FC<DataGridProps> = ({
               onFieldsChange?.(typedFields);
             }}
             onSelectAll={handleSelectAll}
+            onSelectAllPages={handleSelectAllPages}
           />
         )}
 
@@ -441,7 +476,8 @@ export const DataGrid: React.FC<DataGridProps> = ({
           boolProps={boolProps}
           pProps={pProps}
           amountSelected={selectedState?.length || 0}
-          count={count || 0}
+          count={_count}
+          pages={_pages}
           dataGridId={id}
           decorate={decorate}
           editable={Boolean(renderableFields.find((f) => f.editable))}
@@ -457,7 +493,7 @@ export const DataGrid: React.FC<DataGridProps> = ({
           renderableRows={renderableRows}
           setEditingState={setEditingState}
           selectable={selectable}
-          selectedRows={selectedState || []}
+          selectedRows={_selectedRows}
           equalityChecker={equalityChecker}
           sortDirection={sortDirection}
           sortField={sortField}
@@ -491,9 +527,12 @@ export type DataGridCaptionProps = {
   fieldsSelectable: boolean;
   labelSaveFieldSelection?: string;
   labelSelectAll?: string;
+  pages: number;
   renderableRows: AttributeData[];
   selectable: boolean;
   allowSelectAll: boolean;
+  allowSelectAllPages: boolean;
+  allPagesSelected: boolean;
   selectedRows: AttributeData[] | null;
   selectionActions?: ButtonProps[];
   title: React.ReactNode;
@@ -501,6 +540,7 @@ export type DataGridCaptionProps = {
   labelSelectFields?: string;
   onFieldsChange: (typedFields: TypedField[]) => void;
   onSelectAll: (selected: boolean) => void;
+  onSelectAllPages: (selected: boolean) => void;
 };
 
 export const DataGridCaption: React.FC<DataGridCaptionProps> = ({
@@ -510,15 +550,19 @@ export const DataGridCaption: React.FC<DataGridCaptionProps> = ({
   labelSaveFieldSelection,
   labelSelectAll,
   labelSelectFields,
+  pages,
   renderableRows,
   selectable,
   allowSelectAll,
+  allowSelectAllPages,
+  allPagesSelected,
   selectionActions,
   selectedRows,
   title,
   titleId,
   onFieldsChange,
   onSelectAll,
+  onSelectAllPages,
 }) => {
   const [selectFieldsModalState, setSelectFieldsModalState] = useState(false);
   const [selectFieldsActiveState, setSelectFieldsActiveState] = useState<
@@ -586,8 +630,21 @@ export const DataGridCaption: React.FC<DataGridCaptionProps> = ({
             count={count}
             handleSelect={() => onSelectAll(!allSelected)}
             labelSelect={labelSelectAll}
+            pages={pages}
             amountSelected={selectedRows?.length || 0}
-            selectAll={true}
+            selectAll="page"
+            sortedObjectList={renderableRows}
+          />
+        )}
+        {selectable && allowSelectAllPages && (
+          <DataGridSelectionCheckbox
+            checked={allPagesSelected || false}
+            count={pages}
+            handleSelect={() => onSelectAllPages(!allPagesSelected)}
+            labelSelect={labelSelectAll}
+            pages={pages}
+            amountSelected={selectedRows?.length || 0}
+            selectAll="allPages"
             sortedObjectList={renderableRows}
           />
         )}
@@ -829,6 +886,7 @@ export type DataGridBodyProps = {
   editingFieldIndex: number | null;
   handleSelect: (attributeData: AttributeData) => void;
   labelSelect: string;
+  pages: number;
   onChange: DataGridProps["onChange"];
   onClick: DataGridProps["onClick"];
   onEdit: DataGridProps["onEdit"];
@@ -861,6 +919,7 @@ export const DataGridBody: React.FC<DataGridBodyProps> = ({
   editingFieldIndex,
   handleSelect,
   labelSelect,
+  pages,
   onChange,
   onClick,
   onEdit,
@@ -902,6 +961,7 @@ export const DataGridBody: React.FC<DataGridBodyProps> = ({
               count={count}
               handleSelect={handleSelect}
               labelSelect={labelSelect}
+              pages={pages}
               rowData={rowData}
               sortedObjectList={renderableRows}
             />
@@ -1228,8 +1288,9 @@ export type DataGridSelectionCheckboxProps = {
   handleSelect: (attributeData: AttributeData) => void;
   sortedObjectList: AttributeData[];
   labelSelect?: string;
+  pages: number;
   rowData?: AttributeData;
-  selectAll?: boolean;
+  selectAll?: false | "page" | "allPages";
 };
 
 /**
@@ -1243,6 +1304,7 @@ export const DataGridSelectionCheckbox: React.FC<
   count,
   handleSelect,
   labelSelect,
+  pages,
   rowData,
   selectAll,
   sortedObjectList,
@@ -1252,10 +1314,15 @@ export const DataGridSelectionCheckbox: React.FC<
   const contextSelectAll = {
     count: count,
     countPage: sortedObjectList.length,
+    pages: pages,
     amountSelected: amountSelected,
     selectAll: selectAll,
     amountUnselected: (count || 0) - (amountSelected || 0),
     amountUnselectedPage: sortedObjectList.length - (amountSelected || 0),
+  };
+
+  const contextSelectAllPages = {
+    pages: count,
   };
 
   const label = labelSelect
@@ -1263,7 +1330,7 @@ export const DataGridSelectionCheckbox: React.FC<
         ...contextSelectAll,
         ...rowData,
       })
-    : selectAll
+    : selectAll === "page"
       ? intl.formatMessage(
           {
             id: "mykn.components.DataGrid.labelSelectAll",
@@ -1273,18 +1340,28 @@ export const DataGridSelectionCheckbox: React.FC<
           },
           contextSelectAll as unknown as Record<string, string>,
         )
-      : intl.formatMessage(
-          {
-            id: "mykn.components.DataGrid.labelSelect",
-            description:
-              "mykn.components.DataGrid: The select row (accessible) label",
-            defaultMessage: "(de)selecteer rij",
-          },
-          {
-            ...contextSelectAll,
-            ...rowData,
-          } as unknown as Record<string, string>,
-        );
+      : selectAll === "allPages"
+        ? intl.formatMessage(
+            {
+              id: "mykn.components.DataGrid.labelSelectAllPages",
+              description:
+                "mykn.components.DataGrid: The select all pages (accessible) label",
+              defaultMessage: "(de)selecteer {pages} pagina's",
+            },
+            contextSelectAllPages as unknown as Record<string, string>,
+          )
+        : intl.formatMessage(
+            {
+              id: "mykn.components.DataGrid.labelSelect",
+              description:
+                "mykn.components.DataGrid: The select row (accessible) label",
+              defaultMessage: "(de)selecteer rij",
+            },
+            {
+              ...contextSelectAll,
+              ...rowData,
+            } as unknown as Record<string, string>,
+          );
 
   return (
     <Checkbox
