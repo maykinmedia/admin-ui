@@ -84,7 +84,7 @@
   }
 
   &--pad-h {
-    --mykn-button-padding-h: var(--mykn-button-padding-xs, var(--spacing-h));
+    --mykn-button-padding-h: var(--spacing-h);
   }
 
   &--pad-v {

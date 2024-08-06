@@ -58,6 +58,7 @@
 
   &__spacer {
     height: 100%;
+    flex-shrink: 9999;
   }
 
   @media screen and (min-width: constants.$breakpoint-desktop) {
