@@ -6,7 +6,6 @@
   align-self: baseline; // Prevent the badge from unwanted stretching in flex content (use case: Kanban title toolbar).
   border-radius: 2px;
   display: inline-flex;
-  flex-shrink: 0;
   font-family: var(--typography-font-family-body);
   font-size: var(--typography-font-size-body-xs);
   font-weight: var(--typography-font-weight-bold);
