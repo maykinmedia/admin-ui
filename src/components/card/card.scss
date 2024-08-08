@@ -4,7 +4,6 @@
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  //overflow: clip;  // Turned off for now to allow DatePicker to overflow Card and Modal.
   width: 100%;
 
   &__header {
@@ -15,5 +14,36 @@
 
   & + & {
     margin-block-start: var(--spacing-v);
+  }
+
+  &--halign-start {
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  &--halign-center {
+    align-items: center;
+    text-align: center;
+  }
+
+  &--halign-end {
+    align-items: flex-end;
+    text-align: right;
+  }
+
+  &--valign-start {
+    justify-content: flex-start;
+  }
+
+  &--valign-center {
+    justify-content: center;
+  }
+
+  &--valign-end {
+    justify-content: flex-end;
+  }
+
+  &--shadow {
+    box-shadow: 0px 0px 10px 0.5px var(--page-color-shadow);
   }
 }
