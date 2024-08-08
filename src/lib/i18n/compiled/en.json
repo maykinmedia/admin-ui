@@ -37,5 +37,8 @@
   "mykn.components.Select.labelClear": "clear value",
   "mykn.components.Sidebar.collapse": "Collapse sidebar",
   "mykn.components.Sidebar.expand": "Expand sidebar",
-  "mykn.templates.Login.labelLogin": "inloggen"
+  "mykn.templates.Login.labelLogin": "inloggen",
+  "mykn.templates.Login.titleLogin": "Welcome back",
+  "mykn.templates.Login.titlePasswordForgotten": "Password forgotten?",
+  "mykn.templates.Login.linkPasswordForgotten": "Click here"
 }
