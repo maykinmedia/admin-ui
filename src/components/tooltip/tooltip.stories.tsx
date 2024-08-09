@@ -193,3 +193,10 @@ export const TooltipStack: Story = {
     </div>
   ),
 };
+
+export const TooltipkeepOpenOnHover: Story = {
+  args: {
+    ...TooltipComponent.args,
+    keepOpenOnHover: true,
+  },
+};
