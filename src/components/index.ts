@@ -8,6 +8,7 @@ export * from "./data";
 export * from "./dropdown";
 export * from "./form";
 export * from "./icon";
+export * from "./iconinitials";
 export * from "./layout";
 export * from "./logo";
 export * from "./modal";

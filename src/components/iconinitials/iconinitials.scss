@@ -1,0 +1,13 @@
+.mykn-iconinitials {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  border-radius: 50%;
+  text-transform: uppercase;
+  padding: 5px;
+  box-sizing: border-box;
+  background-color: var(--page-color-background-alt2);
+  color: var(--page-color-primary);
+  vertical-align: middle;
+}
