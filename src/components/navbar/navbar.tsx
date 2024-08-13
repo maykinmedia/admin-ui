@@ -11,6 +11,7 @@ export type NavbarProps = ToolbarProps;
 export const Navbar: React.FC<NavbarProps> = ({ children, ...props }) => {
   return (
     <Toolbar
+      align="center"
       direction="vertical"
       justify="v"
       pad
