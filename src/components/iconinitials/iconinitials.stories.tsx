@@ -35,3 +35,12 @@ export const IconInitialsComponentCustomSize: Story = {
     expectInitialsToBe(canvasElement, "JS");
   },
 };
+
+export const IconInitialsComponentOneLetter: Story = {
+  args: {
+    name: "John",
+  },
+  play: async ({ canvasElement }) => {
+    expectInitialsToBe(canvasElement, "J");
+  },
+};

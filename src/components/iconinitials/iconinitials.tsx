@@ -23,13 +23,18 @@ export const IconInitials: React.FC<IconInitialsProps> = ({
   ...props
 }) => {
   const getInitials = (name: string): string => {
-    // Split the name into an array of words
+    // Trim the name and split it into an array of words
     const nameParts = name.trim().split(" ");
 
     // Get the first letter of the first name
     const firstInitial = nameParts[0].charAt(0).toUpperCase();
 
-    // Get the first letter of the last name (or last word in the name)
+    // If there's only one word in the name, return just the first initial
+    if (nameParts.length === 1) {
+      return firstInitial;
+    }
+
+    // Otherwise, get the first letter of the last name (or last word in the name)
     const lastInitial = nameParts[nameParts.length - 1].charAt(0).toUpperCase();
 
     // Combine the initials
