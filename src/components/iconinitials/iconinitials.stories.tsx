@@ -1,24 +1,37 @@
 import type { Meta, StoryObj } from "@storybook/react";
+import { expect } from "@storybook/test";
 
-import { Iconinitials } from "./iconinitials";
+import { IconInitials } from "./iconinitials";
 
 const meta = {
   title: "Icon/Icon Initials",
-  component: Iconinitials,
-} satisfies Meta<typeof Iconinitials>;
+  component: IconInitials,
+} satisfies Meta<typeof IconInitials>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+const expectInitialsToBe = (canvasElement: HTMLElement, initials: string) => {
+  const p = canvasElement.querySelector("p");
+  expect(p).not.toBeNull();
+  expect(p?.textContent).toBe(initials);
+};
+
 export const IconInitialsComponent: Story = {
   args: {
-    initials: "AB",
+    name: "John Doe",
+  },
+  play: async ({ canvasElement }) => {
+    expectInitialsToBe(canvasElement, "JD");
   },
 };
 
 export const IconInitialsComponentCustomSize: Story = {
   args: {
-    initials: "AB",
-    size: "3em",
+    name: "John Michael Smith",
+    size: "lg",
+  },
+  play: async ({ canvasElement }) => {
+    expectInitialsToBe(canvasElement, "JS");
   },
 };
