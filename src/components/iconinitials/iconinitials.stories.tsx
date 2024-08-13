@@ -12,7 +12,7 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 const expectInitialsToBe = (canvasElement: HTMLElement, initials: string) => {
-  const p = canvasElement.querySelector("p");
+  const p = canvasElement.querySelector("span");
   expect(p).not.toBeNull();
   expect(p?.textContent).toBe(initials);
 };
