@@ -15,15 +15,22 @@ export type PProps = React.ComponentProps<"p"> & {
 
   /** "word-break" CSS value. */
   wordBreak?: React.CSSProperties["wordBreak"];
+
+  /** The element or component to render as. */
+  as?: React.ElementType;
+
+  className?: string;
 };
 
 /**
- * Ul component
+ * P component
  * @param bold
  * @param children
  * @param muted
  * @param size
  * @param wordBreak
+ * @param as
+ * @param className
  * @param props
  * @constructor
  */
@@ -33,16 +40,23 @@ export const P: React.FC<PProps> = ({
   muted = false,
   size = "s",
   wordBreak,
+  as: Component = "p",
+  className,
   ...props
 }) => (
-  <p
-    className={clsx("mykn-p", `mykn-p--size-${size}`, {
-      ["mykn-p--bold"]: bold,
-      ["mykn-p--muted"]: muted,
-      [`mykn-p--word-break-${wordBreak}`]: wordBreak,
-    })}
+  <Component
+    className={clsx(
+      "mykn-p",
+      `mykn-p--size-${size}`,
+      {
+        ["mykn-p--bold"]: bold,
+        ["mykn-p--muted"]: muted,
+        [`mykn-p--word-break-${wordBreak}`]: wordBreak,
+      },
+      className,
+    )}
     {...props}
   >
     {children}
-  </p>
+  </Component>
 );
