@@ -43,6 +43,7 @@ export const IconInitials: React.FC<IconInitialsProps> = ({
         size && `mykn-iconinitials--${size}`,
       )}
       aria-label={name}
+      as={"span"}
       {...props}
     >
       {getInitials(name)}
