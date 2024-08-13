@@ -29,9 +29,6 @@ type TooltipProps = React.PropsWithChildren<{
 
   /* The size of the tooltip, defaults to md */
   size?: "sm" | "md" | "lg";
-
-  /* Option to keep the tooltip open when hovering over it */
-  keepOpenOnHover?: boolean;
 }>;
 
 export const Tooltip = ({
@@ -39,7 +36,6 @@ export const Tooltip = ({
   children,
   placement,
   size = "md",
-  keepOpenOnHover = false,
 }: TooltipProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const arrowRef = useRef(null);
@@ -82,35 +78,11 @@ export const Tooltip = ({
     },
   });
 
-  // Handle mouse events only on the trigger element
-  const handleTriggerMouseEnter = () => {
-    setIsOpen(true);
-  };
-
-  const handleTriggerMouseLeave = () => {
-    if (!keepOpenOnHover) {
-      setIsOpen(false);
-    }
-  };
-
-  // Handle mouse events on the tooltip content
-  const handleTooltipMouseEnter = () => {
-    if (keepOpenOnHover) {
-      setIsOpen(true);
-    }
-  };
-
-  const handleTooltipMouseLeave = () => {
-    setIsOpen(false);
-  };
-
   return (
     <>
       {React.cloneElement(children as React.ReactElement, {
         ...getReferenceProps(),
         ref: setReference,
-        onMouseEnter: handleTriggerMouseEnter,
-        onMouseLeave: handleTriggerMouseLeave,
       })}
       <div
         ref={setFloating}
@@ -119,8 +91,6 @@ export const Tooltip = ({
           className: clsx("mykn-tooltip", {
             "mykn-tooltip--open": isOpen,
           }),
-          onMouseEnter: handleTooltipMouseEnter,
-          onMouseLeave: handleTooltipMouseLeave,
         })}
       >
         <div
