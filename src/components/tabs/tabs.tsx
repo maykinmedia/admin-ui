@@ -3,7 +3,6 @@ import React, { Children, ReactElement, isValidElement, useState } from "react";
 
 import { slugify } from "../../lib/format/string";
 import { Button } from "../button";
-import { P } from "../typography";
 import "./tabs.scss";
 
 export type TabsProps = React.PropsWithChildren<{
@@ -42,16 +41,16 @@ export const Tabs: React.FC<TabsProps> = ({
           <React.Fragment key={tab.props.id || slugify(tab.props.label)}>
             <Button
               active={activeTab === index}
-              id={`tab-${tab.props.id || slugify(tab.props.label)}`}
-              role="tab"
-              variant="transparent"
               aria-controls={`tab-content-${tab.props.id || slugify(tab.props.label)}`}
               aria-selected={activeTab === index ? "true" : "false"}
+              id={`tab-${tab.props.id || slugify(tab.props.label)}`}
+              pad="h"
+              role="tab"
+              variant="transparent"
               onClick={() => handleTabClick(index)}
             >
               {tab.props.label}
             </Button>
-            {index < tabs.length - 1 && <P aria-hidden="true">|</P>}
           </React.Fragment>
         ))}
       </nav>

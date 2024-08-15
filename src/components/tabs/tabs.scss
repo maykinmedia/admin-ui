@@ -4,15 +4,13 @@
   width: 100%;
 
   &__tablist {
+    align-items: center;
+    background-color: var(--typography-color-background);
+    box-sizing: border-box;
     display: flex;
     flex-wrap: wrap;
-    align-items: center;
     gap: var(--spacing-v);
-    box-sizing: border-box;
-    border: 1px solid var(--typography-color-border);
-    border-radius: var(--border-radius-l);
-    background-color: var(--typography-color-background);
-    padding: var(--spacing-v) var(--spacing-h);
+    padding-block: var(--spacing-h);
     width: 100%;
   }
 
@@ -21,17 +19,9 @@
     user-select: none;
   }
 
-  &__content {
-    margin-block-start: var(--spacing-h);
-  }
-
   @media screen and (max-width: constants.$breakpoint-desktop) {
     &__tablist {
       justify-content: center;
-    }
-
-    .mykn-p {
-      display: none;
     }
   }
 }
