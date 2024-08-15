@@ -10,17 +10,19 @@ export type NavbarProps = ToolbarProps;
  */
 export const Navbar: React.FC<NavbarProps> = ({ children, ...props }) => {
   return (
-    <Toolbar
-      align="center"
-      direction="vertical"
-      justify="v"
-      pad
-      padSize="xs"
-      variant="primary"
-      sticky="top"
-      {...props}
-    >
-      {children}
-    </Toolbar>
+    <div className="mykn-navbar">
+      <Toolbar
+        align="center"
+        direction="vertical"
+        justify="v"
+        pad
+        padSize="xs"
+        variant="primary"
+        sticky="top"
+        {...props}
+      >
+        {children}
+      </Toolbar>
+    </div>
   );
 };

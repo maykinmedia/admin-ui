@@ -1,19 +1,27 @@
 .mykn-logo {
   display: inline-block;
-
   font-size: 0;
+  height: 34px;
+  max-width: 100%;
 
-  &__image {
-    height: 100%;
-    max-width: 155px;
-    object-fit: contain;
-    overflow: visible;
-    width: 100%;
+  &--abbreviated {
+    height: auto;
+  }
+
+  &--variant-contrast {
+    --page-color-logo: var(--page-color-primary-contrast);
   }
 
   & &__handle {
     transition: transform var(--animation-duration-fast)
       var(--animation-timing-function);
+  }
+
+  &__image {
+    height: 100%;
+    object-fit: contain;
+    overflow: visible;
+    width: 100%;
   }
 
   &[href]:hover &__handle--left,
@@ -34,11 +42,11 @@
     transform: translateX(-2px);
   }
 
-  &--variant-compact &__text--a,
-  &--variant-compact &__text--y,
-  &--variant-compact &__text--k,
-  &--variant-compact &__text--i,
-  &--variant-compact &__text--n {
-    display: none;
+  &--abbreviated &__text--a,
+  &--abbreviated &__text--y,
+  &--abbreviated &__text--k,
+  &--abbreviated &__text--i,
+  &--abbreviated &__text--n {
+    opacity: 0;
   }
 }

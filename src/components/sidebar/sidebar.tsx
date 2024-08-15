@@ -95,9 +95,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
   const _logo = slotLogo || CustomLogo || (
     <Logo
-      variant={
-        expandedState || transitionState || !expandable ? "normal" : "compact"
-      }
+      abbreviated={!(expandedState || transitionState || !expandable)}
       {...logoProps}
     />
   );
