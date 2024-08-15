@@ -43,16 +43,17 @@
   white-space: nowrap;
   width: var(--mykn-button-width);
 
-  &:disabled,
-  &--disabled,
-  &--muted {
+  &#{&}:disabled,
+  &#{&}--disabled,
+  &#{&}--muted {
     --mykn-button-offset: 0 !important;
-    opacity: 0.4;
+    --mykn-button-color-text: var(--typography-color-muted);
   }
 
   &:disabled,
   &--disabled {
     pointer-events: none;
+    opacity: 0.4;
   }
 
   &--align-start {
