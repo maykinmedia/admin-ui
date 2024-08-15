@@ -1,8 +1,5 @@
 .mykn-navbar {
-  float: right; // Fallback.
-  float: inline-end;
-
-  .mykn-page > & {
-    align-self: flex-end;
+  .mykn-logo {
+    width: 32px;
   }
 }
