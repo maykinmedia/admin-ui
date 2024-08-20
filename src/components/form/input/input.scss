@@ -16,6 +16,13 @@
   width: min(320px, 100%);
   max-width: 100%;
 
+  &:disabled,
+  &--disabled,
+  &--muted {
+    color: var(--typography-color-muted);
+    opacity: 0.4;
+  }
+
   &::placeholder {
     color: var(--typography-color-muted);
   }
