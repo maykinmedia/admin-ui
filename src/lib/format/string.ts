@@ -27,7 +27,7 @@ export const field2Caption = (field: string): string =>
  * @param field
  */
 export const field2Title = (field: string): string =>
-  ucFirst(addSpaces(unHyphen(field)).toLowerCase());
+  ucFirst(addSpaces(field).toLowerCase());
 
 /**
  * Converts "Some object name" to "some-object-name".
