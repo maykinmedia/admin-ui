@@ -426,7 +426,7 @@ export const KanbanItem: React.FC<KanbanItemProps> = ({
   const titleField = fieldset[1].title || Object.keys(object)[0];
   const urlField = urlFields.find((f) => object[f]);
 
-  const title = field2Title(String(object[titleField]));
+  const title = field2Title(String(object[titleField]), { unHyphen: false });
   const href = urlField ? String(object[urlField]) || undefined : undefined;
 
   /**

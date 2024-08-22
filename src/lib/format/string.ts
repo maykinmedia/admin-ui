@@ -22,12 +22,49 @@ export const addSpaces = (string: string) =>
 export const field2Caption = (field: string): string =>
   ucFirst(unHyphen(addSpaces(field)));
 
+interface Field2TitleOptions {
+  addSpaces?: boolean;
+  lowerCase?: boolean;
+  ucFirst?: boolean;
+  unHyphen?: boolean;
+}
+
 /**
  * Converts "field_name" to "Field name".
  * @param field
  */
-export const field2Title = (field: string): string =>
-  ucFirst(addSpaces(field).toLowerCase());
+export const field2Title = (
+  field: string,
+  options?: Field2TitleOptions,
+): string => {
+  // Set default values for options using the spread operator
+  const {
+    addSpaces: addSpacesBool = true,
+    lowerCase: lowerCaseBool = true,
+    ucFirst: ucFirstBool = true,
+    unHyphen: unHypenBool = true,
+  } = options || {};
+
+  let result = field;
+
+  if (unHypenBool) {
+    result = unHyphen(result); // Changed name to avoid conflict
+  }
+
+  if (addSpacesBool) {
+    result = addSpaces(result); // Changed name to avoid conflict
+  }
+
+  if (lowerCaseBool) {
+    result = result.toLowerCase();
+  }
+
+  if (ucFirstBool) {
+    result = ucFirst(result); // Changed name to avoid conflict
+  }
+
+  return result;
+};
 
 /**
  * Converts "Some object name" to "some-object-name".
