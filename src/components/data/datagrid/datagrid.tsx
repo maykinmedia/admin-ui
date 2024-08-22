@@ -20,7 +20,7 @@ import {
   sortAttributeDataArray,
 } from "../../../lib/data/attributedata";
 import { getByDotSeparatedPath } from "../../../lib/data/getByDotSeparatedPath";
-import { field2Caption, isLink } from "../../../lib/format/string";
+import { field2Title, isLink } from "../../../lib/format/string";
 import { BadgeProps } from "../../badge";
 import { BoolProps } from "../../boolean";
 import { Button, ButtonProps } from "../../button";
@@ -690,7 +690,7 @@ export const DataGridCaption: React.FC<DataGridCaptionProps> = ({
                   {
                     name: "fields",
                     options: fields.map((f) => ({
-                      label: field2Caption(f.name),
+                      label: field2Title(f.name, { lowerCase: false }),
                       value: f.name,
                       selected: Boolean(selectFieldsActiveState[f.name]),
                     })),
@@ -780,14 +780,14 @@ export const DataGridHeading: React.FC<DataGridHeadingProps> = ({
         {selectable && <th className="mykn-datagrid__cell--checkbox"></th>}
         {renderableFields.map((field) => (
           <DataGridHeadingCell
-            key={`${dataGridId}-heading-${field2Caption(field.name)}`}
+            key={`${dataGridId}-heading-${field2Title(field.name, { lowerCase: false })}`}
             field={field}
             onSort={onSort}
             isSorted={sortField === field.name}
             sortable={sortable}
             sortDirection={sortDirection}
           >
-            {field2Caption(field.name)}
+            {field2Title(field.name, { lowerCase: false })}
           </DataGridHeadingCell>
         ))}
       </tr>
@@ -806,7 +806,7 @@ export const DataGridHeading: React.FC<DataGridHeadingProps> = ({
             ></th>
           )}
           {renderableFields.map((field) => {
-            const placeholder = field2Caption(field.name);
+            const placeholder = field2Title(field.name, { lowerCase: false });
 
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
             const { options, valueTransform, ...context } = field;
@@ -825,7 +825,7 @@ export const DataGridHeading: React.FC<DataGridHeadingProps> = ({
 
             return (
               <th
-                key={`${dataGridId}-filter-${field2Caption(field.name)}`}
+                key={`${dataGridId}-filter-${field2Title(field.name, { lowerCase: false })}`}
                 className={clsx(
                   "mykn-datagrid__cell",
                   "mykn-datagrid__cell--filter",
@@ -1268,7 +1268,7 @@ export const DataGridContentCell: React.FC<DataGridContentCellProps> = ({
           "mykn-datagrid__cell--link": link,
         },
       )}
-      aria-description={field2Caption(field.name)}
+      aria-description={field2Title(field.name, { lowerCase: false })}
     >
       {valueIsPrimitive &&
         isEditingRow &&
