@@ -1,5 +1,6 @@
 import clsx from "clsx";
 import React, {
+  useCallback,
   useContext,
   useEffect,
   useId,
@@ -229,21 +230,10 @@ export type DataGridContextType = Omit<
   onSelectAllPages: (selected: boolean) => void;
   onSort: (field: TypedField) => void;
 };
+
 const DataGridContext = React.createContext<DataGridContextType>(
   {} as unknown as DataGridContextType,
 );
-
-const getTypedFields = (
-  fields: Array<Field | TypedField>,
-  objectList: AttributeData[],
-  urlFields: string[],
-  editable: DataGridProps["editable"],
-  filterable: DataGridProps["filterable"],
-): TypedField[] =>
-  typedFieldByFields(fields, objectList, {
-    editable: Boolean(editable),
-    filterable: Boolean(filterable),
-  }).filter((f) => !urlFields.includes(String(f.name)));
 
 /**
  * A subset of `PaginatorProps` that act as aliases.
@@ -391,19 +381,26 @@ export const DataGrid: React.FC<DataGridProps> = (props) => {
     }
   }, [objectList]);
 
-  const typedFieldsState = getTypedFields(
-    fieldsState,
-    objectList,
-    urlFields as string[],
-    editable,
-    filterable,
+  // Convert `Array<Field|TypedField>` to `TypedField[]`.
+  const typedFields = useMemo(
+    () =>
+      typedFieldByFields(fieldsState, objectList, {
+        editable: Boolean(editable),
+        filterable: Boolean(filterable),
+      }).filter((f) => !(urlFields || []).includes(String(f.name))),
+    [fieldsState, objectList, urlFields, editable, filterable],
   );
 
-  const renderableFields = typedFieldsState.filter((f) => f.active !== false);
+  // Exclude inactive fields.
+  const renderableFields = useMemo(
+    () => typedFields.filter((f) => f.active !== false),
+    [typedFields],
+  );
+
+  // Variable.
   const sortField = sortState?.[0];
   const sortDirection = sortState?.[1];
   const titleId = title ? `${id}-caption` : undefined;
-
   const _count = count || paginatorProps?.count || 0;
   const _pageSize = pageSize || _count;
   const _pages = Math.ceil(_count / _pageSize);
@@ -413,80 +410,112 @@ export const DataGrid: React.FC<DataGridProps> = (props) => {
       ? objectList
       : selectedState) || [];
 
-  const filteredObjectList = filterState
-    ? filterAttributeDataArray(objectList, filterState)
-    : objectList || [];
+  // Filter rows.
+  const filteredObjectList = useMemo(
+    () =>
+      filterState
+        ? filterAttributeDataArray(objectList, filterState)
+        : objectList || [],
+    [objectList, filterState],
+  );
 
-  const renderableRows =
-    !onSort && sortField && sortDirection
-      ? sortAttributeDataArray(filteredObjectList, sortField, sortDirection)
-      : filteredObjectList;
+  // Sort rows.
+  const renderableRows = useMemo(
+    () =>
+      !onSort && sortField && sortDirection
+        ? sortAttributeDataArray(filteredObjectList, sortField, sortDirection)
+        : filteredObjectList,
+    [onSort, sortField, sortDirection, filteredObjectList],
+  );
 
   /**
-   * Gets called when tha select all checkbox is clicked.
+   * Gets called when the select checkbox is clicked.
    */
-  const handleSelectAll = (selected: boolean) => {
-    const value = selected ? renderableRows : [];
-    setSelectedState(value);
-    onSelect?.(value, selected);
-    onSelectionChange?.(value);
-  };
+  const handleSelect = useCallback(
+    (attributeData: AttributeData) => {
+      const currentlySelected = selectedState || [];
+
+      const isAttributeDataCurrentlySelected = currentlySelected.find(
+        (element) => equalityChecker?.(element, attributeData),
+      );
+
+      const newSelectedState = isAttributeDataCurrentlySelected
+        ? currentlySelected.filter((a) => !equalityChecker?.(a, attributeData))
+        : [...currentlySelected, attributeData];
+
+      setSelectedState(newSelectedState);
+      onSelect?.([attributeData], !isAttributeDataCurrentlySelected);
+      onSelectionChange?.(newSelectedState);
+    },
+    [
+      selectedState,
+      setSelectedState,
+      onSelect,
+      onSelectionChange,
+      equalityChecker,
+    ],
+  );
 
   /**
-   * Gets called when tha select all checkbox is clicked.
+   * Gets called when the select all checkbox is clicked.
    */
-  const handleSelectAllPages = (selected: boolean) => {
-    setAllPagesSelectedState(selected);
-    onSelectAllPages?.(selected);
-  };
+  const handleSelectAll = useCallback(
+    (selected: boolean) => {
+      const value = selected ? renderableRows : [];
+      setSelectedState(value);
+      onSelect?.(value, selected);
+      onSelectionChange?.(value);
+    },
+    [renderableRows, setSelectedState, onSelect, onSelectionChange],
+  );
 
-  const handleSelect = (attributeData: AttributeData) => {
-    const currentlySelected = selectedState || [];
-
-    const isAttributeDataCurrentlySelected = currentlySelected.find((element) =>
-      equalityChecker?.(element, attributeData),
-    );
-
-    const newSelectedState = isAttributeDataCurrentlySelected
-      ? [...currentlySelected].filter(
-          (a) => !equalityChecker?.(a, attributeData),
-        )
-      : [...currentlySelected, attributeData];
-
-    setSelectedState(newSelectedState);
-    onSelect?.([attributeData], !isAttributeDataCurrentlySelected);
-    onSelectionChange?.(newSelectedState);
-  };
+  /**
+   * Gets called when the select all pages checkbox is clicked.
+   */
+  const handleSelectAllPages = useCallback(
+    (selected: boolean) => {
+      setAllPagesSelectedState(selected);
+      onSelectAllPages?.(selected);
+    },
+    [setAllPagesSelectedState, onSelectAllPages],
+  );
 
   /**
    * Get called when a column is sorted.
    * @param field
    */
-  const handleSort = (field: TypedField) => {
-    const newSortDirection = sortDirection === "ASC" ? "DESC" : "ASC";
-    setSortState([field.name, newSortDirection]);
-    onSort &&
-      onSort(newSortDirection === "ASC" ? field.name : `-${field.name}`);
-  };
+  const handleSort = useCallback(
+    (field: TypedField) => {
+      const newSortDirection = sortDirection === "ASC" ? "DESC" : "ASC";
+      setSortState([field.name, newSortDirection]);
+      if (onSort) {
+        onSort(newSortDirection === "ASC" ? field.name : `-${field.name}`);
+      }
+    },
+    [sortDirection, setSortState, onSort], // Dependencies
+  );
+
   /**
    * Get called when a column is filtered.
    * @param data
    */
-  const handleFilter = (data: AttributeData) => {
-    if (onFilter) {
-      const handler = () => onFilter(data);
-      onFilterTimeoutRef.current && clearTimeout(onFilterTimeoutRef.current);
-      onFilterTimeoutRef.current = setTimeout(handler, 300);
-      setFilterState(null);
-      return;
-    }
+  const handleFilter = useCallback(
+    (data: AttributeData) => {
+      if (onFilter) {
+        const handler = () => onFilter(data);
+        if (onFilterTimeoutRef.current) {
+          clearTimeout(onFilterTimeoutRef.current);
+        }
+        onFilterTimeoutRef.current = setTimeout(handler, 300);
+        setFilterState(null);
+        return;
+      }
 
-    if (Object.keys(data).filter((key) => data[key]).length === 0) {
-      setFilterState(null);
-    } else {
-      setFilterState(data);
-    }
-  };
+      const hasFilterData = Object.keys(data).some((key) => data[key]);
+      setFilterState(hasFilterData ? data : null);
+    },
+    [onFilter, onFilterTimeoutRef, setFilterState],
+  );
 
   // Run assertions for aliased fields.
   if (showPaginator) {
@@ -521,7 +550,7 @@ export const DataGrid: React.FC<DataGridProps> = (props) => {
         editable: Boolean(renderableFields.find((f) => f.editable)),
         editingFieldIndex: editingState[1],
         editingRow: editingState[0],
-        fields: typedFieldsState,
+        fields: typedFields,
         pages: _pages,
         renderableFields: renderableFields,
         renderableRows: renderableRows,
