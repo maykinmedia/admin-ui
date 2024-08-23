@@ -1,5 +1,12 @@
 import clsx from "clsx";
-import React, { useContext, useEffect, useId, useRef, useState } from "react";
+import React, {
+  useContext,
+  useEffect,
+  useId,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 
 import {
   Attribute,
@@ -32,6 +39,7 @@ import { AProps, Body, H2, H3, P, PProps } from "../../typography";
 import { Paginator, PaginatorProps } from "../paginator";
 import { Value } from "../value";
 import "./datagrid.scss";
+import { TRANSLATIONS } from "./translations";
 
 export type DataGridProps = {
   /** The object list (after pagination), only primitive types supported for now. */
@@ -601,27 +609,11 @@ export const DataGridCaption: React.FC = () => {
 
   const _labelSelectFields = labelSelectFields
     ? formatMessage(labelSelectFields, context)
-    : intl.formatMessage(
-        {
-          id: "mykn.components.DataGrid.labelSelectFields",
-          description:
-            "mykn.components.Modal: The datagrid select fields label",
-          defaultMessage: "selecteer kolommen",
-        },
-        context,
-      );
+    : intl.formatMessage(TRANSLATIONS.LABEL_SELECT_FIELDS, context);
 
   const _labelSaveFieldSelection = labelSaveFieldSelection
     ? formatMessage(labelSaveFieldSelection, context)
-    : intl.formatMessage(
-        {
-          id: "mykn.components.DataGrid.labelSaveFieldSelection",
-          description:
-            "mykn.components.Modal: The datagrid save selection label",
-          defaultMessage: "kolommen opslaan",
-        },
-        context,
-      );
+    : intl.formatMessage(TRANSLATIONS.LABEL_SAVE_FIELD_SELECTION, context);
 
   return (
     <caption className="mykn-datagrid__caption">
@@ -783,15 +775,7 @@ export const DataGridHeading: React.FC = () => {
 
             const _labelFilterField = labelFilterField
               ? formatMessage(labelFilterField, context)
-              : intl.formatMessage(
-                  {
-                    id: "mykn.components.DataGrid.labelFilterField",
-                    description:
-                      "mykn.components.DataGrid: The filter field (accessible) label",
-                    defaultMessage: 'filter veld "{name}"',
-                  },
-                  context,
-                );
+              : intl.formatMessage(TRANSLATIONS.LABEL_FILTER_FIELD, context);
 
             return (
               <th
@@ -1179,99 +1163,97 @@ export const DataGridSelectionCheckbox: React.FC<
     onSelectAllPages,
   } = useContext(DataGridContext);
 
-  let allSelected: boolean = false;
-  let checked: boolean = false;
-  let disabled: boolean = false;
-  let handleSelect: (() => void) | ((rows: AttributeData) => void);
+  const { checked, disabled, onChange, ariaLabel } = useMemo(() => {
+    let allSelected: boolean = false;
+    let checked: boolean = false;
+    let disabled: boolean = false;
+    let handleSelect: (() => void) | ((rows: AttributeData) => void);
+    let i18nContext;
+    let ariaLabel: string = "";
 
-  switch (selectAll) {
-    case "page":
-      allSelected =
-        selectedRows?.every((a) => renderableRows.includes(a)) &&
-        renderableRows.every((a) => selectedRows.includes(a));
-      checked = allSelected || false;
-      disabled = Boolean(allPagesSelectedManaged && allPagesSelected);
-      handleSelect = () => onSelectAll(!allSelected);
-      break;
+    switch (selectAll) {
+      case "page":
+        allSelected =
+          selectedRows?.every((a) => renderableRows.includes(a)) &&
+          renderableRows.every((a) => selectedRows.includes(a));
+        checked = allSelected || false;
+        disabled = Boolean(allPagesSelectedManaged && allPagesSelected);
+        handleSelect = () => onSelectAll(!allSelected);
 
-    case "allPages":
-      allSelected = Boolean(allPagesSelected);
-      checked = allPagesSelected || false;
-      handleSelect = () => onSelectAllPages(!allSelected);
-      break;
+        i18nContext = {
+          count: count,
+          countPage: renderableRows.length,
+          pages: pages,
+          amountSelected: amountSelected,
+          selectAll: selectAll,
+          amountUnselected: (count || 0) - (amountSelected || 0),
+          amountUnselectedPage: renderableRows.length - (amountSelected || 0),
+        };
+        ariaLabel =
+          labelSelect ||
+          intl.formatMessage(TRANSLATIONS.LABEL_SELECT_ALL, i18nContext);
+        break;
 
-    default:
-      allSelected = false;
-      checked =
-        (rowData &&
-          !!selectedRows.find((element) =>
-            equalityChecker(element, rowData),
-          )) ||
-        false;
-      disabled = Boolean(allPagesSelectedManaged && allPagesSelected);
-      handleSelect = onSelect;
-  }
+      case "allPages":
+        allSelected = Boolean(allPagesSelected);
+        checked = allPagesSelected || false;
+        handleSelect = () => onSelectAllPages(!allSelected);
 
-  const contextSelectAll = {
-    count: count,
-    countPage: renderableRows.length,
-    pages: pages,
-    amountSelected: amountSelected,
-    selectAll: selectAll,
-    amountUnselected: (count || 0) - (amountSelected || 0),
-    amountUnselectedPage: renderableRows.length - (amountSelected || 0),
-  };
+        i18nContext = { pages: count };
+        ariaLabel =
+          labelSelect ||
+          intl.formatMessage(TRANSLATIONS.LABEL_SELECT_ALL_PAGES, i18nContext);
+        break;
 
-  const contextSelectAllPages = {
-    pages: count,
-  };
+      default:
+        allSelected = false;
+        checked =
+          (rowData &&
+            !!selectedRows.find((element) =>
+              equalityChecker(element, rowData),
+            )) ||
+          false;
+        disabled = Boolean(allPagesSelectedManaged && allPagesSelected);
+        handleSelect = onSelect;
 
-  const label = labelSelect
-    ? formatMessage(labelSelect, {
-        ...contextSelectAll,
-        ...rowData,
-      })
-    : selectAll === "page"
-      ? intl.formatMessage(
-          {
-            id: "mykn.components.DataGrid.labelSelectAll",
-            description:
-              "mykn.components.DataGrid: The select row (accessible) label",
-            defaultMessage: "(de)selecteer {countPage} rijen",
-          },
-          contextSelectAll as unknown as Record<string, string>,
-        )
-      : selectAll === "allPages"
-        ? intl.formatMessage(
-            {
-              id: "mykn.components.DataGrid.labelSelectAllPages",
-              description:
-                "mykn.components.DataGrid: The select all pages (accessible) label",
-              defaultMessage: "(de)selecteer {pages} pagina's",
-            },
-            contextSelectAllPages as unknown as Record<string, string>,
-          )
-        : intl.formatMessage(
-            {
-              id: "mykn.components.DataGrid.labelSelect",
-              description:
-                "mykn.components.DataGrid: The select row (accessible) label",
-              defaultMessage: "(de)selecteer rij",
-            },
-            {
-              ...contextSelectAll,
-              ...rowData,
-            } as unknown as Record<string, string>,
-          );
+        i18nContext = {
+          count: count,
+          countPage: renderableRows.length,
+          pages: pages,
+          amountSelected: amountSelected,
+          selectAll: selectAll,
+          amountUnselected: (count || 0) - (amountSelected || 0),
+          amountUnselectedPage: renderableRows.length - (amountSelected || 0),
+          ...rowData,
+        };
+        ariaLabel =
+          labelSelect ||
+          intl.formatMessage(TRANSLATIONS.LABEL_SELECT, i18nContext);
+    }
+
+    const onChange = () => handleSelect(rowData || {});
+    return { checked, disabled, onChange, ariaLabel };
+  }, [
+    allPagesSelected,
+    allPagesSelectedManaged,
+    amountSelected,
+    count,
+    labelSelect,
+    pages,
+    renderableRows,
+    rowData,
+    selectAll,
+    selectedRows,
+  ]);
 
   return (
     <Checkbox
       checked={checked}
       disabled={disabled}
-      onChange={() => handleSelect(rowData || {})}
-      aria-label={label}
+      onChange={onChange}
+      aria-label={ariaLabel}
     >
-      {selectAll && label}
+      {selectAll && ariaLabel}
     </Checkbox>
   );
 };

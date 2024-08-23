@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 
 import { formatMessage } from "./formatmessage";
+import { MessageDescriptor } from "./types";
 
 /*
   IMPORTANT!
@@ -44,12 +45,6 @@ try {
 // Redefine (minimal) react-intl types.
 type MessageContext = Record<string, unknown>;
 
-type MessageDescriptor = {
-  id?: string;
-  description: string;
-  defaultMessage: string;
-};
-
 type Intl = {
   formatMessage: (
     descriptor: MessageDescriptor,
@@ -87,7 +82,6 @@ const getLocalizedFallbackIntl = (
       if (messages.default) {
         messages = messages.default as unknown as Record<string, string>;
       }
-
       const message = messages[descriptor.id as string];
       return formatMessage(message, context);
     },
