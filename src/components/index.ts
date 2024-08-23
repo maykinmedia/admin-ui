@@ -1,5 +1,4 @@
 // Auto-generated file. Do not modify manually.
-export * from "./background-image";
 export * from "./badge";
 export * from "./boolean";
 export * from "./breadcrumbs";

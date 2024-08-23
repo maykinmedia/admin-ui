@@ -12,6 +12,9 @@ export type LoginTemplateProps = BaseTemplateProps & {
   /** Form props. */
   formProps: FormProps;
 
+  /** Password Forgotten Href */
+  passwordForgottenHref?: string;
+
   /** The login form label. */
   labelLogin?: FormProps["labelSubmit"];
 
@@ -37,6 +40,7 @@ export type LoginTemplateProps = BaseTemplateProps & {
  */
 export const LoginTemplate: React.FC<LoginTemplateProps> = ({
   formProps,
+  passwordForgottenHref,
   labelLogin,
   titleLogin,
   titlePasswordForgotten,
@@ -104,10 +108,12 @@ export const LoginTemplate: React.FC<LoginTemplateProps> = ({
               justify: true,
             }}
           />
-          <P muted>
-            {_titlePasswordForgotten}{" "}
-            <A href="/forgot-password">{_linkPasswordForgotten}</A>
-          </P>
+          {passwordForgottenHref && (
+            <P muted>
+              {_titlePasswordForgotten}{" "}
+              <A href={passwordForgottenHref}>{_linkPasswordForgotten}</A>
+            </P>
+          )}
         </Body>
       </Card>
     </BaseTemplate>

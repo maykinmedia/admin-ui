@@ -1,7 +1,6 @@
 import clsx from "clsx";
 import React from "react";
 
-import { BackgroundImage } from "../../background-image";
 import "./page.scss";
 
 export type PageProps = React.PropsWithChildren<{
@@ -48,3 +47,30 @@ export const Page: React.FC<PageProps> = ({
     </div>
   );
 };
+
+export type BackgroundImageProps = React.PropsWithChildren<{
+  backgroundImageUrl: string;
+  backgroundOverlayOpacity: number;
+}>;
+
+/**
+ * BackgroundImage component
+ * @param children
+ * @param props
+ * @constructor
+ */
+const BackgroundImage: React.FC<BackgroundImageProps> = ({
+  backgroundImageUrl,
+  backgroundOverlayOpacity,
+}) => (
+  <div className="mykn-background-image">
+    <div
+      className="mykn-background-image__background"
+      style={{ backgroundImage: `url(${backgroundImageUrl})` }}
+    />
+    <div
+      className="mykn-background-image__overlay"
+      style={{ opacity: backgroundOverlayOpacity }}
+    />
+  </div>
+);
