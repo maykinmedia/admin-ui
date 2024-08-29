@@ -35,7 +35,7 @@ import { Button, ButtonProps } from "../../button";
 import { Checkbox, Form, FormControl } from "../../form";
 import { Outline } from "../../icon";
 import { Modal } from "../../modal";
-import { Toolbar } from "../../toolbar";
+import { Toolbar, ToolbarItem } from "../../toolbar";
 import { AProps, Body, H2, H3, P, PProps } from "../../typography";
 import { Paginator, PaginatorProps } from "../paginator";
 import { Value } from "../value";
@@ -534,7 +534,6 @@ export const DataGrid: React.FC<DataGridProps> = (props) => {
       "Either `pageSize` or `paginatorProps.pageSize` should be set when `showPaginator` is `true`.",
     );
   }
-
   return (
     <DataGridContext.Provider
       value={{
@@ -574,6 +573,9 @@ export const DataGrid: React.FC<DataGridProps> = (props) => {
       }}
     >
       <div className="mykn-datagrid" {...attrs}>
+        {title && <DataGridHeader />}
+        {(selectable || fieldsSelectable) && <DataGridToolbar />}
+
         <table
           className={clsx("mykn-datagrid__table", {
             [`mykn-datagrid__table--layout-${tableLayout}`]: tableLayout,
@@ -581,41 +583,54 @@ export const DataGrid: React.FC<DataGridProps> = (props) => {
           role="grid"
           aria-labelledby={titleId}
         >
-          {/* Caption */}
-          {(title || selectable || fieldsSelectable) && <DataGridCaption />}
-
-          {/* Heading */}
-          <DataGridHeading />
-          <DataGridBody />
-
-          {/* Paginator */}
-          {showPaginator && <DataGridFooter />}
+          <DataGridTHead />
+          <DataGridTBody />
         </table>
+
+        {showPaginator && <DataGridFooter />}
         {filterable && <form id={`${id}-filter-form`} />}
       </div>
     </DataGridContext.Provider>
   );
 };
 
-export const DataGridCaption: React.FC = () => {
+/**
+ * DataGrid header, shows title as either string or JSX.
+ */
+export const DataGridHeader: React.FC = () => {
+  const { title, titleId } = useContext(DataGridContext);
+
+  return (
+    <header className="mykn-datagrid__header">
+      {typeof title === "string" ? (
+        <H2 id={titleId as string}>{title}</H2>
+      ) : (
+        title
+      )}
+    </header>
+  );
+};
+
+/**
+ * DataGrid toolbar, shows selection actions and/or allows the user to select fields (columns).
+ */
+export const DataGridToolbar: React.FC = () => {
+  const intl = useIntl();
   const [selectFieldsModalState, setSelectFieldsModalState] = useState(false);
   const [selectFieldsActiveState, setSelectFieldsActiveState] = useState<
     Record<string, boolean>
   >({});
-  const intl = useIntl();
 
   const {
+    allowSelectAll,
+    allowSelectAllPages,
     fields,
     fieldsSelectable,
     labelSaveFieldSelection,
     labelSelectFields,
     selectable,
-    allowSelectAll,
-    allowSelectAllPages,
-    selectionActions,
     selectedRows,
-    title,
-    titleId,
+    selectionActions,
     onFieldsChange,
   } = useContext(DataGridContext);
 
@@ -644,102 +659,105 @@ export const DataGridCaption: React.FC = () => {
     ? formatMessage(labelSaveFieldSelection, context)
     : intl.formatMessage(TRANSLATIONS.LABEL_SAVE_FIELD_SELECTION, context);
 
+  const toolbarItems: ToolbarItem[] = [
+    selectable && allowSelectAll ? (
+      <DataGridSelectionCheckbox key="selectPage" selectAll="page" />
+    ) : null,
+
+    selectable && allowSelectAllPages ? (
+      <DataGridSelectionCheckbox key="selectAllPages" selectAll="allPages" />
+    ) : null,
+
+    ...(selectionActions || []).map((buttonProps, index) => (
+      <Button
+        key={buttonProps.name || index}
+        size="xs"
+        variant="secondary"
+        {...buttonProps}
+        onClick={() => {
+          if (typeof buttonProps.onClick === "function") {
+            const customEvent = new CustomEvent("click", {
+              detail: selectedRows,
+            });
+            buttonProps.onClick(
+              customEvent as unknown as React.MouseEvent<HTMLButtonElement>,
+            );
+          }
+        }}
+      />
+    )),
+
+    fieldsSelectable ? "spacer" : null,
+    fieldsSelectable ? (
+      <>
+        <Button
+          size="xs"
+          variant="outline"
+          wrap={false}
+          onClick={() => setSelectFieldsModalState(true)}
+        >
+          <Outline.ViewColumnsIcon />
+          {ucFirst(_labelSelectFields)}
+        </Button>
+      </>
+    ) : null,
+  ];
+
   return (
-    <caption className="mykn-datagrid__caption">
-      <Toolbar size="fit-content" pad={false}>
-        {title &&
-          (typeof title === "string" ? (
-            <H2 id={titleId as string}>{title}</H2>
-          ) : (
-            title
-          ))}
-        {selectable && allowSelectAll && (
-          <DataGridSelectionCheckbox selectAll="page" />
-        )}
-        {selectable && allowSelectAllPages && (
-          <DataGridSelectionCheckbox selectAll="allPages" />
-        )}
-        {selectionActions?.map((buttonProps, index) => (
-          <Button
-            key={buttonProps.name || index}
-            size="xs"
-            variant="secondary"
-            {...buttonProps}
-            onClick={() => {
-              if (typeof buttonProps.onClick === "function") {
-                const customEvent = new CustomEvent("click", {
-                  detail: selectedRows,
-                });
-                buttonProps.onClick(
-                  customEvent as unknown as React.MouseEvent<HTMLButtonElement>,
-                );
-              }
+    <div className="mykn-datagrid__toolbar">
+      <Toolbar directionResponsive={false} items={toolbarItems} pad={true} />
+
+      <Modal
+        open={selectFieldsModalState}
+        position="side"
+        size="s"
+        title={<H3>{ucFirst(_labelSelectFields)}</H3>}
+        onClose={() => setSelectFieldsModalState(false)}
+      >
+        <Body>
+          <Form
+            fields={[
+              {
+                name: "fields",
+                options: fields.map((f) => ({
+                  label: field2Title(f.name, { lowerCase: false }),
+                  value: f.name,
+                  selected: Boolean(selectFieldsActiveState[f.name]),
+                })),
+                type: "checkbox",
+                onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+                  const name = e.target.value;
+                  setSelectFieldsActiveState({
+                    ...selectFieldsActiveState,
+                    [name]: !selectFieldsActiveState[name],
+                  });
+                },
+              },
+            ]}
+            labelSubmit={ucFirst(_labelSaveFieldSelection)}
+            onSubmit={(e) => {
+              const form = e.target as HTMLFormElement;
+              const data = serializeForm(form);
+              const selectedFields = (data.fields || []) as string[];
+              const newTypedFieldsState = fields.map((f) => ({
+                ...f,
+                active: selectedFields.includes(f.name),
+              }));
+              onFieldsChange?.(newTypedFieldsState);
+              setSelectFieldsModalState(false);
             }}
           />
-        ))}
-      </Toolbar>
-      {fieldsSelectable && (
-        <Toolbar size="fit-content" pad={false}>
-          <Button
-            size="xs"
-            variant="outline"
-            onClick={() => setSelectFieldsModalState(true)}
-          >
-            <Outline.ViewColumnsIcon />
-            {ucFirst(_labelSelectFields)}
-          </Button>
-          <Modal
-            open={selectFieldsModalState}
-            position="side"
-            size="s"
-            title={<H3>{ucFirst(_labelSelectFields)}</H3>}
-            onClose={() => setSelectFieldsModalState(false)}
-          >
-            <Body>
-              <Form
-                fields={[
-                  {
-                    name: "fields",
-                    options: fields.map((f) => ({
-                      label: field2Title(f.name, { lowerCase: false }),
-                      value: f.name,
-                      selected: Boolean(selectFieldsActiveState[f.name]),
-                    })),
-                    type: "checkbox",
-                    onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
-                      const name = e.target.value;
-                      setSelectFieldsActiveState({
-                        ...selectFieldsActiveState,
-                        [name]: !selectFieldsActiveState[name],
-                      });
-                    },
-                  },
-                ]}
-                labelSubmit={ucFirst(_labelSaveFieldSelection)}
-                onSubmit={(e) => {
-                  const form = e.target as HTMLFormElement;
-                  const data = serializeForm(form);
-                  const selectedFields = (data.fields || []) as string[];
-                  const newTypedFieldsState = fields.map((f) => ({
-                    ...f,
-                    active: selectedFields.includes(f.name),
-                  }));
-                  onFieldsChange?.(newTypedFieldsState);
-                  setSelectFieldsModalState(false);
-                }}
-              />
-            </Body>
-          </Modal>
-        </Toolbar>
-      )}
-    </caption>
+        </Body>
+      </Modal>
+    </div>
   );
 };
 
 /**
- * DataGrid heading
+ * DataGrid table head, encapsulates a set of table rows, indicating that they
+ * comprise the head of a table with information about the table's columns.
  */
-export const DataGridHeading: React.FC = () => {
+export const DataGridTHead: React.FC = () => {
   const intl = useIntl();
   const onFilterTimeoutRef = useRef<NodeJS.Timeout>();
   const [filterState, setFilterState] = useState<AttributeData>();
@@ -768,7 +786,8 @@ export const DataGridHeading: React.FC = () => {
   }, [filterState]);
 
   return (
-    <thead className="mykn-datagrid__head" role="rowgroup">
+    <thead className="mykn-datagrid__thead" role="rowgroup">
+      {/* Captions */}
       <tr className="mykn-datagrid__row mykn-datagrid__row--header" role="row">
         {selectable && (
           <th className="mykn-datagrid__cell mykn-datagrid__cell--checkbox"></th>
@@ -782,6 +801,8 @@ export const DataGridHeading: React.FC = () => {
           </DataGridHeadingCell>
         ))}
       </tr>
+
+      {/* Filters */}
       {filterable && (
         <tr
           className="mykn-datagrid__row mykn-datagrid__row--filter"
@@ -855,108 +876,13 @@ export const DataGridHeading: React.FC = () => {
   );
 };
 
-/**
- * DataGrid body
- */
-export const DataGridBody: React.FC = () => {
-  const {
-    dataGridId,
-    page,
-    renderableFields,
-    renderableRows,
-    selectable,
-    selectedRows,
-    equalityChecker = (item1: AttributeData, item2: AttributeData) =>
-      item1 === item2,
-    sortDirection,
-    sortField,
-  } = useContext(DataGridContext);
-
-  return (
-    <tbody className="mykn-datagrid__body" role="rowgroup">
-      {renderableRows.map((rowData, index) => (
-        <tr
-          key={`${dataGridId}-row-${index}`}
-          className={clsx("mykn-datagrid__row", {
-            "mykn-datagrid__row--selected": !!selectedRows.find((element) =>
-              equalityChecker(element, rowData),
-            ),
-          })}
-        >
-          {selectable && (
-            <td
-              className={clsx(
-                "mykn-datagrid__cell",
-                `mykn-datagrid__cell--checkbox`,
-              )}
-            >
-              <DataGridSelectionCheckbox rowData={rowData} />
-            </td>
-          )}
-          {renderableFields.map((field) => (
-            <DataGridContentCell
-              key={`sort-${sortField}${sortDirection}-page-${page}-row-${renderableRows.indexOf(rowData)}-column-${renderableFields.indexOf(field)}`}
-              field={field}
-              rowData={rowData}
-            />
-          ))}
-        </tr>
-      ))}
-    </tbody>
-  );
-};
-
-/**
- * DataGrid footer
- */
-export const DataGridFooter: React.FC = () => {
-  const {
-    count,
-    loading,
-    onPageChange,
-    onPageSizeChange,
-    page,
-    pageSize,
-    pageSizeOptions,
-    renderableFields,
-    selectable,
-    paginatorProps,
-  } = useContext(DataGridContext);
-
-  return (
-    <tfoot className="mykn-datagrid__foot">
-      <tr className="mykn-datagrid__row">
-        <th
-          className="mykn-datagrid__cell"
-          colSpan={
-            selectable ? renderableFields.length + 1 : renderableFields.length
-          }
-        >
-          <Toolbar pad={true}>
-            <Paginator
-              count={count}
-              loading={loading}
-              page={page as number}
-              pageSize={pageSize as number}
-              pageSizeOptions={pageSizeOptions}
-              onPageChange={onPageChange}
-              onPageSizeChange={onPageSizeChange}
-              {...paginatorProps}
-            />
-          </Toolbar>
-        </th>
-      </tr>
-    </tfoot>
-  );
-};
-
 export type DataGridHeadingCellProps = React.PropsWithChildren<{
   field: TypedField;
 }>;
-
 /**
  * DataGrid (heading) cell
  */
+
 export const DataGridHeadingCell: React.FC<DataGridHeadingCellProps> = ({
   children,
   field,
@@ -996,6 +922,58 @@ export const DataGridHeadingCell: React.FC<DataGridHeadingCellProps> = ({
         </P>
       )}
     </th>
+  );
+};
+
+/**
+ * DataGrid table body, encapsulates a set of table rows indicating that they
+ * comprise the body of a table's (main) data.
+ */
+export const DataGridTBody: React.FC = () => {
+  const {
+    dataGridId,
+    page,
+    renderableFields,
+    renderableRows,
+    selectable,
+    selectedRows,
+    equalityChecker = (item1: AttributeData, item2: AttributeData) =>
+      item1 === item2,
+    sortDirection,
+    sortField,
+  } = useContext(DataGridContext);
+
+  return (
+    <tbody className="mykn-datagrid__tbody" role="rowgroup">
+      {renderableRows.map((rowData, index) => (
+        <tr
+          key={`${dataGridId}-row-${index}`}
+          className={clsx("mykn-datagrid__row", {
+            "mykn-datagrid__row--selected": !!selectedRows.find((element) =>
+              equalityChecker(element, rowData),
+            ),
+          })}
+        >
+          {selectable && (
+            <td
+              className={clsx(
+                "mykn-datagrid__cell",
+                `mykn-datagrid__cell--checkbox`,
+              )}
+            >
+              <DataGridSelectionCheckbox rowData={rowData} />
+            </td>
+          )}
+          {renderableFields.map((field) => (
+            <DataGridContentCell
+              key={`sort-${sortField}${sortDirection}-page-${page}-row-${renderableRows.indexOf(rowData)}-column-${renderableFields.indexOf(field)}`}
+              field={field}
+              rowData={rowData}
+            />
+          ))}
+        </tr>
+      ))}
+    </tbody>
   );
 };
 
@@ -1284,5 +1262,38 @@ export const DataGridSelectionCheckbox: React.FC<
     >
       {selectAll && ariaLabel}
     </Checkbox>
+  );
+};
+
+/**
+ * DataGrid footer, shows paginator.
+ */
+export const DataGridFooter: React.FC = () => {
+  const {
+    count,
+    loading,
+    onPageChange,
+    onPageSizeChange,
+    page,
+    pageSize,
+    pageSizeOptions,
+    paginatorProps,
+  } = useContext(DataGridContext);
+
+  return (
+    <footer className="mykn-datagrid__footer">
+      <Toolbar pad={true}>
+        <Paginator
+          count={count}
+          loading={loading}
+          page={page as number}
+          pageSize={pageSize as number}
+          pageSizeOptions={pageSizeOptions}
+          onPageChange={onPageChange}
+          onPageSizeChange={onPageSizeChange}
+          {...paginatorProps}
+        />
+      </Toolbar>
+    </footer>
   );
 };

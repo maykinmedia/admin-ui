@@ -11,7 +11,8 @@ export type ToolbarItem =
   | ButtonProps
   | ButtonLinkProps
   | DropdownProps
-  | "spacer";
+  | "spacer"
+  | null;
 
 export type ToolbarProps = React.PropsWithChildren<
   React.HTMLAttributes<HTMLElement> & {
@@ -20,6 +21,9 @@ export type ToolbarProps = React.PropsWithChildren<
 
     /** The position of `children` compared to `items`. */
     childrenPosition?: "before" | "after";
+
+    /** Can be used to extend the className. */
+    className?: string;
 
     /** Whether the toolbar shows items horizontally or vertically, mobile devices always use vertical. */
     direction?: "horizontal" | "vertical";
@@ -63,6 +67,7 @@ export type ToolbarProps = React.PropsWithChildren<
 export const Toolbar: React.FC<ToolbarProps> = ({
   children,
   childrenPosition = "after",
+  className,
   align = "start",
   compact = false,
   direction = "horizontal",
@@ -145,12 +150,13 @@ export const Toolbar: React.FC<ToolbarProps> = ({
           [`mykn-toolbar--size-${size}`]: size,
           [`mykn-toolbar--sticky-${sticky}`]: sticky,
         },
+        className,
       )}
       role="toolbar"
       {...props}
     >
       {childrenPosition === "before" && children}
-      {items.map(renderItem)}
+      {items.filter((v) => v !== null).map(renderItem)}
       {childrenPosition === "after" && children}
     </nav>
   );
