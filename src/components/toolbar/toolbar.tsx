@@ -50,7 +50,7 @@ export type ToolbarProps = React.PropsWithChildren<
     size?: "fit-content";
 
     /** When set tot true, toolbar will be positioned using display: sticky. */
-    sticky?: false | "top";
+    sticky?: false | "top" | "bottom";
 
     /** The variant (style) of the toolbar. */
     variant?: "normal" | "primary" | "accent" | "transparent";
