@@ -1,5 +1,6 @@
 import clsx from "clsx";
 import React, {
+  CSSProperties,
   useCallback,
   useContext,
   useEffect,
@@ -46,6 +47,14 @@ export type DataGridProps = {
   /** The object list (after pagination), only primitive types supported for now. */
   objectList: AttributeData[];
 
+  /**
+   * Whether to allow horizontal contents to exceed the bounding box width
+   * resulting in a horizontal scrollbar. When this is set to `true` (default) a
+   * "stickyfix" is applied in certain cases to preserve the sticky behaviour of
+   * nested components.
+   */
+  allowOverflowX?: boolean;
+
   /** Whether to use a "decorative" component instead of `<P>` if applicable. */
   decorate?: boolean;
 
@@ -72,6 +81,16 @@ export type DataGridProps = {
    * This can be used to adjust filter input to an API spec.
    */
   filterTransform?: (value: AttributeData) => AttributeData;
+
+  /**
+   * This value is copied one-to-one to the style attribute of the rendered
+   * datagrid.
+   *
+   * NOTE: When using `allowOverflowX=true` (default). Setting this disables
+   * the sticky fix in favor of the native implementation. Even if style is
+   * overridden completely.
+   */
+  height?: string;
 
   /** Whether to allow sorting/the field to sort on. */
   sort?: boolean | string;
@@ -202,10 +221,18 @@ export type DataGridProps = {
   onSort?: (sort: string) => Promise<unknown> | void;
 } & PaginatorPropsAliases;
 
+const dataGridRef = React.createRef<HTMLDivElement>();
+const toolbarRef = React.createRef<HTMLDivElement>();
+const scrollPaneRef = React.createRef<HTMLDivElement>();
+
 export type DataGridContextType = Omit<
   DataGridProps,
   "equalityChecker" | "fields" | "onSelect" | "onSort"
 > & {
+  dataGridRef: React.RefObject<HTMLDivElement>;
+  toolbarRef: React.RefObject<HTMLDivElement>;
+  scrollPaneRef: React.RefObject<HTMLDivElement>;
+
   amountSelected: number;
   count: number;
   dataGridId: string;
@@ -255,6 +282,7 @@ type PaginatorPropsAliases = {
 export const DataGrid: React.FC<DataGridProps> = (props) => {
   // Specify the default props.
   const defaults: Partial<DataGridProps> = {
+    allowOverflowX: true,
     showPaginator: Boolean(props.paginatorProps),
     selectable: false,
     allowSelectAll: true,
@@ -276,6 +304,7 @@ export const DataGrid: React.FC<DataGridProps> = (props) => {
   // Strip all `props` from `attrs`, allowing `attrs` to be passed to the DOM.
   /* eslint-disable @typescript-eslint/no-unused-vars */
   const {
+    allowOverflowX,
     aProps,
     badgeProps,
     boolProps,
@@ -286,6 +315,7 @@ export const DataGrid: React.FC<DataGridProps> = (props) => {
     fields,
     filterable,
     filterTransform,
+    height,
     paginatorProps,
     showPaginator,
     pProps,
@@ -332,18 +362,23 @@ export const DataGrid: React.FC<DataGridProps> = (props) => {
 
   const id = useId();
   const onFilterTimeoutRef = useRef<NodeJS.Timeout>();
+
   const [editingState, setEditingState] = useState<
     [AttributeData | null, number | null]
   >([null, null]);
+
   const [filterState, setFilterState] = useState<AttributeData | null>();
   const [selectedState, setSelectedState] = useState<AttributeData[] | null>(
     null,
   );
+
   const [allPagesSelectedState, setAllPagesSelectedState] =
     useState(allPagesSelected);
+
   const [sortState, setSortState] = useState<
     [string, "ASC" | "DESC"] | undefined
   >();
+
   const [fieldsState, setFieldsState] = useState<Array<Field | TypedField>>([]);
 
   // Update selectedState when selected prop changes.
@@ -537,6 +572,10 @@ export const DataGrid: React.FC<DataGridProps> = (props) => {
   return (
     <DataGridContext.Provider
       value={{
+        dataGridRef,
+        toolbarRef,
+        scrollPaneRef,
+
         ...defaultedProps,
         // @ts-expect-error - FIXME, line required due due to story passing undefined.
         equalityChecker:
@@ -572,20 +611,16 @@ export const DataGrid: React.FC<DataGridProps> = (props) => {
         onSelectAllPages: handleSelectAllPages,
       }}
     >
-      <div className="mykn-datagrid" {...attrs}>
+      <div className="mykn-datagrid" style={{ height }} {...attrs}>
         {title && <DataGridHeader />}
         {(selectable || fieldsSelectable) && <DataGridToolbar />}
 
-        <table
-          className={clsx("mykn-datagrid__table", {
-            [`mykn-datagrid__table--layout-${tableLayout}`]: tableLayout,
-          })}
-          role="grid"
-          aria-labelledby={titleId}
-        >
-          <DataGridTHead />
-          <DataGridTBody />
-        </table>
+        <DataGridScrollPane>
+          <DataGridTable>
+            <DataGridTHead />
+            <DataGridTBody />
+          </DataGridTable>
+        </DataGridScrollPane>
 
         {showPaginator && <DataGridFooter />}
         {filterable && <form id={`${id}-filter-form`} />}
@@ -615,6 +650,7 @@ export const DataGridHeader: React.FC = () => {
  * DataGrid toolbar, shows selection actions and/or allows the user to select fields (columns).
  */
 export const DataGridToolbar: React.FC = () => {
+  const { toolbarRef } = useContext(DataGridContext);
   const intl = useIntl();
   const [selectFieldsModalState, setSelectFieldsModalState] = useState(false);
   const [selectFieldsActiveState, setSelectFieldsActiveState] = useState<
@@ -704,8 +740,8 @@ export const DataGridToolbar: React.FC = () => {
   ];
 
   return (
-    <div className="mykn-datagrid__toolbar">
-      <Toolbar directionResponsive={false} items={toolbarItems} pad={true} />
+    <div ref={toolbarRef} className="mykn-datagrid__toolbar">
+      <Toolbar directionResponsive={true} items={toolbarItems} pad={true} />
 
       <Modal
         open={selectFieldsModalState}
@@ -754,12 +790,81 @@ export const DataGridToolbar: React.FC = () => {
 };
 
 /**
+ * Datagrid scroll pane, contains the scrollable content.
+ * @param children
+ * @constructor
+ */
+export const DataGridScrollPane: React.FC<React.PropsWithChildren> = ({
+  children,
+}) => {
+  const { allowOverflowX, scrollPaneRef } = useContext(DataGridContext);
+
+  // Overflow detection
+  useEffect(() => {
+    detectOverflowX();
+    window.addEventListener("resize", detectOverflowX);
+    window.addEventListener("scroll", detectOverflowX);
+    () => window.removeEventListener("resize", detectOverflowX);
+  });
+
+  /**
+   * Toggles "mykn-datagrid__scrollpane--overflow-x" to class list based on
+   * whether `allowOverflowX=true` and the contents are overflowing.
+   */
+  const detectOverflowX = () => {
+    if (!scrollPaneRef?.current) {
+      return;
+    }
+    const node = scrollPaneRef.current;
+
+    const hasOverflowX = node.scrollWidth > node.clientWidth;
+    const expX = allowOverflowX && hasOverflowX;
+    node.classList.toggle("mykn-datagrid__scrollpane--overflow-x", expX);
+
+    const hasOverflowY = node.scrollHeight > node.clientHeight;
+    const expY = hasOverflowY;
+    node.classList.toggle("mykn-datagrid__scrollpane--overflow-y", expY);
+  };
+
+  return (
+    <div ref={scrollPaneRef} className={clsx("mykn-datagrid__scrollpane")}>
+      {children}
+    </div>
+  );
+  // return null;
+};
+
+/**
+ * DataGrid table, represents tabular: information presented in a two-dimensional table comprised of rows and columns
+ * (fields) of cells containing data.
+ */
+export const DataGridTable: React.FC<React.PropsWithChildren> = ({
+  children,
+}) => {
+  const { tableLayout, titleId } = useContext(DataGridContext);
+
+  return (
+    <table
+      className={clsx("mykn-datagrid__table", {
+        [`mykn-datagrid__table--layout-${tableLayout}`]: tableLayout,
+      })}
+      role="grid"
+      aria-labelledby={titleId}
+    >
+      {children}
+    </table>
+  );
+};
+
+/**
  * DataGrid table head, encapsulates a set of table rows, indicating that they
  * comprise the head of a table with information about the table's columns.
  */
 export const DataGridTHead: React.FC = () => {
+  const { toolbarRef, height } = useContext(DataGridContext);
   const intl = useIntl();
   const onFilterTimeoutRef = useRef<NodeJS.Timeout>();
+  const ref = useRef<HTMLTableSectionElement>(null);
   const [filterState, setFilterState] = useState<AttributeData>();
 
   const {
@@ -771,6 +876,49 @@ export const DataGridTHead: React.FC = () => {
     renderableFields,
     selectable,
   } = useContext(DataGridContext);
+
+  // Sticky fix
+  useEffect(() => {
+    stickyFix();
+    window.addEventListener("resize", stickyFix);
+    window.addEventListener("scroll", stickyFix);
+    () => {
+      window.removeEventListener("resize", stickyFix);
+      window.addEventListener("scroll", stickyFix);
+    };
+  });
+
+  /**
+   * Fixes sticky behaviour due to `overflow-x: auto;` not being compatible
+   * with native sticky in all cases.
+   */
+  const stickyFix = () => {
+    if (!ref.current || !scrollPaneRef.current) {
+      return;
+    }
+
+    const node = ref.current;
+    const scrollPaneNode = scrollPaneRef.current;
+    const indicator = "mykn-datagrid__scrollpane--overflow-x";
+
+    // No need for fallback implementation, native behaviour should work if height is set of no overflow is applied..
+    if (height || !scrollPaneNode?.classList?.contains(indicator)) {
+      node.style.top = "";
+      return;
+    }
+
+    requestAnimationFrame(() => {
+      node.style.top = "";
+      const computedStyle = getComputedStyle(node);
+      const cssTop = parseInt(computedStyle.top);
+
+      const boundingClientRect = node.getBoundingClientRect();
+      const boundingTop = boundingClientRect.top;
+      const compensation = boundingTop * -1 + cssTop * 2;
+
+      node.style.top = compensation + "px";
+    });
+  };
 
   // Debounce filter
   useEffect(() => {
@@ -786,7 +934,18 @@ export const DataGridTHead: React.FC = () => {
   }, [filterState]);
 
   return (
-    <thead className="mykn-datagrid__thead" role="rowgroup">
+    <thead
+      ref={ref}
+      className="mykn-datagrid__thead"
+      role="rowgroup"
+      style={
+        {
+          "--mykn-datagrid-thead-top-base": toolbarRef.current?.clientHeight
+            ? toolbarRef.current?.clientHeight + "px"
+            : undefined,
+        } as unknown as CSSProperties
+      }
+    >
       {/* Captions */}
       <tr className="mykn-datagrid__row mykn-datagrid__row--header" role="row">
         {selectable && (
@@ -1281,19 +1440,17 @@ export const DataGridFooter: React.FC = () => {
   } = useContext(DataGridContext);
 
   return (
-    <footer className="mykn-datagrid__footer">
-      <Toolbar pad={true}>
-        <Paginator
-          count={count}
-          loading={loading}
-          page={page as number}
-          pageSize={pageSize as number}
-          pageSizeOptions={pageSizeOptions}
-          onPageChange={onPageChange}
-          onPageSizeChange={onPageSizeChange}
-          {...paginatorProps}
-        />
-      </Toolbar>
-    </footer>
+    <Toolbar pad={true} sticky="bottom">
+      <Paginator
+        count={count}
+        loading={loading}
+        page={page as number}
+        pageSize={pageSize as number}
+        pageSizeOptions={pageSizeOptions}
+        onPageChange={onPageChange}
+        onPageSizeChange={onPageSizeChange}
+        {...paginatorProps}
+      />
+    </Toolbar>
   );
 };

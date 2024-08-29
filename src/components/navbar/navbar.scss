@@ -2,4 +2,9 @@
   .mykn-logo {
     width: 32px;
   }
+
+  // This is a hack, it prevents unintended overflowing in specific scenario's with DataGrid.
+  .mykn-column & + :last-child {
+    width: calc(100% - 40px);
+  }
 }

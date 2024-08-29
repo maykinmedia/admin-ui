@@ -3,7 +3,37 @@
 .mykn-datagrid {
   background-color: var(--typography-color-background);
   border-radius: var(--border-radius-l);
+  display: flex;
+  flex-direction: column;
   width: 100%;
+
+  &__toolbar {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+
+  &__scrollpane {
+    height: 100%;
+  }
+
+  &__scrollpane--overflow-x {
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+
+  &__scrollpane--overflow-y {
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+  &__scrollpane--overflow-x#{&}__scrollpane--overflow-y {
+    overflow-x: auto;
+    overflow-y: auto;
+  }
+
+  &__scrollpane ~ .mykn-toolbar {
+    border-block-start: 1px solid var(--typography-color-border);
+  }
 
   &__header {
     padding-block: var(--spacing-v);
@@ -15,11 +45,15 @@
     width: 100%;
   }
 
-  &__table &__thead {
+  &__thead {
     background-color: var(--typography-color-background);
     position: sticky;
     top: 0;
     z-index: 1;
+  }
+
+  &__toolbar ~ &__scrollpane:not(&__scrollpane--overflow-y) &__thead {
+    top: var(--mykn-datagrid-thead-top-base, 50px);
   }
 
   &__thead &__row--filter {
@@ -49,6 +83,7 @@
     box-sizing: border-box;
     padding: var(--spacing-v) var(--spacing-h);
     position: relative;
+    white-space: nowrap;
 
     .mykn-a:not(:last-child) {
       margin-inline-end: var(--spacing-h);
@@ -114,134 +149,5 @@
 
   &__cell--link .mykn-button {
     width: calc(100% - 1em - 3 * var(--spacing-h));
-  }
-
-  &__footer {
-    position: sticky;
-    bottom: 0;
-  }
-
-  &__footer &__cell {
-    border-block-start: 1px solid var(--typography-color-border);
-    border-block-end: none;
-    padding: 0;
-  }
-
-  @media screen and (max-width: constants.$breakpoint-desktop - 1px) {
-    background-color: transparent;
-    overflow: visible;
-
-    &__table {
-      display: block;
-    }
-
-    &__table--layout--fixed {
-      table-layout: fixed;
-    }
-
-    &__toolbar {
-      background-color: var(--typography-color-background);
-      border-radius: var(--border-radius-l);
-      display: block;
-
-      > * {
-        float: none;
-      }
-    }
-
-    &__thead {
-      position: static;
-    }
-
-    &__thead &__row--header {
-      display: none;
-    }
-
-    &__tbody {
-      display: block;
-    }
-
-    &__row {
-      background-color: var(--typography-color-background);
-      display: flex;
-      flex-wrap: wrap;
-
-      &:nth-child(even) {
-        background-color: var(--typography-color-background-alt);
-      }
-    }
-
-    &__row:nth-child(even) &__cell {
-      border-block-end: 1px solid var(--typography-color-background);
-    }
-
-    &__cell {
-      display: flex;
-      flex-direction: column;
-      gap: var(--spacing-h);
-      width: 100%;
-      padding: var(--spacing-v) var(--spacing-h);
-      position: relative;
-
-      .mykn-p {
-        font-weight: var(--typography-font-weight-bold);
-        width: 100%;
-      }
-
-      &:before {
-        color: var(--typography-color-body);
-        content: attr(aria-description);
-        font-family: var(--typography-font-family-body);
-        font-size: var(--typography-font-size-body-xs);
-        font-weight: var(--typography-font-weight-normal);
-        line-height: var(--typography-line-height-body-xs);
-        display: block;
-        text-align: start;
-        width: 40%;
-      }
-
-      &:first-child .mykn-a:has(.mykn-icon) {
-        float: right;
-      }
-    }
-
-    &__cell--type-boolean,
-    &__cell--type-number {
-      flex-direction: row;
-      justify-content: space-between;
-      padding: var(--spacing-v) var(--spacing-h);
-      width: 100%;
-    }
-
-    &__footer {
-      display: flex;
-    }
-
-    &__footer &__row {
-      width: 100%;
-    }
-
-    &__footer &__cell {
-      &:before {
-        display: none;
-      }
-    }
-
-    .mykn-toolbar {
-      border-radius: var(--border-radius-l);
-    }
-
-    .mykn-paginator .mykn-icon--spin:first-child {
-      display: none;
-    }
-  }
-
-  // FIXME: Improve this...
-  .mykn-toolbar--sticky-top + & &__thead {
-    top: calc(var(--typography-line-height-h1) + 2 * var(--spacing-v));
-  }
-
-  .mykn-toolbar--sticky-top:has(.mykn-form) + & &__thead {
-    top: calc(42px + 2 * var(--spacing-v));
   }
 }

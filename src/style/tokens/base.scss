@@ -1,4 +1,10 @@
 @mixin tokens {
+  @at-root {
+    body {
+      overflow-x: hidden;
+    }
+  }
+
   /* BRANDING */
   $purple-rain: #341a90;
   $blue-suede-shoes: #00bfcb;
