@@ -5,40 +5,24 @@
   border-radius: var(--border-radius-l);
   width: 100%;
 
+  &__header {
+    padding-block: var(--spacing-v);
+    padding-inline: var(--spacing-h);
+  }
+
   &__table {
     border-spacing: 0;
     width: 100%;
   }
 
-  &__caption {
-    padding-block: var(--spacing-v);
-    padding-inline: var(--spacing-h);
-    text-align: start;
-
-    &:after {
-      clear: both;
-      content: "";
-      display: block;
-    }
-  }
-
-  &__caption .mykn-toolbar {
-    float: inline-start;
-    min-height: calc(var(--spacing-h) + var(--typography-line-height-body-xs));
-  }
-
-  &__caption .mykn-toolbar:not(:first-child):last-child {
-    float: inline-end;
-  }
-
-  &__head {
+  &__table &__thead {
     background-color: var(--typography-color-background);
     position: sticky;
     top: 0;
     z-index: 1;
   }
 
-  &__head &__row--filter {
+  &__thead &__row--filter {
     background-color: var(--typography-color-background-alt);
 
     .mykn-form-control {
@@ -51,7 +35,7 @@
     }
   }
 
-  &__head &__cell {
+  &__thead &__cell {
     text-align: start;
   }
 
@@ -75,7 +59,7 @@
     }
   }
 
-  &__body &__row:last-child &__cell {
+  &__tbody &__row:last-child &__cell {
     border-block-end: none;
   }
 
@@ -123,6 +107,7 @@
     padding-block: 0;
   }
 
+  // FIXME?
   base &__cell--editable:not(#{&}__cell--type-boolean):not(#{&}__cell--link) {
     padding-inline: 0;
   }
@@ -131,12 +116,12 @@
     width: calc(100% - 1em - 3 * var(--spacing-h));
   }
 
-  &__foot {
+  &__footer {
     position: sticky;
     bottom: 0;
   }
 
-  &__foot &__cell {
+  &__footer &__cell {
     border-block-start: 1px solid var(--typography-color-border);
     border-block-end: none;
     padding: 0;
@@ -154,7 +139,7 @@
       table-layout: fixed;
     }
 
-    &__caption {
+    &__toolbar {
       background-color: var(--typography-color-background);
       border-radius: var(--border-radius-l);
       display: block;
@@ -164,15 +149,15 @@
       }
     }
 
-    &__head {
+    &__thead {
       position: static;
     }
 
-    &__head &__row--header {
+    &__thead &__row--header {
       display: none;
     }
 
-    &__body {
+    &__tbody {
       display: block;
     }
 
@@ -228,15 +213,15 @@
       width: 100%;
     }
 
-    &__foot {
+    &__footer {
       display: flex;
     }
 
-    &__foot &__row {
+    &__footer &__row {
       width: 100%;
     }
 
-    &__foot &__cell {
+    &__footer &__cell {
       &:before {
         display: none;
       }
@@ -252,11 +237,11 @@
   }
 
   // FIXME: Improve this...
-  .mykn-toolbar--sticky-top + & &__head {
+  .mykn-toolbar--sticky-top + & &__thead {
     top: calc(var(--typography-line-height-h1) + 2 * var(--spacing-v));
   }
 
-  .mykn-toolbar--sticky-top:has(.mykn-form) + & &__head {
+  .mykn-toolbar--sticky-top:has(.mykn-form) + & &__thead {
     top: calc(42px + 2 * var(--spacing-v));
   }
 }
