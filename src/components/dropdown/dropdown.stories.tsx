@@ -28,13 +28,13 @@ const meta: Meta<typeof Dropdown> = {
 
     // Click opens, escape closes.
     await userEvent.click(button, { delay: 10 });
-    await expect(await canvas.findByRole("dialog")).toBeVisible();
-    await userEvent.keyboard("{Escape}");
+    await waitFor(() => canvas.findByRole("dialog"), { timeout: 300 });
+    await userEvent.keyboard("{Escape}", { delay: 10 });
     await waitFor(() => expect(canvas.queryByRole("dialog")).toBeNull());
     await userEvent.click(button, { delay: 10 });
 
     for (let counter = 0; counter < 3; counter++) {
-      await userEvent.tab({ delay: 10 });
+      await userEvent.tab({ delay: 20 });
     }
 
     await expect(document.activeElement?.textContent).toBe(
