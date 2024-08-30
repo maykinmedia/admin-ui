@@ -13,7 +13,7 @@
 
   &__list {
     display: grid;
-    gap: 0 var(--spacing-v) var(--gutter-h-mobile);
+    gap: 0;
     grid-template-columns: 1fr;
     margin: 0;
     width: 66%;
@@ -34,13 +34,13 @@
 
   &__value {
     color: var(--typography-color-muted);
+
+    &:not(:last-child) {
+      margin-bottom: var(--spacing-v);
+    }
   }
 
   @media screen and (min-width: constants.$breakpoint-desktop) {
     flex-direction: row;
-
-    &__list {
-      gap: var(--spacing-v) var(--gutter-h-desktop);
-    }
   }
 }

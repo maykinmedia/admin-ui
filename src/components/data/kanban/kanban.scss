@@ -40,8 +40,8 @@
     border: 1px solid var(--typography-color-border);
     display: flex;
     flex-direction: column;
-    gap: calc(2 * var(--spacing-v));
-    padding: calc(2 * var(--spacing-v)) calc(2 * var(--spacing-h)) !important;
+    gap: var(--spacing-v);
+    padding: var(--spacing-v) var(--spacing-h);
     position: relative;
   }
 
