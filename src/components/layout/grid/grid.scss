@@ -23,15 +23,15 @@
   }
 
   &--gutter-true {
-    gap: var(--gutter-v-mobile) var(--gutter-h-mobile);
+    gap: var(--spacing-v) var(--spacing-h);
   }
 
-  &--gutter-h {
-    gap: 0 var(--gutter-h-mobile);
+  &--spacing-h {
+    gap: 0 var(--spacing-h);
   }
 
   &--gutter-v {
-    gap: var(--gutter-v-mobile) 0;
+    gap: var(--spacing-v) 0;
   }
 
   @media screen and (min-width: constants.$breakpoint-desktop) {
@@ -44,15 +44,15 @@
     }
 
     &--gutter-true {
-      gap: var(--gutter-v-desktop) var(--gutter-h-desktop);
+      gap: var(--spacing-v) var(--spacing-h);
     }
 
-    &--gutter-h {
-      gap: 0 var(--gutter-h-desktop);
+    &--spacing-h {
+      gap: 0 var(--spacing-h-desktop);
     }
 
     &--gutter-v {
-      gap: var(--gutter-v-desktop) 0;
+      gap: var(--spacing-v) 0;
     }
 
     @for $i from 1 through 12 {
