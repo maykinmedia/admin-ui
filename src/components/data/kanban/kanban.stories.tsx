@@ -125,3 +125,29 @@ export const Draggable: Story = {
     draggable: true,
   },
 };
+
+export const WithToolbar: Story = {
+  ...KanbanComponent,
+  // @ts-expect-error - Fix never
+  args: {
+    ...(KanbanComponent.args as KanbanProps),
+    toolbarProps: {
+      items: [
+        {
+          direction: "horizontal",
+          label: "Sorteren",
+          required: true,
+          options: [
+            { label: "Nieuwste eerst", value: "-pk", selected: true },
+            { label: "Oudste eerst", value: "pk", selected: true },
+          ],
+        },
+        "spacer",
+        {
+          children: "Item toevoegen",
+          variant: "primary",
+        },
+      ],
+    },
+  },
+};
