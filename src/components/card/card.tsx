@@ -8,6 +8,9 @@ import "./card.scss";
 export type CardProps = React.PropsWithChildren<{
   controls?: ButtonProps[];
   title?: string | React.ReactNode;
+  halign?: "start" | "center" | "end";
+  valign?: "start" | "center" | "end";
+  shadow?: boolean;
 }>;
 
 /**
@@ -17,9 +20,17 @@ export const Card: React.FC<CardProps> = ({
   controls = [],
   children,
   title,
+  halign = "start",
+  valign = "start",
+  shadow = false,
   ...props
 }) => (
-  <div className="mykn-card" {...props}>
+  <div
+    className={`mykn-card mykn-card--halign-${halign} mykn-card--valign-${valign} ${
+      shadow ? "mykn-card--shadow" : ""
+    }`}
+    {...props}
+  >
     {(controls.length || title) && (
       <div className="mykn-card__header">
         <Body stretch>

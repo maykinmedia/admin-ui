@@ -193,5 +193,20 @@
     "defaultMessage": "inloggen",
     "description": "templates.Login: The login button label",
     "originalDefault": "inloggen"
+  },
+  "mykn.templates.Login.titleLogin": {
+    "defaultMessage": "Welkom terug",
+    "description": "templates.Login: The login title",
+    "originalDefault": "Welkom terug"
+  },
+  "mykn.templates.Login.titlePasswordForgotten": {
+    "defaultMessage": "Wachtwoord vergeten?",
+    "description": "templates.Login: The password forgotten title",
+    "originalDefault": "Wachtwoord vergeten?"
+  },
+  "mykn.templates.Login.linkPasswordForgotten": {
+    "defaultMessage": "Klik hier",
+    "description": "templates.Login: The link to the password forgotten page",
+    "originalDefault": "Klik hier"
   }
 }

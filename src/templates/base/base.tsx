@@ -27,6 +27,9 @@ export type BaseTemplateProps = React.PropsWithChildren & {
   /** Primary navigation items. */
   primaryNavigationItems?: ToolbarItem[];
 
+  /** Background image */
+  backgroundImageUrl?: string;
+
   /** Sidebar items. */
   sidebarItems?: ToolbarItem[];
 
