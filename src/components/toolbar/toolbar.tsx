@@ -3,6 +3,7 @@ import React from "react";
 
 import { Button, ButtonLink, ButtonLinkProps, ButtonProps } from "../button";
 import { Dropdown, DropdownProps } from "../dropdown";
+import { FormControl, FormControlProps } from "../form";
 import { A, AProps } from "../typography";
 import "./toolbar.scss";
 
@@ -11,6 +12,7 @@ export type ToolbarItem =
   | ButtonProps
   | ButtonLinkProps
   | DropdownProps
+  | FormControlProps
   | "spacer"
   | null;
 
@@ -95,6 +97,13 @@ export const Toolbar: React.FC<ToolbarProps> = ({
     !Object.hasOwn(Object(item), "href") &&
     Object.hasOwn(Object(item), "children"); // Does button always have children?
 
+  // TODO: Improve
+  const isFormControlProps = (item: ToolbarItem): item is FormControlProps =>
+    !isItemAProps(item) &&
+    !isItemButtonProps(item) &&
+    !isItemDropdownProps(item) &&
+    !isItemButtonProps(item);
+
   /**
    * Returns the React.FC for the item based on its shape.
    * @param item
@@ -102,6 +111,10 @@ export const Toolbar: React.FC<ToolbarProps> = ({
   const getItemComponent = (item: ToolbarItem): React.FC => {
     if (item === "spacer") {
       return ToolbarSpacer;
+    }
+
+    if (React.isValidElement(item)) {
+      return () => item;
     }
 
     if (isItemAProps(item)) {
@@ -117,7 +130,11 @@ export const Toolbar: React.FC<ToolbarProps> = ({
     if (isItemButtonProps(item)) {
       return Button;
     }
-    return () => item;
+    if (isFormControlProps(item)) {
+      return FormControl;
+    }
+
+    throw new Error("Unknown toolbar item type!");
   };
 
   /**
@@ -156,7 +173,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
       {...props}
     >
       {childrenPosition === "before" && children}
-      {items.filter((v) => v !== null).map(renderItem)}
+      {items.filter((v) => v).map(renderItem)}
       {childrenPosition === "after" && children}
     </nav>
   );

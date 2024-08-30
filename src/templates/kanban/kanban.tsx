@@ -24,7 +24,7 @@ export const KanbanTemplate: React.FC<KanbanTemplateProps> = ({
   return (
     <CardBaseTemplate {...props}>
       {children}
-      {kanbanProps.groupBy ? (
+      {groupBy ? (
         <KanbanComponent
           objectList={objectList as AttributeData[]}
           fieldset={fieldset as FieldSet}

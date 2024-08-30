@@ -18,7 +18,7 @@ import { Card } from "../../card";
 import { Select } from "../../form";
 import { Column, Grid } from "../../layout";
 import { StackCtx } from "../../stackctx";
-import { Toolbar } from "../../toolbar";
+import { Toolbar, ToolbarProps } from "../../toolbar";
 import { Body, H2, H3, Hr, P } from "../../typography";
 import { Value } from "../value";
 import "./kanban.scss";
@@ -26,6 +26,10 @@ import "./kanban.scss";
 export type KanbanProps = GroupedAttributeDataProps & {
   /** If set, items are `draggable` allowing the user to rearrange them (across) columns). */
   draggable?: boolean;
+
+  /** Props to pass to Toolbar. */
+  toolbarProps?: Partial<ToolbarProps>;
+
   /** The kanban "change column" (accessible) label */
   labelSelectColumn?: string;
 
@@ -71,6 +75,7 @@ export const Kanban: React.FC<KanbanProps> = ({
   objectLists,
   renderPreview,
   title,
+  toolbarProps,
   urlFields = DEFAULT_URL_FIELDS,
   onClick,
   onFieldsetsChange,
@@ -223,9 +228,9 @@ export const Kanban: React.FC<KanbanProps> = ({
       {title && (
         <Body className="mykn-kanban__header">
           <H2>{title}</H2>
-          <br />
         </Body>
       )}
+      {toolbarProps && <Toolbar pad={true} sticky="top" {...toolbarProps} />}
       <Body className="mykn-kanban__body">
         <Grid cols={fieldsetsState.length}>
           {fieldsetsState.map((fieldset, index) => (

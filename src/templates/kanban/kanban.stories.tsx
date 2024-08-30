@@ -204,3 +204,31 @@ export const Draggable: Story = {
     },
   },
 };
+
+export const WithToolbar: Story = {
+  ...WithSecondaryNavigation,
+  args: {
+    ...WithSecondaryNavigation.args,
+    kanbanProps: {
+      ...(WithSecondaryNavigation.args!.kanbanProps as KanbanProps),
+      toolbarProps: {
+        items: [
+          {
+            direction: "horizontal",
+            label: "Sorteren",
+            required: true,
+            options: [
+              { label: "Nieuwste eerst", value: "-pk", selected: true },
+              { label: "Oudste eerst", value: "pk", selected: true },
+            ],
+          },
+          "spacer",
+          {
+            children: "Item toevoegen",
+            variant: "primary",
+          },
+        ],
+      },
+    },
+  },
+};
