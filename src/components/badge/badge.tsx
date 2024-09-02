@@ -5,6 +5,9 @@ import "./badge.scss";
 
 export type BadgeProps = React.PropsWithChildren<{
   level?: "info" | "success" | "warning" | "danger";
+
+  /** Whehtehr to use a rounded presentation. */
+  rounded?: boolean;
 }>;
 
 /**
@@ -14,9 +17,17 @@ export type BadgeProps = React.PropsWithChildren<{
  * @param props
  * @constructor
  */
-export const Badge: React.FC<BadgeProps> = ({ children, level, ...props }) => (
+export const Badge: React.FC<BadgeProps> = ({
+  children,
+  level,
+  rounded,
+  ...props
+}) => (
   <span
-    className={clsx("mykn-badge", { [`mykn-badge--level-${level}`]: level })}
+    className={clsx("mykn-badge", {
+      [`mykn-badge--level-${level}`]: level,
+      "mykn-badge--rounded": rounded,
+    })}
     {...props}
   >
     {children}

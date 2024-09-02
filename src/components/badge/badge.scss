@@ -55,4 +55,8 @@
     background-color: var(--mykn-badge-color);
     opacity: 0.025;
   }
+
+  &--rounded {
+    border-radius: var(--typography-font-size-body-xs);
+  }
 }
