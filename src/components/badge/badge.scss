@@ -10,14 +10,12 @@
   font-family: var(--typography-font-family-body);
   font-size: var(--typography-font-size-body-xs);
   font-weight: var(--typography-font-weight-bold);
-  height: var(--typography-line-height-body-s);
   justify-content: center;
   line-height: var(--typography-line-height-body-xs);
   overflow: hidden;
   padding: 0 var(--spacing-h);
   position: relative;
   transform-style: preserve-3d;
-  white-space: nowrap;
 
   &--level-info {
     --mykn-badge-color: var(--page-color-info);
@@ -58,5 +56,9 @@
 
   &--rounded {
     border-radius: var(--typography-font-size-body-xs);
+  }
+
+  .mykn-icon {
+    margin-inline-end: var(--spacing-h);
   }
 }
