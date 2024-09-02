@@ -1157,9 +1157,9 @@ export const DataGridContentCell: React.FC<DataGridContentCellProps> = ({
     editingFieldIndex,
     editingRow,
     renderableFields = [],
+    setEditingState,
     urlFields = DEFAULT_URL_FIELDS,
     onChange,
-    onClick,
     onEdit,
   } = useContext(DataGridContext);
   const [pristine, setPristine] = useState<boolean>(true);
@@ -1197,8 +1197,10 @@ export const DataGridContentCell: React.FC<DataGridContentCellProps> = ({
       pad={field.type !== "boolean"}
       justify={true}
       variant="transparent"
-      // @ts-expect-error - FIXME: type confusion?
-      onClick={(e) => onClick?.(e, rowData)}
+      wrap={false}
+      onClick={() => {
+        setEditingState([rowData, fieldIndex]);
+      }}
     >
       {renderValue()}
     </Button>
