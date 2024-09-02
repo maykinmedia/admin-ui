@@ -1,9 +1,12 @@
 .mykn-icon {
-  height: 1em;
+  --mykn-icon-size: 1em;
+  height: var(--mykn-icon-size);
   vertical-align: middle;
-  width: 1em;
+  // TODO: Implement proper sizing system for icon
+  transform: scale(1.33);
   transition: all var(--animation-duration-medium)
     var(--animation-timing-function);
+  width: var(--mykn-icon-size);
 
   &--flip-x {
     transform: rotate(180deg);
