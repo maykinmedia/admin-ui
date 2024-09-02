@@ -24,4 +24,8 @@
   &__cell--key {
     font-weight: var(--typography-font-weight-bold);
   }
+
+  &__cell .mykn-icon {
+    margin-inline-end: var(--spacing-h);
+  }
 }
