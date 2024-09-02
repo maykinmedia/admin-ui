@@ -4,12 +4,23 @@
   align-items: start;
   background-color: var(--page-color-background);
   container-name: page;
-  container-type: inline-size;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
   width: 100%;
   min-height: 100%;
+
+  &--container-type-inline-size {
+    container-type: inline-size;
+  }
+
+  &--container-type-size {
+    container-type: size;
+  }
+
+  &--container-type-normal {
+    container-type: normal;
+  }
 
   &--pad-h {
     padding-inline: var(--spacing-h);

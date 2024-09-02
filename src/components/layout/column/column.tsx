@@ -14,6 +14,12 @@ export type ColumnProps = React.PropsWithChildren<{
   /** Additional class names. */
   className?: string;
 
+  /**
+   * Sets the "container-type" CSS attribute. Setting this to "normal" might fix
+   * problems regarding sizing of children.
+   */
+  containerType?: "inline-size" | "size" | "normal";
+
   /** If set, flex children in direction. */
   direction?: "column" | "row";
 
@@ -36,6 +42,7 @@ export type ColumnProps = React.PropsWithChildren<{
 export const Column: React.FC<ColumnProps> = ({
   children,
   className,
+  containerType = "inline-size",
   debug,
   direction,
   gap = false,
@@ -53,6 +60,7 @@ export const Column: React.FC<ColumnProps> = ({
         "mykn-column",
         `mykn-column--span-${span}`,
         {
+          [`mykn-column--container-type-${containerType}`]: containerType,
           "mykn-column--debug": _debug,
           "mykn-column--gap": direction && gap,
           [`mykn-column--direction-${direction}`]: direction,

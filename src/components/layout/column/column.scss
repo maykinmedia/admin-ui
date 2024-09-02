@@ -2,8 +2,19 @@
 
 .mykn-column {
   container-name: column;
-  container-type: inline-size;
   grid-column: auto / 6 span;
+
+  &--container-type-inline-size {
+    container-type: inline-size;
+  }
+
+  &--container-type-size {
+    container-type: size;
+  }
+
+  &--container-type-normal {
+    container-type: normal;
+  }
 
   &--debug {
     min-height: 1rem;
