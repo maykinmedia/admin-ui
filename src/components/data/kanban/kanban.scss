@@ -25,11 +25,6 @@
     padding-block: var(--spacing-v);
   }
 
-  &__body &__drop-target {
-    border-color: var(--page-color-primary);
-    border-style: dashed;
-  }
-
   &__body .mykn-column > .mykn-body > .mykn-h3 {
     position: sticky;
     top: 0;
