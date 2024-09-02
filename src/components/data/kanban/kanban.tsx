@@ -590,7 +590,7 @@ export const KanbanButton: React.FC<KanbanButtonProps> = ({
 
     return (
       <>
-        <Hr size="xxl" />
+        <Hr />
         <Body>
           <Toolbar
             directionResponsive={false}
