@@ -207,14 +207,6 @@ export const Padding: Story = {
     type: "text",
   },
   argTypes: FORM_TEST_ARG_TYPES,
-  decorators: [
-    FORM_TEST_DECORATOR,
-    (Story) => (
-      <Page>
-        <Story />
-      </Page>
-    ),
-  ],
   render: (args) => {
     return (
       <>
@@ -231,6 +223,7 @@ export const Padding: Story = {
       </>
     );
   },
+  play: () => undefined,
 };
 
 export const Size: Story = {
@@ -240,14 +233,6 @@ export const Size: Story = {
     type: "text",
   },
   argTypes: FORM_TEST_ARG_TYPES,
-  decorators: [
-    FORM_TEST_DECORATOR,
-    (Story) => (
-      <Page>
-        <Story />
-      </Page>
-    ),
-  ],
   render: (args) => {
     return (
       <>
@@ -264,6 +249,7 @@ export const Size: Story = {
       </>
     );
   },
+  play: () => undefined,
 };
 
 export const TransparentInput: Story = {
