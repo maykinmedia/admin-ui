@@ -230,6 +230,16 @@ export const TypedResults: Story = {
   },
 };
 
+export const SecondaryActions: Story = {
+  ...FormComponent,
+  args: {
+    ...FormComponent.args,
+    secondaryActions: [
+      { children: "Clear form", type: "reset", variant: "secondary" },
+    ],
+  },
+};
+
 export const UsageWithFormik: Story = {
   ...FormComponent,
   args: {

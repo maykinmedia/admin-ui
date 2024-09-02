@@ -14,7 +14,7 @@ import {
 import { forceArray } from "../../../lib/format/array";
 import { ucFirst } from "../../../lib/format/string";
 import { useIntl } from "../../../lib/i18n/useIntl";
-import { Button, ButtonProps } from "../../button";
+import { ButtonProps } from "../../button";
 import { Toolbar, ToolbarItem, ToolbarProps } from "../../toolbar";
 import { ErrorMessage } from "../errormessage";
 import { FormControl } from "../formcontrol";
@@ -263,19 +263,19 @@ export const Form: React.FC<FormProps> = ({
         <Toolbar
           align={secondaryActions.length ? "space-between" : "end"}
           variant={"transparent"}
-          items={secondaryActions}
+          items={[
+            ...secondaryActions,
+            {
+              children: ucFirst(_labelSubmit),
+              disabled:
+                validateOnChange && Boolean(Object.keys(errorsState).length),
+              type: "submit",
+              ...buttonProps,
+            },
+          ]}
+          overrideItemPadding={false}
           {...toolbarProps}
-        >
-          <Button
-            type="submit"
-            disabled={
-              validateOnChange && Boolean(Object.keys(errorsState).length)
-            }
-            {...buttonProps}
-          >
-            {ucFirst(_labelSubmit)}
-          </Button>
-        </Toolbar>
+        />
       )}
     </form>
   );

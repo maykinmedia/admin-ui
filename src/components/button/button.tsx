@@ -27,7 +27,7 @@ type BaseButtonProps = {
   /** Whether to the button should be rounded. */
   rounded?: boolean;
 
-  /** The size of the text. */
+  /** The size. */
   size?: "xl" | "s" | "xs" | "xxs";
 
   /** Whether the button should be rendered in a square shape. */

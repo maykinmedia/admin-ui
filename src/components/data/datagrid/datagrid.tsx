@@ -704,13 +704,11 @@ export const DataGridToolbar: React.FC = () => {
       <DataGridSelectionCheckbox key="selectAllPages" selectAll="allPages" />
     ) : null,
 
-    ...(selectionActions || []).map((buttonProps, index) => (
-      <Button
-        key={buttonProps.name || index}
-        size="xs"
-        variant="secondary"
-        {...buttonProps}
-        onClick={() => {
+    ...(selectionActions || []).map(
+      (buttonProps): ButtonProps => ({
+        variant: "secondary",
+        ...buttonProps,
+        onClick: () => {
           if (typeof buttonProps.onClick === "function") {
             const customEvent = new CustomEvent("click", {
               detail: selectedRows,
@@ -719,24 +717,24 @@ export const DataGridToolbar: React.FC = () => {
               customEvent as unknown as React.MouseEvent<HTMLButtonElement>,
             );
           }
-        }}
-      />
-    )),
+        },
+      }),
+    ),
 
     fieldsSelectable ? "spacer" : null,
-    fieldsSelectable ? (
-      <>
-        <Button
-          size="xs"
-          variant="outline"
-          wrap={false}
-          onClick={() => setSelectFieldsModalState(true)}
-        >
-          <Outline.ViewColumnsIcon />
-          {ucFirst(_labelSelectFields)}
-        </Button>
-      </>
-    ) : null,
+    fieldsSelectable
+      ? {
+          variant: "outline",
+          wrap: false,
+          onClick: () => setSelectFieldsModalState(true),
+          children: (
+            <>
+              <Outline.ViewColumnsIcon />
+              {ucFirst(_labelSelectFields)}
+            </>
+          ),
+        }
+      : null,
   ];
 
   return (

@@ -59,6 +59,9 @@ export type ToolbarProps = React.PropsWithChildren<
 
     /** The items shown inside the toolbar, alternatively, can opt to use children instead. */
     items?: ToolbarItem[];
+
+    /** Renders `items` with a horizontal padding only by default, ony available when `direction==="horizontal"`. */
+    overrideItemPadding?: boolean;
   }
 >;
 
@@ -82,6 +85,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
   sticky = false,
   variant = "normal",
   items = [],
+  overrideItemPadding = true,
   ...props
 }) => {
   const isItemAProps = (item: ToolbarItem): item is AProps =>
@@ -104,34 +108,56 @@ export const Toolbar: React.FC<ToolbarProps> = ({
     !isItemDropdownProps(item) &&
     !isItemButtonProps(item);
 
+  type ToolbarItemProps =
+    | React.ComponentProps<typeof A>
+    | React.ComponentProps<typeof ButtonLink>
+    | React.ComponentProps<typeof Dropdown>
+    | React.ComponentProps<typeof Button>
+    | React.ComponentProps<typeof FormControl>;
+
   /**
-   * Returns the React.FC for the item based on its shape.
+   * Returns the React.FC and default props to apply to it for the item based on
+   * its shape.
    * @param item
    */
-  const getItemComponent = (item: ToolbarItem): React.FC => {
+  const getItemComponent = (
+    item: ToolbarItem,
+  ): [React.ComponentType, Partial<ToolbarItemProps>] => {
     if (item === "spacer") {
-      return ToolbarSpacer;
+      return [ToolbarSpacer, {}];
     }
 
     if (React.isValidElement(item)) {
-      return () => item;
+      return [() => item, {}];
     }
 
     if (isItemAProps(item)) {
-      return A;
+      return [A, {}];
     }
 
     if (isItemButtonLinkProps(item)) {
-      return ButtonLink;
+      return [ButtonLink, {}];
     }
+
     if (isItemDropdownProps(item)) {
-      return Dropdown as React.FC;
+      return [
+        Dropdown as React.FC,
+        {} as React.ComponentProps<typeof Dropdown>,
+      ];
     }
+
     if (isItemButtonProps(item)) {
-      return Button;
+      return [
+        Button,
+        overrideItemPadding && direction === "horizontal" ? { size: "xs" } : {},
+      ];
     }
+
     if (isFormControlProps(item)) {
-      return FormControl;
+      return [
+        FormControl,
+        overrideItemPadding && direction === "horizontal" ? { size: "xs" } : {},
+      ];
     }
 
     throw new Error("Unknown toolbar item type!");
@@ -144,8 +170,8 @@ export const Toolbar: React.FC<ToolbarProps> = ({
    */
   const renderItem = (item: ToolbarItem, index: number) => {
     const props = typeof item === "string" ? {} : item;
-    const Component = getItemComponent(item);
-    return <Component key={index} {...props}></Component>;
+    const [Component, defaultProps] = getItemComponent(item);
+    return <Component key={index} {...defaultProps} {...props}></Component>;
   };
 
   return (
