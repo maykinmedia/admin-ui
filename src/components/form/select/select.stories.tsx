@@ -75,7 +75,7 @@ export const SelectComponent: Story = {
   },
 };
 
-export const TransparentSelect = {
+export const TransparentSelect: Story = {
   ...SelectComponent,
   args: { ...SelectComponent.args, variant: "transparent" },
   decorators: [
@@ -101,6 +101,7 @@ export const UsageWithFormik: Story = {
     placeholder: "Select school year",
   },
   argTypes: {
+    // @ts-expect-error - validate not on type.
     validate: { action: "validate" },
     onSubmit: { action: "onSubmit" },
   },
@@ -174,5 +175,35 @@ export const ValueBasedOnOptionLabel: Story = {
     name: "school_year",
     placeholder: "Select school year",
     value: "Junior",
+  },
+};
+
+export const Padding: Story = {
+  args: {
+    options: [
+      { label: "Normal padding" },
+      { label: "Horizontal padding" },
+      { label: "Vertical padding" },
+      { label: "No padding" },
+    ],
+    name: "school_year",
+    placeholder: "Select school year",
+    value: "Junior",
+  },
+  render: (args) => {
+    return (
+      <>
+        <Select {...args} pad={true} value="Normal padding" />
+        <br />
+        <br />
+        <Select {...args} pad="h" value="Horizontal padding" />
+        <br />
+        <br />
+        <Select {...args} pad="v" value="Vertical padding" />
+        <br />
+        <br />
+        <Select {...args} pad={false} value="No padding" />
+      </>
+    );
   },
 };

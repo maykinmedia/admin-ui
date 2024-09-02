@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import React, { useEffect, useState } from "react";
 
 import { StackCtx } from "../../stackctx";
@@ -13,6 +14,15 @@ export type InputProps = Omit<
 
   /** Input label. */
   label?: string;
+
+  /** Whether to apply padding. */
+  pad?: boolean | "h" | "v";
+
+  /** The size. */
+  size?: "xl" | "s" | "xs" | "xxs";
+
+  /** The size attribute. */
+  inputSize?: number;
 
   /** Input value. */
   value?: string | number;
@@ -33,6 +43,9 @@ export type InputProps = Omit<
 export const Input: React.FC<InputProps> = ({
   icon,
   label = "",
+  pad = true,
+  size = "s",
+  inputSize,
   type = "text",
   value,
   variant = "normal",
@@ -86,7 +99,16 @@ export const Input: React.FC<InputProps> = ({
   const input = (
     <input
       ref={inputRef}
-      className={`mykn-input mykn-input--variant-${variant}`}
+      className={clsx(
+        "mykn-input",
+        `mykn-input--variant-${variant}`,
+        `mykn-input--size-${size}`,
+        {
+          "mykn-input--pad-h": pad === true || pad === "h",
+          "mykn-input--pad-v": pad === true || pad === "v",
+        },
+      )}
+      size={inputSize}
       type={type}
       onChange={_onChange}
       aria-label={label || undefined}

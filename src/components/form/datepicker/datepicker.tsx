@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import { formatISO } from "date-fns";
 import nl from "date-fns/locale/nl";
 import React, { useEffect, useState } from "react";
@@ -24,6 +25,9 @@ export type DatePickerProps = Omit<
 
   /** DatePicker label. */
   label?: string;
+
+  /** Whether to apply padding. */
+  pad?: boolean | "h" | "v";
 
   /** Placeholder. */
   placeholder?: string;
@@ -74,6 +78,7 @@ export const DatePicker: React.FC<DatePickerProps> = ({
   labelWeekPrefix,
   labelTimeInput,
   labelWeek,
+  pad = true,
   onChange,
   ...props
 }) => {
@@ -362,7 +367,10 @@ export const DatePicker: React.FC<DatePickerProps> = ({
         form={form}
       />
       <ReactDatePicker
-        className="mykn-datepicker mykn-input"
+        className={clsx("mykn-datepicker", "mykn-input", {
+          "mykn-input--pad-h": pad === true || pad === "h",
+          "mykn-input--pad-v": pad === true || pad === "v",
+        })}
         isClearable={!required}
         locale={locale}
         placeholderText={placeholder}

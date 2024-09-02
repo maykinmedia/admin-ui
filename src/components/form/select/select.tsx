@@ -35,14 +35,17 @@ export type SelectProps = ChoiceFieldProps & {
   /** Whether a value is required, a required select can't be cleared. */
   required?: boolean;
 
+  /** Whether to apply padding. */
+  pad?: boolean | "h" | "v";
+
   /** Placeholder text. */
   placeholder?: string;
 
   /** Can be set to `fit-content` to apply auto sizing based on content width. */
-  size?: "fit-content";
+  inputSize?: "fit-content";
 
-  /** The size of the text. */
-  textSize?: "s" | "xs";
+  /** The size. */
+  size?: "xl" | "s" | "xs" | "xxs";
 
   /** The clear value (accessible) label. */
   labelClear?: string;
@@ -70,10 +73,11 @@ export const Select: React.FC<SelectProps> = ({
   onChange,
   label = "",
   labelClear = "",
+  pad = true,
   placeholder = "",
   required = false,
-  size,
-  textSize = "s",
+  size = "s",
+  inputSize,
   value = null,
   variant = "normal",
   form,
@@ -210,10 +214,12 @@ export const Select: React.FC<SelectProps> = ({
       <div
         className={clsx(
           "mykn-select",
-          `mykn-select--variant-${variant} mykn-select--text-size-${textSize}`,
+          `mykn-select--variant-${variant} mykn-select--size-${size}`,
           {
+            "mykn-select--pad-h": pad === true || pad === "h",
+            "mykn-select--pad-v": pad === true || pad === "v",
             "mykn-select--selected": selectedIndex,
-            [`mykn-select--size-${size}`]: size,
+            [`mykn-select--input-size-${inputSize}`]: inputSize,
           },
           className,
         )}

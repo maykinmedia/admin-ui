@@ -471,7 +471,7 @@ export const KanbanItem: React.FC<KanbanItemProps> = ({
             return option;
           })}
           required
-          textSize="xs"
+          size="xs"
           onClick={(e) => e.preventDefault()}
           onChange={(e) =>
             onObjectChange?.(
@@ -497,7 +497,7 @@ export const KanbanItem: React.FC<KanbanItemProps> = ({
             return option;
           })}
           required
-          textSize="xs"
+          size="xs"
           onClick={(e) => e.preventDefault()}
           onChange={(e) =>
             onObjectChange?.(

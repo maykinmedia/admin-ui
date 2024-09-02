@@ -193,11 +193,77 @@ export const InputWithCustomSize: Story = {
   args: {
     name: "input",
     placeholder: "e.g. 1015CJ",
-    size: 6,
+    inputSize: 6,
     type: "text",
   },
   argTypes: FORM_TEST_ARG_TYPES,
   decorators: [FORM_TEST_DECORATOR],
+};
+
+export const Padding: Story = {
+  args: {
+    name: "input",
+    placeholder: "e.g. John Doe",
+    type: "text",
+  },
+  argTypes: FORM_TEST_ARG_TYPES,
+  decorators: [
+    FORM_TEST_DECORATOR,
+    (Story) => (
+      <Page>
+        <Story />
+      </Page>
+    ),
+  ],
+  render: (args) => {
+    return (
+      <>
+        <Input {...args} pad={true} value="Normal padding" />
+        <br />
+        <br />
+        <Input {...args} pad="h" value="Horizontal padding" />
+        <br />
+        <br />
+        <Input {...args} pad="v" value="Vertical padding" />
+        <br />
+        <br />
+        <Input {...args} pad={false} value="No padding" />
+      </>
+    );
+  },
+};
+
+export const Size: Story = {
+  args: {
+    name: "input",
+    placeholder: "e.g. John Doe",
+    type: "text",
+  },
+  argTypes: FORM_TEST_ARG_TYPES,
+  decorators: [
+    FORM_TEST_DECORATOR,
+    (Story) => (
+      <Page>
+        <Story />
+      </Page>
+    ),
+  ],
+  render: (args) => {
+    return (
+      <>
+        <Input {...args} size="xl" value="xl" />
+        <br />
+        <br />
+        <Input {...args} size="s" value="s" />
+        <br />
+        <br />
+        <Input {...args} size="xs" value="xs" />
+        <br />
+        <br />
+        <Input {...args} size="xxs" value="xxs" />
+      </>
+    );
+  },
 };
 
 export const TransparentInput: Story = {
@@ -225,6 +291,7 @@ export const UsageWithFormik: Story = {
     type: "text",
   },
   argTypes: {
+    // @ts-expect-error - validate not on type.
     validate: { action: "validate" },
     onSubmit: { action: "onSubmit" },
   },

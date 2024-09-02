@@ -1,4 +1,9 @@
 .mykn-input {
+  --mykn-input-padding-v: 0;
+  --mykn-input-padding-h: 0;
+  --mykn-input-font-size: var(--typography-font-size-body-s);
+  --mykn-input-line-height: var(--typography-line-height-body-s);
+
   appearance: none;
   align-items: center;
   background: var(--typography-color-background);
@@ -7,14 +12,43 @@
   box-sizing: border-box;
   color: var(--typography-color-body);
   font-family: var(--typography-font-family-body);
-  font-size: var(--typography-font-size-body-s);
-  font-weight: var(--typography-font-weight-normal);
-  line-height: var(--typography-line-height-body-s);
+  font-size: var(--mykn-input-font-size);
+  font-weight: var(--mykn-input-font-weight);
+  line-height: var(--mykn-input-line-height);
   margin: 0;
-  padding: var(--spacing-v) var(--spacing-h);
+  padding-block: var(--mykn-input-padding-v);
+  padding-inline: var(--mykn-input-padding-h);
   position: relative;
   width: min(320px, 100%);
   max-width: 100%;
+
+  &--pad-h {
+    --mykn-input-padding-h: var(--spacing-h);
+  }
+
+  &--pad-v {
+    --mykn-input-padding-v: var(--mykn-input-padding-xs, var(--spacing-v));
+  }
+
+  &--size-xl {
+    --mykn-input-font-size: var(--typography-font-size-xl);
+    --mykn-input-line-height: var(--typography-line-height-xl);
+    --mykn-input-padding-xs: calc(var(--spacing-h) / 2);
+  }
+
+  &--size-xs {
+    --mykn-input-font-size: var(--typography-font-size-body-xs);
+    --mykn-input-line-height: var(--typography-line-height-body-xs);
+    --mykn-input-padding-xs: calc(var(--spacing-h) / 2);
+  }
+
+  &--size-xxs {
+    --mykn-input-font-size: var(--typography-font-size-body-xs);
+    --mykn-input-line-height: var(--typography-line-height-body-xs);
+    --mykn-input-padding-xs: calc(var(--spacing-h) / 2);
+    --mykn-input-height: calc(3 * var(--spacing-h) + 2px) !important;
+    --mykn-input-width: calc(3 * var(--spacing-h) + 2px) !important;
+  }
 
   &:disabled,
   &--disabled,

@@ -519,8 +519,8 @@ export const PaginatorOptions: React.FC<PaginatorOptionsProps> = ({
       <Select
         options={pageSizeOptions}
         required={true}
-        size="fit-content"
-        textSize="xs"
+        inputSize="fit-content"
+        size="xs"
         value={pageSize}
         variant="transparent"
         onChange={onPageSizeChange}
