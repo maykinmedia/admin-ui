@@ -174,6 +174,9 @@ export type DataGridProps = {
   /** The select all items label. */
   labelSelectAll?: string;
 
+  /** The select all pages label. */
+  labelSelectAllPages?: string;
+
   /** Can be used to specify how to compare the selected items and the items in the data grid */
   equalityChecker?: (item1: AttributeData, item2: AttributeData) => boolean;
 
@@ -334,8 +337,9 @@ export const DataGrid: React.FC<DataGridProps> = (props) => {
     labelSaveFieldSelection,
     labelFilterField,
     labelSelect,
-    labelSelectFields,
     labelSelectAll,
+    labelSelectAllPages,
+    labelSelectFields,
 
     // Events
     onChange,
@@ -1321,6 +1325,8 @@ export const DataGridSelectionCheckbox: React.FC<
     count,
     equalityChecker,
     labelSelect,
+    labelSelectAll,
+    labelSelectAllPages,
     pages,
     renderableRows,
     selectedRows,
@@ -1356,7 +1362,7 @@ export const DataGridSelectionCheckbox: React.FC<
           amountUnselectedPage: renderableRows.length - (amountSelected || 0),
         };
         ariaLabel =
-          labelSelect ||
+          labelSelectAll ||
           intl.formatMessage(TRANSLATIONS.LABEL_SELECT_ALL, i18nContext);
         break;
 
@@ -1367,7 +1373,7 @@ export const DataGridSelectionCheckbox: React.FC<
 
         i18nContext = { pages: count };
         ariaLabel =
-          labelSelect ||
+          labelSelectAllPages ||
           intl.formatMessage(TRANSLATIONS.LABEL_SELECT_ALL_PAGES, i18nContext);
         break;
 
