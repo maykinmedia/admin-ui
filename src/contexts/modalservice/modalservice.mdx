@@ -1,0 +1,44 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Contexts/ModalService" />
+
+ModalService
+===
+
+
+## Summary
+
+The `ModalServiceContext` provides `modalProps` and the ability to manipulate them (`setModalProps()`). This allows
+various hooks (like `useAlert()`, and `useConfirm()`) to update it's value, which is obtained by the `ModalService`
+component to render a modal when needed.
+
+## Installation
+
+The `ModalService` can be installed by wrapping it around children consuming `ModalServiceContext`.
+
+```tsx
+<ModalServiceContext>
+  <MyComponent/>
+</ModalServiceContext>;
+```
+
+```tsx
+import { useAlert } from "./usealert";
+
+const MyComponent = () => {
+    const alert = useAlert();
+
+    return (
+      <Button onClick={() => {
+        alert("Title", "Message", "Confirmation Label");
+      }}>
+        Show alert dialog
+      </Button>
+    );
+};
+```
+
+## Utilization
+
+**Please see [Hooks/Dialog](/docs/hooks-dialog--docs) for implementations**
+
