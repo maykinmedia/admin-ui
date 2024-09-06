@@ -37,7 +37,7 @@ export const usePrompt = () => {
     dialog(
       title,
       <>
-        {typeof message === "string" ? <P>message</P> : message}
+        {typeof message === "string" ? <P>{message}</P> : message}
         <Form
           fields={[{ label, name: "message", required: true }]}
           labelSubmit={labelConfirm}
