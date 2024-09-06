@@ -273,7 +273,7 @@ export const Form: React.FC<FormProps> = ({
               ...buttonProps,
             },
           ]}
-          overrideItemPadding={false}
+          overrideItemProps={false}
           {...toolbarProps}
         />
       )}
