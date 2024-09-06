@@ -60,8 +60,11 @@ export type ToolbarProps = React.PropsWithChildren<
     /** The items shown inside the toolbar, alternatively, can opt to use children instead. */
     items?: ToolbarItem[];
 
-    /** Renders `items` with a horizontal padding only by default, ony available when `direction==="horizontal"`. */
-    overrideItemPadding?: boolean;
+    /**
+     * Allows default props of items to be partially overridden based on the component type, this improves the styling
+     * of certain components when rendered in a Toolbar.
+     */
+    overrideItemProps?: boolean;
   }
 >;
 
@@ -85,7 +88,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
   sticky = false,
   variant = "normal",
   items = [],
-  overrideItemPadding = true,
+  overrideItemProps = true,
   ...props
 }) => {
   const isItemAProps = (item: ToolbarItem): item is AProps =>
@@ -149,14 +152,14 @@ export const Toolbar: React.FC<ToolbarProps> = ({
     if (isItemButtonProps(item)) {
       return [
         Button,
-        overrideItemPadding && direction === "horizontal" ? { size: "xs" } : {},
+        overrideItemProps && direction === "horizontal" ? { size: "xs" } : {},
       ];
     }
 
     if (isFormControlProps(item)) {
       return [
         FormControl,
-        overrideItemPadding && direction === "horizontal" ? { size: "xs" } : {},
+        overrideItemProps && direction === "horizontal" ? { size: "xs" } : {},
       ];
     }
 
