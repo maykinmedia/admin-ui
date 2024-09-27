@@ -45,6 +45,7 @@ export const usePrompt = () => {
             {
               children: labelCancel,
               variant: "secondary",
+              type: "button",
               onClick: () => {
                 setModalProps({ open: false });
                 onCancel?.();
