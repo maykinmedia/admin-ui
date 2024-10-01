@@ -39,6 +39,7 @@ export const useConfirm = () => {
         {
           children: labelCancel,
           variant: "secondary",
+          type: "button",
           onClick: () => {
             setModalProps({ open: false });
             onCancel?.();
@@ -47,6 +48,7 @@ export const useConfirm = () => {
         {
           children: labelConfirm,
           variant: "primary",
+          type: "submit",
           onClick: () => {
             setModalProps({ open: false });
             onConfirm?.();
