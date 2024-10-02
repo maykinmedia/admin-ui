@@ -29,3 +29,23 @@ export const loginTemplate: Story = {
     labelLogin: "Log in",
   },
 };
+
+export const WithOIDC: Story = {
+  args: {
+    formProps: {
+      autoComplete: "off",
+      fields: [
+        {
+          label: "Gebruikersnaam",
+          name: "username",
+        },
+        {
+          label: "Wachtwoord",
+          name: "Password",
+        },
+      ],
+    },
+    urlOidcLogin: "http://example.nl/oidc/authenticate/",
+    labelOidcLogin: "OIDC Login!",
+  },
+};
