@@ -193,5 +193,10 @@
     "defaultMessage": "inloggen",
     "description": "templates.Login: The login button label",
     "originalDefault": "inloggen"
+  },
+  "mykn.templates.Login.labelOidcLogin": {
+    "defaultMessage": "Inloggen met organisatie account",
+    "description": "templates.Login: The label for the OIDC login button.",
+    "originalDefault": "Inloggen met organisatie account"
   }
 }

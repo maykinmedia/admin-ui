@@ -50,7 +50,7 @@ export const LoginTemplate: React.FC<LoginTemplateProps> = ({
     : intl.formatMessage({
         id: "mykn.templates.Login.labelOidcLogin",
         description: "templates.Login: The label for the OIDC login button.",
-        defaultMessage: "OIDC Login",
+        defaultMessage: "Inloggen met organisatie account",
       });
 
   const secondaryActions = [];

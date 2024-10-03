@@ -190,8 +190,13 @@
     "originalDefault": "Zijbalk uitklappen"
   },
   "mykn.templates.Login.labelLogin": {
-    "defaultMessage": "inloggen",
+    "defaultMessage": "login",
     "description": "templates.Login: The login button label",
     "originalDefault": "inloggen"
+  },
+  "mykn.templates.Login.labelOidcLogin": {
+    "defaultMessage": "Login with organisation account",
+    "description": "templates.Login: The label for the OIDC login button.",
+    "originalDefault": "Inloggen met organisatie account"
   }
 }
