@@ -1,7 +1,7 @@
-import { FormField } from "@maykin-ui/admin-ui";
 import React from "react";
 
 import { ModalProps } from "../../components";
+import { FormField } from "../../lib";
 import { useFormDialog } from "./useFormDialog";
 
 /**
@@ -22,6 +22,7 @@ export const usePrompt = () => {
    * @param onConfirm
    * @param onCancel
    * @param modalProps
+   * @param autofocus
    */
   const fn = (
     title: string,
@@ -32,6 +33,7 @@ export const usePrompt = () => {
     onConfirm: (message: string) => void,
     onCancel?: () => void,
     modalProps?: Partial<ModalProps>,
+    autofocus?: boolean,
   ) => {
     const fields: FormField[] = [
       {
@@ -54,6 +56,8 @@ export const usePrompt = () => {
       },
       onCancel,
       modalProps,
+      undefined,
+      autofocus,
     );
   };
 

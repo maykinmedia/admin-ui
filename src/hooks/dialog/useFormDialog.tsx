@@ -1,14 +1,8 @@
-import {
-  AttributeData,
-  Form,
-  FormField,
-  FormProps,
-  ModalProps,
-  P,
-} from "@maykin-ui/admin-ui";
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 
+import { Form, FormProps, ModalProps, P } from "../../components";
 import { ModalServiceContext } from "../../contexts";
+import { AttributeData, FormField } from "../../lib";
 import { useDialog } from "./usedialog";
 
 /**
@@ -30,6 +24,7 @@ export const useFormDialog = () => {
    * @param onCancel
    * @param modalProps
    * @param formProps
+   * @param autofocus
    */
   const fn = (
     title: string,
@@ -41,6 +36,7 @@ export const useFormDialog = () => {
     onCancel?: () => void,
     modalProps?: Partial<ModalProps>,
     formProps?: FormProps,
+    autofocus?: boolean,
   ) => {
     dialog(
       title,
@@ -54,6 +50,7 @@ export const useFormDialog = () => {
           onConfirm={onConfirm}
           onCancel={onCancel}
           formProps={formProps}
+          autofocus={autofocus}
         />
       </>,
       undefined,
@@ -65,13 +62,13 @@ export const useFormDialog = () => {
 };
 
 const PromptForm = ({
-  message,
   fields,
   labelConfirm,
   labelCancel,
   onConfirm,
   onCancel,
   formProps,
+  autofocus = false,
 }: {
   message: React.ReactNode;
   fields: FormField[];
@@ -80,33 +77,47 @@ const PromptForm = ({
   onConfirm: (data: AttributeData) => void;
   onCancel?: () => void;
   formProps?: FormProps;
+  autofocus?: boolean;
 }) => {
   const { setModalProps } = useContext(ModalServiceContext);
 
+  useEffect(() => {
+    if (!autofocus) return;
+    // Delay the focus slightly to ensure modal and form are fully rendered
+    const timer = setTimeout(() => {
+      // We focus a form element, and if none are found, we focus the submit button, and otherwise none
+      const formElement: HTMLFormElement | null = document.querySelector(
+        "form input , form textarea , form select , form button[type=submit]",
+      );
+      if (formElement) {
+        formElement.focus();
+      }
+    }, 100);
+
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
-    <>
-      {typeof message === "string" ? <P>{message}</P> : message}
-      <Form
-        fields={fields}
-        labelSubmit={labelConfirm}
-        secondaryActions={[
-          {
-            children: labelCancel,
-            type: "button",
-            variant: "secondary",
-            onClick: () => {
-              setModalProps({ open: false });
-              onCancel?.();
-            },
+    <Form
+      fields={fields}
+      labelSubmit={labelConfirm}
+      secondaryActions={[
+        {
+          children: labelCancel,
+          type: "button",
+          variant: "secondary",
+          onClick: () => {
+            setModalProps({ open: false });
+            onCancel?.();
           },
-        ]}
-        validateOnChange={true}
-        onSubmit={(_, data) => {
-          setModalProps({ open: false });
-          onConfirm(data);
-        }}
-        {...formProps}
-      />
-    </>
+        },
+      ]}
+      validateOnChange={true}
+      onSubmit={(_, data) => {
+        setModalProps({ open: false });
+        onConfirm(data);
+      }}
+      {...formProps}
+    />
   );
 };
