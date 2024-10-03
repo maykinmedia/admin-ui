@@ -1,17 +1,28 @@
-import React, { useContext, useEffect } from "react";
+import { FormField } from "@maykin-ui/admin-ui";
+import React from "react";
 
-import { Form, ModalProps, P } from "../../components";
-import { ModalServiceContext } from "../../contexts";
-import { useDialog } from "./usedialog";
+import { ModalProps } from "../../components";
+import { useFormDialog } from "./useFormDialog";
 
 /**
  * Returns a function which, when called: shows a prompt dialog with a
  * confirmation callback and an optional cancellation callback.
  */
 export const usePrompt = () => {
-  const dialog = useDialog();
-  const { setModalProps } = useContext(ModalServiceContext);
+  const formDialog = useFormDialog();
 
+  /**
+   * Shows a prompt dialog with a confirmation callback and an optional
+   * cancellation callback.
+   * @param title
+   * @param message
+   * @param label
+   * @param labelConfirm
+   * @param labelCancel
+   * @param onConfirm
+   * @param onCancel
+   * @param modalProps
+   */
   const fn = (
     title: string,
     message: React.ReactNode,
@@ -22,80 +33,29 @@ export const usePrompt = () => {
     onCancel?: () => void,
     modalProps?: Partial<ModalProps>,
   ) => {
-    dialog(
+    const fields: FormField[] = [
+      {
+        label,
+        name: "message",
+        required: true,
+        type: "text",
+      },
+    ];
+
+    formDialog(
       title,
-      <PromptForm
-        message={message}
-        label={label}
-        labelConfirm={labelConfirm}
-        labelCancel={labelCancel}
-        onConfirm={onConfirm}
-        onCancel={onCancel}
-        setModalProps={setModalProps}
-      />,
-      undefined,
-      { allowClose: false, ...modalProps },
+      message,
+      fields,
+      labelConfirm,
+      labelCancel,
+      (data) => {
+        const message = data.message as string;
+        onConfirm(message);
+      },
+      onCancel,
+      modalProps,
     );
   };
 
   return fn;
-};
-
-const PromptForm = ({
-  message,
-  label,
-  labelConfirm,
-  labelCancel,
-  onConfirm,
-  onCancel,
-  setModalProps,
-}: {
-  message: React.ReactNode;
-  label: string;
-  labelConfirm: string;
-  labelCancel: string;
-  onConfirm: (message: string) => void;
-  onCancel?: () => void;
-  setModalProps: (props: Partial<ModalProps>) => void;
-}) => {
-  useEffect(() => {
-    // Delay the focus slightly to ensure modal and form are fully rendered
-    const timer = setTimeout(() => {
-      // We focus a form element, and if none are found, we focus the submit button, and otherwise none
-      const formElement: HTMLFormElement | null = document.querySelector(
-        "form input , form textarea , form select , form button[type=submit]",
-      );
-      if (formElement) {
-        formElement.focus();
-      }
-    }, 100);
-
-    return () => clearTimeout(timer);
-  }, []);
-
-  return (
-    <>
-      {typeof message === "string" ? <P>{message}</P> : message}
-      <Form
-        fields={[{ label, name: "message", required: true }]} // No need to pass ref
-        labelSubmit={labelConfirm}
-        secondaryActions={[
-          {
-            children: labelCancel,
-            variant: "secondary",
-            type: "button",
-            onClick: () => {
-              setModalProps({ open: false });
-              onCancel?.();
-            },
-          },
-        ]}
-        validateOnChange={true}
-        onSubmit={(_, { message }) => {
-          setModalProps({ open: false });
-          onConfirm(message as string);
-        }}
-      />
-    </>
-  );
 };
