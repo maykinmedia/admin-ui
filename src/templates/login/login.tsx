@@ -17,6 +17,9 @@ export type LoginTemplateProps = BaseTemplateProps & {
 
   /** Logo (JSX) slot. */
   slotLogo?: React.ReactNode;
+
+  labelOidcLogin?: string;
+  urlOidcLogin?: string;
 };
 
 /**
@@ -26,6 +29,8 @@ export type LoginTemplateProps = BaseTemplateProps & {
 export const LoginTemplate: React.FC<LoginTemplateProps> = ({
   formProps,
   labelLogin,
+  labelOidcLogin,
+  urlOidcLogin,
   slotLogo,
   ...props
 }) => {
@@ -40,6 +45,22 @@ export const LoginTemplate: React.FC<LoginTemplateProps> = ({
         defaultMessage: "inloggen",
       });
 
+  const _labelOidcLogin = labelOidcLogin
+    ? labelOidcLogin
+    : intl.formatMessage({
+        id: "mykn.templates.Login.labelOidcLogin",
+        description: "templates.Login: The label for the OIDC login button.",
+        defaultMessage: "Inloggen met organisatie account",
+      });
+
+  const secondaryActions = [];
+  if (urlOidcLogin)
+    secondaryActions.push({
+      href: urlOidcLogin,
+      variant: "secondary",
+      children: _labelOidcLogin,
+    });
+
   return (
     <BaseTemplate
       columnProps={{ start: 5, span: 4 }}
@@ -51,7 +72,11 @@ export const LoginTemplate: React.FC<LoginTemplateProps> = ({
         <Body>
           {slotLogo || CustomLogo || <Logo />}
           <Hr />
-          <Form labelSubmit={ucFirst(_labelLogin)} {...formProps} />
+          <Form
+            labelSubmit={ucFirst(_labelLogin)}
+            secondaryActions={secondaryActions}
+            {...formProps}
+          />
         </Body>
       </Card>
     </BaseTemplate>

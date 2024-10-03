@@ -37,5 +37,6 @@
   "mykn.components.Select.labelClear": "waarde wissen",
   "mykn.components.Sidebar.collapse": "Zijbalk inklappen",
   "mykn.components.Sidebar.expand": "Zijbalk uitklappen",
-  "mykn.templates.Login.labelLogin": "inloggen"
+  "mykn.templates.Login.labelLogin": "inloggen",
+  "mykn.templates.Login.labelOidcLogin": "Inloggen met organisatie account"
 }
