@@ -21,7 +21,7 @@ export type DatePickerProps = Omit<
   form?: string;
 
   /** Whether a date or date range should be provided. */
-  type?: "date" | "daterange";
+  type?: "datepicker" | "daterangepicker";
 
   /** DatePicker label. */
   label?: string;
@@ -375,7 +375,7 @@ export const DatePicker: React.FC<DatePickerProps> = ({
         locale={locale}
         placeholderText={placeholder}
         selected={date}
-        selectsRange={type === "daterange"}
+        selectsRange={type === "daterangepicker"}
         startDate={dateRange[0]}
         endDate={dateRange[1]}
         showYearDropdown

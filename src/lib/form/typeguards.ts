@@ -6,8 +6,13 @@ import {
   RadioProps,
   SelectProps,
 } from "../../components";
+import { DateInputProps } from "../../components/form/dateinput";
 
-export type FormField = DatePickerProps | InputProps | SelectProps;
+export type FormField =
+  | DateInputProps
+  | DatePickerProps
+  | InputProps
+  | SelectProps;
 
 /** Typeguard for CheckboxProps. */
 export const isCheckbox = (props: FormField): props is CheckboxProps =>
@@ -22,9 +27,15 @@ export const isRadio = (props: FormField): props is RadioProps =>
     typeof props.checked !== "undefined" ||
     typeof props.defaultChecked !== "undefined");
 
+/** Typeguard for DateInputProps. */
+export const isDateInput = (props: FormField): props is DateInputProps =>
+  _isInput(props) &&
+  Boolean(props.type?.match("date") && !props.type?.match("picker"));
+
 /** Typeguard for DatePickerProps. */
 export const isDatePicker = (props: FormField): props is DatePickerProps =>
-  _isInput(props) && Boolean(props.type?.match("date"));
+  _isInput(props) &&
+  Boolean(props.type?.match("date") && props.type?.match("picker"));
 
 /**
  * Typeguard for InputProps.

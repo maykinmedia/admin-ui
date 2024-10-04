@@ -6,6 +6,7 @@ import {
   isCheckbox,
   isCheckboxGroup,
   isChoiceField,
+  isDateInput,
   isDatePicker,
   isInput,
   isRadio,
@@ -13,6 +14,7 @@ import {
 } from "../../../lib/form/typeguards";
 import { Checkbox } from "../checkbox";
 import { ChoiceField } from "../choicefield";
+import { DateInput } from "../dateinput";
 import { DatePicker } from "../datepicker";
 import { ErrorMessage } from "../errormessage";
 import { Input, InputProps } from "../input";
@@ -48,6 +50,7 @@ export const FormControl: React.FC<FormControlProps> = ({
 }) => {
   const [isDirty, setIsDirty] = useState(false);
   const id = useId();
+  // @ts-expect-error - fixme
   const _id = props.id || id;
   // Keep in sync with CheckboxGroup, possibly add constant?
   const htmlFor =
@@ -94,6 +97,10 @@ export const FormWidget: React.FC<FormField> = ({ ...props }) => {
 
   if (isRadio(props)) {
     return <Radio {...props} />;
+  }
+
+  if (isDateInput(props)) {
+    return <DateInput {...props} />;
   }
 
   if (isDatePicker(props)) {

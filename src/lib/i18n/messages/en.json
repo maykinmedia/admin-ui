@@ -49,6 +49,36 @@
     "description": "mykn.components.Modal: The datagrid select fields label",
     "originalDefault": "selecteer kolommen"
   },
+  "mykn.components.DateInput.labelDate": {
+    "defaultMessage": "day of month",
+    "description": "mykn.components.DateInput: The date field (accessible) label",
+    "originalDefault": "dag van de maand"
+  },
+  "mykn.components.DateInput.labelMonth": {
+    "defaultMessage": "month",
+    "description": "mykn.components.DateInput: The month field (accessible) label",
+    "originalDefault": "maand"
+  },
+  "mykn.components.DateInput.labelYear": {
+    "defaultMessage": "year",
+    "description": "mykn.components.DateInput: The year field (accessible) label",
+    "originalDefault": "jaar"
+  },
+  "mykn.components.DateInput.placeholderDate": {
+    "defaultMessage": "dd",
+    "description": "mykn.components.DateInput: The date field placeholder",
+    "originalDefault": "dd"
+  },
+  "mykn.components.DateInput.placeholderMonth": {
+    "defaultMessage": "mm",
+    "description": "mykn.components.DateInput: The month field placeholder",
+    "originalDefault": "mm"
+  },
+  "mykn.components.DateInput.placeholderYear": {
+    "defaultMessage": "yyyy",
+    "description": "mykn.components.DateInput: The year field placeholder",
+    "originalDefault": "jjjj"
+  },
   "mykn.components.DatePicker.labelChooseDayPrefix": {
     "defaultMessage": "Choose day",
     "description": "mykn.components.DatePicker: The choose day prefix",

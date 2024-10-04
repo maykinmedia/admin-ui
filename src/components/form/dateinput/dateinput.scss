@@ -1,0 +1,30 @@
+.mykn-dateinput {
+  display: inline-flex;
+  width: min(320px, 100%);
+
+  .mykn-input {
+    box-sizing: content-box;
+    text-align: center;
+    width: 2em !important;
+  }
+
+  .mykn-input:focus {
+    z-index: 10;
+  }
+
+  .mykn-input[data-section="YY"] {
+    width: 3em !important;
+  }
+
+  .mykn-input:has(+ .mykn-input) {
+    border-start-end-radius: 0;
+    border-end-end-radius: 0;
+    border-inline-end-style: dashed;
+  }
+
+  .mykn-input + .mykn-input {
+    border-inline-start: none;
+    border-start-start-radius: 0;
+    border-end-start-radius: 0;
+  }
+}

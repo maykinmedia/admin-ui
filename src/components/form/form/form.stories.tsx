@@ -172,7 +172,12 @@ export const FormComponent: Story = {
         type: "number",
         required: true,
       },
-      { label: "Date of birth", name: "date_of_birth", type: "date" },
+      {
+        label: "Date of birth",
+        name: "date_of_birth",
+        type: "date",
+        required: true,
+      },
       {
         label: "Select school year",
         name: "school_year",
