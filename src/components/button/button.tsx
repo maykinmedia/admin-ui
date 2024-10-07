@@ -139,7 +139,7 @@ export const ButtonLink = React.forwardRef<HTMLAnchorElement, ButtonLinkProps>(
     return (
       <a
         ref={ref as LegacyRef<HTMLAnchorElement>}
-        aria-disabled={true}
+        aria-disabled={disabled}
         className={clsx(
           "mykn-button",
           `mykn-button--align-${align}`,
