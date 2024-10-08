@@ -180,7 +180,7 @@ export const Form: React.FC<FormProps> = ({
    * Defaults event handler for form submission.
    * @param event
    */
-  const defaultOnSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
+  const handleSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault();
 
     if (validate) {
@@ -203,10 +203,19 @@ export const Form: React.FC<FormProps> = ({
     setValuesState(data);
   };
 
+  /**
+   * Gets called when the form is reset.
+   */
+  const handleReset: React.FormEventHandler<HTMLFormElement> = () => {
+    setValuesState({});
+    setErrorsState({});
+  };
+
   return (
     <form
       className={clsx("mykn-form", `mykn-form--direction-${direction}`)}
-      onSubmit={defaultOnSubmit}
+      onSubmit={handleSubmit}
+      onReset={handleReset}
       {...props}
     >
       {_nonFieldErrors?.length && (

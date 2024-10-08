@@ -6,14 +6,18 @@ import {
   isCheckbox,
   isCheckboxGroup,
   isChoiceField,
+  isDateInput,
   isDatePicker,
+  isDateRangeInput,
   isInput,
   isRadio,
   isRadioGroup,
 } from "../../../lib/form/typeguards";
 import { Checkbox } from "../checkbox";
 import { ChoiceField } from "../choicefield";
+import { DateInput } from "../dateinput";
 import { DatePicker } from "../datepicker";
+import { DateRangeInput } from "../daterangeinput";
 import { ErrorMessage } from "../errormessage";
 import { Input, InputProps } from "../input";
 import { Label } from "../label";
@@ -101,6 +105,14 @@ export const FormWidget: React.FC<FormField> = ({ ...props }) => {
 
   if (isRadio(props)) {
     return <Radio {...props} />;
+  }
+
+  if (isDateInput(props)) {
+    return <DateInput {...props} />;
+  }
+
+  if (isDateRangeInput(props)) {
+    return <DateRangeInput {...props} />;
   }
 
   if (isDatePicker(props)) {

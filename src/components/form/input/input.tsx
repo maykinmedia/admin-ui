@@ -53,6 +53,7 @@ export const Input: React.FC<InputProps> = ({
   ...props
 }) => {
   const inputRef = React.useRef<HTMLInputElement>(null);
+  // TODO: Investigate whether stats is actually (still) required here?
   const [valueState, setValueState] = useState(value || "");
 
   /**

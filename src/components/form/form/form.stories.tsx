@@ -65,7 +65,7 @@ const playFormComponent = async ({
   const schoolYear = canvas.getByLabelText("Select school year");
   const address = canvas.getByLabelText("Address");
   const address_addition = canvas.getByLabelText("Address (addition)");
-  const dateOfBirth = canvas.getByLabelText("Date of birth");
+  const dayOfMonth = canvas.getByLabelText("day of month");
   const english = canvas.getByLabelText("English");
   const math = canvas.getByLabelText("Math");
   const yes = canvas.getByLabelText("Yes");
@@ -116,14 +116,14 @@ const playFormComponent = async ({
     typedResults ? ["Keizersgracht 117", 2] : ["Keizersgracht 117", "2"],
   );
 
-  await userEvent.clear(dateOfBirth);
-  await userEvent.type(dateOfBirth, "2023-09-15", { delay: 10 });
-  await userEvent.type(dateOfBirth, "{enter}");
-  await expect(dateOfBirth).toHaveValue("09/15/2023");
+  await userEvent.clear(dayOfMonth);
+  await userEvent.type(dayOfMonth, "15092023", { delay: 60 });
+  await userEvent.type(dayOfMonth, "{enter}");
+  await expect(dayOfMonth).toHaveValue("15");
   await expectLogToBe(
     canvasElement,
     "date_of_birth",
-    typedResults ? "2023-09-15" : "2023-09-15",
+    typedResults && !formik ? "2023-09-15T00:00:00.000Z" : "2023-09-15",
   );
 
   await userEvent.click(schoolYear);
@@ -165,14 +165,20 @@ export const FormComponent: Story = {
       { label: "First name", name: "first_name", required: true },
       { label: "Last name", name: "last_name", required: true },
       { label: "Age", name: "age", type: "number", required: true },
-      { label: "Address", name: "address", required: true },
+      { label: "Address", name: "address", required: true, inputSize: 50 },
       {
         label: "Address (addition)",
         name: "address",
         type: "number",
         required: true,
+        inputSize: 10,
       },
-      { label: "Date of birth", name: "date_of_birth", type: "date" },
+      {
+        label: "Date of birth",
+        name: "date_of_birth",
+        type: "date",
+        required: true,
+      },
       {
         label: "Select school year",
         name: "school_year",

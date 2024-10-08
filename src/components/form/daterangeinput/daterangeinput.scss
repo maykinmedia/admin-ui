@@ -1,0 +1,16 @@
+.mykn-daterangeinput {
+  display: inline-flex;
+  align-items: center;
+  column-gap: var(--spacing-h);
+
+  .mykn-icon {
+    color: var(--typography-color-muted);
+  }
+
+  &__input[aria-hidden="true"] {
+    opacity: 0;
+    position: absolute;
+    visibility: hidden;
+    z-index: -10;
+  }
+}

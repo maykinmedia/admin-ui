@@ -21,7 +21,7 @@ type Story = StoryObj<typeof meta>;
 
 export const DatepickerComponent: Story = {
   args: {
-    type: "date",
+    type: "datepicker",
     name: "date",
     value: "2023-09-15",
   },
@@ -71,7 +71,7 @@ export const DatePickerWithoutValue: Story = {
   ...DatepickerComponent,
   args: {
     ...DatepickerComponent.args,
-    type: "date",
+    type: "datepicker",
   },
 };
 
@@ -79,7 +79,7 @@ export const DatePickerWithDateAsValue: Story = {
   ...DatepickerComponent,
   args: {
     ...DatepickerComponent.args,
-    type: "date",
+    type: "datepicker",
     value: new Date("2023-09-15"),
   },
 };
@@ -88,7 +88,7 @@ export const DatePickerWithNumberAsValue: Story = {
   ...DatepickerComponent,
   args: {
     ...DatepickerComponent.args,
-    type: "date",
+    type: "datepicker",
     value: 1694736000000,
   },
 };
@@ -98,7 +98,7 @@ export const DatePickerWithNumberAsValue: Story = {
 export const DateRangePicker: Story = {
   args: {
     name: "daterange",
-    type: "daterange",
+    type: "daterangepicker",
     value: "2023-09-14/2023-09-15",
   },
   decorators: [FORM_TEST_DECORATOR],
@@ -148,7 +148,7 @@ export const DateRangePickerWithoutValue: Story = {
   ...DateRangePicker,
   args: {
     ...DateRangePicker.args,
-    type: "daterange",
+    type: "daterangepicker",
   },
 };
 
@@ -156,7 +156,7 @@ export const DateRangePickerWithDatesAsValue: Story = {
   ...DateRangePicker,
   args: {
     ...DateRangePicker.args,
-    type: "daterange",
+    type: "daterangepicker",
     value: [new Date("2023-09-14"), new Date("2023-09-15")],
   },
 };
