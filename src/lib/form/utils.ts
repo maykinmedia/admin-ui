@@ -4,6 +4,7 @@ import {
   Primitive,
   isPrimitive,
 } from "../data/attributedata";
+import { date2DateString } from "../format";
 import { FormField } from "./typeguards";
 
 export type SerializedFormData = Record<
@@ -96,7 +97,16 @@ export const getInputTypeConstructor = (
   index?: number,
 ) => {
   const type = getInputType(form, name, index);
+  if (value === "") return () => null;
+
   switch (type) {
+    case "date":
+      return (value: string) => new Date(value);
+    case "daterange":
+      return (value: string) => {
+        const values = value.split("/").map((value) => new Date(value));
+        return values.length ? values : null;
+      };
     case "number":
       return Number;
     case "checkbox":
@@ -113,15 +123,14 @@ export const getInputTypeConstructor = (
 export const getInputType = (
   form: HTMLFormElement,
   name: string,
-  index?: number,
+  index: number = 0,
 ) => {
+  // FIXME: const inputs = form.elements.namedItem(name); ?
   const inputs = [...form.elements].filter(
     (n) => n.getAttribute("name") === name,
-  );
-  if (typeof index !== "undefined" && inputs.length > 1) {
-    return inputs[index]?.getAttribute("type");
-  }
-  return inputs[0]?.getAttribute("type");
+  ) as HTMLElement[];
+  const input = inputs[index];
+  return input?.dataset.myknType || input?.getAttribute("type");
 };
 
 /**
@@ -166,10 +175,15 @@ export const attribute2Value = (
   if (value === null || value === undefined) {
     return undefined;
   }
-
   switch (typeof value) {
     case "boolean":
       return String(value);
+
+    case "object":
+      if (value instanceof Date) {
+        return date2DateString(value);
+      }
+      break;
 
     default:
       return isPrimitive<Exclude<Primitive, boolean>>(value)
