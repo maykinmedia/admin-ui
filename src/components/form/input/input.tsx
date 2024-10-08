@@ -7,7 +7,7 @@ import "./input.scss";
 
 export type InputProps = Omit<
   React.InputHTMLAttributes<HTMLInputElement>,
-  "value" | "onChange"
+  "size" | "value" | "onChange"
 > & {
   /** Component to use as icon. */
   icon?: React.ReactNode;

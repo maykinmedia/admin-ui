@@ -33,6 +33,9 @@ export type FormProps = Omit<
   /** The direction in which to render the form. */
   direction?: "vertical" | "horizontal";
 
+  /** Justification type. */
+  justify?: "baseline" | "stretch";
+
   /** The classname to use for the fieldset. */
   fieldsetClassName?: string;
 
@@ -103,6 +106,7 @@ export const Form: React.FC<FormProps> = ({
   errors,
   fields = [],
   fieldsetClassName = "mykn-form__fieldset",
+  justify,
   initialValues = {},
   secondaryActions = [],
   labelSubmit = "",
@@ -242,10 +246,12 @@ export const Form: React.FC<FormProps> = ({
 
             return (
               <FormControl
+                // @ts-expect-error - FIXME
                 key={field.id || index}
                 direction={direction}
                 error={message}
                 forceShowError={!validateOnChange}
+                justify={justify}
                 value={value}
                 onChange={defaultOnChange}
                 {...field}
