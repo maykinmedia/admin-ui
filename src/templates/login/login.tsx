@@ -59,6 +59,7 @@ export const LoginTemplate: React.FC<LoginTemplateProps> = ({
       href: urlOidcLogin,
       variant: "secondary",
       children: _labelOidcLogin,
+      disabled: false,
     });
 
   return (
