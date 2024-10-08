@@ -100,6 +100,7 @@ const PromptForm = ({
   return (
     <Form
       fields={fields}
+      justify="stretch"
       labelSubmit={labelConfirm}
       secondaryActions={[
         {

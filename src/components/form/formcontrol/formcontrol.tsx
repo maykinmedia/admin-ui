@@ -24,6 +24,9 @@ export type FormControlProps = FormField & {
   /** The direction in which to render the form. */
   direction?: "vertical" | "horizontal";
 
+  /** Justification type. */
+  justify?: "baseline" | "stretch";
+
   /** An error message to show. */
   error?: string;
 
@@ -35,6 +38,7 @@ export type FormControlProps = FormField & {
  * Renders the correct form widget (based on its props shape) along with its
  * label and `error` message.
  * @param direction
+ * @param justify
  * @param error
  * @param forceShowError
  * @param props
@@ -42,12 +46,14 @@ export type FormControlProps = FormField & {
  */
 export const FormControl: React.FC<FormControlProps> = ({
   direction = "vertical",
+  justify = "baseline",
   error = "",
   forceShowError,
   ...props
 }) => {
   const [isDirty, setIsDirty] = useState(false);
   const id = useId();
+  // @ts-expect-error - fixme
   const _id = props.id || id;
   // Keep in sync with CheckboxGroup, possibly add constant?
   const htmlFor =
@@ -59,6 +65,7 @@ export const FormControl: React.FC<FormControlProps> = ({
       className={clsx(
         "mykn-form-control",
         `mykn-form-control--direction-${direction}`,
+        `mykn-form-control--justify-${justify}`,
       )}
     >
       {props.label && <Label htmlFor={htmlFor}>{props.label}</Label>}

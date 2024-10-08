@@ -1,16 +1,16 @@
 .mykn-form-control {
+  align-items: baseline;
   display: flex;
   flex-direction: column;
   gap: var(--spacing-v);
-
-  .mykn-input,
-  .mykn-select {
-    width: 100%;
-  }
 
   &--direction-horizontal {
     align-items: center;
     flex-direction: row;
     white-space: nowrap;
+  }
+
+  &--justify-stretch {
+    align-items: stretch;
   }
 }
