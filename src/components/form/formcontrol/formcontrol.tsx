@@ -57,7 +57,6 @@ export const FormControl: React.FC<FormControlProps> = ({
 }) => {
   const [isDirty, setIsDirty] = useState(false);
   const id = useId();
-  // @ts-expect-error - fixme
   const _id = props.id || id;
   // Keep in sync with CheckboxGroup, possibly add constant?
   const htmlFor =

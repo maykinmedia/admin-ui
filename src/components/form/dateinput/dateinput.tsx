@@ -13,6 +13,9 @@ import "./dateinput.scss";
 import { TRANSLATIONS } from "./dateinput.translations";
 
 export type DateInputProps = {
+  /** The id, is set: passed to the first input. */
+  id?: string;
+
   /** The associated form's id. */
   form?: string;
 
@@ -65,6 +68,7 @@ export type DateInputProps = {
  * DateInput component, can be used to type a date using separated inputs.
  */
 export const DateInput: React.FC<DateInputProps> = ({
+  id,
   form,
   format = "DDMMYYYY",
   inputProps,
@@ -371,7 +375,7 @@ export const DateInput: React.FC<DateInputProps> = ({
 
   // Input sections.
   const inputs = useMemo(() => {
-    return sanitizedFormat.map((section) => {
+    return sanitizedFormat.map((section, index) => {
       switch (section) {
         case "DD":
           return (
@@ -380,6 +384,7 @@ export const DateInput: React.FC<DateInputProps> = ({
               aria-label={
                 labelDate || intl.formatMessage(TRANSLATIONS.LABEL_DATE, {})
               }
+              id={index === 0 ? id : undefined}
               placeholder={
                 placeholderDate ||
                 intl.formatMessage(TRANSLATIONS.PLACEHOLDER_DATE, {})
@@ -422,6 +427,7 @@ export const DateInput: React.FC<DateInputProps> = ({
               aria-label={
                 labelYear || intl.formatMessage(TRANSLATIONS.LABEL_YEAR, {})
               }
+              id={index === 0 ? id : undefined}
               placeholder={
                 placeholderYear ||
                 intl.formatMessage(TRANSLATIONS.PLACEHOLDER_YEAR, {})
@@ -440,6 +446,7 @@ export const DateInput: React.FC<DateInputProps> = ({
       }
     });
   }, [
+    id,
     inputProps,
     labelDate,
     labelMonth,
