@@ -3,6 +3,7 @@
   --mykn-select-padding-h: 0;
   --mykn-select-font-size: var(--typography-font-size-body-s);
   --mykn-select-line-height: var(--typography-line-height-body-s);
+  --mykn-select-min-height: 38px;
 
   align-items: center;
   background: var(--typography-color-background);
@@ -17,6 +18,7 @@
   font-size: var(--mykn-select-font-size);
   font-weight: var(--typography-font-weight-normal);
   line-height: var(--mykn-select-line-height);
+  min-height: var(--mykn-select-min-height);
   width: min(320px, 100%);
   max-width: 100%;
   padding-block: var(--mykn-select-padding-v);
@@ -40,12 +42,14 @@
   &--size-xs {
     --mykn-select-font-size: var(--typography-font-size-body-xs);
     --mykn-select-line-height: var(--typography-line-height-body-xs);
+    --mykn-select-min-height: 0;
     --mykn-select-padding-xs: calc(var(--spacing-h) / 2);
   }
 
   &--size-xxs {
     --mykn-select-font-size: var(--typography-font-size-body-xs);
     --mykn-select-line-height: var(--typography-line-height-body-xs);
+    --mykn-select-min-height: 0;
     --mykn-select-padding-xs: calc(var(--spacing-h) / 2);
     --mykn-select-height: calc(3 * var(--spacing-h) + 2px) !important;
     --mykn-select-width: calc(3 * var(--spacing-h) + 2px) !important;
