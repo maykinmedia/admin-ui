@@ -255,7 +255,6 @@ export const Form: React.FC<FormProps> = ({
 
             return (
               <FormControl
-                // @ts-expect-error - FIXME
                 key={field.id || index}
                 direction={direction}
                 error={message}
