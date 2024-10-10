@@ -107,16 +107,20 @@ const PromptForm = ({
           children: labelCancel,
           type: "button",
           variant: "secondary",
-          onClick: () => {
-            setModalProps({ open: false });
+          onClick: (e) => {
+            e.preventDefault();
+            e.stopPropagation();
             onCancel?.();
+            setModalProps({ open: false });
           },
         },
       ]}
       validateOnChange={true}
-      onSubmit={(_, data) => {
-        setModalProps({ open: false });
+      onSubmit={(e, data) => {
+        e.preventDefault();
+        e.stopPropagation();
         onConfirm(data);
+        setModalProps({ open: false });
       }}
       {...formProps}
     />

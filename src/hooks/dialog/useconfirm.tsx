@@ -40,18 +40,22 @@ export const useConfirm = () => {
           children: labelCancel,
           variant: "secondary",
           type: "button",
-          onClick: () => {
-            setModalProps({ open: false });
+          onClick: (e) => {
+            e.preventDefault();
+            e.stopPropagation();
             onCancel?.();
+            setModalProps({ open: false });
           },
         },
         {
           children: labelConfirm,
           variant: "primary",
           type: "submit",
-          onClick: () => {
-            setModalProps({ open: false });
+          onClick: (e) => {
+            e.preventDefault();
+            e.stopPropagation();
             onConfirm?.();
+            setModalProps({ open: false });
           },
         },
       ],

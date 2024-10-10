@@ -57,6 +57,13 @@ export const DateRangeInput: React.FC<DateRangeInputProps> = ({
    */
   const dispatchEvent = useCallback(
     (dateString: string) => {
+      const prev = value || "";
+
+      // No change detected.
+      if (prev === dateString) {
+        return;
+      }
+
       const input = fakeInputRef.current as HTMLInputElement;
       input.value = dateString;
 
@@ -97,17 +104,23 @@ export const DateRangeInput: React.FC<DateRangeInputProps> = ({
   // Update valueState.
   useEffect(() => {
     const values = typeof value === "string" ? value.split("/") : value;
+
     const dates = values
       ?.map(value2Date)
       .filter((v): v is Date => Boolean(v))
       .map(date2DateString);
+
+    if (!dates?.length || (dates?.length && dates?.length < 2)) {
+      return;
+    }
 
     setValuesState(dates);
   }, [value]);
 
   // Dispatch event on change.
   useEffect(() => {
-    dispatchEvent(valuesState?.join("/") || "");
+    const newValue = valuesState?.join("/") || "";
+    dispatchEvent(newValue);
   }, [valuesState]);
 
   /**
@@ -177,7 +190,11 @@ export const DateRangeInput: React.FC<DateRangeInputProps> = ({
    * @param index The index of the date input (0: start, 1: end).
    */
   const handleBlur = useCallback<React.FocusEventHandler<HTMLInputElement>>(
-    ({ currentTarget, relatedTarget }) => {
+    (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+
+      const { currentTarget, relatedTarget } = e;
       if (!relatedTarget || !currentTarget.contains(relatedTarget)) {
         const newValuesState = normalizeValuesState(queuedValueState.current);
         setValuesState(newValuesState);
