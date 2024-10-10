@@ -8,6 +8,9 @@ import "./daterangeinput.scss";
 import { TRANSLATIONS } from "./daterangeinput.translations";
 
 export type DateRangeInputProps = Omit<DateInputProps, "type" | "value"> & {
+  /** Component to use as icon. */
+  icon?: React.ReactNode;
+
   /** Whether a date or date range should be provided. */
   type?: "daterange";
 
@@ -26,6 +29,7 @@ export type DateRangeInputProps = Omit<DateInputProps, "type" | "value"> & {
  */
 export const DateRangeInput: React.FC<DateRangeInputProps> = ({
   form,
+  icon = <Outline.CodeBracketSquareIcon />,
   labelStartDate,
   labelEndDate,
   name,
@@ -204,7 +208,7 @@ export const DateRangeInput: React.FC<DateRangeInputProps> = ({
         value={valuesState?.[0]}
         onChange={handleStartChange}
       />
-      <Outline.CodeBracketSquareIcon />{" "}
+      {icon}
       <DateInput
         {...props}
         label={

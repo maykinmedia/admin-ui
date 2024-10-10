@@ -163,7 +163,12 @@ export const DataGridTHead: React.FC = () => {
                 {field.filterable !== false && (
                   <FormControl
                     aria-label={_labelFilterField}
-                    icon={!field.options && <Outline.MagnifyingGlassIcon />}
+                    icon={
+                      !field.options &&
+                      !field.type.includes("date") && (
+                        <Outline.MagnifyingGlassIcon />
+                      )
+                    }
                     form={`${dataGridId}-filter-form`}
                     name={field.filterLookup || field.name}
                     options={field.options}
