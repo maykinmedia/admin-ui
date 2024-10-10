@@ -20,7 +20,6 @@
   padding-block: var(--mykn-input-padding-v);
   padding-inline: var(--mykn-input-padding-h);
   position: relative;
-  width: min(320px, 100%);
   max-width: 100%;
 
   &--pad-h {
@@ -62,6 +61,7 @@
     color: var(--typography-color-muted);
   }
 
+  &[maxlength],
   &[size] {
     width: auto;
   }

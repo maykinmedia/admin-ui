@@ -7,7 +7,7 @@ import "./input.scss";
 
 export type InputProps = Omit<
   React.InputHTMLAttributes<HTMLInputElement>,
-  "value" | "onChange"
+  "size" | "value" | "onChange"
 > & {
   /** Component to use as icon. */
   icon?: React.ReactNode;
@@ -53,6 +53,7 @@ export const Input: React.FC<InputProps> = ({
   ...props
 }) => {
   const inputRef = React.useRef<HTMLInputElement>(null);
+  // TODO: Investigate whether stats is actually (still) required here?
   const [valueState, setValueState] = useState(value || "");
 
   /**

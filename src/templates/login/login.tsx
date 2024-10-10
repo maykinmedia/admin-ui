@@ -74,6 +74,7 @@ export const LoginTemplate: React.FC<LoginTemplateProps> = ({
           {slotLogo || CustomLogo || <Logo />}
           <Hr />
           <Form
+            justify="stretch"
             labelSubmit={ucFirst(_labelLogin)}
             secondaryActions={secondaryActions}
             {...formProps}

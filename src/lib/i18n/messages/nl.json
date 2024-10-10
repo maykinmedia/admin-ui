@@ -49,6 +49,36 @@
     "description": "mykn.components.Modal: The datagrid select fields label",
     "originalDefault": "selecteer kolommen"
   },
+  "mykn.components.DateInput.labelDate": {
+    "defaultMessage": "dag van de maand",
+    "description": "mykn.components.DateInput: The date field (accessible) label",
+    "originalDefault": "dag van de maand"
+  },
+  "mykn.components.DateInput.labelMonth": {
+    "defaultMessage": "maand",
+    "description": "mykn.components.DateInput: The month field (accessible) label",
+    "originalDefault": "maand"
+  },
+  "mykn.components.DateInput.labelYear": {
+    "defaultMessage": "jaar",
+    "description": "mykn.components.DateInput: The year field (accessible) label",
+    "originalDefault": "jaar"
+  },
+  "mykn.components.DateInput.placeholderDate": {
+    "defaultMessage": "dd",
+    "description": "mykn.components.DateInput: The date field placeholder",
+    "originalDefault": "dd"
+  },
+  "mykn.components.DateInput.placeholderMonth": {
+    "defaultMessage": "mm",
+    "description": "mykn.components.DateInput: The month field placeholder",
+    "originalDefault": "mm"
+  },
+  "mykn.components.DateInput.placeholderYear": {
+    "defaultMessage": "jjjj",
+    "description": "mykn.components.DateInput: The year field placeholder",
+    "originalDefault": "jjjj"
+  },
   "mykn.components.DatePicker.labelChooseDayPrefix": {
     "defaultMessage": "Kies dag",
     "description": "mykn.components.DatePicker: The choose day prefix",
@@ -103,6 +133,16 @@
     "defaultMessage": "week",
     "description": "mykn.components.DatePicker: The week prefix",
     "originalDefault": "week"
+  },
+  "mykn.components.DateRangeInput.labelEndDate": {
+    "defaultMessage": "einddatum",
+    "description": "mykn.components.DateRangeInput: The end date (accessible) label",
+    "originalDefault": "einddatum"
+  },
+  "mykn.components.DateRangeInput.labelStartDate": {
+    "defaultMessage": "startdatum",
+    "description": "mykn.components.DateRangeInput: The start date (accessible) label",
+    "originalDefault": "startdatum"
   },
   "mykn.components.Form.labelSubmit": {
     "defaultMessage": "verzenden",

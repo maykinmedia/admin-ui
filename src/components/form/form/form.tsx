@@ -33,6 +33,9 @@ export type FormProps = Omit<
   /** The direction in which to render the form. */
   direction?: "vertical" | "horizontal";
 
+  /** Justification type. */
+  justify?: "baseline" | "stretch";
+
   /** The classname to use for the fieldset. */
   fieldsetClassName?: string;
 
@@ -103,6 +106,7 @@ export const Form: React.FC<FormProps> = ({
   errors,
   fields = [],
   fieldsetClassName = "mykn-form__fieldset",
+  justify,
   initialValues = {},
   secondaryActions = [],
   labelSubmit = "",
@@ -176,7 +180,7 @@ export const Form: React.FC<FormProps> = ({
    * Defaults event handler for form submission.
    * @param event
    */
-  const defaultOnSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
+  const handleSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault();
 
     if (validate) {
@@ -199,10 +203,19 @@ export const Form: React.FC<FormProps> = ({
     setValuesState(data);
   };
 
+  /**
+   * Gets called when the form is reset.
+   */
+  const handleReset: React.FormEventHandler<HTMLFormElement> = () => {
+    setValuesState({});
+    setErrorsState({});
+  };
+
   return (
     <form
       className={clsx("mykn-form", `mykn-form--direction-${direction}`)}
-      onSubmit={defaultOnSubmit}
+      onSubmit={handleSubmit}
+      onReset={handleReset}
       {...props}
     >
       {_nonFieldErrors?.length && (
@@ -246,6 +259,7 @@ export const Form: React.FC<FormProps> = ({
                 direction={direction}
                 error={message}
                 forceShowError={!validateOnChange}
+                justify={justify}
                 value={value}
                 onChange={defaultOnChange}
                 {...field}
