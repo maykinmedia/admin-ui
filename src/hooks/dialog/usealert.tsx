@@ -36,9 +36,11 @@ export const useAlert = () => {
           children: labelConfirm,
           variant: "primary",
           type: "submit",
-          onClick: () => {
-            setModalProps({ open: false });
+          onClick: (e) => {
+            e.preventDefault();
+            e.stopPropagation();
             onConfirm?.();
+            setModalProps({ open: false });
           },
         },
       ],
