@@ -98,6 +98,8 @@ export const Prompt: Story = {
               "Annuleren",
               args.onConfirm,
               args.onCancel,
+              undefined,
+              true,
             )
           }
         >

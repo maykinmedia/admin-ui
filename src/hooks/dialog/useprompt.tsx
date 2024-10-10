@@ -1,16 +1,15 @@
-import React, { useContext } from "react";
+import React from "react";
 
-import { Form, ModalProps, P } from "../../components";
-import { ModalServiceContext } from "../../contexts";
-import { useDialog } from "./usedialog";
+import { ModalProps } from "../../components";
+import { FormField } from "../../lib";
+import { useFormDialog } from "./useFormDialog";
 
 /**
  * Returns a function which, when called: shows a prompt dialog with a
  * confirmation callback and an optional cancellation callback.
  */
 export const usePrompt = () => {
-  const dialog = useDialog();
-  const { setModalProps } = useContext(ModalServiceContext);
+  const formDialog = useFormDialog();
 
   /**
    * Shows a prompt dialog with a confirmation callback and an optional
@@ -23,6 +22,7 @@ export const usePrompt = () => {
    * @param onConfirm
    * @param onCancel
    * @param modalProps
+   * @param autofocus
    */
   const fn = (
     title: string,
@@ -33,34 +33,31 @@ export const usePrompt = () => {
     onConfirm: (message: string) => void,
     onCancel?: () => void,
     modalProps?: Partial<ModalProps>,
+    autofocus?: boolean,
   ) => {
-    dialog(
+    const fields: FormField[] = [
+      {
+        label,
+        name: "message",
+        required: true,
+        type: "text",
+      },
+    ];
+
+    formDialog(
       title,
-      <>
-        {typeof message === "string" ? <P>{message}</P> : message}
-        <Form
-          fields={[{ label, name: "message", required: true }]}
-          labelSubmit={labelConfirm}
-          secondaryActions={[
-            {
-              children: labelCancel,
-              variant: "secondary",
-              type: "button",
-              onClick: () => {
-                setModalProps({ open: false });
-                onCancel?.();
-              },
-            },
-          ]}
-          validateOnChange={true}
-          onSubmit={(_, { message }) => {
-            setModalProps({ open: false });
-            onConfirm(message as string);
-          }}
-        />
-      </>,
+      message,
+      fields,
+      labelConfirm,
+      labelCancel,
+      (data) => {
+        const message = data.message as string;
+        onConfirm(message);
+      },
+      onCancel,
+      modalProps,
       undefined,
-      { allowClose: false, ...modalProps },
+      autofocus,
     );
   };
 
