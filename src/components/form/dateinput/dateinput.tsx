@@ -155,24 +155,6 @@ export const DateInput: React.FC<DateInputProps> = ({
     return () => input.removeEventListener("reset", clear);
   }, [form, fakeInputRef]);
 
-  // Dispatch event on change.
-  useEffect(() => {
-    // Event handling.
-    const date =
-      sanitizedValuesState && sanitizedValues2Date(sanitizedValuesState);
-
-    if (date) {
-      // Date is valid, dispatch `dateString`.
-      const dateString = date2DateString(date);
-      dispatchEvent(dateString);
-      setIsPristine(false);
-    } else if (!isPristine) {
-      // Date is invalid after previous valid value, dispatch "".
-      dispatchEvent("");
-      setIsPristine(false);
-    }
-  }, [sanitizedValuesState]);
-
   /**
    * Returns `SanitizedValues` for the optionally given `Date`, if date is omitted, result contains empty values.
    */
@@ -231,8 +213,23 @@ export const DateInput: React.FC<DateInputProps> = ({
       const fn = () => {
         const active = document.activeElement as HTMLElement;
         const activeSection = active.dataset?.section;
-        const nextSection = activeSection === "DD" ? "MM" : "YY";
-        const previousSection = activeSection === "YY" ? "MM" : "DD";
+        const nextSection =
+          format === "DDMMYYYY"
+            ? activeSection === "DD"
+              ? "MM"
+              : "YY"
+            : activeSection === "YY"
+              ? "MM"
+              : "DD";
+        const previousSection =
+          format === "DDMMYYYY"
+            ? activeSection === "YY"
+              ? "MM"
+              : "DD"
+            : activeSection === "DD"
+              ? "MM"
+              : "YY";
+
         const section =
           direction === "forwards" ? nextSection : previousSection;
 
@@ -276,12 +273,24 @@ export const DateInput: React.FC<DateInputProps> = ({
         ...sanitizedValuesState,
         ...newSanitizedValues,
       };
-      setSanitizedValuesState((state) => ({
-        ...state,
-        ...newSanitizedValuesState,
-      }));
+      setSanitizedValuesState(newSanitizedValuesState);
+
+      const date =
+        newSanitizedValuesState &&
+        sanitizedValues2Date(newSanitizedValuesState);
+
+      if (date) {
+        // Date is valid, dispatch `dateString`.
+        const dateString = date2DateString(date);
+        dispatchEvent(dateString);
+        setIsPristine(false);
+      } else if (!isPristine) {
+        // Date is invalid after previous valid value, dispatch "".
+        dispatchEvent("");
+        setIsPristine(false);
+      }
     },
-    [sanitizedValuesState],
+    [sanitizedValuesState, isPristine, dispatchEvent],
   );
 
   /**
@@ -336,7 +345,8 @@ export const DateInput: React.FC<DateInputProps> = ({
       }
       const { dataset, value } = event.target as HTMLInputElement;
       const section = dataset.section as "DD" | "MM" | "YY";
-      const isCompleted = section !== "YY" && value.length === 2;
+      const isCompleted =
+        section === "YY" ? value.length === 4 : value.length === 2;
       const isCleared = !value && event.key === "Backspace";
 
       if (isCompleted) {

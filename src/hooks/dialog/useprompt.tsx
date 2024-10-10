@@ -2,7 +2,7 @@ import React from "react";
 
 import { ModalProps } from "../../components";
 import { FormField } from "../../lib";
-import { useFormDialog } from "./useFormDialog";
+import { useFormDialog } from "./useformdialog";
 
 /**
  * Returns a function which, when called: shows a prompt dialog with a

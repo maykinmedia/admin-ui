@@ -16,6 +16,7 @@ export const DateInputComponent: Story = {
   args: {
     name: "date",
   },
+  decorators: [FORM_TEST_DECORATOR],
 };
 
 export const SeparatedInputs: Story = {
@@ -85,7 +86,6 @@ export const IsoFormat: Story = {
   args: {
     name: "date",
     format: "YYYYMMDD",
-    value: "2023-09-15",
   },
   decorators: [FORM_TEST_DECORATOR],
   play: async ({ canvasElement }) => {
