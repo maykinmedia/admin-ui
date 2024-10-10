@@ -12,5 +12,10 @@
 
   &--justify-stretch {
     align-items: stretch;
+
+    .mykn-input,
+    .mykn-select {
+      width: 100%;
+    }
   }
 }
