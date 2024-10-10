@@ -18,10 +18,10 @@ export type DateRangeInputProps = Omit<DateInputProps, "type" | "value"> & {
   value?: string;
 
   /** The start date (accessible) label */
-  labelStartDate: string;
+  labelStartDate?: string;
 
   /** The end date (accessible) label */
-  labelEndDate: string;
+  labelEndDate?: string;
 };
 
 /**
@@ -57,13 +57,6 @@ export const DateRangeInput: React.FC<DateRangeInputProps> = ({
    */
   const dispatchEvent = useCallback(
     (dateString: string) => {
-      const prev = value || "";
-
-      // No change detected.
-      if (prev === dateString) {
-        return;
-      }
-
       const input = fakeInputRef.current as HTMLInputElement;
       input.value = dateString;
 
@@ -116,12 +109,6 @@ export const DateRangeInput: React.FC<DateRangeInputProps> = ({
 
     setValuesState(dates);
   }, [value]);
-
-  // Dispatch event on change.
-  useEffect(() => {
-    const newValue = valuesState?.join("/") || "";
-    dispatchEvent(newValue);
-  }, [valuesState]);
 
   /**
    * Normalizes value state, making sure that end date is later than startDate.
@@ -198,6 +185,8 @@ export const DateRangeInput: React.FC<DateRangeInputProps> = ({
       if (!relatedTarget || !currentTarget.contains(relatedTarget)) {
         const newValuesState = normalizeValuesState(queuedValueState.current);
         setValuesState(newValuesState);
+        const newValue = newValuesState?.join("/") || "";
+        dispatchEvent(newValue);
       }
     },
     [document.activeElement, valuesState, normalizeValuesState],

@@ -148,7 +148,6 @@ export const IsoFormat: Story = {
   args: {
     name: "date",
     format: "YYYYMMDD",
-    value: "1988-08-02/2023-09-15",
   },
   decorators: [FORM_TEST_DECORATOR],
   play: async ({ canvasElement }) => {
@@ -157,11 +156,11 @@ export const IsoFormat: Story = {
 
     const inputStart = await canvas.getAllByRole("textbox")[0];
     await userEvent.type(inputStart, "19880802", { delay: 60 });
-
     await userEvent.tab({ delay: 60 });
 
     const inputEnd = await canvas.getAllByRole("textbox")[3];
     await userEvent.type(inputEnd, "20230915", { delay: 60 });
+    await userEvent.tab({ delay: 60 });
 
     await expect(JSON.parse(log.textContent || "{}").date).toBe(
       "1988-08-02/2023-09-15",
