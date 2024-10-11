@@ -44,9 +44,9 @@ export const DataGridSelectionCheckbox: React.FC<
 
     switch (selectAll) {
       case "page":
-        allSelected =
-          selectedRows?.every((a) => renderableRows.includes(a)) &&
-          renderableRows.every((a) => selectedRows.includes(a));
+        allSelected = renderableRows?.every((a, index) =>
+          equalityChecker(a, selectedRows[index]),
+        );
         checked = allSelected || false;
         disabled = Boolean(allPagesSelectedManaged && allPagesSelected);
         handleSelect = () => onSelectAll(!allSelected);
