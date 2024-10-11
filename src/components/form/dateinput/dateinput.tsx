@@ -209,41 +209,17 @@ export const DateInput: React.FC<DateInputProps> = ({
    * @param section
    */
   const focusSection = useCallback(
-    (direction: "forwards" | "backwards") => {
+    (target: HTMLInputElement | null) => {
       const fn = () => {
-        const active = document.activeElement as HTMLElement;
-        const activeSection = active.dataset?.section;
-        const nextSection =
-          format === "DDMMYYYY"
-            ? activeSection === "DD"
-              ? "MM"
-              : "YY"
-            : activeSection === "YY"
-              ? "MM"
-              : "DD";
-        const previousSection =
-          format === "DDMMYYYY"
-            ? activeSection === "YY"
-              ? "MM"
-              : "DD"
-            : activeSection === "DD"
-              ? "MM"
-              : "YY";
-
-        const section =
-          direction === "forwards" ? nextSection : previousSection;
-
-        const input = fakeInputRef.current;
-        if (!input) return;
-
-        const parent = input.parentElement;
-        parent
-          ?.querySelector<HTMLInputElement>(`[data-section="${section}"]`)
-          ?.focus();
+        if (!target) {
+          return;
+        }
+        target?.focus();
+        target?.select();
       };
 
       clearTimeout(debounceRef.current);
-      debounceRef.current = setTimeout(fn, 60);
+      debounceRef.current = setTimeout(fn, 30);
     },
     [debounceRef.current, fakeInputRef.current],
   );
@@ -349,10 +325,11 @@ export const DateInput: React.FC<DateInputProps> = ({
         section === "YY" ? value.length === 4 : value.length === 2;
       const isCleared = !value && event.key === "Backspace";
 
+      const input = event.target as HTMLInputElement;
       if (isCompleted) {
-        focusSection("forwards");
+        focusSection(input.nextElementSibling as HTMLInputElement | null);
       } else if (isCleared) {
-        focusSection("backwards");
+        focusSection(input.previousElementSibling as HTMLInputElement | null);
       }
     },
     [focusSection],
@@ -373,7 +350,8 @@ export const DateInput: React.FC<DateInputProps> = ({
       form,
       pattern: "[0-9]*",
       onChange: handleChange,
-      onFocus: (e: React.FocusEvent<HTMLInputElement>) => e.target.select(),
+      onFocus: (e: React.FocusEvent<HTMLInputElement>) =>
+        setTimeout(() => e.target.select()),
       onKeyDown: onKeyDown,
       onKeyUp: onKeyUp,
       size,
