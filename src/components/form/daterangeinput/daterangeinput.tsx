@@ -165,10 +165,29 @@ export const DateRangeInput: React.FC<DateRangeInputProps> = ({
 
       const newValues = new Array(2);
       newValues[index] = value;
-      newValues[flippedIndex] = _values[flippedIndex] || value;
+      newValues[flippedIndex] = _values[flippedIndex];
       queuedValueState.current = newValues;
     },
     [queuedValueState.current],
+  );
+
+  /**
+   * Gets called when a keyUp event is received.
+   * Implements enter key change trigger..
+   */
+  const handleKeyUp = useCallback<React.KeyboardEventHandler<HTMLInputElement>>(
+    (e) => {
+      if (e.key === "Enter") {
+        const dates = normalizeValuesState(queuedValueState.current)
+          ?.map(value2Date)
+          .filter((v): v is Date => Boolean(v))
+          .map(date2DateString);
+
+        const dateString = dates?.length === 2 && dates.join("/");
+        dispatchEvent(dateString || "");
+      }
+    },
+    [queuedValueState.current, normalizeValuesState],
   );
 
   /**
@@ -183,16 +202,24 @@ export const DateRangeInput: React.FC<DateRangeInputProps> = ({
 
       const { currentTarget, relatedTarget } = e;
       if (!relatedTarget || !currentTarget.contains(relatedTarget)) {
-        const newValuesState = normalizeValuesState(queuedValueState.current);
-        setValuesState(newValuesState);
-        const newValue = newValuesState?.join("/") || "";
-        dispatchEvent(newValue);
+        const dates = normalizeValuesState(queuedValueState.current)
+          ?.map(value2Date)
+          .filter((v): v is Date => Boolean(v))
+          .map(date2DateString);
+
+        const dateString = dates?.length === 2 && dates.join("/");
+        dispatchEvent(dateString || "");
       }
     },
-    [document.activeElement, valuesState, normalizeValuesState],
+    [document.activeElement, queuedValueState.current, normalizeValuesState],
   );
   return (
-    <div ref={nodeRef} className="mykn-daterangeinput" onBlur={handleBlur}>
+    <div
+      ref={nodeRef}
+      className="mykn-daterangeinput"
+      onBlur={handleBlur}
+      onKeyUp={handleKeyUp}
+    >
       <input
         ref={fakeInputRef}
         className="mykn-daterangeinput__input"
