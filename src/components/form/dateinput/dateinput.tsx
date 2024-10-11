@@ -260,7 +260,7 @@ export const DateInput: React.FC<DateInputProps> = ({
         const dateString = date2DateString(date);
         dispatchEvent(dateString);
         setIsPristine(false);
-      } else if (!isPristine) {
+      } else {
         // Date is invalid after previous valid value, dispatch "".
         dispatchEvent("");
         setIsPristine(false);
