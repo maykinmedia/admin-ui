@@ -29,7 +29,6 @@
   box-sizing: border-box;
   color: var(--mykn-button-color-text);
   cursor: pointer;
-  display: inline-flex;
   gap: 0.5em;
   height: var(--mykn-button-height);
   font-family: var(--typography-font-family-body);
@@ -42,6 +41,10 @@
   transform: translateY(var(--mykn-button-offset));
   white-space: nowrap;
   width: var(--mykn-button-width);
+
+  &:not([hidden]) {
+    display: inline-flex;
+  }
 
   &#{&}:disabled,
   &#{&}--disabled,
