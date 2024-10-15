@@ -1,3 +1,9 @@
 .mykn-stackctx {
   position: relative;
+  box-sizing: border-box;
+
+  &:has(.mykn-icon) .mykn-input,
+  &:has(.mykn-icon) .mykn-select {
+    padding-inline-end: 30px;
+  }
 }
