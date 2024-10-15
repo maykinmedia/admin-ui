@@ -115,6 +115,13 @@ export const Select: React.FC<SelectProps> = ({
       flip(),
       sizeMiddleware({
         padding: 20,
+        apply({ availableWidth, availableHeight, elements }) {
+          // Change styles, e.g.
+          Object.assign(elements.floating.style, {
+            maxWidth: `${Math.max(0, availableWidth)}px`,
+            maxHeight: `${Math.max(0, availableHeight)}px`,
+          });
+        },
       }),
     ],
   });
@@ -323,22 +330,26 @@ const BaseSelectDropdown: React.FC<SelectDropdownProps> = ({
   setActiveIndex,
   setSelectedIndex,
 }) => {
-  const listRef = React.useRef<Array<HTMLElement | null>>([]);
-  const listContentRef = React.useRef(options.map((o) => String(o.label)));
   const isTypingRef = React.useRef(false);
+  const nodeRef = React.useRef<HTMLDivElement[]>([]);
+
+  const listRef = React.useRef<string[]>([]);
+  useEffect(() => {
+    listRef.current = options.map(({ label }) => label.toString());
+  }, [options]);
 
   const click = useClick(context, { event: "mousedown" });
   const dismiss = useDismiss(context);
   const role = useRole(context, { role: "listbox" });
   const listNav = useListNavigation(context, {
-    listRef,
+    listRef: nodeRef,
     activeIndex,
     selectedIndex,
     onNavigate: setActiveIndex,
   });
 
   const typeahead = useTypeahead(context, {
-    listRef: listContentRef,
+    listRef: listRef,
     activeIndex,
     selectedIndex,
     onMatch: open ? setActiveIndex : setSelectedIndex,
@@ -346,7 +357,6 @@ const BaseSelectDropdown: React.FC<SelectDropdownProps> = ({
       isTypingRef.current = isTyping;
     },
   });
-
   const { getFloatingProps, getItemProps } = useInteractions([
     dismiss,
     role,
@@ -390,7 +400,8 @@ const BaseSelectDropdown: React.FC<SelectDropdownProps> = ({
       <SelectOption
         key={`${label}-${value || label}`}
         ref={(node) => {
-          listRef.current[i] = node;
+          if (!node) return;
+          nodeRef.current[i] = node;
         }}
         active={i === activeIndex}
         selected={i === selectedIndex}

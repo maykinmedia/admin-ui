@@ -3,6 +3,7 @@
 .mykn-column {
   container-name: column;
   grid-column: auto / 6 span;
+  position: relative; // For debug?
 
   &--container-type-inline-size {
     container-type: inline-size;
