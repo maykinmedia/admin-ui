@@ -24,8 +24,11 @@
   &__cell--key {
     font-weight: var(--typography-font-weight-bold);
   }
+  &__cell--key > .mykn-icon:last-child {
+    margin-inline-start: var(--spacing-h);
+  }
 
-  &__cell .mykn-icon {
+  &__cell > .mykn-icon {
     margin-inline-end: var(--spacing-h);
   }
 }
