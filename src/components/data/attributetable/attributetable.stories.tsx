@@ -62,9 +62,9 @@ export const LabeledAttributeTableComponentWithNodes: Story = {
       },
       labelWithIcon: {
         label: (
-          <div>
+          <>
             A label with icon <Outline.AcademicCapIcon />
-          </div>
+          </>
         ),
         value: "Some value",
       },
