@@ -87,8 +87,6 @@ export const BaseTemplate: React.FC<BaseTemplateProps> = ({
   const content = (
     <Grid>
       <Column direction="row" span={12} {...columnProps}>
-        {slotPrimaryNavigation || contextNavigation}
-        {slotSidebar || contextSidebar}
         {children}
       </Column>
     </Grid>
@@ -96,6 +94,8 @@ export const BaseTemplate: React.FC<BaseTemplateProps> = ({
 
   return (
     <Page {...pageProps}>
+      {slotPrimaryNavigation || contextNavigation}
+      {slotSidebar || contextSidebar}
       {container ? <Container>{content}</Container> : content}
     </Page>
   );
