@@ -1,5 +1,6 @@
 import {
   FloatingFocusManager,
+  FloatingPortal,
   Side,
   autoUpdate,
   flip,
@@ -131,25 +132,27 @@ export const Dropdown: React.FC<DropdownProps> = ({
         {label}
       </Button>
       {isOpen && (
-        <FloatingFocusManager context={context} modal={false}>
-          <div
-            className="mykn-dropdown__dropdown"
-            ref={refs.setFloating}
-            style={floatingStyles}
-            {...getFloatingProps()}
-          >
-            {isToolbarModuleLoaded(toolbarModuleState) && (
-              <toolbarModuleState.Toolbar
-                align="start"
-                direction="vertical"
-                items={items}
-                {...toolbarProps}
-              >
-                {children}
-              </toolbarModuleState.Toolbar>
-            )}
-          </div>
-        </FloatingFocusManager>
+        <FloatingPortal>
+          <FloatingFocusManager context={context} modal={false}>
+            <div
+              className="mykn-dropdown__dropdown"
+              ref={refs.setFloating}
+              style={floatingStyles}
+              {...getFloatingProps()}
+            >
+              {isToolbarModuleLoaded(toolbarModuleState) && (
+                <toolbarModuleState.Toolbar
+                  align="start"
+                  direction="vertical"
+                  items={items}
+                  {...toolbarProps}
+                >
+                  {children}
+                </toolbarModuleState.Toolbar>
+              )}
+            </div>
+          </FloatingFocusManager>
+        </FloatingPortal>
       )}
     </div>
   );
