@@ -1,11 +1,10 @@
 @use "../../../settings/constants";
 
 .mykn-page {
-  align-items: start;
   background-color: var(--page-color-background);
   container-name: page;
   display: flex;
-  flex-direction: column;
+  //flex-direction: column;  // Removed to facilitate NavBar move in BaseTemplate.
   box-sizing: border-box;
   width: 100%;
   min-height: 100%;
@@ -35,6 +34,6 @@
   }
 
   &--valign-middle {
-    justify-content: center;
+    align-items: center;
   }
 }

@@ -34,6 +34,10 @@
     }
   }
 
+  &--direction-vertical .mykn-logo {
+    width: 32px;
+  }
+
   &:not(#{&}--direction-responsive)#{&}--direction-horizontal {
     max-height: 100%;
     flex-direction: row;
@@ -72,6 +76,12 @@
   &__spacer {
     height: 100%;
     flex-shrink: 9999;
+  }
+
+  @media screen and (max-width: constants.$breakpoint-desktop - 1px) {
+    &--direction-responsive .mykn-logo {
+      width: 32px;
+    }
   }
 
   @media screen and (min-width: constants.$breakpoint-desktop) {
