@@ -65,9 +65,29 @@ export const serializeForm = (
 const typeSerializedFormData = (
   form: HTMLFormElement,
   data: SerializedFormData,
-) =>
-  Object.fromEntries(
-    Object.entries(data).map(([key, value]) => {
+) => {
+  // Work around for edge case where checkbox is not present in `data` when unchecked.
+  // This builds an object with all form fields keys (including unchecked checkbox)
+  // set to `undefined`, we can merge this with `data` later on to get a complete
+  // data collection.
+  //
+  // TODO: We can possibly leverage `form.element` to optimize serialisation.
+  const baseData = Object.fromEntries(
+    Object.values(form.elements)
+      .map((element) => {
+        return element instanceof RadioNodeList
+          ? (element[0] as Element | undefined)?.getAttribute("name")
+          : element.getAttribute("name");
+      })
+      .filter((name): name is string => Boolean(name))
+      .map((name): [string, undefined] => [name, undefined]),
+  );
+
+  // Merge `data` and baseData into `completeData`.
+  const completeData: SerializedFormData = Object.assign(baseData, data);
+
+  return Object.fromEntries(
+    Object.entries(completeData).map(([key, value]) => {
       if (Array.isArray(value)) {
         const values = value.map((v, index) => {
           const constructor = getInputTypeConstructor(form, key, value, index);
@@ -81,6 +101,7 @@ const typeSerializedFormData = (
       return [key, _value];
     }),
   );
+};
 
 /**
  * Returns a Function providing a constructor for a typed value (e.g. input[type="number"] -> Number) at the `index`
