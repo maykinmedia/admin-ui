@@ -131,6 +131,10 @@
       width: 100%;
     }
 
+    &--direction-horizontal .mykn-p:has(+ .mykn-p) {
+      margin-block-end: 0;
+    }
+
     &--direction-vertical &__spacer {
       height: 100%;
     }

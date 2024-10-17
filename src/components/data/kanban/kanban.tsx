@@ -230,7 +230,14 @@ export const Kanban: React.FC<KanbanProps> = ({
           <H2>{title}</H2>
         </Body>
       )}
-      {toolbarProps && <Toolbar pad={true} sticky="top" {...toolbarProps} />}
+      {toolbarProps && (
+        <Toolbar
+          pad={true}
+          sticky="top"
+          variant="transparent"
+          {...toolbarProps}
+        />
+      )}
       <Body className="mykn-kanban__body">
         <Grid cols={fieldsetsState.length}>
           {fieldsetsState.map((fieldset, index) => (
