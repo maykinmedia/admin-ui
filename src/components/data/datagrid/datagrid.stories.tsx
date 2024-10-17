@@ -50,6 +50,10 @@ export const DataGridComponent = {
       ],
     },
   },
+  argTypes: {
+    onPageChange: { action: "onPageChange" },
+    onPageSizeChange: { action: "onPageSizeChange" },
+  },
 };
 
 /**
@@ -77,7 +81,7 @@ export const Decorated: Story = {
  * to be editable can be controlled by passing `TypedField` items to the `fields`
  * prop.
  */
-export const EditableRows: Story = {
+export const Editable: Story = {
   ...DataGridComponent,
   args: {
     ...DataGridComponent.args,
@@ -85,6 +89,7 @@ export const EditableRows: Story = {
     editable: true,
   },
   argTypes: {
+    ...DataGridComponent.argTypes,
     onEdit: { action: "onEdit" },
   },
 };
@@ -110,6 +115,7 @@ export const FieldsSelectable: Story = {
     fieldsSelectable: true,
   },
   argTypes: {
+    ...DataGridComponent.argTypes,
     onFieldsChange: { action: "onFieldsChange" },
   },
 };
@@ -133,6 +139,7 @@ export const Filterable: Story = {
     ],
   },
   argTypes: {
+    ...DataGridComponent.argTypes,
     onFilter: { action: "onFilter" },
   },
 };
@@ -158,6 +165,7 @@ export const Selectable: Story = {
     ],
   },
   argTypes: {
+    ...DataGridComponent.argTypes,
     onSelect: { action: "onSelect" },
     onSelectionChange: { action: "onSelectionChange" },
     onSelectAllPages: { action: "onSelectAllPages" },
@@ -245,6 +253,7 @@ export const FilterableSelectableSortable: Story = {
     sort: "price",
   },
   argTypes: {
+    ...DataGridComponent.argTypes,
     onFilter: { action: "onFilter" },
     onSelect: { action: "onSelect" },
     onSelectionChange: { action: "onSelectionChange" },
@@ -271,6 +280,7 @@ export const DateFilter: Story = {
     ],
   },
   argTypes: {
+    ...Filterable.argTypes,
     onFilter: {
       action: "onFilter",
     },
@@ -293,11 +303,6 @@ export const DateRangeFilter: Story = {
       "isAvailable",
       { name: "releaseDate", type: "daterange" },
     ],
-  },
-  argTypes: {
-    onFilter: {
-      action: "onFilter",
-    },
   },
 };
 
