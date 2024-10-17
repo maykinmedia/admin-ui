@@ -25,7 +25,7 @@ export const FORM_TEST_DECORATOR: Decorator = (Story) => {
 
   return (
     <form ref={formRef} aria-label="form" style={{ width: "100%" }}>
-      <Story />
+      {Story()}
       <pre role="log">{JSON.stringify(getData())}</pre>
     </form>
   );
