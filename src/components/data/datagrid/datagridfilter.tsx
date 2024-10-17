@@ -44,6 +44,25 @@ export const DataGridFilter: React.FC = () => {
     onFilterTimeoutRef.current = setTimeout(handler, 300);
   }, [filterState]);
 
+  /**
+   * Gets called when a filter is changed.
+   * @param e
+   */
+  const handleFilter: React.EventHandler<
+    React.SyntheticEvent<HTMLInputElement>
+  > = (e) => {
+    const input = e.target as HTMLInputElement;
+    if (input.type !== "checkbox") {
+      e.preventDefault();
+    }
+
+    const data = serializeForm(input.form as HTMLFormElement) as AttributeData;
+    const _data = filterTransform ? filterTransform(data) : data;
+
+    // Reset page on filter (length of dataset may change).
+    setFilterState(_data);
+  };
+
   return (
     <tr className="mykn-datagrid__row mykn-datagrid__row--filter" role="row">
       {selectable && (
@@ -79,6 +98,7 @@ export const DataGridFilter: React.FC = () => {
                 aria-label={_labelFilterField}
                 icon={
                   !field.options &&
+                  field.type !== "boolean" &&
                   field.type !== "daterange" && <Outline.MagnifyingGlassIcon />
                 }
                 form={`${dataGridId}-filter-form`}
@@ -87,20 +107,19 @@ export const DataGridFilter: React.FC = () => {
                 min={!field.options && field.type === "number" ? 0 : undefined}
                 pad={field.type === "daterange" ? "v" : undefined}
                 placeholder={placeholder}
-                type={field.type}
+                type={field.type === "boolean" ? "checkbox" : field.type}
                 value={field.filterValue}
-                onChange={(
-                  e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
-                ) => {
-                  e.preventDefault();
-                  const data = serializeForm(
-                    e.target.form as HTMLFormElement,
-                  ) as AttributeData;
-                  const _data = filterTransform ? filterTransform(data) : data;
-
-                  // Reset page on filter (length of dataset may change).
-                  setFilterState(_data);
-                }}
+                onChange={
+                  field.type !== "boolean"
+                    ? (e: React.ChangeEvent<HTMLInputElement>) =>
+                        handleFilter(e)
+                    : undefined
+                }
+                onClick={
+                  field.type === "boolean"
+                    ? (e: React.MouseEvent<HTMLInputElement>) => handleFilter(e)
+                    : undefined
+                }
               />
             )}
           </th>

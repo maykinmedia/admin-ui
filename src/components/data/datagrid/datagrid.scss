@@ -61,12 +61,17 @@
 
     .mykn-form-control {
       gap: 0;
+      width: 100%;
     }
 
     .mykn-stackctx,
     .mykn-input,
     .mykn-select {
       width: 100%;
+    }
+
+    .mykn-checkbox {
+      align-self: flex-end;
     }
   }
 
@@ -124,6 +129,10 @@
 
   &__cell--editable .mykn-button {
     border: none;
+  }
+
+  &__cell--editable#{&}__cell--type-boolean .mykn-form-control {
+    align-items: flex-end;
   }
 
   &__cell--editable:not(#{&}__cell--type-boolean) .mykn-form-control {
