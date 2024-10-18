@@ -93,7 +93,7 @@ export const Dropdown: React.FC<DropdownProps> = ({
    * Initialize Floating UI.
    */
   const { refs, floatingStyles, context } = useFloating({
-    middleware: [offset(6), flip(), shift({ padding: 20 })],
+    middleware: [offset(6), flip(), shift({ padding: 0 })],
     open: isOpen,
     onOpenChange: setIsOpen,
     placement: placement,
