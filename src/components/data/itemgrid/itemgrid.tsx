@@ -93,7 +93,7 @@ export const ItemGridSection: React.FC<ItemGridSectionProps> = ({
       <Grid>
         {fieldset[0] && (
           <Column span={12}>
-            <H3>{fieldset[0]}</H3>
+            <H3>{field2Title(fieldset[0])}</H3>
           </Column>
         )}
         {objectList.map((o, index) => (

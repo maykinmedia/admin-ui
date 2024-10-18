@@ -1,10 +1,15 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import * as React from "react";
-import { useEffect, useState } from "react";
 
 import { PAGE_DECORATOR } from "../../../../.storybook/decorators";
-import { generateHexColor } from "../../../../.storybook/utils";
-import { AttributeData, FieldSet } from "../../../lib";
+import {
+  FIXTURE_TODOS,
+  FIXTURE_TODOS_STATUS_DONE,
+  FIXTURE_TODOS_STATUS_IN_PROGRESS,
+  FIXTURE_TODOS_STATUS_IN_REVIEW,
+  FIXTURE_TODOS_STATUS_TODO,
+} from "../../../../.storybook/fixtures/todos";
+import { AttributeData } from "../../../lib";
 import { ItemGrid, ItemGridProps } from "./itemgrid";
 
 const meta: Meta<typeof ItemGrid> = {
@@ -17,59 +22,25 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const ItemGridComponent: Story = {
-  // @ts-expect-error - Fix never
+  // @ts-expect-error - never
   args: {
     title: "The quick brown fox jumps over the lazy dog.",
     fieldsets: [
-      ["Even", { fields: ["title"], title: "title" }],
-      ["Odd", { fields: ["title"], title: "title" }],
+      ["Todo", { fields: ["title"], title: "title" }],
+      ["In Progress", { fields: ["title"], title: "title" }],
+      ["In Review", { fields: ["title"], title: "title" }],
+      ["Done", { fields: ["title"], title: "title" }],
     ],
-  },
-  render: (args: ItemGridProps) => {
-    const abortController = new AbortController();
-    const [objectList, setObjectList] = useState<AttributeData[]>([]);
-    // Process sorting and pagination locally in place for demonstration purposes.
-
-    useEffect(() => {
-      const limit = "groupBy" in args ? 200 : 11;
-      fetch(`https://jsonplaceholder.typicode.com/photos?_limit=${limit}`, {
-        signal: abortController.signal,
-      })
-        .then((response) => response.json())
-        .then((data: AttributeData[]) => {
-          setObjectList(
-            data.map((d) => {
-              const url = `https://placehold.co/600x400/${generateHexColor(d.id as number)}/000`;
-              return {
-                ...d,
-                alphaIndex: String(d.title?.toString()[0]).toUpperCase(),
-                url: url,
-                thumbnailUrl: url,
-              };
-            }),
-          );
-        });
-    }, [args]);
-
-    const even = objectList.filter((o, index) => index % 2 === 0);
-    const odd = objectList.filter((o, index) => index % 2 !== 0);
-
-    return "groupBy" in args ? (
-      <ItemGrid
-        {...args}
-        objectList={objectList}
-        objectLists={undefined}
-        fieldset={args.fieldset as FieldSet}
-        fieldsets={undefined}
-        groupBy={args.groupBy as string}
-      />
-    ) : (
-      <ItemGrid {...args} objectLists={[even, odd]} />
-    );
+    objectLists: [
+      FIXTURE_TODOS_STATUS_TODO,
+      FIXTURE_TODOS_STATUS_IN_PROGRESS,
+      FIXTURE_TODOS_STATUS_IN_REVIEW,
+      FIXTURE_TODOS_STATUS_DONE,
+    ],
   },
 };
 
-export const WithCustomPreview: Story = {
+export const CustomPreview: Story = {
   ...ItemGridComponent,
   // @ts-expect-error - Fix never
   args: {
@@ -77,10 +48,9 @@ export const WithCustomPreview: Story = {
     renderPreview: (attributeData: AttributeData<string>) => (
       <img
         alt={attributeData.title}
-        src={attributeData.thumbnailUrl}
-        width="100%"
-        height="100%"
-        style={{ objectFit: "cover" }}
+        src="/static/maykin_logo.png"
+        height="24"
+        style={{ objectFit: "contain" }}
       />
     ),
   },
@@ -90,7 +60,10 @@ export const GroupBy: Story = {
   ...ItemGridComponent,
   // @ts-expect-error - Fix never
   args: {
+    ...(ItemGridComponent.args as ItemGridProps),
+    title: "The quick brown fox jumps over the lazy dog.",
     fieldset: [`{group}`, { fields: ["title"], title: "title" }],
-    groupBy: "alphaIndex",
+    objectList: FIXTURE_TODOS,
+    groupBy: "status",
   },
 };
