@@ -17,10 +17,16 @@ export const addSpaces = (string: string) =>
 
 /**
  * Converts "fieldName" to "Field name".
- * @param field
+ * @deprecated Use `field2title` instead.
  */
-export const field2Caption = (field: string): string =>
-  ucFirst(unHyphen(addSpaces(field)));
+export const field2Caption = (field: string): string => {
+  if (process && process?.env?.NODE_ENV !== "production") {
+    console.warn(
+      "DEPRECATION: `field2Caption` is deprecated, use `field2Title` instead.",
+    );
+  }
+  return ucFirst(unHyphen(addSpaces(field)));
+};
 
 interface Field2TitleOptions {
   addSpaces?: boolean;

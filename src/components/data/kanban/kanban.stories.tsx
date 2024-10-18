@@ -66,7 +66,7 @@ export const AdditionalFields: Story = {
   },
 };
 
-export const WithCustomPreview: Story = {
+export const CustomPreview: Story = {
   ...KanbanComponent,
   // @ts-expect-error - Fix never
   args: {
@@ -76,6 +76,7 @@ export const WithCustomPreview: Story = {
         alt={attributeData.title}
         src="/static/maykin_logo.png"
         height="24"
+        style={{ objectFit: "contain" }}
       />
     ),
   },

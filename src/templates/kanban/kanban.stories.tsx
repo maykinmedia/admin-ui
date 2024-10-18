@@ -3,9 +3,9 @@ import * as React from "react";
 
 import { Badge, Outline } from "../../components";
 import {
+  CustomPreview as CustomPreviewComponentStory,
   Draggable as DraggableComponentStory,
   KanbanComponent as KanbanComponentStory,
-  WithCustomPreview as WithCustomPreviewComponentStory,
   WithToolbar as WithToolbarComponentStory,
 } from "../../components/data/kanban/kanban.stories";
 import { KanbanTemplate } from "./kanban";
@@ -120,11 +120,11 @@ export const WithSecondaryNavigation: Story = {
   },
 };
 
-export const WithCustomPreview: Story = {
+export const CustomPreview: Story = {
   ...kanbanTemplate,
   args: {
     ...kanbanTemplate.args,
-    kanbanProps: WithCustomPreviewComponentStory.args,
+    kanbanProps: CustomPreviewComponentStory.args,
   },
 };
 
