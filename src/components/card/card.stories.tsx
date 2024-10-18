@@ -1,20 +1,14 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import * as React from "react";
 
-import { Page } from "../layout";
+import { PAGE_DECORATOR } from "../../../.storybook/decorators";
 import { Body, P } from "../typography";
 import { Card } from "./card";
 
 const meta: Meta<typeof Card> = {
   title: "Building Blocks/Card",
   component: Card,
-  decorators: [
-    (Story) => (
-      <Page pad={true}>
-        <Story />
-      </Page>
-    ),
-  ],
+  decorators: [PAGE_DECORATOR],
   parameters: {
     layout: "fullscreen",
   },

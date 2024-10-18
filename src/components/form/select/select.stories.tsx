@@ -4,9 +4,11 @@ import { expect, fn, userEvent, waitFor, within } from "@storybook/test";
 import { Formik } from "formik";
 import * as React from "react";
 
+import {
+  FORM_TEST_DECORATOR,
+  PAGE_DECORATOR,
+} from "../../../../.storybook/decorators";
 import { Button } from "../../button";
-import { Page } from "../../layout";
-import { FORM_TEST_DECORATOR } from "../.storybook/decorators";
 import { Select } from "./select";
 
 const meta: Meta<typeof Select> = {
@@ -78,14 +80,7 @@ export const SelectComponent: Story = {
 export const TransparentSelect: Story = {
   ...SelectComponent,
   args: { ...SelectComponent.args, variant: "transparent" },
-  decorators: [
-    ...(SelectComponent.decorators as StoryFn[]),
-    (Story: StoryFn) => (
-      <Page>
-        <Story />
-      </Page>
-    ),
-  ],
+  decorators: [...(SelectComponent.decorators as StoryFn[]), PAGE_DECORATOR],
 };
 
 export const UsageWithFormik: Story = {

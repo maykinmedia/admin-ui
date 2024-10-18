@@ -1,19 +1,12 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import * as React from "react";
 
-import { Page } from "../layout";
+import { PAGE_DECORATOR } from "../../../.storybook/decorators";
 import { Breadcrumbs } from "./breadcrumbs";
 
 const meta: Meta<typeof Breadcrumbs> = {
   title: "Controls/Breadcrumbs",
   component: Breadcrumbs,
-  decorators: [
-    (Story) => (
-      <Page pad={true}>
-        <Story />
-      </Page>
-    ),
-  ],
+  decorators: [PAGE_DECORATOR],
 };
 
 export default meta;

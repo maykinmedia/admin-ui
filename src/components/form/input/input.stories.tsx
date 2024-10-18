@@ -4,9 +4,9 @@ import { expect, fn, userEvent, waitFor, within } from "@storybook/test";
 import { Formik } from "formik";
 import * as React from "react";
 
+import { PAGE_DECORATOR } from "../../../../.storybook/decorators";
+import { FORM_TEST_DECORATOR } from "../../../../.storybook/decorators";
 import { Button } from "../../button";
-import { Page } from "../../layout";
-import { FORM_TEST_DECORATOR } from "../.storybook/decorators";
 import { Input } from "./input";
 
 const meta: Meta<typeof Input> = {
@@ -260,14 +260,7 @@ export const TransparentInput: Story = {
     variant: "transparent",
   },
   argTypes: FORM_TEST_ARG_TYPES,
-  decorators: [
-    FORM_TEST_DECORATOR,
-    (Story) => (
-      <Page>
-        <Story />
-      </Page>
-    ),
-  ],
+  decorators: [FORM_TEST_DECORATOR, PAGE_DECORATOR],
 };
 
 export const UsageWithFormik: Story = {

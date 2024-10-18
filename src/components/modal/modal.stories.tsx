@@ -2,21 +2,15 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { expect, waitFor, within } from "@storybook/test";
 import * as React from "react";
 
+import { PAGE_DECORATOR } from "../../../.storybook/decorators";
 import { Form } from "../form";
-import { Page } from "../layout";
 import { Body, H3 } from "../typography";
 import { Modal } from "./modal";
 
 const meta: Meta<typeof Modal> = {
   title: "Building Blocks/Modal",
   component: Modal,
-  decorators: [
-    (Story) => (
-      <Page pad={true}>
-        <Story />
-      </Page>
-    ),
-  ],
+  decorators: [PAGE_DECORATOR],
 };
 
 export default meta;

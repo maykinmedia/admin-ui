@@ -1,9 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { expect, userEvent, waitFor, within } from "@storybook/test";
-import * as React from "react";
 
+import { PAGE_DECORATOR } from "../../../../.storybook/decorators";
 import { allModes } from "../../../../.storybook/modes";
-import { Page } from "../../layout";
 import { Paginator } from "./paginator";
 
 const meta: Meta<typeof Paginator> = {
@@ -13,13 +12,7 @@ const meta: Meta<typeof Paginator> = {
     onPageChange: { action: "onPageChange" },
     onPageSizeChange: { action: "onPageSizeChange" },
   },
-  decorators: [
-    (Story) => (
-      <Page>
-        <Story />
-      </Page>
-    ),
-  ],
+  decorators: [PAGE_DECORATOR],
 };
 
 export default meta;

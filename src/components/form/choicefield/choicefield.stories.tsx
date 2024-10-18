@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { FORM_TEST_DECORATOR } from "../.storybook/decorators";
+import { FORM_TEST_DECORATOR } from "../../../../.storybook/decorators";
 import { ChoiceField } from "./choicefield";
 
 const meta: Meta<typeof ChoiceField> = {

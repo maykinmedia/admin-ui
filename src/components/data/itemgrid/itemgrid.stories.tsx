@@ -2,21 +2,15 @@ import type { Meta, StoryObj } from "@storybook/react";
 import * as React from "react";
 import { useEffect, useState } from "react";
 
+import { PAGE_DECORATOR } from "../../../../.storybook/decorators";
 import { generateHexColor } from "../../../../.storybook/utils";
 import { AttributeData, FieldSet } from "../../../lib";
-import { Page } from "../../layout";
 import { ItemGrid, ItemGridProps } from "./itemgrid";
 
 const meta: Meta<typeof ItemGrid> = {
   title: "Data/Itemgrid",
   component: ItemGrid,
-  decorators: [
-    (Story) => (
-      <Page>
-        <Story />
-      </Page>
-    ),
-  ],
+  decorators: [PAGE_DECORATOR],
 };
 
 export default meta;

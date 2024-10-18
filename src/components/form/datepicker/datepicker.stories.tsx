@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { expect, fn, userEvent, waitFor, within } from "@storybook/test";
 
-import { FORM_TEST_DECORATOR } from "../.storybook/decorators";
+import { FORM_TEST_DECORATOR } from "../../../../.storybook/decorators";
 import { DatePicker } from "./datepicker";
 
 const meta = {

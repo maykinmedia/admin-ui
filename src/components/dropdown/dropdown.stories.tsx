@@ -2,24 +2,16 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { expect, userEvent, waitFor, within } from "@storybook/test";
 import * as React from "react";
 
+import { PAGE_DECORATOR } from "../../../.storybook/decorators";
 import { Button, ButtonLink } from "../button";
 import { Outline } from "../icon";
-import { Column, Grid, Page } from "../layout";
 import { Toolbar } from "../toolbar";
 import { Dropdown } from "./dropdown";
 
 const meta: Meta<typeof Dropdown> = {
   title: "Controls/Dropdown",
   component: Dropdown,
-  decorators: [
-    (Story) => (
-      <Page pad={true}>
-        <Grid>
-          <Column span={12}>{Story()}</Column>
-        </Grid>
-      </Page>
-    ),
-  ],
+  decorators: [PAGE_DECORATOR],
   parameters: {
     layout: "fullscreen",
     lastButtonText: "Uitloggen",
