@@ -4,7 +4,7 @@ import * as React from "react";
 
 import { Button, ButtonLink } from "../button";
 import { Outline } from "../icon";
-import { Page } from "../layout";
+import { Column, Grid, Page } from "../layout";
 import { Toolbar } from "../toolbar";
 import { Dropdown } from "./dropdown";
 
@@ -14,7 +14,9 @@ const meta: Meta<typeof Dropdown> = {
   decorators: [
     (Story) => (
       <Page pad={true}>
-        <Story />
+        <Grid>
+          <Column span={12}>{Story()}</Column>
+        </Grid>
       </Page>
     ),
   ],
