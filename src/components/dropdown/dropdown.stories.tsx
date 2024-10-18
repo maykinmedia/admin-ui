@@ -24,11 +24,12 @@ const meta: Meta<typeof Dropdown> = {
   },
   play: async ({ canvasElement, parameters }) => {
     const canvas = within(canvasElement);
+    const body = within(document.body);
     const button = canvas.getByText("Click me!");
 
     // Click opens, escape closes.
     await userEvent.click(button, { delay: 10 });
-    await waitFor(() => canvas.findByRole("dialog"), { timeout: 300 });
+    await waitFor(() => body.findByRole("dialog"), { timeout: 300 });
     await userEvent.keyboard("{Escape}", { delay: 10 });
     await waitFor(() => expect(canvas.queryByRole("dialog")).toBeNull());
     await userEvent.click(button, { delay: 10 });
@@ -99,11 +100,12 @@ export const ActivateOnHover: Story = {
   },
   play: async ({ canvasElement, parameters }) => {
     const canvas = within(canvasElement);
+    const body = within(document.body);
     const button = canvas.getByText("Hover me!");
 
     // Click opens, escape closes.
     await userEvent.hover(button, { delay: 10 });
-    await waitFor(() => canvas.findByRole("dialog"), { timeout: 300 });
+    await waitFor(() => body.findByRole("dialog"), { timeout: 300 });
     await userEvent.keyboard("{Escape}", { delay: 10 });
     await waitFor(() => expect(canvas.queryByRole("dialog")).toBeNull());
     await userEvent.hover(button, { delay: 10 });
@@ -125,14 +127,15 @@ export const ActivateOnFocus: Story = {
   ...ActivateOnHover,
   play: async ({ canvasElement, parameters }) => {
     const canvas = within(canvasElement);
+    const body = within(document.body);
     const button = canvas.getByText("Hover me!");
 
     // Click opens, escape closes.
     await userEvent.tab({ delay: 10 });
     button.focus();
-    await waitFor(() => canvas.findByRole("dialog"), { timeout: 300 });
+    await waitFor(() => body.findByRole("dialog"), { timeout: 300 });
     await userEvent.keyboard("{Escape}");
-    await waitFor(() => expect(canvas.queryByRole("dialog")).toBeNull());
+    await waitFor(() => expect(body.queryByRole("dialog")).toBeNull());
     await userEvent.tab({ shift: true, delay: 10 });
 
     await userEvent.tab({ delay: 10 });
@@ -297,11 +300,12 @@ export const NestedDropdown: Story = {
   },
   play: async ({ canvasElement, parameters }) => {
     const canvas = within(canvasElement);
+    const body = within(document.body);
     const button = canvas.getByText("Click me!");
 
     // Click opens, escape closes.
     await userEvent.click(button, { delay: 10 });
-    await expect(await canvas.findByRole("dialog")).toBeVisible();
+    await expect(await body.findByRole("dialog")).toBeVisible();
     await userEvent.keyboard("{Escape}");
     await waitFor(() => expect(canvas.queryByRole("dialog")).toBeNull());
     await userEvent.click(button, { delay: 10 });
