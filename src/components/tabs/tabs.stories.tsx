@@ -1,20 +1,14 @@
 import { Meta, StoryObj } from "@storybook/react";
 import * as React from "react";
 
+import { PAGE_DECORATOR } from "../../../.storybook/decorators";
 import { Card } from "../card";
-import { Page } from "../layout";
 import { Tab, Tabs } from "./tabs";
 
 const meta: Meta<typeof Tabs> = {
   title: "Controls/Tabs",
   component: Tabs,
-  decorators: [
-    (Story) => (
-      <Page pad={true}>
-        <Story />
-      </Page>
-    ),
-  ],
+  decorators: [PAGE_DECORATOR],
 };
 
 export default meta;

@@ -1,20 +1,14 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import * as React from "react";
 
+import { PAGE_DECORATOR } from "../../../.storybook/decorators";
 import { Outline } from "../icon";
-import { Page } from "../layout";
 import { Navbar } from "./navbar";
 
 const meta: Meta<typeof Navbar> = {
   title: "Controls/Navbar",
   component: Navbar,
-  decorators: [
-    (Story) => (
-      <Page>
-        <Story />
-      </Page>
-    ),
-  ],
+  decorators: [PAGE_DECORATOR],
 };
 
 export default meta;

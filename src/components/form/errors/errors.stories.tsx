@@ -1,19 +1,12 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import * as React from "react";
 
-import { Page } from "../../layout";
+import { PAGE_DECORATOR } from "../../../../.storybook/decorators";
 import { Errors } from "./errors";
 
 const meta: Meta<typeof Errors> = {
   title: "Building Blocks/ErrorsArray",
   component: Errors,
-  decorators: [
-    (Story) => (
-      <Page pad={true}>
-        <Story />
-      </Page>
-    ),
-  ],
+  decorators: [PAGE_DECORATOR],
   parameters: {
     layout: "fullscreen",
   },

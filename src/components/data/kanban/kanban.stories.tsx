@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import * as React from "react";
 
+import { PAGE_DECORATOR } from "../../../../.storybook/decorators";
 import {
   FIXTURE_TODOS,
   FIXTURE_TODOS_STATUS_DONE,
@@ -9,19 +10,12 @@ import {
   FIXTURE_TODOS_STATUS_TODO,
 } from "../../../../.storybook/fixtures/todos";
 import { AttributeData } from "../../../lib";
-import { Page } from "../../layout";
 import { Kanban, KanbanProps } from "./kanban";
 
 const meta: Meta<typeof Kanban> = {
   title: "Data/Kanban",
   component: Kanban,
-  decorators: [
-    (Story) => (
-      <Page>
-        <Story />
-      </Page>
-    ),
-  ],
+  decorators: [PAGE_DECORATOR],
 };
 
 export default meta;

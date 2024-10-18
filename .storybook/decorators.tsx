@@ -2,10 +2,7 @@ import { Decorator } from "@storybook/react";
 import * as React from "react";
 import { useEffect, useRef, useState } from "react";
 
-
-
-import { serializeForm } from "../../../lib";
-
+import { Column, Grid, Page, serializeForm } from "../src";
 
 export const FORM_TEST_DECORATOR: Decorator = (Story) => {
   // Solely here to force re-rendering story on change.
@@ -30,3 +27,11 @@ export const FORM_TEST_DECORATOR: Decorator = (Story) => {
     </form>
   );
 };
+
+export const PAGE_DECORATOR: Decorator = (Story) => (
+  <Page>
+    <Grid>
+      <Column span={12}>{Story()}</Column>
+    </Grid>
+  </Page>
+);

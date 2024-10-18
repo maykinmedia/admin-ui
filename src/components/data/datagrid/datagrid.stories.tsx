@@ -1,21 +1,15 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import * as React from "react";
 
+import { PAGE_DECORATOR } from "../../../../.storybook/decorators";
 import { FIXTURE_PRODUCTS } from "../../../../.storybook/fixtures/products";
 import { Button } from "../../button";
-import { Page } from "../../layout";
 import { DataGrid } from "./datagrid";
 
 const meta: Meta<typeof DataGrid> = {
   title: "Data/DataGrid",
   component: DataGrid,
-  decorators: [
-    (Story) => (
-      <Page pad={false}>
-        <Story />
-      </Page>
-    ),
-  ],
+  decorators: [PAGE_DECORATOR],
   parameters: {
     actions: [], // Prevent auto mocked callback functions.
   },

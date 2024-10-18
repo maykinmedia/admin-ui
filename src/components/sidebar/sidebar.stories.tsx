@@ -1,21 +1,15 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import * as React from "react";
 
+import { PAGE_DECORATOR } from "../../../.storybook/decorators";
 import { Badge } from "../badge";
-import { Page } from "../layout";
 import { Toolbar } from "../toolbar";
 import { Sidebar } from "./sidebar";
 
 const meta: Meta<typeof Sidebar> = {
   title: "Building Blocks/Sidebar",
   component: Sidebar,
-  decorators: [
-    (Story) => (
-      <Page>
-        <Story />
-      </Page>
-    ),
-  ],
+  decorators: [PAGE_DECORATOR],
 };
 
 export default meta;

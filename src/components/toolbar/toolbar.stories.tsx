@@ -1,22 +1,16 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import * as React from "react";
 
+import { PAGE_DECORATOR } from "../../../.storybook/decorators";
 import { Button, ButtonLink } from "../button";
 import { Outline } from "../icon";
-import { Page } from "../layout";
 import { A } from "../typography";
 import { Toolbar } from "./toolbar";
 
 const meta: Meta<typeof Toolbar> = {
   title: "Controls/Toolbar",
   component: Toolbar,
-  decorators: [
-    (Story) => (
-      <Page pad={true}>
-        <Story />
-      </Page>
-    ),
-  ],
+  decorators: [PAGE_DECORATOR],
 };
 
 export default meta;
