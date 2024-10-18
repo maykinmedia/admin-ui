@@ -5,41 +5,47 @@
   position: relative;
   justify-content: center;
 
+  > .mykn-button {
+    width: 100%;
+  }
+
   &--open > .mykn-button {
     outline: 1px solid var(--page-color-primary);
   }
 
-  .mykn-a,
-  .mykn-button,
-  .mykn-dropdown {
-    width: 100%;
-  }
-
-  &__dropdown {
-    width: fit-content;
-    border: 1px solid var(--page-color-primary);
-    border-radius: var(--border-radius-l);
-    box-sizing: border-box;
-    padding: 2px;
-    z-index: 1000;
-  }
-
-  @media screen and (max-width: constants.$breakpoint-desktop - 1px) {
+  @at-root {
     &__dropdown {
-      width: 100%; // Fallback.
-      width: min(100%, max(calc(100vw - 2 * var(--spacing-h)), 100cqw));
-    }
-  }
+      width: fit-content;
+      border: 1px solid var(--page-color-primary);
+      border-radius: var(--border-radius-l);
+      box-sizing: border-box;
+      padding: 2px;
+      z-index: 1000;
 
-  @media screen and (min-width: constants.$breakpoint-desktop) {
-    &__dropdown .mykn-toolbar--direction-horizontal {
-      width: min-content;
+      .mykn-a,
+      .mykn-button,
+      .mykn-dropdown {
+        width: 100%;
+      }
     }
-  }
 
-  @media screen and (min-width: constants.$breakpoint-desktop) {
-    &__dropdown .mykn-toolbar--direction-vertical {
-      width: max-content;
+    @media screen and (max-width: constants.$breakpoint-desktop - 1px) {
+      &__dropdown {
+        width: 100%; // Fallback.
+        width: min(100%, max(calc(100vw - 2 * var(--spacing-h)), 100cqw));
+      }
+    }
+
+    @media screen and (min-width: constants.$breakpoint-desktop) {
+      &__dropdown .mykn-toolbar--direction-horizontal {
+        width: min-content;
+      }
+    }
+
+    @media screen and (min-width: constants.$breakpoint-desktop) {
+      &__dropdown .mykn-toolbar--direction-vertical {
+        width: max-content;
+      }
     }
   }
 }
