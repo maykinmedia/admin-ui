@@ -331,7 +331,7 @@ export const KanbanSection: React.FC<KanbanSectionProps> = ({
     >
       {fieldset[0] && (
         <Toolbar directionResponsive={false} pad={false} variant="transparent">
-          <H3>{fieldset[0]}</H3>
+          <H3>{field2Title(fieldset[0])}</H3>
           <Badge rounded>{objectList.length}</Badge>
         </Toolbar>
       )}
