@@ -1,6 +1,8 @@
 @use "../../../settings/constants";
 
 .mykn-page {
+  align-items: start;
+  justify-content: start;
   background-color: var(--page-color-background);
   container-name: page;
   display: flex;
