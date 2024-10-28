@@ -19,15 +19,9 @@
 
   &__scrollpane--overflow-x {
     overflow-x: auto;
-    overflow-y: hidden;
   }
 
   &__scrollpane--overflow-y {
-    overflow-x: hidden;
-    overflow-y: auto;
-  }
-  &__scrollpane--overflow-x#{&}__scrollpane--overflow-y {
-    overflow-x: auto;
     overflow-y: auto;
   }
 
@@ -53,7 +47,7 @@
   }
 
   &__toolbar ~ &__scrollpane:not(&__scrollpane--overflow-y) &__thead {
-    top: var(--mykn-datagrid-thead-top-base, 50px);
+    top: var(--mykn-datagrid-thead-top-base, 0px);
   }
 
   &__thead &__row--filter {

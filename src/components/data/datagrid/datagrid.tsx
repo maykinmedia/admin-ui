@@ -1,4 +1,5 @@
 import React, {
+  CSSProperties,
   useCallback,
   useEffect,
   useId,
@@ -39,9 +40,7 @@ export type DataGridProps = {
 
   /**
    * Whether to allow horizontal contents to exceed the bounding box width
-   * resulting in a horizontal scrollbar. When this is set to `true` (default) a
-   * "stickyfix" is applied in certain cases to preserve the sticky behaviour of
-   * nested components.
+   * resulting in a horizontal scrollbar.
    */
   allowOverflowX?: boolean;
 
@@ -73,14 +72,10 @@ export type DataGridProps = {
   filterTransform?: (value: AttributeData) => AttributeData;
 
   /**
-   * This value is copied one-to-one to the style attribute of the rendered
-   * datagrid.
-   *
-   * NOTE: When using `allowOverflowX=true` (default). Setting this disables
-   * the sticky fix in favor of the native implementation. Even if style is
-   * overridden completely.
+   * Can be any valid CSS `height` property or `"fill-available-space"` to
+   * automatically use the available vertical in the document.
    */
-  height?: string;
+  height?: CSSProperties["height"] | "fill-available-space";
 
   /** Whether to allow sorting/the field to sort on. */
   sort?: boolean | string;
@@ -214,17 +209,13 @@ export type DataGridProps = {
   onSort?: (sort: string) => Promise<unknown> | void;
 } & PaginatorPropsAliases;
 
-export const dataGridRef = React.createRef<HTMLDivElement>();
 export const toolbarRef = React.createRef<HTMLDivElement>();
-export const scrollPaneRef = React.createRef<HTMLDivElement>();
 
 export type DataGridContextType = Omit<
   DataGridProps,
   "equalityChecker" | "fields" | "onSelect" | "onSort"
 > & {
-  dataGridRef: React.RefObject<HTMLDivElement>;
   toolbarRef: React.RefObject<HTMLDivElement>;
-  scrollPaneRef: React.RefObject<HTMLDivElement>;
 
   amountSelected: number;
   count: number;
@@ -410,6 +401,41 @@ export const DataGrid: React.FC<DataGridProps> = (props) => {
     }
   }, [objectList]);
 
+  // Sync height
+  const dataGridRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const fn = () => {
+      requestAnimationFrame(() => {
+        const node = dataGridRef.current;
+        if (!node) return;
+
+        // Height should be computed.
+        if (height === "fill-available-space") {
+          const rect = node.getBoundingClientRect();
+          node.style.height = `auto`;
+
+          const windowHeight = document.documentElement.clientHeight;
+          const dataGridOffsetTop = rect.top;
+          const availableHeight = Math.min(windowHeight - dataGridOffsetTop);
+          node.style.height = `${availableHeight}px`;
+        }
+
+        // Height is defined.
+        if (height) {
+          node.style.height = height as string;
+        }
+      });
+    };
+    window.addEventListener("resize", fn);
+    window.addEventListener("scroll", fn);
+    fn();
+
+    return () => {
+      window.removeEventListener("resize", fn);
+      window.removeEventListener("scroll", fn);
+    };
+  });
+
   // Convert `Array<Field|TypedField>` to `TypedField[]`.
   const typedFields = useMemo(
     () =>
@@ -566,9 +592,7 @@ export const DataGrid: React.FC<DataGridProps> = (props) => {
   return (
     <DataGridContext.Provider
       value={{
-        dataGridRef,
         toolbarRef,
-        scrollPaneRef,
 
         ...defaultedProps,
         // @ts-expect-error - FIXME, line required due due to story passing undefined.
@@ -605,7 +629,7 @@ export const DataGrid: React.FC<DataGridProps> = (props) => {
         onSelectAllPages: handleSelectAllPages,
       }}
     >
-      <div className="mykn-datagrid" style={{ height }} {...attrs}>
+      <div ref={dataGridRef} className="mykn-datagrid" {...attrs}>
         {title && <DataGridHeader />}
         {(selectable || fieldsSelectable) && <DataGridToolbar />}
 

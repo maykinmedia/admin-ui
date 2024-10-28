@@ -300,6 +300,41 @@ export const DateRangeFilter: Story = {
   },
 };
 
+export const FillAvailableSpace: Story = {
+  args: {
+    objectList: FIXTURE_PRODUCTS,
+    height: "fill-available-space",
+    fields: [
+      "name",
+      "category",
+      { name: "price", type: "number", filterable: false },
+      { name: "stock", type: "number", filterable: false },
+      { name: "isAvailable", type: "boolean" },
+    ],
+    filterable: true,
+    paginatorProps: {
+      count: 100,
+      page: 1,
+      pageSize: 10,
+      pageSizeOptions: [
+        { label: 10 },
+        { label: 20 },
+        { label: 30 },
+        { label: 40 },
+        { label: 50 },
+      ],
+    },
+  },
+  argTypes: {
+    ...DataGridComponent.argTypes,
+    onFilter: { action: "onFilter" },
+    onSelect: { action: "onSelect" },
+    onSelectionChange: { action: "onSelectionChange" },
+    onSelectAllPages: { action: "onSelectAllPages" },
+    onSort: { action: "onSort" },
+  },
+};
+
 export const JSXAsValue: Story = {
   ...DataGridComponent,
   args: {
