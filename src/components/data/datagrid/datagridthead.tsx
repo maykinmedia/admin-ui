@@ -1,7 +1,7 @@
 import React, { CSSProperties, useContext, useEffect, useRef } from "react";
 
 import { field2Title } from "../../../lib";
-import { DataGridContext, scrollPaneRef } from "./datagrid";
+import { DataGridContext } from "./datagrid";
 import { DataGridFilter } from "./datagridfilter";
 import { DataGridHeadingCell } from "./datagridheadingcell";
 
@@ -13,6 +13,7 @@ export const DataGridTHead: React.FC = () => {
   const ref = useRef<HTMLTableSectionElement>(null);
 
   const {
+    allowOverflowX,
     dataGridId,
     filterable,
     height,
@@ -26,41 +27,70 @@ export const DataGridTHead: React.FC = () => {
     stickyFix();
     window.addEventListener("resize", stickyFix);
     window.addEventListener("scroll", stickyFix);
-    () => {
+
+    return () => {
       window.removeEventListener("resize", stickyFix);
-      window.addEventListener("scroll", stickyFix);
+      window.removeEventListener("scroll", stickyFix);
     };
-  });
+  }, [ref.current, height]);
 
   /**
-   * Fixes sticky behaviour due to `overflow-x: auto;` not being compatible
-   * with native sticky in all cases.
+   * Fixes sticky behaviour due to `overflow-y: auto;` and `overflow-x: auto;`
+   * combination not being compatible with native sticky in all cases.
    */
   const stickyFix = () => {
-    if (!ref.current || !scrollPaneRef.current) {
+    if (!ref.current) {
       return;
     }
 
-    const node = ref.current;
-    const scrollPaneNode = scrollPaneRef.current;
-    const indicator = "mykn-datagrid__scrollpane--overflow-x";
-
-    // No need for fallback implementation, native behaviour should work if height is set of no overflow is applied..
-    if (height || !scrollPaneNode?.classList?.contains(indicator)) {
-      node.style.top = "";
-      return;
-    }
+    const thead = ref.current;
+    const table = thead.parentNode as HTMLTableElement;
+    const scrollPane = table?.parentNode as HTMLDivElement;
 
     requestAnimationFrame(() => {
-      node.style.top = "";
-      const computedStyle = getComputedStyle(node);
+      const classOverflowX = "mykn-datagrid__scrollpane--overflow-x";
+      const classOverflowY = "mykn-datagrid__scrollpane--overflow-y";
+
+      // Reset.
+      thead.style.top = "";
+      scrollPane.classList.remove(classOverflowX);
+      scrollPane.classList.remove(classOverflowY);
+
+      // Active conditions.
+      const isHeightSet = Boolean(height);
+      const isScrollX =
+        allowOverflowX && scrollPane.scrollWidth > scrollPane.clientWidth;
+
+      // Available fixes.
+      const shouldOverflowX = !isHeightSet && isScrollX;
+      const shouldOverflowY = isHeightSet;
+      const shouldStickyFix = !height && isScrollX;
+
+      // Apply overflow CSS rules using classes.
+      scrollPane.classList.toggle(classOverflowX, shouldOverflowX);
+      scrollPane.classList.toggle(classOverflowY, shouldOverflowY);
+
+      // No need for fallback implementation as only `overflow-y: auto;` has to
+      // be set.
+      if (!shouldStickyFix) {
+        return;
+      }
+
+      // Fix the sticky top behaviour.
+      const computedStyle = getComputedStyle(thead);
       const cssTop = parseInt(computedStyle.top);
-
-      const boundingClientRect = node.getBoundingClientRect();
+      const boundingClientRect = thead.getBoundingClientRect();
       const boundingTop = boundingClientRect.top;
-      const compensation = boundingTop * -1 + cssTop * 2;
 
-      node.style.top = compensation + "px";
+      // No possibility for fallback implementation as `thead` is not rendered
+      // yet.
+      if (!boundingTop) return;
+
+      // Invert the negative offset caused by scrolling and push the position
+      // in the opposite direction, then apply some compensation for the
+      // existing offset.
+      const compensation = boundingTop * -1 + cssTop * 2;
+      thead.style.top = compensation + "px";
     });
   };
 
