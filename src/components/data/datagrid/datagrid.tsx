@@ -429,12 +429,23 @@ export const DataGrid: React.FC<DataGridProps> = (props) => {
     window.addEventListener("click", fn);
     window.addEventListener("resize", fn);
     window.addEventListener("scroll", fn);
+
+    let timeouts: NodeJS.Timeout[] = [];
+    if (height === "fill-available-space") {
+      timeouts = [
+        setTimeout(fn, 30),
+        setTimeout(fn, 100),
+        setTimeout(fn, 200),
+        setTimeout(fn, 300),
+      ];
+    }
     fn();
 
     return () => {
       window.removeEventListener("click", fn);
       window.removeEventListener("resize", fn);
       window.removeEventListener("scroll", fn);
+      timeouts.forEach((t) => clearTimeout(t));
     };
   });
 
