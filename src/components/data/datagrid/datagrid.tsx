@@ -426,11 +426,13 @@ export const DataGrid: React.FC<DataGridProps> = (props) => {
         }
       });
     };
+    window.addEventListener("click", fn);
     window.addEventListener("resize", fn);
     window.addEventListener("scroll", fn);
     fn();
 
     return () => {
+      window.removeEventListener("click", fn);
       window.removeEventListener("resize", fn);
       window.removeEventListener("scroll", fn);
     };
