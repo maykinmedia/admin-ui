@@ -14,7 +14,7 @@ export type ToolbarItem =
   | DropdownProps
   | FormControlProps
   | "spacer"
-  | null;
+  | React.ReactNode;
 
 export type ToolbarProps = React.PropsWithChildren<
   React.HTMLAttributes<HTMLElement> & {
@@ -172,9 +172,17 @@ export const Toolbar: React.FC<ToolbarProps> = ({
    * @param index
    */
   const renderItem = (item: ToolbarItem, index: number) => {
-    const props = typeof item === "string" ? {} : item;
+    const props = React.isValidElement(item)
+      ? {}
+      : (item as Exclude<ToolbarItem, React.ReactNode>);
     const [Component, defaultProps] = getItemComponent(item);
-    return <Component key={index} {...defaultProps} {...props}></Component>;
+    return (
+      <Component
+        key={index}
+        {...defaultProps}
+        {...(props as object)}
+      ></Component>
+    );
   };
 
   return (

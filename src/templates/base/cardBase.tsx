@@ -120,14 +120,7 @@ export const CardBaseTemplate: React.FC<CardBaseTemplateProps> = ({
           compact={true}
           pad={false}
           variant="transparent"
-          items={actions.map((toolbarItem) => {
-            const props = typeof toolbarItem === "string" ? {} : toolbarItem;
-            return {
-              pad: "h",
-              variant: "transparent",
-              ...props,
-            };
-          })}
+          items={actions}
         ></Toolbar>
       )}
       <Errors errors={errors} errorMessageProps={errorMessageProps} />
