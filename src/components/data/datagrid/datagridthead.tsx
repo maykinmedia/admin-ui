@@ -46,6 +46,7 @@ export const DataGridTHead: React.FC = () => {
     const thead = ref.current;
     const table = thead.parentNode as HTMLTableElement;
     const scrollPane = table?.parentNode as HTMLDivElement;
+    const toolbar = scrollPane.previousSibling as HTMLDivElement | null;
 
     requestAnimationFrame(() => {
       const classOverflowX = "mykn-datagrid__scrollpane--overflow-x";
@@ -58,13 +59,14 @@ export const DataGridTHead: React.FC = () => {
 
       // Active conditions.
       const isHeightSet = Boolean(height);
+      const isHeight100Percent = height === "100%"; // (100)% is edge case.
       const isScrollX =
         allowOverflowX && scrollPane.scrollWidth > scrollPane.clientWidth;
 
       // Available fixes.
       const shouldOverflowX = !isHeightSet && isScrollX;
       const shouldOverflowY = isHeightSet;
-      const shouldStickyFix = !height && isScrollX;
+      const shouldStickyFix = isHeight100Percent || (!height && isScrollX);
 
       // Apply overflow CSS rules using classes.
       scrollPane.classList.toggle(classOverflowX, shouldOverflowX);
@@ -77,8 +79,6 @@ export const DataGridTHead: React.FC = () => {
       }
 
       // Fix the sticky top behaviour.
-      const computedStyle = getComputedStyle(thead);
-      const cssTop = parseInt(computedStyle.top);
       const boundingClientRect = thead.getBoundingClientRect();
       const boundingTop = boundingClientRect.top;
 
@@ -89,7 +89,9 @@ export const DataGridTHead: React.FC = () => {
       // Invert the negative offset caused by scrolling and push the position
       // in the opposite direction, then apply some compensation for the
       // existing offset.
-      const compensation = boundingTop * -1 + cssTop * 2;
+      const compensation =
+        boundingTop * -1 +
+        (toolbar ? toolbar.clientHeight : 0) * (isHeight100Percent ? 1 : 2);
       thead.style.top = compensation + "px";
     });
   };
