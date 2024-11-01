@@ -4,7 +4,7 @@ import * as React from "react";
 import { PAGE_DECORATOR } from "../../../.storybook/decorators";
 import { Button, ButtonLink } from "../button";
 import { Outline } from "../icon";
-import { A } from "../typography";
+import { A, P } from "../typography";
 import { Toolbar } from "./toolbar";
 
 const meta: Meta<typeof Toolbar> = {
@@ -146,10 +146,12 @@ export const MixedToolbar: Story = {
 export const ToolbarWithItemsProp: Story = {
   args: {
     align: "start",
+    pad: "h",
     items: [
       // Button
       {
         variant: "transparent",
+        wrap: false,
         children: (
           <>
             <Outline.PencilIcon />
@@ -161,6 +163,7 @@ export const ToolbarWithItemsProp: Story = {
       // Button
       {
         variant: "transparent",
+        wrap: false,
         children: (
           <>
             <Outline.ClipboardDocumentIcon />
@@ -171,14 +174,15 @@ export const ToolbarWithItemsProp: Story = {
 
       // ButtonLink
       {
+        href: "https://www.example.com",
         variant: "transparent",
+        wrap: false,
         children: (
           <>
             <Outline.UserIcon />
             Admin
           </>
         ),
-        href: "https://www.example.com",
       },
 
       // Dropdown
@@ -190,6 +194,7 @@ export const ToolbarWithItemsProp: Story = {
             <Outline.EllipsisVerticalIcon />
           </>
         ),
+        wrap: false,
         items: [
           {
             variant: "transparent",
@@ -227,6 +232,8 @@ export const ToolbarWithItemsProp: Story = {
           },
         ],
       },
+      "spacer",
+      <P key="JSX">Use &quot;spacer&quot; for spacers, JSX supported.</P>,
     ],
   },
 };
