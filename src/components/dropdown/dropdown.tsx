@@ -19,7 +19,7 @@ import clsx from "clsx";
 import React, { useEffect, useState } from "react";
 
 import { Button, ButtonProps } from "../button";
-import { ToolbarProps, ToolbarSpacerProps } from "../toolbar";
+import { ToolbarProps } from "../toolbar";
 import "./dropdown.scss";
 
 export type DropdownProps = ButtonProps & {
@@ -46,8 +46,7 @@ export type DropdownProps = ButtonProps & {
 type TOOLBAR_MODULE_STUB = {
   Toolbar: React.FC<ToolbarProps>;
   ToolbarProps: ToolbarProps;
-  ToolbarSpacerProps: ToolbarSpacerProps;
-  ToolbarSpacer: React.FC<ToolbarSpacerProps>;
+  ToolbarSpacer: () => unknown;
 };
 
 /**

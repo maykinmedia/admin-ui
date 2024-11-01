@@ -216,11 +216,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
   );
 };
 
-export type ToolbarSpacerProps = React.ComponentProps<"div">;
-
 /**
  * Toolbar "spacer" separates items in a toolbar.
  */
-export const ToolbarSpacer = (props: ToolbarSpacerProps) => (
-  <div className="mykn-toolbar__spacer" {...props}></div>
-);
+export const ToolbarSpacer = () => <div className="mykn-toolbar__spacer"></div>;
