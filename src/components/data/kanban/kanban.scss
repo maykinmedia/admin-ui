@@ -27,6 +27,7 @@
     box-sizing: content-box;
     height: calc(var(--typography-line-height-body-s) * 2);
     padding-block: var(--spacing-v);
+    z-index: 10;
   }
 
   &__body .mykn-column > .mykn-body > .mykn-h3 {
@@ -36,7 +37,6 @@
   }
 
   &__track {
-    border: 1px solid var(--typography-color-border);
     display: flex;
     flex-direction: column;
     gap: var(--spacing-v);
@@ -46,12 +46,11 @@
   }
 
   &__track:before {
-    background-color: var(--typography-color-border);
+    background-color: var(--typography-color-background-alt);
     content: "";
     height: 100%;
     inset-block-start: 0;
     inset-inline-start: calc(-2 * var(--spacing-h));
-    opacity: 0.1;
     position: absolute;
     width: calc(100% + 2 * var(--spacing-h));
   }
