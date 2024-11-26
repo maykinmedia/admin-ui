@@ -38,8 +38,9 @@ export const useConfirm = () => {
       [
         {
           children: labelCancel,
-          variant: "secondary",
+          minWidth: true,
           type: "button",
+          variant: "secondary",
           onClick: (e) => {
             e.preventDefault();
             e.stopPropagation();
@@ -49,8 +50,9 @@ export const useConfirm = () => {
         },
         {
           children: labelConfirm,
-          variant: "primary",
+          minWidth: true,
           type: "submit",
+          variant: "primary",
           onClick: (e) => {
             e.preventDefault();
             e.stopPropagation();
