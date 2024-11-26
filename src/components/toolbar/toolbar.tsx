@@ -1,6 +1,7 @@
 import clsx from "clsx";
 import React from "react";
 
+import { isFormControl } from "../../lib";
 import { Button, ButtonLink, ButtonLinkProps, ButtonProps } from "../button";
 import { Dropdown, DropdownProps } from "../dropdown";
 import { FormControl, FormControlProps } from "../form";
@@ -28,7 +29,7 @@ export type ToolbarProps = React.PropsWithChildren<
     className?: string;
 
     /** Whether the toolbar shows items horizontally or vertically, mobile devices always use vertical. */
-    direction?: "horizontal" | "vertical";
+    direction?: "h" | "v" | "horizontal" | "vertical"; // TODO: deprecate horizontal and vertical
 
     /** Whether the direction is responsive. */
     directionResponsive?: boolean;
@@ -55,7 +56,7 @@ export type ToolbarProps = React.PropsWithChildren<
     sticky?: false | "top" | "bottom";
 
     /** The variant (style) of the toolbar. */
-    variant?: "normal" | "primary" | "accent" | "transparent";
+    variant?: "normal" | "primary" | "accent" | "alt" | "transparent";
 
     /** The items shown inside the toolbar, alternatively, can opt to use children instead. */
     items?: ToolbarItem[];
@@ -78,7 +79,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
   className,
   align = "start",
   compact = false,
-  direction = "horizontal",
+  direction: _direction = "h",
   directionResponsive = true,
   justify = "h",
   pad = "v",
@@ -91,25 +92,13 @@ export const Toolbar: React.FC<ToolbarProps> = ({
   overrideItemProps = true,
   ...props
 }) => {
-  const isItemAProps = (item: ToolbarItem): item is AProps =>
-    Object.hasOwn(Object(item), "textDecoration");
-
-  const isItemButtonLinkProps = (item: ToolbarItem): item is ButtonLinkProps =>
-    Object.hasOwn(Object(item), "href");
-
-  const isItemDropdownProps = (item: ToolbarItem): item is DropdownProps =>
-    Object.hasOwn(Object(item), "items"); // Mandatory on Dropdown if passed to toolbar items.
-
-  const isItemButtonProps = (item: ToolbarItem): item is ButtonProps =>
-    !Object.hasOwn(Object(item), "href") &&
-    Object.hasOwn(Object(item), "children"); // Does button always have children?
-
-  // TODO: Improve
-  const isFormControlProps = (item: ToolbarItem): item is FormControlProps =>
-    !isItemAProps(item) &&
-    !isItemButtonProps(item) &&
-    !isItemDropdownProps(item) &&
-    !isItemButtonProps(item);
+  // TODO: Deprecate "horizontal" and "vertical" (use "h" and "v" instead).
+  const direction =
+    _direction.toLowerCase() === "h"
+      ? "horizontal"
+      : _direction.toLowerCase() === "v"
+        ? "vertical"
+        : (_direction as "horizontal" | "vertical");
 
   type ToolbarItemProps =
     | React.ComponentProps<typeof A>
@@ -134,37 +123,79 @@ export const Toolbar: React.FC<ToolbarProps> = ({
       return [() => item, {}];
     }
 
-    if (isItemAProps(item)) {
-      return [A, {}];
-    }
-
-    if (isItemButtonLinkProps(item)) {
-      return [ButtonLink, {}];
-    }
-
-    if (isItemDropdownProps(item)) {
+    if (isA(item)) {
       return [
-        Dropdown as React.FC,
-        {} as React.ComponentProps<typeof Dropdown>,
+        A,
+        overrideItemProps
+          ? {
+              size: direction === "horizontal" ? "xs" : undefined,
+            }
+          : {},
       ];
     }
 
-    if (isItemButtonProps(item)) {
+    if (isButton(item)) {
       return [
         Button,
-        overrideItemProps && direction === "horizontal" ? { size: "xs" } : {},
+        overrideItemProps
+          ? {
+              size: direction === "horizontal" ? "xs" : undefined,
+              variant: variant === "primary" ? "primary" : "transparent",
+            }
+          : {},
       ];
     }
 
-    if (isFormControlProps(item)) {
+    if (isButtonLink(item)) {
+      return [
+        ButtonLink,
+        overrideItemProps
+          ? {
+              size: direction === "horizontal" ? "xs" : undefined,
+              variant: variant === "primary" ? "primary" : "transparent",
+            }
+          : {},
+      ];
+    }
+
+    if (isDropdown(item)) {
+      return [
+        Dropdown as React.FC,
+        overrideItemProps
+          ? {
+              size: direction === "horizontal" ? "xs" : undefined,
+              variant: variant === "primary" ? "primary" : "transparent",
+            }
+          : {},
+      ];
+    }
+
+    if (isFormControl(item)) {
       return [
         FormControl,
-        overrideItemProps && direction === "horizontal" ? { size: "xs" } : {},
+        overrideItemProps
+          ? {
+              size: direction === "horizontal" ? "xs" : undefined,
+            }
+          : {},
       ];
     }
 
     throw new Error("Unknown toolbar item type!");
   };
+
+  const isA = (item: unknown): item is AProps =>
+    Object.hasOwn(Object(item), "textDecoration");
+
+  const isButton = (item: unknown): item is ButtonProps =>
+    !Object.hasOwn(Object(item), "href") &&
+    Object.hasOwn(Object(item), "children"); // Does button always have children?
+
+  const isButtonLink = (item: unknown): item is ButtonLinkProps =>
+    Object.hasOwn(Object(item), "href");
+
+  const isDropdown = (item: unknown): item is DropdownProps =>
+    Object.hasOwn(Object(item), "items"); // Mandatory on Dropdown if passed to toolbar items.
 
   /**
    * Renders an item (in items).
