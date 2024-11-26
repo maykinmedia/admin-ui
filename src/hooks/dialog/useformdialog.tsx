@@ -105,6 +105,7 @@ const PromptForm = ({
       secondaryActions={[
         {
           children: labelCancel,
+          minWidth: true,
           type: "button",
           variant: "secondary",
           onClick: (e) => {

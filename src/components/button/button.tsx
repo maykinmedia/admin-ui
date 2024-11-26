@@ -18,6 +18,9 @@ type BaseButtonProps = {
   /** Whether the buttons width should be set to 100%. */
   justify?: boolean;
 
+  /** Whether to set a minimum width of the button. */
+  minWidth?: boolean;
+
   /** Whether the text should be presented in a lighter color. */
   muted?: boolean;
 
@@ -73,6 +76,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       bold = false,
       className,
       justify = false,
+      minWidth = false,
       muted = false,
       pad = true,
       rounded = false,
@@ -97,6 +101,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
             "mykn-button--active": active,
             "mykn-button--bold": bold,
             "mykn-button--justify": justify,
+            "mykn-button--min-width": minWidth,
             "mykn-button--muted": muted,
             "mykn-button--pad-h": pad === true || pad === "h",
             "mykn-button--pad-v": pad === true || pad === "v",
@@ -125,6 +130,7 @@ export const ButtonLink = React.forwardRef<HTMLAnchorElement, ButtonLinkProps>(
       className,
       disabled,
       justify = false,
+      minWidth = false,
       muted = false,
       pad = true,
       size = "s",
@@ -150,6 +156,7 @@ export const ButtonLink = React.forwardRef<HTMLAnchorElement, ButtonLinkProps>(
             "mykn-button--bold": bold,
             "mykn-button--disabled": disabled,
             "mykn-button--justify": justify,
+            "mykn-button--min-width": minWidth,
             "mykn-button--muted": muted,
             "mykn-button--pad-h": pad === true || pad === "h",
             "mykn-button--pad-v": pad === true || pad === "v",

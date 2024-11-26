@@ -34,8 +34,9 @@ export const useAlert = () => {
         "spacer",
         {
           children: labelConfirm,
-          variant: "primary",
+          minWidth: true,
           type: "submit",
+          variant: "primary",
           onClick: (e) => {
             e.preventDefault();
             e.stopPropagation();
