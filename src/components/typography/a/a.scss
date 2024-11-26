@@ -1,14 +1,39 @@
 .mykn-a {
-  font-family: inherit;
   line-height: var(--typography-line-height-body-s);
   align-items: center;
   color: var(--typography-color-link);
   display: inline-flex;
+  font-family: inherit;
   font-size: inherit;
   justify-content: center;
   font-weight: inherit;
   gap: 0.5em;
   width: fit-content;
+
+  &:not(
+      .mykn-h1 .mykn-a,
+      .mykn-h2 .mykn-a,
+      .mykn-h3 .mykn-a,
+      .mykn-li .mykn-a,
+      .mykn-p .mykn-a
+    ) {
+    font-family: var(--typography-font-family-body);
+    font-size: var(--typography-font-size-body-s);
+    line-height: var(--typography-line-height-body-s);
+  }
+
+  &--size-xs {
+    &:not(
+        .mykn-h1 .mykn-a,
+        .mykn-h2 .mykn-a,
+        .mykn-h3 .mykn-a,
+        .mykn-li .mykn-a,
+        .mykn-p .mykn-a
+      ) {
+      font-size: var(--typography-font-size-body-xs);
+      line-height: var(--typography-line-height-body-xs);
+    }
+  }
 
   &--text-decoration-none {
     text-decoration: none;

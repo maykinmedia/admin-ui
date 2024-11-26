@@ -2,6 +2,7 @@ import {
   CheckboxProps,
   ChoiceFieldProps,
   DatePickerProps,
+  FormControlProps,
   InputProps,
   RadioProps,
   SelectProps,
@@ -15,6 +16,17 @@ export type FormField =
   | DatePickerProps
   | InputProps
   | SelectProps;
+
+/**
+ * Typeguard for CheckboxProps.
+ */
+export const isFormControl = (props: unknown): props is FormControlProps =>
+  isCheckbox(props as CheckboxProps) ||
+  isRadio(props as RadioProps) ||
+  isDateInput(props as DateInputProps) ||
+  isDatePicker(props as DatePickerProps) ||
+  isChoiceField(props as ChoiceFieldProps) ||
+  isInput(props as InputProps);
 
 /** Typeguard for CheckboxProps. */
 export const isCheckbox = (props: FormField): props is CheckboxProps =>

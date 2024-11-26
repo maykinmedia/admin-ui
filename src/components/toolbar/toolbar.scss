@@ -1,8 +1,29 @@
 @use "../../settings/constants";
 
+@mixin horizontal {
+  &--direction-horizontal {
+    @media screen and (min-width: constants.$breakpoint-desktop) {
+      @content;
+    }
+  }
+}
+
+@mixin vertical {
+  &--direction-vertical {
+    @content;
+  }
+
+  &--direction-responsive#{&}--direction-horizontal {
+    @media screen and (max-width: constants.$breakpoint-desktop - 1px) {
+      @content;
+    }
+  }
+}
+
 .mykn-toolbar {
   $self: &;
   background-color: var(--typography-color-background);
+  border-block: 1px solid transparent;
   box-sizing: border-box;
   column-gap: var(--spacing-h);
   display: flex;
@@ -26,25 +47,25 @@
     height: 100cqh;
   }
 
-  &--direction-responsive#{&}--direction-horizontal {
-    @media screen and (max-width: constants.$breakpoint-desktop - 1px) {
-      #{$self}__spacer {
-        display: none;
-      }
-    }
+  &--pad-a .mykn-a {
+    box-sizing: border-box;
+    padding: var(--spacing-v) var(--spacing-h);
   }
 
-  &--direction-vertical .mykn-logo {
-    width: 32px;
+  &--pad-h {
+    padding-inline: var(--spacing-h);
   }
 
-  &:not(#{&}--direction-responsive)#{&}--direction-horizontal {
-    max-height: 100%;
-    flex-direction: row;
+  &--pad-size-xs#{&}--pad-h {
+    padding-inline: calc(var(--spacing-h) / 2);
+  }
 
-    #{$self}__spacer {
-      width: 100%;
-    }
+  &--pad-v {
+    padding-block: var(--spacing-v);
+  }
+
+  &--pad-size-xs-#{&}--pad-v {
+    padding-inline: calc(var(--spacing-v) / 2);
   }
 
   &--variant-primary {
@@ -53,6 +74,11 @@
 
   &--variant-accent {
     background-color: var(--page-color-accent);
+  }
+
+  &--variant-alt {
+    background-color: var(--typography-color-background-alt);
+    border-color: var(--typography-color-border);
   }
 
   &--variant-transparent {
@@ -78,97 +104,8 @@
     flex-shrink: 9999;
   }
 
-  @media screen and (max-width: constants.$breakpoint-desktop - 1px) {
-    &--direction-responsive .mykn-logo {
-      width: 32px;
-    }
-  }
-
-  @media screen and (min-width: constants.$breakpoint-desktop) {
-    &--align-start {
-      align-items: start;
-      justify-content: start;
-      text-align: start;
-    }
-
-    &--align-end {
-      align-items: end;
-      justify-content: end;
-      text-align: end;
-    }
-
-    &--align-center {
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-    }
-
-    &--align-space-between {
-      align-items: center;
-      justify-content: space-between;
-      text-align: center;
-    }
-
-    &--direction-horizontal {
-      align-items: center;
-      flex-direction: row;
-      max-height: 100%;
-    }
-
-    &--direction-vertical#{&}--align-start .mykn-a,
-    &--direction-vertical#{&}--align-start .mykn-button,
-    &--direction-vertical#{&}--align-start .mykn-dropdown {
-      display: flex;
-      justify-content: start;
-      text-align: start;
-    }
-
-    &--direction-vertical#{&}--align-end .mykn-a,
-    &--direction-vertical#{&}--align-end .mykn-button,
-    &--direction-vertical#{&}--align-end .mykn-dropdown {
-      display: flex;
-      justify-content: end;
-      text-align: end;
-    }
-
-    &--direction-vertical#{&}--align-center .mykn-a,
-    &--direction-vertical#{&}--align-center .mykn-button,
-    &--direction-vertical#{&}--align-center .mykn-dropdown {
-      width: 100%;
-    }
-
-    &--direction-horizontal &__spacer {
-      width: 100%;
-    }
-
-    &--direction-horizontal .mykn-p:has(+ .mykn-p) {
-      margin-block-end: 0;
-    }
-
-    &--direction-vertical &__spacer {
-      height: 100%;
-    }
-  }
-
-  &--pad-a .mykn-a {
-    box-sizing: border-box;
-    padding: var(--spacing-v) var(--spacing-h);
-  }
-
-  &--pad-h {
-    padding-inline: var(--spacing-h);
-  }
-
-  &--pad-size-xs#{&}--pad-h {
-    padding-inline: calc(var(--spacing-h) / 2);
-  }
-
-  &--pad-v {
-    padding-block: var(--spacing-v);
-  }
-
-  &--pad-size-xs-#{&}--pad-v {
-    padding-inline: calc(var(--spacing-v) / 2);
+  .mykn-logo--abbreviated {
+    width: 34px;
   }
 
   .mykn-a {
@@ -188,5 +125,105 @@
   .mykn-h2,
   .mykn-h3 {
     margin-block-end: 0 !important;
+  }
+
+  // Horizontal layout (desktop only).
+  @include horizontal {
+    align-items: center;
+    flex-direction: row;
+    max-height: 100%;
+
+    &#{$self}--align-start {
+      justify-content: start;
+      text-align: start;
+    }
+
+    &#{$self}--align-end {
+      justify-content: end;
+      text-align: end;
+    }
+
+    &#{$self}--align-center {
+      justify-content: center;
+      text-align: center;
+    }
+
+    #{$self}__spacer {
+      width: 100%;
+    }
+
+    .mykn-p:has(+ .mykn-p) {
+      margin-block-end: 0;
+    }
+  }
+
+  // Horizontal on mobile.
+  &--direction-responsive#{&}--direction-horizontal {
+    @media screen and (max-width: constants.$breakpoint-desktop - 1px) {
+      #{$self}__spacer {
+        display: none;
+      }
+    }
+  }
+
+  // Vertical layout (explicit or via direction-responsive).
+  @include vertical() {
+    &__spacer {
+      height: 100%;
+    }
+
+    &#{$self}--align-start .mykn-a,
+    &#{$self}--align-start .mykn-button,
+    &#{$self}--align-start .mykn-dropdown {
+      display: flex;
+      justify-content: start;
+      text-align: start;
+    }
+
+    &#{$self}--align-end .mykn-a,
+    &#{$self}--align-end .mykn-button,
+    &#{$self}--align-end .mykn-dropdown {
+      display: flex;
+      justify-content: end;
+      text-align: end;
+    }
+
+    &#{$self}--align-center .mykn-a,
+    &#{$self}--align-center .mykn-button,
+    &#{$self}--align-center .mykn-dropdown,
+    &#{$self}--align-center .mykn-form-control,
+    &#{$self}--align-center .mykn-input,
+    &#{$self}--align-center .mykn-select {
+      width: 100%;
+    }
+  }
+
+  // Vertical on desktop.
+  @media screen and (min-width: constants.$breakpoint-desktop) {
+    @include vertical {
+      &#{$self}--align-start {
+        align-items: start;
+        justify-content: start;
+        text-align: start;
+      }
+
+      &#{$self}--align-end {
+        align-items: end;
+        justify-content: end;
+        text-align: end;
+      }
+
+      &#{$self}--align-center {
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+      }
+
+      &--align-space-between {
+        align-items: center;
+        justify-content: space-between;
+        text-align: center;
+      }
+    }
   }
 }

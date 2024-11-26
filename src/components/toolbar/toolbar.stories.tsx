@@ -2,13 +2,15 @@ import type { Meta, StoryObj } from "@storybook/react";
 import * as React from "react";
 
 import { PAGE_DECORATOR } from "../../../.storybook/decorators";
-import { Button, ButtonLink } from "../button";
-import { Outline } from "../icon";
-import { A, P } from "../typography";
-import { Toolbar } from "./toolbar";
+import { ButtonLinkProps, ButtonProps } from "../button";
+import { DropdownProps } from "../dropdown";
+import { FormControlProps } from "../form";
+import { Logo } from "../logo";
+import { A, AProps, H3 } from "../typography";
+import { Toolbar, ToolbarProps } from "./toolbar";
 
 const meta: Meta<typeof Toolbar> = {
-  title: "Controls/Toolbar",
+  title: "Building Blocks/Toolbar",
   component: Toolbar,
   decorators: [PAGE_DECORATOR],
 };
@@ -18,58 +20,115 @@ type Story = StoryObj<typeof meta>;
 
 export const ToolbarComponent: Story = {
   args: {
-    align: "end",
-    children: (
+    align: "center",
+    pad: true,
+    items: [
+      <Logo key="logo" abbreviated />,
+      "spacer",
+      {
+        children: "Anchor",
+        href: "https://www.example.com",
+        textDecoration: "underline",
+      } as AProps,
+      {
+        children: "ButtonLink",
+        href: "https://www.example.com",
+      } as ButtonLinkProps,
+      {
+        children: "Button",
+        onClick: () => alert("Button clicked."),
+      } as ButtonProps,
+      {
+        label: "Dropdown",
+        toolbarProps: { align: "center" },
+        items: [
+          <Logo key="logo" abbreviated />,
+          "spacer",
+          {
+            children: "Anchor",
+            href: "https://www.example.com",
+            textDecoration: "underline",
+          },
+          {
+            children: "ButtonLink",
+            href: "https://www.example.com",
+          },
+          {
+            children: "Button",
+            onClick: () => alert("Button clicked."),
+          },
+          {
+            placeholder: "FormControl",
+          },
+        ],
+      } as DropdownProps,
+      {
+        placeholder: "FormControl",
+      } as FormControlProps,
+    ],
+  },
+};
+
+export const Compact: Story = {
+  ...ToolbarComponent,
+  args: {
+    ...ToolbarComponent.args,
+    compact: true,
+  },
+};
+
+export const Variants: Story = {
+  ...ToolbarComponent,
+  args: {
+    ...ToolbarComponent.args,
+    items: ToolbarComponent.args?.items?.toSpliced(0, 1),
+  },
+  render: (args) => {
+    const variants: ToolbarProps["variant"][] = [
+      "normal",
+      "primary",
+      "accent",
+      "alt",
+      "transparent",
+    ];
+    return (
       <>
-        <Button variant="transparent">
-          <Outline.PencilIcon />
-          Zaaktypen
-        </Button>
-
-        <Button variant="transparent">
-          <Outline.ClipboardDocumentIcon />
-          Documenttypen
-        </Button>
-
-        <ButtonLink
-          href="https://www.example.com"
-          target="_blank"
-          variant="transparent"
-        >
-          <Outline.UserIcon />
-          Admin
-        </ButtonLink>
-
-        <Button variant="primary">
-          <Outline.ArrowRightStartOnRectangleIcon />
-          Uitloggen
-        </Button>
+        {variants.map((variant) => {
+          return (
+            <Toolbar
+              key={variant}
+              {...{
+                ...args,
+                items: [
+                  <H3 key="label">variant: {variant}</H3>,
+                  ...(args.items || []),
+                ],
+              }}
+              variant={variant}
+            />
+          );
+        })}
       </>
-    ),
+    );
   },
 };
 
-export const TransparentToolbar: Story = {
-  ...ToolbarComponent,
-  args: {
-    ...ToolbarComponent.args,
-    variant: "transparent",
-  },
-};
-
-export const VerticalToolbar: Story = {
+export const Vertical: Story = {
   ...ToolbarComponent,
   args: {
     ...ToolbarComponent.args,
     direction: "vertical",
-    variant: "transparent",
   },
 };
 
-export const ToolbarWithLinks: Story = {
+export const SidebarStart: Story = {
   args: {
+    align: "start",
     direction: "vertical",
+    pad: true,
     variant: "transparent",
+    items: [<Logo key="logo" abbreviated />],
+    childrenPosition: "after",
     children: (
       <>
         <A href="https://www.example.com" target="_blank">
@@ -112,128 +171,7 @@ export const ToolbarWithLinks: Story = {
   },
 };
 
-export const MixedToolbar: Story = {
-  args: {
-    align: "start",
-    direction: "vertical",
-    padA: true,
-    variant: "transparent",
-    children: (
-      <>
-        <A href="https://www.example.com" target="_blank">
-          <Outline.ArrowsRightLeftIcon />
-          Relaties
-        </A>
-
-        <Button variant="transparent">
-          <Outline.PencilIcon />
-          Zaaktypen
-        </Button>
-
-        <ButtonLink
-          href="https://www.example.com"
-          target="_blank"
-          variant="transparent"
-        >
-          <Outline.UserIcon />
-          Admin
-        </ButtonLink>
-      </>
-    ),
-  },
-};
-
-export const ToolbarWithItemsProp: Story = {
-  args: {
-    align: "start",
-    pad: "h",
-    items: [
-      // Button
-      {
-        variant: "transparent",
-        wrap: false,
-        children: (
-          <>
-            <Outline.PencilIcon />
-            Zaaktypen
-          </>
-        ),
-      },
-
-      // Button
-      {
-        variant: "transparent",
-        wrap: false,
-        children: (
-          <>
-            <Outline.ClipboardDocumentIcon />
-            Documenttypen
-          </>
-        ),
-      },
-
-      // ButtonLink
-      {
-        href: "https://www.example.com",
-        variant: "transparent",
-        wrap: false,
-        children: (
-          <>
-            <Outline.UserIcon />
-            Admin
-          </>
-        ),
-      },
-
-      // Dropdown
-      {
-        label: (
-          <>
-            {" "}
-            Click me!
-            <Outline.EllipsisVerticalIcon />
-          </>
-        ),
-        wrap: false,
-        items: [
-          {
-            variant: "transparent",
-            children: (
-              <>
-                <Outline.PencilIcon /> Zaaktypen
-              </>
-            ),
-          },
-          {
-            variant: "transparent",
-            children: (
-              <>
-                <Outline.ClipboardDocumentIcon /> Documenttypen
-              </>
-            ),
-          },
-          {
-            href: "https://www.example.com",
-            target: "_blank",
-            variant: "transparent",
-            children: (
-              <>
-                <Outline.UserIcon /> Admin
-              </>
-            ),
-          },
-          {
-            variant: "transparent",
-            children: (
-              <>
-                <Outline.ArrowRightStartOnRectangleIcon /> Uitloggen
-              </>
-            ),
-          },
-        ],
-      },
-      "spacer",
-      <P key="JSX">Use &quot;spacer&quot; for spacers, JSX supported.</P>,
-    ],
-  },
+export const SidebarEnd: Story = {
+  ...SidebarStart,
+  args: { ...SidebarStart.args, align: "end", justify: "h" },
 };

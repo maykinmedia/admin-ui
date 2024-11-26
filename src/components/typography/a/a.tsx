@@ -13,6 +13,9 @@ export type AProps = AnchorHTMLAttributes<HTMLAnchorElement> & {
   /** Whether the text should be presented in a lighter color. */
   muted?: boolean;
 
+  /** The size of the text. */
+  size?: "s" | "xs";
+
   /** The text decoration. */
   textDecoration?: "underline" | "none";
 };
@@ -22,21 +25,27 @@ export type AProps = AnchorHTMLAttributes<HTMLAnchorElement> & {
  * @param active
  * @param children
  * @param muted
+ * @param size
  * @param textDecoration
  * @param props
- * @constructor
  */
 export const A: React.FC<AProps> = ({
   active,
   children,
   muted,
+  size = "s",
   textDecoration = "underline",
   ...props
 }) => (
   <a
-    className={clsx("mykn-a", `mykn-a--text-decoration-${textDecoration}`, {
-      "mykn-a--muted": muted,
-    })}
+    className={clsx(
+      "mykn-a",
+      `mykn-a--text-decoration-${textDecoration}`,
+      `mykn-a--size-${size}`,
+      {
+        "mykn-a--muted": muted,
+      },
+    )}
     aria-current={active}
     {...props}
   >

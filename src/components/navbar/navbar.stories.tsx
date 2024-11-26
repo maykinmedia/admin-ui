@@ -6,7 +6,7 @@ import { Outline } from "../icon";
 import { Navbar } from "./navbar";
 
 const meta: Meta<typeof Navbar> = {
-  title: "Controls/Navbar",
+  title: "Building Blocks/Navbar",
   component: Navbar,
   decorators: [PAGE_DECORATOR],
 };
