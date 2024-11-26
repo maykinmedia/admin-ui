@@ -10,6 +10,7 @@
   --mykn-button-font-weight: var(--typography-font-weight-normal);
   --mykn-button-line-height: var(--typography-line-height-body-s);
   --mykn-button-height: auto;
+  --mykn-button-min-width: 88px;
   --mykn-button-width: auto;
   --mykn-button-offset: 0px;
 
@@ -85,6 +86,10 @@
 
   &--justify {
     --mykn-button-width: 100%;
+  }
+
+  &--min-width {
+    min-width: var(--mykn-button-min-width);
   }
 
   &--pad-h {

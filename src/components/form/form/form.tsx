@@ -283,6 +283,7 @@ export const Form: React.FC<FormProps> = ({
               children: ucFirst(_labelSubmit),
               disabled:
                 validateOnChange && Boolean(Object.keys(errorsState).length),
+              minWidth: true,
               type: "submit",
               variant: "primary",
               ...buttonProps,
