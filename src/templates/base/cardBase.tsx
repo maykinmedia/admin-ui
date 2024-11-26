@@ -100,7 +100,7 @@ export const CardBaseTemplate: React.FC<CardBaseTemplateProps> = ({
             : _secondaryNavigationItems) || []
         }
         pad={true}
-        variant="accent"
+        variant="alt"
       >
         {formProps && (
           <Form
