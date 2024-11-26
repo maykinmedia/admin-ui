@@ -62,6 +62,7 @@ export const BaseTemplate: React.FC<BaseTemplateProps> = ({
     primaryNavigation ||
     (primaryNavigationItems.length || _primaryNavigationItems?.length ? (
       <Navbar
+        variant="primary"
         items={
           primaryNavigationItems.length
             ? primaryNavigationItems

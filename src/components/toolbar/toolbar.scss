@@ -23,7 +23,6 @@
 .mykn-toolbar {
   $self: &;
   background-color: var(--typography-color-background);
-  border-block: 1px solid transparent;
   box-sizing: border-box;
   column-gap: var(--spacing-h);
   display: flex;
@@ -78,7 +77,17 @@
 
   &--variant-alt {
     background-color: var(--typography-color-background-alt);
-    border-color: var(--typography-color-border);
+  }
+
+  @include horizontal {
+    &#{$self}--variant-alt {
+      border-block: 1px solid var(--typography-color-border);
+    }
+  }
+  @include vertical {
+    &#{$self}--variant-alt {
+      border-inline: 1px solid var(--typography-color-border);
+    }
   }
 
   &--variant-transparent {
@@ -138,13 +147,18 @@
       text-align: start;
     }
 
+    &#{$self}--align-center {
+      justify-content: center;
+      text-align: center;
+    }
+
     &#{$self}--align-end {
       justify-content: end;
       text-align: end;
     }
 
-    &#{$self}--align-center {
-      justify-content: center;
+    &#{$self}--align-space-between {
+      justify-content: space-between;
       text-align: center;
     }
 
