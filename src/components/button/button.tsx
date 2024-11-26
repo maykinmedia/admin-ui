@@ -35,8 +35,8 @@ type BaseButtonProps = {
 
   /** The variant (style) of the button. */
   variant?:
-    | "primary"
     | "secondary"
+    | "primary"
     | "outline"
     | "transparent"
     | "info"
@@ -78,7 +78,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       rounded = false,
       size = "s",
       square = false,
-      variant = "primary",
+      variant = "secondary",
       wrap = true,
       onClick,
       ...props
@@ -129,7 +129,7 @@ export const ButtonLink = React.forwardRef<HTMLAnchorElement, ButtonLinkProps>(
       pad = true,
       size = "s",
       square = false,
-      variant = "primary",
+      variant = "secondary",
       wrap = true,
       onClick,
       ...props

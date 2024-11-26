@@ -284,6 +284,7 @@ export const Form: React.FC<FormProps> = ({
               disabled:
                 validateOnChange && Boolean(Object.keys(errorsState).length),
               type: "submit",
+              variant: "primary",
               ...buttonProps,
             },
           ]}
