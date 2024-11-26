@@ -35,7 +35,9 @@ export const ModalService: React.FC<React.PropsWithChildren> = ({
       value={{ modalProps, setModalProps: setModalProps }}
     >
       {children}
-      {modalProps.open && <Modal {...modalProps} />}
+      {modalProps.open && (
+        <Modal onClose={() => setModalProps({ open: false })} {...modalProps} />
+      )}
     </ModalServiceContext.Provider>
   );
 };
