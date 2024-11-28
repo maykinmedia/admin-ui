@@ -29,6 +29,22 @@ export const AttributeTableComponent: Story = {
   },
 };
 
+export const AttributeTableComponentCompact: Story = {
+  args: {
+    object: {
+      url: "https://www.example.com",
+      omschrijving: "Afvalpas vervangen",
+      zaaktype: "https://www.example.com",
+      versie: 2,
+      opmerkingen: null,
+      actief: false,
+      toekomstig: false,
+      concept: true,
+    },
+    compact: true,
+  },
+};
+
 export const LabeledAttributeTableComponent: Story = {
   args: {
     labeledObject: {
