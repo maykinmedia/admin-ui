@@ -1,5 +1,6 @@
 import {
   FloatingArrow,
+  FloatingPortal,
   Placement,
   arrow,
   autoUpdate,
@@ -84,31 +85,37 @@ export const Tooltip = ({
         ...getReferenceProps(),
         ref: setReference,
       })}
-      <div
-        ref={setFloating}
-        style={{ ...floatingStyles, zIndex: 1 }}
-        {...getFloatingProps({
-          className: clsx("mykn-tooltip", {
-            "mykn-tooltip--open": isOpen,
-          }),
-        })}
-      >
+      <FloatingPortal>
         <div
-          style={transitionStyles}
-          className={clsx("mykn-tooltip__content", {
-            "mykn-tooltip__content--sm": size === "sm",
-            "mykn-tooltip__content--md": size === "md",
-            "mykn-tooltip__content--lg": size === "lg",
+          ref={setFloating}
+          style={{ ...floatingStyles, zIndex: 1 }}
+          {...getFloatingProps({
+            className: clsx("mykn-tooltip", {
+              "mykn-tooltip--open": isOpen,
+            }),
           })}
         >
-          <FloatingArrow
-            ref={arrowRef}
-            context={context}
-            className="mykn-tooltip__arrow"
-          />
-          {React.isValidElement(content) ? content : <P size="xs">{content}</P>}
+          <div
+            style={transitionStyles}
+            className={clsx("mykn-tooltip__content", {
+              "mykn-tooltip__content--sm": size === "sm",
+              "mykn-tooltip__content--md": size === "md",
+              "mykn-tooltip__content--lg": size === "lg",
+            })}
+          >
+            <FloatingArrow
+              ref={arrowRef}
+              context={context}
+              className="mykn-tooltip__arrow"
+            />
+            {React.isValidElement(content) ? (
+              content
+            ) : (
+              <P size="xs">{content}</P>
+            )}
+          </div>
         </div>
-      </div>
+      </FloatingPortal>
     </>
   );
 };

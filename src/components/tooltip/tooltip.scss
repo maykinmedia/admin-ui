@@ -10,7 +10,7 @@
   &--open {
     opacity: 1;
     transform: scale(1);
-    z-index: 1 !important;
+    z-index: 1000 !important;
   }
 
   &__arrow {
