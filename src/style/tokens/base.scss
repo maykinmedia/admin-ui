@@ -1,4 +1,7 @@
-@mixin tokens {
+$purple-rain: #341a90;
+$blue-suede-shoes: #297aa3;
+
+@mixin tokens($brand-color: $purple-rain) {
   @at-root {
     body {
       overflow-x: hidden;
@@ -6,10 +9,6 @@
   }
 
   /* BRANDING */
-  $purple-rain: #341a90;
-  $blue-suede-shoes: #00bfcb;
-  $brand-color: $purple-rain;
-
   --brand-color-hue: #{hue($brand-color)};
   --brand-color-saturisation: #{saturation($brand-color)};
   --brand-color-lightness: #{lightness($brand-color)};

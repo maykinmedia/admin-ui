@@ -10,6 +10,7 @@
   &__cell {
     display: flex;
     align-items: center;
+    color: var(--typography-color-body);
     font-family: var(--typography-font-family-body), sans-serif;
     font-size: var(--typography-font-size-body-s);
     font-weight: var(--typography-font-weight-normal);
