@@ -12,6 +12,11 @@ import { DataGridHeadingCell } from "./datagridheadingcell";
 export const DataGridTHead: React.FC = () => {
   const ref = useRef<HTMLTableSectionElement>(null);
 
+  const thead = ref.current;
+  const table = thead?.parentNode as HTMLTableElement | undefined;
+  const scrollPane = table?.parentNode as HTMLDivElement | undefined;
+  const toolbar = scrollPane?.previousSibling as HTMLDivElement | undefined;
+
   const {
     allowOverflowX,
     dataGridId,
@@ -32,53 +37,49 @@ export const DataGridTHead: React.FC = () => {
       window.removeEventListener("resize", stickyFix);
       window.removeEventListener("scroll", stickyFix);
     };
-  }, [ref.current, height]);
+  }, [ref.current, height, renderableFields]);
 
   /**
    * Fixes sticky behaviour due to `overflow-y: auto;` and `overflow-x: auto;`
    * combination not being compatible with native sticky in all cases.
    */
   const stickyFix = () => {
-    if (!ref.current) {
+    if (!ref.current || !thead || !table || !scrollPane || !toolbar) {
       return;
     }
 
-    const thead = ref.current;
-    const table = thead.parentNode as HTMLTableElement;
-    const scrollPane = table?.parentNode as HTMLDivElement;
-    const toolbar = scrollPane.previousSibling as HTMLDivElement | null;
-
     requestAnimationFrame(() => {
+      thead.style.top = "";
+
       const classOverflowX = "mykn-datagrid__scrollpane--overflow-x";
       const classOverflowY = "mykn-datagrid__scrollpane--overflow-y";
-
-      // Reset.
-      thead.style.top = "";
-      scrollPane.classList.remove(classOverflowX);
-      scrollPane.classList.remove(classOverflowY);
 
       // Active conditions.
       const isHeightSet = Boolean(height);
       const isHeight100Percent = height === "100%"; // (100)% is edge case.
+      const isHeightExplicitlySet = isHeightSet && !isHeight100Percent;
       const isScrollX =
-        allowOverflowX && scrollPane.scrollWidth > scrollPane.clientWidth;
+        allowOverflowX && scrollPane.scrollWidth - scrollPane.clientWidth > 20;
 
       // Available fixes.
-      const shouldOverflowX = !isHeightSet && isScrollX;
-      const shouldOverflowY = isHeightSet;
-      const shouldStickyFix = isHeight100Percent || (!height && isScrollX);
+      const shouldOverflowX = isScrollX && !isHeightExplicitlySet;
+      const shouldOverflowY = isHeightExplicitlySet;
+      const shouldStickyFix = shouldOverflowX;
 
       // Apply overflow CSS rules using classes.
-      scrollPane.classList.toggle(classOverflowX, shouldOverflowX);
-      scrollPane.classList.toggle(classOverflowY, shouldOverflowY);
+      if (scrollPane.classList.contains(classOverflowX) !== shouldOverflowX) {
+        scrollPane.classList.toggle(classOverflowX, shouldOverflowX);
+      }
+      if (scrollPane.classList.contains(classOverflowY) !== shouldOverflowY) {
+        scrollPane.classList.toggle(classOverflowY, shouldOverflowY);
+      }
 
       // No need for fallback implementation as only `overflow-y: auto;` has to
       // be set.
-      if (!shouldStickyFix) {
-        return;
-      }
+      if (!shouldStickyFix) return;
 
       // Fix the sticky top behaviour.
+      thead.style.transform = "";
       const boundingClientRect = thead.getBoundingClientRect();
       const boundingTop = boundingClientRect.top;
 
@@ -89,10 +90,16 @@ export const DataGridTHead: React.FC = () => {
       // Invert the negative offset caused by scrolling and push the position
       // in the opposite direction, then apply some compensation for the
       // existing offset.
-      const compensation =
+      const compensation = Math.max(
         boundingTop * -1 +
-        (toolbar ? toolbar.clientHeight : 0) * (isHeight100Percent ? 1 : 2);
-      thead.style.top = compensation + "px";
+          (toolbar ? toolbar.clientHeight : 0) * (isHeight100Percent ? 1 : 2),
+        0,
+      );
+
+      // No compensation.
+      if (!compensation) return;
+
+      thead.style.top = `${compensation}px`;
     });
   };
 
