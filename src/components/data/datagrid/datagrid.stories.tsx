@@ -4,11 +4,11 @@ import * as React from "react";
 import { PAGE_DECORATOR } from "../../../../.storybook/decorators";
 import { FIXTURE_PRODUCTS } from "../../../../.storybook/fixtures/products";
 import { Button } from "../../button";
-import { DataGrid } from "./datagrid";
+import { DataGrid, DataGridProps } from "./datagrid";
 
-const meta: Meta<typeof DataGrid> = {
+const meta: Meta<typeof DataGrid<(typeof FIXTURE_PRODUCTS)[number]>> = {
   title: "Data/DataGrid",
-  component: DataGrid,
+  component: DataGrid<(typeof FIXTURE_PRODUCTS)[number]>,
   decorators: [PAGE_DECORATOR],
   parameters: {
     actions: [], // Prevent auto mocked callback functions.
@@ -63,9 +63,8 @@ export const MinimalExample = {
  * pass `true` to `decorate` prop to use value decoration (see `Value` component).
  */
 export const Decorated: Story = {
-  ...DataGridComponent,
   args: {
-    ...DataGridComponent.args,
+    objectList: FIXTURE_PRODUCTS,
     decorate: true,
   },
 };
@@ -76,9 +75,8 @@ export const Decorated: Story = {
  * prop.
  */
 export const Editable: Story = {
-  ...DataGridComponent,
   args: {
-    ...DataGridComponent.args,
+    objectList: FIXTURE_PRODUCTS,
     fields: ["name", "category", "price", "stock", "isAvailable"],
     editable: true,
   },
@@ -94,9 +92,8 @@ export const Editable: Story = {
  * the `fields` prop.
  */
 export const FieldsSelectable: Story = {
-  ...DataGridComponent,
   args: {
-    ...DataGridComponent.args,
+    objectList: FIXTURE_PRODUCTS,
     fields: [
       { name: "id", type: "number", active: false },
       "name",
@@ -139,12 +136,32 @@ export const Filterable: Story = {
 };
 
 /**
+ * Minimal example with only required props showing a simple table.
+ */
+export const Paginated = {
+  args: {
+    objectList: FIXTURE_PRODUCTS,
+    paginatorProps: {
+      count: 100,
+      page: 1,
+      pageSize: 10,
+      pageSizeOptions: [
+        { label: 10 },
+        { label: 20 },
+        { label: 30 },
+        { label: 40 },
+        { label: 50 },
+      ],
+    },
+  },
+};
+
+/**
  * pass a `true` to `selectable` to allow selecting rows.
  */
 export const Selectable: Story = {
-  ...DataGridComponent,
   args: {
-    ...DataGridComponent.args,
+    objectList: FIXTURE_PRODUCTS,
     selectable: true,
     allowSelectAll: false,
     selectionActions: [
@@ -167,14 +184,15 @@ export const Selectable: Story = {
 };
 
 /**
- * Pass a function `(item1: AttributeData, item2: AttributeData) => bool`) to the `equalityChecker` prop to allow items
- * in `selected` to be matched to item in `objectList`. If `equalityChecker` is omitted: strict checking
- * (`item1 === item2`) is used to determine a match.
+ * Pass a function `(item1, item2) => bool`) to the `equalityChecker` prop to
+ * allow items in `selected` to be matched to item in `objectList`. If
+ * `equalityChecker` is omitted: strict checking (`item1 === item2`) is used to
+ * determine a match.
  */
 export const SelectionMatchEqualityChecker: Story = {
-  ...Selectable,
   args: {
-    ...Selectable.args,
+    objectList: FIXTURE_PRODUCTS,
+    selectable: true,
     selected: [
       {
         id: 1,
@@ -184,7 +202,9 @@ export const SelectionMatchEqualityChecker: Story = {
       },
     ],
     equalityChecker: (item1, item2) => item1?.id === item2?.id,
-  },
+  } as Partial<
+    DataGridProps<{ id: number } & (typeof FIXTURE_PRODUCTS)[number]>
+  >,
 };
 
 /**
@@ -192,12 +212,12 @@ export const SelectionMatchEqualityChecker: Story = {
  * if no `onSort` prop is passed.
  */
 export const Sortable: Story = {
-  ...DataGridComponent,
   args: {
-    ...DataGridComponent.args,
+    objectList: FIXTURE_PRODUCTS,
     sort: true,
   },
-  // Don't set argTypes.onSort as it will result in a onSort prop being passed.
+  // Don't set argTypes.onSort as it will result in a onSort prop being passed
+  // preventing built-in sort (external sorting is expected in such cases).
 };
 
 /**
@@ -212,7 +232,7 @@ export const Sorted: Story = {
   },
 };
 
-export const FilterableSelectableSortable: Story = {
+export const FilterablePaginatedSelectableSortable: Story = {
   args: {
     objectList: FIXTURE_PRODUCTS,
     fields: [
@@ -223,6 +243,18 @@ export const FilterableSelectableSortable: Story = {
       { name: "isAvailable", type: "boolean" },
     ],
     filterable: true,
+    paginatorProps: {
+      count: 100,
+      page: 1,
+      pageSize: 10,
+      pageSizeOptions: [
+        { label: 10 },
+        { label: 20 },
+        { label: 30 },
+        { label: 40 },
+        { label: 50 },
+      ],
+    },
     selectable: true,
     selected: [
       {
@@ -232,7 +264,6 @@ export const FilterableSelectableSortable: Story = {
         id: 5,
       },
     ],
-    equalityChecker: (item1, item2) => item1?.id === item2?.id,
     allowSelectAll: true,
     selectionActions: [
       {
@@ -245,7 +276,7 @@ export const FilterableSelectableSortable: Story = {
       },
     ],
     sort: "price",
-  },
+  } as DataGridProps<{ id: number } & (typeof FIXTURE_PRODUCTS)[number]>,
   argTypes: {
     ...DataGridComponent.argTypes,
     onFilter: { action: "onFilter" },
@@ -336,11 +367,10 @@ export const FillAvailableSpace: Story = {
 };
 
 export const JSXAsValue: Story = {
-  ...DataGridComponent,
   args: {
-    ...DataGridComponent.args,
+    // @ts-expect-error - fixme
     fields: ["name", "category", "price", "stock", "isAvailable", "action"],
-    objectList: DataGridComponent.args.objectList.map((item) => ({
+    objectList: FIXTURE_PRODUCTS.map((item) => ({
       ...item,
       action: (
         <Button pad="h" variant="secondary">

@@ -7,7 +7,8 @@ import { DataGridContext } from "./datagrid";
 /**
  * DataGrid footer, shows paginator.
  */
-export const DataGridFooter: React.FC = () => {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export const DataGridFooter = <T extends object = object>() => {
   const {
     count,
     loading,

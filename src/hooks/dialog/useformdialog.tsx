@@ -2,14 +2,14 @@ import React, { useContext, useEffect } from "react";
 
 import { Form, FormProps, ModalProps, P } from "../../components";
 import { ModalServiceContext } from "../../contexts";
-import { AttributeData, FormField } from "../../lib";
+import { FormField } from "../../lib";
 import { useDialog } from "./usedialog";
 
 /**
  * Returns a function which, when called: shows a form dialog with a
  * confirmation callback and an optional cancellation callback.
  */
-export const useFormDialog = () => {
+export const useFormDialog = <T extends object = object>() => {
   const dialog = useDialog();
 
   /**
@@ -26,23 +26,23 @@ export const useFormDialog = () => {
    * @param formProps
    * @param autofocus
    */
-  const fn = (
+  const fn = <FT extends object = T>(
     title: string,
     message: React.ReactNode,
     fields: FormField[],
     labelConfirm: string,
     labelCancel: string,
-    onConfirm: (data: AttributeData) => void,
+    onConfirm: (data: FT) => void,
     onCancel?: () => void,
     modalProps?: Partial<ModalProps>,
-    formProps?: FormProps,
+    formProps?: FormProps<FT>,
     autofocus?: boolean,
   ) => {
     dialog(
       title,
       <>
         {typeof message === "string" ? <P>{message}</P> : message}
-        <PromptForm
+        <PromptForm<FT>
           message={message}
           fields={fields}
           labelConfirm={labelConfirm}
@@ -61,7 +61,7 @@ export const useFormDialog = () => {
   return fn;
 };
 
-const PromptForm = ({
+const PromptForm = <T extends object = object>({
   fields,
   labelConfirm,
   labelCancel,
@@ -74,9 +74,9 @@ const PromptForm = ({
   fields: FormField[];
   labelConfirm: string;
   labelCancel: string;
-  onConfirm: (data: AttributeData) => void;
+  onConfirm: (data: T) => void;
   onCancel?: () => void;
-  formProps?: FormProps;
+  formProps?: FormProps<T>;
   autofocus?: boolean;
 }) => {
   const { setModalProps } = useContext(ModalServiceContext);
@@ -98,7 +98,7 @@ const PromptForm = ({
   }, []);
 
   return (
-    <Form
+    <Form<T>
       fields={fields}
       justify="stretch"
       labelSubmit={labelConfirm}

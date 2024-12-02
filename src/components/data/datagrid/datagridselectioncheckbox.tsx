@@ -1,21 +1,22 @@
 import React, { useContext, useMemo } from "react";
 
-import { AttributeData, useIntl } from "../../../lib";
+import { useIntl } from "../../../lib";
 import { Checkbox } from "../../form";
-import { DataGridContext } from "./datagrid";
+import { DataGridContext, DataGridContextType } from "./datagrid";
 import { TRANSLATIONS } from "./translations";
 
-export type DataGridSelectionCheckboxProps = {
-  rowData?: AttributeData;
+export type DataGridSelectionCheckboxProps<T extends object = object> = {
+  rowData?: T;
   selectAll?: false | "page" | "allPages";
 };
 
 /**
  * A select (all) checkbox
  */
-export const DataGridSelectionCheckbox: React.FC<
-  DataGridSelectionCheckboxProps
-> = ({ rowData, selectAll }) => {
+export const DataGridSelectionCheckbox = <T extends object = object>({
+  rowData,
+  selectAll,
+}: DataGridSelectionCheckboxProps<T>) => {
   const intl = useIntl();
   const {
     allPagesSelected,
@@ -32,13 +33,13 @@ export const DataGridSelectionCheckbox: React.FC<
     onSelect,
     onSelectAll,
     onSelectAllPages,
-  } = useContext(DataGridContext);
+  } = useContext(DataGridContext) as DataGridContextType<T>;
 
   const { checked, disabled, onChange, ariaLabel } = useMemo(() => {
     let allSelected: boolean = false;
     let checked: boolean = false;
     let disabled: boolean = false;
-    let handleSelect: (() => void) | ((rows: AttributeData) => void);
+    let handleSelect: (rows: T) => void;
     let i18nContext;
     let ariaLabel: string = "";
 
@@ -102,7 +103,7 @@ export const DataGridSelectionCheckbox: React.FC<
           intl.formatMessage(TRANSLATIONS.LABEL_SELECT, i18nContext);
     }
 
-    const onChange = () => handleSelect(rowData || {});
+    const onChange = () => handleSelect(rowData || ({} as T));
     return { checked, disabled, onChange, ariaLabel };
   }, [
     allPagesSelected,

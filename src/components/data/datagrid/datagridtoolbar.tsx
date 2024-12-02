@@ -2,9 +2,9 @@ import { useContext, useEffect, useState } from "react";
 import React from "react";
 
 import {
-  field2Title,
   formatMessage,
   serializeForm,
+  string2Title,
   ucFirst,
   useIntl,
 } from "../../../lib";
@@ -21,7 +21,7 @@ import { TRANSLATIONS } from "./translations";
 /**
  * DataGrid toolbar, shows selection actions and/or allows the user to select fields (columns).
  */
-export const DataGridToolbar: React.FC = () => {
+export const DataGridToolbar = <T extends object = object>() => {
   const { toolbarRef } = useContext(DataGridContext);
   const intl = useIntl();
   const [selectFieldsModalState, setSelectFieldsModalState] = useState(false);
@@ -69,11 +69,11 @@ export const DataGridToolbar: React.FC = () => {
 
   const toolbarItems: ToolbarItem[] = [
     selectable && allowSelectAll ? (
-      <DataGridSelectionCheckbox key="selectPage" selectAll="page" />
+      <DataGridSelectionCheckbox<T> key="selectPage" selectAll="page" />
     ) : null,
 
     selectable && allowSelectAllPages ? (
-      <DataGridSelectionCheckbox key="selectAllPages" selectAll="allPages" />
+      <DataGridSelectionCheckbox<T> key="selectAllPages" selectAll="allPages" />
     ) : null,
 
     ...(selectionActions || []).map(
@@ -126,7 +126,7 @@ export const DataGridToolbar: React.FC = () => {
               {
                 name: "fields",
                 options: fields.map((f) => ({
-                  label: field2Title(f.name, { lowerCase: false }),
+                  label: string2Title(f.name, { lowerCase: false }),
                   value: f.name,
                   selected: Boolean(selectFieldsActiveState[f.name]),
                 })),

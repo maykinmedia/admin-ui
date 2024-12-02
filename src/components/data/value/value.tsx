@@ -1,21 +1,20 @@
 import React from "react";
 
 import {
-  Attribute,
   isBool,
+  isLink,
   isNull,
   isNumber,
   isString,
   isUndefined,
-} from "../../../lib/data/attributedata";
-import { isLink } from "../../../lib/format/string";
+} from "../../../lib";
 import { Badge, BadgeProps } from "../../badge";
 import { Bool, BoolProps } from "../../boolean";
 import { A, AProps, P, PProps } from "../../typography";
 
 export type ValueProps = React.HTMLAttributes<unknown> & {
   /** Value to render. */
-  value: Attribute;
+  value: unknown;
 
   /** Whether to use a "decorative" component instead of `<P>` if applicable. */
   decorate?: boolean;

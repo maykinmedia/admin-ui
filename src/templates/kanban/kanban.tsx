@@ -1,23 +1,24 @@
 import React from "react";
 
 import { Kanban as KanbanComponent, KanbanProps } from "../../components";
-import { AttributeData, FieldSet } from "../../lib";
+import { FieldSet } from "../../lib";
 import { CardBaseTemplate } from "../base";
 import { BodyBaseTemplateProps } from "../base/bodyBase";
 
-export type KanbanTemplateProps = BodyBaseTemplateProps & {
-  kanbanProps: KanbanProps;
-};
+export type KanbanTemplateProps<T extends object = object> =
+  BodyBaseTemplateProps & {
+    kanbanProps: KanbanProps<T>;
+  };
 
 /**
  * grid template
  * @constructor
  */
-export const KanbanTemplate: React.FC<KanbanTemplateProps> = ({
+export const KanbanTemplate = <T extends object = object>({
   children,
   kanbanProps,
   ...props
-}) => {
+}: KanbanTemplateProps<T>) => {
   const { objectList, objectLists, fieldset, fieldsets, groupBy, ...kbProps } =
     kanbanProps;
 
@@ -25,18 +26,18 @@ export const KanbanTemplate: React.FC<KanbanTemplateProps> = ({
     <CardBaseTemplate {...props}>
       {children}
       {groupBy ? (
-        <KanbanComponent
-          objectList={objectList as AttributeData[]}
-          fieldset={fieldset as FieldSet}
-          groupBy={groupBy as string}
+        <KanbanComponent<T>
+          objectList={objectList as T[]}
+          fieldset={fieldset as FieldSet<T>}
+          groupBy={groupBy}
           {...kbProps}
         >
           {children}
         </KanbanComponent>
       ) : (
-        <KanbanComponent
-          objectLists={objectLists as AttributeData[][]}
-          fieldsets={fieldsets as FieldSet[]}
+        <KanbanComponent<T>
+          objectLists={objectLists as T[][]}
+          fieldsets={fieldsets as FieldSet<T>[]}
           {...kbProps}
         >
           {children}

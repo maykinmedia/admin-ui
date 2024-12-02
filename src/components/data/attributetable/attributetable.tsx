@@ -2,11 +2,9 @@ import clsx from "clsx";
 import React, { useId, useState } from "react";
 
 import {
-  AttributeData,
   Field,
-  LabeledAttributeData,
   TypedField,
-  field2Title,
+  string2Title,
   typedFieldByFields,
   useIntl,
 } from "../../../lib";
@@ -15,29 +13,31 @@ import { Form, FormControl, FormProps } from "../../form";
 import { Value } from "../value";
 import "./attributetable.scss";
 
-export type AttributeTableProps = {
-  object?: AttributeData;
-  labeledObject?: LabeledAttributeData;
+export type AttributeTableProps<T extends object = object> = {
+  object?: T;
+  // TODO: Deprecate?
+  labeledObject?: Record<string, { label: string; value: unknown }>;
   editable?: boolean;
-  fields?: Field[] | TypedField[];
+  fields?: Field<T>[] | TypedField<T>[];
   formProps?: FormProps;
   labelCancel?: string;
   labelEdit?: string;
   valign?: "middle" | "start";
   compact?: boolean;
 };
-export const AttributeTable: React.FC<AttributeTableProps> = ({
-  object = {},
+
+export const AttributeTable = <T extends object = object>({
+  object = {} as T,
   labeledObject = {},
   editable = false,
-  fields = Object.keys(object).concat(Object.keys(labeledObject)),
+  fields = Object.keys(object).concat(Object.keys(labeledObject)) as Field<T>[],
   formProps,
   labelCancel,
   labelEdit,
   valign = "middle",
   compact = false,
   ...props
-}) => {
+}: AttributeTableProps<T>) => {
   const intl = useIntl();
   const [isFormOpenState, setIsFormOpenState] = useState(false);
   const typedFields = typedFieldByFields(fields, [object]);
@@ -79,8 +79,8 @@ export const AttributeTable: React.FC<AttributeTableProps> = ({
 
   const renderRows = () =>
     typedFields.map((field) => (
-      <AttributeTableRow
-        key={field.name}
+      <AttributeTableRow<T>
+        key={field.name.toString()}
         editable={editable}
         field={field}
         isFormOpen={isFormOpenState}
@@ -106,33 +106,39 @@ export const AttributeTable: React.FC<AttributeTableProps> = ({
   );
 };
 
-export type AttributeTableRowProps = {
+export type AttributeTableRowProps<T extends object = object> = {
   editable?: boolean;
-  object?: AttributeData;
-  labeledObject?: LabeledAttributeData;
-  field: TypedField;
+  object?: T;
+  // TODO: Deprecate in favor of using TypedField for labels in the future?
+  labeledObject?: Record<string, { label: string; value: unknown }>;
+  field: TypedField<T>;
   isFormOpen: boolean;
   labelEdit?: string;
   onClick: React.MouseEventHandler;
   compact?: boolean;
 };
-export const AttributeTableRow: React.FC<AttributeTableRowProps> = ({
+
+export const AttributeTableRow = <T extends object = object>({
   editable = false,
   field,
   isFormOpen,
-  object = {},
+  object = {} as T,
   labeledObject = {},
   labelEdit,
   compact = false,
   onClick,
-}) => {
+}: AttributeTableRowProps<T>) => {
   const id = useId();
   const intl = useIntl();
   const [isEditingState, setIsEditingState] = useState(false);
   const name = field.name;
-  const fieldInObject = Object.keys(object).includes(name);
-  const label = fieldInObject ? field2Title(name) : labeledObject[name].label;
-  const rawValue = fieldInObject ? object[name] : labeledObject[name].value;
+  const fieldInObject = Object.keys(object).includes(name.toString());
+  const label = fieldInObject
+    ? string2Title(name.toString())
+    : labeledObject[name as string].label;
+  const rawValue = fieldInObject
+    ? object[name as keyof T]
+    : labeledObject[name as string].value;
   const isEditing = isFormOpen && isEditingState;
 
   const handleCLick: React.MouseEventHandler = (e) => {
@@ -180,7 +186,7 @@ export const AttributeTableRow: React.FC<AttributeTableRowProps> = ({
           field.type === "boolean" ? Boolean(rawValue) : undefined
         }
         hidden={!isEditing}
-        name={name}
+        name={name.toString()}
         options={field.options}
         required={true}
         type={field.type === "number" ? "number" : undefined}

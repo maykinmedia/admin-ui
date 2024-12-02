@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 
-import { ucFirst } from "../../../lib/format/string";
-import { formatMessage } from "../../../lib/i18n/formatmessage";
-import { useIntl } from "../../../lib/i18n/useIntl";
+import { ucFirst } from "../../../lib";
+import { formatMessage } from "../../../lib";
+import { useIntl } from "../../../lib";
 import { Button } from "../../button";
 import { Option, Select, SelectProps } from "../../form";
 import { Outline } from "../../icon";

@@ -9,7 +9,6 @@ import {
   FIXTURE_TODOS_STATUS_IN_REVIEW,
   FIXTURE_TODOS_STATUS_TODO,
 } from "../../../../.storybook/fixtures/todos";
-import { AttributeData } from "../../../lib";
 import { ItemGrid, ItemGridProps } from "./itemgrid";
 
 const meta: Meta<typeof ItemGrid> = {
@@ -45,9 +44,9 @@ export const CustomPreview: Story = {
   // @ts-expect-error - Fix never
   args: {
     ...(ItemGridComponent.args as ItemGridProps),
-    renderPreview: (attributeData: AttributeData<string>) => (
+    renderPreview: (data: Record<string, string>) => (
       <img
-        alt={attributeData.title}
+        alt={data.title}
         src="/static/maykin_logo.png"
         height="24"
         style={{ objectFit: "contain" }}

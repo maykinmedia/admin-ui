@@ -1,20 +1,15 @@
 import React from "react";
 
-import {
-  AttributeData,
-  FieldSet,
-  attributeDataByFieldsets,
-  slugify,
-} from "../../../lib";
+import { FieldSet, dataByFieldsets, slugify } from "../../../lib";
 import { Column, Grid } from "../../layout";
 import { Toolbar } from "../../toolbar";
 import { Body, H2, Hr } from "../../typography";
 import { AttributeList, AttributeListProps } from "../attributelist";
 import "./attributegrid.scss";
 
-export type AttributeGridProps = {
-  object: AttributeData;
-  fieldsets: FieldSet[];
+export type AttributeGridProps<T extends object = object> = {
+  object: T;
+  fieldsets: FieldSet<T>[];
   generateTitleIds?: boolean;
   title?: React.ReactNode;
 };
@@ -22,17 +17,15 @@ export type AttributeGridProps = {
 /**
  * AttributeGrid component, renders multiple `AttributeList`s in a `Grid` component based on `fieldsets`.
  */
-export const AttributeGrid: React.FC<AttributeGridProps> = ({
+export const AttributeGrid = <T extends object = object>({
   object,
   fieldsets,
   generateTitleIds = false,
   title,
   ...props
-}) => {
+}: AttributeGridProps<T>) => {
   const objectList =
-    object && fieldsets?.length
-      ? attributeDataByFieldsets(object, fieldsets)
-      : [];
+    object && fieldsets?.length ? dataByFieldsets(object, fieldsets) : [];
 
   // The grid datastructure:
   //
