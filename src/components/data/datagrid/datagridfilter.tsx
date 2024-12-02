@@ -2,25 +2,24 @@ import clsx from "clsx";
 import React, { useContext, useEffect, useRef, useState } from "react";
 
 import {
-  AttributeData,
-  field2Title,
   formatMessage,
   serializeForm,
+  string2Title,
   useIntl,
 } from "../../../lib";
 import { FormControl } from "../../form";
 import { Outline } from "../../icon";
-import { DataGridContext } from "./datagrid";
+import { DataGridContext, DataGridContextType } from "./datagrid";
 import { TRANSLATIONS } from "./translations";
 
 /**
  * DataGrid filter, encapsulates a set of FormControl's allowing the user to
  * filter items on the grid.
  */
-export const DataGridFilter: React.FC = () => {
+export const DataGridFilter = <T extends object = object>() => {
   const intl = useIntl();
   const onFilterTimeoutRef = useRef<NodeJS.Timeout>();
-  const [filterState, setFilterState] = useState<AttributeData>();
+  const [filterState, setFilterState] = useState<T>();
 
   const {
     dataGridId,
@@ -29,7 +28,7 @@ export const DataGridFilter: React.FC = () => {
     onFilter,
     renderableFields,
     selectable,
-  } = useContext(DataGridContext);
+  } = useContext(DataGridContext) as DataGridContextType<T>;
 
   // Debounce filter
   useEffect(() => {
@@ -56,7 +55,7 @@ export const DataGridFilter: React.FC = () => {
       e.preventDefault();
     }
 
-    const data = serializeForm(input.form as HTMLFormElement) as AttributeData;
+    const data = serializeForm(input.form as HTMLFormElement) as T;
     const _data = filterTransform ? filterTransform(data) : data;
 
     // Reset page on filter (length of dataset may change).
@@ -75,7 +74,9 @@ export const DataGridFilter: React.FC = () => {
         ></th>
       )}
       {renderableFields.map((field) => {
-        const placeholder = field2Title(field.name, { lowerCase: false });
+        const placeholder = string2Title(field.name.toString(), {
+          lowerCase: false,
+        });
 
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { options, valueTransform, ...context } = field;
@@ -86,7 +87,7 @@ export const DataGridFilter: React.FC = () => {
 
         return (
           <th
-            key={`${dataGridId}-filter-${field2Title(field.name, { lowerCase: false })}`}
+            key={`${dataGridId}-filter-${string2Title(field.name.toString(), { lowerCase: false })}`}
             className={clsx(
               "mykn-datagrid__cell",
               "mykn-datagrid__c" + "ell--filter",
@@ -102,7 +103,7 @@ export const DataGridFilter: React.FC = () => {
                   field.type !== "daterange" && <Outline.MagnifyingGlassIcon />
                 }
                 form={`${dataGridId}-filter-form`}
-                name={field.filterLookup || field.name}
+                name={field.filterLookup || field.name.toString()}
                 options={field.options}
                 min={!field.options && field.type === "number" ? 0 : undefined}
                 pad={field.type === "daterange" ? "v" : undefined}

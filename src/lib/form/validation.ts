@@ -1,4 +1,3 @@
-import { AttributeData } from "../data";
 import { FormField } from "./typeguards";
 import { parseFieldName } from "./utils";
 
@@ -37,8 +36,8 @@ export const validateRequired: Validator = (
  * @param fields
  * @param validators
  */
-export const validateForm = (
-  values: AttributeData,
+export const validateForm = <T extends object = object>(
+  values: T,
   fields: FormField[],
   validators: Validator[] = [validateRequired],
 ) => {
@@ -50,7 +49,7 @@ export const validateForm = (
           string,
           number | undefined,
         ];
-        const value = values[name];
+        const value = values[name as keyof T];
 
         // Validate array, multiple values.
         if (Array.isArray(value)) {

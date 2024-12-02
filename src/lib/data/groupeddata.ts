@@ -2,9 +2,9 @@ import React from "react";
 
 import { ButtonLinkProps, ButtonProps } from "../../components";
 import { formatMessage } from "../i18n";
-import { AttributeData, FieldOptions, FieldSet } from "./attributedata";
+import { FieldOptions, FieldSet } from "./field";
 
-export type GroupedAttributeDataProps = Omit<
+export type GroupedDataProps<T extends object = object> = Omit<
   React.ComponentProps<"div">,
   "draggable" | "title" | "onClick"
 > & {
@@ -12,7 +12,7 @@ export type GroupedAttributeDataProps = Omit<
   title?: React.ReactNode;
 
   /** A `Function` that is used to create the preview for an object. */
-  renderPreview?: (attributeData: AttributeData) => React.ReactNode;
+  renderPreview?: (data: T) => React.ReactNode;
 
   /**
    *  A `string[]` containing the fields which should be used to detect the url
@@ -28,69 +28,69 @@ export type GroupedAttributeDataProps = Omit<
   /**
    * Gets called when a button is clicked.
    * @param event
-   * @param attributeData
+   * @param data
    */
-  onClick?: (event: React.MouseEvent, attributeData: AttributeData) => void;
-} & GroupedAttributeDataConfigurationProps;
+  onClick?: (event: React.MouseEvent, data: T) => void;
+} & GroupedDataConfigurationProps<T>;
 
-export type GroupedAttributeDataConfigurationProps =
-  | GroupedAttributeDataFieldsetProps
-  | GroupedAttributeDataGroupByProps;
+export type GroupedDataConfigurationProps<T extends object = object> =
+  | GroupedDataFieldsetProps<T>
+  | GroupedDataGroupByProps<T>;
 
 /**
  * WHen using `fieldsets` / `objectLists` to define sections. The length of `fieldSets` and `objectLists` should match.
  */
-export type GroupedAttributeDataFieldsetProps = {
+export type GroupedDataFieldsetProps<T extends object = object> = {
   /** The field to sort by, if `undefined`: `fieldsets` and `objectLists` are used for manual segmentation. */
   groupBy?: never;
 
   /** The fieldsets to render. */
-  fieldsets: FieldSet[];
+  fieldsets: FieldSet<T>[];
 
   /** The object lists to show, each index should match `fieldsets` index. */
-  objectLists: AttributeData[][];
+  objectLists: T[][];
 
   fieldset?: never;
   objectList?: never;
 };
 
-export type GroupedAttributeDataGroupByProps = {
+export type GroupedDataGroupByProps<T extends object = object> = {
   /**
    * The field to sort by, if specified: `fieldset` acts as base fieldset and `objectList` as list of objects to group.`.
    * The first item in `fieldset` (the label) may contain "{group}" placeholder which will be replaced by the matching
    * value.
    */
-  groupBy: string;
+  groupBy: keyof T;
 
   /** The fieldset to render. */
-  fieldset: FieldSet;
+  fieldset: FieldSet<T>;
 
   /** The objects to show. */
-  objectList: AttributeData[];
+  objectList: T[];
 
   fieldsets?: never;
   objectLists?: never;
 };
 
 /**
- * Returns segments represented by `[Fieldset[], AttributeData[][]]`.
+ * Returns segments represented by `[Fieldset[], T[][]]`.
  */
-export const getContextData = (
-  groupBy?: string,
-  fieldset?: FieldSet,
-  fieldsets?: FieldSet[],
-  objectList?: AttributeData[],
-  objectLists?: AttributeData[][],
-): [FieldSet[], AttributeData[][]] => {
+export const getContextData = <T extends object = object>(
+  groupBy?: keyof T,
+  fieldset?: FieldSet<T>,
+  fieldsets?: FieldSet<T>[],
+  objectList?: T[],
+  objectLists?: T[][],
+): [FieldSet<T>[], T[][]] => {
   if (groupBy) {
     const fieldsetTemplate = fieldset?.[0] as string;
-    const fieldsetOptions = fieldset?.[1] as FieldOptions;
+    const fieldsetOptions = fieldset?.[1] as FieldOptions<T>;
     const groups = [...new Set((objectList || []).map((o) => o[groupBy]))].sort(
       (a, b) =>
         String(a).localeCompare(String(b), undefined, { numeric: true }),
     );
 
-    const _fieldsets = groups.map<FieldSet>((g) => [
+    const _fieldsets = groups.map<FieldSet<T>>((g) => [
       fieldsetTemplate
         ? formatMessage(fieldsetTemplate, { group: g })
         : String(g),
@@ -98,9 +98,9 @@ export const getContextData = (
     ]);
 
     const _objectLists = groups.map((g) =>
-      (objectList as AttributeData[]).filter((o) => o[groupBy] === g),
+      (objectList as T[]).filter((o) => o[groupBy] === g),
     );
     return [_fieldsets, _objectLists];
   }
-  return [fieldsets as FieldSet[], objectLists as AttributeData[][]];
+  return [fieldsets as FieldSet[], objectLists as T[][]];
 };

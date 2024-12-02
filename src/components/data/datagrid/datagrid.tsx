@@ -13,13 +13,10 @@ import {
   Field,
   SerializedFormData,
   TypedField,
-  filterAttributeDataArray,
+  filterDataArray,
   typedFieldByFields,
 } from "../../../lib";
-import {
-  AttributeData,
-  sortAttributeDataArray,
-} from "../../../lib/data/attributedata";
+import { sortDataArray } from "../../../lib";
 import { BadgeProps } from "../../badge";
 import { BoolProps } from "../../boolean";
 import { ButtonProps } from "../../button";
@@ -34,9 +31,9 @@ import { DataGridTBody } from "./datagridtbody";
 import { DataGridTHead } from "./datagridthead";
 import { DataGridToolbar } from "./datagridtoolbar";
 
-export type DataGridProps = {
+export type DataGridProps<T extends object = object> = {
   /** The object list (after pagination), only primitive types supported for now. */
-  objectList: AttributeData[];
+  objectList: T[];
 
   /**
    * Whether to allow horizontal contents to exceed the bounding box width
@@ -54,7 +51,7 @@ export type DataGridProps = {
   editable?: boolean;
 
   /** A `string[]` or `TypedField[]` containing the keys in `objectList` to show object for. */
-  fields?: Array<Field | TypedField>;
+  fields?: Array<Field<T> | TypedField<T>>;
 
   /** Whether the fields should be selectable. */
   fieldsSelectable?: boolean;
@@ -69,7 +66,7 @@ export type DataGridProps = {
    * A function transforming the filter values.
    * This can be used to adjust filter input to an API spec.
    */
-  filterTransform?: (value: AttributeData) => AttributeData;
+  filterTransform?: (value: T) => Record<string, unknown>;
 
   /**
    * Can be any valid CSS `height` property or `"fill-available-space"` to
@@ -113,7 +110,7 @@ export type DataGridProps = {
   selectable?: boolean;
 
   /** References to the selected items in `objectList`, setting this preselects the items. */
-  selected?: AttributeData[];
+  selected?: T[];
 
   /** Whether a select all checkbox should be shown (when `selectable=true`). */
   allowSelectAll?: boolean;
@@ -163,13 +160,13 @@ export type DataGridProps = {
   labelSelectAllPages?: string;
 
   /** Can be used to specify how to compare the selected items and the items in the data grid */
-  equalityChecker?: (item1: AttributeData, item2: AttributeData) => boolean;
+  equalityChecker?: (item1: T, item2: T) => boolean;
 
   /** Renders buttons allowing to perform actions on selection, `onClick` is called with selection array. */
   selectionActions?: ButtonProps[];
 
   /** Get called to when the active field selection is changed. */
-  onFieldsChange?: (typedFields: TypedField[]) => void;
+  onFieldsChange?: (typedFields: TypedField<T>[]) => void;
 
   /**
    * Gets called when a selection is made, receives two arguments:
@@ -179,10 +176,10 @@ export type DataGridProps = {
    *   - all items on page (select all).
    * - selected: boolean indicating whether the rows are selected (true) or deselected (false).
    */
-  onSelect?: (rows: AttributeData[], selected: boolean) => void;
+  onSelect?: (rows: T[], selected: boolean) => void;
 
   /** Gets called when the selection is changed, receives all currently selected items. */
-  onSelectionChange?: (rows: AttributeData[]) => void;
+  onSelectionChange?: (rows: T[]) => void;
 
   /** Gets called when the "select all pages" checkbox is clicked. */
   onSelectAllPages?: (selected: boolean) => void;
@@ -190,7 +187,7 @@ export type DataGridProps = {
   /** Gets called when an object is selected. */
   onClick?: (
     event: React.MouseEvent<HTMLAnchorElement>,
-    attributeData: DataGridProps["objectList"][number],
+    attributeData: T,
   ) => void;
 
   /** Gets called when a row value is edited. */
@@ -203,7 +200,7 @@ export type DataGridProps = {
    *  Gets called when a row value is filtered.
    *  This callback is debounced every 300 milliseconds.
    */
-  onFilter?: (rowData: AttributeData) => void;
+  onFilter?: (rowData: Record<keyof T, unknown>) => void;
 
   /** Gets called when the object list is sorted. */
   onSort?: (sort: string) => Promise<unknown> | void;
@@ -211,8 +208,8 @@ export type DataGridProps = {
 
 export const toolbarRef = React.createRef<HTMLDivElement>();
 
-export type DataGridContextType = Omit<
-  DataGridProps,
+export type DataGridContextType<T extends object> = Omit<
+  DataGridProps<T>,
   "equalityChecker" | "fields" | "onSelect" | "onSort"
 > & {
   toolbarRef: React.RefObject<HTMLDivElement>;
@@ -222,29 +219,29 @@ export type DataGridContextType = Omit<
   dataGridId: string;
   editable: boolean;
   editingFieldIndex: number | null; // TODO: undefined?
-  editingRow: AttributeData | null;
-  equalityChecker: (item1: AttributeData, item2: AttributeData) => boolean;
-  fields: TypedField[];
+  editingRow: T | null;
+  equalityChecker: (item1: T, item2: T) => boolean;
+  fields: TypedField<T>[];
   pages: number;
-  renderableFields: TypedField[];
-  renderableRows: AttributeData[];
-  selectedRows: AttributeData[];
-  setEditingState: React.Dispatch<[AttributeData | null, number | null]>; // TODO: Wrap?
+  renderableFields: TypedField<T>[];
+  renderableRows: T[];
+  selectedRows: T[];
+  setEditingState: React.Dispatch<[T, number] | [null, null]>; // TODO: Wrap?
   sortable: boolean;
   sortDirection?: "ASC" | "DESC";
   sortField?: string;
   titleId?: string; // TODO: Move?;
-  onFieldsChange?: (typedFields: TypedField[]) => void;
-  onFilter: (rowData: AttributeData) => void;
-  onSelect: (rows: AttributeData) => void;
+  onFieldsChange?: (typedFields: TypedField<T>[]) => void;
+  onFilter: (rowData: Record<keyof T, unknown>) => void;
+  onSelect: (rows: T) => void;
   onSelectAll: (selected: boolean) => void;
   onSelectAllPages: (selected: boolean) => void;
-  onSort: (field: TypedField) => void;
+  onSort: (field: TypedField<T>) => void;
 };
 
-export const DataGridContext = React.createContext<DataGridContextType>(
-  {} as unknown as DataGridContextType,
-);
+export const DataGridContext = React.createContext<
+  DataGridContextType<Record<string, unknown>>
+>({} as unknown as DataGridContextType<Record<string, unknown>>);
 
 /**
  * A subset of `PaginatorProps` that act as aliases.
@@ -263,9 +260,9 @@ type PaginatorPropsAliases = {
 /**
  * DataGrid component
  */
-export const DataGrid: React.FC<DataGridProps> = (props) => {
+export const DataGrid = <T extends object>(props: DataGridProps<T>) => {
   // Specify the default props.
-  const defaults: Partial<DataGridProps> = {
+  const defaults: Partial<DataGridProps<T>> = {
     allowOverflowX: true,
     showPaginator: Boolean(props.paginatorProps),
     selectable: false,
@@ -274,8 +271,7 @@ export const DataGrid: React.FC<DataGridProps> = (props) => {
     allPagesSelected: false,
     allPagesSelectedManaged: true,
     fieldsSelectable: false,
-    equalityChecker: (item1: AttributeData, item2: AttributeData) =>
-      item1 == item2,
+    equalityChecker: (item1: T, item2: T) => item1 == item2,
     selectionActions: [],
     title: "",
     urlFields: DEFAULT_URL_FIELDS,
@@ -348,23 +344,28 @@ export const DataGrid: React.FC<DataGridProps> = (props) => {
   const id = useId();
   const onFilterTimeoutRef = useRef<NodeJS.Timeout>();
 
-  const [editingState, setEditingState] = useState<
-    [AttributeData | null, number | null]
-  >([null, null]);
-
-  const [filterState, setFilterState] = useState<AttributeData | null>();
-  const [selectedState, setSelectedState] = useState<AttributeData[] | null>(
+  // Row that's being edited.
+  const [editingState, setEditingState] = useState<[T, number] | [null, null]>([
     null,
-  );
+    null,
+  ]);
+
+  const [filterState, setFilterState] = useState<Record<
+    keyof T,
+    unknown
+  > | null>(); // FIXME
+  const [selectedState, setSelectedState] = useState<T[] | null>(null);
 
   const [allPagesSelectedState, setAllPagesSelectedState] =
     useState(allPagesSelected);
 
   const [sortState, setSortState] = useState<
-    [string, "ASC" | "DESC"] | undefined
+    [keyof T | string, "ASC" | "DESC"] | undefined
   >();
 
-  const [fieldsState, setFieldsState] = useState<Array<Field | TypedField>>([]);
+  const [fieldsState, setFieldsState] = useState<
+    Array<Field<T> | TypedField<T>>
+  >([]);
 
   // Update selectedState when selected prop changes.
   useEffect(() => {
@@ -380,7 +381,7 @@ export const DataGrid: React.FC<DataGridProps> = (props) => {
   useEffect(() => {
     if (typeof sort === "string") {
       const direction = sort.startsWith("-") ? "DESC" : "ASC";
-      const field = sort.replace(/^-/, "");
+      const field = sort.replace(/^-/, "") as Field<T>;
       setSortState([field, direction]);
     }
   }, [sort]);
@@ -388,7 +389,10 @@ export const DataGrid: React.FC<DataGridProps> = (props) => {
   // Update fieldsState when fields prop changes.
   useEffect(() => {
     const _fields =
-      fields || (objectList?.length ? Object.keys(objectList[0]) : []);
+      fields ||
+      ((objectList?.length ? Object.keys(objectList[0]) : []) as Array<
+        Field<T> | TypedField<T>
+      >);
     setFieldsState(_fields);
   }, [fields]);
 
@@ -396,7 +400,10 @@ export const DataGrid: React.FC<DataGridProps> = (props) => {
   useEffect(() => {
     if (!fieldsState.length) {
       const _fields =
-        fields || (objectList?.length ? Object.keys(objectList[0]) : []);
+        fields ||
+        ((objectList?.length ? Object.keys(objectList[0]) : []) as Array<
+          Field<T> | TypedField<T>
+        >);
       setFieldsState(_fields);
     }
   }, [objectList]);
@@ -481,9 +488,7 @@ export const DataGrid: React.FC<DataGridProps> = (props) => {
   // Filter rows.
   const filteredObjectList = useMemo(
     () =>
-      filterState
-        ? filterAttributeDataArray(objectList, filterState)
-        : objectList || [],
+      filterState ? filterDataArray(objectList, filterState) : objectList || [],
     [objectList, filterState],
   );
 
@@ -491,7 +496,7 @@ export const DataGrid: React.FC<DataGridProps> = (props) => {
   const renderableRows = useMemo(
     () =>
       !onSort && sortField && sortDirection
-        ? sortAttributeDataArray(filteredObjectList, sortField, sortDirection)
+        ? sortDataArray(filteredObjectList, sortField, sortDirection)
         : filteredObjectList,
     [onSort, sortField, sortDirection, filteredObjectList],
   );
@@ -500,7 +505,7 @@ export const DataGrid: React.FC<DataGridProps> = (props) => {
    * Gets called when the select checkbox is clicked.
    */
   const handleSelect = useCallback(
-    (attributeData: AttributeData) => {
+    (attributeData: T) => {
       const currentlySelected = selectedState || [];
 
       const isAttributeDataCurrentlySelected = currentlySelected.find(
@@ -553,11 +558,15 @@ export const DataGrid: React.FC<DataGridProps> = (props) => {
    * @param field
    */
   const handleSort = useCallback(
-    (field: TypedField) => {
+    (field: TypedField<T>) => {
       const newSortDirection = sortDirection === "ASC" ? "DESC" : "ASC";
       setSortState([field.name, newSortDirection]);
       if (onSort) {
-        onSort(newSortDirection === "ASC" ? field.name : `-${field.name}`);
+        onSort(
+          newSortDirection === "ASC"
+            ? field.name.toString()
+            : `-${field.name.toString()}`,
+        );
       }
     },
     [sortDirection, setSortState, onSort], // Dependencies
@@ -568,7 +577,7 @@ export const DataGrid: React.FC<DataGridProps> = (props) => {
    * @param data
    */
   const handleFilter = useCallback(
-    (data: AttributeData) => {
+    (data: Record<keyof T, unknown>) => {
       if (onFilter) {
         const handler = () => onFilter(data);
         if (onFilterTimeoutRef.current) {
@@ -579,7 +588,9 @@ export const DataGrid: React.FC<DataGridProps> = (props) => {
         return;
       }
 
-      const hasFilterData = Object.keys(data).some((key) => data[key]);
+      const hasFilterData = Object.keys(data).some(
+        (key) => data[key as keyof T],
+      );
       setFilterState(hasFilterData ? data : null);
     },
     [onFilter, onFilterTimeoutRef, setFilterState],
@@ -604,56 +615,58 @@ export const DataGrid: React.FC<DataGridProps> = (props) => {
   }
   return (
     <DataGridContext.Provider
-      value={{
-        toolbarRef,
+      // @ts-expect-error - Fix generic typing
+      value={
+        {
+          toolbarRef,
 
-        ...defaultedProps,
-        // @ts-expect-error - FIXME, line required due due to story passing undefined.
-        equalityChecker:
-          defaultedProps.equalityChecker || defaults.equalityChecker,
+          ...defaultedProps,
+          equalityChecker:
+            defaultedProps.equalityChecker || defaults.equalityChecker,
 
-        allPagesSelected: allPagesSelectedState,
-        amountSelected: selectedState?.length || 0,
-        count: _count,
-        dataGridId: id,
-        editable: Boolean(renderableFields.find((f) => f.editable)),
-        editingFieldIndex: editingState[1],
-        editingRow: editingState[0],
-        fields: typedFields,
-        pages: _pages,
-        renderableFields: renderableFields,
-        renderableRows: renderableRows,
-        selectedRows: _selectedRows,
-        setEditingState: setEditingState, // TODO: Wrap?
-        sortable: Boolean(sort),
-        sortDirection: sortDirection,
-        sortField: sortField,
-        titleId: titleId,
+          allPagesSelected: allPagesSelectedState,
+          amountSelected: selectedState?.length || 0,
+          count: _count,
+          dataGridId: id,
+          editable: Boolean(renderableFields.find((f) => f.editable)),
+          editingFieldIndex: editingState[1],
+          editingRow: editingState[0],
+          fields: typedFields,
+          pages: _pages,
+          renderableFields: renderableFields,
+          renderableRows: renderableRows,
+          selectedRows: _selectedRows,
+          setEditingState: setEditingState, // TODO: Wrap?
+          sortable: Boolean(sort),
+          sortDirection: sortDirection,
+          sortField: sortField,
+          titleId: titleId,
 
-        // Events
-        onFieldsChange: (typedFields: TypedField[]) => {
-          setFieldsState(typedFields);
-          onFieldsChange?.(typedFields);
-        },
-        onFilter: handleFilter,
-        onSelect: handleSelect,
-        onSort: handleSort,
-        onSelectAll: handleSelectAll,
-        onSelectAllPages: handleSelectAllPages,
-      }}
+          // Events
+          onFieldsChange: (typedFields: TypedField<T>[]) => {
+            setFieldsState(typedFields);
+            onFieldsChange?.(typedFields);
+          },
+          onFilter: handleFilter,
+          onSelect: handleSelect,
+          onSort: handleSort,
+          onSelectAll: handleSelectAll,
+          onSelectAllPages: handleSelectAllPages,
+        } as DataGridContextType<T>
+      }
     >
       <div ref={dataGridRef} className="mykn-datagrid" {...attrs}>
-        {title && <DataGridHeader />}
-        {(selectable || fieldsSelectable) && <DataGridToolbar />}
+        {title && <DataGridHeader<T> />}
+        {(selectable || fieldsSelectable) && <DataGridToolbar<T> />}
 
-        <DataGridScrollPane>
-          <DataGridTable>
-            <DataGridTHead />
-            <DataGridTBody />
+        <DataGridScrollPane<T>>
+          <DataGridTable<T>>
+            <DataGridTHead<T> />
+            <DataGridTBody<T> />
           </DataGridTable>
         </DataGridScrollPane>
 
-        {showPaginator && <DataGridFooter />}
+        {showPaginator && <DataGridFooter<T> />}
         {filterable && <form id={`${id}-filter-form`} />}
       </div>
     </DataGridContext.Provider>

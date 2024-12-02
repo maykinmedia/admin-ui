@@ -2,10 +2,11 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 import { LoginTemplate } from "./login";
 
-const meta: Meta<typeof LoginTemplate> = {
-  title: "Templates/Login",
-  component: LoginTemplate,
-};
+const meta: Meta<typeof LoginTemplate<{ username: string; password: string }>> =
+  {
+    title: "Templates/Login",
+    component: LoginTemplate<{ username: string; password: string }>,
+  };
 
 export default meta;
 type Story = StoryObj<typeof meta>;

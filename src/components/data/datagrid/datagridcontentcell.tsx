@@ -2,34 +2,32 @@ import clsx from "clsx";
 import React, { useContext, useState } from "react";
 
 import {
-  Attribute,
-  AttributeData,
   DEFAULT_URL_FIELDS,
   TypedField,
-  field2Title,
   isLink,
   isPrimitive,
   serializeForm,
+  string2Title,
 } from "../../../lib";
-import { getByDotSeparatedPath } from "../../../lib/data/getByDotSeparatedPath";
+import { getByDotSeparatedPath } from "../../../lib/data/utils";
 import { BoolProps } from "../../boolean";
 import { Button } from "../../button";
 import { FormControl } from "../../form";
 import { Value } from "../value";
-import { DataGridContext } from "./datagrid";
+import { DataGridContext, DataGridContextType } from "./datagrid";
 
-export type DataGridContentCellProps = {
-  field: TypedField;
-  rowData: AttributeData;
+export type DataGridContentCellProps<T extends object = object> = {
+  field: TypedField<T>;
+  rowData: T;
 };
 
 /**
  * DataGrid (content) cell
  */
-export const DataGridContentCell: React.FC<DataGridContentCellProps> = ({
+export const DataGridContentCell = <T extends object = object>({
   field,
   rowData,
-}) => {
+}: DataGridContentCellProps<T>) => {
   const {
     aProps,
     badgeProps,
@@ -45,7 +43,9 @@ export const DataGridContentCell: React.FC<DataGridContentCellProps> = ({
     urlFields = DEFAULT_URL_FIELDS,
     onChange,
     onEdit,
-  } = useContext(DataGridContext);
+  } =
+    // @ts-expect-error - DataGridContext does not have generic T at time of instantiation.
+    useContext<DataGridContextType<T>>(DataGridContext);
   const [pristine, setPristine] = useState<boolean>(true);
 
   const fieldEditable =
@@ -54,11 +54,11 @@ export const DataGridContentCell: React.FC<DataGridContentCellProps> = ({
   const isEditingRow = editingRow === rowData;
   const isEditingField =
     isEditingRow && editingFieldIndex === renderableFields.indexOf(field);
-  const urlField = urlFields.find((f) => rowData[f]);
-  const rowUrl = urlField ? rowData[urlField] : null;
-  const resolvedValue = getByDotSeparatedPath<Attribute>(
+  const urlField = urlFields.find((f) => rowData[f as keyof T]);
+  const rowUrl = urlField ? rowData[urlField as keyof T] : null;
+  const resolvedValue = getByDotSeparatedPath(
     rowData,
-    field.valueLookup || field.name,
+    field.valueLookup || field.name.toString(),
   );
   const value = field.valueTransform?.(rowData) || resolvedValue;
   const valueIsPrimitive = isPrimitive(value);
@@ -101,7 +101,7 @@ export const DataGridContentCell: React.FC<DataGridContentCellProps> = ({
       <FormControl
         autoFocus
         key={"datagrid-editable"}
-        name={field.name}
+        name={field.name as string}
         defaultChecked={field.type === "boolean" ? Boolean(value) : undefined}
         options={field.options || undefined}
         type={field.type === "number" ? "number" : undefined}
@@ -131,7 +131,7 @@ export const DataGridContentCell: React.FC<DataGridContentCellProps> = ({
       defaultValue={value?.toString() || ""}
       form={`${dataGridId}-editable-form`}
       hidden
-      name={field.name}
+      name={field.name.toString()}
       type={
         field.type === "boolean"
           ? "checkbox"
@@ -173,7 +173,9 @@ export const DataGridContentCell: React.FC<DataGridContentCellProps> = ({
           "mykn-datagrid__cell--link": link,
         },
       )}
-      aria-description={field2Title(field.name, { lowerCase: false })}
+      aria-description={string2Title(field.name.toString(), {
+        lowerCase: false,
+      })}
     >
       {valueIsPrimitive &&
         isEditingRow &&

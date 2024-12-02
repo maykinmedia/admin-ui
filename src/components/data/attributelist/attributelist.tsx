@@ -1,62 +1,64 @@
 import React from "react";
 
-import { AttributeData } from "../../../lib/data/attributedata";
-import { field2Title } from "../../../lib/format/string";
+import { Field, string2Title } from "../../../lib";
 import { H3 } from "../../typography";
 import { Value } from "../value";
 import "./attributelist.scss";
 
-export type AttributeListProps = React.ComponentPropsWithoutRef<"div"> & {
-  /** The object to show object attributes of. */
-  object: AttributeData;
+export type AttributeListProps<T extends object = object> =
+  React.ComponentPropsWithoutRef<"div"> & {
+    /** The object to show object attributes of. */
+    object: T;
 
-  /** The fields in object to show. */
-  fields?: Array<keyof AttributeData>;
+    /** The fields in object to show. */
+    fields?: Array<keyof T>;
 
-  /** A title for the attribute list. */
-  title?: string;
+    /** A title for the attribute list. */
+    title?: string;
 
-  /** An optional id for the title. */
-  titleId?: string;
-};
+    /** An optional id for the title. */
+    titleId?: string;
+  };
 
 /**
  * AttributeList component, shows multiple `fields` in `object`.
  * TODO: tooltip
  */
-export const AttributeList: React.FC<AttributeListProps> = ({
+export const AttributeList = <T extends object = object>({
   title = "",
   titleId,
-  object = {},
-  fields = Object.keys(object),
+  object = {} as T,
+  fields = Object.keys(object) as Field<T>[],
   ...props
-}) => (
+}: AttributeListProps<T>) => (
   <div className="mykn-attributelist" {...props}>
     {title && <H3 id={titleId}>{title}</H3>}
 
     <dl className="mykn-attributelist__list">
       {fields.map((f) => (
-        <AttributePair key={f} object={object} field={f} />
+        <AttributePair<T> key={f.toString()} object={object} field={f} />
       ))}
     </dl>
   </div>
 );
 
-export type AttributePairProps = {
-  object: AttributeData;
-  field: keyof AttributeData;
+export type AttributePairProps<T extends object = object> = {
+  object: T;
+  field: keyof T;
 };
 
 /**
  * A single attribute in an AttributeList
  */
-export const AttributePair: React.FC<AttributePairProps> = ({
+export const AttributePair = <T extends object = object>({
   object,
   field,
-}) => {
+}: AttributePairProps<T>) => {
   return (
     <>
-      <dt className="mykn-attributelist__key">{field2Title(field)}</dt>
+      <dt className="mykn-attributelist__key">
+        {string2Title(field as string)}
+      </dt>
       <dd className="mykn-attributelist__value">
         <Value value={object[field]} />
       </dd>

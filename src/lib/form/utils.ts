@@ -1,15 +1,10 @@
-import {
-  Attribute,
-  AttributeData,
-  Primitive,
-  isPrimitive,
-} from "../data/attributedata";
+import { Primitive, isPrimitive } from "../data";
 import { date2DateString } from "../format";
 import { FormField } from "./typeguards";
 
 export type SerializedFormData = Record<
   string,
-  Attribute | File | Array<Attribute | File>
+  FormDataEntryValue | FormDataEntryValue[]
 >;
 
 /**
@@ -160,16 +155,16 @@ export const getInputType = (
  * @param values
  * @param field
  */
-export const getValueFromFormData = (
+export const getValueFromFormData = <T extends object = SerializedFormData>(
   fields: FormField[],
-  values: AttributeData<Attribute | Attribute[]> | SerializedFormData,
+  values: T,
   field: FormField,
 ): number | string | undefined => {
   // Support Formik array field names (field[1]).
   const [name, formikIndex] = parseFieldName(field.name);
 
   // Get value from values.
-  const value = name && values[name];
+  const value = name && values[name as keyof T];
 
   // Get value from array of values.
   if (Array.isArray(value)) {
@@ -180,36 +175,34 @@ export const getValueFromFormData = (
           .findIndex((f) => f === field);
 
     const _value = value[arrayIndex];
-    return attribute2Value(_value as Attribute);
+    return data2Value(_value);
   }
 
-  return attribute2Value(value as Attribute);
+  return data2Value(value);
 };
 
 /**
- * Converts Attribute to JSX friendly value.
- * @param value
+ * Converts `data` to JSX friendly value.
+ * @param data
  */
-export const attribute2Value = (
-  value: Attribute | undefined,
-): number | string | undefined => {
-  if (value === null || value === undefined) {
+export const data2Value = (data: unknown): number | string | undefined => {
+  if (data === null || data === undefined) {
     return undefined;
   }
-  switch (typeof value) {
+  switch (typeof data) {
     case "boolean":
-      return String(value);
+      return String(data);
 
     case "object":
-      if (value instanceof Date) {
-        return date2DateString(value);
+      if (data instanceof Date) {
+        return date2DateString(data);
       }
       break;
 
     default:
-      return isPrimitive<Exclude<Primitive, boolean>>(value)
-        ? value
-        : String(value || "");
+      return isPrimitive<Exclude<Primitive, boolean>>(data)
+        ? data
+        : String(data || "");
   }
 };
 

@@ -5,21 +5,23 @@ import { TypedField } from "../../../lib";
 import { Button } from "../../button";
 import { Outline } from "../../icon";
 import { P } from "../../typography";
-import { DataGridContext } from "./datagrid";
+import { DataGridContext, DataGridContextType } from "./datagrid";
 
-export type DataGridHeadingCellProps = React.PropsWithChildren<{
-  field: TypedField;
-}>;
+export type DataGridHeadingCellProps<T extends object = object> =
+  React.PropsWithChildren<{
+    field: TypedField<T>;
+  }>;
 
 /**
  * DataGrid (heading) cell
  */
-export const DataGridHeadingCell: React.FC<DataGridHeadingCellProps> = ({
+export const DataGridHeadingCell = <T extends object = object>({
   children,
   field,
-}) => {
-  const { sortField, sortable, sortDirection, onSort } =
-    useContext(DataGridContext);
+}: DataGridHeadingCellProps<T>) => {
+  const { sortField, sortable, sortDirection, onSort } = useContext(
+    DataGridContext,
+  ) as DataGridContextType<T>;
   const isSorted = sortField === field.name;
 
   return (

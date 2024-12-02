@@ -8,9 +8,10 @@ import { DataGridContext } from "./datagrid";
  * @param children
  * @constructor
  */
-export const DataGridScrollPane: React.FC<React.PropsWithChildren> = ({
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export const DataGridScrollPane = <T extends object = object>({
   children,
-}) => {
+}: React.PropsWithChildren) => {
   const { allowOverflowX } = useContext(DataGridContext);
 
   return (

@@ -7,9 +7,10 @@ import { DataGridContext } from "./datagrid";
  * DataGrid table, represents tabular: information presented in a two-dimensional table comprised of rows and columns
  * (fields) of cells containing data.
  */
-export const DataGridTable: React.FC<React.PropsWithChildren> = ({
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export const DataGridTable = <T extends object = object>({
   children,
-}) => {
+}: React.PropsWithChildren) => {
   const { tableLayout, titleId } = useContext(DataGridContext);
 
   return (

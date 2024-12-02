@@ -2,7 +2,6 @@ import clsx from "clsx";
 import React, { FormEvent, useContext, useEffect, useState } from "react";
 
 import { ConfigContext } from "../../../contexts";
-import { Attribute, AttributeData } from "../../../lib/data/attributedata";
 import { FormField } from "../../../lib/form/typeguards";
 import { getValueFromFormData, serializeForm } from "../../../lib/form/utils";
 import {
@@ -20,7 +19,7 @@ import { ErrorMessage } from "../errormessage";
 import { FormControl } from "../formcontrol";
 import "./form.scss";
 
-export type FormProps = Omit<
+export type FormProps<T extends object = object> = Omit<
   React.ComponentProps<"form">,
   "onChange" | "onSubmit"
 > & {
@@ -40,10 +39,10 @@ export type FormProps = Omit<
   fieldsetClassName?: string;
 
   /** The initial form values, only applies on initial render. */
-  initialValues?: AttributeData<Attribute | Attribute[]>;
+  initialValues?: T;
 
   /** The form values, always applied. */
-  values?: AttributeData<Attribute | Attribute[]>;
+  values?: T;
 
   /** Error messages, applied to automatically rendered field. */
   errors?: Record<keyof FormProps["fields"], string>;
@@ -77,7 +76,7 @@ export type FormProps = Omit<
 
   /** A validation function. */
   validate?: (
-    values: AttributeData,
+    values: T,
     fields: FormField[],
     validators?: Validator[],
   ) => FormProps["errors"] | void;
@@ -92,13 +91,13 @@ export type FormProps = Omit<
   onChange?: React.ChangeEventHandler<HTMLInputElement | HTMLSelectElement>;
 
   /** Gets called when the form is submitted, setting this overrides default implementation. */
-  onSubmit?: (event: FormEvent<HTMLFormElement>, data: AttributeData) => void;
+  onSubmit?: (event: FormEvent<HTMLFormElement>, data: T) => void;
 };
 
 /**
  * Generic form component, capable of auto rendering `fields` based on their shape.
  */
-export const Form: React.FC<FormProps> = ({
+export const Form = <T extends object = object>({
   buttonProps,
   children,
   debug = false,
@@ -107,7 +106,7 @@ export const Form: React.FC<FormProps> = ({
   fields = [],
   fieldsetClassName = "mykn-form__fieldset",
   justify,
-  initialValues = {},
+  initialValues = {} as T,
   secondaryActions = [],
   labelSubmit = "",
   labelValidationErrorRequired = "",
@@ -117,12 +116,12 @@ export const Form: React.FC<FormProps> = ({
   showActions = true,
   toolbarProps,
   useTypedResults = false,
-  validate = validateForm,
+  validate = validateForm<T>,
   validateOnChange = false,
   validators,
   values,
   ...props
-}) => {
+}: FormProps<T>) => {
   const { debug: contextDebug } = useContext(ConfigContext);
   const _debug = debug || contextDebug;
   const _nonFieldErrors = forceArray(nonFieldErrors);
@@ -153,7 +152,7 @@ export const Form: React.FC<FormProps> = ({
    */
   useEffect(() => {
     if (validateOnChange && validate) {
-      const errors = validate(valuesState as AttributeData, fields, validators);
+      const errors = validate(valuesState, fields, validators);
       setErrorsState(errors || {});
     }
   }, [valuesState]);
@@ -171,7 +170,7 @@ export const Form: React.FC<FormProps> = ({
     const form = (event.target as HTMLInputElement).form;
 
     if (form && !onChange) {
-      const data = serializeForm(form, useTypedResults) as AttributeData;
+      const data = serializeForm(form, useTypedResults) as T;
       setValuesState(data);
     }
   };
@@ -184,7 +183,7 @@ export const Form: React.FC<FormProps> = ({
     event.preventDefault();
 
     if (validate) {
-      const errors = validate(valuesState as AttributeData, fields, validators);
+      const errors = validate(valuesState, fields, validators);
       setErrorsState(errors || {});
 
       if (errors && Object.keys(errors).length) {
@@ -193,7 +192,7 @@ export const Form: React.FC<FormProps> = ({
     }
 
     const form = event.target as HTMLFormElement;
-    const data = serializeForm(form, useTypedResults) as AttributeData;
+    const data = serializeForm(form, useTypedResults) as T;
 
     if (onSubmit) {
       onSubmit(event, data);
@@ -207,7 +206,7 @@ export const Form: React.FC<FormProps> = ({
    * Gets called when the form is reset.
    */
   const handleReset: React.FormEventHandler<HTMLFormElement> = () => {
-    setValuesState({});
+    setValuesState({} as T);
     setErrorsState({});
   };
 
@@ -233,7 +232,7 @@ export const Form: React.FC<FormProps> = ({
 
             const value =
               (field.value as string) ||
-              getValueFromFormData(fields, valuesState, field);
+              getValueFromFormData<T>(fields, valuesState, field);
 
             const _labelValidationErrorRequired = labelValidationErrorRequired
               ? labelValidationErrorRequired

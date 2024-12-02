@@ -15,20 +15,7 @@ export const isLink = (string: string): boolean =>
 export const addSpaces = (string: string) =>
   string.replaceAll(/(?<=[a-z])([A-Z])/g, (match) => " " + match);
 
-/**
- * Converts "fieldName" to "Field name".
- * @deprecated Use `field2title` instead.
- */
-export const field2Caption = (field: string): string => {
-  if (process && process?.env?.NODE_ENV !== "production") {
-    console.warn(
-      "DEPRECATION: `field2Caption` is deprecated, use `field2Title` instead.",
-    );
-  }
-  return ucFirst(unHyphen(addSpaces(field)));
-};
-
-interface Field2TitleOptions {
+interface String2TitleOptions {
   addSpaces?: boolean;
   lowerCase?: boolean;
   ucFirst?: boolean;
@@ -38,10 +25,11 @@ interface Field2TitleOptions {
 /**
  * Converts "field_name" to "Field name".
  * @param field
+ * @param options
  */
-export const field2Title = (
+export const string2Title = (
   field: string,
-  options?: Field2TitleOptions,
+  options?: String2TitleOptions,
 ): string => {
   // Set default values for options using the spread operator
   const {
