@@ -6,7 +6,8 @@ import { DataGridContext } from "./datagrid";
 /**
  * DataGrid header, shows title as either string or JSX.
  */
-export const DataGridHeader: React.FC = () => {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export const DataGridHeader = <T extends object = object>() => {
   const { title, titleId } = useContext(DataGridContext);
 
   return (

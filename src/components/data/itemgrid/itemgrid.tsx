@@ -1,27 +1,22 @@
 import React from "react";
 
+import { DEFAULT_URL_FIELDS, FieldSet, string2Title } from "../../../lib";
 import {
-  AttributeData,
-  DEFAULT_URL_FIELDS,
-  FieldSet,
-  field2Title,
-} from "../../../lib";
-import {
-  GroupedAttributeDataProps,
+  GroupedDataProps,
   getContextData,
-} from "../../../lib/data/groupedattributedata";
+} from "../../../lib/data/groupeddata";
 import { Button, ButtonLink, ButtonLinkProps, ButtonProps } from "../../button";
 import { Column, Grid } from "../../layout";
 import { Body, H1, H2, H3, P } from "../../typography";
 import { Value } from "../value";
 import "./itemgrid.scss";
 
-export type ItemGridProps = GroupedAttributeDataProps;
+export type ItemGridProps<T extends object = object> = GroupedDataProps<T>;
 
 /**
  * ItemGrid component
  */
-export const ItemGrid: React.FC<ItemGridProps> = ({
+export const ItemGrid = <T extends object = object>({
   buttonProps,
   buttonLinkProps,
   fieldset,
@@ -34,13 +29,13 @@ export const ItemGrid: React.FC<ItemGridProps> = ({
   urlFields = DEFAULT_URL_FIELDS,
   onClick,
   ...props
-}) => {
-  const [_fieldsets, _objectLists] = getContextData(
+}: ItemGridProps<T>) => {
+  const [_fieldsets, _objectLists] = getContextData<T>(
     groupBy,
     fieldset,
     fieldsets,
-    objectList,
-    objectLists,
+    objectList as T[],
+    objectLists as T[][],
   );
 
   return (
@@ -51,13 +46,14 @@ export const ItemGrid: React.FC<ItemGridProps> = ({
         </Body>
       )}
       {_fieldsets.map((fieldset, index) => (
-        <ItemGridSection
+        <ItemGridSection<T>
           key={fieldset[0] ? fieldset[0] : index}
           buttonLinkProps={buttonLinkProps}
           buttonProps={buttonProps}
           fieldset={fieldset}
           objectList={_objectLists[index]}
           renderPreview={renderPreview}
+          // @ts-expect-error - complex union
           urlFields={urlFields}
           onClick={onClick}
         />
@@ -66,20 +62,20 @@ export const ItemGrid: React.FC<ItemGridProps> = ({
   );
 };
 
-export type ItemGridSectionProps = Omit<
+export type ItemGridSectionProps<T extends object = object> = Omit<
   React.ComponentProps<"section">,
   "onClick"
 > & {
   buttonLinkProps?: ButtonLinkProps;
   buttonProps?: ButtonProps;
-  fieldset: FieldSet;
-  objectList: AttributeData[];
-  renderPreview?: (attributeData: AttributeData) => React.ReactNode;
+  fieldset: FieldSet<T>;
+  objectList: T[];
+  renderPreview?: (data: T) => React.ReactNode;
   urlFields: (keyof ItemGridSectionProps["objectList"][number])[];
-  onClick?: (event: React.MouseEvent, attributeData: AttributeData) => void;
+  onClick?: (event: React.MouseEvent, data: T) => void;
 };
 
-export const ItemGridSection: React.FC<ItemGridSectionProps> = ({
+export const ItemGridSection = <T extends object = object>({
   buttonLinkProps,
   buttonProps,
   fieldset,
@@ -87,17 +83,17 @@ export const ItemGridSection: React.FC<ItemGridSectionProps> = ({
   renderPreview,
   urlFields,
   onClick,
-}) => (
+}: ItemGridSectionProps<T>) => (
   <section className="mykn-itemgrid__section">
     <Body>
       <Grid>
         {fieldset[0] && (
           <Column span={12}>
-            <H3>{field2Title(fieldset[0])}</H3>
+            <H3>{string2Title(fieldset[0])}</H3>
           </Column>
         )}
         {objectList.map((o, index) => (
-          <ItemGridItem
+          <ItemGridItem<T>
             key={index}
             buttonLinkProps={buttonLinkProps}
             buttonProps={buttonProps}
@@ -113,17 +109,20 @@ export const ItemGridSection: React.FC<ItemGridSectionProps> = ({
   </section>
 );
 
-export type ItemGridItemProps = Omit<React.ComponentProps<"li">, "onClick"> & {
+export type ItemGridItemProps<T extends object = object> = Omit<
+  React.ComponentProps<"li">,
+  "onClick"
+> & {
   buttonLinkProps?: ButtonLinkProps;
   buttonProps?: ButtonProps;
-  fieldset: FieldSet;
-  object: AttributeData;
-  renderPreview?: (attributeData: AttributeData) => React.ReactNode;
+  fieldset: FieldSet<T>;
+  object: T;
+  renderPreview?: (data: T) => React.ReactNode;
   urlFields: (keyof ItemGridItemProps["object"])[];
-  onClick?: (event: React.MouseEvent, attributeData: AttributeData) => void;
+  onClick?: (event: React.MouseEvent, data: T) => void;
 };
 
-export const ItemGridItem: React.FC<ItemGridItemProps> = ({
+export const ItemGridItem = <T extends object = object>({
   buttonLinkProps,
   buttonProps,
   fieldset,
@@ -131,12 +130,12 @@ export const ItemGridItem: React.FC<ItemGridItemProps> = ({
   renderPreview,
   urlFields,
   onClick,
-}) => {
+}: ItemGridItemProps<T>) => {
   const fields = fieldset[1].fields;
   const titleField = fieldset[1].title || Object.keys(object)[0];
   const urlField = urlFields.find((f) => object[f]);
 
-  const title = object[titleField];
+  const title = object[titleField as keyof T];
   const href = urlField ? String(object[urlField]) || undefined : undefined;
   const otherFields = fields.filter(
     (field) => ![...urlFields, titleField].includes(field),
@@ -144,7 +143,7 @@ export const ItemGridItem: React.FC<ItemGridItemProps> = ({
 
   return (
     <Column direction="column" span={1} mobileSpan={2}>
-      <ItemGridButton
+      <ItemGridButton<T>
         buttonLinkProps={buttonLinkProps}
         buttonProps={buttonProps}
         href={href}
@@ -154,11 +153,11 @@ export const ItemGridItem: React.FC<ItemGridItemProps> = ({
         onClick={onClick}
       ></ItemGridButton>
       <P bold size="xs">
-        {field2Title(String(title))}
+        {string2Title(String(title))}
       </P>
 
       {otherFields.map((field) => (
-        <P key={field} muted size="xs">
+        <P key={field.toString()} muted size="xs">
           <Value value={object[field]} />
         </P>
       ))}
@@ -166,17 +165,17 @@ export const ItemGridItem: React.FC<ItemGridItemProps> = ({
   );
 };
 
-export type ItemGridButtonProps = {
+export type ItemGridButtonProps<T extends object = object> = {
   buttonLinkProps?: ButtonLinkProps;
   buttonProps?: ButtonProps;
   href?: string;
-  object: AttributeData;
-  renderPreview?: (attributeData: AttributeData) => React.ReactNode;
+  object: T;
+  renderPreview?: (data: T) => React.ReactNode;
   title: string;
-  onClick?: (event: React.MouseEvent, attributeData: AttributeData) => void;
+  onClick?: (event: React.MouseEvent, data: T) => void;
 };
 
-export const ItemGridButton: React.FC<ItemGridButtonProps> = ({
+export const ItemGridButton = <T extends object = object>({
   buttonLinkProps,
   buttonProps,
   href,
@@ -184,7 +183,7 @@ export const ItemGridButton: React.FC<ItemGridButtonProps> = ({
   object,
   renderPreview = () => <H1 aria-hidden>{title[0].toUpperCase()}</H1>,
   onClick,
-}) => {
+}: ItemGridButtonProps<T>) => {
   const content = renderPreview(object);
 
   return href ? (

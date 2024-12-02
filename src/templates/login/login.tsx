@@ -6,34 +6,35 @@ import { ucFirst } from "../../lib/format/string";
 import { useIntl } from "../../lib/i18n/useIntl";
 import { BaseTemplate, BaseTemplateProps } from "../base";
 
-export type LoginTemplateProps = BaseTemplateProps & {
-  fields?: FormProps["fields"];
+export type LoginTemplateProps<T extends object = object> =
+  BaseTemplateProps & {
+    fields?: FormProps<T>["fields"];
 
-  /** Form props. */
-  formProps: FormProps;
+    /** Form props. */
+    formProps: FormProps<T>;
 
-  /** The login form label. */
-  labelLogin?: FormProps["labelSubmit"];
+    /** The login form label. */
+    labelLogin?: FormProps<T>["labelSubmit"];
 
-  /** Logo (JSX) slot. */
-  slotLogo?: React.ReactNode;
+    /** Logo (JSX) slot. */
+    slotLogo?: React.ReactNode;
 
-  labelOidcLogin?: string;
-  urlOidcLogin?: string;
-};
+    labelOidcLogin?: string;
+    urlOidcLogin?: string;
+  };
 
 /**
  * Login template
  * @constructor
  */
-export const LoginTemplate: React.FC<LoginTemplateProps> = ({
+export const LoginTemplate = <T extends object = object>({
   formProps,
   labelLogin,
   labelOidcLogin,
   urlOidcLogin,
   slotLogo,
   ...props
-}) => {
+}: LoginTemplateProps<T>) => {
   const { logo: CustomLogo } = useContext(ConfigContext);
   const intl = useIntl();
 
@@ -73,7 +74,7 @@ export const LoginTemplate: React.FC<LoginTemplateProps> = ({
         <Body>
           {slotLogo || CustomLogo || <Logo />}
           <Hr />
-          <Form
+          <Form<T>
             justify="stretch"
             labelSubmit={ucFirst(_labelLogin)}
             secondaryActions={secondaryActions}

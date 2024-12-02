@@ -9,7 +9,7 @@ import { useFormDialog } from "./useformdialog";
  * confirmation callback and an optional cancellation callback.
  */
 export const usePrompt = () => {
-  const formDialog = useFormDialog();
+  const formDialog = useFormDialog<{ message: string }>();
 
   /**
    * Shows a prompt dialog with a confirmation callback and an optional

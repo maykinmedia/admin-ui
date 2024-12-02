@@ -1,8 +1,7 @@
 import clsx from "clsx";
 import React, { useContext } from "react";
 
-import { AttributeData } from "../../../lib";
-import { DataGridContext } from "./datagrid";
+import { DataGridContext, DataGridContextType } from "./datagrid";
 import { DataGridContentCell } from "./datagridcontentcell";
 import { DataGridSelectionCheckbox } from "./datagridselectioncheckbox";
 
@@ -10,7 +9,7 @@ import { DataGridSelectionCheckbox } from "./datagridselectioncheckbox";
  * DataGrid table body, encapsulates a set of table rows indicating that they
  * comprise the body of a table's (main) data.
  */
-export const DataGridTBody: React.FC = () => {
+export const DataGridTBody = <T extends object = object>() => {
   const {
     dataGridId,
     page,
@@ -18,11 +17,10 @@ export const DataGridTBody: React.FC = () => {
     renderableRows,
     selectable,
     selectedRows,
-    equalityChecker = (item1: AttributeData, item2: AttributeData) =>
-      item1 === item2,
+    equalityChecker = (item1, item2) => item1 === item2,
     sortDirection,
     sortField,
-  } = useContext(DataGridContext);
+  } = useContext(DataGridContext) as DataGridContextType<T>;
 
   return (
     <tbody className="mykn-datagrid__tbody" role="rowgroup">
@@ -42,11 +40,11 @@ export const DataGridTBody: React.FC = () => {
                 `mykn-datagrid__cell--checkbox`,
               )}
             >
-              <DataGridSelectionCheckbox rowData={rowData} />
+              <DataGridSelectionCheckbox<T> rowData={rowData} />
             </td>
           )}
           {renderableFields.map((field) => (
-            <DataGridContentCell
+            <DataGridContentCell<T>
               key={`sort-${sortField}${sortDirection}-page-${page}-row-${renderableRows.indexOf(rowData)}-column-${renderableFields.indexOf(field)}`}
               field={field}
               rowData={rowData}
