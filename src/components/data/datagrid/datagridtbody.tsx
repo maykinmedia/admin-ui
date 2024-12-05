@@ -1,7 +1,7 @@
 import clsx from "clsx";
-import React, { useContext } from "react";
+import React from "react";
 
-import { DataGridContext, DataGridContextType } from "./datagrid";
+import { useDataGridContext } from "./datagrid";
 import { DataGridContentCell } from "./datagridcontentcell";
 import { DataGridSelectionCheckbox } from "./datagridselectioncheckbox";
 
@@ -9,7 +9,10 @@ import { DataGridSelectionCheckbox } from "./datagridselectioncheckbox";
  * DataGrid table body, encapsulates a set of table rows indicating that they
  * comprise the body of a table's (main) data.
  */
-export const DataGridTBody = <T extends object = object>() => {
+export const DataGridTBody = <
+  T extends object = object,
+  F extends object = T,
+>() => {
   const {
     dataGridId,
     page,
@@ -20,7 +23,7 @@ export const DataGridTBody = <T extends object = object>() => {
     equalityChecker = (item1, item2) => item1 === item2,
     sortDirection,
     sortField,
-  } = useContext(DataGridContext) as DataGridContextType<T>;
+  } = useDataGridContext<T, F>();
 
   return (
     <tbody className="mykn-datagrid__tbody" role="rowgroup">

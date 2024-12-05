@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 
 import {
   DEFAULT_URL_FIELDS,
@@ -14,9 +14,13 @@ import { BoolProps } from "../../boolean";
 import { Button } from "../../button";
 import { FormControl } from "../../form";
 import { Value } from "../value";
-import { DataGridContext, DataGridContextType } from "./datagrid";
+import { useDataGridContext } from "./datagrid";
 
-export type DataGridContentCellProps<T extends object = object> = {
+export type DataGridContentCellProps<
+  T extends object = object,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  F extends object = T,
+> = {
   field: TypedField<T>;
   rowData: T;
 };
@@ -24,10 +28,13 @@ export type DataGridContentCellProps<T extends object = object> = {
 /**
  * DataGrid (content) cell
  */
-export const DataGridContentCell = <T extends object = object>({
+export const DataGridContentCell = <
+  T extends object = object,
+  F extends object = T,
+>({
   field,
   rowData,
-}: DataGridContentCellProps<T>) => {
+}: DataGridContentCellProps<T, F>) => {
   const {
     aProps,
     badgeProps,
@@ -43,9 +50,7 @@ export const DataGridContentCell = <T extends object = object>({
     urlFields = DEFAULT_URL_FIELDS,
     onChange,
     onEdit,
-  } =
-    // @ts-expect-error - DataGridContext does not have generic T at time of instantiation.
-    useContext<DataGridContextType<T>>(DataGridContext);
+  } = useDataGridContext<T, F>();
   const [pristine, setPristine] = useState<boolean>(true);
 
   const fieldEditable =

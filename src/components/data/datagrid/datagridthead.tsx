@@ -1,7 +1,7 @@
-import React, { CSSProperties, useContext, useEffect, useRef } from "react";
+import React, { CSSProperties, useEffect, useRef } from "react";
 
 import { string2Title } from "../../../lib";
-import { DataGridContext, DataGridContextType } from "./datagrid";
+import { useDataGridContext } from "./datagrid";
 import { DataGridFilter } from "./datagridfilter";
 import { DataGridHeadingCell } from "./datagridheadingcell";
 
@@ -9,7 +9,10 @@ import { DataGridHeadingCell } from "./datagridheadingcell";
  * DataGrid table head, encapsulates a set of table rows, indicating that they
  * comprise the head of a table with information about the table's columns.
  */
-export const DataGridTHead = <T extends object = object>() => {
+export const DataGridTHead = <
+  T extends object = object,
+  F extends object = T,
+>() => {
   const ref = useRef<HTMLTableSectionElement>(null);
 
   const thead = ref.current;
@@ -25,7 +28,7 @@ export const DataGridTHead = <T extends object = object>() => {
     renderableFields,
     selectable,
     toolbarRef,
-  } = useContext(DataGridContext) as DataGridContextType<T>;
+  } = useDataGridContext<T, F>();
 
   // Sticky fix
   useEffect(() => {
@@ -122,7 +125,7 @@ export const DataGridTHead = <T extends object = object>() => {
           <th className="mykn-datagrid__cell mykn-datagrid__cell--checkbox"></th>
         )}
         {renderableFields.map((field) => (
-          <DataGridHeadingCell<T>
+          <DataGridHeadingCell<T, F>
             key={`${dataGridId}-heading-${string2Title(field.name.toString(), { lowerCase: false })}`}
             field={field}
           >
@@ -132,7 +135,7 @@ export const DataGridTHead = <T extends object = object>() => {
       </tr>
 
       {/* Filters */}
-      {filterable && <DataGridFilter<T> />}
+      {filterable && <DataGridFilter<T, F> />}
     </thead>
   );
 };

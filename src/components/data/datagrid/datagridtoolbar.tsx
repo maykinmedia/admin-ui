@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import React from "react";
 
 import {
@@ -14,15 +14,18 @@ import { Outline } from "../../icon";
 import { Modal } from "../../modal";
 import { Toolbar, ToolbarItem } from "../../toolbar";
 import { Body, H3 } from "../../typography";
-import { DataGridContext } from "./datagrid";
+import { useDataGridContext } from "./datagrid";
 import { DataGridSelectionCheckbox } from "./datagridselectioncheckbox";
 import { TRANSLATIONS } from "./translations";
 
 /**
  * DataGrid toolbar, shows selection actions and/or allows the user to select fields (columns).
  */
-export const DataGridToolbar = <T extends object = object>() => {
-  const { toolbarRef } = useContext(DataGridContext);
+export const DataGridToolbar = <
+  T extends object = object,
+  F extends object = T,
+>() => {
+  const { toolbarRef } = useDataGridContext<T, F>();
   const intl = useIntl();
   const [selectFieldsModalState, setSelectFieldsModalState] = useState(false);
   const [selectFieldsActiveState, setSelectFieldsActiveState] = useState<
@@ -40,7 +43,7 @@ export const DataGridToolbar = <T extends object = object>() => {
     selectedRows,
     selectionActions,
     onFieldsChange,
-  } = useContext(DataGridContext);
+  } = useDataGridContext<T, F>();
 
   // Create map mapping `field.name` to active state.
   useEffect(() => {
@@ -69,11 +72,14 @@ export const DataGridToolbar = <T extends object = object>() => {
 
   const toolbarItems: ToolbarItem[] = [
     selectable && allowSelectAll ? (
-      <DataGridSelectionCheckbox<T> key="selectPage" selectAll="page" />
+      <DataGridSelectionCheckbox<T, F> key="selectPage" selectAll="page" />
     ) : null,
 
     selectable && allowSelectAllPages ? (
-      <DataGridSelectionCheckbox<T> key="selectAllPages" selectAll="allPages" />
+      <DataGridSelectionCheckbox<T, F>
+        key="selectAllPages"
+        selectAll="allPages"
+      />
     ) : null,
 
     ...(selectionActions || []).map(
@@ -126,9 +132,9 @@ export const DataGridToolbar = <T extends object = object>() => {
               {
                 name: "fields",
                 options: fields.map((f) => ({
-                  label: string2Title(f.name, { lowerCase: false }),
-                  value: f.name,
-                  selected: Boolean(selectFieldsActiveState[f.name]),
+                  label: string2Title(f.name.toString(), { lowerCase: false }),
+                  value: f.name.toString(),
+                  selected: Boolean(selectFieldsActiveState[f.name.toString()]),
                 })),
                 type: "checkbox",
                 onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -147,7 +153,7 @@ export const DataGridToolbar = <T extends object = object>() => {
               const selectedFields = (data.fields || []) as string[];
               const newTypedFieldsState = fields.map((f) => ({
                 ...f,
-                active: selectedFields.includes(f.name),
+                active: selectedFields.includes(f.name.toString()),
               }));
               onFieldsChange?.(newTypedFieldsState);
               setSelectFieldsModalState(false);

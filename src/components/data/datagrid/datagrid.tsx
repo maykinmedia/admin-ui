@@ -1,6 +1,7 @@
 import React, {
   CSSProperties,
   useCallback,
+  useContext,
   useEffect,
   useId,
   useMemo,
@@ -31,7 +32,7 @@ import { DataGridTBody } from "./datagridtbody";
 import { DataGridTHead } from "./datagridthead";
 import { DataGridToolbar } from "./datagridtoolbar";
 
-export type DataGridProps<T extends object = object> = {
+export type DataGridProps<T extends object = object, F extends object = T> = {
   /** The object list (after pagination), only primitive types supported for now. */
   objectList: T[];
 
@@ -66,7 +67,7 @@ export type DataGridProps<T extends object = object> = {
    * A function transforming the filter values.
    * This can be used to adjust filter input to an API spec.
    */
-  filterTransform?: (value: T) => Record<string, unknown>;
+  filterTransform?: (value: T) => F;
 
   /**
    * Can be any valid CSS `height` property or `"fill-available-space"` to
@@ -200,7 +201,7 @@ export type DataGridProps<T extends object = object> = {
    *  Gets called when a row value is filtered.
    *  This callback is debounced every 300 milliseconds.
    */
-  onFilter?: (rowData: T | Record<string, unknown>) => void;
+  onFilter?: (rowData: F) => void;
 
   /** Gets called when the object list is sorted. */
   onSort?: (sort: string) => Promise<unknown> | void;
@@ -208,8 +209,8 @@ export type DataGridProps<T extends object = object> = {
 
 export const toolbarRef = React.createRef<HTMLDivElement>();
 
-export type DataGridContextType<T extends object> = Omit<
-  DataGridProps<T>,
+export type DataGridContextType<T extends object, F extends object> = Omit<
+  DataGridProps<T, F>,
   "equalityChecker" | "fields" | "onSelect" | "onSort"
 > & {
   toolbarRef: React.RefObject<HTMLDivElement>;
@@ -232,7 +233,7 @@ export type DataGridContextType<T extends object> = Omit<
   sortField?: string;
   titleId?: string; // TODO: Move?;
   onFieldsChange?: (typedFields: TypedField<T>[]) => void;
-  onFilter: (rowData: T | Record<string, unknown>) => void;
+  onFilter: (rowData: F) => void;
   onSelect: (rows: T) => void;
   onSelectAll: (selected: boolean) => void;
   onSelectAllPages: (selected: boolean) => void;
@@ -240,8 +241,15 @@ export type DataGridContextType<T extends object> = Omit<
 };
 
 export const DataGridContext = React.createContext<
-  DataGridContextType<Record<string, unknown>>
->({} as unknown as DataGridContextType<Record<string, unknown>>);
+  DataGridContextType<object, object>
+>({} as DataGridContextType<object, object>);
+
+export const useDataGridContext = <
+  T extends object = object,
+  F extends object = T,
+>() => {
+  return useContext(DataGridContext) as unknown as DataGridContextType<T, F>;
+};
 
 /**
  * A subset of `PaginatorProps` that act as aliases.
@@ -260,9 +268,11 @@ type PaginatorPropsAliases = {
 /**
  * DataGrid component
  */
-export const DataGrid = <T extends object>(props: DataGridProps<T>) => {
+export const DataGrid = <T extends object = object, F extends object = T>(
+  props: DataGridProps<T, F>,
+) => {
   // Specify the default props.
-  const defaults: Partial<DataGridProps<T>> = {
+  const defaults: Partial<DataGridProps<T, F>> = {
     allowOverflowX: true,
     showPaginator: Boolean(props.paginatorProps),
     selectable: false,
@@ -350,9 +360,7 @@ export const DataGrid = <T extends object>(props: DataGridProps<T>) => {
     null,
   ]);
 
-  const [filterState, setFilterState] = useState<
-    T | Record<string, unknown> | null
-  >();
+  const [filterState, setFilterState] = useState<F | null>();
   const [selectedState, setSelectedState] = useState<T[] | null>(null);
 
   const [allPagesSelectedState, setAllPagesSelectedState] =
@@ -576,7 +584,7 @@ export const DataGrid = <T extends object>(props: DataGridProps<T>) => {
    * @param data
    */
   const handleFilter = useCallback(
-    (data: T | Record<string, unknown>) => {
+    (data: F) => {
       if (onFilter) {
         const handler = () => onFilter(data);
         if (onFilterTimeoutRef.current) {
@@ -614,7 +622,8 @@ export const DataGrid = <T extends object>(props: DataGridProps<T>) => {
   }
   return (
     <DataGridContext.Provider
-      // @ts-expect-error - Fix generic typing
+      // @ts-expect-error - DataGridContext doesnt have DataGridContextType with generic T and F at time of
+      // instantiation.
       value={
         {
           toolbarRef,
@@ -651,21 +660,21 @@ export const DataGrid = <T extends object>(props: DataGridProps<T>) => {
           onSort: handleSort,
           onSelectAll: handleSelectAll,
           onSelectAllPages: handleSelectAllPages,
-        } as DataGridContextType<T>
+        } as DataGridContextType<T, F>
       }
     >
       <div ref={dataGridRef} className="mykn-datagrid" {...attrs}>
-        {title && <DataGridHeader<T> />}
-        {(selectable || fieldsSelectable) && <DataGridToolbar<T> />}
+        {title && <DataGridHeader<T, F> />}
+        {(selectable || fieldsSelectable) && <DataGridToolbar<T, F> />}
 
-        <DataGridScrollPane<T>>
-          <DataGridTable<T>>
-            <DataGridTHead<T> />
-            <DataGridTBody<T> />
+        <DataGridScrollPane<T, F>>
+          <DataGridTable<T, F>>
+            <DataGridTHead<T, F> />
+            <DataGridTBody<T, F> />
           </DataGridTable>
         </DataGridScrollPane>
 
-        {showPaginator && <DataGridFooter<T> />}
+        {showPaginator && <DataGridFooter<T, F> />}
         {filterable && <form id={`${id}-filter-form`} />}
       </div>
     </DataGridContext.Provider>

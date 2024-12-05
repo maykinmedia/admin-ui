@@ -67,7 +67,7 @@ export const typeByDataArray = <T extends object = object>(
  */
 export const filterDataArray = <T extends object = object>(
   objectList: T[],
-  data: T | Record<string, unknown>,
+  data: T | object,
 ): T[] => {
   return objectList.filter((obj) => {
     for (const key in data) {

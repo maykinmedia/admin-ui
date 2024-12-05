@@ -1,27 +1,34 @@
 import clsx from "clsx";
-import React, { useContext } from "react";
+import React from "react";
 
 import { TypedField } from "../../../lib";
 import { Button } from "../../button";
 import { Outline } from "../../icon";
 import { P } from "../../typography";
-import { DataGridContext, DataGridContextType } from "./datagrid";
+import { useDataGridContext } from "./datagrid";
 
-export type DataGridHeadingCellProps<T extends object = object> =
-  React.PropsWithChildren<{
-    field: TypedField<T>;
-  }>;
+export type DataGridHeadingCellProps<
+  T extends object = object,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  F extends object = T,
+> = React.PropsWithChildren<{
+  field: TypedField<T>;
+}>;
 
 /**
  * DataGrid (heading) cell
  */
-export const DataGridHeadingCell = <T extends object = object>({
+export const DataGridHeadingCell = <
+  T extends object = object,
+  F extends object = T,
+>({
   children,
   field,
-}: DataGridHeadingCellProps<T>) => {
-  const { sortField, sortable, sortDirection, onSort } = useContext(
-    DataGridContext,
-  ) as DataGridContextType<T>;
+}: DataGridHeadingCellProps<T, F>) => {
+  const { sortField, sortable, sortDirection, onSort } = useDataGridContext<
+    T,
+    F
+  >();
   const isSorted = sortField === field.name;
 
   return (

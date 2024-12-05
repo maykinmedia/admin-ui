@@ -1,18 +1,20 @@
 import clsx from "clsx";
-import React, { useContext } from "react";
+import React from "react";
 
-import { DataGridContext } from "./datagrid";
+import { useDataGridContext } from "./datagrid";
 
 /**
  * DataGrid scroll pane, contains the scrollable content.
  * @param children
  * @constructor
  */
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export const DataGridScrollPane = <T extends object = object>({
+export const DataGridScrollPane = <
+  T extends object = object,
+  F extends object = T,
+>({
   children,
 }: React.PropsWithChildren) => {
-  const { allowOverflowX } = useContext(DataGridContext);
+  const { allowOverflowX } = useDataGridContext<T, F>();
 
   return (
     <div
