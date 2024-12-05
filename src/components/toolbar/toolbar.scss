@@ -20,6 +20,18 @@
   }
 }
 
+@mixin dark {
+  @at-root {
+    .view--dark & {
+      @content;
+    }
+
+    @media screen and (prefers-color-scheme: dark) {
+      @content;
+    }
+  }
+}
+
 .mykn-toolbar {
   $self: &;
   background-color: var(--typography-color-background);
@@ -68,11 +80,32 @@
   }
 
   &--variant-primary {
+    --typography-color-h: var(--typography-color-background);
+    --typography-color-body: var(--typography-color-background);
+    --mykn-button-color-text: var(--typography-color-background);
     background-color: var(--page-color-primary);
+
+    @include dark {
+      & {
+        .mykn-button {
+          --mykn-button-color-text: var(--typography-color-body);
+        }
+      }
+    }
   }
 
   &--variant-accent {
     background-color: var(--page-color-accent);
+
+    @include dark {
+      & {
+        --typography-color-body: var(--typography-color-background);
+
+        .mykn-button {
+          --mykn-button-color-text: var(--typography-color-background);
+        }
+      }
+    }
   }
 
   &--variant-alt {
