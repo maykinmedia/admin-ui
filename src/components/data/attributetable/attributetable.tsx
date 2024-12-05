@@ -24,8 +24,8 @@ export type AttributeTableProps = {
   labelCancel?: string;
   labelEdit?: string;
   valign?: "middle" | "start";
+  compact?: boolean;
 };
-
 export const AttributeTable: React.FC<AttributeTableProps> = ({
   object = {},
   labeledObject = {},
@@ -35,6 +35,7 @@ export const AttributeTable: React.FC<AttributeTableProps> = ({
   labelCancel,
   labelEdit,
   valign = "middle",
+  compact = false,
   ...props
 }) => {
   const intl = useIntl();
@@ -66,7 +67,13 @@ export const AttributeTable: React.FC<AttributeTableProps> = ({
         {renderRows()}
       </Form>
     ) : (
-      <div className="mykn-attributetable__body">{renderRows()}</div>
+      <div
+        className={clsx("mykn-attributetable__body", {
+          "mykn-attributetable--compact": compact,
+        })}
+      >
+        {renderRows()}
+      </div>
     );
   };
 
@@ -80,6 +87,7 @@ export const AttributeTable: React.FC<AttributeTableProps> = ({
         object={object}
         labeledObject={labeledObject}
         labelEdit={labelEdit}
+        compact={compact}
         onClick={() => setIsFormOpenState(true)}
       />
     ));
@@ -89,6 +97,7 @@ export const AttributeTable: React.FC<AttributeTableProps> = ({
       className={clsx(
         "mykn-attributetable",
         `mykn-attributetable--valign-${valign}`,
+        { "mykn-attributetable--compact": compact },
       )}
       {...props}
     >
@@ -105,8 +114,8 @@ export type AttributeTableRowProps = {
   isFormOpen: boolean;
   labelEdit?: string;
   onClick: React.MouseEventHandler;
+  compact?: boolean;
 };
-
 export const AttributeTableRow: React.FC<AttributeTableRowProps> = ({
   editable = false,
   field,
@@ -114,6 +123,7 @@ export const AttributeTableRow: React.FC<AttributeTableRowProps> = ({
   object = {},
   labeledObject = {},
   labelEdit,
+  compact = false,
   onClick,
 }) => {
   const id = useId();
@@ -143,9 +153,6 @@ export const AttributeTableRow: React.FC<AttributeTableRowProps> = ({
         { ...field, label: label || field.name },
       );
 
-  /**
-   * Renders the value (if not already a React.ReactNode).
-   */
   const renderValue = () => {
     return editable ? (
       <Button
@@ -183,14 +190,30 @@ export const AttributeTableRow: React.FC<AttributeTableRowProps> = ({
   };
 
   return (
-    <>
-      <div className="mykn-attributetable__cell mykn-attributetable__cell--key">
+    <div
+      className={clsx("mykn-attributetable__row", {
+        "mykn-attributetable--compact": compact,
+      })}
+    >
+      <div
+        className={clsx(
+          "mykn-attributetable__cell",
+          "mykn-attributetable__cell--key",
+          { "mykn-attributetable--compact": compact },
+        )}
+      >
         {isEditing ? <label htmlFor={`${id}_input`}>{label}</label> : label}
       </div>
-      <div className="mykn-attributetable__cell mykn-attributetable__cell--value">
+      <div
+        className={clsx(
+          "mykn-attributetable__cell",
+          "mykn-attributetable__cell--value",
+          { "mykn-attributetable--compact": compact },
+        )}
+      >
         {(!editable || !isEditing) && renderValue()}
         {editable && renderInput()}
       </div>
-    </>
+    </div>
   );
 };
