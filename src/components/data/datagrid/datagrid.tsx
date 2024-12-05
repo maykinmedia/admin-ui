@@ -33,7 +33,7 @@ import { DataGridTHead } from "./datagridthead";
 import { DataGridToolbar } from "./datagridtoolbar";
 
 export type DataGridProps<T extends object = object, F extends object = T> = {
-  /** The object list (after pagination), only primitive types supported for now. */
+  /** The object list (after pagination). */
   objectList: T[];
 
   /**
@@ -266,7 +266,13 @@ type PaginatorPropsAliases = {
 };
 
 /**
- * DataGrid component
+ * DataGrid Component
+ *
+ * An interactive grid for React applications with support for sorting,
+ * filtering, row selection, and pagination.
+ *
+ * @typeParam T - The shape of a single data row.
+ * @typeParam F - If the shape of the filtered returned by `filterTransform`
  */
 export const DataGrid = <T extends object = object, F extends object = T>(
   props: DataGridProps<T, F>,

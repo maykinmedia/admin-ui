@@ -12,8 +12,12 @@ export type ListTemplateProps<
 };
 
 /**
- * List template
- * @constructor
+ * List Template
+ *
+ * Uses a `DataGrid` to render a list of data within `CardBaseTemplate`.
+ *
+ * @typeParam T - The shape of a single data row.
+ * @typeParam F - If the shape of the filtered returned by `filterTransform`
  */
 export const ListTemplate = <T extends object = object, F extends object = T>({
   children,

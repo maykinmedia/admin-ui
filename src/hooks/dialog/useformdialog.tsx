@@ -8,6 +8,8 @@ import { useDialog } from "./usedialog";
 /**
  * Returns a function which, when called: shows a form dialog with a
  * confirmation callback and an optional cancellation callback.
+ *
+ * @typeParam T - The shape of the serialized form data.
  */
 export const useFormDialog = <T extends object = object>() => {
   const dialog = useDialog();
@@ -15,6 +17,9 @@ export const useFormDialog = <T extends object = object>() => {
   /**
    * Shows a prompt dialog with a confirmation callback and an optional
    * cancellation callback.
+
+   * @typeParam T - The shape of the serialized form data.
+   *
    * @param title
    * @param message
    * @param fields

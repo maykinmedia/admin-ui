@@ -24,8 +24,12 @@ export type LoginTemplateProps<T extends object = object> =
   };
 
 /**
- * Login template
- * @constructor
+ * Login Template
+ *
+ * Uses a `Form` to render form fields within `CardBaseTemplate`, styled to
+ * resemble a login page.
+ *
+ * @typeParam T - The shape of the serialized form data.
  */
 export const LoginTemplate = <T extends object = object>({
   formProps,

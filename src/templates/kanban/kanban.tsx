@@ -11,8 +11,11 @@ export type KanbanTemplateProps<T extends object = object> =
   };
 
 /**
- * grid template
- * @constructor
+ * Kanban Template
+ *
+ * Uses a `Kanban` to render a lists of data within `CardBaseTemplate`.
+ *
+ * @typeParam T - The shape of a single item.
  */
 export const KanbanTemplate = <T extends object = object>({
   children,

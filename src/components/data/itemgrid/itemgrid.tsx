@@ -14,7 +14,11 @@ import "./itemgrid.scss";
 export type ItemGridProps<T extends object = object> = GroupedDataProps<T>;
 
 /**
- * ItemGrid component
+ * ItemGrid Component
+ *
+ * Shows item over various rows.
+ *
+ * @typeParam T - The shape of a single item.
  */
 export const ItemGrid = <T extends object = object>({
   buttonProps,

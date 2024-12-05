@@ -58,8 +58,12 @@ export type KanbanDragData<T extends object = object> = {
 };
 
 /**
- * Kanban component, shows item over various columns. Items can be made `draggable` allowing the user to rearrange them
- * (across columns).
+ * Kanban Component
+ *
+ * Shows items over various columns. Items can be made `draggable` allowing the
+ * user to rearrange them (across columns).
+ *
+ * @typeParam T - The shape of a single item.
  */
 export const Kanban = <T extends object = object>({
   buttonProps,
