@@ -1,17 +1,17 @@
 import clsx from "clsx";
-import React, { useContext } from "react";
+import React from "react";
 
-import { DataGridContext } from "./datagrid";
+import { useDataGridContext } from "./datagrid";
 
 /**
  * DataGrid table, represents tabular: information presented in a two-dimensional table comprised of rows and columns
  * (fields) of cells containing data.
  */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export const DataGridTable = <T extends object = object>({
+export const DataGridTable = <T extends object = object, F extends object = T>({
   children,
 }: React.PropsWithChildren) => {
-  const { tableLayout, titleId } = useContext(DataGridContext);
+  const { tableLayout, titleId } = useDataGridContext<T, F>();
 
   return (
     <table

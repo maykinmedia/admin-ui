@@ -1,11 +1,15 @@
-import React, { useContext, useMemo } from "react";
+import React, { useMemo } from "react";
 
 import { useIntl } from "../../../lib";
 import { Checkbox } from "../../form";
-import { DataGridContext, DataGridContextType } from "./datagrid";
+import { useDataGridContext } from "./datagrid";
 import { TRANSLATIONS } from "./translations";
 
-export type DataGridSelectionCheckboxProps<T extends object = object> = {
+export type DataGridSelectionCheckboxProps<
+  T extends object = object,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  F extends object = T,
+> = {
   rowData?: T;
   selectAll?: false | "page" | "allPages";
 };
@@ -13,10 +17,13 @@ export type DataGridSelectionCheckboxProps<T extends object = object> = {
 /**
  * A select (all) checkbox
  */
-export const DataGridSelectionCheckbox = <T extends object = object>({
+export const DataGridSelectionCheckbox = <
+  T extends object = object,
+  F extends object = T,
+>({
   rowData,
   selectAll,
-}: DataGridSelectionCheckboxProps<T>) => {
+}: DataGridSelectionCheckboxProps<T, F>) => {
   const intl = useIntl();
   const {
     allPagesSelected,
@@ -33,7 +40,7 @@ export const DataGridSelectionCheckbox = <T extends object = object>({
     onSelect,
     onSelectAll,
     onSelectAllPages,
-  } = useContext(DataGridContext) as DataGridContextType<T>;
+  } = useDataGridContext<T, F>();
 
   const { checked, disabled, onChange, ariaLabel } = useMemo(() => {
     let allSelected: boolean = false;

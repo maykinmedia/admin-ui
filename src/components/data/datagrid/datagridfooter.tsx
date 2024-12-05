@@ -1,14 +1,18 @@
-import React, { useContext } from "react";
+import React from "react";
 
 import { Toolbar } from "../../toolbar";
 import { Paginator } from "../paginator";
-import { DataGridContext } from "./datagrid";
+import { useDataGridContext } from "./datagrid";
 
 /**
  * DataGrid footer, shows paginator.
  */
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export const DataGridFooter = <T extends object = object>() => {
+export const DataGridFooter = <
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  T extends object = object,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  F extends object = T,
+>() => {
   const {
     count,
     loading,
@@ -18,7 +22,7 @@ export const DataGridFooter = <T extends object = object>() => {
     pageSize,
     pageSizeOptions,
     paginatorProps,
-  } = useContext(DataGridContext);
+  } = useDataGridContext<T, F>();
 
   return (
     <Toolbar pad={true} sticky="bottom">

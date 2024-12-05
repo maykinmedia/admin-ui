@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import * as React from "react";
 
 import { Badge, DataGridProps, Outline } from "../../components";
-import { FilterableSelectableSortable } from "../../components/data/datagrid/datagrid.stories";
+import { FilterablePaginatedSelectableSortable } from "../../components/data/datagrid/datagrid.stories";
 import { ListTemplate } from "./list";
 
 const meta: Meta<typeof ListTemplate> = {
@@ -15,7 +15,7 @@ type Story = StoryObj<typeof meta>;
 
 export const listTemplate: Story = {
   args: {
-    dataGridProps: FilterableSelectableSortable.args as DataGridProps,
+    dataGridProps: FilterablePaginatedSelectableSortable.args as DataGridProps,
     breadcrumbItems: [
       { label: "Home", href: "/" },
       { label: "Templates", href: "#" },

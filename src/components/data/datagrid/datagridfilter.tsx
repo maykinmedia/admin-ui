@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import {
   formatMessage,
@@ -9,17 +9,19 @@ import {
 } from "../../../lib";
 import { FormControl } from "../../form";
 import { Outline } from "../../icon";
-import { DataGridContext, DataGridContextType } from "./datagrid";
+import { useDataGridContext } from "./datagrid";
 import { TRANSLATIONS } from "./translations";
 
 /**
  * DataGrid filter, encapsulates a set of FormControl's allowing the user to
  * filter items on the grid.
  */
-export const DataGridFilter = <T extends object = object>() => {
+export const DataGridFilter = <
+  T extends object = object,
+  F extends object = T,
+>() => {
   const intl = useIntl();
   const onFilterTimeoutRef = useRef<NodeJS.Timeout>();
-  const [filterState, setFilterState] = useState<T | Record<string, unknown>>();
 
   const {
     dataGridId,
@@ -28,7 +30,9 @@ export const DataGridFilter = <T extends object = object>() => {
     onFilter,
     renderableFields,
     selectable,
-  } = useContext(DataGridContext) as DataGridContextType<T>;
+  } = useDataGridContext<T, F>();
+
+  const [filterState, setFilterState] = useState<F>();
 
   // Debounce filter
   useEffect(() => {
@@ -59,7 +63,7 @@ export const DataGridFilter = <T extends object = object>() => {
     const _data = filterTransform ? filterTransform(data) : data;
 
     // Reset page on filter (length of dataset may change).
-    setFilterState(_data);
+    setFilterState(_data as unknown as F);
   };
 
   return (
