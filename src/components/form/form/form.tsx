@@ -95,7 +95,15 @@ export type FormProps<T extends object = object> = Omit<
 };
 
 /**
- * Generic form component, capable of auto rendering `fields` based on their shape.
+ * Form Component
+ *
+ * A reusable form component with built-in validation, state management, and
+ * dynamic rendering of fields.
+ *
+ * Fields may contain a `FormField[]`, in which ase the exact type of each item
+ * will be automatically resolved and used to render the correct fom widget.
+ *
+ * @typeParam T - The shape of the serialized form data.
  */
 export const Form = <T extends object = object>({
   buttonProps,

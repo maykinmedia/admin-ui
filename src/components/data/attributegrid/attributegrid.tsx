@@ -15,7 +15,11 @@ export type AttributeGridProps<T extends object = object> = {
 };
 
 /**
- * AttributeGrid component, renders multiple `AttributeList`s in a `Grid` component based on `fieldsets`.
+ * AttributeGrid Component
+ *
+ * Uses multiple `AttributeList`s to render lists of data within a `Grid`.
+ *
+ * @typeParam T - The shape of a single data item.
  */
 export const AttributeGrid = <T extends object = object>({
   object,
@@ -27,7 +31,7 @@ export const AttributeGrid = <T extends object = object>({
   const objectList =
     object && fieldsets?.length ? dataByFieldsets(object, fieldsets) : [];
 
-  // The grid datastructure:
+  // The grid data structure:
   //
   // Built an Array of Array of tuples, each Array (1) represents a row with a max span of 12, the total span is defined
   // by the sum of the first key of each tuple in Array (2).

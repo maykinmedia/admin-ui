@@ -26,6 +26,13 @@ export type AttributeTableProps<T extends object = object> = {
   compact?: boolean;
 };
 
+/**
+ * AttributeTable Component
+ *
+ * Shows key/value pairs, optionally grouped by `title`.
+ *
+ * @typeParam T - The shape of a single item.
+ */
 export const AttributeTable = <T extends object = object>({
   object = {} as T,
   labeledObject = {},
