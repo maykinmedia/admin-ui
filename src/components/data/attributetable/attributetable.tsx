@@ -19,7 +19,7 @@ export type AttributeTableProps<T extends object = object> = {
   labeledObject?: Record<string, { label: React.ReactNode; value: unknown }>;
   editable?: boolean;
   fields?: Field<T>[] | TypedField<T>[];
-  formProps?: FormProps;
+  formProps?: FormProps<T>;
   labelCancel?: string;
   labelEdit?: string;
   valign?: "middle" | "start";
