@@ -26,6 +26,6 @@ export const ListTemplate = <T extends object = object, F extends object = T>({
 }: ListTemplateProps<T, F>) => (
   <CardBaseTemplate {...props}>
     {children}
-    <DataGrid<T, F> {...dataGridProps} />
+    <DataGrid<T, F> height="100%" {...dataGridProps} />
   </CardBaseTemplate>
 );
