@@ -68,6 +68,7 @@ export const DataGridSelectionCheckbox = <
           amountUnselected: (count || 0) - (amountSelected || 0),
           amountUnselectedPage: renderableRows.length - (amountSelected || 0),
         };
+        console.log(i18nContext);
         ariaLabel =
           labelSelectAll ||
           intl.formatMessage(TRANSLATIONS.LABEL_SELECT_ALL, i18nContext);
@@ -78,7 +79,7 @@ export const DataGridSelectionCheckbox = <
         checked = allPagesSelected || false;
         handleSelect = () => onSelectAllPages(!allSelected);
 
-        i18nContext = { pages: count };
+        i18nContext = { pages: pages };
         ariaLabel =
           labelSelectAllPages ||
           intl.formatMessage(TRANSLATIONS.LABEL_SELECT_ALL_PAGES, i18nContext);
