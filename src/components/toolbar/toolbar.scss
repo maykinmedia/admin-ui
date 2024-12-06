@@ -80,30 +80,37 @@
   }
 
   &--variant-primary {
-    --typography-color-h: var(--typography-color-background);
-    --typography-color-body: var(--typography-color-background);
-    --mykn-button-color-text: var(--typography-color-background);
+    --toolbar-color-text-primary: var(--typography-color-background);
     background-color: var(--page-color-primary);
+
+    * {
+      --typography-color-h: var(--toolbar-color-text-primary);
+      --typography-color-body: var(--toolbar-color-text-primary);
+      --mykn-button-color-text: var(--toolbar-color-text-primary);
+      --typography-color-muted: var(--toolbar-color-text-primary);
+    }
 
     @include dark {
       & {
-        .mykn-button {
-          --mykn-button-color-text: var(--typography-color-body);
-        }
+        --toolbar-color-text-primary: var(--typography-color-body);
       }
     }
   }
 
   &--variant-accent {
+    --toolbar-color-text-accent: var(--typography-color-body);
     background-color: var(--page-color-accent);
+
+    * {
+      --typography-color-h: var(--toolbar-color-text-accent);
+      --typography-color-body: var(--toolbar-color-text-accent);
+      --mykn-button-color-text: var(--toolbar-color-text-accent);
+      --typography-color-muted: var(--toolbar-color-text-accent);
+    }
 
     @include dark {
       & {
-        --typography-color-body: var(--typography-color-background);
-
-        .mykn-button {
-          --mykn-button-color-text: var(--typography-color-background);
-        }
+        --toolbar-color-text-accent: var(--typography-color-background);
       }
     }
   }

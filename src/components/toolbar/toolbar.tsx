@@ -176,6 +176,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
         overrideItemProps
           ? {
               size: direction === "horizontal" ? "xs" : undefined,
+              variant: "transparent",
             }
           : {},
       ];
