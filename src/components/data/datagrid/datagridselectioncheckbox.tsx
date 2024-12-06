@@ -78,7 +78,7 @@ export const DataGridSelectionCheckbox = <
         checked = allPagesSelected || false;
         handleSelect = () => onSelectAllPages(!allSelected);
 
-        i18nContext = { pages: count };
+        i18nContext = { pages: pages };
         ariaLabel =
           labelSelectAllPages ||
           intl.formatMessage(TRANSLATIONS.LABEL_SELECT_ALL_PAGES, i18nContext);
