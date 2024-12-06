@@ -16,10 +16,10 @@ import "./attributetable.scss";
 export type AttributeTableProps<T extends object = object> = {
   object?: T;
   // TODO: Deprecate?
-  labeledObject?: Record<string, { label: string; value: unknown }>;
+  labeledObject?: Record<string, { label: React.ReactNode; value: unknown }>;
   editable?: boolean;
   fields?: Field<T>[] | TypedField<T>[];
-  formProps?: FormProps;
+  formProps?: FormProps<T>;
   labelCancel?: string;
   labelEdit?: string;
   valign?: "middle" | "start";
@@ -29,7 +29,8 @@ export type AttributeTableProps<T extends object = object> = {
 /**
  * AttributeTable Component
  *
- * Shows key/value pairs, optionally grouped by `title`.
+ * Shows key/value pairs.
+ * @see DataGrid for more advanced table layout.
  *
  * @typeParam T - The shape of a single item.
  */
@@ -117,7 +118,7 @@ export type AttributeTableRowProps<T extends object = object> = {
   editable?: boolean;
   object?: T;
   // TODO: Deprecate in favor of using TypedField for labels in the future?
-  labeledObject?: Record<string, { label: string; value: unknown }>;
+  labeledObject?: Record<string, { label: React.ReactNode; value: unknown }>;
   field: TypedField<T>;
   isFormOpen: boolean;
   labelEdit?: string;

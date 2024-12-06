@@ -101,7 +101,8 @@ export const FIXTURE_PRODUCTS = [
   {
     id: 10,
     name: "Smart TV",
-    description: "65-inch smart TV with 4K resolution and streaming capabilities.",
+    description:
+      "65-inch smart TV with 4K resolution and streaming capabilities.",
     url: "https://www.example.com/products/10",
     price: 599.99,
     stock: 10,
@@ -110,3 +111,5 @@ export const FIXTURE_PRODUCTS = [
     releaseDate: "2023-10-01",
   },
 ];
+
+export const FIXTURE_PRODUCT = FIXTURE_PRODUCTS[0];

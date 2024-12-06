@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { userEvent, within } from "@storybook/test";
 import * as React from "react";
 
+import { FIXTURE_PRODUCT } from "../../../../.storybook/fixtures/products";
 import { ButtonLink } from "../../button";
 import { Outline } from "../../icon";
 import { AttributeTable } from "./attributetable";
@@ -16,31 +17,13 @@ type Story = StoryObj<typeof meta>;
 
 export const AttributeTableComponent: Story = {
   args: {
-    object: {
-      url: "https://www.example.com",
-      omschrijving: "Afvalpas vervangen",
-      zaaktype: "https://www.example.com",
-      versie: 2,
-      opmerkingen: null,
-      actief: false,
-      toekomstig: false,
-      concept: true,
-    },
+    object: FIXTURE_PRODUCT,
   },
 };
 
 export const AttributeTableComponentCompact: Story = {
   args: {
-    object: {
-      url: "https://www.example.com",
-      omschrijving: "Afvalpas vervangen",
-      zaaktype: "https://www.example.com",
-      versie: 2,
-      opmerkingen: null,
-      actief: false,
-      toekomstig: false,
-      concept: true,
-    },
+    object: FIXTURE_PRODUCT,
     compact: true,
   },
 };
@@ -48,19 +31,23 @@ export const AttributeTableComponentCompact: Story = {
 export const LabeledAttributeTableComponent: Story = {
   args: {
     labeledObject: {
-      url: { label: "Url", value: "https://www.example.com" },
-      omschrijving: { label: "Omschrijving", value: "Afvalpas vervangen" },
-      zaaktype: { label: "Zaaktype", value: "https://www.example.com" },
-      versie: { label: "Versie", value: 2 },
-      opmerkingen: { label: "Opmerkingen", value: null },
-      actief: { label: "Actief", value: false },
-      toekomstig: { label: "Toekomstig", value: false },
-      concept: { label: "Concept", value: true },
+      id: { label: "Identifier", value: FIXTURE_PRODUCT.id },
+      name: { label: "Name", value: FIXTURE_PRODUCT.name },
+      description: { label: "Description", value: FIXTURE_PRODUCT.description },
+      url: { label: "Link", value: FIXTURE_PRODUCT.url },
+      price: { label: "Price", value: FIXTURE_PRODUCT.price },
+      stock: { label: "In stock", value: FIXTURE_PRODUCT.stock },
+      category: { label: "Category", value: FIXTURE_PRODUCT.category },
+      is_available: { label: "Available", value: FIXTURE_PRODUCT.isAvailable },
+      release_date: {
+        label: "Release date",
+        value: FIXTURE_PRODUCT.releaseDate,
+      },
     },
   },
 };
 
-export const LabeledAttributeTableComponentWithNodes: Story = {
+export const LabeledAttributeTableComponentWithJSX: Story = {
   args: {
     labeledObject: {
       button: {
