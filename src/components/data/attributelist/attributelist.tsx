@@ -21,8 +21,11 @@ export type AttributeListProps<T extends object = object> =
   };
 
 /**
- * AttributeList component, shows multiple `fields` in `object`.
- * TODO: tooltip
+ * AttributeList Component
+ *
+ * Shows key/value pairs, optionally grouped by `title`.
+ *
+ * @typeParam T - The shape of a single item.
  */
 export const AttributeList = <T extends object = object>({
   title = "",
