@@ -29,7 +29,8 @@ export type AttributeTableProps<T extends object = object> = {
 /**
  * AttributeTable Component
  *
- * Shows key/value pairs, optionally grouped by `title`.
+ * Shows key/value pairs.
+ * @see DataGrid for more advanced table layout.
  *
  * @typeParam T - The shape of a single item.
  */
