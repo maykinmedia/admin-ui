@@ -10,10 +10,13 @@ export type RadioGroupProps = ChoiceFieldProps<
 >;
 export const RadioGroup: React.FC<RadioGroupProps> = ({
   id = "",
+  label,
   name,
   options,
+  required,
   variant,
   onChange,
+  onClick,
 }) => {
   const reactId = useId();
   const _id = id || reactId;
@@ -34,7 +37,7 @@ export const RadioGroup: React.FC<RadioGroupProps> = ({
   };
 
   return (
-    <div className={clsx("mykn-radiogroup")}>
+    <div className={clsx("mykn-radiogroup")} aria-label={label}>
       {options.map((option, index) => {
         const radioId = `${_id}-choice-${index}`;
         const optionValue = option.value || option.label;
@@ -43,11 +46,13 @@ export const RadioGroup: React.FC<RadioGroupProps> = ({
           <Radio
             id={radioId}
             key={optionValue || index}
+            checked={selectedValueState === optionValue}
             name={name}
+            required={required}
             value={optionValue}
             variant={variant}
-            checked={selectedValueState === optionValue}
             onChange={handleChange}
+            onClick={onClick}
           >
             {option.label}
           </Radio>

@@ -59,7 +59,10 @@ export const DataGridFilter = <
       e.preventDefault();
     }
 
-    const data = serializeForm(input.form as HTMLFormElement) as T;
+    const data = serializeForm<keyof T & string>(
+      input.form as HTMLFormElement,
+      true,
+    );
     const _data = filterTransform ? filterTransform(data) : data;
 
     // Reset page on filter (length of dataset may change).
@@ -122,7 +125,9 @@ export const DataGridFilter = <
                 }
                 onClick={
                   field.type === "boolean"
-                    ? (e: React.MouseEvent<HTMLInputElement>) => handleFilter(e)
+                    ? (e: React.MouseEvent<HTMLInputElement>) => {
+                        handleFilter(e);
+                      }
                     : undefined
                 }
               />

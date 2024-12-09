@@ -11,20 +11,29 @@ export type ChoiceFieldProps<
   /** Can be used to generate `SelectOption` components from an array of objects. */
   options: Option[];
 
+  /** The associated form's id. */
+  form?: string;
+
+  /** The (accessible) label .*/
+  label?: string;
+
   /** Form element name. */
   name?: string;
 
+  /** Whether a value is required. */
+  required?: boolean;
+
   /** Form element type. */
   type?: string;
-
-  /** Gets called when the input is blurred. */
-  onBlur?: React.FormEventHandler<FormElement>;
 
   /** Value of the form element */
   value?: Option["value"] | null;
 
   /** The variant (style) of the form element. */
   variant?: "normal" | "transparent";
+
+  /** Gets called when the input is blurred. */
+  onBlur?: React.FormEventHandler<FormElement>;
 
   /**
    *

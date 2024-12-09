@@ -3,6 +3,7 @@ import React, { useId, useState } from "react";
 
 import {
   Field,
+  SerializedFormData,
   TypedField,
   string2Title,
   typedFieldByFields,
@@ -19,7 +20,7 @@ export type AttributeTableProps<T extends object = object> = {
   labeledObject?: Record<string, { label: React.ReactNode; value: unknown }>;
   editable?: boolean;
   fields?: Field<T>[] | TypedField<T>[];
-  formProps?: FormProps<T>;
+  formProps?: FormProps<Record<keyof T, SerializedFormData[string]>>;
   labelCancel?: string;
   labelEdit?: string;
   valign?: "middle" | "start";
@@ -60,7 +61,7 @@ export const AttributeTable = <T extends object = object>({
 
   const renderTable = () => {
     return editable ? (
-      <Form
+      <Form<Record<keyof T, SerializedFormData[string]>>
         fieldsetClassName="mykn-attributetable__body"
         showActions={isFormOpenState}
         secondaryActions={[

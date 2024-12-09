@@ -33,7 +33,7 @@ export type DatePickerProps = Omit<
   placeholder?: string;
 
   /** Can be a `Date` `[Date, Date]` or a (date) `string` or a (time) `number`. */
-  value?: DatePickerValue | string | number;
+  value?: DatePickerValue | string | number | null;
 
   labelNextYear?: string;
   labelPreviousYear?: string;

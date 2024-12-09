@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from "react";
 
 import { Form, FormProps, ModalProps, P } from "../../components";
 import { ModalServiceContext } from "../../contexts";
-import { FormField } from "../../lib";
+import { FormField, SerializedFormData } from "../../lib";
 import { useDialog } from "./usedialog";
 
 /**
@@ -31,7 +31,9 @@ export const useFormDialog = <T extends object = object>() => {
    * @param formProps
    * @param autofocus
    */
-  const fn = <FT extends object = T>(
+  const fn = <
+    FT extends SerializedFormData = Record<keyof T, SerializedFormData[string]>,
+  >(
     title: string,
     message: React.ReactNode,
     fields: FormField[],
@@ -66,7 +68,7 @@ export const useFormDialog = <T extends object = object>() => {
   return fn;
 };
 
-const PromptForm = <T extends object = object>({
+const PromptForm = <T extends SerializedFormData = SerializedFormData>({
   fields,
   labelConfirm,
   labelCancel,

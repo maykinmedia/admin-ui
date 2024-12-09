@@ -132,6 +132,7 @@ export const Filterable: Story = {
   argTypes: {
     ...DataGridComponent.argTypes,
     onFilter: { action: "onFilter" },
+    filterTransform: { action: "filterTransform" },
   },
 };
 

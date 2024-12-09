@@ -2,10 +2,27 @@ import { Primitive, isPrimitive } from "../data";
 import { date2DateString } from "../format";
 import { FormField } from "./typeguards";
 
-export type SerializedFormData = Record<
-  string,
+export type SerializedFormData<T extends string = string> =
+  | UnTypedSerializedFormData<T>
+  | TypedSerializedFormData<T>;
+
+export type UnTypedSerializedFormData<T extends string = string> = Record<
+  T,
   FormDataEntryValue | FormDataEntryValue[]
 >;
+
+export type TypedSerializedFormData<T extends string = string> = Record<
+  T,
+  TypedFormDataEntryValue | TypedFormDataEntryValue[]
+>;
+
+export type TypedFormDataEntryValue =
+  | FormDataEntryValue
+  | FormDataEntryValue[]
+  | boolean
+  | number
+  | Date
+  | [Date, Date];
 
 /**
  * Basic `FormData` based serialization function.
@@ -13,54 +30,71 @@ export type SerializedFormData = Record<
  * @param form
  * @param useTypedResults Whether the convert results to type inferred from input type (e.g. checkbox value will be boolean).
  */
-export const serializeForm = (
+export function serializeForm<T extends string = string>(
   form: HTMLFormElement,
-  useTypedResults = false,
-): SerializedFormData => {
+  useTypedResults: true,
+): TypedSerializedFormData<T>;
+export function serializeForm<T extends string = string>(
+  form: HTMLFormElement,
+  useTypedResults: false,
+): UnTypedSerializedFormData<T>;
+export function serializeForm<T extends string = string>(
+  form: HTMLFormElement,
+  useTypedResults?: boolean,
+): typeof useTypedResults extends true
+  ? TypedSerializedFormData<T>
+  : UnTypedSerializedFormData<T>;
+export function serializeForm<T extends string = string>(
+  form: HTMLFormElement,
+  useTypedResults?: boolean,
+): TypedSerializedFormData<T> | UnTypedSerializedFormData<T> {
   const formData = new FormData(form);
-  const entries = Array.from(formData.entries());
+  const entries = Array.from(formData.entries()) as Array<[T, string | File]>;
 
-  const data = entries.reduce<SerializedFormData>((acc, [name, value]) => {
-    const inputsMatchingName = [...form.elements].filter(
-      (n) => n.getAttribute("name") === name,
-    ) as Array<
-      | HTMLButtonElement
-      | HTMLInputElement
-      | HTMLSelectElement
-      | HTMLTextAreaElement
-    >;
-    const nameMultipleTimesInForm = inputsMatchingName.length > 1;
-    // Edge case: radio can possibly have more than one DOM element representing a single value.
-    const isRadio = inputsMatchingName.every((i) => i.type === "radio");
+  const data = entries.reduce<UnTypedSerializedFormData<T>>(
+    (acc, [name, value]) => {
+      const inputsMatchingName = [...form.elements].filter(
+        (n) => n.getAttribute("name") === name,
+      ) as Array<
+        | HTMLButtonElement
+        | HTMLInputElement
+        | HTMLSelectElement
+        | HTMLTextAreaElement
+      >;
+      const nameMultipleTimesInForm = inputsMatchingName.length > 1;
+      // Edge case: radio can possibly have more than one DOM element representing a single value.
+      const isRadio = inputsMatchingName.every((i) => i.type === "radio");
 
-    if (nameMultipleTimesInForm && !isRadio) {
-      // Key is already set on (serialized) `acc`, replace it with an `Array`.
-      const existingValue = acc[name];
+      if (nameMultipleTimesInForm && !isRadio) {
+        // Key is already set on (serialized) `acc`, replace it with an `Array`.
+        const existingValue = acc[name];
 
-      acc[name] = existingValue
-        ? Array.isArray(existingValue)
-          ? [...existingValue, value]
-          : [existingValue, value]
-        : [value];
-    } else {
-      // Key is not yet set in (serialized) `acc`, set it.
-      acc[name] = value;
-    }
-    return acc;
-  }, {});
+        acc[name] = existingValue
+          ? Array.isArray(existingValue)
+            ? [...existingValue, value]
+            : [existingValue, value]
+          : [value];
+      } else {
+        // Key is not yet set in (serialized) `acc`, set it.
+        acc[name] = value;
+      }
+      return acc;
+    },
+    {} as UnTypedSerializedFormData<T>,
+  );
 
-  return useTypedResults ? typeSerializedFormData(form, data) : data;
-};
+  return useTypedResults ? typeSerializedFormData<T>(form, data) : data;
+}
 
 /**
  * Converts values in `data` to the type implied by the associated form control in `form`.
  * @param form
  * @param data
  */
-const typeSerializedFormData = (
+const typeSerializedFormData = <T extends string = string>(
   form: HTMLFormElement,
-  data: SerializedFormData,
-) => {
+  data: UnTypedSerializedFormData<T>,
+): TypedSerializedFormData<T> => {
   // Work around for edge case where checkbox is not present in `data` when unchecked.
   // This builds an object with all form fields keys (including unchecked checkbox)
   // set to `undefined`, we can merge this with `data` later on to get a complete
@@ -79,7 +113,10 @@ const typeSerializedFormData = (
   );
 
   // Merge `data` and baseData into `completeData`.
-  const completeData: SerializedFormData = Object.assign(baseData, data);
+  const completeData: UnTypedSerializedFormData<T> = Object.assign(
+    baseData,
+    data,
+  );
 
   return Object.fromEntries(
     Object.entries(completeData).map(([key, value]) => {
@@ -95,7 +132,7 @@ const typeSerializedFormData = (
       const _value = constructor ? constructor(value) : value;
       return [key, _value];
     }),
-  );
+  ) as TypedSerializedFormData<T>;
 };
 
 /**
@@ -155,7 +192,9 @@ export const getInputType = (
  * @param values
  * @param field
  */
-export const getValueFromFormData = <T extends object = SerializedFormData>(
+export const getValueFromFormData = <
+  T extends SerializedFormData = SerializedFormData,
+>(
   fields: FormField[],
   values: T,
   field: FormField,
