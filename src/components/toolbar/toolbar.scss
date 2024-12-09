@@ -79,20 +79,22 @@
     padding-inline: calc(var(--spacing-v) / 2);
   }
 
+  --typography-color-link: var(--typography-color-body);
   &--variant-primary {
     --toolbar-color-text-primary: var(--typography-color-background);
     background-color: var(--page-color-primary);
 
-    * {
+    > * {
+      --button-color-text-primary: var(--toolbar-color-text-primary);
       --typography-color-h: var(--toolbar-color-text-primary);
-      --typography-color-body: var(--toolbar-color-text-primary);
-      --mykn-button-color-text: var(--toolbar-color-text-primary);
+      --typography-color-link: var(--toolbar-color-text-primary);
       --typography-color-muted: var(--toolbar-color-text-primary);
     }
 
     @include dark {
       & {
         --toolbar-color-text-primary: var(--typography-color-body);
+        --typography-color-link: var(--typography-color-body);
       }
     }
   }
@@ -102,14 +104,14 @@
     background-color: var(--page-color-accent);
 
     * {
+      --button-color-text-transparent: var(--toolbar-color-text-accent);
       --typography-color-h: var(--toolbar-color-text-accent);
-      --typography-color-body: var(--toolbar-color-text-accent);
-      --mykn-button-color-text: var(--toolbar-color-text-accent);
       --typography-color-muted: var(--toolbar-color-text-accent);
     }
 
     @include dark {
       & {
+        --typography-color-link: var(--typography-color-background);
         --toolbar-color-text-accent: var(--typography-color-background);
       }
     }
@@ -159,7 +161,6 @@
 
   .mykn-a {
     text-decoration: none;
-    color: var(--typography-color-body);
 
     &[aria-current] {
       color: var(--page-color-primary);
