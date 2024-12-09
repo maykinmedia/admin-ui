@@ -149,7 +149,7 @@ export const DataGridToolbar = <
             labelSubmit={ucFirst(_labelSaveFieldSelection)}
             onSubmit={(e) => {
               const form = e.target as HTMLFormElement;
-              const data = serializeForm(form);
+              const data = serializeForm(form, false);
               const selectedFields = (data.fields || []) as string[];
               const newTypedFieldsState = fields.map((f) => ({
                 ...f,

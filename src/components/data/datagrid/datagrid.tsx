@@ -14,6 +14,7 @@ import {
   Field,
   SerializedFormData,
   TypedField,
+  TypedSerializedFormData,
   filterDataArray,
   typedFieldByFields,
 } from "../../../lib";
@@ -67,7 +68,9 @@ export type DataGridProps<T extends object = object, F extends object = T> = {
    * A function transforming the filter values.
    * This can be used to adjust filter input to an API spec.
    */
-  filterTransform?: (value: T) => F;
+  filterTransform?: (
+    value: Partial<TypedSerializedFormData<keyof T & string>>,
+  ) => F;
 
   /**
    * Can be any valid CSS `height` property or `"fill-available-space"` to
@@ -272,7 +275,7 @@ type PaginatorPropsAliases = {
  * filtering, row selection, and pagination.
  *
  * @typeParam T - The shape of a single data row.
- * @typeParam F - If the shape of the filtered returned by `filterTransform`
+ * @typeParam F - If the shape of the data returned by `filterTransform`
  */
 export const DataGrid = <T extends object = object, F extends object = T>(
   props: DataGridProps<T, F>,
