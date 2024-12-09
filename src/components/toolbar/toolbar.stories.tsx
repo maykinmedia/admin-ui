@@ -5,6 +5,7 @@ import { PAGE_DECORATOR } from "../../../.storybook/decorators";
 import { ButtonLinkProps, ButtonProps } from "../button";
 import { DropdownProps } from "../dropdown";
 import { FormControlProps } from "../form";
+import { IconInitials } from "../iconinitials";
 import { Logo } from "../logo";
 import { A, AProps, H3 } from "../typography";
 import { Toolbar, ToolbarProps } from "./toolbar";
@@ -23,7 +24,7 @@ export const ToolbarComponent: Story = {
     align: "center",
     pad: true,
     items: [
-      <Logo key="logo" abbreviated />,
+      <Logo key="Logo" abbreviated />,
       "spacer",
       {
         children: "Anchor",
@@ -65,6 +66,7 @@ export const ToolbarComponent: Story = {
       {
         placeholder: "FormControl",
       } as FormControlProps,
+      <IconInitials key="IconInitials" name="Maykin Media" />,
     ],
   },
 };
