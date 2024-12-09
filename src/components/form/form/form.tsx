@@ -2,24 +2,28 @@ import clsx from "clsx";
 import React, { FormEvent, useContext, useEffect, useState } from "react";
 
 import { ConfigContext } from "../../../contexts";
-import { FormField } from "../../../lib/form/typeguards";
-import { getValueFromFormData, serializeForm } from "../../../lib/form/utils";
+import { ucFirst } from "../../../lib";
+import { useIntl } from "../../../lib";
+import { FormField } from "../../../lib";
+import {
+  SerializedFormData,
+  getValueFromFormData,
+  serializeForm,
+} from "../../../lib";
 import {
   DEFAULT_VALIDATION_ERROR_REQUIRED,
   Validator,
   getErrorFromErrors,
   validateForm,
-} from "../../../lib/form/validation";
-import { forceArray } from "../../../lib/format/array";
-import { ucFirst } from "../../../lib/format/string";
-import { useIntl } from "../../../lib/i18n/useIntl";
+} from "../../../lib";
+import { forceArray } from "../../../lib";
 import { ButtonProps } from "../../button";
 import { Toolbar, ToolbarItem, ToolbarProps } from "../../toolbar";
 import { ErrorMessage } from "../errormessage";
 import { FormControl } from "../formcontrol";
 import "./form.scss";
 
-export type FormProps<T extends object = object> = Omit<
+export type FormProps<T extends SerializedFormData = SerializedFormData> = Omit<
   React.ComponentProps<"form">,
   "onChange" | "onSubmit"
 > & {
@@ -105,7 +109,7 @@ export type FormProps<T extends object = object> = Omit<
  *
  * @typeParam T - The shape of the serialized form data.
  */
-export const Form = <T extends object = object>({
+export const Form = <T extends SerializedFormData = SerializedFormData>({
   buttonProps,
   children,
   debug = false,
@@ -134,7 +138,7 @@ export const Form = <T extends object = object>({
   const _debug = debug || contextDebug;
   const _nonFieldErrors = forceArray(nonFieldErrors);
 
-  const [valuesState, setValuesState] = useState(initialValues);
+  const [valuesState, setValuesState] = useState<T>(initialValues);
   const [errorsState, setErrorsState] = useState(errors || {});
 
   useEffect(() => {
@@ -178,7 +182,7 @@ export const Form = <T extends object = object>({
     const form = (event.target as HTMLInputElement).form;
 
     if (form && !onChange) {
-      const data = serializeForm(form, useTypedResults) as T;
+      const data = serializeForm<keyof T & string>(form, useTypedResults) as T;
       setValuesState(data);
     }
   };
@@ -200,7 +204,7 @@ export const Form = <T extends object = object>({
     }
 
     const form = event.target as HTMLFormElement;
-    const data = serializeForm(form, useTypedResults) as T;
+    const data = serializeForm<keyof T & string>(form, useTypedResults) as T;
 
     if (onSubmit) {
       onSubmit(event, data);

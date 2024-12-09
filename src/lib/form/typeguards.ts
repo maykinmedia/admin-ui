@@ -11,6 +11,9 @@ import { DateInputProps } from "../../components/form/dateinput";
 import { DateRangeInputProps } from "../../components/form/daterangeinput";
 
 export type FormField =
+  | CheckboxProps
+  | RadioProps
+  | ChoiceFieldProps
   | DateInputProps
   | DateRangeInputProps
   | DatePickerProps

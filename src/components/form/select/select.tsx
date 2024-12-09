@@ -29,12 +29,6 @@ export type SelectProps = ChoiceFieldProps & {
   /** Component to use as icon. */
   icon?: React.ReactNode;
 
-  /** Select label. */
-  label?: string;
-
-  /** Whether a value is required, a required select can't be cleared. */
-  required?: boolean;
-
   /** Whether to apply padding. */
   pad?: boolean | "h" | "v";
 
@@ -49,9 +43,6 @@ export type SelectProps = ChoiceFieldProps & {
 
   /** The clear value (accessible) label. */
   labelClear?: string;
-
-  /** The associated form's id. */
-  form?: React.ComponentProps<"select">["form"];
 };
 
 /**

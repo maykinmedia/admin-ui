@@ -1,5 +1,5 @@
 import { FormField } from "./typeguards";
-import { parseFieldName } from "./utils";
+import { SerializedFormData, parseFieldName } from "./utils";
 
 export const DEFAULT_VALIDATION_ERROR_REQUIRED = "Dit veld is verplicht";
 
@@ -22,7 +22,7 @@ export const validateRequired: Validator = (
   message = DEFAULT_VALIDATION_ERROR_REQUIRED,
 ) => {
   // Not required, don't validate.
-  if (!field.required || value) {
+  if (!field?.required || value) {
     return;
   }
 
@@ -36,8 +36,8 @@ export const validateRequired: Validator = (
  * @param fields
  * @param validators
  */
-export const validateForm = <T extends object = object>(
-  values: T,
+export const validateForm = <T extends SerializedFormData = SerializedFormData>(
+  values: T | Record<string, never>,
   fields: FormField[],
   validators: Validator[] = [validateRequired],
 ) => {
@@ -49,6 +49,7 @@ export const validateForm = <T extends object = object>(
           string,
           number | undefined,
         ];
+        // @ts-expect-error - fixme
         const value = values[name as keyof T];
 
         // Validate array, multiple values.

@@ -2,26 +2,28 @@ import React, { useContext } from "react";
 
 import { Body, Card, Form, FormProps, Hr, Logo } from "../../components";
 import { ConfigContext } from "../../contexts";
+import { SerializedFormData } from "../../lib";
 import { ucFirst } from "../../lib/format/string";
 import { useIntl } from "../../lib/i18n/useIntl";
 import { BaseTemplate, BaseTemplateProps } from "../base";
 
-export type LoginTemplateProps<T extends object = object> =
-  BaseTemplateProps & {
-    fields?: FormProps<T>["fields"];
+export type LoginTemplateProps<
+  T extends SerializedFormData = SerializedFormData,
+> = BaseTemplateProps & {
+  fields?: FormProps<T>["fields"];
 
-    /** Form props. */
-    formProps: FormProps<T>;
+  /** Form props. */
+  formProps: FormProps<T>;
 
-    /** The login form label. */
-    labelLogin?: FormProps<T>["labelSubmit"];
+  /** The login form label. */
+  labelLogin?: FormProps<T>["labelSubmit"];
 
-    /** Logo (JSX) slot. */
-    slotLogo?: React.ReactNode;
+  /** Logo (JSX) slot. */
+  slotLogo?: React.ReactNode;
 
-    labelOidcLogin?: string;
-    urlOidcLogin?: string;
-  };
+  labelOidcLogin?: string;
+  urlOidcLogin?: string;
+};
 
 /**
  * Login Template
@@ -31,7 +33,9 @@ export type LoginTemplateProps<T extends object = object> =
  *
  * @typeParam T - The shape of the serialized form data.
  */
-export const LoginTemplate = <T extends object = object>({
+export const LoginTemplate = <
+  T extends SerializedFormData = SerializedFormData,
+>({
   formProps,
   labelLogin,
   labelOidcLogin,
