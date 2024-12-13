@@ -103,6 +103,7 @@ export const AttributeTable = <T extends object = object>({
 
   return (
     <div
+      role="table"
       className={clsx(
         "mykn-attributetable",
         `mykn-attributetable--valign-${valign}`,
@@ -209,6 +210,7 @@ export const AttributeTableRow = <T extends object = object>({
       className={clsx("mykn-attributetable__row", {
         "mykn-attributetable--compact": compact,
       })}
+      role="row"
     >
       <div
         className={clsx(
@@ -216,6 +218,7 @@ export const AttributeTableRow = <T extends object = object>({
           "mykn-attributetable__cell--key",
           { "mykn-attributetable--compact": compact },
         )}
+        role="cell"
       >
         {isEditing ? <label htmlFor={`${id}_input`}>{label}</label> : label}
       </div>
