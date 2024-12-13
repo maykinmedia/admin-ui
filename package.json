@@ -60,6 +60,7 @@
   },
   "homepage": "https://github.com/maykinmedia/admin-ui/#readme",
   "devDependencies": {
+    "@playwright/test": "^1.49.1",
     "@chromatic-com/storybook": "^2.0.2",
     "@commitlint/cli": "^19.0.0",
     "@commitlint/config-conventional": "^19.0.0",
