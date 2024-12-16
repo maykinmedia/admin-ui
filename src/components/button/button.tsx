@@ -83,7 +83,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       size = "s",
       square = false,
       variant = "secondary",
-      wrap = true,
+      wrap = false,
       onClick,
       ...props
     },
@@ -136,7 +136,7 @@ export const ButtonLink = React.forwardRef<HTMLAnchorElement, ButtonLinkProps>(
       size = "s",
       square = false,
       variant = "secondary",
-      wrap = true,
+      wrap = false,
       onClick,
       ...props
     },
