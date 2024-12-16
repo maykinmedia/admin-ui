@@ -8,15 +8,15 @@
 
   --typography-color-background: #313741;
   --typography-color-background-alt: #252f3d;
-  --typography-color-body: #e3e5e8;
+  --typography-color-body: #c5c6ce;
   --typography-color-border: #535353;
-  --typography-color-h: #e3e5e8;
+  --typography-color-h: var(--typography-color-body);
   --typography-color-muted: #8c8c8c;
 
   --button-color-text-outline: #f3f3f3;
-  --button-color-text-primary: #313741;
-
+  --button-color-text-primary: var(--typography-color-body);
   --button-color-text-secondary: #313741;
+  --button-color-text-danger: var(--typography-color-body);
 
   --button-color-background-outline-hover: #f3f3f3;
   --button-color-background-outline-active: #f3f3f3;
