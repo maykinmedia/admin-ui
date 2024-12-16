@@ -16,4 +16,9 @@
   & + & {
     margin-block-start: var(--spacing-v);
   }
+
+  &:has(> .mykn-body),
+  &__header:has(> .mykn-body) {
+    padding: 0;
+  }
 }

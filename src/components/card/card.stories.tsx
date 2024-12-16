@@ -26,3 +26,28 @@ export const CardComponent: Story = {
     ),
   },
 };
+
+export const CardWithTitle: Story = {
+  args: {
+    title: "Card title",
+    children: (
+      <Body>
+        <P>The quick brown fox jumps over the lazy dog.</P>
+      </Body>
+    ),
+  },
+};
+
+export const CardWithControls: Story = {
+  args: {
+    title: "Card title",
+    controls: [
+      { children: "Click me", onClick: () => alert("Button clicked.") },
+    ],
+    children: (
+      <Body>
+        <P>The quick brown fox jumps over the lazy dog.</P>
+      </Body>
+    ),
+  },
+};

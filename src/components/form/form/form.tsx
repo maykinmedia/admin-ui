@@ -301,6 +301,7 @@ export const Form = <T extends SerializedFormData = SerializedFormData>({
             },
           ]}
           overrideItemProps={false}
+          pad={false}
           {...toolbarProps}
         />
       )}
