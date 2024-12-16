@@ -80,6 +80,7 @@
   }
 
   --typography-color-link: var(--typography-color-body);
+
   &--variant-primary {
     --toolbar-color-text-primary: var(--typography-color-background);
     background-color: var(--page-color-primary);
@@ -227,22 +228,6 @@
       height: 100%;
     }
 
-    &#{$self}--align-start .mykn-a,
-    &#{$self}--align-start .mykn-button,
-    &#{$self}--align-start .mykn-dropdown {
-      display: flex;
-      justify-content: start;
-      text-align: start;
-    }
-
-    &#{$self}--align-end .mykn-a,
-    &#{$self}--align-end .mykn-button,
-    &#{$self}--align-end .mykn-dropdown {
-      display: flex;
-      justify-content: end;
-      text-align: end;
-    }
-
     &#{$self}--align-center .mykn-a,
     &#{$self}--align-center .mykn-button,
     &#{$self}--align-center .mykn-dropdown,
@@ -278,6 +263,22 @@
         align-items: center;
         justify-content: space-between;
         text-align: center;
+      }
+
+      &#{$self}--align-start .mykn-a,
+      &#{$self}--align-start .mykn-button,
+      &#{$self}--align-start .mykn-dropdown {
+        display: flex;
+        justify-content: start;
+        text-align: start;
+      }
+
+      &#{$self}--align-end .mykn-a,
+      &#{$self}--align-end .mykn-button,
+      &#{$self}--align-end .mykn-dropdown {
+        display: flex;
+        justify-content: end;
+        text-align: end;
       }
     }
   }
