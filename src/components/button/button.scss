@@ -272,7 +272,10 @@
       --mykn-button-color-background: var(--page-color-#{$variant});
       --mykn-button-color-border: var(--page-color-#{$variant});
       --mykn-button-color-shadow: var(--page-color-shadow);
-      --mykn-button-color-text: var(--page-color-background);
+      --mykn-button-color-text: var(
+        --button-color-text-#{$variant},
+        var(--page-color-background)
+      );
 
       &:focus,
       &:hover {
