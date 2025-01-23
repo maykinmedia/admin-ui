@@ -19,9 +19,11 @@ import {
 import { forceArray } from "../../../lib";
 import { ButtonProps } from "../../button";
 import { Toolbar, ToolbarItem, ToolbarProps } from "../../toolbar";
+import { P } from "../../typography";
 import { ErrorMessage } from "../errormessage";
 import { FormControl } from "../formcontrol";
 import "./form.scss";
+import { TRANSLATIONS } from "./translations";
 
 export type FormProps<T extends SerializedFormData = SerializedFormData> = Omit<
   React.ComponentProps<"form">,
@@ -62,6 +64,21 @@ export type FormProps<T extends SerializedFormData = SerializedFormData> = Omit<
 
   /** Whether to show the form actions. */
   showActions?: boolean;
+
+  /** Whether to show a required indicator (*) when a field is required. */
+  showRequiredIndicator?: boolean;
+
+  /** The required indicator (*). */
+  requiredIndicator?: string;
+
+  /** The required explanation text. */
+  requiredExplanation?: string;
+
+  /** The required (accessible) label. */
+  labelRequired?: string;
+
+  /** Whether to show a text describing the meaning of * when one or more fields are required. */
+  showRequiredExplanation?: boolean;
 
   /** Props to pass to Toolbar. */
   toolbarProps?: Partial<ToolbarProps>;
@@ -126,6 +143,11 @@ export const Form = <T extends SerializedFormData = SerializedFormData>({
   onChange,
   onSubmit,
   showActions = true,
+  showRequiredIndicator = true,
+  requiredIndicator,
+  labelRequired,
+  showRequiredExplanation = true,
+  requiredExplanation,
   toolbarProps,
   useTypedResults = false,
   validate = validateForm<T>,
@@ -151,13 +173,17 @@ export const Form = <T extends SerializedFormData = SerializedFormData>({
 
   const intl = useIntl();
 
-  const _labelSubmit = labelSubmit
-    ? labelSubmit
-    : intl.formatMessage({
-        id: "mykn.components.Form.labelSubmit",
-        description: "mykn.components.Form: The submit form label",
-        defaultMessage: "verzenden",
-      });
+  const _requiredIndicator =
+    requiredIndicator || intl.formatMessage(TRANSLATIONS.REQUIRED_INDICATOR);
+
+  const _requiredExplanation =
+    requiredExplanation ||
+    intl.formatMessage(TRANSLATIONS.REQUIRED_EXPLANATION, {
+      requiredIndicator: _requiredIndicator,
+    });
+
+  const _labelSubmit =
+    labelSubmit || intl.formatMessage(TRANSLATIONS.LABEL_SUBMIT);
 
   /**
    * Revalidate on state change.
@@ -237,6 +263,8 @@ export const Form = <T extends SerializedFormData = SerializedFormData>({
         </div>
       )}
 
+      {showRequiredExplanation && <P>{_requiredExplanation}</P>}
+
       {Boolean(fields?.length) && (
         <div className={fieldsetClassName}>
           {fields.map((field, index) => {
@@ -249,12 +277,7 @@ export const Form = <T extends SerializedFormData = SerializedFormData>({
             const _labelValidationErrorRequired = labelValidationErrorRequired
               ? labelValidationErrorRequired
               : intl.formatMessage(
-                  {
-                    id: "mykn.components.Form.labelValidationErrorRequired",
-                    description:
-                      'mykn.components.Form: The "required" validation error',
-                    defaultMessage: "Veld {label} is verplicht",
-                  },
+                  TRANSLATIONS.LABEL_VALIDATION_ERROR_REQUIRED,
                   { ...field, label, value },
                 );
 
@@ -271,6 +294,9 @@ export const Form = <T extends SerializedFormData = SerializedFormData>({
                 error={message}
                 forceShowError={!validateOnChange}
                 justify={justify}
+                showRequiredIndicator={showRequiredIndicator}
+                requiredIndicator={requiredIndicator}
+                labelRequired={labelRequired}
                 value={value}
                 onChange={defaultOnChange}
                 {...field}

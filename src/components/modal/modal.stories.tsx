@@ -39,6 +39,7 @@ export const ModalComponent: Story = {
             },
           ]}
           showActions={false}
+          showRequiredExplanation={false}
         />
       </Body>
     ),

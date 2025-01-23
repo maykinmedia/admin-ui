@@ -86,6 +86,7 @@ export const LoginTemplate = <
             justify="stretch"
             labelSubmit={ucFirst(_labelLogin)}
             secondaryActions={secondaryActions}
+            showRequiredExplanation={false}
             {...formProps}
           />
         </Body>

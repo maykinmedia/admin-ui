@@ -62,6 +62,7 @@ export const AttributeTable = <T extends object = object>({
   const renderTable = () => {
     return editable ? (
       <Form<Record<keyof T, SerializedFormData[string]>>
+        showRequiredExplanation={false}
         fieldsetClassName="mykn-attributetable__body"
         showActions={isFormOpenState}
         secondaryActions={[

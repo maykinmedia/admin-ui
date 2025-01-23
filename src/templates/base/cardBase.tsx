@@ -105,6 +105,7 @@ export const CardBaseTemplate: React.FC<CardBaseTemplateProps> = ({
         {formProps && (
           <Form
             direction="horizontal"
+            showRequiredExplanation={false}
             toolbarProps={{ pad: false }}
             {...Object(formProps)}
           />

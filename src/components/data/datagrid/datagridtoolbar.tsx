@@ -147,6 +147,7 @@ export const DataGridToolbar = <
               },
             ]}
             labelSubmit={ucFirst(_labelSaveFieldSelection)}
+            showRequiredExplanation={false}
             onSubmit={(e) => {
               const form = e.target as HTMLFormElement;
               const data = serializeForm(form, false);
