@@ -56,7 +56,7 @@ export const useFormDialog = <T extends object = object>() => {
           labelCancel={labelCancel}
           onConfirm={onConfirm}
           onCancel={onCancel}
-          formProps={formProps}
+          formProps={{ "aria-label": title, ...formProps }}
           autofocus={autofocus}
         />
       </>,

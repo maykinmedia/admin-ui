@@ -224,7 +224,7 @@ export const Select: React.FC<SelectProps> = ({
         tabIndex={0}
         ref={refs.setReference}
         aria-autocomplete="none"
-        aria-label={label || undefined}
+        title={label || undefined}
         aria-hidden={hidden}
         onBlur={handleBlur}
         {...getReferenceProps()}
@@ -237,7 +237,7 @@ export const Select: React.FC<SelectProps> = ({
           name={name}
           defaultValue={selectedOptionValue}
           hidden={true}
-          aria-label=""
+          aria-label={label}
           form={form}
         >
           {(selectedOptionValue && (
