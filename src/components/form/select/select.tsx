@@ -223,8 +223,8 @@ export const Select: React.FC<SelectProps> = ({
         )}
         tabIndex={0}
         ref={refs.setReference}
-        title={label || undefined}
         aria-autocomplete="none"
+        aria-label={label || undefined}
         aria-hidden={hidden}
         onBlur={handleBlur}
         {...getReferenceProps()}

@@ -107,6 +107,7 @@ export const WithToolbar: Story = {
           direction: "horizontal",
           label: "Sorteren",
           required: true,
+          showRequiredIndicator: false,
           options: [
             { label: "Nieuwste eerst", value: "-pk", selected: true },
             { label: "Oudste eerst", value: "pk", selected: true },

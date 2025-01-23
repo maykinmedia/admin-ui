@@ -12,16 +12,18 @@ type Story = StoryObj<typeof FormControl>;
 
 export const InputFormControl: Story = {
   args: {
-    error: 'Field "school year" does not contain a valid e-mail address',
+    error: 'Field "e-mail" does not contain a valid e-mail address',
+    forceShowError: true, // Make sure the Story shows error.
     label: "Enter your e-mail address",
     name: "e-mail",
-    value: "johndoen#example.com",
+    value: "johndoe@example.com",
   },
 };
 
 export const SelectFormControl: Story = {
   args: {
     error: 'Field "school year" is required',
+    forceShowError: true, // Make sure the Story shows error.
     options: [
       { label: "Freshman" },
       { label: "Sophomore" },
@@ -32,5 +34,15 @@ export const SelectFormControl: Story = {
     name: "school_year",
     label: "Select school year",
     value: "Junior",
+  },
+};
+
+export const Required: Story = {
+  args: {
+    error: "Dit veld is verplicht",
+    forceShowError: true, // Make sure the Story shows error.
+    label: "Enter your e-mail address",
+    name: "e-mail",
+    required: true,
   },
 };

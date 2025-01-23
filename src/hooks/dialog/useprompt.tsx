@@ -56,7 +56,9 @@ export const usePrompt = () => {
       },
       onCancel,
       modalProps,
-      undefined,
+      {
+        showRequiredExplanation: false,
+      },
       autofocus,
     );
   };

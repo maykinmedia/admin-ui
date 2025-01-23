@@ -1,6 +1,7 @@
 import clsx from "clsx";
 import React, { useId, useState } from "react";
 
+import { useIntl } from "../../../lib";
 import {
   FormField,
   isCheckbox,
@@ -19,6 +20,7 @@ import { DateInput } from "../dateinput";
 import { DatePicker } from "../datepicker";
 import { DateRangeInput } from "../daterangeinput";
 import { ErrorMessage } from "../errormessage";
+import { TRANSLATIONS } from "../form/translations";
 import { Input, InputProps } from "../input";
 import { Label } from "../label";
 import { Radio } from "../radio";
@@ -36,6 +38,15 @@ export type FormControlProps = FormField & {
 
   /** Whether to forcefully show the error (if set), this skips the dirty check. */
   forceShowError?: boolean;
+
+  /** Whether to show a required indicator (*) when a field is required. */
+  showRequiredIndicator?: boolean;
+
+  /** The required indicator (*). */
+  requiredIndicator?: string;
+
+  /** The required (accessible) label. */
+  labelRequired?: string;
 };
 
 /**
@@ -45,6 +56,9 @@ export type FormControlProps = FormField & {
  * @param justify
  * @param error
  * @param forceShowError
+ * @param showRequiredLabel
+ * @param requiredIndicator
+ * @param labelRequired
  * @param props
  * @constructor
  */
@@ -53,6 +67,9 @@ export const FormControl: React.FC<FormControlProps> = ({
   justify = "baseline",
   error = "",
   forceShowError,
+  showRequiredIndicator = true,
+  requiredIndicator,
+  labelRequired,
   ...props
 }) => {
   const [isDirty, setIsDirty] = useState(false);
@@ -63,6 +80,15 @@ export const FormControl: React.FC<FormControlProps> = ({
     isCheckboxGroup(props) || isRadioGroup(props) ? `${_id}-choice-0` : _id;
   const idError = `${id}_error`;
 
+  const intl = useIntl();
+
+  const _requiredIndicator =
+    requiredIndicator || intl.formatMessage(TRANSLATIONS.REQUIRED_INDICATOR);
+
+  const _labelRequired =
+    labelRequired ||
+    intl.formatMessage(TRANSLATIONS.LABEL_REQUIRED, { label: props.label });
+
   return (
     <div
       className={clsx(
@@ -71,7 +97,20 @@ export const FormControl: React.FC<FormControlProps> = ({
         `mykn-form-control--justify-${justify}`,
       )}
     >
-      {props.label && <Label htmlFor={htmlFor}>{props.label}</Label>}
+      {props.label && (
+        <Label htmlFor={htmlFor}>
+          {props.label}
+          {props.required && showRequiredIndicator && (
+            <abbr
+              className="mykn-form-control__required-inidicator"
+              title={_labelRequired}
+            >
+              {_requiredIndicator}
+            </abbr>
+          )}
+        </Label>
+      )}
+
       <FormWidget
         id={_id}
         aria-invalid={!!error}
@@ -84,6 +123,7 @@ export const FormControl: React.FC<FormControlProps> = ({
           props.onChange?.(e);
         }}
       />
+
       {(isDirty || forceShowError) && error && (
         <ErrorMessage id={idError}>{error}</ErrorMessage>
       )}

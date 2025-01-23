@@ -144,6 +144,11 @@
     "description": "mykn.components.DateRangeInput: The start date (accessible) label",
     "originalDefault": "startdatum"
   },
+  "mykn.components.Form.labelRequired": {
+    "defaultMessage": "Veld {label} is verplicht",
+    "description": "mykn.components.Form: The required (accessible) label",
+    "originalDefault": "Veld {label} is verplicht"
+  },
   "mykn.components.Form.labelSubmit": {
     "defaultMessage": "verzenden",
     "description": "mykn.components.Form: The submit form label",
@@ -153,6 +158,16 @@
     "defaultMessage": "Veld {label} is verplicht",
     "description": "mykn.components.Form: The \"required\" validation error",
     "originalDefault": "Veld {label} is verplicht"
+  },
+  "mykn.components.Form.requiredExplanation": {
+    "defaultMessage": "Verplichte velden zijn gemarkeerd met een sterretje ({requiredIndicator})",
+    "description": "mykn.components.Form: The required explanation text",
+    "originalDefault": "Verplichte velden zijn gemarkeerd met een sterretje ({requiredIndicator})"
+  },
+  "mykn.components.Form.requiredIndicator": {
+    "defaultMessage": "*",
+    "description": "mykn.components.Form: The required indicator (*)",
+    "originalDefault": "*"
   },
   "mykn.components.Kanban.labelMoveObject": {
     "defaultMessage": "wijzig positie van onderdeel",
