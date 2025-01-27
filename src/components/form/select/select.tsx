@@ -237,7 +237,7 @@ export const Select: React.FC<SelectProps> = ({
           name={name}
           defaultValue={selectedOptionValue}
           hidden={true}
-          aria-label={label}
+          aria-label="" // Intentionally left blank
           form={form}
         >
           {(selectedOptionValue && (

@@ -62,10 +62,12 @@ const playFormComponent = async ({
   const firstName = canvas.getByLabelText("First name");
   const lastName = canvas.getByLabelText("Last name");
   const age = canvas.getByLabelText("Age");
-  const schoolYear = canvas.getByLabelText("Select school year");
+  const schoolYear = canvas.getByLabelText("Select school year", {
+    exact: false,
+  });
   const address = canvas.getByLabelText("Address");
   const address_addition = canvas.getByLabelText("Address (addition)");
-  const dayOfMonth = canvas.getByLabelText("day of month");
+  const dateOfBirth = canvas.getByLabelText("Date of birth", { exact: false });
   const english = canvas.getByLabelText("English");
   const math = canvas.getByLabelText("Math");
   const yes = canvas.getByLabelText("Yes");
@@ -116,10 +118,10 @@ const playFormComponent = async ({
     typedResults ? ["Keizersgracht 117", 2] : ["Keizersgracht 117", "2"],
   );
 
-  await userEvent.clear(dayOfMonth);
-  await userEvent.type(dayOfMonth, "15092023", { delay: 60 });
-  await userEvent.type(dayOfMonth, "{enter}");
-  await expect(dayOfMonth).toHaveValue("15");
+  await userEvent.clear(dateOfBirth);
+  await userEvent.type(dateOfBirth, "15092023", { delay: 60 });
+  await userEvent.type(dateOfBirth, "{enter}");
+  await expect(dateOfBirth).toHaveValue("15");
   await expectLogToBe(
     canvasElement,
     "date_of_birth",
