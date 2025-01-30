@@ -104,6 +104,7 @@ export const DateRangeInput: React.FC<DateRangeInputProps> = ({
       .map(date2DateString);
 
     if (!dates?.length || (dates?.length && dates?.length < 2)) {
+      setValuesState(undefined);
       return;
     }
 

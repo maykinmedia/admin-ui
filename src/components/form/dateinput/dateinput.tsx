@@ -134,6 +134,7 @@ export const DateInput: React.FC<DateInputProps> = ({
   // Update sanitizedValuesState.
   useEffect(() => {
     if (!value) {
+      setSanitizedValuesState(undefined);
       return;
     }
     const date = value2Date(value);
@@ -261,9 +262,11 @@ export const DateInput: React.FC<DateInputProps> = ({
         dispatchEvent(dateString);
         setIsPristine(false);
       } else {
+        if (isPristine) {
+          return;
+        }
         // Date is invalid after previous valid value, dispatch "".
         dispatchEvent("");
-        setIsPristine(false);
       }
     },
     [sanitizedValuesState, isPristine, dispatchEvent],
