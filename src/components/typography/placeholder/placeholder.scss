@@ -1,0 +1,31 @@
+.mykn-placeholder {
+  --mykn-placeholder-color-dark: var(--typography-color-border);
+  --mykn-placeholder-color-light: var(--typography-color-background-alt);
+
+  animation: shift-background var(--animation-duration-slow) infinite
+    var(--animation-timing-function) reverse;
+  background: linear-gradient(
+    90deg,
+    var(--mykn-placeholder-color-dark),
+    var(--mykn-placeholder-color-light),
+    var(--mykn-placeholder-color-dark)
+  );
+  background-size: 200% 100%;
+  border: none;
+  border-radius: 1em;
+  display: inline-block;
+  height: 1em;
+  margin: 0;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+
+@keyframes shift-background {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 200% 0%;
+  }
+}
