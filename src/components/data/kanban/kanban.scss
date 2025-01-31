@@ -1,4 +1,6 @@
 .mykn-kanban {
+  --mykn-kanban-spacing: 4px;
+
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -39,9 +41,9 @@
   &__track {
     display: flex;
     flex-direction: column;
-    gap: var(--spacing-v);
+    gap: var(--mykn-kanban-spacing);
     height: 100%;
-    padding: var(--spacing-v) var(--spacing-h);
+    padding: var(--mykn-kanban-spacing) !important;
     position: relative;
   }
 
