@@ -39,6 +39,10 @@
     width: 100%;
   }
 
+  &__table--layout-fixed {
+    table-layout: fixed;
+  }
+
   &__thead {
     background-color: var(--typography-color-background);
     position: sticky;
