@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import React, {
   CSSProperties,
   useCallback,
@@ -169,6 +170,9 @@ export type DataGridProps<T extends object = object, F extends object = T> = {
   /** Renders buttons allowing to perform actions on selection, `onClick` is called with selection array. */
   selectionActions?: ButtonProps[];
 
+  /** Whether wrapping should be allowed. */
+  wrap?: boolean;
+
   /** Get called to when the active field selection is changed. */
   onFieldsChange?: (typedFields: TypedField<T>[]) => void;
 
@@ -235,6 +239,7 @@ export type DataGridContextType<T extends object, F extends object> = Omit<
   sortDirection?: "ASC" | "DESC";
   sortField?: string;
   titleId?: string; // TODO: Move?;
+  wrap?: boolean;
   onFieldsChange?: (typedFields: TypedField<T>[]) => void;
   onFilter: (rowData: F) => void;
   onSelect: (rows: T) => void;
@@ -295,6 +300,7 @@ export const DataGrid = <T extends object = object, F extends object = T>(
     title: "",
     urlFields: DEFAULT_URL_FIELDS,
     page: props.paginatorProps?.page,
+    wrap: false,
   };
 
   // Create a props object with defaults applied.
@@ -330,6 +336,7 @@ export const DataGrid = <T extends object = object, F extends object = T>(
     tableLayout,
     title,
     urlFields,
+    wrap,
     labelSaveFieldSelection,
     labelFilterField,
     labelSelect,
@@ -658,6 +665,7 @@ export const DataGrid = <T extends object = object, F extends object = T>(
           sortDirection: sortDirection,
           sortField: sortField,
           titleId: titleId,
+          wrap: wrap,
 
           // Events
           onFieldsChange: (typedFields: TypedField<T>[]) => {
@@ -672,7 +680,11 @@ export const DataGrid = <T extends object = object, F extends object = T>(
         } as DataGridContextType<T, F>
       }
     >
-      <div ref={dataGridRef} className="mykn-datagrid" {...attrs}>
+      <div
+        ref={dataGridRef}
+        className={clsx("mykn-datagrid", { "mykn-datagrid--wrap": wrap })}
+        {...attrs}
+      >
         {title && <DataGridHeader<T, F> />}
         {(selectable || fieldsSelectable) && <DataGridToolbar<T, F> />}
 
