@@ -2,6 +2,7 @@
   display: table;
   background-color: var(--typography-color-background);
   width: 100%;
+  white-space: nowrap;
 
   &--compact {
     width: unset;
@@ -22,6 +23,10 @@
         padding-block-start: 0;
       }
     }
+  }
+
+  &--wrap {
+    white-space: normal;
   }
 
   &__body {
