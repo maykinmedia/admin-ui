@@ -40,7 +40,9 @@
   }
 
   &__table--layout-fixed {
-    table-layout: fixed;
+    @media screen and (min-width: constants.$breakpoint-desktop) {
+      table-layout: fixed;
+    }
   }
 
   &__thead {
@@ -87,7 +89,6 @@
     box-sizing: border-box;
     padding: var(--spacing-v) var(--spacing-h);
     position: relative;
-    white-space: nowrap;
 
     .mykn-a:not(:last-child) {
       margin-inline-end: var(--spacing-h);
@@ -96,6 +97,16 @@
         display: inline;
       }
     }
+  }
+
+  &:not(#{&}--wrap) &__cell {
+    white-space: nowrap;
+  }
+
+  &:not(#{&}--wrap) &__cell > .mykn-p {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
 
   &__tbody &__row:last-child &__cell {
@@ -117,7 +128,7 @@
   &__cell--checkbox {
     @media screen and (min-width: constants.$breakpoint-desktop) {
       max-width: calc(var(--typography-line-height-body-s) + var(--spacing-h));
-      width: 1px; // WebKit (Safari)?
+      width: calc(var(--spacing-h) * 2 + 20px);
     }
   }
 

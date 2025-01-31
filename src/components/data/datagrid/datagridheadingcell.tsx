@@ -37,6 +37,7 @@ export const DataGridHeadingCell = <
         `mykn-datagrid__cell--type-${field.type}`,
       ])}
       role="columnheader"
+      style={field.width ? { width: field.width } : {}}
     >
       {sortable ? (
         <Button
