@@ -15,16 +15,38 @@ import { Value } from "../value";
 import "./attributetable.scss";
 
 export type AttributeTableProps<T extends object = object> = {
+  /** The object. */
   object?: T;
+
   // TODO: Deprecate?
   labeledObject?: Record<string, { label: React.ReactNode; value: unknown }>;
+
+  /**
+   * Whether values should be made editable, default is determined by whether any of `fields` is a `TypedField` and has
+   * `editable` set.
+   */
   editable?: boolean;
+
+  /** A `string[]` or `TypedField[]` containing the keys in `objectList` to show value for. */
   fields?: Field<T>[] | TypedField<T>[];
+
+  /** Props for Form. */
   formProps?: FormProps<Record<keyof T, SerializedFormData[string]>>;
+
+  /** The cancel label. */
   labelCancel?: string;
+
+  /** The edit value (accessible) label. */
   labelEdit?: string;
+
+  /** Vertical alignment of contents. */
   valign?: "middle" | "start";
+
+  /** Whether a compact layout should be used. */
   compact?: boolean;
+
+  /** Whether wrapping should be allowed. */
+  wrap?: boolean;
 };
 
 /**
@@ -45,11 +67,13 @@ export const AttributeTable = <T extends object = object>({
   labelEdit,
   valign = "middle",
   compact = false,
+  wrap = false,
   ...props
 }: AttributeTableProps<T>) => {
   const intl = useIntl();
   const [isFormOpenState, setIsFormOpenState] = useState(false);
-  const typedFields = typedFieldByFields(fields, [object]);
+  const typedFields = typedFieldByFields(fields, [object], { editable });
+  const _editable = Boolean(typedFields.find((f) => f.editable));
 
   const _labelCancel = labelCancel
     ? labelCancel
@@ -60,7 +84,7 @@ export const AttributeTable = <T extends object = object>({
       });
 
   const renderTable = () => {
-    return editable ? (
+    return _editable ? (
       <Form<Record<keyof T, SerializedFormData[string]>>
         showRequiredExplanation={false}
         fieldsetClassName="mykn-attributetable__body"
@@ -91,7 +115,7 @@ export const AttributeTable = <T extends object = object>({
     typedFields.map((field) => (
       <AttributeTableRow<T>
         key={field.name.toString()}
-        editable={editable}
+        editable={_editable}
         field={field}
         isFormOpen={isFormOpenState}
         object={object}
@@ -109,6 +133,7 @@ export const AttributeTable = <T extends object = object>({
         "mykn-attributetable",
         `mykn-attributetable--valign-${valign}`,
         { "mykn-attributetable--compact": compact },
+        { "mykn-attributetable--wrap": wrap },
       )}
       {...props}
     >
