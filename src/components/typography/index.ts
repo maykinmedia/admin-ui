@@ -5,3 +5,5 @@ export * from "./h2";
 export * from "./h3";
 export * from "./hr";
 export * from "./p";
+export * from "./placeholder";
+export * from "./ul";
