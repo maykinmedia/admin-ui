@@ -99,7 +99,7 @@ export type FieldSet<T extends object = object> = [
  * @param objectList
  * @param base
  */
-export const typedFieldByFields = <T extends object>(
+export const fields2TypedFields = <T extends object>(
   optionallyTypedFields: Array<Field<T> | TypedField<T>>,
   objectList: T[],
   base?: Partial<TypedField<T>>,
