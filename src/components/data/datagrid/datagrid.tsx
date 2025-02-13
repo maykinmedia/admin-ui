@@ -16,8 +16,8 @@ import {
   SerializedFormData,
   TypedField,
   TypedSerializedFormData,
+  fields2TypedFields,
   filterDataArray,
-  typedFieldByFields,
 } from "../../../lib";
 import { sortDataArray } from "../../../lib";
 import { BadgeProps } from "../../badge";
@@ -482,7 +482,7 @@ export const DataGrid = <T extends object = object, F extends object = T>(
   // Convert `Array<Field|TypedField>` to `TypedField[]`.
   const typedFields = useMemo(
     () =>
-      typedFieldByFields(fieldsState, objectList, {
+      fields2TypedFields(fieldsState, objectList, {
         editable: Boolean(editable),
         filterable: Boolean(filterable),
       }).filter((f) => !(urlFields || []).includes(String(f.name))),

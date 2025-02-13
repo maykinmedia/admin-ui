@@ -5,8 +5,8 @@ import {
   Field,
   SerializedFormData,
   TypedField,
+  fields2TypedFields,
   string2Title,
-  typedFieldByFields,
   useIntl,
 } from "../../../lib";
 import { Button } from "../../button";
@@ -72,7 +72,7 @@ export const AttributeTable = <T extends object = object>({
 }: AttributeTableProps<T>) => {
   const intl = useIntl();
   const [isFormOpenState, setIsFormOpenState] = useState(false);
-  const typedFields = typedFieldByFields(fields, [object], { editable });
+  const typedFields = fields2TypedFields(fields, [object], { editable });
   const _editable = Boolean(typedFields.find((f) => f.editable));
 
   const _labelCancel = labelCancel
