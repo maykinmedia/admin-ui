@@ -485,6 +485,7 @@ export const DataGrid = <T extends object = object, F extends object = T>(
       fields2TypedFields(fieldsState, objectList, {
         editable: Boolean(editable),
         filterable: Boolean(filterable),
+        sortable: Boolean(sort),
       }).filter((f) => !(urlFields || []).includes(String(f.name))),
     [fieldsState, objectList, urlFields, editable, filterable],
   );

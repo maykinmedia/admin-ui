@@ -25,10 +25,7 @@ export const DataGridHeadingCell = <
   children,
   field,
 }: DataGridHeadingCellProps<T, F>) => {
-  const { sortField, sortable, sortDirection, onSort } = useDataGridContext<
-    T,
-    F
-  >();
+  const { sortField, sortDirection, onSort } = useDataGridContext<T, F>();
   const isSorted = sortField === field.name;
 
   return (
@@ -39,7 +36,7 @@ export const DataGridHeadingCell = <
       role="columnheader"
       style={field.width ? { width: field.width } : {}}
     >
-      {sortable ? (
+      {field.sortable ? (
         <Button
           active={isSorted}
           align="space-between"
