@@ -118,8 +118,9 @@
   }
 
   &__cell--checkbox,
-  &__cell--type-null,
   &__cell--type-boolean,
+  &__cell--type-jsx,
+  &__cell--type-null,
   &__cell--type-number {
     text-align: end;
     width: 0; // TODO: Possibly 1px for WebKit (Safari)?

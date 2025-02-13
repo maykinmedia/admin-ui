@@ -222,6 +222,52 @@ export const Sortable: Story = {
 };
 
 /**
+ * pass `false` to `field.sortable` to exclude field from sorting.
+ */
+export const FieldExcludedFromSortable: Story = {
+  args: {
+    fields: [
+      "name",
+      "category",
+      "price",
+      "stock",
+      "isAvailable",
+      { name: "action", type: "jsx", sortable: false },
+    ],
+    objectList: FIXTURE_PRODUCTS.map((item) => ({
+      ...item,
+      action: (
+        <Button pad="h" variant="secondary">
+          Buy!
+        </Button>
+      ),
+    })),
+    sort: true,
+  },
+  // Don't set argTypes.onSort as it will result in a onSort prop being passed
+  // preventing built-in sort (external sorting is expected in such cases).
+};
+
+/**
+ * pass `true` to `field.sortable` to explicitly allow sorting on field.
+ */
+export const SingleFieldSortable: Story = {
+  args: {
+    fields: [
+      { name: "id", type: "number", sortable: true },
+      "name",
+      "category",
+      "price",
+      "stock",
+      "isAvailable",
+    ],
+    objectList: FIXTURE_PRODUCTS,
+  },
+  // Don't set argTypes.onSort as it will result in a onSort prop being passed
+  // preventing built-in sort (external sorting is expected in such cases).
+};
+
+/**
  * pass a `string` to `sort` (optionally prefix by `-` to invert sorting) prop
  * to set a predefined order.
  */

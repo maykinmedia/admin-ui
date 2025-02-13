@@ -43,6 +43,9 @@ export type TypedField<T extends object = object> = {
   /** The value for this field's filter. */
   filterValue?: string | number;
 
+  /** Used by DataGrid to determine whether the field should be sortable. */
+  sortable?: boolean;
+
   /**
    * The "lookup" (dot separated) to use for this field while filtering (e.g.
    * "._expand.zaaktype.omschrijving").
@@ -69,7 +72,8 @@ export type FieldType =
   | "daterange"
   | "null"
   | "number"
-  | "string";
+  | "string"
+  | "jsx";
 
 /** A Django-admin like field_options definition. */
 export type FieldOptions<T extends object = object> = {
