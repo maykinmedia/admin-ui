@@ -1,0 +1,123 @@
+{
+  "theme": {
+    "purple-rain": {
+      "primary": {
+        "color": {
+          "type": "color",
+          "value": "#341a90"
+        },
+        "hue": {
+          "type": "color",
+          "value": "{theme.purple-rain.primary.color.attributes.hsl.h}",
+          "attributes": {
+            "outputReferences": false
+          }
+        },
+        "saturation": {
+          "type": "color",
+          "value": "{theme.purple-rain.primary.color.attributes.hsl.s}",
+          "attributes": {
+            "outputReferences": false
+          }
+        },
+        "lightness": {
+          "type": "color",
+          "value": "{theme.purple-rain.primary.color.attributes.hsl.l}",
+          "attributes": {
+            "outputReferences": false
+          }
+        }
+      },
+      "accent": {
+        "color": {
+          "value": "hsl({theme.purple-rain.primary.hue} 100% 95%)"
+        }
+      }
+    },
+    "blue-suede-shoes": {
+      "primary": {
+        "color": {
+          "type": "color",
+          "value": "#54A9D4"
+        },
+        "hue": {
+          "type": "color",
+          "value": "{theme.blue-suede-shoes.primary.color.attributes.hsl.h}",
+          "attributes": {
+            "outputReferences": false
+          }
+        },
+        "saturation": {
+          "type": "color",
+          "value": "{theme.blue-suede-shoes.primary.color.attributes.hsl.s}",
+          "attributes": {
+            "outputReferences": false
+          }
+        },
+        "lightness": {
+          "type": "color",
+          "value": "{theme.blue-suede-shoes.primary.color.attributes.hsl.l}",
+          "attributes": {
+            "outputReferences": false
+          }
+        }
+      },
+      "accent": {
+        "color": {
+          "value": "hsl({theme.blue-suede-shoes.primary.hue} 100% 95%)"
+        }
+      }
+    }
+  },
+  "page": {
+    "color": {
+      "primary": {
+        "value": "light-dark({theme.purple-rain.primary.color}, {theme.blue-suede-shoes.primary.color})"
+      },
+      "primary-contrast": {
+        "value": "light-dark({typography.color.background}, #ffffff)"
+      },
+      "secondary": {
+        "value": "#eeeeee"
+      },
+      "secondary-contrast": {
+        "value": "{typography.color.body}"
+      },
+      "accent": {
+        "value": "light-dark({theme.purple-rain.accent.color}, {theme.blue-suede-shoes.accent.color})"
+      },
+      "highlight": {
+        "value": "{page.color.background}"
+      },
+      "background": {
+        "value": "light-dark(#f5f7fd, #252f3d)"
+      },
+      "background-alt": {
+        "value": "#fafafa"
+      },
+      "logo": {
+        "value": "light-dark({typography.color.body}, {page.color.primary-contrast})"
+      },
+      "shadow": {
+        "value": "rgba(12, 12, 12, 0.3)"
+      },
+      "info": {
+        "value": "#00bfcb"
+      },
+      "success": {
+        "value": "#339343"
+      },
+      "warning": {
+        "value": "#ec9700"
+      },
+      "danger": {
+        "value": "#ff4949"
+      }
+    },
+    "container": {
+      "size": {
+        "value": "1240px"
+      }
+    }
+  }
+}

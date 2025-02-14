@@ -1,0 +1,180 @@
+{
+  "button": {
+    "color": {
+      "background": {
+        "primary": {
+          "value": "{page.color.primary}"
+        },
+        "primary-hover": {
+          "value": "{button.color.background.primary}"
+        },
+        "primary-active": {
+          "value": "{button.color.background.primary-hover}"
+        },
+        "secondary": {
+          "value": "{page.color.secondary}"
+        },
+        "secondary-hover": {
+          "value": "{button.color.background.secondary}"
+        },
+        "secondary-active": {
+          "value": "{button.color.background.secondary-hover}"
+        },
+        "outline": {
+          "value": "{typography.color.background}"
+        },
+        "outline-hover": {
+          "value": "{button.color.background.outline}"
+        },
+        "outline-active": {
+          "value": "{button.color.background.outline-hover}"
+        },
+        "transparent": {
+          "value": "transparent"
+        },
+        "transparent-hover": {
+          "value": "{button.color.background.outline-hover}"
+        },
+        "transparent-active": {
+          "value": "{button.color.background.outline-active}"
+        }
+      },
+      "border": {
+        "primary": {
+          "value": "transparent"
+        },
+        "primary-hover": {
+          "value": "{button.color.border.primary}"
+        },
+        "primary-active": {
+          "value": "{button.color.border.primary-hover}"
+        },
+        "secondary": {
+          "value": "transparent"
+        },
+        "secondary-hover": {
+          "value": "{button.color.border.secondary}"
+        },
+        "secondary-active": {
+          "value": "{button.color.border.secondary-hover}"
+        },
+        "outline": {
+          "value": "{form.color.border}"
+        },
+        "outline-hover": {
+          "value": "{button.color.background.primary}"
+        },
+        "outline-active": {
+          "value": "{button.color.border.outline-hover}"
+        },
+        "transparent": {
+          "value": "transparent"
+        },
+        "transparent-hover": {
+          "value": "{button.color.border.transparent}"
+        },
+        "transparent-active": {
+          "value": "{button.color.border.transparent-hover}"
+        }
+      },
+      "shadow": {
+        "primary": {
+          "value": "#000"
+        },
+        "primary-hover": {
+          "value": "{button.color.shadow.primary}"
+        },
+        "primary-active": {
+          "value": "{button.color.shadow.primary-hover}"
+        },
+        "secondary": {
+          "value": "{page.color.primary}"
+        },
+        "secondary-hover": {
+          "value": "{button.color.shadow.secondary}"
+        },
+        "secondary-active": {
+          "value": "{button.color.shadow.secondary-hover}"
+        },
+        "outline": {
+          "value": "{page.color.primary}"
+        },
+        "outline-hover": {
+          "value": "{button.color.shadow.outline}"
+        },
+        "outline-active": {
+          "value": "{button.color.shadow.outline-hover}"
+        },
+        "transparent": {
+          "value": "{page.color.primary}"
+        },
+        "transparent-hover": {
+          "value": "{button.color.shadow.transparent}"
+        },
+        "transparent-active": {
+          "value": "{button.color.shadow.transparent-hover}"
+        }
+      },
+      "text": {
+        "primary": {
+          "value": "{page.color.primary-contrast}"
+        },
+        "primary-hover": {
+          "value": "{button.color.text.primary}"
+        },
+        "primary-active": {
+          "value": "{button.color.text.primary-hover}"
+        },
+        "secondary": {
+          "value": "light-dark({typography.color.body}, {typography.color.background})"
+        },
+        "secondary-hover": {
+          "value": "{button.color.text.secondary}"
+        },
+        "secondary-active": {
+          "value": "{button.color.text.secondary-hover}"
+        },
+        "outline": {
+          "value": "{typography.color.body}"
+        },
+        "outline-hover": {
+          "value": "{button.color.background.primary}"
+        },
+        "outline-active": {
+          "value": "{button.color.text.outline-hover}"
+        },
+        "transparent": {
+          "value": "{button.color.text.outline}"
+        },
+        "transparent-hover": {
+          "value": "{button.color.text.outline-hover}"
+        },
+        "transparent-active": {
+          "value": "{button.color.text.outline-active}"
+        },
+        "danger": {
+          "value": "light-dark({page.color.danger}, {page.color.primary-contrast})"
+        }
+      }
+    }
+  },
+  "form": {
+    "color": {
+      "border": {
+        "value": "#b1b1b1"
+      }
+    }
+  },
+  "toolbar": {
+    "color": {
+      "text": {
+        "primary": {
+          "value": "{page.color.primary-contrast}"
+        },
+        "accent": {
+          "value": "light-dark({typography.color.body}, {typography.color.background})"
+        }
+      }
+    }
+  }
+}

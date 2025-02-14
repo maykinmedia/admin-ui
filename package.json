@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "create-component": "./bin/create_component.sh",
-    "build": "npm run rollup",
+    "build": "npm run build:design-tokens && npm run rollup",
     "watch": "npm run rollup:watch",
     "rebuild": "npm run clean && npm run build",
     "clean": "rm -rf ./dist",
@@ -23,6 +23,7 @@
     "commitlint": "commitlint --edit",
     "rollup": "rollup -c",
     "rollup:watch": "rollup -cw",
+    "build:design-tokens": "style-dictionary build -c style-dictionary.config.mjs --verbose",
     "prepare": "husky install"
   },
   "main": "dist/cjs/index.js",
@@ -60,12 +61,12 @@
   },
   "homepage": "https://github.com/maykinmedia/admin-ui/#readme",
   "devDependencies": {
-    "@playwright/test": "^1.49.1",
     "@chromatic-com/storybook": "^2.0.2",
     "@commitlint/cli": "^19.0.0",
     "@commitlint/config-conventional": "^19.0.0",
     "@formatjs/cli": "^6.2.7",
     "@formatjs/ts-transformer": "^3.13.12",
+    "@playwright/test": "^1.49.1",
     "@rollup/plugin-commonjs": "^25.0.7",
     "@rollup/plugin-json": "^6.1.0",
     "@rollup/plugin-terser": "^0.4.4",
@@ -109,6 +110,7 @@
     "sass": "^1.69.7",
     "sass-loader": "^13.3.3",
     "storybook": "^8.3.5",
+    "style-dictionary": "^4.3.3",
     "ts-loader": "^9.5.1",
     "tslib": "^2.6.2",
     "typescript": "^5.3.3"

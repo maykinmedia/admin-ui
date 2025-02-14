@@ -1,0 +1,66 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Manual/Design tokens"  />
+
+# Design tokens
+
+Admin-UI supports customizable styling with dark mode support. Customization is achieved through a set of design tokens
+located in `src/style/tokens`. These tokens must be compiled using [Style Dictionary](https://styledictionary.com/) before they can be used.
+After compilation, the processed tokens are output to `src/style/compiled`, where they are consumed by the main
+stylesheet in `src/style/index.scss`.
+
+## Compilation
+
+To compile the updated design tokens, run the following command:
+
+npm run build:design-tokens
+
+## Token structure
+
+Design tokens are defined as JSON objects containing a `value`, and optionally a `type` and other attributes. The token
+path is transformed into meaningful variables for a specific platform. Admin-UI uses CSS custom properties as the output
+format. Token values can be direct platform-compatible values or references to other tokens.
+
+### Example
+
+Given the following token definition:
+
+The following token:
+
+```json
+{
+  "button": {
+    "color": {
+      "background": {
+        "primary": {
+          "value": "{page.color.primary}"
+        }
+      }
+    }
+  }
+}
+```
+
+Gets compiled to
+
+```css
+--button-color-background-primary: var(--page-color-primary);
+```
+
+## Token files
+
+The token files in `src/style/tokens` are organized by role. During compilation:
+
+- Tokens **without** a `type: "font"` attribute are merged and output to `src/style/compiled/properties.css`.
+- Tokens **with** a `type: "font"` attribute are transformed into `@font-face` definitions and output to
+`src/style/compiled/fonts.css`.
+
+## Best practices for updating styles
+
+When modifying design tokens, follow these best practices:
+
+- **Ensure accessibility**: Maintain proper color contrast for readability.
+- **Use references**: Reference existing tokens where possible to simplify future customizations.
+- **Test changes**: Verify styles in different themes and viewports to prevent regressions.
+
+> **Reminder:** After updating the tokens, recompile and rebuild Admin-UI to apply the changes.

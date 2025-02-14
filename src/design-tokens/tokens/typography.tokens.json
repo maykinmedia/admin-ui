@@ -1,0 +1,85 @@
+{
+  "typography": {
+    "color": {
+      "h": {
+        "value": "light-dark(#282828, {typography.color.body})"
+      },
+      "body": {
+        "value": "light-dark(#333333, #c5c6ce)"
+      },
+      "border": {
+        "value": "light-dark(#ebebeb, #535353)"
+      },
+      "link": {
+        "value": "{page.color.primary}"
+      },
+      "muted": {
+        "value": "light-dark(#696969, #8c8c8c)"
+      },
+      "background": {
+        "value": "light-dark(#fff, #313741)"
+      },
+      "background-alt": {
+        "value": "light-dark(#f8f8f8, #252f3d)"
+      }
+    },
+    "font": {
+      "family": {
+        "h": {
+          "value": "\"Roboto Slab\", sans-serif"
+        },
+        "body": {
+          "value": "Lato, sans-serif"
+        }
+      },
+      "size": {
+        "h1": {
+          "value": "32px"
+        },
+        "h2": {
+          "value": "20px"
+        },
+        "h3": {
+          "value": "14px"
+        },
+        "xl": {
+          "value": "26px"
+        },
+        "body-s": {
+          "value": "14px"
+        },
+        "body-xs": {
+          "value": "12px"
+        }
+      },
+      "weight": {
+        "bold": {
+          "value": "600"
+        },
+        "normal": {
+          "value": "400"
+        }
+      }
+    },
+    "line-height": {
+      "h1": {
+        "value": "24px"
+      },
+      "h2": {
+        "value": "24px"
+      },
+      "h3": {
+        "value": "24px"
+      },
+      "xl": {
+        "value": "24px"
+      },
+      "body-s": {
+        "value": "24px"
+      },
+      "body-xs": {
+        "value": "24px"
+      }
+    }
+  }
+}
