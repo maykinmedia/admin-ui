@@ -1,0 +1,20 @@
+@import "design-tokens/compiled/fonts.css";
+@import "design-tokens/compiled/properties.css";
+
+:root {
+  color-scheme: light dark;
+
+  @media (prefers-reduced-motion) {
+    --animation-duration-slow: 0s;
+    --animation-duration-medium: 0s;
+    --animation-duration-fast: 0s;
+  }
+}
+
+html.view--light {
+  color-scheme: light;
+}
+
+html.view--dark {
+  color-scheme: dark;
+}

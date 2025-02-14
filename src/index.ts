@@ -1,4 +1,4 @@
-import "./style/default.scss";
+import "./index.scss";
 
 export * from "./components";
 export * as components from "./components";

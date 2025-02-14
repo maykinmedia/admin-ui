@@ -1,0 +1,133 @@
+{
+  "asset": {
+    "font": {
+      "Roboto Slab": {
+        "100": {
+          "normal": {
+            "type": "font",
+            "value": "roboto-slab-v34-latin-100",
+            "formats": ["woff2"]
+          }
+        },
+        "200": {
+          "normal": {
+            "type": "font",
+            "value": "roboto-slab-v34-latin-200",
+            "formats": ["woff2"]
+          }
+        },
+        "300": {
+          "normal": {
+            "type": "font",
+            "value": "roboto-slab-v34-latin-300",
+            "formats": ["woff2"]
+          }
+        },
+        "400": {
+          "normal": {
+            "type": "font",
+            "value": "roboto-slab-v34-latin-regular",
+            "formats": ["woff2"]
+          }
+        },
+        "500": {
+          "normal": {
+            "type": "font",
+            "value": "roboto-slab-v34-latin-500",
+            "formats": ["woff2"]
+          }
+        },
+        "600": {
+          "normal": {
+            "type": "font",
+            "value": "roboto-slab-v34-latin-600",
+            "formats": ["woff2"]
+          }
+        },
+        "700": {
+          "normal": {
+            "type": "font",
+            "value": "roboto-slab-v34-latin-700",
+            "formats": ["woff2"]
+          }
+        },
+        "800": {
+          "normal": {
+            "type": "font",
+            "value": "roboto-slab-v34-latin-800",
+            "formats": ["woff2"]
+          }
+        },
+        "900": {
+          "normal": {
+            "type": "font",
+            "value": "roboto-slab-v34-latin-900",
+            "formats": ["woff2"]
+          }
+        }
+      },
+      "Lato": {
+        "100": {
+          "normal": {
+            "type": "font",
+            "value": "lato-v24-latin-100",
+            "formats": ["woff2"]
+          },
+          "italic": {
+            "type": "font",
+            "value": "lato-v24-latin-100italic",
+            "formats": ["woff2"]
+          }
+        },
+        "300": {
+          "normal": {
+            "type": "font",
+            "value": "lato-v24-latin-300",
+            "formats": ["woff2"]
+          },
+          "italic": {
+            "type": "font",
+            "value": "lato-v24-latin-300italic",
+            "formats": ["woff2"]
+          }
+        },
+        "400": {
+          "normal": {
+            "type": "font",
+            "value": "lato-v24-latin-regular",
+            "formats": ["woff2"]
+          },
+          "italic": {
+            "type": "font",
+            "value": "lato-v24-latin-italic",
+            "formats": ["woff2"]
+          }
+        },
+        "700": {
+          "normal": {
+            "type": "font",
+            "value": "lato-v24-latin-700",
+            "formats": ["woff2"]
+          },
+          "italic": {
+            "type": "font",
+            "value": "lato-v24-latin-700italic",
+            "formats": ["woff2"]
+          }
+        },
+        "900": {
+          "normal": {
+            "type": "font",
+            "value": "lato-v24-latin-900",
+            "formats": ["woff2"]
+          },
+          "italic": {
+            "type": "font",
+            "value": "lato-v24-latin-900italic",
+            "formats": ["woff2"]
+          }
+        }
+      }
+    }
+  }
+}

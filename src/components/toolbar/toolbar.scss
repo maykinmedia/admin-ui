@@ -82,8 +82,10 @@
   --typography-color-link: var(--typography-color-body);
 
   &--variant-primary {
-    --toolbar-color-text-primary: var(--typography-color-background);
-    background-color: var(--page-color-primary);
+    background-color: light-dark(
+      var(--page-color-primary),
+      var(--typography-color-background-alt)
+    );
 
     > * {
       --button-color-text-primary: var(--toolbar-color-text-primary);
@@ -94,14 +96,13 @@
 
     @include dark {
       & {
-        --toolbar-color-text-primary: var(--typography-color-body);
+        --button-color-background-primary: transparent;
         --typography-color-link: var(--typography-color-body);
       }
     }
   }
 
   &--variant-accent {
-    --toolbar-color-text-accent: var(--typography-color-body);
     background-color: var(--page-color-accent);
 
     * {
@@ -113,7 +114,6 @@
     @include dark {
       & {
         --typography-color-link: var(--typography-color-background);
-        --toolbar-color-text-accent: var(--typography-color-background);
       }
     }
   }

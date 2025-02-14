@@ -1,7 +1,7 @@
 import { withThemeByClassName } from "@storybook/addon-themes";
 import type { Preview } from "@storybook/react";
 
-import "../src/style/default.scss";
+import "../src/index.scss";
 import { allModes } from "./modes";
 
 const preview: Preview = {
@@ -28,6 +28,11 @@ const preview: Preview = {
       },
     },
     layout: "fullscreen",
+    options: {
+      storySort: {
+        order: ['Manual', ['Introduction', 'Internationalization', 'Design tokens', 'Release Procedure']]
+      },
+    }
   },
 
   decorators: [
