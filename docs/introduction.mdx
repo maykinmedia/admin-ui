@@ -1,0 +1,147 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Manual/Introduction" />
+
+<p align="center">
+  <a href="https://maykinmedia.nl">
+    <img alt="Maykin logo" src="/static/maykin_logo.png" />
+  </a>
+</p>
+
+## Introduction
+
+**Admin-ui** is the official (React) component library developed and maintained by **Maykin Media**, specifically
+designed for **admin-like applications** within our projects. It provides a **consistent, efficient, and accessible**
+foundation for application interfaces.
+
+By standardizing UI components, Admin-ui helps teams **streamline development, ensure a cohesive user experience,
+and reduce maintenance overhead** across multiple projects.
+
+## Project goals
+
+- **Consistency** – Maintain a uniform UI across all Maykin Media admin panels, dashboards, and tools.
+- **Efficiency** – Speed up development with ready-to-use components optimized for admin workflows.
+- **Accessibility** – Ensure compliance with WCAG standards by default.
+
+## Getting Started
+
+Admin-ui is intended for use in **Maykin Media** projects. To install it, run:
+
+```sh
+npm install @maykin-ui/admin-ui
+```
+
+Admin-ui provides collection of **templates**, **components**, **contexts**, **hooks** and **libraries** are exposed to
+be used in external applications.
+
+Using a component:
+```tsx
+import {Button} from "@maykin-ui/admin-ui";
+
+<Button variant="primary">Primary Button</Button>
+```
+
+### Templates
+
+A template is a predefined structure or blueprint that defines the layout and presentation of a user interface without
+containing the actual data. Templates are composed out of multiple components an may pass certain prop (objects) to
+components to allow overriding their behaviour. Refer to the respective templates stories for more information.
+
+Various templates are available for various use cases like listing
+data, or providing a login page.
+
+### Components
+
+A component is a reusable, self-contained piece of the user interface (UI) that encapsulates structure, styling, and
+behavior. Components can be "composed" to build modular, scalable, and maintainable UIs. Just like templates: components
+can be made out of other components and may allow overriding nested props.
+
+Components are subdivided into:
+
+- **Page layout**: grid system and friends for specifying the page layout.
+- **Building blocks**: foundations of a user interface (cards/modals).
+- **Controls**: components that control data flow.
+- **Typography**: typographic elements for showing text.
+- **Icons**: Admin-ui wraps [Heroicons](https://heroicons.com/).
+- **Data presentation**: various components for displaying data.
+- **Form rendering**: Various components for showing forms.
+- **Brand identity**: The Maykin Brand.
+
+### Contexts
+
+Context refers to a shared state or data that is accessible to multiple components without having to pass it down
+manually through props. Context is commonly used to manage global state.
+
+> If a component always requires context to work, it loses composability because it cannot be reused outside the provider.
+
+Certain information/configuration can be exposed using provided contexts, however: by convention, admin-ui never relies
+solely on context as provider and must accept props as alternative for any value that is consumed from a context*.
+
+
+***ModalService** is an exception to this rule.*
+
+### Hooks
+
+Hooks are functions that allow components to use state, lifecycle methods, and other React features.
+
+Various hooks are provided to simplify certain patterns (like prompting for user input).
+
+
+### Libraries
+
+Admin-ui exposes certain libraries so that internal behavior can be reproduced by other projects.
+
+_**TODO**: Document libraries_
+
+### Translations
+
+Admin-ui supports React-intl to provide translations, a collection of (compiled) language translations files can be
+found in `/dist/esm/lib/i18n/compiled`. If react-intl is not used, Admin-ui falls backs to a custom implementation using
+the lang attribute (`<html lang="en">`) as language identifier.
+
+### Engineering patterns
+
+While working with admin-ui, please take the following te patterns in mind.
+
+#### Accessibility matters
+
+_Explanation_
+
+As developers, we can make the web a better place, please check you work for accessibility standards. Especially check
+for color contrast according to
+[WCAG standards (AA)](https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html).
+
+_Motivation_
+
+Not everyone interacts with the web in the same way. Accessibility ensures that users with disabilities,
+including those who are blind, deaf, or have mobility impairments, can fully engage with digital content.
+
+Additionally: many (government) organisation explicitly demand (and check) for compliance to WCAG standards.
+
+_**TODO**: Test for and fix accessibility issues._
+
+#### Composing props
+
+_Explanation_
+
+In certain cases like the `Form` component, prop shapes like `InputProps`  or `SelectProps` (and others) are accepted
+as part of an array passed to the `fields` prop. Another example: the `ToolbarComponent` takes an `items` prop which may
+contain prop shapes like `ButtonProps` or `InputProps`. The toolbar itself may be used in other components (like `Form`) to render
+specific action controls.
+
+_Motivation_
+
+This allows for features like auto rendering forms and toolbars without duplicating props. Future efforts will
+automatically become available to components implementing such features and specific nested behavior can easily be
+overridden.
+
+#### Contexts must remain optional
+
+_Explanation_
+
+A component should not depend on the presence of a context for it to work. Any value obtained from a context should also
+be passable as prop.
+
+_Motivation_
+
+If a component always requires context to work, it loses composability because it cannot be reused outside the provider.

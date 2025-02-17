@@ -1,0 +1,43 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Manual/Release Procedure" />
+
+# Release procedure
+
+To release a new version of **Admin-ui**, follow these steps carefully to ensure consistency and stability.
+
+## Prepare the release
+
+Before updating the package version, ensure everything is up to date and built correctly:
+
+```sh
+git pull
+npm run build
+npm run makemessages # Check that nothing changed, otherwise stop
+npm run compilemessages # Check that nothing changed, otherwise stop
+```
+
+## Update the version
+
+Modify the `version` field in `package.json`. Then, update dependencies and commit the version change:
+
+```sh
+npm install
+git add package.json package-lock.json
+git commit -m ":bookmark: - chore: <new version>"
+git push
+```
+
+> If you do not have permissions to push directly to `main`, create a release branch, merge it, and pull the latest changes from `main`.
+
+## Tag and publish
+
+Once the release commit is merged, finalize the release by tagging and publishing:
+
+```sh
+git tag 0.0.XX-alpha
+git push --tags
+npm publish --tag alpha --access=public
+```
+
+> If you do not have credentials to publish to npm, ask someone with the necessary access to complete this step.
