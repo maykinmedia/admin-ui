@@ -5,9 +5,11 @@ import { Meta } from '@storybook/blocks';
 # Design tokens
 
 Admin-UI supports customizable styling with dark mode support. Customization is achieved through a set of design tokens
-located in `src/style/tokens`. These tokens must be compiled using [Style Dictionary](https://styledictionary.com/) before they can be used.
-After compilation, the processed tokens are output to `src/style/compiled`, where they are consumed by the main
-stylesheet in `src/style/index.scss`.
+located in `src/design-tokens/tokens`. These tokens must be compiled using
+[Style Dictionary](https://styledictionary.com/) before they can be used.
+
+After compilation, the processed tokens are output to `src/design-tokens/compiled`, where they are consumed by the main
+stylesheet in `src/index.scss`.
 
 ## Compilation
 
@@ -49,11 +51,11 @@ Gets compiled to
 
 ## Token files
 
-The token files in `src/style/tokens` are organized by role. During compilation:
+The token files in `src/design-tokens/tokens` are organized by role. During compilation:
 
-- Tokens **without** a `type: "font"` attribute are merged and output to `src/style/compiled/properties.css`.
+- Tokens **without** a `type: "font"` attribute are merged and output to `src/design-tokens/compiled/properties.css`.
 - Tokens **with** a `type: "font"` attribute are transformed into `@font-face` definitions and output to
-`src/style/compiled/fonts.css`.
+`src/design-tokens/compiled/fonts.css`.
 
 ## Best practices for updating styles
 
@@ -61,6 +63,6 @@ When modifying design tokens, follow these best practices:
 
 - **Ensure accessibility**: Maintain proper color contrast for readability.
 - **Use references**: Reference existing tokens where possible to simplify future customizations.
-- **Test changes**: Verify styles in different themes and viewports to prevent regressions.
+- **Test changes**: Verify styles in different themes (dark mode) and viewports to prevent regressions.
 
 > **Reminder:** After updating the tokens, recompile and rebuild Admin-UI to apply the changes.

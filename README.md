@@ -1,4 +1,4 @@
-[![Storybook](https://raw.githubusercontent.com/storybooks/brand/master/badge/badge-storybook.svg)](https://659d1ab1b20571e0dbb5e47c-trzbhgdygz.chromatic.com)
+[![Storybook](https://raw.githubusercontent.com/storybooks/brand/master/badge/badge-storybook.svg)](https://main--659d1ab1b20571e0dbb5e47c.chromatic.com)
 
 <p align="center">
   <a href="https://maykinmedia.nl">
@@ -45,6 +45,6 @@ import { Button } from "@maykin-ui/admin-ui";
 
 For an overview of available components, templates, and usage examples, visit the **Storybook** environment:
 
-➡ **[Admin-ui Storybook](https://659d1ab1b20571e0dbb5e47c-trzbhgdygz.chromatic.com)**
+➡ **[Admin-ui Storybook](https://main--659d1ab1b20571e0dbb5e47c.chromatic.com)**
 
 Storybook provides interactive documentation, allowing you to explore and test components in isolation.
