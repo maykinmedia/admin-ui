@@ -1,0 +1,49 @@
+.mykn-banner {
+  --mykn-banner-color: var(--typography-color-body);
+  border: 1px solid;
+  border-radius: var(--border-radius-s);
+  display: flex;
+  align-items: center;
+  padding: var(--spacing-v);
+  background-color: var(--typography-color-background-alt);
+  color: var(--mykn-banner-color);
+  position: relative;
+  min-height: 60px;
+
+  &--variant-info {
+    --mykn-banner-color: var(--page-color-info);
+    border-color: var(--page-color-info);
+  }
+
+  &--variant-success {
+    --mykn-banner-color: var(--page-color-success);
+    border-color: var(--page-color-success);
+  }
+
+  &--variant-warning {
+    --mykn-banner-color: var(--page-color-warning);
+    border-color: var(--page-color-warning);
+  }
+
+  &--variant-danger {
+    --mykn-banner-color: var(--page-color-danger);
+    border-color: var(--page-color-danger);
+  }
+
+  &__icon {
+    flex-shrink: 0;
+    margin-inline-end: var(--spacing-v);
+    width: 24px;
+    height: 24px;
+    background-color: var(--mykn-banner-color);
+    border-radius: 50%;
+  }
+
+  &__content {
+    flex: 1;
+  }
+
+  &__title {
+    margin-bottom: var(--spacing-xs);
+  }
+}

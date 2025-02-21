@@ -1,5 +1,6 @@
 // Auto-generated file. Do not modify manually.
 export * from "./badge";
+export * from "./banner";
 export * from "./boolean";
 export * from "./breadcrumbs";
 export * from "./button";
