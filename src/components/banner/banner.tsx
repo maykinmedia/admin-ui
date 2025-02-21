@@ -1,6 +1,7 @@
 import clsx from "clsx";
 import React from "react";
 
+import { Solid } from "..";
 import { Button } from "../button";
 import { P } from "../typography";
 import "./banner.scss";
@@ -43,30 +44,49 @@ export const Banner: React.FC<BannerProps> = ({
   actionText,
   onActionClick,
   ...props
-}) => (
-  <div
-    className={clsx("mykn-banner", {
-      [`mykn-banner--variant-${variant}`]: variant,
-      "mykn-banner--with-icon": withIcon,
-      "mykn-banner--with-action": actionText,
-    })}
-    {...props}
-  >
-    {withIcon && <span className="mykn-banner__icon" />}
-    <div className="mykn-banner__content">
-      <P className="mykn-banner__title" bold>
-        {title}
-      </P>
-      {description && <P className="mykn-banner__description">{description}</P>}
+}) => {
+  const getIcon = () => {
+    switch (variant) {
+      case "danger":
+        return <Solid.XCircleIcon className="mykn-banner__icon" />;
+      case "info":
+        return <Solid.InformationCircleIcon className="mykn-banner__icon" />;
+      case "warning":
+        return <Solid.ExclamationTriangleIcon className="mykn-banner__icon" />;
+      case "success":
+        return <Solid.CheckCircleIcon className="mykn-banner__icon" />;
+      default:
+        return <></>;
+    }
+  };
+
+  return (
+    <div
+      className={clsx("mykn-banner", {
+        [`mykn-banner--variant-${variant}`]: variant,
+        "mykn-banner--with-icon": withIcon,
+        "mykn-banner--with-action": actionText,
+      })}
+      {...props}
+    >
+      {withIcon && getIcon()}
+      <div className="mykn-banner__content">
+        <P className="mykn-banner__title" bold>
+          {title}
+        </P>
+        {description && (
+          <P className="mykn-banner__description">{description}</P>
+        )}
+      </div>
+      {actionText && onActionClick && (
+        <Button
+          variant="outline"
+          onClick={onActionClick}
+          className="mykn-banner__button"
+        >
+          {actionText}
+        </Button>
+      )}
     </div>
-    {actionText && onActionClick && (
-      <Button
-        variant="outline"
-        onClick={onActionClick}
-        className="mykn-banner__button"
-      >
-        {actionText}
-      </Button>
-    )}
-  </div>
-);
+  );
+};
