@@ -58,7 +58,10 @@
   --button-color-shadow-primary-hover: var(--button-color-shadow-primary);
   --button-color-text-secondary: light-dark(var(--typography-color-body), var(--typography-color-background));
   --button-color-text-outline: var(--typography-color-body);
-  --button-color-text-danger: light-dark(var(--page-color-danger), var(--page-color-primary-contrast));
+  --button-color-text-success: light-dark(var(--typography-color-background), var(--page-color-primary-contrast));
+  --button-color-text-info: light-dark(var(--typography-color-background), var(--page-color-primary-contrast));
+  --button-color-text-warning: light-dark(var(--typography-color-background), var(--page-color-primary-contrast));
+  --button-color-text-danger: light-dark(var(--typography-color-background), var(--page-color-primary-contrast));
   --toolbar-color-text-accent: light-dark(var(--typography-color-body), var(--typography-color-background));
   --theme-purple-rain-primary-hue: 253.22033898305085;
   --theme-purple-rain-primary-saturation: 0.6941176470588236;

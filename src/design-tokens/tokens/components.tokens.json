@@ -152,8 +152,17 @@
         "transparent-active": {
           "value": "{button.color.text.outline-active}"
         },
+        "success": {
+          "value": "light-dark({typography.color.background}, {page.color.primary-contrast})"
+        },
+        "info": {
+          "value": "light-dark({typography.color.background}, {page.color.primary-contrast})"
+        },
+        "warning": {
+          "value": "light-dark({typography.color.background}, {page.color.primary-contrast})"
+        },
         "danger": {
-          "value": "light-dark({page.color.danger}, {page.color.primary-contrast})"
+          "value": "light-dark({typography.color.background}, {page.color.primary-contrast})"
         }
       }
     }
