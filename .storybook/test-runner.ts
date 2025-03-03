@@ -7,7 +7,7 @@ const { MINIMAL_VIEWPORTS } = require("@storybook/addon-viewport");
 const DEFAULT_VP_SIZE = { width: 1280, height: 720 };
 
 /**
- * Attempt to solve: https://github.com/testing-library/web-testing-library/issues/3.
+ * Attempt to solve: https://github.com/storybookjs/test-runner/issues/442.
  * GitHub's suggestions did not work at time of writing.
  * @param page
  * @param story
@@ -26,6 +26,8 @@ async function waitForStoryContext(
     if (attempt > maxAttempts) {
       throw e;
     }
+    // ¯\_(ツ)_/¯ - If this is not the first attempt: add a timeout.
+    await new Promise(resolve => setTimeout(resolve, 600));
     return waitForStoryContext(page, story, attempt + 1);
   }
 }

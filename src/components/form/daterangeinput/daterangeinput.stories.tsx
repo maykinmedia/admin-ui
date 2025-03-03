@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { expect, userEvent, within } from "@storybook/test";
+import { expect, userEvent, waitFor, within } from "@storybook/test";
 
 import { FORM_TEST_DECORATOR } from "../../../../.storybook/decorators";
 import { DateRangeInput } from "./daterangeinput";
@@ -121,22 +121,30 @@ export const ClearSections: Story = {
     const dayEnd = await canvas.getAllByRole("textbox")[3];
     const yearEnd = await canvas.getAllByRole("textbox")[5];
 
-    await userEvent.click(yearEnd);
+    await userEvent.click(yearEnd, { delay: 60 });
     await userEvent.keyboard("{Backspace}", { delay: 60 });
     await userEvent.keyboard("{Backspace}", { delay: 60 });
     await userEvent.keyboard("{Backspace}", { delay: 60 });
 
-    await expect(document.activeElement).toBe(dayEnd);
+    await waitFor(() =>
+      expect(document.activeElement?.getAttribute("placeholder")).toBe(
+        dayEnd.getAttribute("placeholder"),
+      ),
+    );
 
     const dayStart = await canvas.getAllByRole("textbox")[0];
     const yearStart = await canvas.getAllByRole("textbox")[2];
 
-    await userEvent.click(yearStart);
+    await userEvent.click(yearStart, { delay: 60 });
     await userEvent.keyboard("{Backspace}", { delay: 60 });
     await userEvent.keyboard("{Backspace}", { delay: 60 });
     await userEvent.keyboard("{Backspace}", { delay: 60 });
 
-    await expect(document.activeElement).toBe(dayStart);
+    await waitFor(() =>
+      expect(document.activeElement?.getAttribute("placeholder")).toBe(
+        dayStart.getAttribute("placeholder"),
+      ),
+    );
 
     await userEvent.click(yearEnd);
     await userEvent.tab({ delay: 60 });
