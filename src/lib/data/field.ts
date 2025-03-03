@@ -110,7 +110,7 @@ export const fields2TypedFields = <T extends object>(
 ): TypedField<T>[] =>
   optionallyTypedFields.map((field) =>
     Object.assign(
-      { ...base } || {},
+      { ...base },
       isPrimitive<Field<T>>(field)
         ? {
             type: typeByDataArray<T>(field, objectList),

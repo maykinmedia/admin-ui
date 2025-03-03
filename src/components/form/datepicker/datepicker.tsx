@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import { formatISO } from "date-fns";
-import nl from "date-fns/locale/nl";
+import { nl } from "date-fns/locale";
 import React, { useEffect, useState } from "react";
 import ReactDatePicker, { ReactDatePickerProps } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
