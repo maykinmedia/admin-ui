@@ -71,12 +71,14 @@ export const ClearSections: Story = {
     const year = await canvas.getAllByRole("textbox")[2];
     const log = canvas.getByRole("log");
 
-    await userEvent.click(year);
+    await userEvent.click(year, { delay: 60 });
     await userEvent.keyboard("{Backspace}", { delay: 60 });
     await userEvent.keyboard("{Backspace}", { delay: 60 });
     await userEvent.keyboard("{Backspace}", { delay: 60 });
 
-    await expect(document.activeElement).toBe(day);
+    await expect(document.activeElement?.getAttribute("placeholder")).toBe(
+      day.getAttribute("placeholder"),
+    );
     await userEvent.type(day, "02081988", { delay: 60 });
     await expect(JSON.parse(log.textContent || "{}").date).toBe("1988-08-02");
   },

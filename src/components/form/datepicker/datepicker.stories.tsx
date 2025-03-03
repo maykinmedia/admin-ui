@@ -44,6 +44,7 @@ export const DatepickerComponent: Story = {
     await waitFor(testEventListener.bind(this, "2023-09-14"));
 
     // Test clear date.
+    await userEvent.tab();
     const clearButton = canvas.getByRole("button");
     await userEvent.click(clearButton, { delay: 10 });
 
@@ -124,6 +125,7 @@ export const DateRangePicker: Story = {
     await waitFor(testEventListener.bind(this, "2023-09-14/2023-09-15"));
 
     // Test clear date.
+    await userEvent.tab();
     const clearButton = canvas.getByRole("button");
     await userEvent.click(clearButton, { delay: 10 });
 
