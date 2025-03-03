@@ -2,7 +2,9 @@ import clsx from "clsx";
 import { formatISO } from "date-fns";
 import { nl } from "date-fns/locale";
 import React, { useEffect, useState } from "react";
-import ReactDatePicker, { ReactDatePickerProps } from "react-datepicker";
+import ReactDatePicker, {
+  DatePickerProps as ReactDatePickerProps,
+} from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 import { formatMessage, useIntl } from "../../../lib";
@@ -10,7 +12,7 @@ import { eventFactory } from "../eventFactory";
 import "./datepicker.scss";
 
 export type DatePickerDate = Date | null;
-export type DatePickerDateRange = [DatePickerDate, DatePickerDate];
+export type DatePickerDateRange = (Date | null)[];
 export type DatePickerValue = DatePickerDate | DatePickerDateRange;
 
 export type DatePickerProps = Omit<
@@ -367,6 +369,7 @@ export const DatePicker: React.FC<DatePickerProps> = ({
         form={form}
         data-mykn-type={type === "daterangepicker" ? "daterange" : "date"}
       />
+      {/* @ts-expect-error - https://github.com/Hacker0x01/react-datepicker/issues/5391. */}
       <ReactDatePicker
         className={clsx("mykn-datepicker", "mykn-input", {
           "mykn-input--pad-h": pad === true || pad === "h",
@@ -376,7 +379,7 @@ export const DatePicker: React.FC<DatePickerProps> = ({
         locale={locale}
         placeholderText={placeholder}
         selected={date}
-        selectsRange={type === "daterangepicker"}
+        selectsRange={type === "daterangepicker" || undefined}
         startDate={dateRange[0]}
         endDate={dateRange[1]}
         showYearDropdown
