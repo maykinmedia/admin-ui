@@ -368,7 +368,7 @@ export const DataGrid = <T extends object = object, F extends object = T>(
   /* eslint-enable */
 
   const id = useId();
-  const onFilterTimeoutRef = useRef<NodeJS.Timeout>();
+  const onFilterTimeoutRef = useRef<NodeJS.Timeout>(undefined);
 
   // Row that's being edited.
   const [editingState, setEditingState] = useState<[T, number] | [null, null]>([

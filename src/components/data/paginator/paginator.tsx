@@ -88,7 +88,7 @@ export const Paginator: React.FC<PaginatorProps> = ({
   onPageSizeChange,
   ...props
 }) => {
-  const onPageChangeTimeoutRef = useRef<NodeJS.Timeout>();
+  const onPageChangeTimeoutRef = useRef<NodeJS.Timeout>(undefined);
   const [loadingState, setLoadingState] = useState(false);
   const [pageState, setPageState] = useState(page);
   const [pageSizeState, setPageSizeState] = useState(pageSize);
