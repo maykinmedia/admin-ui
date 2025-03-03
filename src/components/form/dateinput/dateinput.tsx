@@ -87,7 +87,7 @@ export const DateInput: React.FC<DateInputProps> = ({
   ...props
 }) => {
   type SanitizedValues = { DD: string; MM: string; YY: string };
-  const debounceRef = useRef<NodeJS.Timeout>();
+  const debounceRef = useRef<NodeJS.Timeout>(undefined);
   const fakeInputRef = useRef<HTMLInputElement>(null);
   const [isPristine, setIsPristine] = useState(true);
   const [sanitizedValuesState, setSanitizedValuesState] = useState<
@@ -219,7 +219,7 @@ export const DateInput: React.FC<DateInputProps> = ({
         target?.select();
       };
 
-      clearTimeout(debounceRef.current);
+      clearTimeout(debounceRef?.current);
       debounceRef.current = setTimeout(fn, 30);
     },
     [debounceRef.current, fakeInputRef.current],

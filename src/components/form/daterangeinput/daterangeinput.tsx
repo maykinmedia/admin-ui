@@ -42,7 +42,7 @@ export const DateRangeInput: React.FC<DateRangeInputProps> = ({
   const nodeRef = useRef<HTMLDivElement>(null);
   const fakeInputRef = useRef<HTMLInputElement>(null);
   const [valuesState, setValuesState] = useState<string[]>();
-  const queuedValueState = useRef<string[]>();
+  const queuedValueState = useRef<string[]>(undefined);
   const intl = useIntl();
 
   /**

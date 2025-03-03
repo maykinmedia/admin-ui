@@ -32,7 +32,7 @@ export const Tabs: React.FC<TabsProps> = ({
 
   const tabs = Children.toArray(children).filter(
     (child) => isValidElement(child) && child.type === Tab,
-  ) as ReactElement[];
+  ) as ReactElement<TabProps>[];
 
   return (
     <div className={clsx("mykn-tabs")} {...props}>

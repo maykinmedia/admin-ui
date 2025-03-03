@@ -21,7 +21,7 @@ export const DataGridFilter = <
   F extends object = T,
 >() => {
   const intl = useIntl();
-  const onFilterTimeoutRef = useRef<NodeJS.Timeout>();
+  const onFilterTimeoutRef = useRef<NodeJS.Timeout>(undefined);
 
   const {
     dataGridId,

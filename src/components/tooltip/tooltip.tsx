@@ -81,7 +81,7 @@ export const Tooltip = ({
 
   return (
     <>
-      {React.cloneElement(children as React.ReactElement, {
+      {React.cloneElement(children as React.ReactElement<{ ref: unknown }>, {
         ...getReferenceProps(),
         ref: setReference,
       })}
