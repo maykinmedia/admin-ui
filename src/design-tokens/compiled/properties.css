@@ -73,7 +73,6 @@
   --page-color-primary-contrast: light-dark(var(--typography-color-background), #ffffff);
   --page-color-secondary-contrast: var(--typography-color-body);
   --page-color-highlight: var(--page-color-background);
-  --page-color-logo: light-dark(var(--typography-color-body), var(--page-color-primary-contrast));
   --typography-color-h: light-dark(#282828, var(--typography-color-body));
   --button-color-background-primary: var(--page-color-primary);
   --button-color-background-secondary-hover: var(--button-color-background-secondary);
@@ -91,6 +90,7 @@
   --toolbar-color-text-primary: var(--page-color-primary-contrast);
   --theme-purple-rain-accent-color: hsl(var(--theme-purple-rain-primary-hue) 100% 95%);
   --theme-blue-suede-shoes-accent-color: hsl(var(--theme-blue-suede-shoes-primary-hue) 100% 95%);
+  --page-color-logo: light-dark(var(--page-color-primary), var(--page-color-primary-contrast));
   --typography-color-link: var(--page-color-primary);
   --button-color-background-primary-hover: var(--button-color-background-primary);
   --button-color-background-secondary-active: var(--button-color-background-secondary-hover);
