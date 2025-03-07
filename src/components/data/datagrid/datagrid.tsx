@@ -442,8 +442,6 @@ export const DataGrid = <T extends object = object, F extends object = T>(
         // Height should be computed.
         if (height === "fill-available-space") {
           const rect = node.getBoundingClientRect();
-          node.style.height = `auto`;
-
           const windowHeight = document.documentElement.clientHeight;
           const dataGridOffsetTop = rect.top;
           const availableHeight = Math.min(windowHeight - dataGridOffsetTop);
