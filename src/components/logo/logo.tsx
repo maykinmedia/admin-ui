@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import React from "react";
 
-import { createMessageDescriptor, useIntl } from "../../lib";
+import { gettextFirst } from "../../lib";
 import "./logo.scss";
 import { TRANSLATIONS } from "./translations";
 
@@ -39,22 +39,14 @@ export const Logo: React.FC<LogoProps> = ({
   variant = "normal",
   ...props
 }) => {
-  const intl = useIntl();
   const Tag = href ? "a" : "span";
   const viewBoxWidth = abbreviated ? 47 : 122;
   const context = {
     href: href || "",
   };
 
-  const _label = intl.formatMessage(
-    createMessageDescriptor(label, TRANSLATIONS.LABEL),
-    context,
-  );
-
-  const _hrefLabel = intl.formatMessage(
-    createMessageDescriptor(hrefLabel, TRANSLATIONS.LABEL_HREF),
-    context,
-  );
+  const _label = gettextFirst(label, TRANSLATIONS.LABEL, context);
+  const _hrefLabel = gettextFirst(hrefLabel, TRANSLATIONS.LABEL_HREF, context);
 
   return (
     <Tag

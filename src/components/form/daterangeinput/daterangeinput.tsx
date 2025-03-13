@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 
-import { date2DateString, useIntl, value2Date } from "../../../lib";
+import { date2DateString, gettextFirst, value2Date } from "../../../lib";
 import { Outline } from "../../icon/icon";
 import { DateInput, DateInputProps } from "../dateinput";
 import { eventFactory } from "../eventFactory";
@@ -43,7 +43,6 @@ export const DateRangeInput: React.FC<DateRangeInputProps> = ({
   const fakeInputRef = useRef<HTMLInputElement>(null);
   const [valuesState, setValuesState] = useState<string[]>();
   const queuedValueState = useRef<string[]>(undefined);
-  const intl = useIntl();
 
   /**
    * Dispatch change event.
@@ -235,19 +234,14 @@ export const DateRangeInput: React.FC<DateRangeInputProps> = ({
       />
       <DateInput
         {...props}
-        label={
-          labelStartDate ||
-          intl.formatMessage(TRANSLATIONS.LABEL_START_DATE, {})
-        }
+        label={gettextFirst(labelStartDate, TRANSLATIONS.LABEL_START_DATE)}
         value={valuesState?.[0]}
         onChange={handleStartChange}
       />
       {icon}
       <DateInput
         {...props}
-        label={
-          labelEndDate || intl.formatMessage(TRANSLATIONS.LABEL_END_DATE, {})
-        }
+        label={gettextFirst(labelEndDate, TRANSLATIONS.LABEL_END_DATE)}
         value={valuesState?.[1]}
         onChange={handleEndChange}
       />

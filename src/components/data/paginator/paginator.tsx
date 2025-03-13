@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 
-import { createMessageDescriptor, ucFirst, useIntl } from "../../../lib";
+import { gettext, gettextFirst, ucFirst, useIntl } from "../../../lib";
 import { Button } from "../../button";
 import { Option, Select, SelectProps } from "../../form";
 import { Outline } from "../../icon";
@@ -107,15 +107,15 @@ export const Paginator: React.FC<PaginatorProps> = ({
     pageSize: pageSizeState,
   };
 
-  const intl = useIntl();
-
-  const _labelPagination = intl.formatMessage(
-    createMessageDescriptor(labelPagination, TRANSLATIONS.LABEL_PAGINATION),
+  const _labelPagination = gettextFirst(
+    labelPagination,
+    TRANSLATIONS.LABEL_PAGINATION,
     context,
   );
 
-  const _labelGoToPage = intl.formatMessage(
-    createMessageDescriptor(labelGoToPage, TRANSLATIONS.LABEL_GO_TO_PAGE),
+  const _labelGoToPage = gettextFirst(
+    labelGoToPage,
+    TRANSLATIONS.LABEL_GO_TO_PAGE,
     { ...context, page: "{page}" },
   );
 
@@ -257,17 +257,17 @@ export const PaginatorNav: React.FC<PaginatorNavProps> = ({
     nextPage,
   };
 
-  const _labelPrevious = intl.formatMessage(
-    createMessageDescriptor(labelPrevious, TRANSLATIONS.LABEL_PREVIOUS),
-    context,
-  );
-  const _labelNext = intl.formatMessage(
-    createMessageDescriptor(labelNext, TRANSLATIONS.LABEL_NEXT),
+  const _labelPrevious = gettextFirst(
+    labelPrevious,
+    TRANSLATIONS.LABEL_PREVIOUS,
     context,
   );
 
-  const _labelGoToPage = intl.formatMessage(
-    createMessageDescriptor(labelGoToPage, TRANSLATIONS.LABEL_GO_TO_PAGE),
+  const _labelNext = gettextFirst(labelNext, TRANSLATIONS.LABEL_NEXT, context);
+
+  const _labelGoToPage = gettextFirst(
+    labelGoToPage,
+    TRANSLATIONS.LABEL_GO_TO_PAGE,
     { ...context, page: "{page}" },
   );
 
@@ -289,8 +289,8 @@ export const PaginatorNav: React.FC<PaginatorNavProps> = ({
         <>
           <Button
             active={currentPage === 1}
-            aria-label={intl.formatMessage(
-              createMessageDescriptor(_labelGoToPage),
+            aria-label={gettext(
+              { id: _labelGoToPage, defaultMessage: _labelGoToPage },
               { page: 1 },
             )}
             aria-current={currentPage === 1}
@@ -318,15 +318,17 @@ export const PaginatorNav: React.FC<PaginatorNavProps> = ({
       )}
 
       {pages.map((page) => {
+        const ariaLabel = intl.formatMessage(
+          { id: _labelGoToPage, defaultMessage: _labelGoToPage },
+          { page },
+        );
+
         return (
           <Button
             key={page}
             active={currentPage === page}
             aria-current={currentPage === page}
-            aria-label={intl.formatMessage(
-              createMessageDescriptor(_labelGoToPage),
-              { page },
-            )}
+            aria-label={ariaLabel}
             className="mykn-paginator__button mykn-paginator__button--page"
             size="xs"
             square
@@ -355,8 +357,8 @@ export const PaginatorNav: React.FC<PaginatorNavProps> = ({
           <Button
             active={currentPage === pageCount}
             aria-current={currentPage === pageCount}
-            aria-label={intl.formatMessage(
-              createMessageDescriptor(_labelGoToPage),
+            aria-label={gettext(
+              { id: _labelGoToPage, defaultMessage: _labelGoToPage },
               { page: pageCount },
             )}
             className="mykn-paginator__button mykn-paginator__button--page"
@@ -402,8 +404,6 @@ export const PaginatorMeta: React.FC<PaginatorMetaProps> = ({
   page,
   pageSize,
 }) => {
-  const intl = useIntl();
-
   const index = page - 1;
   const pageCount = Math.ceil(count / pageSize);
   const pageStart = index * pageSize + 1;
@@ -420,16 +420,15 @@ export const PaginatorMeta: React.FC<PaginatorMetaProps> = ({
     pageSize,
   };
 
-  const _labelCurrentPageRange = intl.formatMessage(
-    createMessageDescriptor(
-      labelCurrentPageRange,
-      TRANSLATIONS.LABEL_CURRENT_PAGE_RANGE,
-    ),
+  const _labelCurrentPageRange = gettextFirst(
+    labelCurrentPageRange,
+    TRANSLATIONS.LABEL_CURRENT_PAGE_RANGE,
     context,
   );
 
-  const _labelLoading = intl.formatMessage(
-    createMessageDescriptor(labelLoading, TRANSLATIONS.LABEL_LOADING),
+  const _labelLoading = gettextFirst(
+    labelLoading,
+    TRANSLATIONS.LABEL_LOADING,
     context,
   );
 
@@ -463,8 +462,6 @@ export const PaginatorOptions: React.FC<PaginatorOptionsProps> = ({
   pageSize,
   pageSizeOptions = [],
 }) => {
-  const intl = useIntl();
-
   if (pageSizeOptions.length === 0) {
     return;
   }
@@ -473,8 +470,9 @@ export const PaginatorOptions: React.FC<PaginatorOptionsProps> = ({
     pageSize,
   };
 
-  const _labelPageSize = intl.formatMessage(
-    createMessageDescriptor(labelPageSize, TRANSLATIONS.LABEL_PAGE_SIZE),
+  const _labelPageSize = gettextFirst(
+    labelPageSize,
+    TRANSLATIONS.LABEL_PAGE_SIZE,
     context,
   );
 

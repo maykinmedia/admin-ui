@@ -4,11 +4,9 @@ import {
   DEFAULT_URL_FIELDS,
   FieldSet,
   GroupedDataProps,
-  createMessageDescriptor,
   getContextData,
+  gettextFirst,
   string2Title,
-  stringifyContext,
-  useIntl,
 } from "../../../lib";
 import { Badge } from "../../badge";
 import { Button, ButtonLink, ButtonLinkProps, ButtonProps } from "../../button";
@@ -414,19 +412,16 @@ export const KanbanItem = <T extends object = object>({
   onClick,
   onObjectChange,
 }: KanbanItemProps<T>) => {
-  const intl = useIntl();
-
-  const _labelSelectColumn = intl.formatMessage(
-    createMessageDescriptor(
-      labelSelectColumn,
-      TRANSLATIONS.LABEL_SELECT_COLUMN,
-    ),
-    stringifyContext(object),
+  const _labelSelectColumn = gettextFirst(
+    labelSelectColumn,
+    TRANSLATIONS.LABEL_SELECT_COLUMN,
+    object,
   );
 
-  const _labelMoveObject = intl.formatMessage(
-    createMessageDescriptor(labelMoveObject, TRANSLATIONS.LABEL_MOVE_OBJECT),
-    stringifyContext(object),
+  const _labelMoveObject = gettextFirst(
+    labelMoveObject,
+    TRANSLATIONS.LABEL_MOVE_OBJECT,
+    object,
   );
 
   const titleField = fieldset[1].title || Object.keys(object)[0];

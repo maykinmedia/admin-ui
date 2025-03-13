@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 
-import { useIntl } from "../../../lib";
+import { gettextFirst } from "../../../lib";
 import { Checkbox } from "../../form";
 import { useDataGridContext } from "./datagrid";
 import { TRANSLATIONS } from "./translations";
@@ -24,7 +24,6 @@ export const DataGridSelectionCheckbox = <
   rowData,
   selectAll,
 }: DataGridSelectionCheckboxProps<T, F>) => {
-  const intl = useIntl();
   const {
     allPagesSelected,
     allPagesSelectedManaged,
@@ -42,12 +41,38 @@ export const DataGridSelectionCheckbox = <
     onSelectAllPages,
   } = useDataGridContext<T, F>();
 
+  const i18nContext = {
+    count: count,
+    countPage: renderableRows.length,
+    pages: pages,
+    amountSelected: amountSelected,
+    selectAll: selectAll,
+    amountUnselected: (count || 0) - (amountSelected || 0),
+    amountUnselectedPage: renderableRows.length - (amountSelected || 0),
+  };
+
+  const _labelSelectAll = gettextFirst(
+    labelSelectAll,
+    TRANSLATIONS.LABEL_SELECT_ALL,
+    i18nContext,
+  );
+
+  const _labelSelectAllPages = gettextFirst(
+    labelSelectAllPages,
+    TRANSLATIONS.LABEL_SELECT_ALL_PAGES,
+    i18nContext,
+  );
+
+  const _labelSelect = gettextFirst(labelSelect, TRANSLATIONS.LABEL_SELECT, {
+    i18nContext,
+    ...rowData,
+  });
+
   const { checked, disabled, onChange, ariaLabel } = useMemo(() => {
     let allSelected: boolean = false;
     let checked: boolean = false;
     let disabled: boolean = false;
     let handleSelect: (rows: T) => void;
-    let i18nContext;
     let ariaLabel: string = "";
 
     switch (selectAll) {
@@ -58,30 +83,14 @@ export const DataGridSelectionCheckbox = <
         checked = allSelected || false;
         disabled = Boolean(allPagesSelectedManaged && allPagesSelected);
         handleSelect = () => onSelectAll(!allSelected);
-
-        i18nContext = {
-          count: count,
-          countPage: renderableRows.length,
-          pages: pages,
-          amountSelected: amountSelected,
-          selectAll: selectAll,
-          amountUnselected: (count || 0) - (amountSelected || 0),
-          amountUnselectedPage: renderableRows.length - (amountSelected || 0),
-        };
-        ariaLabel =
-          labelSelectAll ||
-          intl.formatMessage(TRANSLATIONS.LABEL_SELECT_ALL, i18nContext);
+        ariaLabel = _labelSelectAll;
         break;
 
       case "allPages":
         allSelected = Boolean(allPagesSelected);
         checked = allPagesSelected || false;
         handleSelect = () => onSelectAllPages(!allSelected);
-
-        i18nContext = { pages: pages };
-        ariaLabel =
-          labelSelectAllPages ||
-          intl.formatMessage(TRANSLATIONS.LABEL_SELECT_ALL_PAGES, i18nContext);
+        ariaLabel = _labelSelectAllPages;
         break;
 
       default:
@@ -94,20 +103,7 @@ export const DataGridSelectionCheckbox = <
           false;
         disabled = Boolean(allPagesSelectedManaged && allPagesSelected);
         handleSelect = onSelect;
-
-        i18nContext = {
-          count: count,
-          countPage: renderableRows.length,
-          pages: pages,
-          amountSelected: amountSelected,
-          selectAll: selectAll,
-          amountUnselected: (count || 0) - (amountSelected || 0),
-          amountUnselectedPage: renderableRows.length - (amountSelected || 0),
-          ...rowData,
-        };
-        ariaLabel =
-          labelSelect ||
-          intl.formatMessage(TRANSLATIONS.LABEL_SELECT, i18nContext);
+        ariaLabel = _labelSelect;
     }
 
     const onChange = () => handleSelect(rowData || ({} as T));

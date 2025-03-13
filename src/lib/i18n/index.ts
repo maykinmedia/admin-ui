@@ -1,2 +1,2 @@
 export * from "./useIntl";
-export * from "./utils";
+export * from "./gettext";

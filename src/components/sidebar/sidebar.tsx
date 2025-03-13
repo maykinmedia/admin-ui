@@ -2,7 +2,7 @@ import clsx from "clsx";
 import React, { useContext, useEffect, useId, useState } from "react";
 
 import { ConfigContext } from "../../contexts";
-import { createMessageDescriptor, useIntl } from "../../lib";
+import { gettextFirst } from "../../lib";
 import { Button } from "../button";
 import { Card } from "../card";
 import { Outline } from "../icon";
@@ -52,16 +52,17 @@ export const Sidebar: React.FC<SidebarProps> = ({
   const [transitionState, setTransitionState] = useState<boolean>(false);
   const [expandedState, setExpandedState] = useState<boolean>(expanded);
   const { logo: CustomLogo } = useContext(ConfigContext);
-  const intl = useIntl();
   const context = { expanded: expandedState };
 
-  const _labelExpand = intl.formatMessage(
-    createMessageDescriptor(labelExpand, TRANSLATIONS.LABEL_EXPAND),
+  const _labelExpand = gettextFirst(
+    labelExpand,
+    TRANSLATIONS.LABEL_EXPAND,
     context,
   );
 
-  const _labelCollapse = intl.formatMessage(
-    createMessageDescriptor(labelCollapse, TRANSLATIONS.LABEL_COLLAPSE),
+  const _labelCollapse = gettextFirst(
+    labelCollapse,
+    TRANSLATIONS.LABEL_COLLAPSE,
     context,
   );
 

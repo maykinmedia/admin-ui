@@ -33,7 +33,7 @@ import { Messages } from "./types";
  * this is returned by custom (`useIntl`) if `IntlContext` is not available.
  * This prevents error when `IntlProvider` is not used.
  */
-const getDefaultMessages = (locale: string): Messages => {
+export const getDefaultMessages = (locale: string): Messages => {
   switch (locale) {
     case "en":
       return en;
@@ -55,6 +55,7 @@ export const useIntl = (locale = document?.documentElement?.lang || "nl") => {
   };
 
   return createIntl({
+    fallbackOnEmptyString: false,
     locale,
     messages,
     // Errors get silenced since we allow props to be passed as message which are

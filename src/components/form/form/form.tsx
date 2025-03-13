@@ -2,21 +2,21 @@ import clsx from "clsx";
 import React, { FormEvent, useContext, useEffect, useState } from "react";
 
 import { ConfigContext } from "../../../contexts";
-import { stringifyContext, ucFirst } from "../../../lib";
-import { useIntl } from "../../../lib";
-import { FormField } from "../../../lib";
-import {
-  SerializedFormData,
-  getValueFromFormData,
-  serializeForm,
-} from "../../../lib";
 import {
   DEFAULT_VALIDATION_ERROR_REQUIRED,
+  FormField,
+  SerializedFormData,
   Validator,
+  forceArray,
   getErrorFromErrors,
+  getValueFromFormData,
+  gettextFirst,
+  serializeForm,
+  stringifyContext,
+  ucFirst,
+  useIntl,
   validateForm,
 } from "../../../lib";
-import { forceArray } from "../../../lib";
 import { ButtonProps } from "../../button";
 import { Toolbar, ToolbarItem, ToolbarProps } from "../../toolbar";
 import { P } from "../../typography";
@@ -156,6 +156,8 @@ export const Form = <T extends SerializedFormData = SerializedFormData>({
   values,
   ...props
 }: FormProps<T>) => {
+  const intl = useIntl();
+
   const { debug: contextDebug } = useContext(ConfigContext);
   const _debug = debug || contextDebug;
   const _nonFieldErrors = forceArray(nonFieldErrors);
@@ -171,19 +173,20 @@ export const Form = <T extends SerializedFormData = SerializedFormData>({
     errors && setErrorsState(errors);
   }, [errors]);
 
-  const intl = useIntl();
+  const _requiredIndicator = gettextFirst(
+    requiredIndicator,
+    TRANSLATIONS.REQUIRED_INDICATOR,
+  );
 
-  const _requiredIndicator =
-    requiredIndicator || intl.formatMessage(TRANSLATIONS.REQUIRED_INDICATOR);
-
-  const _requiredExplanation =
-    requiredExplanation ||
-    intl.formatMessage(TRANSLATIONS.REQUIRED_EXPLANATION, {
+  const _requiredExplanation = gettextFirst(
+    requiredExplanation,
+    TRANSLATIONS.REQUIRED_EXPLANATION,
+    {
       requiredIndicator: _requiredIndicator,
-    });
+    },
+  );
 
-  const _labelSubmit =
-    labelSubmit || intl.formatMessage(TRANSLATIONS.LABEL_SUBMIT);
+  const _labelSubmit = gettextFirst(labelSubmit, TRANSLATIONS.LABEL_SUBMIT);
 
   /**
    * Revalidate on state change.
@@ -274,12 +277,15 @@ export const Form = <T extends SerializedFormData = SerializedFormData>({
               (field.value as string) ||
               getValueFromFormData<T>(fields, valuesState, field);
 
-            const _labelValidationErrorRequired = labelValidationErrorRequired
-              ? labelValidationErrorRequired
-              : intl.formatMessage(
-                  TRANSLATIONS.LABEL_VALIDATION_ERROR_REQUIRED,
-                  stringifyContext({ ...field, label, value }),
-                );
+            const _labelValidationErrorRequired = intl.formatMessage(
+              labelValidationErrorRequired === undefined
+                ? TRANSLATIONS.LABEL_VALIDATION_ERROR_REQUIRED
+                : {
+                    id: new String() as string,
+                    defaultMessage: labelValidationErrorRequired,
+                  },
+              stringifyContext({ ...field, label, value }),
+            );
 
             const error = getErrorFromErrors(fields, errorsState, field);
             const message =
