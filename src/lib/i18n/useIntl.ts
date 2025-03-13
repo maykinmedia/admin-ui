@@ -9,7 +9,7 @@ import { Messages } from "./types";
   IMPORTANT!
   ==========
 
-  This UI library needs to support the following scenarios:
+  Admin-ui needs to support the following scenarios:
 
   - An application with extensive internationalization support
     (using react-intl).
@@ -17,19 +17,15 @@ import { Messages } from "./types";
   - An application with basic internationalization using translated labels
     passed as props.
 
-  - No internalisation (default messages only).
+  - No internationalization (default messages only).
 
   The default behaviour of react-intl's `useIntl` hook is to throw en exception
   if `<IntlProvider>` does not exist in the component ancestry. This only suits
   the first case but not he second or third.
 
-  The React rules of hooks (https://react.dev/warnings/invalid-hook-call-warning)
-  prevent us from conditionally calling hooks (or catching exceptions raised by
-  them), we therefore cant rely on the react-intl `useIntl` hook.
-
-  We avoid this problem by implementing our own version of `useIntl` which does
-  not throw an exception if `<IntlProvider>` does not exist but instead will
-  create an "intl" using `createIntl()`
+  TO avoid this problem a custom version of the `useIntl` hook is exposed that
+  does not throw an exception if `<IntlProvider>` does not exist, instead it will
+  create an "intl" using `createIntl()`.
  */
 
 /**
