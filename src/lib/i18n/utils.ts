@@ -4,8 +4,12 @@ import { MessageDescriptor } from "react-intl";
  * Creates a `MessageDescriptor` for `messages` if it's truthy, returns `undefined`
  * otherwise.
  *
- * @param message - The messages to wrap in a `MessageDescriptor`.
- * @param fallback
+ * @param args
+ *
+ *  - message: The messages to wrap in a `MessageDescriptor`.
+ *  - fallback: fallback MessageDescriptor if `message===undefined`
+ *
+ *  @return MessageDescriptor
  */
 export function createMessageDescriptor(
   ...args:
@@ -14,7 +18,9 @@ export function createMessageDescriptor(
 ): MessageDescriptor {
   const [message, fallback] = args;
   if (typeof message !== "undefined") {
-    return { id: message, defaultMessage: message };
+    // Trick react-intl into ignoring empty id by using complex String type.
+    const id = message || (new String() as string);
+    return { id, defaultMessage: message };
   }
   return fallback!;
 }

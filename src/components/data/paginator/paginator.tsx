@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import { MessageDescriptor } from "react-intl";
 
 import { createMessageDescriptor, ucFirst, useIntl } from "../../../lib";
 import { Button } from "../../button";
@@ -73,13 +72,13 @@ export type PaginatorProps = React.HTMLAttributes<HTMLElement> & {
  */
 export const Paginator: React.FC<PaginatorProps> = ({
   count,
-  labelCurrentPageRange = "",
-  labelGoToPage = "",
-  labelPageSize = "",
-  labelPagination = "",
-  labelPrevious = "",
-  labelNext = "",
-  labelLoading = "",
+  labelCurrentPageRange,
+  labelGoToPage,
+  labelPageSize,
+  labelPagination,
+  labelPrevious,
+  labelNext,
+  labelLoading,
   loading = undefined,
   page = 1,
   pageSize,
@@ -113,6 +112,11 @@ export const Paginator: React.FC<PaginatorProps> = ({
   const _labelPagination = intl.formatMessage(
     createMessageDescriptor(labelPagination, TRANSLATIONS.LABEL_PAGINATION),
     context,
+  );
+
+  const _labelGoToPage = intl.formatMessage(
+    createMessageDescriptor(labelGoToPage, TRANSLATIONS.LABEL_GO_TO_PAGE),
+    { ...context, page: "{page}" },
   );
 
   useEffect(() => setPageState(page), [page]);
@@ -169,7 +173,7 @@ export const Paginator: React.FC<PaginatorProps> = ({
         <PaginatorNav
           count={count}
           currentPage={pageState}
-          labelGoToPage={labelGoToPage}
+          labelGoToPage={_labelGoToPage}
           labelPrevious={labelPrevious}
           labelNext={labelNext}
           pageSize={pageSizeState}
@@ -286,7 +290,7 @@ export const PaginatorNav: React.FC<PaginatorNavProps> = ({
           <Button
             active={currentPage === 1}
             aria-label={intl.formatMessage(
-              createMessageDescriptor(_labelGoToPage) as MessageDescriptor,
+              createMessageDescriptor(_labelGoToPage),
               { page: 1 },
             )}
             aria-current={currentPage === 1}
@@ -320,7 +324,7 @@ export const PaginatorNav: React.FC<PaginatorNavProps> = ({
             active={currentPage === page}
             aria-current={currentPage === page}
             aria-label={intl.formatMessage(
-              createMessageDescriptor(_labelGoToPage) as MessageDescriptor,
+              createMessageDescriptor(_labelGoToPage),
               { page },
             )}
             className="mykn-paginator__button mykn-paginator__button--page"
@@ -352,7 +356,7 @@ export const PaginatorNav: React.FC<PaginatorNavProps> = ({
             active={currentPage === pageCount}
             aria-current={currentPage === pageCount}
             aria-label={intl.formatMessage(
-              createMessageDescriptor(_labelGoToPage) as MessageDescriptor,
+              createMessageDescriptor(_labelGoToPage),
               { page: pageCount },
             )}
             className="mykn-paginator__button mykn-paginator__button--page"
