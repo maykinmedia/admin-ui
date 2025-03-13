@@ -7,9 +7,10 @@ import ReactDatePicker, {
 } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-import { formatMessage, useIntl } from "../../../lib";
+import { createMessageDescriptor, useIntl } from "../../../lib";
 import { eventFactory } from "../eventFactory";
 import "./datepicker.scss";
+import { TRANSLATIONS } from "./translations";
 
 export type DatePickerDate = Date | null;
 export type DatePickerDateRange = (Date | null)[];
@@ -234,130 +235,72 @@ export const DatePicker: React.FC<DatePickerProps> = ({
   // intl context
   const context = { name: name || "", value: value2string(valueState) };
 
-  const _labelNextYear = labelNextYear
-    ? formatMessage(labelNextYear, context)
-    : intl.formatMessage(
-        {
-          id: "mykn.components.DatePicker.labelNextYear",
-          description:
-            "mykn.components.DatePicker: The datepicker next year label",
-          defaultMessage: "Volgend jaar",
-        },
-        context,
-      );
+  const _labelNextYear = intl.formatMessage(
+    createMessageDescriptor(labelNextYear, TRANSLATIONS.LABEL_NEXT_YEAR),
+    context,
+  );
 
-  const _labelPreviousYear = labelPreviousYear
-    ? formatMessage(labelPreviousYear, context)
-    : intl.formatMessage(
-        {
-          id: "mykn.components.DatePicker.labelPreviousYear",
-          description:
-            "mykn.components.DatePicker: The datepicker previous year label",
-          defaultMessage: "Vorig jaar",
-        },
-        context,
-      );
+  const _labelPreviousYear = intl.formatMessage(
+    createMessageDescriptor(
+      labelPreviousYear,
+      TRANSLATIONS.LABEL_PREVIOUS_YEAR,
+    ),
+    context,
+  );
 
-  const _labelNextMonth = labelNextMonth
-    ? formatMessage(labelNextMonth, context)
-    : intl.formatMessage(
-        {
-          id: "mykn.components.DatePicker.labelNextMonth",
-          description:
-            "mykn.components.DatePicker: The datepicker next month label",
-          defaultMessage: "Volgende maand",
-        },
-        context,
-      );
+  const _labelNextMonth = intl.formatMessage(
+    createMessageDescriptor(labelNextMonth, TRANSLATIONS.LABEL_NEXT_MONTH),
+    context,
+  );
 
-  const _labelPreviousMonth = labelPreviousMonth
-    ? formatMessage(labelPreviousMonth, context)
-    : intl.formatMessage(
-        {
-          id: "mykn.components.DatePicker.labelPreviousMonth",
-          description:
-            "mykn.components.DatePicker: The datepicker previous month label",
-          defaultMessage: "Vorige maand",
-        },
-        context,
-      );
+  const _labelPreviousMonth = intl.formatMessage(
+    createMessageDescriptor(
+      labelPreviousMonth,
+      TRANSLATIONS.LABEL_PREVIOUS_MONTH,
+    ),
+    context,
+  );
 
-  const _labelClose = labelClose
-    ? formatMessage(labelClose, context)
-    : intl.formatMessage(
-        {
-          id: "mykn.components.DatePicker.labelClose",
-          description: "mykn.components.DatePicker: The datepicker close label",
-          defaultMessage: "Sluiten",
-        },
-        context,
-      );
+  const _labelClose = intl.formatMessage(
+    createMessageDescriptor(labelClose, TRANSLATIONS.LABEL_CLOSE),
+    context,
+  );
 
-  const _labelChooseDayPrefix = labelChooseDayPrefix
-    ? formatMessage(labelChooseDayPrefix, context)
-    : intl.formatMessage(
-        {
-          id: "mykn.components.DatePicker.labelChooseDayPrefix",
-          description: "mykn.components.DatePicker: The choose day prefix",
-          defaultMessage: "Kies dag",
-        },
-        context,
-      );
+  const _labelChooseDayPrefix = intl.formatMessage(
+    createMessageDescriptor(
+      labelChooseDayPrefix,
+      TRANSLATIONS.LABEL_CHOOSE_DAY_PREFIX,
+    ),
+    context,
+  );
 
-  const _labelDisabledDayPrefix = labelDisabledDayPrefix
-    ? formatMessage(labelDisabledDayPrefix, context)
-    : intl.formatMessage(
-        {
-          id: "mykn.components.DatePicker.labelDisabledDayPrefix",
-          description: "mykn.components.DatePicker: The disabled day prefix",
-          defaultMessage: "Uitgeschakelde dag",
-        },
-        context,
-      );
+  const _labelDisabledDayPrefix = intl.formatMessage(
+    createMessageDescriptor(
+      labelDisabledDayPrefix,
+      TRANSLATIONS.LABEL_DISABLED_DAY_PREFIX,
+    ),
+    context,
+  );
 
-  const _labelMonthPrefix = labelMonthPrefix
-    ? formatMessage(labelMonthPrefix, context)
-    : intl.formatMessage(
-        {
-          id: "mykn.components.DatePicker.labelMonthPrefix",
-          description: "mykn.components.DatePicker: The month prefix",
-          defaultMessage: "maand ",
-        },
-        context,
-      );
+  const _labelMonthPrefix = intl.formatMessage(
+    createMessageDescriptor(labelMonthPrefix, TRANSLATIONS.LABEL_MONTH_PREFIX),
+    context,
+  );
 
-  const _labelWeekPrefix = labelWeekPrefix
-    ? formatMessage(labelWeekPrefix, context)
-    : intl.formatMessage(
-        {
-          id: "mykn.components.DatePicker.labelWeekPrefix",
-          description: "mykn.components.DatePicker: The week prefix",
-          defaultMessage: "week ",
-        },
-        context,
-      );
+  const _labelWeekPrefix = intl.formatMessage(
+    createMessageDescriptor(labelWeekPrefix, TRANSLATIONS.LABEL_WEEK_PREFIX),
+    context,
+  );
 
-  const _labelTimeInput = labelTimeInput
-    ? formatMessage(labelTimeInput, context)
-    : intl.formatMessage(
-        {
-          id: "mykn.components.DatePicker.labelTimeInput",
-          description: "mykn.components.DatePicker: The time input label",
-          defaultMessage: "Kies tijd: ",
-        },
-        context,
-      );
+  const _labelTimeInput = intl.formatMessage(
+    createMessageDescriptor(labelTimeInput, TRANSLATIONS.LABEL_TIME_INPUT),
+    context,
+  );
 
-  const _labelWeek = labelWeek
-    ? formatMessage(labelWeek, context)
-    : intl.formatMessage(
-        {
-          id: "mykn.components.DatePicker.labelWeek",
-          description: "mykn.components.DatePicker: The week label",
-          defaultMessage: "Week",
-        },
-        context,
-      );
+  const _labelWeek = intl.formatMessage(
+    createMessageDescriptor(labelWeek, TRANSLATIONS.LABEL_WEEK),
+    context,
+  );
 
   return (
     <>

@@ -2,10 +2,14 @@ import React, { useContext } from "react";
 
 import { Body, Card, Form, FormProps, Hr, Logo } from "../../components";
 import { ConfigContext } from "../../contexts";
-import { SerializedFormData } from "../../lib";
-import { ucFirst } from "../../lib/format/string";
-import { useIntl } from "../../lib/i18n/useIntl";
+import {
+  SerializedFormData,
+  createMessageDescriptor,
+  ucFirst,
+  useIntl,
+} from "../../lib";
 import { BaseTemplate, BaseTemplateProps } from "../base";
+import { TRANSLATIONS } from "./translations";
 
 export type LoginTemplateProps<
   T extends SerializedFormData = SerializedFormData,
@@ -46,21 +50,13 @@ export const LoginTemplate = <
   const { logo: CustomLogo } = useContext(ConfigContext);
   const intl = useIntl();
 
-  const _labelLogin = labelLogin
-    ? labelLogin
-    : intl.formatMessage({
-        id: "mykn.templates.Login.labelLogin",
-        description: "templates.Login: The login button label",
-        defaultMessage: "inloggen",
-      });
+  const _labelLogin = intl.formatMessage(
+    createMessageDescriptor(labelLogin, TRANSLATIONS.LABEL_LOGIN),
+  );
 
-  const _labelOidcLogin = labelOidcLogin
-    ? labelOidcLogin
-    : intl.formatMessage({
-        id: "mykn.templates.Login.labelOidcLogin",
-        description: "templates.Login: The label for the OIDC login button.",
-        defaultMessage: "Inloggen met organisatie account",
-      });
+  const _labelOidcLogin = intl.formatMessage(
+    createMessageDescriptor(labelOidcLogin, TRANSLATIONS.LABEL_OIDC_LOGIN),
+  );
 
   const secondaryActions = [];
   if (urlOidcLogin)

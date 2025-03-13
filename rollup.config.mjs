@@ -49,7 +49,8 @@ export default [
           })
         ]
       }),
-      terser()
+      terser(),
+      json()
     ]
 
   },
@@ -60,6 +61,6 @@ export default [
   //   external: [/\.scss$/],
   //   plugins: [dts()]
   // },
-  { input: "src/lib/i18n/compiled/en.json", output: { dir: "dist/esm/lib/i18n/compiled",  }, plugins: [json()] },
+  { input: "src/lib/i18n/compiled/en.json", output: { dir: "dist/esm/lib/i18n/compiled" }, plugins: [json()] },
   { input: "src/lib/i18n/compiled/nl.json", output: { dir: "dist/esm/lib/i18n/compiled" }, plugins: [json()] }
 ];

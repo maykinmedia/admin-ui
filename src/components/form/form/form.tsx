@@ -2,7 +2,7 @@ import clsx from "clsx";
 import React, { FormEvent, useContext, useEffect, useState } from "react";
 
 import { ConfigContext } from "../../../contexts";
-import { ucFirst } from "../../../lib";
+import { stringifyContext, ucFirst } from "../../../lib";
 import { useIntl } from "../../../lib";
 import { FormField } from "../../../lib";
 import {
@@ -278,7 +278,7 @@ export const Form = <T extends SerializedFormData = SerializedFormData>({
               ? labelValidationErrorRequired
               : intl.formatMessage(
                   TRANSLATIONS.LABEL_VALIDATION_ERROR_REQUIRED,
-                  { ...field, label, value },
+                  stringifyContext({ ...field, label, value }),
                 );
 
             const error = getErrorFromErrors(fields, errorsState, field);

@@ -1,14 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
+import { MessageDescriptor } from "react-intl";
 
-import { ucFirst } from "../../../lib";
-import { formatMessage } from "../../../lib";
-import { useIntl } from "../../../lib";
+import { createMessageDescriptor, ucFirst, useIntl } from "../../../lib";
 import { Button } from "../../button";
 import { Option, Select, SelectProps } from "../../form";
 import { Outline } from "../../icon";
 import { Toolbar } from "../../toolbar";
 import { P } from "../../typography";
 import "./paginator.scss";
+import { TRANSLATIONS } from "./translations";
 
 export type PaginatorProps = React.HTMLAttributes<HTMLElement> & {
   /** The total number of results (items not pages). */
@@ -110,17 +110,10 @@ export const Paginator: React.FC<PaginatorProps> = ({
 
   const intl = useIntl();
 
-  const _labelPagination = labelPagination
-    ? formatMessage(labelPagination, context)
-    : intl.formatMessage(
-        {
-          id: "mykn.components.Paginator.labelPagination",
-          description:
-            "mykn.components.Paginator: The pagination (accessible) label",
-          defaultMessage: "paginering",
-        },
-        context,
-      );
+  const _labelPagination = intl.formatMessage(
+    createMessageDescriptor(labelPagination, TRANSLATIONS.LABEL_PAGINATION),
+    context,
+  );
 
   useEffect(() => setPageState(page), [page]);
   useEffect(() => setPageSizeState(pageSize), [pageSize]);
@@ -260,41 +253,19 @@ export const PaginatorNav: React.FC<PaginatorNavProps> = ({
     nextPage,
   };
 
-  const _labelPrevious = labelPrevious
-    ? formatMessage(labelPrevious, context)
-    : intl.formatMessage(
-        {
-          id: "mykn.components.Paginator.labelPrevious",
-          description:
-            "mykn.components.Paginator: The go to previous page (accessible) label",
-          defaultMessage: "vorige",
-        },
-        context,
-      );
+  const _labelPrevious = intl.formatMessage(
+    createMessageDescriptor(labelPrevious, TRANSLATIONS.LABEL_PREVIOUS),
+    context,
+  );
+  const _labelNext = intl.formatMessage(
+    createMessageDescriptor(labelNext, TRANSLATIONS.LABEL_NEXT),
+    context,
+  );
 
-  const _labelNext = labelNext
-    ? formatMessage(labelNext, context)
-    : intl.formatMessage(
-        {
-          id: "mykn.components.Paginator.labelNext",
-          description:
-            "mykn.components.Paginator: The go to next page (accessible) label",
-          defaultMessage: "volgende",
-        },
-        context,
-      );
-
-  const _labelGoToPage = labelGoToPage
-    ? formatMessage(labelGoToPage, context)
-    : intl.formatMessage(
-        {
-          id: "mykn.components.Paginator.labelGoToPage",
-          description:
-            "mykn.components.Paginator: The go to page (accessible) label",
-          defaultMessage: "naar pagina {page}",
-        },
-        context,
-      );
+  const _labelGoToPage = intl.formatMessage(
+    createMessageDescriptor(labelGoToPage, TRANSLATIONS.LABEL_GO_TO_PAGE),
+    { ...context, page: "{page}" },
+  );
 
   return (
     <Toolbar directionResponsive={false} pad={false} variant="transparent">
@@ -314,7 +285,10 @@ export const PaginatorNav: React.FC<PaginatorNavProps> = ({
         <>
           <Button
             active={currentPage === 1}
-            aria-label={formatMessage(_labelGoToPage, { page: 1 })}
+            aria-label={intl.formatMessage(
+              createMessageDescriptor(_labelGoToPage) as MessageDescriptor,
+              { page: 1 },
+            )}
             aria-current={currentPage === 1}
             className="mykn-paginator__button mykn-paginator__button--page"
             size="xs"
@@ -345,7 +319,10 @@ export const PaginatorNav: React.FC<PaginatorNavProps> = ({
             key={page}
             active={currentPage === page}
             aria-current={currentPage === page}
-            aria-label={formatMessage(_labelGoToPage, { page })}
+            aria-label={intl.formatMessage(
+              createMessageDescriptor(_labelGoToPage) as MessageDescriptor,
+              { page },
+            )}
             className="mykn-paginator__button mykn-paginator__button--page"
             size="xs"
             square
@@ -374,7 +351,10 @@ export const PaginatorNav: React.FC<PaginatorNavProps> = ({
           <Button
             active={currentPage === pageCount}
             aria-current={currentPage === pageCount}
-            aria-label={formatMessage(_labelGoToPage, { page: pageCount })}
+            aria-label={intl.formatMessage(
+              createMessageDescriptor(_labelGoToPage) as MessageDescriptor,
+              { page: pageCount },
+            )}
             className="mykn-paginator__button mykn-paginator__button--page"
             size="xs"
             square
@@ -436,30 +416,18 @@ export const PaginatorMeta: React.FC<PaginatorMetaProps> = ({
     pageSize,
   };
 
-  const _labelCurrentPageRange = labelCurrentPageRange
-    ? formatMessage(labelCurrentPageRange, context)
-    : intl.formatMessage(
-        {
-          id: "mykn.components.Paginator.labelCurrentPageRange",
-          description:
-            "mykn.components.Paginator: The current page range (accessible) label",
-          defaultMessage:
-            "resultaat {pageStart} t/m {pageEnd} van {pageCount} pagina's",
-        },
-        context,
-      );
+  const _labelCurrentPageRange = intl.formatMessage(
+    createMessageDescriptor(
+      labelCurrentPageRange,
+      TRANSLATIONS.LABEL_CURRENT_PAGE_RANGE,
+    ),
+    context,
+  );
 
-  const _labelLoading = labelLoading
-    ? formatMessage(labelLoading, context)
-    : intl.formatMessage(
-        {
-          id: "mykn.components.Paginator.labelLoading",
-          description:
-            "mykn.components.Paginator: The loading (accessible) label",
-          defaultMessage: "bezig met laden...",
-        },
-        context,
-      );
+  const _labelLoading = intl.formatMessage(
+    createMessageDescriptor(labelLoading, TRANSLATIONS.LABEL_LOADING),
+    context,
+  );
 
   return (
     <>
@@ -501,17 +469,10 @@ export const PaginatorOptions: React.FC<PaginatorOptionsProps> = ({
     pageSize,
   };
 
-  const _labelPageSize = labelPageSize
-    ? formatMessage(labelPageSize, context)
-    : intl.formatMessage(
-        {
-          id: "mykn.components.Paginator.labelPageSize",
-          description:
-            "mykn.components.Paginator: The page size (accessible) label",
-          defaultMessage: "aantal resultaten",
-        },
-        context,
-      );
+  const _labelPageSize = intl.formatMessage(
+    createMessageDescriptor(labelPageSize, TRANSLATIONS.LABEL_PAGE_SIZE),
+    context,
+  );
 
   return (
     <>

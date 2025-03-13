@@ -1,4 +1,4 @@
-import { Meta } from '@storybook/blocks';
+import { Meta } from "@storybook/blocks";
 
 <Meta title="Manual/Internationalization"/>
 
@@ -8,68 +8,96 @@ Messages provided by Admin-ui can be translated, by default: translations for Du
 
 ## Providing translations
 
-This UI library supports the following for scenarios:
+Admin-UI supports the following for scenarios:
 
 - An application with extensive Internationalization support
-  (using [react-intl](https://formatjs.io/docs/react-intl/).
+  (using [react-intl](https://formatjs.io/docs/react-intl/)).
 
 - An application with basic Internationalization using translates labels
-  passed as props.
+  passed as props (these take precedence over react-intl).
 
 - No internalisation (default messages only).
 
-**Extensive Internationalization support (using [react-intl](https://formatjs.io/docs/react-intl/))**
+*NOTE: The locale is resolved using `<html lang="nl">` attribute.*
 
-If react-intl is installed and `IntlContext` is provided by `<IntlProvider>`, this library will attempt to use it to
-obtain messages from it given that the messages are not explicitly provided using props (which takes precedence).
+**Extensive Internationalization support (using react-intl)**
 
-The (compiled) messages are made available as JSON file in the dist/messages folder. The messages should be provided to
-`<IntlProvider>`.
+React-intl is used internally to extract and format messages. Messages are made available in th `dist/esm/lib/i18n/compiled/`
+folder. If `<IntlProvider>` is made available in the component tree, and contains a valid `IntlContext`: it's  messages
+are used override the default messages allowing custom translations to be passed. The messages set in `IntlContext.messages`
+can be a subset of the available messages. If a message is missing from the context, the default is used.
 
 
 **Internationalization using translates labels passed as props**
 
-For basic use cased, translations can be passed using props. Please refer to the specific components for labels
-available for translations.
+For basic use cases, translations can be passed using props. Please refer to the specific components for labels
+available for translation.
 
 
-**No internalisation (default messages only)**
+**No Internationalization (default messages only)**
 
-If react-intl is not installed or using `IntlContext` fails, a fallback implementation is used for providing translations.
+If `<IntlProvider>` is not available, or if no `IntlContext` is set (and no label is passed as prop): the factory message
+is used as translation.
 
 
 ## Managing translations
 
 **Providing translatable strings (during development)**
 
-Components should implement a `label<key>` prop for each translations that should take precedence if it's passed. If
-it's left empty, a translation should be obtained using the `src/lib/i18n/useIntl.tsx` `useIntl`. This hook will return
-the correct "intl" implementation based on whether react-intl is available.
+Components that contain translatable strings should:
 
-`useIntl` take a locale as optional argument, if it's not set, an attempt is made for the body's `lang` attribute to be
- used as locale. If no locale can be resolved "nl" is the default  value.
+- Implement a `label<key>` prop for each translation.
+- Implement a `translations.ts` file that calls react-intl's `defineMessages` function passing the default messages.
+- Use `useIntl` from `src/lib/i18n/useIntl.ts` instead of the react-intl hook (which breaks without `<IntlProvider>`).
+- Use `createMessageDescriptor` from `src/lib/i18n/utils.ts` to return the correct message.
+- Use `intl.formatMessage` to get the correctly formatted message.
+- Optionally pass a context to `intl.formatMessage`.
+- Use the resulting output as label.
 
- For pragmatic reasons: translation labels should be written in Dutch and should provide an explicit id. Also: the
- description should identify the component and description of the prop.
+Example (`translations.ts`):
 
-```tsx
-const intl = useIntl("en");  // locale can be left empty.
+```ts
+import { defineMessages } from "react-intl";
 
-
-// labelTrue is a prop.
-// _labelTrue is the rendered string.
-const _labelTrue =
-  labelTrue ||
-  intl.formatMessage({
-    id: "mykn.components.Bool.labelTrue",
-    description: "mykn.components.Bool: The accessible label when value is truthy",
-    defaultMessage: "ja",
-  });
+export const TRANSLATIONS = defineMessages({
+  LABEL_FOO: {
+    id: "mykn.components.MyComponent.labelFoo",
+    description:
+      "mykn.components.MyComponent: Example label",
+    defaultMessage: "{foo} bar"
+  }
+});
 ```
 
-**Extracting and compiling messages (before build)**
+Example (component file):
 
-Messages can be extracted by running `npm run makemessages` after which they end up in src/lib/i18n/messages, they can
+```ts
+import { createMessageDescriptor, useIntl } from "../../lib";
+import { P } from "../typography";
+import { TRANSLATIONS } from "./translations";
+
+
+export type MyComponentProps = {
+  labelFoo?: string;
+};
+
+export function MyComponent({ labelFoo }: MyComponentProps) {
+  const intl = useIntl();
+  const context = { foo: "foo" };
+
+  const _labelFoo = intl.formatMessage(
+    createMessageDescriptor(labelFoo, TRANSLATIONS.LABEL_FOO),
+    context,
+  );
+
+  return <P>{_labelFoo}</P>;
+}
+```
+
+
+## Extracting and compiling messages (before build)
+
+Messages can be extracted by running `npm run makemessages` after which they end up in `src/lib/i18n/messages`, they can
 be compiled after translation using `npm run compilemessages`.
 
 Copying the messages to the dist folder should be handled as part of the `npm run build` command. This allows

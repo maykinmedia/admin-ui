@@ -1,11 +1,11 @@
 import clsx from "clsx";
 import React from "react";
 
-import { Outline } from "../../components/icon";
-import { ucFirst } from "../../lib/format/string";
-import { useIntl } from "../../lib/i18n/useIntl";
+import { createMessageDescriptor, ucFirst, useIntl } from "../../lib";
+import { Outline } from "../icon";
 import { P, PProps } from "../typography";
 import "./bool.scss";
+import { TRANSLATIONS } from "./translations";
 
 export type BoolProps = {
   /** The value. */
@@ -44,22 +44,13 @@ export const Bool: React.FC<BoolProps> = ({
   ...props
 }) => {
   const intl = useIntl();
-  const _labelTrue =
-    labelTrue ||
-    intl.formatMessage({
-      id: "mykn.components.Bool.labelTrue",
-      description:
-        "mykn.components.Bool: The accessible label when value is truthy",
-      defaultMessage: "ja",
-    });
-  const _labelFalse =
-    labelFalse ||
-    intl.formatMessage({
-      id: "mykn.components.Bool.labelFalse",
-      description:
-        "mykn.components.Bool: The accessible label when value is falsy",
-      defaultMessage: "nee",
-    });
+
+  const _labelTrue = intl.formatMessage(
+    createMessageDescriptor(labelTrue, TRANSLATIONS.LABEL_TRUE),
+  );
+  const _labelFalse = intl.formatMessage(
+    createMessageDescriptor(labelFalse, TRANSLATIONS.LABEL_FALSE),
+  );
 
   if (!decorate) {
     const label = ucFirst(value ? _labelTrue : _labelFalse);

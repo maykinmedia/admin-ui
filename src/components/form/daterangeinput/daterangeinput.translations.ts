@@ -1,5 +1,4 @@
-// Define the structure of a single message descriptor
-import { defineMessages } from "../../../lib";
+import { defineMessages } from "react-intl";
 
 export const TRANSLATIONS = defineMessages({
   LABEL_START_DATE: {

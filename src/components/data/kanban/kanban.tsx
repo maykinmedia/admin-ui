@@ -3,14 +3,13 @@ import React, { useEffect, useState } from "react";
 import {
   DEFAULT_URL_FIELDS,
   FieldSet,
-  formatMessage,
+  GroupedDataProps,
+  createMessageDescriptor,
+  getContextData,
   string2Title,
+  stringifyContext,
   useIntl,
 } from "../../../lib";
-import {
-  GroupedDataProps,
-  getContextData,
-} from "../../../lib/data/groupeddata";
 import { Badge } from "../../badge";
 import { Button, ButtonLink, ButtonLinkProps, ButtonProps } from "../../button";
 import { Card } from "../../card";
@@ -21,6 +20,7 @@ import { Toolbar, ToolbarProps } from "../../toolbar";
 import { Body, H2, H3, Hr, P } from "../../typography";
 import { Value } from "../value";
 import "./kanban.scss";
+import { TRANSLATIONS } from "./translations";
 
 export type KanbanProps<T extends object = object> = GroupedDataProps<T> & {
   /** If set, items are `draggable` allowing the user to rearrange them (across) columns). */
@@ -416,29 +416,19 @@ export const KanbanItem = <T extends object = object>({
 }: KanbanItemProps<T>) => {
   const intl = useIntl();
 
-  const _labelSelectColumn = labelSelectColumn
-    ? formatMessage(labelSelectColumn, object)
-    : intl.formatMessage(
-        {
-          id: "mykn.components.Kanban.labelSelectColumn",
-          description:
-            'mykn.components.Kanban: The kanban "change column" (accessible) label',
-          defaultMessage: "verplaats onderdeel naar kolom",
-        },
-        object as Record<string, string>,
-      );
+  const _labelSelectColumn = intl.formatMessage(
+    createMessageDescriptor(
+      labelSelectColumn,
+      TRANSLATIONS.LABEL_SELECT_COLUMN,
+    ),
+    stringifyContext(object),
+  );
 
-  const _labelMoveObject = labelMoveObject
-    ? formatMessage(labelMoveObject, object)
-    : intl.formatMessage(
-        {
-          id: "mykn.components.Kanban.labelMoveObject",
-          description:
-            'mykn.components.Kanban: The kanban "move object position" (accessible) label',
-          defaultMessage: "wijzig positie van onderdeel",
-        },
-        object as Record<string, string>,
-      );
+  const _labelMoveObject = intl.formatMessage(
+    createMessageDescriptor(labelMoveObject, TRANSLATIONS.LABEL_MOVE_OBJECT),
+    stringifyContext(object),
+  );
+
   const titleField = fieldset[1].title || Object.keys(object)[0];
   const urlField = urlFields.find((f) => object[f as keyof T]);
 

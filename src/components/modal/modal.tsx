@@ -1,12 +1,13 @@
 import clsx from "clsx";
 import React, { useEffect, useRef, useState } from "react";
 
-import { formatMessage, isPrimitive, useIntl } from "../../lib";
+import { createMessageDescriptor, isPrimitive, useIntl } from "../../lib";
 import { ButtonProps } from "../button";
 import { Card } from "../card";
 import { Outline } from "../icon";
 import { H2 } from "../typography";
 import "./modal.scss";
+import { TRANSLATIONS } from "./translations";
 
 export type ModalProps = Omit<React.ComponentProps<"dialog">, "title"> & {
   allowClose?: boolean;
@@ -37,6 +38,15 @@ export const Modal: React.FC<ModalProps> = ({
   const [openState, setOpenState] = useState<ModalProps["open"]>(false);
   const dialogRef = useRef<HTMLDialogElement>(null);
   const intl = useIntl();
+
+  const context = {
+    open: Boolean(openState),
+  };
+
+  const _labelClose = intl.formatMessage(
+    createMessageDescriptor(labelClose, TRANSLATIONS.LABEL_CLOSE),
+    context,
+  );
 
   useEffect(() => {
     if (open) {
@@ -81,22 +91,6 @@ export const Modal: React.FC<ModalProps> = ({
     }
     e.preventDefault();
   };
-
-  const context = {
-    open: Boolean(openState),
-  };
-
-  const _labelClose = labelClose
-    ? formatMessage(labelClose, context)
-    : intl.formatMessage(
-        {
-          id: "mykn.components.Modal.labelClose",
-          description:
-            "mykn.components.Modal: The modal close (accessible) label",
-          defaultMessage: "Sluiten",
-        },
-        context,
-      );
 
   const controls: ButtonProps[] | undefined = allowClose
     ? [
