@@ -38,8 +38,8 @@ export const Bool: React.FC<BoolProps> = ({
   decorate = true,
   explicit = false,
   value,
-  labelTrue = "",
-  labelFalse = "",
+  labelTrue,
+  labelFalse,
   pProps,
   ...props
 }) => {
