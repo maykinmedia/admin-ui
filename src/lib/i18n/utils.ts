@@ -8,20 +8,15 @@ import { MessageDescriptor } from "react-intl";
  * @param fallback
  */
 export function createMessageDescriptor(
-  message: string,
-  fallback?: MessageDescriptor,
-): MessageDescriptor;
-export function createMessageDescriptor(
-  message: string | undefined,
-  fallback: MessageDescriptor,
-): MessageDescriptor;
-export function createMessageDescriptor(
-  message: string | undefined,
-  fallback?: MessageDescriptor,
+  ...args:
+    | [message: string]
+    | [message: string | undefined, fallback: MessageDescriptor]
 ): MessageDescriptor {
-  return typeof message === "undefined"
-    ? fallback!
-    : { id: message || "foo", defaultMessage: message };
+  const [message, fallback] = args;
+  if (typeof message !== "undefined") {
+    return { id: message, defaultMessage: message };
+  }
+  return fallback!;
 }
 
 /**
