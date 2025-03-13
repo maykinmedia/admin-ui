@@ -48,10 +48,7 @@ Components that contain translatable strings should:
 
 - Implement a `label<key>` prop for each translation.
 - Implement a `translations.ts` file that calls react-intl's `defineMessages` function passing the default messages.
-- Use `useIntl` from `src/lib/i18n/useIntl.ts` instead of the react-intl hook (which breaks without `<IntlProvider>`).
-- Use `createMessageDescriptor` from `src/lib/i18n/utils.ts` to return the correct message.
-- Use `intl.formatMessage` to get the correctly formatted message.
-- Optionally pass a context to `intl.formatMessage`.
+- Use `gettextFirst` from `src/lib/i18n/gettext.ts` to obtain the translated string.
 - Use the resulting output as label.
 
 Example (`translations.ts`):
@@ -72,7 +69,7 @@ export const TRANSLATIONS = defineMessages({
 Example (component file):
 
 ```ts
-import { createMessageDescriptor, useIntl } from "../../lib";
+import { gettextFirst } from "../../../lib";
 import { P } from "../typography";
 import { TRANSLATIONS } from "./translations";
 
@@ -82,17 +79,23 @@ export type MyComponentProps = {
 };
 
 export function MyComponent({ labelFoo }: MyComponentProps) {
-  const intl = useIntl();
   const context = { foo: "foo" };
 
-  const _labelFoo = intl.formatMessage(
-    createMessageDescriptor(labelFoo, TRANSLATIONS.LABEL_FOO),
+  const _labelFoo = gettextFirst(
+    labelFoo,
+    TRANSLATIONS.LABEL_FOO,
     context,
   );
 
   return <P>{_labelFoo}</P>;
 }
 ```
+
+If `gettextFirst` can't be used due to the "rules of hooks":
+
+- Use `useIntl` from `src/lib/i18n/useIntl.ts` instead of the react-intl hook (which breaks without `<IntlProvider>`).
+- Use `intl.formatMessage` to get the translated string.
+- Use the resulting output as label.
 
 
 ## Extracting and compiling messages (before build)

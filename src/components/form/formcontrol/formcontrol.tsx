@@ -3,6 +3,7 @@ import React, { useId, useState } from "react";
 
 import {
   FormField,
+  gettextFirst,
   isCheckbox,
   isCheckboxGroup,
   isChoiceField,
@@ -12,7 +13,6 @@ import {
   isInput,
   isRadio,
   isRadioGroup,
-  useIntl,
 } from "../../../lib";
 import { Checkbox } from "../checkbox";
 import { ChoiceField } from "../choicefield";
@@ -80,14 +80,16 @@ export const FormControl: React.FC<FormControlProps> = ({
     isCheckboxGroup(props) || isRadioGroup(props) ? `${_id}-choice-0` : _id;
   const idError = `${id}_error`;
 
-  const intl = useIntl();
+  const _requiredIndicator = gettextFirst(
+    requiredIndicator,
+    TRANSLATIONS.REQUIRED_INDICATOR,
+  );
 
-  const _requiredIndicator =
-    requiredIndicator || intl.formatMessage(TRANSLATIONS.REQUIRED_INDICATOR);
-
-  const _labelRequired =
-    labelRequired ||
-    intl.formatMessage(TRANSLATIONS.LABEL_REQUIRED, { label: props.label });
+  const _labelRequired = gettextFirst(
+    labelRequired,
+    TRANSLATIONS.LABEL_REQUIRED,
+    { label: props.label },
+  );
 
   return (
     <div

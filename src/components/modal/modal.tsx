@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import React, { useEffect, useRef, useState } from "react";
 
-import { createMessageDescriptor, isPrimitive, useIntl } from "../../lib";
+import { gettextFirst, isPrimitive } from "../../lib";
 import { ButtonProps } from "../button";
 import { Card } from "../card";
 import { Outline } from "../icon";
@@ -37,14 +37,14 @@ export const Modal: React.FC<ModalProps> = ({
 }) => {
   const [openState, setOpenState] = useState<ModalProps["open"]>(false);
   const dialogRef = useRef<HTMLDialogElement>(null);
-  const intl = useIntl();
 
   const context = {
     open: Boolean(openState),
   };
 
-  const _labelClose = intl.formatMessage(
-    createMessageDescriptor(labelClose, TRANSLATIONS.LABEL_CLOSE),
+  const _labelClose = gettextFirst(
+    labelClose,
+    TRANSLATIONS.LABEL_CLOSE,
     context,
   );
 

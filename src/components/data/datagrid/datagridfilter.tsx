@@ -2,7 +2,6 @@ import clsx from "clsx";
 import React, { useEffect, useRef, useState } from "react";
 
 import {
-  createMessageDescriptor,
   serializeForm,
   string2Title,
   stringifyContext,
@@ -89,12 +88,12 @@ export const DataGridFilter = <
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { options, valueTransform, ...context } = field;
         const _labelFilterField = intl.formatMessage(
-          createMessageDescriptor(
-            labelFilterField,
-            TRANSLATIONS.LABEL_FILTER_FIELD,
-          ),
+          labelFilterField === undefined
+            ? TRANSLATIONS.LABEL_FILTER_FIELD
+            : { id: new String() as string, defaultMessage: labelFilterField },
           stringifyContext(context),
         );
+
         return (
           <th
             key={`${dataGridId}-filter-${string2Title(field.name.toString(), { lowerCase: false })}`}

@@ -2,12 +2,7 @@ import React, { useContext } from "react";
 
 import { Body, Card, Form, FormProps, Hr, Logo } from "../../components";
 import { ConfigContext } from "../../contexts";
-import {
-  SerializedFormData,
-  createMessageDescriptor,
-  ucFirst,
-  useIntl,
-} from "../../lib";
+import { SerializedFormData, gettextFirst, ucFirst } from "../../lib";
 import { BaseTemplate, BaseTemplateProps } from "../base";
 import { TRANSLATIONS } from "./translations";
 
@@ -48,14 +43,11 @@ export const LoginTemplate = <
   ...props
 }: LoginTemplateProps<T>) => {
   const { logo: CustomLogo } = useContext(ConfigContext);
-  const intl = useIntl();
 
-  const _labelLogin = intl.formatMessage(
-    createMessageDescriptor(labelLogin, TRANSLATIONS.LABEL_LOGIN),
-  );
-
-  const _labelOidcLogin = intl.formatMessage(
-    createMessageDescriptor(labelOidcLogin, TRANSLATIONS.LABEL_OIDC_LOGIN),
+  const _labelLogin = gettextFirst(labelLogin, TRANSLATIONS.LABEL_LOGIN);
+  const _labelOidcLogin = gettextFirst(
+    labelOidcLogin,
+    TRANSLATIONS.LABEL_OIDC_LOGIN,
   );
 
   const secondaryActions = [];

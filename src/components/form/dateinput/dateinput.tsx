@@ -6,12 +6,7 @@ import React, {
   useState,
 } from "react";
 
-import {
-  createMessageDescriptor,
-  date2DateString,
-  useIntl,
-  value2Date,
-} from "../../../lib/";
+import { date2DateString, gettextFirst, value2Date } from "../../../lib/";
 import { eventFactory } from "../eventFactory";
 import { Input, InputProps } from "../input";
 import "./dateinput.scss";
@@ -98,27 +93,21 @@ export const DateInput: React.FC<DateInputProps> = ({
   const [sanitizedValuesState, setSanitizedValuesState] = useState<
     SanitizedValues | undefined
   >();
-  const intl = useIntl();
-
-  const _labelDate = intl.formatMessage(
-    createMessageDescriptor(labelDate, TRANSLATIONS.LABEL_DATE),
-    {},
-  );
-  const _placeholderDate = intl.formatMessage(
-    createMessageDescriptor(placeholderDate, TRANSLATIONS.PLACEHOLDER_DATE),
+  const _labelDate = gettextFirst(labelDate, TRANSLATIONS.LABEL_DATE);
+  const _placeholderDate = gettextFirst(
+    placeholderDate,
+    TRANSLATIONS.PLACEHOLDER_DATE,
   );
 
-  const _labelMonth = intl.formatMessage(
-    createMessageDescriptor(labelMonth, TRANSLATIONS.LABEL_MONTH),
+  const _labelMonth = gettextFirst(labelMonth, TRANSLATIONS.LABEL_MONTH);
+  const _placeholderMonth = gettextFirst(
+    placeholderMonth,
+    TRANSLATIONS.PLACEHOLDER_MONTH,
   );
-  const _placeholderMonth = intl.formatMessage(
-    createMessageDescriptor(placeholderMonth, TRANSLATIONS.PLACEHOLDER_MONTH),
-  );
-  const _labelYear = intl.formatMessage(
-    createMessageDescriptor(labelYear, { id: "foo", defaultMessage: "bar" }),
-  );
-  const _placeholderYear = intl.formatMessage(
-    createMessageDescriptor(placeholderYear, TRANSLATIONS.PLACEHOLDER_YEAR),
+  const _labelYear = gettextFirst(labelYear, TRANSLATIONS.LABEL_YEAR);
+  const _placeholderYear = gettextFirst(
+    placeholderYear,
+    TRANSLATIONS.PLACEHOLDER_YEAR,
   );
 
   /**

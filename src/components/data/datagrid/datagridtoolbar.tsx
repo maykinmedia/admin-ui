@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
 
 import {
-  createMessageDescriptor,
+  gettextFirst,
   serializeForm,
   string2Title,
   ucFirst,
-  useIntl,
 } from "../../../lib";
 import { ButtonProps } from "../../button";
 import { Form } from "../../form";
@@ -25,7 +24,6 @@ export const DataGridToolbar = <
   F extends object = T,
 >() => {
   const { toolbarRef } = useDataGridContext<T, F>();
-  const intl = useIntl();
   const [selectFieldsModalState, setSelectFieldsModalState] = useState(false);
   const [selectFieldsActiveState, setSelectFieldsActiveState] = useState<
     Record<string, boolean>
@@ -61,19 +59,15 @@ export const DataGridToolbar = <
     open: Boolean(selectFieldsModalState),
   };
 
-  const _labelSelectFields = intl.formatMessage(
-    createMessageDescriptor(
-      labelSelectFields,
-      TRANSLATIONS.LABEL_SELECT_FIELDS,
-    ),
+  const _labelSelectFields = gettextFirst(
+    labelSelectFields,
+    TRANSLATIONS.LABEL_SELECT_FIELDS,
     context,
   );
 
-  const _labelSaveFieldSelection = intl.formatMessage(
-    createMessageDescriptor(
-      labelSaveFieldSelection,
-      TRANSLATIONS.LABEL_SAVE_FIELD_SELECTION,
-    ),
+  const _labelSaveFieldSelection = gettextFirst(
+    labelSaveFieldSelection,
+    TRANSLATIONS.LABEL_SAVE_FIELD_SELECTION,
     context,
   );
 

@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import React from "react";
 
-import { createMessageDescriptor, ucFirst, useIntl } from "../../lib";
+import { gettextFirst, ucFirst } from "../../lib";
 import { Outline } from "../icon";
 import { P, PProps } from "../typography";
 import "./bool.scss";
@@ -43,14 +43,8 @@ export const Bool: React.FC<BoolProps> = ({
   pProps,
   ...props
 }) => {
-  const intl = useIntl();
-
-  const _labelTrue = intl.formatMessage(
-    createMessageDescriptor(labelTrue, TRANSLATIONS.LABEL_TRUE),
-  );
-  const _labelFalse = intl.formatMessage(
-    createMessageDescriptor(labelFalse, TRANSLATIONS.LABEL_FALSE),
-  );
+  const _labelTrue = gettextFirst(labelTrue, TRANSLATIONS.LABEL_TRUE);
+  const _labelFalse = gettextFirst(labelFalse, TRANSLATIONS.LABEL_FALSE);
 
   if (!decorate) {
     const label = ucFirst(value ? _labelTrue : _labelFalse);

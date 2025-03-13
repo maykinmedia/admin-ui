@@ -17,7 +17,7 @@ import {
 import clsx from "clsx";
 import React, { useEffect } from "react";
 
-import { createMessageDescriptor, ucFirst, useIntl } from "../../../lib";
+import { gettextFirst, ucFirst } from "../../../lib";
 import { Outline, Solid } from "../../icon";
 import { ChoiceFieldProps, Option } from "../choicefield";
 import { eventFactory } from "../eventFactory";
@@ -73,7 +73,6 @@ export const Select: React.FC<SelectProps> = ({
   form,
   ...props
 }) => {
-  const intl = useIntl();
   const i18nContext = {
     name: name || "",
     placeholder: placeholder,
@@ -81,8 +80,10 @@ export const Select: React.FC<SelectProps> = ({
     value: (Array.isArray(value) ? value.join(", ") : value) as string,
     variant,
   };
-  const _labelClear = intl.formatMessage(
-    createMessageDescriptor(labelClear, TRANSLATIONS.LABEL_CLEAR),
+
+  const _labelClear = gettextFirst(
+    labelClear,
+    TRANSLATIONS.LABEL_CLEAR,
     i18nContext,
   );
 

@@ -5,11 +5,9 @@ import {
   Field,
   SerializedFormData,
   TypedField,
-  createMessageDescriptor,
   fields2TypedFields,
+  gettextFirst,
   string2Title,
-  stringifyContext,
-  useIntl,
 } from "../../../lib";
 import { Button } from "../../button";
 import { Form, FormControl, FormProps } from "../../form";
@@ -73,14 +71,11 @@ export const AttributeTable = <T extends object = object>({
   wrap = false,
   ...props
 }: AttributeTableProps<T>) => {
-  const intl = useIntl();
   const [isFormOpenState, setIsFormOpenState] = useState(false);
   const typedFields = fields2TypedFields(fields, [object], { editable });
   const _editable = Boolean(typedFields.find((f) => f.editable));
 
-  const _labelCancel = intl.formatMessage(
-    createMessageDescriptor(labelCancel, TRANSLATIONS.LABEL_CANCEL),
-  );
+  const _labelCancel = gettextFirst(labelCancel, TRANSLATIONS.LABEL_CANCEL);
 
   const renderTable = () => {
     return _editable ? (
@@ -164,7 +159,6 @@ export const AttributeTableRow = <T extends object = object>({
   onClick,
 }: AttributeTableRowProps<T>) => {
   const id = useId();
-  const intl = useIntl();
   const [isEditingState, setIsEditingState] = useState(false);
   const name = field.name;
   const fieldInObject = Object.keys(object).includes(name.toString());
@@ -182,10 +176,10 @@ export const AttributeTableRow = <T extends object = object>({
     onClick(e);
   };
 
-  const _labelEdit = intl.formatMessage(
-    createMessageDescriptor(labelEdit, TRANSLATIONS.LABEL_EDIT),
-    stringifyContext({ ...field, label: label || field.name }),
-  );
+  const _labelEdit = gettextFirst(labelEdit, TRANSLATIONS.LABEL_EDIT, {
+    ...field,
+    label: label || field.name,
+  });
 
   const renderValue = () => {
     return editable ? (
