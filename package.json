@@ -44,6 +44,7 @@
     "./contexts": "./dist/esm/contexts/index.js",
     "./hooks": "./dist/esm/hooks/index.js",
     "./lib": "./dist/esm/lib/index.js",
+    "./messages/*": "./dist/esm/lib/i18n/compiled/*.js",
     "./templates": "./dist/esm/templates/index.js",
     "./style": "./dist/esm/index.css"
   },
@@ -128,7 +129,8 @@
     "@floating-ui/react": "^0.27.5",
     "@heroicons/react": "^2.2.0",
     "clsx": "^2.1.1",
-    "react-datepicker": "^7.6.0"
+    "react-datepicker": "^7.6.0",
+    "react-intl": "^7.1.6"
   },
   "optionalDependencies": {
     "@rollup/rollup-linux-x64-gnu": "latest"

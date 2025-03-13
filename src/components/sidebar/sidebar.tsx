@@ -2,13 +2,14 @@ import clsx from "clsx";
 import React, { useContext, useEffect, useId, useState } from "react";
 
 import { ConfigContext } from "../../contexts";
-import { formatMessage, useIntl } from "../../lib";
+import { createMessageDescriptor, useIntl } from "../../lib";
 import { Button } from "../button";
 import { Card } from "../card";
 import { Outline } from "../icon";
 import { Logo, LogoProps } from "../logo";
 import { Body } from "../typography";
 import "./sidebar.scss";
+import { TRANSLATIONS } from "./translations";
 
 export type SidebarProps = React.PropsWithChildren<{
   /** The position of this component. */
@@ -54,29 +55,15 @@ export const Sidebar: React.FC<SidebarProps> = ({
   const intl = useIntl();
   const context = { expanded: expandedState };
 
-  const _labelExpand = labelExpand
-    ? formatMessage(labelExpand, { expanded: expandedState })
-    : intl.formatMessage(
-        {
-          id: "mykn.components.Sidebar.expand",
-          description:
-            "mykn.components.Sidebar: An aria-label describing the expand action",
-          defaultMessage: "Zijbalk uitklappen",
-        },
-        context,
-      );
+  const _labelExpand = intl.formatMessage(
+    createMessageDescriptor(labelExpand, TRANSLATIONS.LABEL_EXPAND),
+    context,
+  );
 
-  const _labelCollapse = labelCollapse
-    ? formatMessage(labelCollapse, { expanded: expandedState })
-    : intl.formatMessage(
-        {
-          id: "mykn.components.Sidebar.collapse",
-          description:
-            "mykn.components.Sidebar: An aria-label describing the collapse action",
-          defaultMessage: "Zijbalk inklappen",
-        },
-        context,
-      );
+  const _labelCollapse = intl.formatMessage(
+    createMessageDescriptor(labelCollapse, TRANSLATIONS.LABEL_COLLAPSE),
+    context,
+  );
 
   useEffect(() => {
     setExpandedState(expanded);

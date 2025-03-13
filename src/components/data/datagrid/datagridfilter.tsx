@@ -2,9 +2,10 @@ import clsx from "clsx";
 import React, { useEffect, useRef, useState } from "react";
 
 import {
-  formatMessage,
+  createMessageDescriptor,
   serializeForm,
   string2Title,
+  stringifyContext,
   useIntl,
 } from "../../../lib";
 import { FormControl } from "../../form";
@@ -87,11 +88,13 @@ export const DataGridFilter = <
 
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { options, valueTransform, ...context } = field;
-
-        const _labelFilterField = labelFilterField
-          ? formatMessage(labelFilterField, context)
-          : intl.formatMessage(TRANSLATIONS.LABEL_FILTER_FIELD, context);
-
+        const _labelFilterField = intl.formatMessage(
+          createMessageDescriptor(
+            labelFilterField,
+            TRANSLATIONS.LABEL_FILTER_FIELD,
+          ),
+          stringifyContext(context),
+        );
         return (
           <th
             key={`${dataGridId}-filter-${string2Title(field.name.toString(), { lowerCase: false })}`}

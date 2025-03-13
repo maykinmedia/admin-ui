@@ -1,7 +1,6 @@
 import clsx from "clsx";
 import React, { useId, useState } from "react";
 
-import { useIntl } from "../../../lib";
 import {
   FormField,
   isCheckbox,
@@ -13,7 +12,8 @@ import {
   isInput,
   isRadio,
   isRadioGroup,
-} from "../../../lib/form/typeguards";
+  useIntl,
+} from "../../../lib";
 import { Checkbox } from "../checkbox";
 import { ChoiceField } from "../choicefield";
 import { DateInput } from "../dateinput";

@@ -1,8 +1,7 @@
-import { useEffect, useState } from "react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import {
-  formatMessage,
+  createMessageDescriptor,
   serializeForm,
   string2Title,
   ucFirst,
@@ -62,13 +61,21 @@ export const DataGridToolbar = <
     open: Boolean(selectFieldsModalState),
   };
 
-  const _labelSelectFields = labelSelectFields
-    ? formatMessage(labelSelectFields, context)
-    : intl.formatMessage(TRANSLATIONS.LABEL_SELECT_FIELDS, context);
+  const _labelSelectFields = intl.formatMessage(
+    createMessageDescriptor(
+      labelSelectFields,
+      TRANSLATIONS.LABEL_SELECT_FIELDS,
+    ),
+    context,
+  );
 
-  const _labelSaveFieldSelection = labelSaveFieldSelection
-    ? formatMessage(labelSaveFieldSelection, context)
-    : intl.formatMessage(TRANSLATIONS.LABEL_SAVE_FIELD_SELECTION, context);
+  const _labelSaveFieldSelection = intl.formatMessage(
+    createMessageDescriptor(
+      labelSaveFieldSelection,
+      TRANSLATIONS.LABEL_SAVE_FIELD_SELECTION,
+    ),
+    context,
+  );
 
   const toolbarItems: ToolbarItem[] = [
     selectable && allowSelectAll ? (

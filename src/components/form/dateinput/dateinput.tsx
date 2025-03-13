@@ -6,7 +6,12 @@ import React, {
   useState,
 } from "react";
 
-import { date2DateString, useIntl, value2Date } from "../../../lib/";
+import {
+  createMessageDescriptor,
+  date2DateString,
+  useIntl,
+  value2Date,
+} from "../../../lib/";
 import { eventFactory } from "../eventFactory";
 import { Input, InputProps } from "../input";
 import "./dateinput.scss";
@@ -94,6 +99,27 @@ export const DateInput: React.FC<DateInputProps> = ({
     SanitizedValues | undefined
   >();
   const intl = useIntl();
+
+  const _labelDate = intl.formatMessage(
+    createMessageDescriptor(labelDate, TRANSLATIONS.LABEL_DATE),
+    {},
+  );
+  const _placeholderDate = intl.formatMessage(
+    createMessageDescriptor(placeholderDate, TRANSLATIONS.PLACEHOLDER_DATE),
+  );
+
+  const _labelMonth = intl.formatMessage(
+    createMessageDescriptor(labelMonth, TRANSLATIONS.LABEL_MONTH),
+  );
+  const _placeholderMonth = intl.formatMessage(
+    createMessageDescriptor(placeholderMonth, TRANSLATIONS.PLACEHOLDER_MONTH),
+  );
+  const _labelYear = intl.formatMessage(
+    createMessageDescriptor(labelYear, { id: "foo", defaultMessage: "bar" }),
+  );
+  const _placeholderYear = intl.formatMessage(
+    createMessageDescriptor(placeholderYear, TRANSLATIONS.PLACEHOLDER_YEAR),
+  );
 
   /**
    * Dispatch change event.
@@ -372,14 +398,9 @@ export const DateInput: React.FC<DateInputProps> = ({
           return (
             <Input
               key={section}
-              aria-label={
-                labelDate || intl.formatMessage(TRANSLATIONS.LABEL_DATE, {})
-              }
+              aria-label={_labelDate}
               id={index === 0 ? id : undefined}
-              placeholder={
-                placeholderDate ||
-                intl.formatMessage(TRANSLATIONS.PLACEHOLDER_DATE, {})
-              }
+              placeholder={_placeholderDate}
               {...baseProps}
               {...inputProps}
               data-section="DD"
@@ -394,13 +415,8 @@ export const DateInput: React.FC<DateInputProps> = ({
           return (
             <Input
               key={section}
-              aria-label={
-                labelMonth || intl.formatMessage(TRANSLATIONS.LABEL_MONTH, {})
-              }
-              placeholder={
-                placeholderMonth ||
-                intl.formatMessage(TRANSLATIONS.PLACEHOLDER_MONTH, {})
-              }
+              aria-label={_labelMonth}
+              placeholder={_placeholderMonth}
               {...baseProps}
               {...inputProps}
               data-section="MM"
@@ -415,14 +431,9 @@ export const DateInput: React.FC<DateInputProps> = ({
           return (
             <Input
               key={section}
-              aria-label={
-                labelYear || intl.formatMessage(TRANSLATIONS.LABEL_YEAR, {})
-              }
+              aria-label={_labelYear}
               id={index === 0 ? id : undefined}
-              placeholder={
-                placeholderYear ||
-                intl.formatMessage(TRANSLATIONS.PLACEHOLDER_YEAR, {})
-              }
+              placeholder={_placeholderYear}
               {...baseProps}
               {...inputProps}
               data-section="YY"

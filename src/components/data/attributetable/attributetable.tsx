@@ -5,14 +5,17 @@ import {
   Field,
   SerializedFormData,
   TypedField,
+  createMessageDescriptor,
   fields2TypedFields,
   string2Title,
+  stringifyContext,
   useIntl,
 } from "../../../lib";
 import { Button } from "../../button";
 import { Form, FormControl, FormProps } from "../../form";
 import { Value } from "../value";
 import "./attributetable.scss";
+import { TRANSLATIONS } from "./translations";
 
 export type AttributeTableProps<T extends object = object> = {
   /** The object. */
@@ -75,13 +78,9 @@ export const AttributeTable = <T extends object = object>({
   const typedFields = fields2TypedFields(fields, [object], { editable });
   const _editable = Boolean(typedFields.find((f) => f.editable));
 
-  const _labelCancel = labelCancel
-    ? labelCancel
-    : intl.formatMessage({
-        id: "mykn.components.AttributeTable.labelCancel",
-        description: "mykn.components.AttributeTable: The cancel label",
-        defaultMessage: "Annuleren",
-      });
+  const _labelCancel = intl.formatMessage(
+    createMessageDescriptor(labelCancel, TRANSLATIONS.LABEL_CANCEL),
+  );
 
   const renderTable = () => {
     return _editable ? (
@@ -183,17 +182,10 @@ export const AttributeTableRow = <T extends object = object>({
     onClick(e);
   };
 
-  const _labelEdit = labelEdit
-    ? labelEdit
-    : intl.formatMessage(
-        {
-          id: "mykn.components.AttributeTable.labelEdit",
-          description:
-            "mykn.components.AttributeTable: The edit value (accessible) label",
-          defaultMessage: 'Bewerk "{label}"',
-        },
-        { ...field, label: label || field.name },
-      );
+  const _labelEdit = intl.formatMessage(
+    createMessageDescriptor(labelEdit, TRANSLATIONS.LABEL_EDIT),
+    stringifyContext({ ...field, label: label || field.name }),
+  );
 
   const renderValue = () => {
     return editable ? (

@@ -17,13 +17,12 @@ import {
 import clsx from "clsx";
 import React, { useEffect } from "react";
 
-import { ucFirst } from "../../../lib/format/string";
-import { formatMessage } from "../../../lib/i18n/formatmessage";
-import { useIntl } from "../../../lib/i18n/useIntl";
+import { createMessageDescriptor, ucFirst, useIntl } from "../../../lib";
 import { Outline, Solid } from "../../icon";
 import { ChoiceFieldProps, Option } from "../choicefield";
 import { eventFactory } from "../eventFactory";
 import "./select.scss";
+import { TRANSLATIONS } from "./translations";
 
 export type SelectProps = ChoiceFieldProps & {
   /** Component to use as icon. */
@@ -82,14 +81,10 @@ export const Select: React.FC<SelectProps> = ({
     value: (Array.isArray(value) ? value.join(", ") : value) as string,
     variant,
   };
-  const _labelClear = labelClear
-    ? formatMessage(labelClear, i18nContext)
-    : intl.formatMessage({
-        id: "mykn.components.Select.labelClear",
-        description:
-          "mykn.components.Select: The clear value (accessible) label",
-        defaultMessage: "waarde wissen",
-      });
+  const _labelClear = intl.formatMessage(
+    createMessageDescriptor(labelClear, TRANSLATIONS.LABEL_CLEAR),
+    i18nContext,
+  );
 
   const fakeInputRef = React.useRef<HTMLSelectElement>(null);
   const [isOpen, setIsOpen] = React.useState(false);

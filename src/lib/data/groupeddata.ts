@@ -1,7 +1,6 @@
 import React from "react";
 
 import { ButtonLinkProps, ButtonProps } from "../../components";
-import { formatMessage } from "../i18n";
 import { FieldOptions, FieldSet } from "./field";
 
 export type GroupedDataProps<T extends object = object> = Omit<
@@ -91,9 +90,7 @@ export const getContextData = <T extends object = object>(
     );
 
     const _fieldsets = groups.map<FieldSet<T>>((g) => [
-      fieldsetTemplate
-        ? formatMessage(fieldsetTemplate, { group: g })
-        : String(g),
+      fieldsetTemplate?.replace("{group}", String(g)) ?? String(g),
       fieldsetOptions,
     ]);
 

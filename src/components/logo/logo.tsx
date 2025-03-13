@@ -1,9 +1,9 @@
 import clsx from "clsx";
 import React from "react";
 
-import { formatMessage } from "../../lib/i18n/formatmessage";
-import { useIntl } from "../../lib/i18n/useIntl";
+import { createMessageDescriptor, useIntl } from "../../lib";
 import "./logo.scss";
+import { TRANSLATIONS } from "./translations";
 
 export type LogoProps = {
   /** Whether to show the logo with a single letter ("M") instead of the full brand name ("MAYKIN"). */
@@ -39,35 +39,22 @@ export const Logo: React.FC<LogoProps> = ({
   variant = "normal",
   ...props
 }) => {
+  const intl = useIntl();
+  const Tag = href ? "a" : "span";
   const viewBoxWidth = abbreviated ? 47 : 122;
   const context = {
     href: href || "",
   };
 
-  const intl = useIntl();
-  const _hrefLabel = hrefLabel
-    ? formatMessage(hrefLabel, context)
-    : intl.formatMessage(
-        {
-          id: "mykn.components.Logo.hrefLabel",
-          description:
-            "mykn.components.Logo: An aria-label describing the link action",
-          defaultMessage: 'Navigeer naar "{href}"',
-        },
-        context,
-      );
-  const _label = label
-    ? formatMessage(label, context)
-    : intl.formatMessage(
-        {
-          id: "mykn.components.Logo.label",
-          description:
-            "mykn.components.Logo: The aria-label to set on the SVG element",
-          defaultMessage: "Maykin logo",
-        },
-        context,
-      );
-  const Tag = href ? "a" : "span";
+  const _label = intl.formatMessage(
+    createMessageDescriptor(label, TRANSLATIONS.LABEL),
+    context,
+  );
+
+  const _hrefLabel = intl.formatMessage(
+    createMessageDescriptor(hrefLabel, TRANSLATIONS.LABEL_HREF),
+    context,
+  );
 
   return (
     <Tag
