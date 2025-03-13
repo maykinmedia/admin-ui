@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 
-import { gettext, gettextFirst, ucFirst, useIntl } from "../../../lib";
+import { gettextFirst, ucFirst, useIntl } from "../../../lib";
 import { Button } from "../../button";
 import { Option, Select, SelectProps } from "../../form";
 import { Outline } from "../../icon";
@@ -289,7 +289,7 @@ export const PaginatorNav: React.FC<PaginatorNavProps> = ({
         <>
           <Button
             active={currentPage === 1}
-            aria-label={gettext(
+            aria-label={intl.formatMessage(
               { id: _labelGoToPage, defaultMessage: _labelGoToPage },
               { page: 1 },
             )}
@@ -357,7 +357,7 @@ export const PaginatorNav: React.FC<PaginatorNavProps> = ({
           <Button
             active={currentPage === pageCount}
             aria-current={currentPage === pageCount}
-            aria-label={gettext(
+            aria-label={intl.formatMessage(
               { id: _labelGoToPage, defaultMessage: _labelGoToPage },
               { page: pageCount },
             )}
