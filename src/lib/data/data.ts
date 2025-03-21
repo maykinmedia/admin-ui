@@ -93,7 +93,11 @@ export const filterDataArray = <T extends object = object>(
           break;
 
         case "string":
-          if (!attributeValue.includes(String(filterValue))) {
+          if (
+            !attributeValue
+              .toLowerCase()
+              .includes(String(filterValue).toLowerCase())
+          ) {
             return false;
           }
           break;

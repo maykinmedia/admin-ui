@@ -137,6 +137,25 @@ export const Filterable: Story = {
 };
 
 /**
+ * Without the `onFilter` prop, filter is applied to `objectList` without external
+ * processing.
+ */
+export const LocalFilter: Story = {
+  ...DataGridComponent,
+  args: {
+    ...DataGridComponent.args,
+    filterable: true,
+    fields: [
+      "name",
+      "category",
+      { name: "price", type: "number", filterable: false },
+      { name: "stock", type: "number", filterable: false },
+      { name: "isAvailable", type: "boolean" },
+    ],
+  },
+};
+
+/**
  * Minimal example with only required props showing a simple table.
  */
 export const Paginated = {
