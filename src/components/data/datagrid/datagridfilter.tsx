@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import React, { useEffect, useRef, useState } from "react";
+import React from "react";
 
 import {
   serializeForm,
@@ -21,7 +21,6 @@ export const DataGridFilter = <
   F extends object = T,
 >() => {
   const intl = useIntl();
-  const onFilterTimeoutRef = useRef<NodeJS.Timeout>(undefined);
 
   const {
     dataGridId,
@@ -31,21 +30,6 @@ export const DataGridFilter = <
     renderableFields,
     selectable,
   } = useDataGridContext<T, F>();
-
-  const [filterState, setFilterState] = useState<F>();
-
-  // Debounce filter
-  useEffect(() => {
-    const handler = () => {
-      // No filter state.
-      if (filterState === undefined) {
-        return;
-      }
-      onFilter(filterState || {});
-    };
-    onFilterTimeoutRef.current && clearTimeout(onFilterTimeoutRef.current);
-    onFilterTimeoutRef.current = setTimeout(handler, 300);
-  }, [filterState]);
 
   /**
    * Gets called when a filter is changed.
@@ -63,10 +47,12 @@ export const DataGridFilter = <
       input.form as HTMLFormElement,
       true,
     );
-    const _data = filterTransform ? filterTransform(data) : data;
+    const _data = (filterTransform ? filterTransform(data) : data) as F;
 
-    // Reset page on filter (length of dataset may change).
-    setFilterState(_data as unknown as F);
+    if (_data !== undefined) {
+      onFilter(_data);
+      return;
+    }
   };
 
   return (
