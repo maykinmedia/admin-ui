@@ -5,18 +5,25 @@
 
   &__tablist {
     align-items: center;
-    background-color: var(--typography-color-background);
+    border-block-end: 2px solid var(--typography-color-border);
     box-sizing: border-box;
     display: flex;
     flex-wrap: wrap;
     gap: var(--spacing-v);
-    padding-block: var(--spacing-h);
     width: 100%;
   }
 
   &__tablist .mykn-p {
     color: var(--typography-color-border);
     user-select: none;
+  }
+
+  .mykn-button {
+    background-color: transparent;
+  }
+
+  [aria-selected="true"] {
+    box-shadow: 0 2px var(--mykn-button-color-shadow);
   }
 
   @media screen and (max-width: constants.$breakpoint-desktop) {
