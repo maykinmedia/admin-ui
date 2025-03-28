@@ -44,7 +44,6 @@ export const Tabs: React.FC<TabsProps> = ({
               aria-controls={`tab-content-${tab.props.id || slugify(tab.props.label)}`}
               aria-selected={activeTab === index ? "true" : "false"}
               id={`tab-${tab.props.id || slugify(tab.props.label)}`}
-              pad="h"
               role="tab"
               variant="transparent"
               onClick={() => handleTabClick(index)}
