@@ -1,4 +1,4 @@
-import { Meta } from '@storybook/blocks';
+import { Meta } from "@storybook/blocks";
 
 <Meta title="Manual/Introduction" />
 
@@ -34,9 +34,23 @@ npm install @maykin-ui/admin-ui
 Admin-ui provides collection of **templates**, **components**, **contexts**, **hooks** and **libraries** are exposed to
 be used in external applications.
 
+Using a template:
+```tsx
+import { BaseTemplate, ConfigContext } from "@maykin-ui/admin-ui";
+import "@maykin-ui/admin-ui/style";
+import { Outlet } from "react-router";
+
+<BaseTemplate>
+  <ConfigContext.Provider value={{ templatesContentOnly: true }}>
+    <Outlet />
+  </ConfigContext.Provider>
+</BaseTemplate>;
+```
+
 Using a component:
 ```tsx
 import {Button} from "@maykin-ui/admin-ui";
+import "@maykin-ui/admin-ui/style";
 
 <Button variant="primary">Primary Button</Button>
 ```

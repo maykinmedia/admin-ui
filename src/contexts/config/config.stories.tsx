@@ -4,16 +4,7 @@ import * as React from "react";
 import { LoginTemplate } from "../../templates";
 import { ConfigContext, ConfigContextType } from "./config";
 
-const meta: Meta<typeof ConfigContext> = {
-  title: "Contexts/ConfigContext",
-  // @ts-expect-error - not a component but a context
-  component: ConfigContext,
-};
-
-export default meta;
-type Story = StoryObj<typeof meta>;
-
-const BASE_RENDER = (args: ConfigContextType) => (
+const Component: React.FC = (args: ConfigContextType) => (
   <ConfigContext.Provider value={args}>
     <LoginTemplate
       formProps={{
@@ -31,6 +22,10 @@ const BASE_RENDER = (args: ConfigContextType) => (
     />
   </ConfigContext.Provider>
 );
+const meta: Meta<typeof Component> = {
+  title: "Contexts/ConfigContext",
+  component: Component,
+};
 
 export const CustomLogo: Story = {
   args: {
@@ -42,12 +37,19 @@ export const CustomLogo: Story = {
       />
     ),
   },
-  render: BASE_RENDER,
+};
+
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const TemplatesContentOnly: Story = {
+  args: {
+    templatesContentOnly: true,
+  },
 };
 
 export const DebugMode: Story = {
   args: {
     debug: true,
   },
-  render: BASE_RENDER,
 };
