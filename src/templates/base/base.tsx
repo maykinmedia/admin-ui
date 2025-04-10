@@ -12,7 +12,7 @@ import {
   Toolbar,
   ToolbarItem,
 } from "../../components";
-import { NavigationContext } from "../../contexts";
+import { ConfigContext, NavigationContext } from "../../contexts";
 
 export type BaseTemplateProps = React.PropsWithChildren & {
   /** Column props. */
@@ -23,6 +23,9 @@ export type BaseTemplateProps = React.PropsWithChildren & {
 
   /** Whether to limit the content width using a container. */
   container?: boolean;
+
+  /** Whether to only output the page inner contents. */
+  contentOnly?: boolean;
 
   /** Primary navigation items. */
   primaryNavigationItems?: ToolbarItem[];
@@ -46,11 +49,16 @@ export const BaseTemplate: React.FC<BaseTemplateProps> = ({
   columnProps,
   pageProps,
   container = false,
+  contentOnly,
   primaryNavigationItems = [],
   sidebarItems = [],
   slotPrimaryNavigation,
   slotSidebar,
 }) => {
+  const { templatesContentOnly } = useContext(ConfigContext);
+  const _contentOnly =
+    typeof contentOnly !== "undefined" ? contentOnly : templatesContentOnly;
+
   const {
     primaryNavigation,
     primaryNavigationItems: _primaryNavigationItems,
@@ -93,11 +101,14 @@ export const BaseTemplate: React.FC<BaseTemplateProps> = ({
     </Grid>
   );
 
-  return (
+  const _content = container ? <Container>{content}</Container> : content;
+
+  const page = (
     <Page {...pageProps}>
       {slotPrimaryNavigation || contextNavigation}
       {slotSidebar || contextSidebar}
-      {container ? <Container>{content}</Container> : content}
+      {_content}
     </Page>
   );
+  return _contentOnly ? _content : page;
 };

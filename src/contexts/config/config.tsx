@@ -4,6 +4,9 @@ export type ConfigContextType = {
   /** Enables various debug utilities throughout this library.  */
   debug?: boolean;
 
+  /** Whether to only output the page inner contents in templates. */
+  templatesContentOnly?: boolean;
+
   /** Overrides the logo throughout this library. */
   logo?: React.ReactNode;
 };
@@ -14,5 +17,6 @@ export type ConfigContextType = {
  */
 export const ConfigContext = createContext<ConfigContextType>({
   debug: false,
+  templatesContentOnly: false,
   logo: null,
 });
