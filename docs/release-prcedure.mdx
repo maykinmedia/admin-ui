@@ -35,9 +35,9 @@ git push
 Once the release commit is merged, finalize the release by tagging and publishing:
 
 ```sh
-git tag 0.0.XX-alpha
+git tag <new version>
 git push --tags
-npm publish --tag alpha --access=public
+npm publish --access=public
 ```
 
 > If you do not have credentials to publish to npm, ask someone with the necessary access to complete this step.
