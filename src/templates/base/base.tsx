@@ -5,6 +5,7 @@ import {
   ColumnProps,
   Container,
   Grid,
+  GridProps,
   Navbar,
   Page,
   PageProps,
@@ -30,6 +31,9 @@ export type BaseTemplateProps = React.PropsWithChildren & {
   /** Whether to wrap content in a grid. */
   grid?: boolean;
 
+  /** Grid props. */
+  gridProps?: GridProps;
+
   /** Primary navigation items. */
   primaryNavigationItems?: ToolbarItem[];
 
@@ -53,15 +57,19 @@ export const BaseTemplate: React.FC<BaseTemplateProps> = ({
   pageProps,
   container = false,
   contentOnly,
-  grid = true,
+  grid,
+  gridProps,
   primaryNavigationItems = [],
   sidebarItems = [],
   slotPrimaryNavigation,
   slotSidebar,
 }) => {
-  const { templatesContentOnly } = useContext(ConfigContext);
+  const { templatesContentOnly = false, templatesGrid = true } =
+    useContext(ConfigContext);
   const _contentOnly =
     typeof contentOnly !== "undefined" ? contentOnly : templatesContentOnly;
+
+  const _grid = typeof grid !== "undefined" ? grid : templatesGrid;
 
   const {
     primaryNavigation,
@@ -97,8 +105,8 @@ export const BaseTemplate: React.FC<BaseTemplateProps> = ({
       </Sidebar>
     ) : null);
 
-  const content = grid ? (
-    <Grid>
+  const content = _grid ? (
+    <Grid {...gridProps} stretch={true}>
       <Column direction="row" span={12} {...columnProps}>
         {children}
       </Column>
