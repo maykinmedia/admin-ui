@@ -26,12 +26,20 @@
     gap: var(--spacing-v) var(--spacing-h);
   }
 
+  &--gutter-v {
+    gap: var(--spacing-v) 0;
+  }
+
   &--spacing-h {
     gap: 0 var(--spacing-h);
   }
 
-  &--gutter-v {
-    gap: var(--spacing-v) 0;
+  &--stretch {
+    height: 100%;
+  }
+
+  &--valign-middle {
+    align-items: center;
   }
 
   @media screen and (min-width: constants.$breakpoint-desktop) {
