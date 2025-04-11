@@ -7,6 +7,9 @@ export type ConfigContextType = {
   /** Whether to only output the page inner contents in templates. */
   templatesContentOnly?: boolean;
 
+  /** Whether to wrap contents of templates in a grid. */
+  templatesGrid?: boolean;
+
   /** Overrides the logo throughout this library. */
   logo?: React.ReactNode;
 };
@@ -18,5 +21,6 @@ export type ConfigContextType = {
 export const ConfigContext = createContext<ConfigContextType>({
   debug: false,
   templatesContentOnly: false,
+  templatesGrid: true,
   logo: null,
 });
