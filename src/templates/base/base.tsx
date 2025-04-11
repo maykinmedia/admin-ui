@@ -27,6 +27,9 @@ export type BaseTemplateProps = React.PropsWithChildren & {
   /** Whether to only output the page inner contents. */
   contentOnly?: boolean;
 
+  /** Whether to wrap content in a grid. */
+  grid?: boolean;
+
   /** Primary navigation items. */
   primaryNavigationItems?: ToolbarItem[];
 
@@ -50,6 +53,7 @@ export const BaseTemplate: React.FC<BaseTemplateProps> = ({
   pageProps,
   container = false,
   contentOnly,
+  grid = true,
   primaryNavigationItems = [],
   sidebarItems = [],
   slotPrimaryNavigation,
@@ -93,12 +97,14 @@ export const BaseTemplate: React.FC<BaseTemplateProps> = ({
       </Sidebar>
     ) : null);
 
-  const content = (
+  const content = grid ? (
     <Grid>
       <Column direction="row" span={12} {...columnProps}>
         {children}
       </Column>
     </Grid>
+  ) : (
+    children
   );
 
   const _content = container ? <Container>{content}</Container> : content;

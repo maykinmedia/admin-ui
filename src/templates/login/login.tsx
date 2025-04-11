@@ -1,6 +1,16 @@
 import React, { useContext } from "react";
 
-import { Body, Card, Form, FormProps, Hr, Logo } from "../../components";
+import {
+  Body,
+  Card,
+  Column,
+  Container,
+  Form,
+  FormProps,
+  Grid,
+  Hr,
+  Logo,
+} from "../../components";
 import { ConfigContext } from "../../contexts";
 import { SerializedFormData, gettextFirst, ucFirst } from "../../lib";
 import { BaseTemplate, BaseTemplateProps } from "../base";
@@ -35,6 +45,7 @@ export type LoginTemplateProps<
 export const LoginTemplate = <
   T extends SerializedFormData = SerializedFormData,
 >({
+  columnProps,
   formProps,
   labelLogin,
   labelOidcLogin,
@@ -60,25 +71,26 @@ export const LoginTemplate = <
     });
 
   return (
-    <BaseTemplate
-      columnProps={{ start: 5, span: 4 }}
-      pageProps={{ valign: "middle" }}
-      container={true}
-      {...props}
-    >
-      <Card>
-        <Body>
-          {slotLogo || CustomLogo || <Logo />}
-          <Hr />
-          <Form<T>
-            justify="stretch"
-            labelSubmit={ucFirst(_labelLogin)}
-            secondaryActions={secondaryActions}
-            showRequiredExplanation={false}
-            {...formProps}
-          />
-        </Body>
-      </Card>
+    <BaseTemplate grid={false} {...props}>
+      <Container>
+        <Grid stretch valign="middle">
+          <Column direction="row" start={5} span={4} {...columnProps}>
+            <Card>
+              <Body>
+                {slotLogo || CustomLogo || <Logo />}
+                <Hr />
+                <Form<T>
+                  justify="stretch"
+                  labelSubmit={ucFirst(_labelLogin)}
+                  secondaryActions={secondaryActions}
+                  showRequiredExplanation={false}
+                  {...formProps}
+                />
+              </Body>
+            </Card>
+          </Column>
+        </Grid>
+      </Container>
     </BaseTemplate>
   );
 };
