@@ -30,6 +30,9 @@ export type SidebarProps = React.PropsWithChildren<{
   /** An aria-label describing the collapse action. */
   labelCollapse?: string;
 
+  /** Whether to show the logo. */
+  showLogo?: boolean;
+
   /** Logo (JSX) slot. */
   slotLogo?: React.ReactNode;
 }>;
@@ -43,6 +46,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
   expanded = true,
   logoProps,
   position = "start",
+  showLogo = false,
   slotLogo,
   labelExpand,
   labelCollapse,
@@ -81,12 +85,15 @@ export const Sidebar: React.FC<SidebarProps> = ({
     isSideBar && setTransitionState(false);
   };
 
-  const _logo = slotLogo || CustomLogo || (
-    <Logo
-      abbreviated={!(expandedState || transitionState || !expandable)}
-      {...logoProps}
-    />
-  );
+  const _logo = !showLogo
+    ? null
+    : slotLogo ||
+      CustomLogo || (
+        <Logo
+          abbreviated={!(expandedState || transitionState || !expandable)}
+          {...logoProps}
+        />
+      );
   return (
     <aside
       className={clsx("mykn-sidebar", `mykn-sidebar--position-${position}`)}
