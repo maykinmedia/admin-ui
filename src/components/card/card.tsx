@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import React from "react";
 
 import { Button, ButtonProps } from "../button";
@@ -6,7 +7,13 @@ import { Body, H1 } from "../typography";
 import "./card.scss";
 
 export type CardProps = React.PropsWithChildren<{
+  /** Buttons to use in the cards' header. */
   controls?: ButtonProps[];
+
+  /** Whether to use `height 100%;`. */
+  fullHeight?: boolean;
+
+  /** A title for the card. */
   title?: string | React.ReactNode;
 }>;
 
@@ -16,10 +23,14 @@ export type CardProps = React.PropsWithChildren<{
 export const Card: React.FC<CardProps> = ({
   controls = [],
   children,
+  fullHeight,
   title,
   ...props
 }) => (
-  <div className="mykn-card" {...props}>
+  <div
+    className={clsx("mykn-card", { "mykn-card--full-height": fullHeight })}
+    {...props}
+  >
     {(controls.length || title) && (
       <div className="mykn-card__header">
         <Body stretch>

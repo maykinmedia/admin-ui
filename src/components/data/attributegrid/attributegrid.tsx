@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import React from "react";
 
 import { FieldSet, dataByFieldsets, slugify } from "../../../lib";
@@ -8,9 +9,19 @@ import { AttributeList, AttributeListProps } from "../attributelist";
 import "./attributegrid.scss";
 
 export type AttributeGridProps<T extends object = object> = {
+  /** The object to show object attributes of. */
   object: T;
+
+  /** The fieldsets to render. */
   fieldsets: FieldSet<T>[];
+
+  /** Whether to use `height 100%;`. */
+  fullHeight?: boolean;
+
+  /** Whether to automatically generate id's for titles. */
   generateTitleIds?: boolean;
+
+  /** A title. */
   title?: React.ReactNode;
 };
 
@@ -24,6 +35,7 @@ export type AttributeGridProps<T extends object = object> = {
 export const AttributeGrid = <T extends object = object>({
   object,
   fieldsets,
+  fullHeight,
   generateTitleIds = false,
   title,
   ...props
@@ -58,7 +70,12 @@ export const AttributeGrid = <T extends object = object>({
   });
 
   return (
-    <div className="mykn-attributegrid" {...props}>
+    <div
+      className={clsx("mykn-attributegrid", {
+        "mykn-attributegrid--full-height": fullHeight,
+      })}
+      {...props}
+    >
       {title && (
         <Toolbar pad={true}>
           {typeof title === "string" ? <H2>{title}</H2> : title}

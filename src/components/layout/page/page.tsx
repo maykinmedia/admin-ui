@@ -10,6 +10,9 @@ export type PageProps = React.PropsWithChildren<{
    */
   containerType?: "inline-size" | "size" | "normal";
 
+  /** Whether to use `height 100%;` (over `min-height: 100%;`). */
+  fullHeight?: boolean;
+
   /** Vertical alignment of page content. */
   valign?: "start" | "middle";
 
@@ -23,12 +26,14 @@ export type PageProps = React.PropsWithChildren<{
 export const Page: React.FC<PageProps> = ({
   children,
   containerType = "inline-size",
+  fullHeight = true,
   pad = false,
   valign,
   ...props
 }) => (
   <div
     className={clsx("mykn-page", {
+      "mykn-page--full-height": fullHeight,
       [`mykn-page--container-type-${containerType}`]: containerType,
       [`mykn-page--valign-${valign}`]: valign,
       "mykn-page--pad-h": pad === true || pad === "h",

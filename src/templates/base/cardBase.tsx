@@ -114,7 +114,7 @@ export const CardBaseTemplate: React.FC<CardBaseTemplateProps> = ({
     ) : null;
 
   const renderCard = () => (
-    <Card {...cardProps}>
+    <Card fullHeight {...cardProps}>
       {actions && (
         <Toolbar
           align="end"

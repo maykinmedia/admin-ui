@@ -7,6 +7,10 @@
   //overflow: clip;  // Turned off for now to allow DatePicker to overflow Card and Modal.
   width: 100%;
 
+  &--full-height {
+    height: 100%;
+  }
+
   &__header {
     display: flex;
     justify-content: space-between;
