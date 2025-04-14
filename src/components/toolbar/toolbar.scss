@@ -6,6 +6,9 @@
       @content;
     }
   }
+  &--direction-horizontal:not(#{&}--direction-responsive) {
+    @content;
+  }
 }
 
 @mixin vertical {
