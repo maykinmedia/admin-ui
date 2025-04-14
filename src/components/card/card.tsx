@@ -54,7 +54,13 @@ export const Card: React.FC<CardProps> = ({
             {typeof title === "string" ? <H2>{title}</H2> : title}
           </Body>
           {Boolean(actions?.length) && (
-            <Toolbar align="end" size="fit-content" pad="h" items={actions} />
+            <Toolbar
+              align="end"
+              directionResponsive={false}
+              size="fit-content"
+              pad="h"
+              items={actions}
+            />
           )}
         </div>
       )}
