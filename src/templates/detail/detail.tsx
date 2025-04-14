@@ -9,27 +9,27 @@ import {
   H2,
 } from "../../components";
 import { slugify } from "../../lib";
-import { CardBaseTemplate } from "../base";
-import { BodyBaseTemplateProps } from "../base/bodyBase";
+import { BodyBaseTemplateProps, CardBaseTemplate } from "../base";
 
-export type DetailTemplateProps = BodyBaseTemplateProps & {
-  attributeGridProps: AttributeGridProps;
-  inlines?: DataGridProps[];
-};
+export type DetailTemplateProps<T extends object = object> =
+  BodyBaseTemplateProps & {
+    attributeGridProps: AttributeGridProps<T>;
+    inlines?: DataGridProps[];
+  };
 
 /**
  * Detail template
  * @constructor
  */
-export const DetailTemplate: React.FC<DetailTemplateProps> = ({
+export const DetailTemplate = <T extends object = object>({
   children,
   attributeGridProps,
   inlines = [],
   ...props
-}) => (
+}: DetailTemplateProps<T>) => (
   <CardBaseTemplate {...props}>
     {children}
-    <AttributeGrid generateTitleIds={true} {...attributeGridProps} />
+    <AttributeGrid<T> generateTitleIds={true} {...attributeGridProps} />
     {inlines.map(({ title, ...props }, index) => {
       return (
         <Body key={typeof title === "string" ? title : index}>
