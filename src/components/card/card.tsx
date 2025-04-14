@@ -1,14 +1,20 @@
 import clsx from "clsx";
 import React from "react";
 
-import { Button, ButtonProps } from "../button";
-import { Toolbar } from "../toolbar";
-import { Body, H1 } from "../typography";
+import { ButtonProps } from "../button";
+import { Toolbar, ToolbarItem } from "../toolbar";
+import { Body, H2 } from "../typography";
 import "./card.scss";
 
 export type CardProps = React.PropsWithChildren<{
   /** Buttons to use in the cards' header. */
+  actions?: ToolbarItem[];
+
+  /** @deprecated: REMOVE IN 3.0 - Renamed to actions. */
   controls?: ButtonProps[];
+
+  /** The (flex) direction. */
+  direction?: React.CSSProperties["flexDirection"];
 
   /** Whether to use `height 100%;`. */
   fullHeight?: boolean;
@@ -22,29 +28,37 @@ export type CardProps = React.PropsWithChildren<{
  */
 export const Card: React.FC<CardProps> = ({
   controls = [],
+  actions = controls,
   children,
+  direction = "column",
   fullHeight,
   title,
   ...props
-}) => (
-  <div
-    className={clsx("mykn-card", { "mykn-card--full-height": fullHeight })}
-    {...props}
-  >
-    {(controls.length || title) && (
-      <div className="mykn-card__header">
-        <Body stretch>
-          {typeof title === "string" ? <H1>{title}</H1> : title}
-        </Body>
-        {Boolean(controls?.length) && (
-          <Toolbar align="end" size="fit-content" pad="h">
-            {controls.map((buttonProps, index) => (
-              <Button key={buttonProps.id || index} {...buttonProps} />
-            ))}
-          </Toolbar>
-        )}
-      </div>
-    )}
-    {children}
-  </div>
-);
+}) => {
+  // Controls is renamed to actions.
+  if (typeof controls !== "undefined") {
+    console.warn('mykn.components.Card: use of deprecated prop "controls"');
+  }
+
+  return (
+    <div
+      className={clsx("mykn-card", {
+        "mykn-card--full-height": fullHeight,
+        [`mykn-card--direction-${direction}`]: direction,
+      })}
+      {...props}
+    >
+      {(actions.length || title) && (
+        <div className="mykn-card__header">
+          <Body stretch>
+            {typeof title === "string" ? <H2>{title}</H2> : title}
+          </Body>
+          {Boolean(actions?.length) && (
+            <Toolbar align="end" size="fit-content" pad="h" items={actions} />
+          )}
+        </div>
+      )}
+      {children}
+    </div>
+  );
+};

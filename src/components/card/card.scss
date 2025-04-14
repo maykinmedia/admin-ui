@@ -7,6 +7,22 @@
   //overflow: clip;  // Turned off for now to allow DatePicker to overflow Card and Modal.
   width: 100%;
 
+  &--direction--column {
+    flex-direction: column;
+  }
+
+  &--direction-column-reverse {
+    flex-direction: column-reverse;
+  }
+
+  &--direction-row {
+    flex-direction: row;
+  }
+
+  &--direction-row-reverse {
+    flex-direction: row-reverse;
+  }
+
   &--full-height {
     height: 100%;
   }
