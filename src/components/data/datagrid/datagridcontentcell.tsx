@@ -48,6 +48,7 @@ export const DataGridContentCell = <
     renderableFields = [],
     setEditingState,
     urlFields = DEFAULT_URL_FIELDS,
+    onClick,
     onChange,
     onEdit,
   } = useDataGridContext<T, F>();
@@ -163,6 +164,7 @@ export const DataGridContentCell = <
         href={link}
         decorate={decorate}
         value={label || (field.type === "boolean" ? Boolean(value) : value)}
+        onClick={(e) => onClick?.(e, rowData)}
       />
     );
   };

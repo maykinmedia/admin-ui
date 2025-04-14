@@ -3,12 +3,12 @@ import React from "react";
 
 import "./badge.scss";
 
-export type BadgeProps = React.PropsWithChildren<{
+export type BadgeProps = React.ComponentProps<"span"> & {
   level?: "info" | "success" | "warning" | "danger";
 
-  /** Whehtehr to use a rounded presentation. */
+  /** Whether to use a rounded presentation. */
   rounded?: boolean;
-}>;
+};
 
 /**
  * Badge component

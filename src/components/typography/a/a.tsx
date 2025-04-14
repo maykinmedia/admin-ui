@@ -1,9 +1,9 @@
 import clsx from "clsx";
-import React, { AnchorHTMLAttributes } from "react";
+import React from "react";
 
 import "./a.scss";
 
-export type AProps = AnchorHTMLAttributes<HTMLAnchorElement> & {
+export type AProps = React.ComponentProps<"a"> & {
   /**
    * This sets aria-current on the <a>, (visually) indicating that this element represents the current item within a
    * container or set of related elements.
