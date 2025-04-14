@@ -117,6 +117,7 @@ export const Modal: React.FC<ModalProps> = ({
     >
       <Card
         controls={controls}
+        fullHeight
         title={isPrimitive(title) ? <H2>{title}</H2> : title}
       >
         {children}

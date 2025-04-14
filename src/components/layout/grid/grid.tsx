@@ -11,10 +11,13 @@ export type GridProps = React.PropsWithChildren<{
   /** If set, show the Outline of the grid. */
   debug?: boolean;
 
+  /** Whether to use `height 100%;`. */
+  fullHeight?: boolean;
+
   /** Whether to use gutters (gaps between columns). */
   gutter?: boolean | "h" | "v";
 
-  /** Whether to stretch the grid (vertically). */
+  /** @deprecated: REMOVE IN 3.0 - Renamed to fullHeight. */
   stretch?: boolean;
 
   /** Vertical alignment of content. */
@@ -31,11 +34,17 @@ export const Grid: React.FC<GridProps> = ({
   children,
   cols,
   debug,
+  fullHeight,
   stretch,
   gutter = true,
   valign,
   ...props
 }) => {
+  // Stretch is renamed to fullHeight.
+  if (typeof stretch !== "undefined") {
+    console.warn('mykn.components.Grid: use of deprecated prop "stretch"');
+  }
+
   const { debug: contextDebug } = useContext(ConfigContext);
   const _debug = debug || contextDebug;
 
@@ -43,7 +52,7 @@ export const Grid: React.FC<GridProps> = ({
     <div
       className={clsx("mykn-grid", {
         "mykn-grid--debug": _debug,
-        "mykn-grid--stretch": stretch,
+        "mykn-grid--full-height": fullHeight || stretch,
         [`mykn-grid--cols-${cols}`]: cols,
         [`mykn-grid--gutter-${gutter}`]: gutter,
         [`mykn-grid--valign-${valign}`]: valign,

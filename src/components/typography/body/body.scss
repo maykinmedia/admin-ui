@@ -14,8 +14,16 @@
     }
   }
 
-  &--stretch {
-    width: 100%;
+  &--allow-scroll-h {
+    overflow-x: auto;
+  }
+
+  &--allow-scroll-v {
+    overflow-y: auto;
+  }
+
+  &--full-height {
+    height: 100%;
   }
 
   @media screen and (min-width: constants.$breakpoint-desktop) {
