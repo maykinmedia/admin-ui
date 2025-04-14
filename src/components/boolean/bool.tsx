@@ -7,7 +7,7 @@ import { P, PProps } from "../typography";
 import "./bool.scss";
 import { TRANSLATIONS } from "./translations";
 
-export type BoolProps = {
+export type BoolProps = React.ComponentProps<"span"> & {
   /** The value. */
   value: boolean;
 

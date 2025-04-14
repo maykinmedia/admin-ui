@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ComponentProps, MouseEventHandler } from "react";
 
 import {
   isBool,
@@ -12,7 +12,10 @@ import { Badge, BadgeProps } from "../../badge";
 import { Bool, BoolProps } from "../../boolean";
 import { A, AProps, P, PProps } from "../../typography";
 
-export type ValueProps = React.HTMLAttributes<unknown> & {
+export type ValueProps = Omit<
+  React.ComponentProps<"a" | "p" | "span">,
+  "onClick"
+> & {
   /** Value to render. */
   value: unknown;
 
@@ -26,6 +29,8 @@ export type ValueProps = React.HTMLAttributes<unknown> & {
   boolProps?: Omit<BoolProps, "value">;
   badgeProps?: BadgeProps;
   pProps?: PProps;
+
+  onClick?: MouseEventHandler<HTMLAnchorElement>;
 };
 
 /**
@@ -44,6 +49,7 @@ export const Value: React.FC<ValueProps> = ({
   pProps,
   href = "",
   value,
+  onClick, // Only supported when rendering `<A>`.
   ...props
 }) => {
   if (React.isValidElement(value)) {
@@ -52,7 +58,7 @@ export const Value: React.FC<ValueProps> = ({
 
   if (isNull(value) || isUndefined(value)) {
     return (
-      <P {...pProps} {...props}>
+      <P {...pProps} {...(props as ComponentProps<"p">)}>
         -
       </P>
     );
@@ -63,8 +69,12 @@ export const Value: React.FC<ValueProps> = ({
 
     if (href || isLink(string)) {
       return (
-        <P {...pProps} {...props}>
-          <A {...aProps} href={href || string}>
+        <P {...pProps} {...(props as ComponentProps<"p">)}>
+          <A
+            {...aProps}
+            href={href || string}
+            onClick={onClick as React.MouseEventHandler<HTMLAnchorElement>}
+          >
             {string || href}
           </A>
         </P>
@@ -72,7 +82,7 @@ export const Value: React.FC<ValueProps> = ({
     }
 
     return (
-      <P {...pProps} {...props}>
+      <P {...pProps} {...(props as ComponentProps<"p">)}>
         {string || "-"}
       </P>
     );
