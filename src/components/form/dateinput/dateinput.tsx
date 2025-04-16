@@ -62,6 +62,9 @@ export type DateInputProps = {
 
   /** Gets called when the value is changed. */
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
+
+  /** Disabled state. */
+  disabled?: boolean;
 };
 
 /**
@@ -84,6 +87,7 @@ export const DateInput: React.FC<DateInputProps> = ({
   size,
   value = null,
   onChange,
+  disabled = false,
   ...props
 }) => {
   type SanitizedValues = { DD: string; MM: string; YY: string };
@@ -376,6 +380,7 @@ export const DateInput: React.FC<DateInputProps> = ({
       type: "text",
       pad: pad,
       required,
+      disabled,
     };
   }, [props]);
 

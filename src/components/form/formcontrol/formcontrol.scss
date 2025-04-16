@@ -22,4 +22,18 @@
   &__required-inidicator {
     text-decoration: none;
   }
+
+  // Makes sure that the wrapper actually has the cursor of not-allowed. Needs to be in wrapper
+  &,
+  &:has(.mykn-input:disabled),
+  &:has(.mykn-select[aria-disabled="true"]) {
+    cursor: not-allowed;
+  }
+
+  // The inputs themselves should not allow any pointer events (select boxes would open otherwise, for example)
+  .mykn-input:disabled,
+  .mykn-select[aria-disabled="true"] {
+    opacity: 0.5;
+    pointer-events: none;
+  }
 }

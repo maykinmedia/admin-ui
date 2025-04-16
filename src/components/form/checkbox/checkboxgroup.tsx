@@ -19,6 +19,7 @@ export const CheckboxGroup: React.FC<CheckboxGroupProps> = ({
   required,
   onChange,
   onClick,
+  disabled,
 }) => {
   const reactId = useId();
   const _id = id || reactId;
@@ -41,6 +42,7 @@ export const CheckboxGroup: React.FC<CheckboxGroupProps> = ({
             variant={variant}
             onChange={onChange}
             onClick={onClick}
+            disabled={disabled}
           >
             {option.label}
           </Checkbox>
