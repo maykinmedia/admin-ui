@@ -43,6 +43,9 @@ export type ChoiceFieldProps<
    * the use of events).
    */
   onChange?: React.ChangeEventHandler<FormElement>;
+
+  /** Disabled state. */
+  disabled?: boolean;
 };
 /**
  * A single (select) option, can be passed to `Select as array.

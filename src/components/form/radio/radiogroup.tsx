@@ -17,6 +17,7 @@ export const RadioGroup: React.FC<RadioGroupProps> = ({
   variant,
   onChange,
   onClick,
+  disabled,
 }) => {
   const reactId = useId();
   const _id = id || reactId;
@@ -53,6 +54,7 @@ export const RadioGroup: React.FC<RadioGroupProps> = ({
             variant={variant}
             onChange={handleChange}
             onClick={onClick}
+            disabled={disabled}
           >
             {option.label}
           </Radio>

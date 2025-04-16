@@ -42,6 +42,9 @@ export type SelectProps = ChoiceFieldProps & {
 
   /** The clear value (accessible) label. */
   labelClear?: string;
+
+  /** Disabled state */
+  disabled?: boolean;
 };
 
 /**
@@ -71,6 +74,7 @@ export const Select: React.FC<SelectProps> = ({
   value = null,
   variant = "normal",
   form,
+  disabled = false,
   ...props
 }) => {
   const i18nContext = {
@@ -222,6 +226,7 @@ export const Select: React.FC<SelectProps> = ({
         aria-autocomplete="none"
         title={label || undefined}
         aria-hidden={hidden}
+        aria-disabled={disabled}
         onBlur={handleBlur}
         {...getReferenceProps()}
         {...props}
@@ -235,6 +240,7 @@ export const Select: React.FC<SelectProps> = ({
           hidden={true}
           aria-label="" // Intentionally left blank
           form={form}
+          disabled={disabled}
         >
           {(selectedOptionValue && (
             <option value={selectedOptionValue}>{selectedOptionLabel}</option>

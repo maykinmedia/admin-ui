@@ -338,3 +338,46 @@ export const UsageWithFormik: Story = {
     );
   },
 };
+
+export const FormAllDisabled: Story = {
+  // Every single `field` needs to have the `disabled` tag
+  ...FormComponent,
+  args: {
+    ...FormComponent.args,
+    fields: FormComponent.args?.fields?.map((field) => ({
+      ...field,
+      disabled: true,
+    })),
+  },
+
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const form = await canvas.findByRole("form");
+    await expect(form).toBeDisabled();
+    const firstName = canvas.getByLabelText("First name");
+    await expect(firstName).toBeDisabled();
+  },
+  render: (args) => {
+    return (
+      <Formik
+        initialValues={{}}
+        onSubmit={(data) => console.log(data)}
+        validate={(values) =>
+          args.validate && args.validate(values, args.fields || [])
+        }
+        validateOnChange={args.validateOnChange}
+      >
+        {({ errors, values, handleChange, handleSubmit }) => (
+          <Form
+            debug={args.debug}
+            errors={errors}
+            fields={args.fields}
+            values={values}
+            onChange={handleChange}
+            onSubmit={(event) => handleSubmit(event)}
+          ></Form>
+        )}
+      </Formik>
+    );
+  },
+};
