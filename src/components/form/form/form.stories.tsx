@@ -352,10 +352,63 @@ export const FormAllDisabled: Story = {
 
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    const form = await canvas.findByRole("form");
-    await expect(form).toBeDisabled();
     const firstName = canvas.getByLabelText("First name");
-    await expect(firstName).toBeDisabled();
+    const lastName = canvas.getByLabelText("Last name");
+    const age = canvas.getByLabelText("Age");
+    const schoolYear = canvas.getByLabelText("Select school year", {
+      exact: false,
+    });
+    const address = canvas.getByLabelText("Address");
+    const address_addition = canvas.getByLabelText("Address (addition)");
+    const dateOfBirth = canvas.getByLabelText("Date of birth", {
+      exact: false,
+    });
+    const english = canvas.getByLabelText("English");
+    const math = canvas.getByLabelText("Math");
+    const yes = canvas.getByLabelText("Yes");
+    const no = canvas.getByLabelText("No");
+    const acceptTos = canvas.getByLabelText(
+      "I have read and accept the terms and conditions",
+    );
+
+    //   We check that every single one of these has a disabled (or aria-disabled) tag
+    await expect(firstName).toHaveAttribute("disabled");
+    await expect(lastName).toHaveAttribute("disabled");
+    await expect(age).toHaveAttribute("disabled");
+    await expect(schoolYear).toHaveAttribute("disabled");
+    await expect(address).toHaveAttribute("disabled");
+    await expect(address_addition).toHaveAttribute("disabled");
+    await expect(dateOfBirth).toHaveAttribute("disabled");
+    await expect(english).toHaveAttribute("disabled");
+    await expect(math).toHaveAttribute("disabled");
+    await expect(yes).toHaveAttribute("disabled");
+    await expect(no).toHaveAttribute("disabled");
+    await expect(acceptTos).toHaveAttribute("disabled");
+
+    // Aditionally, we want to check if all of these are indeed non-interactive, checking if we can either
+    // 1. Type in it
+    // 2. Select a value (if it's a select)
+    // 3. Click a checkbox/radio (if checkbox/radio)
+
+    await userEvent.type(firstName, "John", { delay: 10 });
+    await expect(firstName).toHaveValue("");
+    await userEvent.type(lastName, "Doe", { delay: 10 });
+    await expect(lastName).toHaveValue("");
+    await userEvent.type(age, "33", { delay: 10 });
+    await expect(age).toHaveValue(null);
+    await expect(schoolYear).toHaveStyle("pointer-events: none");
+    await userEvent.type(address, "Keizersgracht 117", { delay: 10 });
+    await expect(address).toHaveValue("");
+    await userEvent.type(address_addition, "2", { delay: 10 });
+    await expect(address_addition).toHaveValue(null);
+    await userEvent.type(dateOfBirth, "15092023", { delay: 60 });
+    await userEvent.type(dateOfBirth, "{enter}");
+    await expect(dateOfBirth).toHaveValue("");
+    await expect(english).toHaveStyle("pointer-events: none");
+    await expect(math).toHaveStyle("pointer-events: none");
+    await expect(yes).toHaveStyle("pointer-events: none");
+    await expect(no).toHaveStyle("pointer-events: none");
+    await expect(acceptTos).toHaveStyle("pointer-events: none");
   },
   render: (args) => {
     return (
