@@ -1,11 +1,10 @@
 import clsx from "clsx";
 import React, { useEffect, useRef, useState } from "react";
 
-import { gettextFirst, isPrimitive } from "../../lib";
+import { gettextFirst } from "../../lib";
 import { Card } from "../card";
 import { Outline } from "../icon";
 import { ToolbarItem } from "../toolbar";
-import { H2 } from "../typography";
 import "./modal.scss";
 import { TRANSLATIONS } from "./translations";
 
@@ -178,11 +177,7 @@ export const Modal: React.FC<ModalProps> = ({
       onKeyDown={handleKeyDown}
       {...props}
     >
-      <Card
-        actions={_actions}
-        fullHeight
-        title={isPrimitive(title) ? <H2>{title}</H2> : title}
-      >
+      <Card actions={_actions} fullHeight title={title}>
         {children}
       </Card>
     </dialog>
