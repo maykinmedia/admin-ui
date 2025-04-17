@@ -33,7 +33,8 @@
   // The inputs themselves should not allow any pointer events (select boxes would open otherwise, for example)
   .mykn-input:disabled,
   .mykn-select[aria-disabled="true"] {
-    opacity: 0.5;
+    color: var(--typography-color-muted);
+    opacity: 0.4;
     pointer-events: none;
   }
 }
