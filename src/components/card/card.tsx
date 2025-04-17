@@ -3,7 +3,7 @@ import React from "react";
 
 import { ButtonProps } from "../button";
 import { Toolbar, ToolbarItem } from "../toolbar";
-import { Body, H2 } from "../typography";
+import { Body, H3 } from "../typography";
 import "./card.scss";
 
 export type CardProps = React.PropsWithChildren<{
@@ -51,7 +51,7 @@ export const Card: React.FC<CardProps> = ({
       {(actions.length || title) && (
         <div className="mykn-card__header">
           <Body stretch>
-            {typeof title === "string" ? <H2>{title}</H2> : title}
+            {typeof title === "string" ? <H3>{title}</H3> : title}
           </Body>
           {Boolean(actions?.length) && (
             <Toolbar
