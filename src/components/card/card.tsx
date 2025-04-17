@@ -36,7 +36,7 @@ export const Card: React.FC<CardProps> = ({
   ...props
 }) => {
   // Controls is renamed to actions.
-  if (typeof controls !== "undefined") {
+  if (controls && controls.length) {
     console.warn('mykn.components.Card: use of deprecated prop "controls"');
   }
 
