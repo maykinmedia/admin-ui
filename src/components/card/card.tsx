@@ -7,7 +7,7 @@ import { Body, H2 } from "../typography";
 import "./card.scss";
 
 export type CardProps = React.PropsWithChildren<{
-  /** Buttons to use in the cards' header. */
+  /** Buttons to use in the header. */
   actions?: ToolbarItem[];
 
   /** @deprecated: REMOVE IN 3.0 - Renamed to actions. */

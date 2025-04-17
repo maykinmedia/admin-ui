@@ -2,37 +2,74 @@ import clsx from "clsx";
 import React, { useEffect, useRef, useState } from "react";
 
 import { gettextFirst, isPrimitive } from "../../lib";
-import { ButtonProps } from "../button";
 import { Card } from "../card";
 import { Outline } from "../icon";
+import { ToolbarItem } from "../toolbar";
 import { H2 } from "../typography";
 import "./modal.scss";
 import { TRANSLATIONS } from "./translations";
 
 export type ModalProps = Omit<React.ComponentProps<"dialog">, "title"> & {
+  /** Buttons to use in the header. */
+  actions?: ToolbarItem[];
+
+  /** Whether to allow the dialog to be closed.*/
   allowClose?: boolean;
+
+  /** Whether to show the close button.*/
+  showClose?: boolean;
+
+  /** Whether to show the `labelClose` label. */
+  showLabelClose?: boolean;
+
+  /** The close (accessible) label. */
   labelClose?: string;
+
+  /** Whether the dialog is opened or closed. */
   open?: React.ComponentProps<"dialog">["open"];
+
+  /** Gets called when the dialog is closed. */
   onClose?: React.ComponentProps<"dialog">["onClose"];
+
+  /** The position of the modal. */
   position?: "float" | "side";
+
+  /**
+   * Attempts to fix the autofocus by focussing the first available input with
+   * an `autofocus` attribute.
+   */
   restoreAutofocus?: boolean;
+
+  /** The size of the dialog. */
   size?: "m" | "s";
+
+  /** The title of the dialog. */
   title?: string | React.ReactNode;
+
+  /**
+   * The type of dialog: "modal" is a blocking variant where "dialog" is solely
+   * an overlay.
+   */
+  type?: "modal" | "dialog";
 };
 
 /**
  * Modal component (mode dialog).
  */
 export const Modal: React.FC<ModalProps> = ({
+  actions = [],
   allowClose = true,
   children,
-  open,
+  labelClose,
+  showLabelClose = false,
   onClose,
+  open,
   position = "float",
   restoreAutofocus = true,
   size,
+  showClose = true,
   title,
-  labelClose,
+  type = "modal",
   ...props
 }) => {
   const [openState, setOpenState] = useState<ModalProps["open"]>(false);
@@ -50,10 +87,22 @@ export const Modal: React.FC<ModalProps> = ({
 
   useEffect(() => {
     if (open) {
-      dialogRef.current?.showModal();
+      switch (type) {
+        case "dialog":
+          dialogRef.current?.show();
+          break;
+        default:
+          dialogRef.current?.showModal();
+      }
+
       setOpenState(true);
       if (restoreAutofocus) {
-        doRestoreAutofocus();
+        dialogRef.current?.addEventListener("animationend", doRestoreAutofocus);
+        return () =>
+          dialogRef.current?.removeEventListener(
+            "animationend",
+            doRestoreAutofocus,
+          );
       }
     } else {
       setOpenState(false);
@@ -65,11 +114,11 @@ export const Modal: React.FC<ModalProps> = ({
    * Focuses the first child element with "autofocus" set.
    */
   const doRestoreAutofocus = () => {
-    setTimeout(() => {
-      const input =
-        dialogRef.current?.querySelector<HTMLInputElement>("[autofocus]");
-      input?.focus();
-    });
+    const target =
+      dialogRef.current?.querySelector<HTMLInputElement>("[autofocus]") ||
+      dialogRef.current;
+
+    target?.focus();
   };
 
   /**
@@ -86,22 +135,35 @@ export const Modal: React.FC<ModalProps> = ({
    * @param e
    */
   const handleKeyDown: React.KeyboardEventHandler = (e) => {
-    if (allowClose || e.key !== "Escape") {
-      return;
+    // Prevent unwanted close.
+    if (!allowClose && e.key === "Escape") {
+      e.preventDefault();
     }
-    e.preventDefault();
+
+    // Force possible non-native close when `type==="dialog".
+    if (type === "dialog" && allowClose && e.key === "Escape") {
+      dialogRef.current?.close();
+    }
   };
 
-  const controls: ButtonProps[] | undefined = allowClose
-    ? [
-        {
-          "aria-label": _labelClose,
-          children: <Outline.XMarkIcon />,
-          variant: "transparent",
-          onClick: () => dialogRef.current?.close(),
-        },
-      ]
-    : undefined;
+  const _actions: ToolbarItem[] =
+    allowClose && showClose
+      ? [
+          ...actions,
+          {
+            "aria-label": _labelClose,
+            children: showLabelClose ? (
+              <>
+                <Outline.XMarkIcon /> {_labelClose}
+              </>
+            ) : (
+              <Outline.XMarkIcon />
+            ),
+            variant: "transparent",
+            onClick: () => dialogRef.current?.close(),
+          },
+        ]
+      : actions;
 
   return (
     <dialog
@@ -110,13 +172,14 @@ export const Modal: React.FC<ModalProps> = ({
       className={clsx("mykn-modal", {
         [`mykn-modal--size-${size}`]: size,
         [`mykn-modal--position-${position}`]: position,
+        [`mykn-modal--type-${type}`]: type,
       })}
       onClose={handleClose}
       onKeyDown={handleKeyDown}
       {...props}
     >
       <Card
-        controls={controls}
+        actions={_actions}
         fullHeight
         title={isPrimitive(title) ? <H2>{title}</H2> : title}
       >
