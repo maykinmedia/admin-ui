@@ -103,9 +103,9 @@ export const Sidebar: React.FC<SidebarProps> = ({
       onTransitionEnd={handleTransitionEnd}
     >
       <div className="mykn-sidebar__header">
-        {_logo && (
+        {(_logo || expandable) && (
           <Card>
-            <Body>{_logo}</Body>
+            {_logo && <Body>{_logo}</Body>}
             {expandable && (
               <Button
                 className="mykn-sidebar__toggle"
