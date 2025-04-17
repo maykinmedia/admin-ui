@@ -1,7 +1,7 @@
 .mykn-modal {
   border: 1px solid var(--typography-color-border);
   background: transparent;
-  border-radius: var(--border-radius-l);
+  box-sizing: border-box;
   display: block;
   inset-block-start: 0;
   inset-block-end: 0;
@@ -24,6 +24,7 @@
   }
 
   &--position-float {
+    border-radius: var(--border-radius-l);
     margin: auto;
 
     &[open] {
@@ -48,14 +49,11 @@
       animation-fill-mode: forwards;
     }
 
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
     position: fixed;
     height: 100%;
 
     > .mykn-card {
-      border-top-right-radius: 0;
-      border-bottom-right-radius: 0;
+      border-radius: 0;
     }
 
     // TODO: Investiage improvement.
@@ -76,6 +74,14 @@
 
   &--size-s {
     width: 280px;
+  }
+
+  &--type-dialog#{&}--position-float {
+    box-shadow: 0 0 20px var(--page-color-shadow);
+  }
+
+  &--type-dialog#{&}--position-side {
+    box-shadow: -4px 0 20px var(--page-color-shadow);
   }
 }
 
