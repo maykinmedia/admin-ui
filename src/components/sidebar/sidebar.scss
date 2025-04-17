@@ -17,7 +17,9 @@
 
   &--position-start &__header &__toggle,
   &--position-end &__header &__toggle {
-    inset-block-start: 100%;
+    inset-block-start: calc(
+      var(--typography-line-height-h2) + var(--typography-font-size-h2)
+    );
     position: absolute;
     transform-origin: center;
   }

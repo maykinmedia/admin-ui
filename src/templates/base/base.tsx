@@ -19,8 +19,14 @@ export type BaseTemplateProps = React.PropsWithChildren & {
   /** Column props. */
   columnProps?: ColumnProps;
 
+  /** Grid props. */
+  gridProps?: GridProps;
+
   /** Page props. */
   pageProps?: PageProps;
+
+  /** Sidebar props. */
+  sidebarProps?: ToolbarItem[];
 
   /** Whether to limit the content width using a container. */
   container?: boolean;
@@ -30,9 +36,6 @@ export type BaseTemplateProps = React.PropsWithChildren & {
 
   /** Whether to wrap content in a grid. */
   grid?: boolean;
-
-  /** Grid props. */
-  gridProps?: GridProps;
 
   /** Primary navigation items. */
   primaryNavigationItems?: ToolbarItem[];
@@ -61,6 +64,7 @@ export const BaseTemplate: React.FC<BaseTemplateProps> = ({
   gridProps,
   primaryNavigationItems = [],
   sidebarItems = [],
+  sidebarProps,
   slotPrimaryNavigation,
   slotSidebar,
 }) => {
@@ -94,7 +98,7 @@ export const BaseTemplate: React.FC<BaseTemplateProps> = ({
   const contextSidebar =
     sidebar ||
     (sidebarItems.length || _sidebarItems?.length ? (
-      <Sidebar expanded>
+      <Sidebar expandable={true} {...sidebarProps}>
         <Toolbar
           align="space-between"
           direction="vertical"
