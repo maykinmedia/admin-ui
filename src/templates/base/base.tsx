@@ -106,7 +106,7 @@ export const BaseTemplate: React.FC<BaseTemplateProps> = ({
     ) : null);
 
   const content = _grid ? (
-    <Grid {...gridProps} stretch={true}>
+    <Grid {...gridProps} fullHeight={true}>
       <Column direction="row" span={12} {...columnProps}>
         {children}
       </Column>
