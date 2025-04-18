@@ -15,6 +15,10 @@
   width: var(--mykn-sidebar-width);
   z-index: 1000;
 
+  &:has(> &__header &__toggle) {
+    z-index: 1010;
+  }
+
   &--position-start &__header &__toggle,
   &--position-end &__header &__toggle {
     inset-block-start: calc(
