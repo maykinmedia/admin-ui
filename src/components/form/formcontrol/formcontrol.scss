@@ -23,8 +23,7 @@
     text-decoration: none;
   }
 
-  // Makes sure that the wrapper actually has the cursor of not-allowed. Needs to be in wrapper
-  &,
+  // Cursor not allowed on the form control when any of its children are disabled
   &:has(.mykn-input:disabled),
   &:has(.mykn-select[aria-disabled="true"]) {
     cursor: not-allowed;
