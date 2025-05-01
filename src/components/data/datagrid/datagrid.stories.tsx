@@ -111,6 +111,46 @@ export const FieldsSelectable: Story = {
   },
 };
 
+export const FieldsSelectableOverflow: Story = {
+  args: {
+    objectList: FIXTURE_PRODUCTS,
+    fields: [
+      { name: "id", type: "number", active: false },
+      "name",
+      "category",
+      "price",
+      "stock",
+      "isAvailable",
+      { name: "releaseDate", type: "date", active: false },
+      { name: "overflowFilter1", active: false },
+      { name: "overflowFilter2", active: false },
+      { name: "overflowFilter3", active: false },
+      { name: "overflowFilter4", active: false },
+      { name: "overflowFilter5", active: false },
+      { name: "overflowFilter6", active: false },
+      { name: "overflowFilter7", active: false },
+      { name: "overflowFilter8", active: false },
+      { name: "overflowFilter9", active: false },
+      { name: "overflowFilter10", active: false },
+      { name: "overflowFilter11", active: false },
+      { name: "overflowFilter12", active: false },
+      { name: "overflowFilter13", active: false },
+      { name: "overflowFilter14", active: false },
+      { name: "overflowFilter15", active: false },
+      { name: "overflowFilter16", active: false },
+      { name: "overflowFilter17", active: false },
+      { name: "overflowFilter18", active: false },
+      { name: "overflowFilter19", active: false },
+      { name: "overflowFilter20", active: false },
+    ],
+    fieldsSelectable: true,
+  },
+  argTypes: {
+    ...DataGridComponent.argTypes,
+    onFieldsChange: { action: "onFieldsChange" },
+  },
+};
+
 /**
  * Pass `true` to `filterable` prop to allow values to be filtered, the exact fields
  * to be filterable can be controlled by passing `TypedField` items to the `fields`

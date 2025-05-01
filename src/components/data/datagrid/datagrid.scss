@@ -170,4 +170,19 @@
   &__cell--link .mykn-button {
     width: calc(100% - 1em - 3 * var(--spacing-h));
   }
+
+  .mykn-body {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .mykn-form {
+    flex: 1 1 auto;
+    height: unset !important;
+
+    &__fieldset {
+      flex: 1 1 auto;
+      height: unset !important;
+    }
+  }
 }
