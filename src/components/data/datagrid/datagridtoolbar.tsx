@@ -127,7 +127,7 @@ export const DataGridToolbar = <
         title={<H3>{ucFirst(_labelSelectFields)}</H3>}
         onClose={() => setSelectFieldsModalState(false)}
       >
-        <Body>
+        <Body allowScroll>
           <Form
             fields={[
               {
