@@ -31,7 +31,7 @@ export const Card: React.FC<CardProps> = ({
   actions = controls,
   children,
   direction = "column",
-  fullHeight,
+  fullHeight = false,
   title,
   ...props
 }) => {
