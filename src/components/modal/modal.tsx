@@ -177,7 +177,7 @@ export const Modal: React.FC<ModalProps> = ({
       onKeyDown={handleKeyDown}
       {...props}
     >
-      <Card actions={_actions} fullHeight title={title}>
+      <Card actions={_actions} fullHeight={position === "side"} title={title}>
         {children}
       </Card>
     </dialog>
