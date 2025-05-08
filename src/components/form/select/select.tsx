@@ -45,6 +45,9 @@ export type SelectProps = ChoiceFieldProps & {
 
   /** Disabled state */
   disabled?: boolean;
+
+  /** allow selecting more than one option */
+  multiple?: boolean;
 };
 
 /**
@@ -75,6 +78,7 @@ export const Select: React.FC<SelectProps> = ({
   variant = "normal",
   form,
   disabled = false,
+  multiple = false,
   ...props
 }) => {
   const i18nContext = {
@@ -94,7 +98,7 @@ export const Select: React.FC<SelectProps> = ({
   const fakeInputRef = React.useRef<HTMLSelectElement>(null);
   const [isOpen, setIsOpen] = React.useState(false);
   const [activeIndex, setActiveIndex] = React.useState<number | null>(null);
-  const [selectedIndex, setSelectedIndex] = React.useState<number | null>(null);
+  const [selectedIndices, setSelectedIndices] = React.useState<number[]>([]);
 
   const { refs, floatingStyles, context } = useFloating({
     placement: "bottom-start",
@@ -123,21 +127,29 @@ export const Select: React.FC<SelectProps> = ({
   const { getReferenceProps } = useInteractions([dismiss, role, click]);
 
   useEffect(() => {
-    const index = options.findIndex(
-      (o) =>
-        o.selected ||
-        (o.value
-          ? o.value.toString() === value?.toString()
-          : o.label === value),
-    );
-
-    if (index === -1) {
-      setSelectedIndex(null);
-      return;
+    let indices: number[] = [];
+    if (multiple && Array.isArray(value)) {
+      indices = options
+        .map((o, i) =>
+          o.selected ||
+          o.value?.toString() ===
+            value.find((v) => v.toString() === o.value?.toString())
+            ? i
+            : -1,
+        )
+        .filter((i) => i !== -1);
+    } else {
+      const idx = options.findIndex(
+        (o) =>
+          o.selected ||
+          (o.value
+            ? o.value.toString() === value?.toString()
+            : o.label === value),
+      );
+      if (idx !== -1) indices = [idx];
     }
-
-    setSelectedIndex(index);
-  }, [value, options]);
+    setSelectedIndices(indices);
+  }, [value, options, multiple]);
 
   /**
    * Handles a blur.
@@ -158,53 +170,62 @@ export const Select: React.FC<SelectProps> = ({
    * @param index
    */
   const handleChange = (event: React.UIEvent, index: number | null) => {
-    const selectedOption = index !== null ? options[index] : null;
+    if (index === null) {
+      setSelectedIndices([]);
+      setIsOpen(false);
 
-    setSelectedIndex(index);
-    setIsOpen(false);
+      /*
+       * Dispatch change event.
+       *
+       * A custom "change" event created with `detail` set to the selected option.
+       * The event is dispatched on `fakeInputRef.current` setting `target` to a
+       * native select (which in itself can be used to obtain the value without
+       * the use of events).
+       *
+       * This aims to improve compatibility with various approaches of dealing
+       * with forms.
+       *
+       * NOTE: Dispatching is delayed to allow React to `fakeInputRef.current`
+       * before dispatching.
+       */
+      const fakeInput = fakeInputRef.current as HTMLSelectElement;
+      const changeEvent = eventFactory("change", null, true, false, false);
+      fakeInput.dispatchEvent(changeEvent);
+      onChange?.(
+        changeEvent as unknown as React.ChangeEvent<HTMLSelectElement>,
+      );
+      return;
+    }
 
-    /*
-     * Dispatch change event.
-     *
-     * A custom "change" event created with `detail` set to the selected option.
-     * The event is dispatched on `fakeInputRef.current` setting `target` to a
-     * native select (which in itself can be used to obtain the value without
-     * the use of events).
-     *
-     * This aims to improve compatibility with various approaches of dealing
-     * with forms.
-     *
-     * NOTE: Dispatching is delayed to allow React to `fakeInputRef.current`
-     * before dispatching.
-     */
+    let next: number[];
+    if (multiple) {
+      next = selectedIndices.includes(index)
+        ? selectedIndices.filter((i) => i !== index)
+        : [...selectedIndices, index];
+      setIsOpen(true);
+    } else {
+      next = [index];
+      setIsOpen(false);
+    }
+
+    setSelectedIndices(next);
+    const selectedOptions = next.map((i) => options[i]);
+    const detail = multiple ? selectedOptions : selectedOptions[0] || null;
+
     const fakeInput = fakeInputRef.current as HTMLSelectElement;
     setTimeout(() => {
-      const changeEvent = eventFactory(
-        "change",
-        selectedOption,
-        true,
-        false,
-        false,
-      );
+      const changeEvent = eventFactory("change", detail, true, false, false);
       fakeInput.dispatchEvent(changeEvent);
-      onChange &&
-        onChange(
-          changeEvent as unknown as React.ChangeEvent<HTMLSelectElement>,
-        );
+      onChange?.(
+        changeEvent as unknown as React.ChangeEvent<HTMLSelectElement>,
+      );
     });
   };
 
-  const selectedOptionLabel =
-    selectedIndex !== null ? options[selectedIndex]?.label : undefined;
-
-  const selectedOptionValue =
-    selectedIndex !== null
-      ? Object.prototype.hasOwnProperty.call(
-          options[selectedIndex] || {},
-          "value",
-        )
-        ? options[selectedIndex].value
-        : selectedOptionLabel
+  const selectValue = multiple
+    ? selectedIndices.map((i) => String(options[i].value) ?? options[i].label)
+    : selectedIndices[0] !== undefined && selectedIndices[0] !== null
+      ? options[selectedIndices[0]].value
       : "";
 
   return (
@@ -216,7 +237,7 @@ export const Select: React.FC<SelectProps> = ({
           {
             "mykn-select--pad-h": pad === true || pad === "h",
             "mykn-select--pad-v": pad === true || pad === "v",
-            "mykn-select--selected": selectedIndex,
+            "mykn-select--selected": selectedIndices.length > 0,
             [`mykn-select--input-size-${inputSize}`]: inputSize,
           },
           className,
@@ -236,26 +257,67 @@ export const Select: React.FC<SelectProps> = ({
           id={id}
           ref={fakeInputRef}
           name={name}
-          defaultValue={selectedOptionValue}
-          hidden={true}
-          aria-label="" // Intentionally left blank
+          multiple={multiple}
+          value={selectValue}
+          hidden
           form={form}
           disabled={disabled}
         >
-          {(selectedOptionValue && (
-            <option value={selectedOptionValue}>{selectedOptionLabel}</option>
-          )) || <option value=""></option>}
+          {options.map((opt, i) =>
+            selectedIndices.includes(i) ? (
+              <option key={i} value={opt.value ?? opt.label} selected>
+                {opt.label}
+              </option>
+            ) : null,
+          )}
         </select>
 
-        <div className="mykn-select__label">
-          {selectedOptionLabel || placeholder}
+        <div
+          className={clsx(
+            "mykn-select__label",
+            multiple && "mykn-select__label--multiple",
+          )}
+        >
+          {selectedIndices.length > 0 ? (
+            selectedIndices.map((i) => {
+              if (multiple) {
+                return (
+                  <span key={i} className="mykn-select__pill">
+                    {options[i]?.label}
+                  </span>
+                );
+              }
+              return options[i]?.label;
+            })
+          ) : (
+            <span className="mykn-select__placeholder">{placeholder}</span>
+          )}
         </div>
         {!required && (
           <button
             className="mykn-select__clear"
             type="button"
             aria-label={ucFirst(_labelClear)}
-            onClick={(e) => handleChange(e, null)}
+            onClick={(e) => {
+              if (multiple) {
+                setSelectedIndices([]);
+                // fire a change with empty array detail
+                const fake = fakeInputRef.current!;
+                const changeEvent = eventFactory(
+                  "change",
+                  [],
+                  true,
+                  false,
+                  false,
+                );
+                fake.dispatchEvent(changeEvent);
+                onChange?.(
+                  changeEvent as unknown as React.ChangeEvent<HTMLSelectElement>,
+                );
+              } else {
+                handleChange(e, null);
+              }
+            }}
           >
             <Outline.XCircleIcon />
           </button>
@@ -266,7 +328,7 @@ export const Select: React.FC<SelectProps> = ({
       <SelectDropdown
         ref={refs.setFloating}
         activeIndex={activeIndex}
-        selectedIndex={selectedIndex}
+        selectedIndices={selectedIndices}
         context={context}
         floatingStyles={floatingStyles}
         handleChange={handleChange}
@@ -274,7 +336,7 @@ export const Select: React.FC<SelectProps> = ({
         options={options}
         portalRoot={refs.reference.current as HTMLDivElement}
         setActiveIndex={setActiveIndex}
-        setSelectedIndex={setSelectedIndex}
+        setSelectedIndices={setSelectedIndices}
       />
     </>
   );
@@ -283,8 +345,8 @@ export const Select: React.FC<SelectProps> = ({
 export type SelectDropdownProps = React.PropsWithChildren<{
   activeIndex: number | null;
   setActiveIndex: (index: number | null) => void;
-  selectedIndex: number | null;
-  setSelectedIndex: (index: number | null) => void;
+  selectedIndices: number[];
+  setSelectedIndices: (prev: (prev: number[]) => number[]) => void;
   context: FloatingContext;
   floatingStyles: React.CSSProperties;
   open: boolean;
@@ -297,7 +359,7 @@ export type SelectDropdownProps = React.PropsWithChildren<{
 /**
  * Base select dropdown component.
  * @param activeIndex
- * @param selectedIndex
+ * @param selectedIndices
  * @param context
  * @param floatingStyles
  * @param forwardedRef
@@ -306,13 +368,13 @@ export type SelectDropdownProps = React.PropsWithChildren<{
  * @param options
  * @param portalRoot
  * @param setActiveIndex
- * @param setSelectedIndex
+ * @param setSelectedIndices
  * @private
  * @constructor
  */
 const BaseSelectDropdown: React.FC<SelectDropdownProps> = ({
   activeIndex,
-  selectedIndex,
+  selectedIndices,
   context,
   floatingStyles,
   forwardedRef,
@@ -321,7 +383,7 @@ const BaseSelectDropdown: React.FC<SelectDropdownProps> = ({
   options = [],
   portalRoot,
   setActiveIndex,
-  setSelectedIndex,
+  setSelectedIndices,
 }) => {
   const isTypingRef = React.useRef(false);
   const nodeRef = React.useRef<HTMLDivElement[]>([]);
@@ -337,15 +399,21 @@ const BaseSelectDropdown: React.FC<SelectDropdownProps> = ({
   const listNav = useListNavigation(context, {
     listRef: nodeRef,
     activeIndex,
-    selectedIndex,
+    selectedIndex: selectedIndices[0] ?? null,
     onNavigate: setActiveIndex,
   });
 
   const typeahead = useTypeahead(context, {
     listRef: listRef,
     activeIndex,
-    selectedIndex,
-    onMatch: open ? setActiveIndex : setSelectedIndex,
+    selectedIndex: selectedIndices[0] ?? null,
+    onMatch: (index) => {
+      if (open) {
+        setActiveIndex(index);
+      } else {
+        toggleSelection(index);
+      }
+    },
     onTypingChange(isTyping) {
       isTypingRef.current = isTyping;
     },
@@ -358,29 +426,26 @@ const BaseSelectDropdown: React.FC<SelectDropdownProps> = ({
     click,
   ]);
 
-  /**
-   * Index "click" event handler.
-   * @param event
-   * @param index
-   */
+  const toggleSelection = (index: number) => {
+    setSelectedIndices((prev) => {
+      if (prev.includes(index)) {
+        return prev.filter((i) => i !== index);
+      } else {
+        return [...prev, index];
+      }
+    });
+  };
+
   const onClick = (event: React.MouseEvent, index: number) => {
     event.preventDefault();
+    toggleSelection(index);
     handleChange(event, index);
   };
 
-  /**
-   * Indexed "keydown" event handler.
-   * @param event
-   * @param index
-   */
   const onKeyDown = (event: React.KeyboardEvent, index: number) => {
-    if (event.key === "Enter") {
+    if (event.key === "Enter" || (event.key === " " && !isTypingRef.current)) {
       event.preventDefault();
-      handleChange(event, index);
-    }
-
-    if (event.key === " " && !isTypingRef.current) {
-      event.preventDefault();
+      toggleSelection(index);
       handleChange(event, index);
     }
   };
@@ -393,11 +458,10 @@ const BaseSelectDropdown: React.FC<SelectDropdownProps> = ({
       <SelectOption
         key={`${label}-${value || label}`}
         ref={(node) => {
-          if (!node) return;
-          nodeRef.current[i] = node;
+          if (node) nodeRef.current[i] = node;
         }}
         active={i === activeIndex}
-        selected={i === selectedIndex}
+        selected={selectedIndices.includes(i)}
         tabIndex={i === activeIndex ? 0 : -1}
         {...getItemProps({
           onClick: (e) => onClick(e, i),

@@ -65,10 +65,14 @@ export function serializeForm<T extends string = string>(
       // Edge case: radio can possibly have more than one DOM element representing a single value.
       const isRadio = inputsMatchingName.every((i) => i.type === "radio");
 
-      if (nameMultipleTimesInForm && !isRadio) {
+      // special-case <select multiple>
+      const firstEl = inputsMatchingName[0];
+      const isSelectMultiple =
+        firstEl instanceof HTMLSelectElement && firstEl.multiple;
+
+      if ((nameMultipleTimesInForm && !isRadio) || isSelectMultiple) {
         // Key is already set on (serialized) `acc`, replace it with an `Array`.
         const existingValue = acc[name];
-
         acc[name] = existingValue
           ? Array.isArray(existingValue)
             ? [...existingValue, value]
