@@ -202,3 +202,35 @@ export const Padding: Story = {
     );
   },
 };
+
+export const SelectSingle: Story = {
+  args: {
+    options: [
+      { label: "Freshman", value: "FR" },
+      { label: "Sophomore", value: "SO" },
+      { label: "Junior", value: "JR" },
+      { label: "Senior", value: "SR" },
+      { label: "Graduate", value: "GR" },
+    ],
+    name: "school_year",
+    placeholder: "Select school year",
+  },
+  decorators: [FORM_TEST_DECORATOR],
+};
+
+export const SelectMultiple: Story = {
+  args: {
+    options: [
+      { label: "Football", value: "football" },
+      { label: "Basketball", value: "basketball" },
+      { label: "Tennis", value: "tennis" },
+      { label: "Swimming", value: "swimming" },
+      { label: "Running", value: "running" },
+      { label: "Cycling", value: "cycling" },
+    ],
+    name: "favourite_sport",
+    placeholder: "Select favourite sport",
+    multiple: true,
+  },
+  decorators: [FORM_TEST_DECORATOR],
+};
