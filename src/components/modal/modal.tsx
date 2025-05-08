@@ -111,13 +111,14 @@ export const Modal: React.FC<ModalProps> = ({
 
   /**
    * Focuses the first child element with "autofocus" set.
+   * FIXME: Probably doesn't work due to React swallowing autofocus attribute.
    */
   const doRestoreAutofocus = () => {
-    const target =
-      dialogRef.current?.querySelector<HTMLInputElement>("[autofocus]") ||
-      dialogRef.current;
-
-    target?.focus();
+    setTimeout(() => {
+      const input =
+        dialogRef.current?.querySelector<HTMLInputElement>("[autofocus]");
+      input?.focus();
+    });
   };
 
   /**
