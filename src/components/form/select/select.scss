@@ -4,6 +4,7 @@
   --mykn-select-font-size: var(--typography-font-size-body-s);
   --mykn-select-line-height: var(--typography-line-height-body-s);
   --mykn-select-min-height: 42px;
+  --mykn-select-spacing-pill: calc(var(--spacing-xs-h) / 4);
 
   align-items: center;
   background: var(--typography-color-background);
@@ -32,6 +33,15 @@
 
   &--pad-v {
     --mykn-select-padding-v: var(--mykn-select-padding-xs, var(--spacing-xs-v));
+  }
+
+  &--multiple#{&}--pad-v {
+    --mykn-select-padding-v: calc(
+      var(--mykn-select-padding-xs, var(--spacing-xs-v)) - var(
+          --mykn-select-spacing-pill
+        ) *
+        2
+    );
   }
 
   &--size-xl {
@@ -93,6 +103,26 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+  }
+
+  &--multiple &__label {
+    white-space: unset;
+    overflow: visible;
+  }
+
+  &__pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 0 0.5em; // TODO: spacing-h and spacing-v are too big for this. Add more tokens or hardcode?
+    margin: var(--mykn-select-spacing-pill);
+    border-radius: var(--border-radius-l);
+    background-color: var(--page-color-highlight);
+    font-size: var(--typography-font-size-body-xs);
+    line-height: var(--typography-font-size-body-xs);
+
+    &-remove {
+      margin-inline-start: 0.05em;
+    }
   }
 
   &__clear {

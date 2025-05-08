@@ -65,6 +65,7 @@ const playFormComponent = async ({
   const schoolYear = canvas.getByLabelText("Select school year", {
     exact: false,
   });
+  const favouriteSport = canvas.getByLabelText("Favourite sport");
   const address = canvas.getByLabelText("Address");
   const address_addition = canvas.getByLabelText("Address (addition)");
   const dateOfBirth = canvas.getByLabelText("Date of birth", { exact: false });
@@ -140,6 +141,18 @@ const playFormComponent = async ({
   await expect(math).toBeChecked();
   await expectLogToBe(canvasElement, "courses", ["english", "math"]);
 
+  await userEvent.click(favouriteSport, { delay: 100 });
+  const football = await canvas.findByText("Football");
+  const tennis = await canvas.findByText("Tennis");
+  await userEvent.click(football, { delay: 10 });
+  await userEvent.click(tennis, { delay: 10 });
+  await expect(favouriteSport).toHaveTextContent("FootballTennis");
+  await expectLogToBe(
+    canvasElement,
+    "favourite_sport",
+    typedResults ? ["football", "tennis"] : ["football", "tennis"],
+  );
+
   await userEvent.click(yes);
   await expect(yes).toBeChecked();
   await expectLogToBe(canvasElement, "subscribe_newsletter", "yes");
@@ -205,6 +218,20 @@ export const FormComponent: Story = {
         ],
       },
       {
+        options: [
+          { label: "Football", value: "football" },
+          { label: "Basketball", value: "basketball" },
+          { label: "Tennis", value: "tennis" },
+          { label: "Swimming", value: "swimming" },
+          { label: "Running", value: "running" },
+          { label: "Cycling", value: "cycling" },
+        ],
+        name: "favourite_sport",
+        placeholder: "Select favourite sport",
+        label: "Favourite sport",
+        multiple: true,
+      },
+      {
         label: "Receive newsletter",
         name: "subscribe_newsletter",
         type: "radio",
@@ -214,6 +241,7 @@ export const FormComponent: Story = {
           { label: "No", value: "no" },
         ],
       },
+
       {
         label: "I have read and accept the terms and conditions",
         name: "accept_tos",
@@ -286,6 +314,20 @@ export const UsageWithFormik: Story = {
           { label: "Math", value: "math" },
           { label: "Science", value: "science" },
         ],
+      },
+      {
+        options: [
+          { label: "Football", value: "football" },
+          { label: "Basketball", value: "basketball" },
+          { label: "Tennis", value: "tennis" },
+          { label: "Swimming", value: "swimming" },
+          { label: "Running", value: "running" },
+          { label: "Cycling", value: "cycling" },
+        ],
+        name: "favourite_sport",
+        placeholder: "Select favourite sport",
+        label: "Favourite sport",
+        multiple: true,
       },
       {
         label: "Receive newsletter",
