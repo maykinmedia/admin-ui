@@ -3,14 +3,14 @@
 .mykn-paginator {
   display: flex;
   justify-content: space-between;
-  gap: var(--spacing-v);
+  gap: var(--spacing-xs-v);
   position: relative;
   width: 100%;
 
   &__section {
     display: flex;
     align-items: center;
-    gap: var(--spacing-h);
+    gap: var(--spacing-xs-h);
   }
 
   &__section .mykn-p {
@@ -19,7 +19,7 @@
 
   &__section--meta {
     display: flex;
-    gap: var(--spacing-v);
+    gap: var(--spacing-xs-v);
     inset-block-start: 50%;
     inset-inline-start: 50%;
     position: absolute;
@@ -28,7 +28,7 @@
 
     > .mykn-icon {
       inset-inline-start: 100%;
-      margin-inline-start: var(--spacing-h);
+      margin-inline-start: var(--spacing-xs-h);
       position: absolute;
     }
   }
@@ -42,7 +42,7 @@
     grid-template-rows: auto auto;
 
     &__section {
-      flex-basis: calc(50% - var(--spacing-v) / 2);
+      flex-basis: calc(50% - var(--spacing-xs-v) / 2);
       white-space: nowrap;
     }
 

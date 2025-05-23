@@ -1,13 +1,13 @@
 .mykn-form {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-v);
+  gap: var(--spacing-xs-v);
   width: 100%;
 
   &__fieldset {
     display: flex;
     flex-direction: column;
-    gap: var(--spacing-v);
+    gap: var(--spacing-xs-v);
     width: 100%;
   }
 

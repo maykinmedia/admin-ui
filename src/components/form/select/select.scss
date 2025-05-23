@@ -27,11 +27,11 @@
   text-align: start;
 
   &--pad-h {
-    --mykn-select-padding-h: var(--spacing-h);
+    --mykn-select-padding-h: var(--spacing-xs-h);
   }
 
   &--pad-v {
-    --mykn-select-padding-v: var(--mykn-select-padding-xs, var(--spacing-v));
+    --mykn-select-padding-v: var(--mykn-select-padding-xs, var(--spacing-xs-v));
   }
 
   &--size-xl {
@@ -43,16 +43,16 @@
     --mykn-select-font-size: var(--typography-font-size-body-xs);
     --mykn-select-line-height: var(--typography-line-height-body-xs);
     --mykn-select-min-height: 0;
-    --mykn-select-padding-xs: calc(var(--spacing-h) / 2);
+    --mykn-select-padding-xs: calc(var(--spacing-xs-h) / 2);
   }
 
   &--size-xxs {
     --mykn-select-font-size: var(--typography-font-size-body-xs);
     --mykn-select-line-height: var(--typography-line-height-body-xs);
     --mykn-select-min-height: 0;
-    --mykn-select-padding-xs: calc(var(--spacing-h) / 2);
-    --mykn-select-height: calc(3 * var(--spacing-h) + 2px) !important;
-    --mykn-select-width: calc(3 * var(--spacing-h) + 2px) !important;
+    --mykn-select-padding-xs: calc(var(--spacing-xs-h) / 2);
+    --mykn-select-height: calc(3 * var(--spacing-xs-h) + 2px) !important;
+    --mykn-select-width: calc(3 * var(--spacing-xs-h) + 2px) !important;
   }
 
   &[aria-hidden="true"] {
@@ -101,7 +101,7 @@
     border: none;
     color: var(--typography-color-body);
     margin: 0;
-    margin-inline-end: var(--spacing-h);
+    margin-inline-end: var(--spacing-xs-h);
     padding: 0;
     flex-shrink: 0;
   }
@@ -117,7 +117,7 @@
     box-sizing: border-box;
     min-width: 100%;
     overflow: auto;
-    padding: var(--spacing-v) 0;
+    padding: var(--spacing-xs-v) 0;
     width: fit-content;
     z-index: 1000;
   }
@@ -136,7 +136,7 @@
   font-size: var(--mykn-select-font-size);
   font-weight: var(--mykn-option-font-weight);
   line-height: var(--mykn-select-line-height);
-  padding: 0 var(--spacing-h);
+  padding: 0 var(--spacing-xs-h);
   text-align: start;
   white-space: nowrap;
 

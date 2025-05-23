@@ -23,14 +23,14 @@
   }
 
   &--pad-h {
-    padding-inline: var(--spacing-h);
+    padding-inline: var(--spacing-xs-h);
   }
 
   &--pad-v {
-    padding-block: var(--spacing-h);
+    padding-block: var(--spacing-xs-h);
 
     @media screen and (min-width: constants.$breakpoint-desktop) {
-      padding-block: var(--spacing-v);
+      padding-block: var(--spacing-xs-v);
     }
   }
 

@@ -39,12 +39,12 @@
   $self: &;
   background-color: var(--typography-color-background);
   box-sizing: border-box;
-  column-gap: var(--spacing-h);
+  column-gap: var(--spacing-xs-h);
   display: flex;
   flex-direction: column;
   max-height: 100cqh;
   justify-content: flex-start;
-  row-gap: var(--spacing-v);
+  row-gap: var(--spacing-xs-v);
   text-align: start;
   width: fit-content;
   z-index: 10;
@@ -63,23 +63,23 @@
 
   &--pad-a .mykn-a {
     box-sizing: border-box;
-    padding: var(--spacing-v) var(--spacing-h);
+    padding: var(--spacing-xs-v) var(--spacing-xs-h);
   }
 
   &--pad-h {
-    padding-inline: var(--spacing-h);
+    padding-inline: var(--spacing-xs-h);
   }
 
   &--pad-size-xs#{&}--pad-h {
-    padding-inline: calc(var(--spacing-h) / 2);
+    padding-inline: calc(var(--spacing-xs-h) / 2);
   }
 
   &--pad-v {
-    padding-block: var(--spacing-v);
+    padding-block: var(--spacing-xs-v);
   }
 
   &--pad-size-xs-#{&}--pad-v {
-    padding-inline: calc(var(--spacing-v) / 2);
+    padding-inline: calc(var(--spacing-xs-v) / 2);
   }
 
   --typography-color-link: var(--typography-color-body);

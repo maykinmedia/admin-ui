@@ -13,7 +13,7 @@
   justify-content: center;
   line-height: var(--typography-line-height-body-xs);
   overflow: hidden;
-  padding: 0 var(--spacing-h);
+  padding: 0 var(--spacing-xs-h);
   position: relative;
   transform-style: preserve-3d;
 
@@ -59,6 +59,6 @@
   }
 
   .mykn-icon {
-    margin-inline-end: var(--spacing-h);
+    margin-inline-end: var(--spacing-xs-h);
   }
 }

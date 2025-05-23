@@ -18,8 +18,8 @@ import {
   TypedSerializedFormData,
   fields2TypedFields,
   filterDataArray,
+  sortDataArray,
 } from "../../../lib";
-import { sortDataArray } from "../../../lib";
 import { BadgeProps } from "../../badge";
 import { BoolProps } from "../../boolean";
 import { ButtonProps } from "../../button";
@@ -43,6 +43,9 @@ export type DataGridProps<T extends object = object, F extends object = T> = {
    * resulting in a horizontal scrollbar.
    */
   allowOverflowX?: boolean;
+
+  /** Whether a compact layout should be used. */
+  compact?: boolean;
 
   /** Whether to use a "decorative" component instead of `<P>` if applicable. */
   decorate?: boolean;
@@ -288,6 +291,7 @@ export const DataGrid = <T extends object = object, F extends object = T>(
   // Specify the default props.
   const defaults: Partial<DataGridProps<T, F>> = {
     allowOverflowX: true,
+    compact: true,
     showPaginator: Boolean(props.paginatorProps),
     selectable: false,
     allowSelectAll: true,
@@ -310,6 +314,7 @@ export const DataGrid = <T extends object = object, F extends object = T>(
   /* eslint-disable @typescript-eslint/no-unused-vars */
   const {
     allowOverflowX,
+    compact,
     aProps,
     badgeProps,
     boolProps,
@@ -681,7 +686,10 @@ export const DataGrid = <T extends object = object, F extends object = T>(
     >
       <div
         ref={dataGridRef}
-        className={clsx("mykn-datagrid", { "mykn-datagrid--wrap": wrap })}
+        className={clsx("mykn-datagrid", {
+          "mykn-datagrid--wrap": wrap,
+          "mykn-datagrid--compact": compact,
+        })}
         {...attrs}
       >
         {title && <DataGridHeader<T, F> />}

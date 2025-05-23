@@ -55,9 +55,7 @@ export const DataGridHeadingCell = <
           {!isSorted && <Outline.ChevronUpDownIcon />}
         </Button>
       ) : (
-        <P muted size="xs">
-          {children}
-        </P>
+        <P bold>{children}</P>
       )}
     </th>
   );
