@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import React from "react";
 
-import { useDataGridContext } from "./datagrid";
+import { useDataGridContext } from "./datagridcontext";
 
 /**
  * DataGrid scroll pane, contains the scrollable content.

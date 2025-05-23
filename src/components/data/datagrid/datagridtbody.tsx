@@ -1,8 +1,8 @@
 import clsx from "clsx";
 import React from "react";
 
-import { useDataGridContext } from "./datagrid";
 import { DataGridContentCell } from "./datagridcontentcell";
+import { useDataGridContext } from "./datagridcontext";
 import { DataGridSelectionCheckbox } from "./datagridselectioncheckbox";
 
 /**

@@ -9,7 +9,7 @@ import {
 } from "../../../lib";
 import { FormControl } from "../../form";
 import { Outline } from "../../icon";
-import { useDataGridContext } from "./datagrid";
+import { useDataGridContext } from "./datagridcontext";
 import { TRANSLATIONS } from "./translations";
 
 /**

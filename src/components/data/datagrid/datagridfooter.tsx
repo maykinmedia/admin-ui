@@ -2,7 +2,7 @@ import React from "react";
 
 import { Toolbar } from "../../toolbar";
 import { Paginator } from "../paginator";
-import { useDataGridContext } from "./datagrid";
+import { useDataGridContext } from "./datagridcontext";
 
 /**
  * DataGrid footer, shows paginator.

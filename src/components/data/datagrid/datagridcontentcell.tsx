@@ -14,7 +14,7 @@ import { BoolProps } from "../../boolean";
 import { Button } from "../../button";
 import { FormControl } from "../../form";
 import { Value } from "../value";
-import { useDataGridContext } from "./datagrid";
+import { useDataGridContext } from "./datagridcontext";
 
 export type DataGridContentCellProps<
   T extends object = object,

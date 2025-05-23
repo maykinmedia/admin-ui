@@ -2,7 +2,7 @@ import React, { useMemo } from "react";
 
 import { gettextFirst } from "../../../lib";
 import { Checkbox } from "../../form";
-import { useDataGridContext } from "./datagrid";
+import { useDataGridContext } from "./datagridcontext";
 import { TRANSLATIONS } from "./translations";
 
 export type DataGridSelectionCheckboxProps<

@@ -1,6 +1,6 @@
 import React, { createContext, useState } from "react";
 
-import { Modal, ModalProps } from "../../components";
+import { Modal, ModalProps } from "../../components/modal";
 
 export type ModalServiceContextType = {
   modalProps: ModalProps;
