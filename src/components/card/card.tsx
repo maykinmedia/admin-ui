@@ -50,7 +50,7 @@ export const Card: React.FC<CardProps> = ({
     >
       {(actions.length || title) && (
         <div className="mykn-card__header">
-          <Body stretch>
+          <Body fullHeight>
             {typeof title === "string" ? <H3>{title}</H3> : title}
           </Body>
           {Boolean(actions?.length) && (

@@ -4,9 +4,21 @@ import * as React from "react";
 import { Badge, Outline } from "../../components";
 import { DetailTemplate } from "./detail";
 
-const meta: Meta<typeof DetailTemplate> = {
+const FIXTURE = {
+  afgekeurd: "Goedgekeurd",
+  begin: "Erfpacht aanvraag wijzigen (2023-10-28)",
+  behandelaar: "Initiator",
+  "datum vergadering": "BInG aanvraag behandelen (2023-10-28)",
+  einde: "Erfpacht aanvraag wijzigen (2023-10-28)",
+  goedgekeurd: "Ingetrokken",
+  klantcontacter: "Beslisser",
+  "uitgevoerd afgerond": "Afgehandeld",
+  "voorstel voor besluitvorming opgesteld": "In behandeling genomen",
+};
+
+const meta: Meta<typeof DetailTemplate<typeof FIXTURE>> = {
   title: "Templates/Detail",
-  component: DetailTemplate,
+  component: DetailTemplate<typeof FIXTURE>,
   argTypes: { onSubmit: { action: "onSubmit" } },
 };
 
@@ -16,7 +28,6 @@ type Story = StoryObj<typeof meta>;
 export const detailTemplate: Story = {
   args: {
     attributeGridProps: {
-      pad: true,
       title: "Detailweergave",
       fieldsets: [
         [
@@ -33,17 +44,7 @@ export const detailTemplate: Story = {
         ["Eigenschappen", { fields: ["einde", "begin", "datum vergadering"] }],
         ["Resultaten", { fields: ["goedgekeurd", "afgekeurd"] }],
       ],
-      object: {
-        afgekeurd: "Goedgekeurd",
-        begin: "Erfpacht aanvraag wijzigen (2023-10-28)",
-        behandelaar: "Initiator",
-        "datum vergadering": "BInG aanvraag behandelen (2023-10-28)",
-        einde: "Erfpacht aanvraag wijzigen (2023-10-28)",
-        goedgekeurd: "Ingetrokken",
-        klantcontacter: "Beslisser",
-        "uitgevoerd afgerond": "Afgehandeld",
-        "voorstel voor besluitvorming opgesteld": "In behandeling genomen",
-      },
+      object: FIXTURE,
     },
     breadcrumbItems: [
       { label: "Home", href: "/" },

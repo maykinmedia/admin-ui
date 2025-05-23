@@ -73,7 +73,7 @@ export const LoginTemplate = <
   return (
     <BaseTemplate {...props} grid={false}>
       <Container>
-        <Grid stretch valign="middle">
+        <Grid fullHeight valign="middle">
           <Column direction="row" start={5} span={4} {...columnProps}>
             <Card>
               <Body>
