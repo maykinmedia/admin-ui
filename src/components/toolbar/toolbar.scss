@@ -36,6 +36,8 @@
 }
 
 .mykn-toolbar {
+  --typography-color-link: var(--typography-color-body);
+
   $self: &;
   background-color: var(--typography-color-background);
   box-sizing: border-box;
@@ -81,8 +83,6 @@
   &--pad-size-xs-#{&}--pad-v {
     padding-inline: calc(var(--spacing-xs-v) / 2);
   }
-
-  --typography-color-link: var(--typography-color-body);
 
   &--variant-primary {
     background-color: light-dark(
