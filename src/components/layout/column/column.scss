@@ -51,11 +51,11 @@
   }
 
   &--direction-column#{&}--gap {
-    gap: var(--spacing-v);
+    gap: var(--spacing-xs-v);
   }
 
   &--direction-row#{&}--gap {
-    gap: var(--spacing-h);
+    gap: var(--spacing-xs-h);
   }
 
   @for $i from 1 through 6 {

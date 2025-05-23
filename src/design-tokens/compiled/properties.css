@@ -15,8 +15,10 @@
   --form-color-border: #b1b1b1;
   --border-radius-l: 4px;
   --border-radius-s: 2px;
-  --spacing-h: 8px;
-  --spacing-v: 8px;
+  --spacing-s-h: 16px;
+  --spacing-s-v: 16px;
+  --spacing-xs-h: 8px;
+  --spacing-xs-v: 8px;
   --theme-purple-rain-primary-color: hsl(253 69% 33%);
   --theme-blue-suede-shoes-primary-color: hsl(200 60% 58%);
   --page-color-secondary: #eeeeee;

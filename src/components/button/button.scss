@@ -93,31 +93,31 @@
   }
 
   &--pad-h {
-    --mykn-button-padding-h: var(--spacing-h);
+    --mykn-button-padding-h: var(--spacing-xs-h);
   }
 
   &--pad-v {
-    --mykn-button-padding-v: var(--mykn-button-padding-xs, var(--spacing-v));
+    --mykn-button-padding-v: var(--mykn-button-padding-xs, var(--spacing-xs-v));
   }
 
   &--size-xl {
     --mykn-button-font-size: var(--typography-font-size-xl);
     --mykn-button-line-height: var(--typography-line-height-xl);
-    --mykn-button-padding-xs: calc(var(--spacing-h) / 2);
+    --mykn-button-padding-xs: calc(var(--spacing-xs-h) / 2);
   }
 
   &--size-xs {
     --mykn-button-font-size: var(--typography-font-size-body-xs);
     --mykn-button-line-height: var(--typography-line-height-body-xs);
-    --mykn-button-padding-xs: calc(var(--spacing-h) / 2);
+    --mykn-button-padding-xs: calc(var(--spacing-xs-h) / 2);
   }
 
   &--size-xxs {
     --mykn-button-font-size: var(--typography-font-size-body-xs);
     --mykn-button-line-height: var(--typography-line-height-body-xs);
-    --mykn-button-padding-xs: calc(var(--spacing-h) / 2);
-    --mykn-button-height: calc(3 * var(--spacing-h) + 2px) !important;
-    --mykn-button-width: calc(3 * var(--spacing-h) + 2px) !important;
+    --mykn-button-padding-xs: calc(var(--spacing-xs-h) / 2);
+    --mykn-button-height: calc(3 * var(--spacing-xs-h) + 2px) !important;
+    --mykn-button-width: calc(3 * var(--spacing-xs-h) + 2px) !important;
   }
 
   &--rounded {

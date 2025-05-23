@@ -28,7 +28,7 @@
     border: 1px dashed var(--page-color-primary);
     box-sizing: content-box;
     height: calc(var(--typography-line-height-body-s) * 2);
-    padding-block: var(--spacing-v);
+    padding-block: var(--spacing-xs-v);
     z-index: 10;
   }
 
@@ -52,9 +52,9 @@
     content: "";
     height: 100%;
     inset-block-start: 0;
-    inset-inline-start: calc(-2 * var(--spacing-h));
+    inset-inline-start: calc(-2 * var(--spacing-xs-h));
     position: absolute;
-    width: calc(100% + 2 * var(--spacing-h));
+    width: calc(100% + 2 * var(--spacing-xs-h));
   }
 
   &__body &__button {
@@ -66,8 +66,8 @@
   }
 
   &__select {
-    inset-block-end: var(--spacing-v);
-    inset-inline-end: var(--spacing-h);
+    inset-block-end: var(--spacing-xs-v);
+    inset-inline-end: var(--spacing-xs-h);
     position: absolute;
     opacity: 0;
     pointer-events: none;

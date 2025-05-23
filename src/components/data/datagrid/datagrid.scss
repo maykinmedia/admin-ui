@@ -1,11 +1,19 @@
 @use "../../../settings/constants";
 
 .mykn-datagrid {
+  --mykn-datagrid-spacing-h: var(--spacing-s-h);
+  --mykn-datagrid-spacing-v: var(--spacing-s-v);
+
   background-color: var(--typography-color-background);
   border-radius: var(--border-radius-l);
   display: flex;
   flex-direction: column;
   width: 100%;
+
+  &--compact {
+    --mykn-datagrid-spacing-h: var(--spacing-xs-h);
+    --mykn-datagrid-spacing-v: var(--spacing-xs-v);
+  }
 
   &__toolbar {
     position: sticky;
@@ -30,8 +38,8 @@
   }
 
   &__header {
-    padding-block: var(--spacing-v);
-    padding-inline: var(--spacing-h);
+    padding-block: var(--mykn-datagrid-spacing-v);
+    padding-inline: var(--mykn-datagrid-spacing-h);
   }
 
   &__table {
@@ -87,11 +95,11 @@
     border-block-start: 1px solid transparent;
     border-block-end: 1px solid var(--typography-color-border);
     box-sizing: border-box;
-    padding: var(--spacing-v) var(--spacing-h);
+    padding: var(--mykn-datagrid-spacing-v) var(--mykn-datagrid-spacing-h);
     position: relative;
 
     .mykn-a:not(:last-child) {
-      margin-inline-end: var(--spacing-h);
+      margin-inline-end: var(--mykn-datagrid-spacing-h);
 
       + .mykn-p {
         display: inline;
@@ -114,7 +122,8 @@
   }
 
   &__cell--filter {
-    padding-inline: var(--spacing-h);
+    padding-inline: var(--spacing-xs-h);
+    padding-block: var(--spacing-xs-v);
   }
 
   &__cell--checkbox,
@@ -128,13 +137,15 @@
 
   &__cell--checkbox {
     @media screen and (min-width: constants.$breakpoint-desktop) {
-      max-width: calc(var(--typography-line-height-body-s) + var(--spacing-h));
-      width: calc(var(--spacing-h) * 2 + 20px);
+      max-width: calc(
+        var(--typography-line-height-body-s) + var(--mykn-datagrid-spacing-h)
+      );
+      width: calc(var(--mykn-datagrid-spacing-h) * 2 + 20px);
     }
   }
 
   &__cell--editable:not(#{&}__cell--editing) {
-    padding-inline: var(--spacing-h);
+    padding-inline: var(--mykn-datagrid-spacing-h);
   }
 
   &__cell--editable .mykn-button {
@@ -147,10 +158,10 @@
 
   &__cell--editable:not(#{&}__cell--type-boolean) .mykn-form-control {
     height: 100%;
-    left: var(--spacing-h);
+    left: var(--mykn-datagrid-spacing-h);
     position: absolute;
     top: 0;
-    width: calc(100% - var(--spacing-h) * 2);
+    width: calc(100% - var(--mykn-datagrid-spacing-h) * 2);
     z-index: 1000;
 
     .mykn-input {
@@ -168,7 +179,7 @@
   }
 
   &__cell--link .mykn-button {
-    width: calc(100% - 1em - 3 * var(--spacing-h));
+    width: calc(100% - 1em - 3 * var(--mykn-datagrid-spacing-h));
   }
 
   .mykn-body {

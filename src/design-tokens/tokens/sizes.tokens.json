@@ -8,11 +8,21 @@
     }
   },
   "spacing": {
-    "h": {
-      "value": "8px"
+    "s": {
+      "h": {
+        "value": "16px"
+      },
+      "v": {
+        "value": "16px"
+      }
     },
-    "v": {
-      "value": "8px"
+    "xs": {
+      "h": {
+        "value": "8px"
+      },
+      "v": {
+        "value": "8px"
+      }
     }
   }
 }
