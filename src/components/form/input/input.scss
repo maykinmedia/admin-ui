@@ -73,17 +73,19 @@
     max-width: 16px;
     min-width: 16px;
     width: 16px;
-
-    &:checked {
-      border-color: var(--page-color-primary);
-    }
   }
 
   &[type="checkbox"] {
-    &:checked:before {
+    &:checked {
       background-color: var(--page-color-primary);
+    }
+
+    &:checked:before {
+      background-color: var(--page-color-primary-contrast);
       mask-image: url(data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2217%22%20height%3D%2216%22%20viewBox%3D%220%200%2017%2016%22%20fill%3D%22none%22%3E%3Cpath%20d%3D%22m3.594%208%204.019%204.019a1%201%200%200%200%201.601-.26L13.594%203%22%20stroke%3D%22%23341A90%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22%2F%3E%3C%2Fsvg%3E);
       mask-position: center;
+      mask-repeat: no-repeat;
+      mask-size: calc(100% - 2px); // Not bound to spacing.
       content: "";
       position: absolute;
       top: 0;
@@ -94,6 +96,7 @@
   }
 
   &[type="radio"] {
+    background-color: var(--typography-color-background);
     border-radius: 50%;
 
     &:checked:before {
@@ -104,8 +107,8 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 8px;
-      height: 8px;
+      width: 12px;
+      height: 12px;
     }
   }
 
