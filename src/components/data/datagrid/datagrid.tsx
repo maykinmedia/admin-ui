@@ -2,7 +2,6 @@ import clsx from "clsx";
 import React, {
   CSSProperties,
   useCallback,
-  useContext,
   useEffect,
   useId,
   useMemo,
@@ -18,14 +17,15 @@ import {
   TypedSerializedFormData,
   fields2TypedFields,
   filterDataArray,
+  sortDataArray,
 } from "../../../lib";
-import { sortDataArray } from "../../../lib";
 import { BadgeProps } from "../../badge";
 import { BoolProps } from "../../boolean";
 import { ButtonProps } from "../../button";
 import { AProps, PProps } from "../../typography";
 import { PaginatorProps } from "../paginator";
 import "./datagrid.scss";
+import { DataGridContext, DataGridContextType } from "./datagridcontext";
 import { DataGridFooter } from "./datagridfooter";
 import { DataGridHeader } from "./datagridheader";
 import { DataGridScrollPane } from "./datagridscrollpane";
@@ -215,49 +215,6 @@ export type DataGridProps<T extends object = object, F extends object = T> = {
 } & PaginatorPropsAliases;
 
 export const toolbarRef = React.createRef<HTMLDivElement>();
-
-export type DataGridContextType<T extends object, F extends object> = Omit<
-  DataGridProps<T, F>,
-  "equalityChecker" | "fields" | "onSelect" | "onSort"
-> & {
-  toolbarRef: React.RefObject<HTMLDivElement>;
-
-  amountSelected: number;
-  count: number;
-  dataGridId: string;
-  editable: boolean;
-  editingFieldIndex: number | null; // TODO: undefined?
-  editingRow: T | null;
-  equalityChecker: (item1: T, item2: T) => boolean;
-  fields: TypedField<T>[];
-  pages: number;
-  renderableFields: TypedField<T>[];
-  renderableRows: T[];
-  selectedRows: T[];
-  setEditingState: React.Dispatch<[T, number] | [null, null]>; // TODO: Wrap?
-  sortable: boolean;
-  sortDirection?: "ASC" | "DESC";
-  sortField?: string;
-  titleId?: string; // TODO: Move?;
-  wrap?: boolean;
-  onFieldsChange?: (typedFields: TypedField<T>[]) => void;
-  onFilter: (rowData: F) => void;
-  onSelect: (rows: T) => void;
-  onSelectAll: (selected: boolean) => void;
-  onSelectAllPages: (selected: boolean) => void;
-  onSort: (field: TypedField<T>) => void;
-};
-
-export const DataGridContext = React.createContext<
-  DataGridContextType<object, object>
->({} as DataGridContextType<object, object>);
-
-export const useDataGridContext = <
-  T extends object = object,
-  F extends object = T,
->() => {
-  return useContext(DataGridContext) as unknown as DataGridContextType<T, F>;
-};
 
 /**
  * A subset of `PaginatorProps` that act as aliases.
@@ -637,8 +594,7 @@ export const DataGrid = <T extends object = object, F extends object = T>(
   }
   return (
     <DataGridContext.Provider
-      // @ts-expect-error - DataGridContext doesnt have DataGridContextType with generic T and F at time of
-      // instantiation.
+      // @ts-expect-error - DataGridContext doesn't have DataGridContextType with generic T and F yet.
       value={
         {
           toolbarRef,
