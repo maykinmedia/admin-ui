@@ -51,6 +51,7 @@ export default [
         }), tsconfig: "./tsconfig.json"
       }),
       styles({
+        url: false,
         mode: "extract",
         minimize: true,
         sourceMap: true,
