@@ -23,31 +23,31 @@
   max-width: 100%;
 
   &--pad-h {
-    --mykn-input-padding-h: var(--spacing-h);
+    --mykn-input-padding-h: var(--spacing-xs-h);
   }
 
   &--pad-v {
-    --mykn-input-padding-v: var(--mykn-input-padding-xs, var(--spacing-v));
+    --mykn-input-padding-v: var(--mykn-input-padding-xs, var(--spacing-xs-v));
   }
 
   &--size-xl {
     --mykn-input-font-size: var(--typography-font-size-xl);
     --mykn-input-line-height: var(--typography-line-height-xl);
-    --mykn-input-padding-xs: calc(var(--spacing-h) / 2);
+    --mykn-input-padding-xs: calc(var(--spacing-xs-h) / 2);
   }
 
   &--size-xs {
     --mykn-input-font-size: var(--typography-font-size-body-xs);
     --mykn-input-line-height: var(--typography-line-height-body-xs);
-    --mykn-input-padding-xs: calc(var(--spacing-h) / 2);
+    --mykn-input-padding-xs: calc(var(--spacing-xs-h) / 2);
   }
 
   &--size-xxs {
     --mykn-input-font-size: var(--typography-font-size-body-xs);
     --mykn-input-line-height: var(--typography-line-height-body-xs);
-    --mykn-input-padding-xs: calc(var(--spacing-h) / 2);
-    --mykn-input-height: calc(3 * var(--spacing-h) + 2px) !important;
-    --mykn-input-width: calc(3 * var(--spacing-h) + 2px) !important;
+    --mykn-input-padding-xs: calc(var(--spacing-xs-h) / 2);
+    --mykn-input-height: calc(3 * var(--spacing-xs-h) + 2px) !important;
+    --mykn-input-width: calc(3 * var(--spacing-xs-h) + 2px) !important;
   }
 
   &:disabled,
@@ -143,7 +143,7 @@
       background-color: var(--typography-color-background);
       border-radius: 6px;
       color: transparent;
-      padding: var(--spacing-v) var(--spacing-h);
+      padding: var(--spacing-xs-v) var(--spacing-xs-h);
     }
   }
 
@@ -159,7 +159,7 @@
     pointer-events: none;
     color: var(--typography-color-muted);
     inset-block-start: 50%;
-    inset-inline-end: var(--spacing-h);
+    inset-inline-end: var(--spacing-xs-h);
     position: absolute;
     transform: translateY(-50%);
   }

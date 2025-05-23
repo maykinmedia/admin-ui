@@ -30,11 +30,11 @@
   &__header {
     display: flex;
     justify-content: space-between;
-    padding-block-start: var(--spacing-v);
+    padding-block-start: var(--spacing-xs-v);
   }
 
   & + & {
-    margin-block-start: var(--spacing-v);
+    margin-block-start: var(--spacing-xs-v);
   }
 
   &:has(> .mykn-body),
