@@ -10,7 +10,19 @@ import json from "@rollup/plugin-json";
 
 export default [
   {
-    external: ["react", "react-dom", "@floating-ui/react", "@heroicons/react/24/outline", "@heroicons/react/24/solid", "clsx"],
+    external: [
+      "@floating-ui/react",
+      "@heroicons/react/24/outline",
+      "@heroicons/react/24/solid",
+      "clsx",
+      "date-fns",
+      "date-fns/locale",
+      "react",
+      "react-datepicker",
+      "react-datepicker/dist/react-datepicker.css",
+      "react-dom",
+      "react-intl"
+    ],
     input: "src/index.ts",
     output: [{
       assetFileNames: "[name][extname]",
