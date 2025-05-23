@@ -4,7 +4,7 @@ import React from "react";
 import { isFormControl } from "../../lib";
 import { Button, ButtonLink, ButtonLinkProps, ButtonProps } from "../button";
 import { Dropdown, DropdownProps } from "../dropdown";
-import { FormControl, FormControlProps } from "../form";
+import { FormControl, FormControlProps } from "../form/formcontrol";
 import { A, AProps } from "../typography";
 import "./toolbar.scss";
 

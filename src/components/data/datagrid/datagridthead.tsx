@@ -1,7 +1,7 @@
 import React, { CSSProperties, useEffect, useRef } from "react";
 
 import { string2Title } from "../../../lib";
-import { useDataGridContext } from "./datagrid";
+import { useDataGridContext } from "./datagridcontext";
 import { DataGridFilter } from "./datagridfilter";
 import { DataGridHeadingCell } from "./datagridheadingcell";
 

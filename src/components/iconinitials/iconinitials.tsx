@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import React from "react";
 
-import { P } from "..";
+import { P } from "../typography";
 import "./iconinitials.scss";
 
 export type IconInitialsProps = React.HTMLAttributes<HTMLParagraphElement> & {

@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import React from "react";
 
-import { useDataGridContext } from "./datagrid";
+import { useDataGridContext } from "./datagridcontext";
 
 /**
  * DataGrid table, represents tabular: information presented in a two-dimensional table comprised of rows and columns

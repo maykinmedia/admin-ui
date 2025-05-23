@@ -1,8 +1,8 @@
 import clsx from "clsx";
 import React from "react";
 
-import { Solid } from "..";
 import { Button } from "../button";
+import { Solid } from "../icon";
 import { P } from "../typography";
 import "./banner.scss";
 

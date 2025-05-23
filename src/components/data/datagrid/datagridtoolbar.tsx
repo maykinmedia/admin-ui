@@ -12,7 +12,7 @@ import { Outline } from "../../icon";
 import { Modal } from "../../modal";
 import { Toolbar, ToolbarItem } from "../../toolbar";
 import { Body, H3 } from "../../typography";
-import { useDataGridContext } from "./datagrid";
+import { useDataGridContext } from "./datagridcontext";
 import { DataGridSelectionCheckbox } from "./datagridselectioncheckbox";
 import { TRANSLATIONS } from "./translations";
 

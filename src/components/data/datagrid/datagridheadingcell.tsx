@@ -5,7 +5,7 @@ import { TypedField } from "../../../lib";
 import { Button } from "../../button";
 import { Outline } from "../../icon";
 import { P } from "../../typography";
-import { useDataGridContext } from "./datagrid";
+import { useDataGridContext } from "./datagridcontext";
 
 export type DataGridHeadingCellProps<
   T extends object = object,

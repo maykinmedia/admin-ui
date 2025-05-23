@@ -25,7 +25,7 @@ export const Body: React.FC<BodyProps> = ({
   allowScroll,
   children,
   className,
-  stretch = false,
+  stretch,
   fullHeight = false,
   ...props
 }) => {

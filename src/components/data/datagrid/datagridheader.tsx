@@ -1,7 +1,7 @@
 import React from "react";
 
 import { H2 } from "../../typography";
-import { useDataGridContext } from "./datagrid";
+import { useDataGridContext } from "./datagridcontext";
 
 /**
  * DataGrid header, shows title as either string or JSX.
