@@ -4,7 +4,7 @@
   color: var(--mykn-badge-color);
   align-items: center;
   align-self: baseline; // Prevent the badge from unwanted stretching in flex content (use case: Kanban title toolbar).
-  border-radius: 2px;
+  border-radius: var(--border-radius-s);
   display: inline-flex;
   flex-shrink: 0;
   font-family: var(--typography-font-family-body);
