@@ -93,6 +93,21 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+
+    &--multiple {
+      white-space: unset;
+      overflow: visible;
+    }
+  }
+
+  &__pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 0 0.5em; // TODO: spacing-h and spacing-v are too big for this. Add more tokens or hardcode?
+    margin: calc(var(--spacing-h) / 4);
+    border-radius: 9999px;
+    background-color: var(--page-color-accent);
+    color: var(--typography-color-link);
   }
 
   &__clear {
