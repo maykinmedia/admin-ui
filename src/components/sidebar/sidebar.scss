@@ -30,12 +30,18 @@
 
   &--position-start &__header &__toggle {
     inset-inline-start: 100%;
-    transform: translate(-50%, -50%); // TODO: RTL support.
+    transform: translate(
+      -50%,
+      calc(-50% + var(--mykn-button-offset))
+    ); // TODO: RTL support.
   }
 
   &--position-end &__header &__toggle {
     inset-inline-end: 100%;
-    transform: translate(50%, -50%); // TODO: RTL support.
+    transform: translate(
+      50%,
+      calc(-50% + var(--mykn-button-offset))
+    ); // TODO: RTL support.
   }
 
   .mykn-page > &--position-end {
