@@ -231,13 +231,18 @@
       height: 100%;
     }
 
-    &#{$self}--align-center .mykn-a,
-    &#{$self}--align-center .mykn-button,
-    &#{$self}--align-center .mykn-dropdown,
-    &#{$self}--align-center .mykn-form-control,
-    &#{$self}--align-center .mykn-input,
-    &#{$self}--align-center .mykn-select {
+    .mykn-a,
+    .mykn-button,
+    .mykn-dropdown,
+    .mykn-form-control,
+    .mykn-input,
+    .mykn-select,
+    .mykn-stackctx {
       width: 100%;
+    }
+
+    .mykn-iconinitials {
+      align-self: center;
     }
   }
 
