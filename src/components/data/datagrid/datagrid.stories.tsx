@@ -4,6 +4,7 @@ import * as React from "react";
 import { PAGE_DECORATOR } from "../../../../.storybook/decorators";
 import { FIXTURE_PRODUCTS } from "../../../../.storybook/fixtures/products";
 import { Button } from "../../button";
+import { Outline } from "../../icon/icon";
 import { DataGrid, DataGridProps } from "./datagrid";
 
 const meta: Meta<typeof DataGrid<(typeof FIXTURE_PRODUCTS)[number]>> = {
@@ -484,5 +485,45 @@ export const JSXAsValue: Story = {
         </Button>
       ),
     })),
+  },
+};
+
+/**
+ * Pass `ToolbarItem[]` to `toolbarItems` prop to specify additional toolbar items.
+ */
+export const AdditionalToolBarItems: Story = {
+  args: {
+    ...DataGridComponent.args,
+    fields: ["name", "category", "price", "stock", "isAvailable"],
+    toolbarItems: [
+      {
+        icon: <Outline.MagnifyingGlassIcon />,
+        name: "query",
+        placeholder: "search",
+        type: "search",
+      },
+      {
+        variant: "outline",
+        children: (
+          <>
+            <Outline.AdjustmentsHorizontalIcon />
+            Filter
+          </>
+        ),
+      },
+      {
+        variant: "primary",
+        children: (
+          <>
+            <Outline.PlusIcon />
+            Add product
+          </>
+        ),
+      },
+    ],
+  },
+  argTypes: {
+    ...DataGridComponent.argTypes,
+    onFieldsChange: { action: "onFieldsChange" },
   },
 };

@@ -38,7 +38,8 @@ export const DataGridToolbar = <
     labelSelectFields,
     selectable,
     selectedRows,
-    selectionActions,
+    selectionActions = [],
+    toolbarItems = [],
     onFieldsChange,
   } = useDataGridContext<T, F>();
 
@@ -71,7 +72,7 @@ export const DataGridToolbar = <
     context,
   );
 
-  const toolbarItems: ToolbarItem[] = [
+  const items: ToolbarItem[] = [
     selectable && allowSelectAll ? (
       <DataGridSelectionCheckbox<T, F> key="selectPage" selectAll="page" />
     ) : null,
@@ -83,7 +84,7 @@ export const DataGridToolbar = <
       />
     ) : null,
 
-    ...(selectionActions || []).map(
+    ...selectionActions.map(
       (buttonProps): ButtonProps => ({
         variant: "secondary",
         ...buttonProps,
@@ -100,7 +101,8 @@ export const DataGridToolbar = <
       }),
     ),
 
-    fieldsSelectable ? "spacer" : null,
+    toolbarItems?.length || fieldsSelectable ? "spacer" : null,
+    ...toolbarItems,
     fieldsSelectable
       ? {
           variant: "outline",
@@ -118,7 +120,7 @@ export const DataGridToolbar = <
 
   return (
     <div ref={toolbarRef} className="mykn-datagrid__toolbar">
-      <Toolbar directionResponsive={true} items={toolbarItems} pad={true} />
+      <Toolbar directionResponsive={true} items={items} pad={true} />
 
       <Modal
         open={selectFieldsModalState}

@@ -22,6 +22,7 @@ import {
 import { BadgeProps } from "../../badge";
 import { BoolProps } from "../../boolean";
 import { ButtonProps } from "../../button";
+import { ToolbarItem } from "../../toolbar";
 import { AProps, PProps } from "../../typography";
 import { PaginatorProps } from "../paginator";
 import "./datagrid.scss";
@@ -143,6 +144,12 @@ export type DataGridProps<T extends object = object, F extends object = T> = {
    */
   allPagesSelectedManaged?: boolean;
 
+  /** Renders buttons allowing to perform actions on selection, `onClick` is called with selection array. */
+  selectionActions?: ButtonProps[];
+
+  /** Extra toolbar items to render. */
+  toolbarItems?: ToolbarItem[];
+
   /** The table layout algorithm. */
   tableLayout?: "auto" | "fixed";
 
@@ -169,9 +176,6 @@ export type DataGridProps<T extends object = object, F extends object = T> = {
 
   /** Can be used to specify how to compare the selected items and the items in the data grid */
   equalityChecker?: (item1: T, item2: T) => boolean;
-
-  /** Renders buttons allowing to perform actions on selection, `onClick` is called with selection array. */
-  selectionActions?: ButtonProps[];
 
   /** Whether wrapping should be allowed. */
   wrap?: boolean;
@@ -258,6 +262,7 @@ export const DataGrid = <T extends object = object, F extends object = T>(
     fieldsSelectable: false,
     equalityChecker: (item1: T, item2: T) => item1 == item2,
     selectionActions: [],
+    toolbarItems: [],
     title: "",
     urlFields: DEFAULT_URL_FIELDS,
     page: props.paginatorProps?.page,
@@ -287,6 +292,7 @@ export const DataGrid = <T extends object = object, F extends object = T>(
     showPaginator,
     pProps,
     selectable,
+    toolbarItems,
     allowSelectAll,
     allowSelectAllPages,
     allPagesSelected,
@@ -649,7 +655,9 @@ export const DataGrid = <T extends object = object, F extends object = T>(
         {...attrs}
       >
         {title && <DataGridHeader<T, F> />}
-        {(selectable || fieldsSelectable) && <DataGridToolbar<T, F> />}
+        {(selectable || fieldsSelectable || toolbarItems?.length) && (
+          <DataGridToolbar<T, F> />
+        )}
 
         <DataGridScrollPane<T, F>>
           <DataGridTable<T, F>>
