@@ -26,10 +26,16 @@
     transform: translate(-50%, -50%);
     justify-content: center;
 
+    // Loading indicator.
     > .mykn-icon {
-      inset-inline-start: 100%;
-      margin-inline-start: var(--spacing-xs-h);
+      inset-inline-end: 100%;
       position: absolute;
+      margin-inline-end: var(--spacing-xs-h);
+
+      @media screen and (min-width: constants.$breakpoint-desktop) {
+        inset-inline-start: 100%;
+        margin-inline-start: var(--spacing-xs-h);
+      }
     }
   }
 
@@ -52,7 +58,9 @@
 
     &__section--meta {
       grid-area: meta;
-      position: static;
+      position: relative;
+      inset-block: 0;
+      inset-inline: 0;
       text-align: end;
       transform: none;
     }
