@@ -655,9 +655,9 @@ export const DataGrid = <T extends object = object, F extends object = T>(
         {...attrs}
       >
         {title && <DataGridHeader<T, F> />}
-        {(selectable || fieldsSelectable || toolbarItems?.length) && (
-          <DataGridToolbar<T, F> />
-        )}
+        {(selectable ||
+          fieldsSelectable ||
+          (toolbarItems?.length ?? 0) > 0) && <DataGridToolbar<T, F> />}
 
         <DataGridScrollPane<T, F>>
           <DataGridTable<T, F>>
