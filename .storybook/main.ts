@@ -12,6 +12,7 @@ const config: StorybookConfig = {
     "@storybook/addon-themes",
     "@chromatic-com/storybook",
     "@storybook/addon-docs",
+    "@storybook/addon-vitest",
   ],
   core: {
     disableTelemetry: true,
