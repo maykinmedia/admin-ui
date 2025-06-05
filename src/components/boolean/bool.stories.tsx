@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import { expect, within } from "@storybook/test";
+import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import * as React from "react";
+import { expect, within } from "storybook/test";
 
 import { Body, H1, H2, H3, P } from "../typography";
 import { Bool } from "./bool";

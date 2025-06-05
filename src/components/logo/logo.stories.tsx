@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import { userEvent } from "@storybook/test";
+import type { Meta, StoryObj } from "@storybook/react-webpack5";
+import { userEvent } from "storybook/test";
 
 import { Logo } from "./logo";
 

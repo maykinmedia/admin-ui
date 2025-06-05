@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import { expect } from "@storybook/test";
+import type { Meta, StoryObj } from "@storybook/react-webpack5";
+import { expect } from "storybook/test";
 
 import { IconInitials } from "./iconinitials";
 

@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import { userEvent, within } from "@storybook/test";
+import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import React from "react";
+import { userEvent, within } from "storybook/test";
 
 import { Button } from "../../components";
 import { ModalService } from "../../contexts";

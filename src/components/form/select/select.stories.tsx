@@ -1,8 +1,8 @@
-import { action } from "@storybook/addon-actions";
-import type { Meta, StoryFn, StoryObj } from "@storybook/react";
-import { expect, fn, userEvent, waitFor, within } from "@storybook/test";
+import type { Meta, StoryFn, StoryObj } from "@storybook/react-webpack5";
 import { Formik } from "formik";
 import * as React from "react";
+import { action } from "storybook/actions";
+import { expect, fn, userEvent, waitFor, within } from "storybook/test";
 
 import {
   FORM_TEST_DECORATOR,
