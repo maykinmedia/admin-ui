@@ -49,7 +49,14 @@ export const DataGridTHead = <
     const thead = ref.current;
     const table = thead.parentNode as HTMLTableElement;
     const scrollPane = table?.parentNode as HTMLDivElement;
-    const toolbar = scrollPane.previousSibling as HTMLDivElement | null;
+    const previousSibling = scrollPane.previousSibling as HTMLDivElement | null;
+
+    // Toolbar may not be rendered.
+    const toolbar = previousSibling?.classList.contains(
+      "mykn-datagrid__toolbar",
+    )
+      ? previousSibling
+      : null;
 
     requestAnimationFrame(() => {
       const classOverflowX = "mykn-datagrid__scrollpane--overflow-x";
