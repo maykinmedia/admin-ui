@@ -10,11 +10,10 @@ const config: StorybookConfig = {
   staticDirs: [{ from: "./static", to: "/static" }],
   addons: [
     "@storybook/addon-links",
-    "@storybook/addon-essentials",
-    "@storybook/addon-interactions",
     "@storybook/addon-themes",
     "@storybook/addon-webpack5-compiler-swc",
     "@chromatic-com/storybook",
+    "@storybook/addon-docs"
   ],
   core: {
     disableTelemetry: true,

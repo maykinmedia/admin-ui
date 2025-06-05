@@ -1,7 +1,7 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import { expect, userEvent, waitFor, within } from "@storybook/test";
+import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { Formik } from "formik";
 import * as React from "react";
+import { expect, userEvent, waitFor, within } from "storybook/test";
 
 import { validateForm } from "../../../lib";
 import { Form } from "./form";

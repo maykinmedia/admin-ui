@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-webpack5";
 
 import { PAGE_DECORATOR } from "../../../.storybook/decorators";
 import { Breadcrumbs } from "./breadcrumbs";

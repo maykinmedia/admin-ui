@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import { expect, userEvent, waitFor, within } from "@storybook/test";
+import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import * as React from "react";
+import { expect, userEvent, waitFor, within } from "storybook/test";
 
 import { PAGE_DECORATOR } from "../../../.storybook/decorators";
 import { Button, ButtonLink } from "../button";

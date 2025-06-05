@@ -1,8 +1,8 @@
-import { StoryFn } from "@storybook/react";
+import { StoryFn } from "@storybook/react-webpack5";
 import { Page } from "playwright";
 
 const { getStoryContext } = require("@storybook/test-runner");
-const { MINIMAL_VIEWPORTS } = require("@storybook/addon-viewport");
+const { MINIMAL_VIEWPORTS } = require("storybook/viewport");
 
 const DEFAULT_VP_SIZE = { width: 1280, height: 720 };
 
