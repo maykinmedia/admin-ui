@@ -1,4 +1,6 @@
 [![Storybook](https://raw.githubusercontent.com/storybooks/brand/master/badge/badge-storybook.svg)](https://main--659d1ab1b20571e0dbb5e47c.chromatic.com)
+![GitHub Actions](https://github.com/maykinmedia/admin-ui/actions/workflows/ci.yaml/badge.svg)
+[![codecov](https://codecov.io/gh/maykinmedia/admin-ui/graph/badge.svg?token=V2JBYN9OWE)](https://codecov.io/gh/maykinmedia/admin-ui)
 
 <p align="center">
   <a href="https://maykinmedia.nl">
