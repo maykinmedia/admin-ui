@@ -1,6 +1,7 @@
 .DS_STORE
 .idea
 build-storybook.log
+coverage
 doctor-storybook.log
 dist
 node_modules

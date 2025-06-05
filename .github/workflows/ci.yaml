@@ -74,19 +74,24 @@ jobs:
         with:
           fetch-depth: 0
 
+      - uses: actions/setup-node@v4
+
       - name: Install dependencies
-        run: npm install
-      - name: Install Playwright
+        run: npm ci
+
+      - name: Install Playwright and browsers
         run: npx playwright install --with-deps
+
+      - name: Run tests
+        run: npm run test:coverage
+
+      - name: Publish coverage report
+        uses: codecov/codecov-action@v3.1.4
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
       - name: Build Storybook
         run: npm run build-storybook --quiet
-
-      - name: Serve Storybook and run tests
-        run: |
-          npx concurrently -k -s first -n "SB,TEST" -c "magenta,blue" \
-            "npx http-server storybook-static --port 6006" \
-            "npx wait-on tcp:127.0.0.1:6006 && npm run test-storybook"
 
       - name: Publish to Chromatic
         uses: chromaui/action@latest
