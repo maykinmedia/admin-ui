@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 
 import { gettextFirst, ucFirst, useIntl } from "../../../lib";
 import { Button } from "../../button";
-import { Option, Select, SelectProps } from "../../form";
+import { FormControl, Option, Select, SelectProps } from "../../form";
 import { Outline } from "../../icon";
 import { Toolbar } from "../../toolbar";
 import { P } from "../../typography";
@@ -169,18 +169,7 @@ export const Paginator: React.FC<PaginatorProps> = ({
       aria-label={ucFirst(_labelPagination)}
       {...props}
     >
-      <div className="mykn-paginator__section mykn-paginator__section--nav">
-        <PaginatorNav
-          count={count}
-          currentPage={pageState}
-          labelGoToPage={_labelGoToPage}
-          labelPrevious={labelPrevious}
-          labelNext={labelNext}
-          pageSize={pageSizeState}
-          onPageSizeChange={handlePageChange}
-        />
-      </div>
-
+      <h2 className="mykn-paginator__sr-only">Pagination</h2>
       <div className="mykn-paginator__section mykn-paginator__section--meta">
         <PaginatorMeta
           count={count}
@@ -192,13 +181,27 @@ export const Paginator: React.FC<PaginatorProps> = ({
         />
       </div>
 
-      <div className="mykn-paginator__section mykn-paginator__section--options">
-        <PaginatorOptions
-          labelPageSize={labelPageSize}
-          pageSize={pageSizeState}
-          pageSizeOptions={pageSizeOptions}
-          onPageSizeChange={handlePageSizeChange}
-        />
+      <div className="mykn-paginator__interactive">
+        <div className="mykn-paginator__section mykn-paginator__section--options">
+          <PaginatorOptions
+            labelPageSize={labelPageSize}
+            pageSize={pageSizeState}
+            pageSizeOptions={pageSizeOptions}
+            onPageSizeChange={handlePageSizeChange}
+          />
+        </div>
+
+        <div className="mykn-paginator__section mykn-paginator__section--nav">
+          <PaginatorNav
+            count={count}
+            currentPage={pageState}
+            labelGoToPage={_labelGoToPage}
+            labelPrevious={labelPrevious}
+            labelNext={labelNext}
+            pageSize={pageSizeState}
+            onPageSizeChange={handlePageChange}
+          />
+        </div>
       </div>
     </nav>
   );
@@ -218,35 +221,13 @@ export const PaginatorNav: React.FC<PaginatorNavProps> = ({
   count,
   currentPage = 1,
   labelGoToPage,
-  labelNext,
-  labelPrevious,
   onPageSizeChange,
   pageSize,
 }) => {
   const intl = useIntl();
-
-  const maxOffset = 2;
   const pageCount = Math.ceil(count / pageSize);
-
   const previousPage = Math.max(0, currentPage - 1);
   const nextPage = currentPage + 1 > pageCount ? 0 : currentPage + 1;
-
-  const startRange = Math.min(maxOffset, previousPage);
-  const endRange = Math.min(maxOffset, pageCount - currentPage);
-
-  const startPages =
-    startRange > 0
-      ? new Array(startRange)
-          .fill(0)
-          .map((_, i) => currentPage - (i + 1))
-          .reverse()
-      : [];
-  const endPages =
-    endRange > 0
-      ? new Array(endRange).fill(0).map((_, i) => currentPage + i + 1)
-      : [];
-
-  const pages = [...startPages, currentPage, ...endPages];
 
   const context = {
     count,
@@ -256,133 +237,87 @@ export const PaginatorNav: React.FC<PaginatorNavProps> = ({
     previousPage,
     nextPage,
   };
-
-  const _labelPrevious = gettextFirst(
-    labelPrevious,
-    TRANSLATIONS.LABEL_PREVIOUS,
-    context,
-  );
-
-  const _labelNext = gettextFirst(labelNext, TRANSLATIONS.LABEL_NEXT, context);
-
   const _labelGoToPage = gettextFirst(
     labelGoToPage,
     TRANSLATIONS.LABEL_GO_TO_PAGE,
     { ...context, page: "{page}" },
   );
 
+  const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = parseInt(e.target.value);
+    if (!isNaN(value) && value > 0 && value <= pageCount) {
+      onPageSizeChange(value);
+    }
+  };
+
   return (
     <Toolbar directionResponsive={false} pad={false} variant="transparent">
-      <Button
-        className="mykn-paginator__button mykn-paginator__button--previous"
-        disabled={!previousPage}
-        size="xs"
-        variant="outline"
-        wrap={false}
-        onClick={() => onPageSizeChange(previousPage)}
-      >
-        <Outline.ChevronLeftIcon />
-        {ucFirst(_labelPrevious)}
-      </Button>
+      <FormControl
+        value={currentPage}
+        type="text"
+        label="Page"
+        direction="horizontal"
+        onChange={onChangeInput}
+        min={1}
+        max={pageCount}
+      />
 
-      {startPages.length > 0 && !startPages.includes(1) && (
-        <>
-          <Button
-            active={currentPage === 1}
-            aria-label={intl.formatMessage(
-              { id: _labelGoToPage, defaultMessage: _labelGoToPage },
-              { page: 1 },
-            )}
-            aria-current={currentPage === 1}
-            className="mykn-paginator__button mykn-paginator__button--page"
-            size="xs"
-            square
-            variant="outline"
-            onClick={() => onPageSizeChange(1)}
-          >
-            1
-          </Button>
-          {!startPages.includes(2) && (
-            <Button
-              aria-hidden
-              className="mykn-paginator__ellipsis"
-              disabled
-              size="xs"
-              square
-              variant="outline"
-            >
-              …
-            </Button>
+      <div className="mykn-paginator__buttons">
+        <Button
+          aria-label={intl.formatMessage(
+            { id: _labelGoToPage, defaultMessage: _labelGoToPage },
+            { page: 1 },
           )}
-        </>
-      )}
+          aria-current={currentPage === 1}
+          className="mykn-paginator__button mykn-paginator__button--page"
+          size="xs"
+          square
+          variant="outline"
+          onClick={() => onPageSizeChange(1)}
+          disabled={currentPage === 1}
+        >
+          <Outline.ChevronDoubleLeftIcon />
+        </Button>
 
-      {pages.map((page) => {
-        const ariaLabel = intl.formatMessage(
-          { id: _labelGoToPage, defaultMessage: _labelGoToPage },
-          { page },
-        );
+        <Button
+          className="mykn-paginator__button mykn-paginator__button--previous"
+          disabled={!previousPage}
+          size="xs"
+          variant="outline"
+          square
+          wrap={false}
+          onClick={() => onPageSizeChange(previousPage)}
+        >
+          <Outline.ChevronLeftIcon />
+        </Button>
 
-        return (
-          <Button
-            key={page}
-            active={currentPage === page}
-            aria-current={currentPage === page}
-            aria-label={ariaLabel}
-            className="mykn-paginator__button mykn-paginator__button--page"
-            size="xs"
-            square
-            variant="outline"
-            onClick={() => onPageSizeChange(page)}
-          >
-            {page}
-          </Button>
-        );
-      })}
-
-      {endPages.length > 0 && !endPages.includes(pageCount) && (
-        <>
-          {!endPages.includes(pageCount - 1) && (
-            <Button
-              aria-hidden
-              className="mykn-paginator__ellipsis"
-              disabled
-              size="xs"
-              square
-              variant="outline"
-            >
-              …
-            </Button>
+        <Button
+          className="mykn-paginator__button mykn-paginator__button--next"
+          disabled={!nextPage}
+          size="xs"
+          variant="outline"
+          square
+          wrap={false}
+          onClick={() => onPageSizeChange(nextPage)}
+        >
+          <Outline.ChevronRightIcon />
+        </Button>
+        <Button
+          aria-current={currentPage === pageCount}
+          aria-label={intl.formatMessage(
+            { id: _labelGoToPage, defaultMessage: _labelGoToPage },
+            { page: pageCount },
           )}
-          <Button
-            active={currentPage === pageCount}
-            aria-current={currentPage === pageCount}
-            aria-label={intl.formatMessage(
-              { id: _labelGoToPage, defaultMessage: _labelGoToPage },
-              { page: pageCount },
-            )}
-            className="mykn-paginator__button mykn-paginator__button--page"
-            size="xs"
-            square
-            variant="outline"
-            onClick={() => onPageSizeChange(pageCount)}
-          >
-            {pageCount}
-          </Button>
-        </>
-      )}
-
-      <Button
-        className="mykn-paginator__button mykn-paginator__button--next"
-        disabled={!nextPage}
-        size="xs"
-        variant="outline"
-        wrap={false}
-        onClick={() => onPageSizeChange(nextPage)}
-      >
-        {ucFirst(_labelNext)}
-        <Outline.ChevronRightIcon />
-      </Button>
+          className="mykn-paginator__button mykn-paginator__button--page"
+          size="xs"
+          square
+          variant="outline"
+          onClick={() => onPageSizeChange(pageCount)}
+          disabled={currentPage === pageCount}
+        >
+          <Outline.ChevronDoubleRightIcon />
+        </Button>
+      </div>
     </Toolbar>
   );
 };
@@ -434,7 +369,7 @@ export const PaginatorMeta: React.FC<PaginatorMetaProps> = ({
 
   return (
     <>
-      <P size="xs" title={ucFirst(_labelCurrentPageRange)}>
+      <P size="s" title={ucFirst(_labelCurrentPageRange)}>
         {`${pageStart}-${pageEnd} / ${count}`}
       </P>
       {_labelLoading && (
@@ -478,7 +413,7 @@ export const PaginatorOptions: React.FC<PaginatorOptionsProps> = ({
 
   return (
     <>
-      <P size="xs">{ucFirst(_labelPageSize)}</P>
+      <P size="s">{ucFirst(_labelPageSize)}</P>
       <Select
         options={pageSizeOptions}
         required={true}
