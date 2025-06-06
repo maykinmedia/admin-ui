@@ -8,6 +8,7 @@ import ReactDatePicker, {
 import "react-datepicker/dist/react-datepicker.css";
 
 import { gettextFirst } from "../../../lib";
+import { Outline } from "../../icon";
 import { eventFactory } from "../eventFactory";
 import "./datepicker.scss";
 import { TRANSLATIONS } from "./translations";
@@ -63,6 +64,7 @@ export type DatePickerProps = Omit<
  */
 export const DatePicker: React.FC<DatePickerProps> = ({
   form,
+  icon,
   type = "daterange",
   locale = nl,
   name,
@@ -93,6 +95,17 @@ export const DatePicker: React.FC<DatePickerProps> = ({
 
   const date = Array.isArray(valueState) ? valueState[0] : valueState;
   const dateRange = Array.isArray(valueState) ? valueState : [null, null];
+
+  // Respect form reset.
+  useEffect(() => {
+    const input = fakeInputRef.current as HTMLInputElement;
+    const form = input.form;
+    if (!form) return;
+
+    const clear = () => setValueState(null);
+    form.addEventListener("reset", clear);
+    return () => input.removeEventListener("reset", clear);
+  }, [form, fakeInputRef]);
 
   /**
    * Converts value prop to `valueState`.
@@ -335,6 +348,8 @@ export const DatePicker: React.FC<DatePickerProps> = ({
         weekAriaLabelPrefix={_labelWeekPrefix}
         timeInputLabel={_labelTimeInput}
         weekLabel={_labelWeek}
+        showIcon
+        icon={icon || <Outline.CalendarIcon />}
         onChange={handleChange}
         {...props}
       />
