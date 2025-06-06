@@ -1,7 +1,9 @@
 import {
+  FloatingArrow,
   FloatingFocusManager,
   FloatingPortal,
   Side,
+  arrow,
   autoUpdate,
   flip,
   offset,
@@ -16,7 +18,7 @@ import {
   useRole,
 } from "@floating-ui/react";
 import clsx from "clsx";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 
 import { Button, ButtonProps } from "../button";
 import { ToolbarProps } from "../toolbar";
@@ -77,6 +79,8 @@ export const Dropdown: React.FC<DropdownProps> = ({
   toolbarProps,
   ...props
 }) => {
+  const arrowRef = useRef(null);
+
   // FIXME: Experimental approach for avoiding circular dependency.
   const [toolbarModuleState, setToolbarModuleState] =
     useState<TOOLBAR_MODULE_STUB | null>(null);
@@ -99,8 +103,13 @@ export const Dropdown: React.FC<DropdownProps> = ({
   /**
    * Initialize Floating UI.
    */
-  const { refs, floatingStyles, context } = useFloating({
-    middleware: [offset(6), flip(), shift({ padding: 0 })],
+  const { refs, floatingStyles, middlewareData, context } = useFloating({
+    middleware: [
+      offset(6),
+      flip(),
+      arrow({ element: arrowRef }),
+      shift({ padding: 0 }),
+    ],
     open: isOpen,
     onOpenChange: setIsOpen,
     placement: placement,
@@ -163,6 +172,20 @@ export const Dropdown: React.FC<DropdownProps> = ({
       <Button ref={refs.setReference} {...getReferenceProps()} {...props}>
         {label}
       </Button>
+      <FloatingArrow
+        ref={arrowRef}
+        className="mykn-dropdown__arrow"
+        context={context}
+        fill="none"
+        stroke="var(--page-color-primary)"
+        strokeWidth={0.1}
+        style={{
+          [context.placement]:
+            context.placement === "top"
+              ? 1
+              : -1 * (middlewareData.offset?.y ?? 0) + -3 + "px",
+        }}
+      />
       {isOpen && (
         <FloatingPortal>
           <FloatingFocusManager context={context} modal={false}>
