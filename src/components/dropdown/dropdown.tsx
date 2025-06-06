@@ -16,7 +16,7 @@ import {
   useRole,
 } from "@floating-ui/react";
 import clsx from "clsx";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
 import { Button, ButtonProps } from "../button";
 import { ToolbarProps } from "../toolbar";
@@ -37,6 +37,9 @@ export type DropdownProps = ButtonProps & {
 
   /** The items shown inside the dropdown. */
   items?: ToolbarProps["items"];
+
+  /** Whether to render the dropdown content as Toolbar. */
+  toolbar: boolean;
 
   /** Any additional props to pass to the toolbar. */
   toolbarProps?: Omit<ToolbarProps, "items">;
@@ -70,6 +73,7 @@ export const Dropdown: React.FC<DropdownProps> = ({
   open = false,
   placement = "bottom",
   items,
+  toolbar = true,
   toolbarProps,
   ...props
 }) => {
@@ -77,11 +81,13 @@ export const Dropdown: React.FC<DropdownProps> = ({
   const [toolbarModuleState, setToolbarModuleState] =
     useState<TOOLBAR_MODULE_STUB | null>(null);
 
-  if (!toolbarModuleState) {
-    import("../toolbar/toolbar").then((toolbarModule) =>
-      setToolbarModuleState(toolbarModule as TOOLBAR_MODULE_STUB),
-    );
-  }
+  useEffect(() => {
+    if (!toolbarModuleState) {
+      import("../toolbar/toolbar").then((toolbarModule) =>
+        setToolbarModuleState(toolbarModule as TOOLBAR_MODULE_STUB),
+      );
+    }
+  }, [toolbar]);
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -127,6 +133,25 @@ export const Dropdown: React.FC<DropdownProps> = ({
     toolbarModuleState: TOOLBAR_MODULE_STUB | null,
   ): toolbarModuleState is TOOLBAR_MODULE_STUB => Boolean(toolbarModuleState);
 
+  /**
+   * Renders the dropdown content.
+   */
+  const renderContent = useCallback(() => {
+    if (toolbar && isToolbarModuleLoaded(toolbarModuleState)) {
+      return (
+        <toolbarModuleState.Toolbar
+          align="start"
+          direction="vertical"
+          items={items}
+          {...toolbarProps}
+        >
+          {children}
+        </toolbarModuleState.Toolbar>
+      );
+    }
+    return children;
+  }, [toolbar, toolbarModuleState, items, toolbarProps, children]);
+
   return (
     <div
       className={clsx(
@@ -150,16 +175,7 @@ export const Dropdown: React.FC<DropdownProps> = ({
               style={floatingStyles}
               {...getFloatingProps()}
             >
-              {isToolbarModuleLoaded(toolbarModuleState) && (
-                <toolbarModuleState.Toolbar
-                  align="start"
-                  direction="vertical"
-                  items={items}
-                  {...toolbarProps}
-                >
-                  {children}
-                </toolbarModuleState.Toolbar>
-              )}
+              {renderContent()}
             </div>
           </FloatingFocusManager>
         </FloatingPortal>
