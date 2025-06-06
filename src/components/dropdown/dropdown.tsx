@@ -46,6 +46,12 @@ export type DropdownProps = ButtonProps & {
   /** Any additional props to pass to the toolbar. */
   toolbarProps?: Omit<ToolbarProps, "items">;
   // toolbarProps?: unknown;
+
+  /** Gets called when the dropdown is opened. */
+  onOpen?: () => void;
+
+  /** Gets called when the dropdown is closed. */
+  onClose?: () => void;
 };
 
 type TOOLBAR_MODULE_STUB = {
@@ -77,6 +83,8 @@ export const Dropdown: React.FC<DropdownProps> = ({
   items,
   toolbar = true,
   toolbarProps,
+  onOpen,
+  onClose,
   ...props
 }) => {
   const arrowRef = useRef(null);
@@ -96,6 +104,21 @@ export const Dropdown: React.FC<DropdownProps> = ({
   const [isOpen, setIsOpen] = useState(false);
 
   /**
+   * Gets called when the floating-ui open state is altered.
+   */
+  const handleOpenChange = useCallback(
+    (open: boolean) => {
+      setIsOpen(open);
+      if (open) {
+        onOpen?.();
+      } else if (!open) {
+        onClose?.();
+      }
+    },
+    [onOpen, onClose],
+  );
+
+  /**
    * Sync isOpen with open prop.
    */
   useEffect(() => setIsOpen(open), [open]);
@@ -111,7 +134,7 @@ export const Dropdown: React.FC<DropdownProps> = ({
       shift({ padding: 0 }),
     ],
     open: isOpen,
-    onOpenChange: setIsOpen,
+    onOpenChange: handleOpenChange,
     placement: placement,
     strategy: "fixed",
     whileElementsMounted: autoUpdate,
