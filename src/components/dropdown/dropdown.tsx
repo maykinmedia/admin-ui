@@ -54,6 +54,7 @@ type TOOLBAR_MODULE_STUB = {
  * passed using the `label` prop. `Children` should be a `Toolbar` component containing
  * the individual items.
  * @param children
+ * @param className
  * @param hover
  * @param label
  * @param open
@@ -63,6 +64,7 @@ type TOOLBAR_MODULE_STUB = {
  */
 export const Dropdown: React.FC<DropdownProps> = ({
   children,
+  className,
   activateOnHover = false,
   label,
   open = false,
@@ -126,15 +128,24 @@ export const Dropdown: React.FC<DropdownProps> = ({
   ): toolbarModuleState is TOOLBAR_MODULE_STUB => Boolean(toolbarModuleState);
 
   return (
-    <div className={clsx("mykn-dropdown", { "mykn-dropdown--open": isOpen })}>
-      <Button {...props} ref={refs.setReference} {...getReferenceProps()}>
+    <div
+      className={clsx(
+        "mykn-dropdown",
+        { "mykn-dropdown--open": isOpen },
+        className,
+      )}
+    >
+      <Button ref={refs.setReference} {...getReferenceProps()} {...props}>
         {label}
       </Button>
       {isOpen && (
         <FloatingPortal>
           <FloatingFocusManager context={context} modal={false}>
             <div
-              className="mykn-dropdown__dropdown"
+              className={clsx(
+                "mykn-dropdown__dropdown",
+                className && className.trim() + "__dropdown",
+              )}
               ref={refs.setFloating}
               style={floatingStyles}
               {...getFloatingProps()}
