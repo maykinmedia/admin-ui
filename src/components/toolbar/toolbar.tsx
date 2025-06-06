@@ -18,62 +18,62 @@ export type ToolbarItem =
   | React.ReactNode;
 
 export type ToolbarProps = React.PropsWithChildren<
-  React.HTMLAttributes<HTMLElement> & {
-    /** Aligns the contents based on the current direction. */
-    align?: "start" | "center" | "end" | "space-between";
+  React.HTMLAttributes<HTMLElement>
+> & {
+  /** Aligns the contents based on the current direction. */
+  align?: "start" | "center" | "end" | "space-between";
 
-    /** The position of `children` compared to `items`. */
-    childrenPosition?: "before" | "after";
+  /** The position of `children` compared to `items`. */
+  childrenPosition?: "before" | "after";
 
-    /** Can be used to extend the className. */
-    className?: string;
+  /** Can be used to extend the className. */
+  className?: string;
 
-    /** Whether the toolbar shows items horizontally or vertically, mobile devices always use vertical. */
-    direction?: "h" | "v" | "horizontal" | "vertical"; // TODO: deprecate horizontal and vertical
+  /** Whether the toolbar shows items horizontally or vertically, mobile devices always use vertical. */
+  direction?: "h" | "v" | "horizontal" | "vertical"; // TODO: deprecate horizontal and vertical
 
-    /** Whether the direction is responsive. */
-    directionResponsive?: boolean;
+  /** Whether the direction is responsive. */
+  directionResponsive?: boolean;
 
-    /** When set to true, gap between items is removed. */
-    compact?: boolean;
+  /** When set to true, gap between items is removed. */
+  compact?: boolean;
 
-    /** Whether to stretch this component. */
-    justify?: "h" | "v" | boolean;
+  /** Whether to stretch this component. */
+  justify?: "h" | "v" | boolean;
 
-    /** Whether to apply padding to the toolbar. */
-    pad?: "v" | "h" | boolean;
+  /** Whether to apply padding to the toolbar. */
+  pad?: "v" | "h" | boolean;
 
-    /** The size of the padding. */
-    padSize?: "s" | "xs";
+  /** The size of the padding. */
+  padSize?: "s" | "xs";
 
-    /** When set to true, padding is applied to A components to match Button component's height. */
-    padA?: boolean;
+  /** When set to true, padding is applied to A components to match Button component's height. */
+  padA?: boolean;
 
-    /** Can be set to `fit-content` to apply auto sizing based on content width. */
-    size?: "fit-content";
+  /** Can be set to `fit-content` to apply auto sizing based on content width. */
+  size?: "fit-content";
 
-    /** When set tot true, toolbar will be positioned using display: sticky. */
-    sticky?: false | "top" | "bottom";
+  /** When set tot true, toolbar will be positioned using display: sticky. */
+  sticky?: false | "top" | "bottom";
 
-    /** The variant (style) of the toolbar. */
-    variant?: "normal" | "primary" | "accent" | "alt" | "transparent";
+  /** The variant (style) of the toolbar. */
+  variant?: "normal" | "primary" | "accent" | "alt" | "transparent";
 
-    /** The items shown inside the toolbar, alternatively, can opt to use children instead. */
-    items?: ToolbarItem[];
+  /** The items shown inside the toolbar, alternatively, can opt to use children instead. */
+  items?: ToolbarItem[];
 
-    /**
-     * Allows default props of items to be partially overridden based on the component type, this improves the styling
-     * of certain components when rendered in a Toolbar.
-     */
-    overrideItemProps?: boolean;
-  }
->;
+  /**
+   * Allows default props of items to be partially overridden based on the component type, this improves the styling
+   * of certain components when rendered in a Toolbar.
+   */
+  overrideItemProps?: boolean;
+};
 
 /**
  * A flexible and customizable toolbar component for arranging and aligning
  * various interactive elements such as `A`, `Button`, `ButtonLink` and `Dropdown`.
  */
-export const Toolbar: React.FC<ToolbarProps> = ({
+export function Toolbar({
   children,
   childrenPosition = "after",
   className,
@@ -85,13 +85,13 @@ export const Toolbar: React.FC<ToolbarProps> = ({
   pad = "v",
   padA = false,
   padSize = "s",
-  size = "",
+  size = undefined,
   sticky = false,
   variant = "normal",
   items = [],
   overrideItemProps = true,
   ...props
-}) => {
+}: ToolbarProps) {
   // TODO: Deprecate "horizontal" and "vertical" (use "h" and "v" instead).
   const direction =
     _direction.toLowerCase() === "h"
@@ -246,7 +246,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
       {childrenPosition === "after" && children}
     </nav>
   );
-};
+}
 
 /**
  * Toolbar "spacer" separates items in a toolbar.
