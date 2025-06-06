@@ -269,9 +269,11 @@
 
   @each $variant in ("info" "success" "warning" "danger") {
     &--variant-#{$variant} {
-      --mykn-button-color-background: var(--page-color-#{$variant});
-      --mykn-button-color-border: var(--page-color-#{$variant});
-      --mykn-button-color-shadow: var(--page-color-shadow);
+      --mykn-button-color-background: var(
+        --button-color-background-#{$variant}
+      );
+      --mykn-button-color-border: var(--button-color-background-#{$variant});
+      --mykn-button-color-shadow: var(--button-color-background-#{$variant});
       --mykn-button-color-text: var(
         --button-color-text-#{$variant},
         var(--page-color-background)
