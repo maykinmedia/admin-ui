@@ -6,22 +6,34 @@ export const TRANSLATIONS = defineMessages({
     description: "mykn.components.Paginator: The pagination (accessible) label",
     defaultMessage: "paginering",
   },
+  LABEL_PAGE_SELECT: {
+    id: "mykn.components.Paginator.labelPageSelect",
+    description: "mykn.components.Paginator: The page (accessible) label",
+    defaultMessage: "Pagina",
+  },
+  LABEL_FIRST: {
+    id: "mykn.components.Paginator.labelFirst",
+    description:
+      "mykn.components.Paginator: The go to first page (accessible) label",
+    defaultMessage: "Ga naar de eerste pagina (pagina {page})",
+  },
   LABEL_PREVIOUS: {
     id: "mykn.components.Paginator.labelPrevious",
     description:
       "mykn.components.Paginator: The go to previous page (accessible) label",
-    defaultMessage: "vorige",
+    defaultMessage: "Ga naar de vorige pagina (pagina {page})",
   },
   LABEL_NEXT: {
     id: "mykn.components.Paginator.labelNext",
     description:
       "mykn.components.Paginator: The go to next page (accessible) label",
-    defaultMessage: "volgende",
+    defaultMessage: "Ga naar de volgende pagina (pagina {page})",
   },
-  LABEL_GO_TO_PAGE: {
-    id: "mykn.components.Paginator.labelGoToPage",
-    description: "mykn.components.Paginator: The go to page (accessible) label",
-    defaultMessage: "naar pagina {page}",
+  LABEL_LAST: {
+    id: "mykn.components.Paginator.labelLast",
+    description:
+      "mykn.components.Paginator: The go to last page (accessible) label",
+    defaultMessage: "Ga naar de laatste pagina (pagina {page})",
   },
   LABEL_CURRENT_PAGE_RANGE: {
     id: "mykn.components.Paginator.labelCurrentPageRange",
