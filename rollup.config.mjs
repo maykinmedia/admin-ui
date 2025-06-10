@@ -2,27 +2,28 @@ import { transform } from "@formatjs/ts-transformer";
 import commonjs from "@rollup/plugin-commonjs";
 import terser from "@rollup/plugin-terser";
 import typescript from "rollup-plugin-typescript2";
-import peerDepsExternal from "rollup-plugin-peer-deps-external";
 import styles from "rollup-plugin-styler";
 import postcss_url from "postcss-url";
 import json from "@rollup/plugin-json";
-// import { dts } from "rollup-plugin-dts";
+import { dts } from "rollup-plugin-dts";
+
+const EXTERNAL = [
+  "@floating-ui/react",
+  "@heroicons/react/24/outline",
+  "@heroicons/react/24/solid",
+  "clsx",
+  "date-fns",
+  "date-fns/locale",
+  "react",
+  "react-datepicker",
+  "react-datepicker/dist/react-datepicker.css",
+  "react-dom",
+  "react-intl"
+];
 
 export default [
   {
-    external: [
-      "@floating-ui/react",
-      "@heroicons/react/24/outline",
-      "@heroicons/react/24/solid",
-      "clsx",
-      "date-fns",
-      "date-fns/locale",
-      "react",
-      "react-datepicker",
-      "react-datepicker/dist/react-datepicker.css",
-      "react-dom",
-      "react-intl"
-    ],
+    external: EXTERNAL,
     input: "src/index.ts",
     output: [{
       assetFileNames: "[name][extname]",
@@ -38,7 +39,6 @@ export default [
       preserveModules: true
     }],
     plugins: [
-      peerDepsExternal(),
       commonjs(),
       typescript({
         transformers: () => ({
@@ -67,13 +67,12 @@ export default [
     ]
 
   },
-  // FIXME: Replaced with "moduleResolution": "bundler",
-  // {
-  //   input: "dist/esm/index.js",
-  //   output: [{ file: "dist/types//index.d.ts", format: "esm" }],
-  //   external: [/\.scss$/],
-  //   plugins: [dts()]
-  // },
+  {
+    external: [...EXTERNAL, /\.scss$/],
+    input: "src/index.ts",
+    output: [{ dir: "dist/esm", format: "esm", preserveModules: true }],
+    plugins: [dts()]
+  },
   { input: "src/lib/i18n/compiled/en.json", output: { dir: "dist/esm/lib/i18n/compiled" }, plugins: [json()] },
   { input: "src/lib/i18n/compiled/nl.json", output: { dir: "dist/esm/lib/i18n/compiled" }, plugins: [json()] }
 ];

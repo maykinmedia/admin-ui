@@ -1,15 +1,15 @@
 {
   "compilerOptions": {
-    "module": "ESNext",
-    "moduleResolution": "bundler",
-    "target": "ESNext",
-    "outDir": "dist",
-    "strict": true,
-    "jsx": "react",
+    "allowSyntheticDefaultImports": true,
     "declaration": true,
     "declarationDir": "dist/types",
     "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true
+    "jsx": "react",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "outDir": "dist",
+    "strict": true,
+    "target": "ESNext",
   },
   "exclude": ["**/*.stories.tsx", "**/*.stories.tsx", "**/*.stories.md", ".storybook"]
 }
