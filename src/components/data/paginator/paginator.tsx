@@ -465,7 +465,6 @@ export const PaginatorOptions: React.FC<PaginatorOptionsProps> = ({
         inputSize="fit-content"
         size="xs"
         value={pageSize}
-        variant="transparent"
         onChange={onPageSizeChange}
       />
     </>
