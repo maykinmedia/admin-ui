@@ -1,6 +1,5 @@
 import React from "react";
 
-import { Toolbar } from "../../toolbar";
 import { Paginator } from "../paginator";
 import { useDataGridContext } from "./datagridcontext";
 
@@ -25,7 +24,7 @@ export const DataGridFooter = <
   } = useDataGridContext<T, F>();
 
   return (
-    <Toolbar pad={true} sticky="bottom">
+    <div className="mykn-datagrid__footer">
       <Paginator
         count={count}
         loading={loading}
@@ -36,6 +35,6 @@ export const DataGridFooter = <
         onPageSizeChange={onPageSizeChange}
         {...paginatorProps}
       />
-    </Toolbar>
+    </div>
   );
 };

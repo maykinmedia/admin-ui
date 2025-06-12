@@ -1,8 +1,9 @@
+import clsx from "clsx";
 import React, { useEffect, useRef, useState } from "react";
 
 import { gettextFirst, ucFirst, useIntl } from "../../../lib";
 import { Button } from "../../button";
-import { FormControl, Option, Select, SelectProps } from "../../form";
+import { FormControl, Option, SelectProps } from "../../form";
 import { Outline } from "../../icon";
 import { Toolbar } from "../../toolbar";
 import { P } from "../../typography";
@@ -191,7 +192,9 @@ export const Paginator: React.FC<PaginatorProps> = ({
 
   return (
     <nav
-      className="mykn-paginator"
+      className={clsx("mykn-paginator", {
+        "mykn-paginator--loading": isLoading,
+      })}
       aria-label={ucFirst(_labelPagination)}
       {...props}
     >
@@ -207,29 +210,27 @@ export const Paginator: React.FC<PaginatorProps> = ({
         />
       </div>
 
-      <div className="mykn-paginator__interactive">
-        <div className="mykn-paginator__section mykn-paginator__section--options">
-          <PaginatorOptions
-            labelPageSize={labelPageSize}
-            pageSize={pageSizeState}
-            pageSizeOptions={pageSizeOptions}
-            onPageSizeChange={handlePageSizeChange}
-          />
-        </div>
+      <div className="mykn-paginator__section mykn-paginator__section--options">
+        <PaginatorOptions
+          labelPageSize={labelPageSize}
+          pageSize={pageSizeState}
+          pageSizeOptions={pageSizeOptions}
+          onPageSizeChange={handlePageSizeChange}
+        />
+      </div>
 
-        <div className="mykn-paginator__section mykn-paginator__section--nav">
-          <PaginatorNav
-            count={count}
-            currentPage={pageState}
-            labelPageSelect={labelPageSelect}
-            labelFirst={_labelFirst}
-            labelLast={_labelLast}
-            labelPrevious={_labelPrevious}
-            labelNext={_labelNext}
-            pageSize={pageSizeState}
-            onPageSizeChange={handlePageChange}
-          />
-        </div>
+      <div className="mykn-paginator__section mykn-paginator__section--nav">
+        <PaginatorNav
+          count={count}
+          currentPage={pageState}
+          labelPageSelect={labelPageSelect}
+          labelFirst={_labelFirst}
+          labelLast={_labelLast}
+          labelPrevious={_labelPrevious}
+          labelNext={_labelNext}
+          pageSize={pageSizeState}
+          onPageSizeChange={handlePageChange}
+        />
       </div>
     </nav>
   );
@@ -277,15 +278,21 @@ export const PaginatorNav: React.FC<PaginatorNavProps> = ({
   };
 
   return (
-    <Toolbar directionResponsive={false} pad={false} variant="transparent">
+    <Toolbar
+      align="space-between"
+      directionResponsive={false}
+      pad={false}
+      variant="transparent"
+    >
       <FormControl
-        value={currentPage}
-        type="number"
-        label={_labelPageSelect}
         direction="horizontal"
-        onChange={onChangeInput}
-        min={1}
         max={pageCount}
+        label={_labelPageSelect}
+        min={1}
+        size="xs"
+        type="number"
+        value={currentPage}
+        onChange={onChangeInput}
       />
 
       <div className="mykn-paginator__buttons">
@@ -402,10 +409,13 @@ export const PaginatorMeta: React.FC<PaginatorMetaProps> = ({
 
   return (
     <>
-      <P size="s" title={ucFirst(_labelCurrentPageRange)}>
+      {/* Hidden on mobile when loading. */}
+      <P size="xs" title={ucFirst(_labelCurrentPageRange)}>
         {`${pageStart}-${pageEnd} / ${count}`}
       </P>
-      {_labelLoading && (
+      {/* `_labelLoading` MUST be truthy in order to show the icon for a11y. */}
+      {/* Only render icon if `loading` is truthy (save space on mobile). */}
+      {Boolean(_labelLoading && loading) && (
         <Outline.ArrowPathIcon
           spin={true}
           aria-hidden={!loading}
@@ -446,8 +456,10 @@ export const PaginatorOptions: React.FC<PaginatorOptionsProps> = ({
 
   return (
     <>
-      <P size="s">{ucFirst(_labelPageSize)}</P>
-      <Select
+      <FormControl
+        direction="horizontal"
+        showRequiredIndicator={false}
+        label={ucFirst(_labelPageSize)}
         options={pageSizeOptions}
         required={true}
         inputSize="fit-content"

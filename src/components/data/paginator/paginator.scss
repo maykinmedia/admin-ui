@@ -1,124 +1,66 @@
 @use "../../../settings/constants";
 
+@mixin mykn-paginator-hide {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 .mykn-paginator {
-  display: flex;
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  grid-template-areas: "meta spacer options nav";
   justify-content: space-between;
-  gap: var(--spacing-xs-v);
+  column-gap: var(--spacing-m-h);
+  row-gap: var(--spacing-xs-v);
   position: relative;
   width: 100%;
 
-  &__screenreader-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0 0 0 0);
-    white-space: nowrap;
-    border: 0;
+  @media screen and (max-width: constants.$breakpoint-desktop - 1px) {
+    column-gap: var(--spacing-xs-h);
+    grid-template-columns: auto auto;
+    grid-template-rows: repeat(2, auto);
+    grid-template-areas:
+      "meta options"
+      "nav nav";
+
+    &--loading .mykn-p,
+    .mykn-paginator__button--page {
+      @include mykn-paginator-hide;
+    }
   }
 
-  &__interactive {
-    display: flex;
-    align-items: center;
-    gap: 3em;
+  &__screenreader-only {
+    @include mykn-paginator-hide;
   }
 
   &__section {
     display: flex;
     align-items: center;
     gap: var(--spacing-xs-h);
+  }
 
-    &--nav {
-      > nav {
-        gap: 1.5em;
-      }
-      input {
-        width: 4em;
-        background-color: transparent;
-      }
-    }
+  &__section--meta {
+    grid-area: meta;
+  }
+
+  &__section--options {
+    grid-area: options;
+  }
+
+  &__section--nav {
+    grid-area: nav;
   }
 
   &__buttons {
     display: flex;
     align-items: center;
     gap: var(--spacing-xs-v);
-  }
-
-  &__section .mykn-p {
-    margin-block-end: 0 !important;
-  }
-
-  &__section--meta {
-    display: flex;
-    gap: var(--spacing-xs-v);
-    justify-content: center;
-
-    // Loading indicator.
-    > .mykn-icon {
-      inset-inline-end: 100%;
-      position: absolute;
-      margin-inline-end: var(--spacing-xs-h);
-
-      @media screen and (min-width: constants.$breakpoint-desktop) {
-        inset-inline-start: 100%;
-        margin-inline-start: var(--spacing-xs-h);
-      }
-    }
-  }
-
-  @media screen and (max-width: constants.$breakpoint-desktop - 1px) {
-    flex-direction: column;
-    align-items: stretch;
-    gap: var(--spacing-xs-v);
-
-    &__interactive {
-      flex-direction: column;
-      gap: var(--spacing-xs-v);
-      align-items: flex-start;
-    }
-
-    &__section {
-      width: 100%;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      gap: var(--spacing-xs-v);
-    }
-
-    &__section--nav,
-    &__section--options,
-    &__section--meta {
-      width: 100%;
-      justify-content: space-between;
-    }
-
-    &__section--meta {
-      order: 3;
-      justify-content: center;
-      text-align: center;
-
-      > .mykn-icon {
-        position: static;
-        margin-inline: auto;
-        display: block;
-      }
-    }
-    .mykn-paginator__buttons {
-      justify-content: space-between;
-    }
-
-    .mykn-button {
-      width: 3.5em !important; // Needed to override `mykn-toolbar` related styling
-    }
-
-    .mykn-select {
-      width: unset !important; // Needed to override `mykn-toolbar` related styling
-    }
-
-    input {
-      width: 4.5em;
-    }
   }
 }
