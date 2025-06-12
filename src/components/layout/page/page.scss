@@ -34,6 +34,7 @@
     }
   }
 
+  // Warning: setting this may break vertical overflow scrolling with sidebar navigation.
   &--full-height {
     height: 100%;
   }
