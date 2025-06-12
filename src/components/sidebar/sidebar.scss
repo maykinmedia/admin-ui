@@ -1,13 +1,15 @@
 @use "../../settings/constants";
 
 .mykn-sidebar {
-  --mykn-sidebar-width: 280px;
+  --mykn-sidebar-width: min(
+    280px,
+    calc(100vw - 40px - 48px)
+  ); // Screen width - toolbar width - 2 * toggle width.
   $self: &;
 
   display: flex;
   flex-direction: column;
   height: 100cqh; // Height of container (probably Page component)
-  max-width: 280px;
   position: sticky;
   top: 0;
   transition: all var(--animation-duration-medium)
