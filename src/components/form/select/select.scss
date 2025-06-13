@@ -82,6 +82,11 @@
     visibility: hidden;
   }
 
+  &--variant-accent {
+    background-color: var(--page-color-accent);
+    border-color: transparent;
+  }
+
   &--variant-transparent {
     background-color: transparent;
   }

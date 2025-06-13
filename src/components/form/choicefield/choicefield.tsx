@@ -29,7 +29,7 @@ export type ChoiceFieldProps<
   /** Value of the form element */
   value?: Option["value"] | null;
 
-  /** The variant (style) of the form element. */
+  /** The variant (style) of the form element - omitted and replaced in Select. */
   variant?: "normal" | "transparent";
 
   /** Gets called when the input is blurred. */
