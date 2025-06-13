@@ -19,6 +19,7 @@ const meta: Meta<typeof Select> = {
   render: ({ name = "select", ...args }) => (
     <Toolbar variant="transparent">
       <Select name={name} variant="normal" {...args} />
+      <Select name={name + "-accent"} variant="accent" {...args} />
       <Select name={name + "-transparent"} variant="transparent" {...args} />
     </Toolbar>
   ),

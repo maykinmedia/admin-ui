@@ -25,7 +25,7 @@ import { eventFactory } from "../eventFactory";
 import "./select.scss";
 import { TRANSLATIONS } from "./translations";
 
-export type SelectProps = ChoiceFieldProps & {
+export type SelectProps = Omit<ChoiceFieldProps, "variant"> & {
   /** Component to use as icon. */
   icon?: React.ReactNode;
 
@@ -49,6 +49,9 @@ export type SelectProps = ChoiceFieldProps & {
 
   /** allow selecting more than one option */
   multiple?: boolean;
+
+  /** The variant (style) of the form element. */
+  variant?: "normal" | "accent" | "transparent";
 };
 
 /**
