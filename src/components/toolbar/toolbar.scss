@@ -23,13 +23,13 @@
   }
 }
 
-@mixin dark {
+@mixin theme($theme) {
   @at-root {
-    .view--dark & {
+    .view--#{$theme} & {
       @content;
     }
 
-    @media screen and (prefers-color-scheme: dark) {
+    @media screen and (prefers-color-scheme: $theme) {
       @content;
     }
   }
@@ -90,35 +90,22 @@
       var(--typography-color-background-alt)
     );
 
-    > * {
-      --button-color-text-primary: var(--toolbar-color-text-primary);
-      --typography-color-h: var(--toolbar-color-text-primary);
-      --typography-color-link: var(--toolbar-color-text-primary);
-      --typography-color-muted: var(--toolbar-color-text-primary);
-    }
+    @include theme(light) {
+      & > * {
+        --typography-color-body: var(--page-color-primary-contrast);
+        --typography-color-link: var(--page-color-primary-contrast);
+        --typography-color-h: var(--page-color-primary-contrast);
+      }
 
-    @include dark {
-      & {
-        --button-color-background-primary: transparent;
-        --typography-color-link: var(--typography-color-body);
+      & > .mykn-button--variant-transparent,
+      & > .mykn-dropdown .mykn-button--variant-transparent {
+        --mykn-button-color-text: var(--page-color-primary-contrast);
       }
     }
   }
 
   &--variant-accent {
     background-color: var(--page-color-accent);
-
-    * {
-      --button-color-text-transparent: var(--toolbar-color-text-accent);
-      --typography-color-h: var(--toolbar-color-text-accent);
-      --typography-color-muted: var(--toolbar-color-text-accent);
-    }
-
-    @include dark {
-      & {
-        --typography-color-link: var(--typography-color-background);
-      }
-    }
   }
 
   &--variant-alt {
