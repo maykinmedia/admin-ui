@@ -84,7 +84,7 @@
         "value": "{typography.color.body}"
       },
       "accent": {
-        "value": "light-dark({theme.purple-rain.accent.color}, {theme.blue-suede-shoes.accent.color})"
+        "value": "light-dark({theme.purple-rain.accent.color}, {typography.color.background})"
       },
       "highlight": {
         "value": "{page.color.background}"
