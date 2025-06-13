@@ -41,7 +41,7 @@ export type DropdownProps = ButtonProps & {
   items?: ToolbarProps["items"];
 
   /** Whether to render the dropdown content as Toolbar. */
-  toolbar: boolean;
+  toolbar?: boolean;
 
   /** Any additional props to pass to the toolbar. */
   toolbarProps?: Omit<ToolbarProps, "items">;
