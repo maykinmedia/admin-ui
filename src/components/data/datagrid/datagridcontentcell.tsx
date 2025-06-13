@@ -16,11 +16,7 @@ import { FormControl } from "../../form";
 import { Value } from "../value";
 import { useDataGridContext } from "./datagridcontext";
 
-export type DataGridContentCellProps<
-  T extends object = object,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  F extends object = T,
-> = {
+export type DataGridContentCellProps<T extends object = object> = {
   field: TypedField<T>;
   rowData: T;
 };
@@ -34,7 +30,7 @@ export const DataGridContentCell = <
 >({
   field,
   rowData,
-}: DataGridContentCellProps<T, F>) => {
+}: DataGridContentCellProps<T>) => {
   const {
     aProps,
     badgeProps,

@@ -1,5 +1,3 @@
-import React from "react";
-
 import { Paginator } from "../paginator";
 import { useDataGridContext } from "./datagridcontext";
 

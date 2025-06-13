@@ -1,15 +1,11 @@
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 
 import { gettextFirst } from "../../../lib";
 import { Checkbox } from "../../form";
 import { useDataGridContext } from "./datagridcontext";
 import { TRANSLATIONS } from "./translations";
 
-export type DataGridSelectionCheckboxProps<
-  T extends object = object,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  F extends object = T,
-> = {
+export type DataGridSelectionCheckboxProps<T extends object = object> = {
   rowData?: T;
   selectAll?: false | "page" | "allPages";
 };
@@ -23,7 +19,7 @@ export const DataGridSelectionCheckbox = <
 >({
   rowData,
   selectAll,
-}: DataGridSelectionCheckboxProps<T, F>) => {
+}: DataGridSelectionCheckboxProps<T>) => {
   const {
     allPagesSelected,
     allPagesSelectedManaged,

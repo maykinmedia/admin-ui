@@ -7,13 +7,10 @@ import { Outline } from "../../icon";
 import { P } from "../../typography";
 import { useDataGridContext } from "./datagridcontext";
 
-export type DataGridHeadingCellProps<
-  T extends object = object,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  F extends object = T,
-> = React.PropsWithChildren<{
-  field: TypedField<T>;
-}>;
+export type DataGridHeadingCellProps<T extends object = object> =
+  React.PropsWithChildren<{
+    field: TypedField<T>;
+  }>;
 
 /**
  * DataGrid (heading) cell
@@ -24,7 +21,7 @@ export const DataGridHeadingCell = <
 >({
   children,
   field,
-}: DataGridHeadingCellProps<T, F>) => {
+}: DataGridHeadingCellProps<T>) => {
   const { sortField, sortDirection, onSort } = useDataGridContext<T, F>();
   const isSorted = sortField === field.name;
 

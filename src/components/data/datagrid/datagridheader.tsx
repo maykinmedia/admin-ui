@@ -1,5 +1,3 @@
-import React from "react";
-
 import { H2 } from "../../typography";
 import { useDataGridContext } from "./datagridcontext";
 

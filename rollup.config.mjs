@@ -15,6 +15,7 @@ const EXTERNAL = [
   "date-fns",
   "date-fns/locale",
   "react",
+  "react/jsx-runtime",
   "react-datepicker",
   "react-datepicker/dist/react-datepicker.css",
   "react-dom",

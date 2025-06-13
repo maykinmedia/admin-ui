@@ -1,5 +1,3 @@
-import React from "react";
-
 import { Kanban as KanbanComponent, KanbanProps } from "../../components";
 import { FieldSet } from "../../lib";
 import { CardBaseTemplate } from "../base";

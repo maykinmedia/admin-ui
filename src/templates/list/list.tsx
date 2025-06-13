@@ -1,5 +1,3 @@
-import React from "react";
-
 import { DataGrid, DataGridProps } from "../../components";
 import { CardBaseTemplate } from "../base";
 import { BodyBaseTemplateProps } from "../base/bodyBase";
