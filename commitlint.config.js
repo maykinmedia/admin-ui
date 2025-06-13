@@ -1,10 +1,10 @@
 /**
  * @example: :sparkles: #1 - feat: implement new feature
- * @see {@link https://regexr.com/7qm0o RegExr}
+ * @see {@link https://regexr.com/8fcbf RegExr}
  * @type {RegExp}
  */
 const COMMIT_PATTERN =
-  /(:\w+\:)(?:\s+(#\d+))?\s-\s([\w\s]+)(?:\((\w+)\))?:\s(.+)/;
+  /(:\w+\:)(?:\s+(#\d+))?\s-\s([\w\s]+)(?:\((\w+)\))?!?:\s(.+)/;
 
 // We can't use commitlint type enum here due to gitmoji.
 const TYPE_ENUM = [
@@ -59,7 +59,7 @@ module.exports = {
         // Message did not match format.
         return [
           false,
-          "Commit message format invalid: \n\nFormat: <gitmoji>[ [ticket]] - <type>[([optional scope])]: <description>.\nExample: :sparkles: #1 - feat: implement new feature",
+          "Commit message format invalid: \n\nFormat: <gitmoji>[ [ticket]] - <type>[([optional scope])]: <description>.\nExample: :sparkles: #1 - feat[!]: implement new feature",
         ];
       },
     ],

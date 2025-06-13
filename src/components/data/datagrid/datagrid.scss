@@ -182,6 +182,11 @@
     width: calc(100% - 1em - 3 * var(--mykn-datagrid-spacing-h));
   }
 
+  &__footer {
+    box-sizing: border-box;
+    padding: var(--spacing-xs-v) var(--spacing-xs-h);
+  }
+
   .mykn-body {
     display: flex;
     flex-direction: column;

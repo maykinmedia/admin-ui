@@ -199,10 +199,15 @@
     "description": "mykn.components.Paginator: The current page range (accessible) label",
     "originalDefault": "resultaat {pageStart} t/m {pageEnd} van {pageCount} pagina's"
   },
-  "mykn.components.Paginator.labelGoToPage": {
-    "defaultMessage": "naar pagina {page}",
-    "description": "mykn.components.Paginator: The go to page (accessible) label",
-    "originalDefault": "naar pagina {page}"
+  "mykn.components.Paginator.labelFirst": {
+    "defaultMessage": "Ga naar de eerste pagina (pagina {page})",
+    "description": "mykn.components.Paginator: The go to first page (accessible) label",
+    "originalDefault": "Ga naar de eerste pagina (pagina {page})"
+  },
+  "mykn.components.Paginator.labelLast": {
+    "defaultMessage": "Ga naar de laatste pagina (pagina {page})",
+    "description": "mykn.components.Paginator: The go to last page (accessible) label",
+    "originalDefault": "Ga naar de laatste pagina (pagina {page})"
   },
   "mykn.components.Paginator.labelLoading": {
     "defaultMessage": "bezig met laden...",
@@ -212,7 +217,12 @@
   "mykn.components.Paginator.labelNext": {
     "defaultMessage": "volgende",
     "description": "mykn.components.Paginator: The go to next page (accessible) label",
-    "originalDefault": "volgende"
+    "originalDefault": "Ga naar de volgende pagina (pagina {page})"
+  },
+  "mykn.components.Paginator.labelPageSelect": {
+    "defaultMessage": "Pagina",
+    "description": "mykn.components.Paginator: The page (accessible) label",
+    "originalDefault": "Pagina"
   },
   "mykn.components.Paginator.labelPageSize": {
     "defaultMessage": "aantal resultaten",
@@ -227,7 +237,7 @@
   "mykn.components.Paginator.labelPrevious": {
     "defaultMessage": "vorige",
     "description": "mykn.components.Paginator: The go to previous page (accessible) label",
-    "originalDefault": "vorige"
+    "originalDefault": "Ga naar de vorige pagina (pagina {page})"
   },
   "mykn.components.Select.labelClear": {
     "defaultMessage": "waarde wissen",

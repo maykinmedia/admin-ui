@@ -10,7 +10,11 @@ export type PageProps = React.PropsWithChildren<{
    */
   containerType?: "inline-size" | "size" | "normal";
 
-  /** Whether to use `height 100%;` (over `min-height: 100%;`). */
+  /**
+   * Whether to use `height 100%;` (over `min-height: 100%;`).
+   * Warning: setting this may break vertical overflow scrolling with sidebar
+   * navigation.
+   */
   fullHeight?: boolean;
 
   /** Vertical alignment of page content. */
@@ -26,7 +30,7 @@ export type PageProps = React.PropsWithChildren<{
 export const Page: React.FC<PageProps> = ({
   children,
   containerType = "inline-size",
-  fullHeight = true,
+  fullHeight = false,
   pad = false,
   valign,
   ...props

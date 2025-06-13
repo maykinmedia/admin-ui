@@ -5,6 +5,14 @@
     }
   },
   "spacing": {
+    "m": {
+      "h": {
+        "value": "48px"
+      },
+      "v": {
+        "value": "48px"
+      }
+    },
     "s": {
       "h": {
         "value": "16px"

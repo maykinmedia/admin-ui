@@ -1,11 +1,44 @@
 @use "../../../settings/constants";
 
+@mixin mykn-paginator-hide {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 .mykn-paginator {
-  display: flex;
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  grid-template-areas: "meta spacer options nav";
   justify-content: space-between;
-  gap: var(--spacing-xs-v);
+  column-gap: var(--spacing-m-h);
+  row-gap: var(--spacing-xs-v);
   position: relative;
   width: 100%;
+
+  @media screen and (max-width: constants.$breakpoint-desktop - 1px) {
+    column-gap: var(--spacing-xs-h);
+    grid-template-columns: auto auto;
+    grid-template-rows: repeat(2, auto);
+    grid-template-areas:
+      "meta options"
+      "nav nav";
+
+    &--loading .mykn-p,
+    .mykn-paginator__button--page {
+      @include mykn-paginator-hide;
+    }
+  }
+
+  &__screenreader-only {
+    @include mykn-paginator-hide;
+  }
 
   &__section {
     display: flex;
@@ -13,66 +46,21 @@
     gap: var(--spacing-xs-h);
   }
 
-  &__section .mykn-p {
-    margin-block-end: 0 !important;
-  }
-
   &__section--meta {
-    display: flex;
-    gap: var(--spacing-xs-v);
-    inset-block-start: 50%;
-    inset-inline-start: 50%;
-    position: absolute;
-    transform: translate(-50%, -50%);
-    justify-content: center;
-
-    // Loading indicator.
-    > .mykn-icon {
-      inset-inline-end: 100%;
-      position: absolute;
-      margin-inline-end: var(--spacing-xs-h);
-
-      @media screen and (min-width: constants.$breakpoint-desktop) {
-        inset-inline-start: 100%;
-        margin-inline-start: var(--spacing-xs-h);
-      }
-    }
+    grid-area: meta;
   }
 
-  @media screen and (max-width: constants.$breakpoint-desktop - 1px) {
-    display: grid;
-    grid-template-areas:
-      "nav meta"
-      "options options";
-    grid-template-columns: auto auto;
-    grid-template-rows: auto auto;
+  &__section--options {
+    grid-area: options;
+  }
 
-    &__section {
-      flex-basis: calc(50% - var(--spacing-xs-v) / 2);
-      white-space: nowrap;
-    }
+  &__section--nav {
+    grid-area: nav;
+  }
 
-    &__section--nav {
-      grid-area: nav;
-    }
-
-    &__section--meta {
-      grid-area: meta;
-      position: relative;
-      inset-block: 0;
-      inset-inline: 0;
-      text-align: end;
-      transform: none;
-    }
-
-    &__section--options {
-      grid-area: options;
-      flex-basis: 100%;
-    }
-
-    &__ellipsis,
-    &__button--page {
-      display: none !important;
-    }
+  &__buttons {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs-v);
   }
 }
