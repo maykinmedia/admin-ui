@@ -200,12 +200,12 @@
     "originalDefault": "resultaat {pageStart} t/m {pageEnd} van {pageCount} pagina's"
   },
   "mykn.components.Paginator.labelFirst": {
-    "defaultMessage": "Ga naar de eerste pagina (pagina {page})",
+    "defaultMessage": "Go to first page (page {page})",
     "description": "mykn.components.Paginator: The go to first page (accessible) label",
     "originalDefault": "Ga naar de eerste pagina (pagina {page})"
   },
   "mykn.components.Paginator.labelLast": {
-    "defaultMessage": "Ga naar de laatste pagina (pagina {page})",
+    "defaultMessage": "Go to last page (page {page})",
     "description": "mykn.components.Paginator: The go to last page (accessible) label",
     "originalDefault": "Ga naar de laatste pagina (pagina {page})"
   },
@@ -215,12 +215,12 @@
     "originalDefault": "bezig met laden..."
   },
   "mykn.components.Paginator.labelNext": {
-    "defaultMessage": "next",
+    "defaultMessage": "Go to next page (page {page})",
     "description": "mykn.components.Paginator: The go to next page (accessible) label",
     "originalDefault": "Ga naar de volgende pagina (pagina {page})"
   },
   "mykn.components.Paginator.labelPageSelect": {
-    "defaultMessage": "Pagina",
+    "defaultMessage": "Page",
     "description": "mykn.components.Paginator: The page (accessible) label",
     "originalDefault": "Pagina"
   },
@@ -235,7 +235,7 @@
     "originalDefault": "paginering"
   },
   "mykn.components.Paginator.labelPrevious": {
-    "defaultMessage": "previous",
+    "defaultMessage": "Go to previous page (page {page})",
     "description": "mykn.components.Paginator: The go to previous page (accessible) label",
     "originalDefault": "Ga naar de vorige pagina (pagina {page})"
   },
