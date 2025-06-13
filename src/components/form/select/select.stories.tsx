@@ -39,10 +39,13 @@ async function assertNativeValue(select: HTMLSelectElement, value: string) {
  * Assert `select`s serialized form value.
  * @param select
  */
-async function assertFormValue(select: HTMLSelectElement, value: string) {
+async function assertFormValue(
+  select: HTMLSelectElement,
+  value: string | string[] | undefined,
+) {
   const pre = await within(document.body).findByRole("log");
   const data = JSON.parse(pre?.textContent || "{}");
-  await expect(data[select.name]).toBe(value);
+  await expect(data[select.name]).toEqual(value);
 }
 
 export const SelectComponent: Story = {
@@ -68,8 +71,6 @@ export const SelectComponent: Story = {
     for (const select of selects) {
       const nativeSelect =
         select.querySelector<HTMLSelectElement>("select[hidden]");
-      const clear = within(select).getByLabelText("Clear value");
-
       const spy = fn();
       select.addEventListener("change", spy);
 
@@ -79,14 +80,24 @@ export const SelectComponent: Story = {
 
       // Test that event listener on the (custom) select gets called.
       await waitFor(expect(spy).toHaveBeenCalled);
-
       // Test that the native select value attributes has the correct value.
       await waitFor(() => assertNativeValue(nativeSelect!, "JR"));
-
       // Test that the FormData serialization returns the correct value.
       await waitFor(() => assertFormValue(nativeSelect!, "JR"));
 
+      const clear = within(select).getByLabelText("Clear value");
       await userEvent.click(clear, { delay: 10 });
+
+      // Test that event listener on the (custom) select gets called.
+      await waitFor(expect(spy).toHaveBeenCalled);
+      // Test that the native select value attributes has the correct value.
+      await waitFor(() => assertNativeValue(nativeSelect!, ""));
+      // Test that the FormData serialization returns the correct value.
+      await waitFor(() => assertFormValue(nativeSelect!, undefined));
+
+      await userEvent.click(select, { delay: 10 });
+      const junior2 = await within(select).findByText("Junior");
+      await userEvent.click(junior2, { delay: 10 });
     }
   },
 };
