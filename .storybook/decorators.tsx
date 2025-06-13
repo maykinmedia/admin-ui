@@ -1,4 +1,4 @@
-import { Decorator } from "@storybook/react-webpack5";
+import { Decorator } from "@storybook/react-vite";
 import * as React from "react";
 import { useEffect, useRef, useState } from "react";
 

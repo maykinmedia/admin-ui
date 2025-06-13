@@ -1,5 +1,5 @@
 import { withThemeByClassName } from "@storybook/addon-themes";
-import type { Preview } from "@storybook/react-webpack5";
+import type { Preview } from "@storybook/react-vite";
 
 import "../src/index.scss";
 import { allModes } from "./modes";
