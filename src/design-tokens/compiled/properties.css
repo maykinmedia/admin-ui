@@ -75,7 +75,6 @@
   --button-color-text-success: var(--page-color-success);
   --button-color-text-warning: var(--page-color-warning);
   --button-color-text-danger: var(--page-color-danger);
-  --toolbar-color-text-accent: light-dark(var(--typography-color-body), var(--typography-color-background));
   --theme-purple-rain-primary-hue: 253.22033898305085;
   --theme-purple-rain-primary-saturation: 0.6941176470588236;
   --theme-purple-rain-primary-lightness: 0.3333333333333333;
@@ -116,7 +115,7 @@
   --button-color-text-primary-hover: var(--button-color-text-primary);
   --button-color-text-secondary-active: var(--button-color-text-secondary-hover);
   --button-color-text-outline-hover: var(--button-color-background-primary);
-  --page-color-accent: light-dark(var(--theme-purple-rain-accent-color), var(--theme-blue-suede-shoes-accent-color));
+  --page-color-accent: light-dark(var(--theme-purple-rain-accent-color), var(--typography-color-background));
   --button-color-background-primary-active: var(--button-color-background-primary-hover);
   --button-color-background-transparent-active: var(--button-color-background-outline-active);
   --button-color-border-outline-active: var(--button-color-border-outline-hover);

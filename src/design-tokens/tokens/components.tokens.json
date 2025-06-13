@@ -215,9 +215,6 @@
       "text": {
         "primary": {
           "value": "{page.color.primary-contrast}"
-        },
-        "accent": {
-          "value": "light-dark({typography.color.body}, {typography.color.background})"
         }
       }
     }
