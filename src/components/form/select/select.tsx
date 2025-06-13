@@ -260,18 +260,20 @@ export const Select: React.FC<SelectProps> = ({
       >
         {/* This is here for compatibility with native forms, as well as a providing a target for change events. */}
         <select
-          id={id}
           ref={fakeInputRef}
-          name={name}
-          multiple={multiple}
-          value={selectValue}
-          hidden
-          form={form}
           disabled={disabled}
+          form={form}
+          hidden
+          id={id}
+          multiple={multiple}
+          name={name}
+          value={selectValue}
+          // Silence React value without onChange error as this is deliberate.
+          onChange={() => {}}
         >
           {options.map((opt, i) =>
             selectedIndices.includes(i) ? (
-              <option key={i} value={opt.value ?? opt.label} selected>
+              <option key={i} value={opt.value ?? opt.label}>
                 {opt.label}
               </option>
             ) : null,
