@@ -37,6 +37,18 @@
         },
         "transparent-active": {
           "value": "{button.color.background.outline-active}"
+        },
+        "info": {
+          "value": "{typography.color.background}"
+        },
+        "success": {
+          "value": "{typography.color.background}"
+        },
+        "warning": {
+          "value": "{typography.color.background}"
+        },
+        "danger": {
+          "value": "{typography.color.background}"
         }
       },
       "border": {
@@ -75,6 +87,18 @@
         },
         "transparent-active": {
           "value": "{button.color.border.transparent-hover}"
+        },
+        "info": {
+          "value": "{typography.color.background}"
+        },
+        "success": {
+          "value": "{typography.color.background}"
+        },
+        "warning": {
+          "value": "{typography.color.background}"
+        },
+        "danger": {
+          "value": "{typography.color.background}"
         }
       },
       "shadow": {
@@ -113,6 +137,18 @@
         },
         "transparent-active": {
           "value": "{button.color.shadow.transparent-hover}"
+        },
+        "info": {
+          "value": "{page.color.info}"
+        },
+        "success": {
+          "value": "{page.color.success}"
+        },
+        "warning": {
+          "value": "{page.color.warning}"
+        },
+        "danger": {
+          "value": "{page.color.danger}"
         }
       },
       "text": {
@@ -152,17 +188,17 @@
         "transparent-active": {
           "value": "{button.color.text.outline-active}"
         },
-        "success": {
-          "value": "light-dark({typography.color.background}, {page.color.primary-contrast})"
-        },
         "info": {
-          "value": "light-dark({typography.color.background}, {page.color.primary-contrast})"
+          "value": "{page.color.info}"
+        },
+        "success": {
+          "value": "{page.color.success}"
         },
         "warning": {
-          "value": "light-dark({typography.color.background}, {page.color.primary-contrast})"
+          "value": "{page.color.warning}"
         },
         "danger": {
-          "value": "light-dark({typography.color.background}, {page.color.primary-contrast})"
+          "value": "{page.color.danger}"
         }
       }
     }
