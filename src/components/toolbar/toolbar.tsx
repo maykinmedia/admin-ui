@@ -140,7 +140,7 @@ export function Toolbar({
         overrideItemProps
           ? {
               size: direction === "horizontal" ? "xs" : undefined,
-              variant: variant === "primary" ? "primary" : "transparent",
+              variant: "transparent",
             }
           : {},
       ];
@@ -152,7 +152,7 @@ export function Toolbar({
         overrideItemProps
           ? {
               size: direction === "horizontal" ? "xs" : undefined,
-              variant: variant === "primary" ? "primary" : "transparent",
+              variant: "transparent",
             }
           : {},
       ];
@@ -164,7 +164,7 @@ export function Toolbar({
         overrideItemProps
           ? {
               size: direction === "horizontal" ? "xs" : undefined,
-              variant: variant === "primary" ? "primary" : "transparent",
+              variant: "transparent",
             }
           : {},
       ];
