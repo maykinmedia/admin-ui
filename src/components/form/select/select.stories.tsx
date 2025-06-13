@@ -197,6 +197,57 @@ export const SelectMultiple: Story = {
     multiple: true,
   },
   decorators: [FORM_TEST_DECORATOR],
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const selects = canvas.getAllByRole("combobox");
+
+    for (const select of selects) {
+      const nativeSelect =
+        select.querySelector<HTMLSelectElement>("select[hidden]");
+      const clear = within(select).getByLabelText("Clear value");
+
+      const spy = fn();
+      select.addEventListener("change", spy);
+
+      await userEvent.click(select, { delay: 10 });
+      await userEvent.click(await within(select).findByText("Football"));
+      await userEvent.click(await within(select).findByText("Tennis"));
+      await userEvent.click(await within(select).findByText("Running"));
+      await userEvent.click(await within(select).findByText("Cycling"));
+
+      // Test that event listener on the (custom) select gets called.
+      await waitFor(expect(spy).toHaveBeenCalled);
+      // Test that the native select value attributes has the correct value.
+      await waitFor(() => assertNativeValue(nativeSelect!, "football"));
+      // Test that the FormData serialization returns the correct value.
+      await waitFor(() =>
+        assertFormValue(nativeSelect!, [
+          "football",
+          "tennis",
+          "running",
+          "cycling",
+        ]),
+      );
+
+      await userEvent.click(clear, { delay: 10 });
+
+      // Test that event listener on the (custom) select gets called.
+      await waitFor(expect(spy).toHaveBeenCalled);
+      // Test that the native select value attributes has the correct value.
+      await waitFor(() => assertNativeValue(nativeSelect!, ""));
+      // Test that the FormData serialization returns the correct value.
+      await waitFor(() => assertFormValue(nativeSelect!, undefined));
+
+      await userEvent.click(select, { delay: 10 });
+      await userEvent.click(await within(select).findByText("Football"));
+      await userEvent.click(await within(select).findByText("Tennis"));
+      await userEvent.click(await within(select).findByText("Running"));
+      await userEvent.click(await within(select).findByText("Cycling"));
+
+      // Close dropdown.
+      await userEvent.click(canvasElement);
+    }
+  },
 };
 
 export const UsageWithFormik: Story = {
