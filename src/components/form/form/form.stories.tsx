@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react-webpack5";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Formik } from "formik";
 import * as React from "react";
 import { expect, userEvent, waitFor, within } from "storybook/test";
