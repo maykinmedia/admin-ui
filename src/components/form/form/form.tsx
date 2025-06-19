@@ -1,5 +1,11 @@
 import clsx from "clsx";
-import React, { FormEvent, useContext, useEffect, useState } from "react";
+import React, {
+  FormEvent,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 
 import { ConfigContext } from "../../../contexts";
 import {
@@ -157,6 +163,7 @@ export const Form = <T extends SerializedFormData = SerializedFormData>({
   ...props
 }: FormProps<T>) => {
   const intl = useIntl();
+  const formRef = useRef<HTMLFormElement>(null);
 
   const { debug: contextDebug } = useContext(ConfigContext);
   const _debug = debug || contextDebug;
@@ -245,14 +252,32 @@ export const Form = <T extends SerializedFormData = SerializedFormData>({
 
   /**
    * Gets called when the form is reset.
+   * NOTE: This may differ from a native reset as this clears the state
+   * instead of resetting to the true initial state.
+   *
+   * This is due to React
+   * updating the attributes used to specify the initial state.
    */
   const handleReset: React.FormEventHandler<HTMLFormElement> = () => {
+    formRef.current
+      ?.querySelectorAll<
+        HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+      >("input, select, textarea")
+      .forEach((input) => {
+        input.value = "";
+
+        if (input instanceof HTMLInputElement) {
+          input.checked = false;
+        }
+      });
+
     setValuesState({} as T);
     setErrorsState({});
   };
 
   return (
     <form
+      ref={formRef}
       className={clsx("mykn-form", `mykn-form--direction-${direction}`)}
       onSubmit={handleSubmit}
       onReset={handleReset}
