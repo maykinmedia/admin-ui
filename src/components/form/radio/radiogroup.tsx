@@ -18,13 +18,15 @@ export const RadioGroup: React.FC<RadioGroupProps> = ({
   onChange,
   onClick,
   disabled,
+  value,
 }) => {
   const reactId = useId();
   const _id = id || reactId;
   const [selectedValueState, setSelectedValueState] = useState<
-    string | number | undefined
-  >();
+    string | number | null | undefined
+  >(value);
 
+  // Update value from options.
   useEffect(() => {
     const initialSelected = options.find((option) => option.selected)?.value;
     if (initialSelected !== undefined) {
@@ -32,17 +34,21 @@ export const RadioGroup: React.FC<RadioGroupProps> = ({
     }
   }, [options]);
 
+  // Update value.
+  useEffect(() => {
+    setSelectedValueState(value);
+  }, [value]);
+
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedValueState(event.target.value);
     onChange?.(event);
   };
 
   return (
-    <div className={clsx("mykn-radiogroup")} aria-label={label}>
+    <div className={clsx("mykn-radiogroup")} aria-label={label} id={_id}>
       {options.map((option, index) => {
         const radioId = `${_id}-choice-${index}`;
         const optionValue = option.value || option.label;
-
         return (
           <Radio
             id={radioId}

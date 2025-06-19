@@ -164,17 +164,6 @@ export const DateInput: React.FC<DateInputProps> = ({
     }
   }, [value]);
 
-  // Respect form reset.
-  useEffect(() => {
-    const input = fakeInputRef.current as HTMLInputElement;
-    const form = input.form;
-    if (!form) return;
-
-    const clear = () => setSanitizedValuesState(undefined);
-    form.addEventListener("reset", clear);
-    return () => input.removeEventListener("reset", clear);
-  }, [form, fakeInputRef]);
-
   /**
    * Returns `SanitizedValues` for the optionally given `Date`, if date is omitted, result contains empty values.
    */

@@ -96,17 +96,6 @@ export const DatePicker: React.FC<DatePickerProps> = ({
   const date = Array.isArray(valueState) ? valueState[0] : valueState;
   const dateRange = Array.isArray(valueState) ? valueState : [null, null];
 
-  // Respect form reset.
-  useEffect(() => {
-    const input = fakeInputRef.current as HTMLInputElement;
-    const form = input.form;
-    if (!form) return;
-
-    const clear = () => setValueState(null);
-    form.addEventListener("reset", clear);
-    return () => input.removeEventListener("reset", clear);
-  }, [form, fakeInputRef]);
-
   /**
    * Converts value prop to `valueState`.
    * Takes:
