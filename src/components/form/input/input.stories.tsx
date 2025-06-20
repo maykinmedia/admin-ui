@@ -4,8 +4,10 @@ import * as React from "react";
 import { action } from "storybook/actions";
 import { expect, fn, userEvent, waitFor, within } from "storybook/test";
 
-import { PAGE_DECORATOR } from "../../../../.storybook/decorators";
-import { FORM_TEST_DECORATOR } from "../../../../.storybook/decorators";
+import {
+  FORM_TEST_DECORATOR,
+  PAGE_DECORATOR,
+} from "../../../../.storybook/decorators";
 import { Button } from "../../button";
 import { Input } from "./input";
 
@@ -109,7 +111,7 @@ export const InputTypeColor: Story = {
   args: {
     name: "input",
     type: "color",
-    value: "#00bfcb",
+    defaultValue: "#00bfcb",
   },
   argTypes: FORM_TEST_ARG_TYPES,
   decorators: [FORM_TEST_DECORATOR],
@@ -163,7 +165,7 @@ export const InputTypePassword: Story = {
     name: "input",
     placeholder: "Enter password",
     type: "password",
-    value: "p4$$w0rd",
+    defaultValue: "p4$$w0rd",
   },
   argTypes: FORM_TEST_ARG_TYPES,
   decorators: [FORM_TEST_DECORATOR],
