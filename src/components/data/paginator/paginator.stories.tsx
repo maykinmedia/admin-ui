@@ -127,7 +127,7 @@ export const PaginatorComponentWithSpinner: Story = {
     await userEvent.type(pageInput, "2", { delay: 10 });
     await userEvent.tab();
     await waitFor(() => {
-      expect(canvas.getByTitle("Result 11 to 20 of 13 pages")).toBeVisible();
+      expect(canvas.getByTitle("Result 121 to 123 of 13 pages")).toBeVisible();
     });
 
     await userEvent.click(firstPageButton);

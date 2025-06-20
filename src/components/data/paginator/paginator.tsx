@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 
 import { gettextFirst, ucFirst, useIntl } from "../../../lib";
 import { Button } from "../../button";
@@ -101,11 +101,21 @@ export const Paginator: React.FC<PaginatorProps> = ({
 }) => {
   const onPageChangeTimeoutRef = useRef<NodeJS.Timeout>(undefined);
   const [loadingState, setLoadingState] = useState(false);
-  const [pageState, setPageState] = useState(page);
   const [pageSizeState, setPageSizeState] = useState(pageSize);
 
-  const index = pageState - 1;
   const pageCount = Math.ceil(count / pageSizeState);
+
+  const [pageState, _setPageState] = useState(page);
+
+  // Clamp pageState on update.
+  const setPageState = useCallback(
+    (page: number) => {
+      _setPageState(Math.max(Math.min(page, pageCount), 1));
+    },
+    [pageCount],
+  );
+
+  const index = pageState - 1;
   const pageStart = index * pageSizeState + 1;
   const pageEnd = Math.min(pageStart + pageSizeState - 1, count);
 

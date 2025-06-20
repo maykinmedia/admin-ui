@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 import { StackCtx } from "../../stackctx";
 import { eventFactory } from "../eventFactory";
@@ -53,21 +53,12 @@ export const Input: React.FC<InputProps> = ({
   ...props
 }) => {
   const inputRef = React.useRef<HTMLInputElement>(null);
-  // TODO: Investigate whether stats is actually (still) required here?
-  const [valueState, setValueState] = useState(value || "");
-
-  /**
-   * Syncs value state with value prop change.
-   */
-  useEffect(() => setValueState(value || ""), [value]);
 
   /**
    * Handles a change of value.
    * @param event
    */
   const _onChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
-    setValueState(event.target.value);
-
     /*
      * Dispatch change event.
      *
@@ -95,8 +86,9 @@ export const Input: React.FC<InputProps> = ({
             value: value,
           }
       : {
-          value: valueState,
+          value: value,
         };
+
   const input = (
     <input
       ref={inputRef}

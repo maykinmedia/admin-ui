@@ -251,6 +251,7 @@ export const FormComponent: Story = {
     ],
     validate: validateForm,
     validateOnChange: true,
+    secondaryActions: [{ type: "reset", value: "Reset" }],
   },
   play: playFormComponent,
 };

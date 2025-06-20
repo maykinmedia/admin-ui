@@ -122,49 +122,55 @@ export const DataGridToolbar = <
     <div ref={toolbarRef} className="mykn-datagrid__toolbar">
       <Toolbar directionResponsive={true} items={items} pad={true} />
 
-      <Modal
-        open={selectFieldsModalState}
-        position="side"
-        size="s"
-        title={<H3>{ucFirst(_labelSelectFields)}</H3>}
-        onClose={() => setSelectFieldsModalState(false)}
-      >
-        <Body allowScroll>
-          <Form
-            fields={[
-              {
-                name: "fields",
-                options: fields.map((f) => ({
-                  label: string2Title(f.name.toString(), { lowerCase: false }),
-                  value: f.name.toString(),
-                  selected: Boolean(selectFieldsActiveState[f.name.toString()]),
-                })),
-                type: "checkbox",
-                onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
-                  const name = e.target.value;
-                  setSelectFieldsActiveState({
-                    ...selectFieldsActiveState,
-                    [name]: !selectFieldsActiveState[name],
-                  });
+      {fieldsSelectable && (
+        <Modal
+          open={selectFieldsModalState}
+          position="side"
+          size="s"
+          title={<H3>{ucFirst(_labelSelectFields)}</H3>}
+          onClose={() => setSelectFieldsModalState(false)}
+        >
+          <Body allowScroll>
+            <Form
+              fields={[
+                {
+                  name: "fields",
+                  options: fields.map((f) => ({
+                    label: string2Title(f.name.toString(), {
+                      lowerCase: false,
+                    }),
+                    value: f.name.toString(),
+                    selected: Boolean(
+                      selectFieldsActiveState[f.name.toString()],
+                    ),
+                  })),
+                  type: "checkbox",
+                  onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+                    const name = e.target.value;
+                    setSelectFieldsActiveState({
+                      ...selectFieldsActiveState,
+                      [name]: !selectFieldsActiveState[name],
+                    });
+                  },
                 },
-              },
-            ]}
-            labelSubmit={ucFirst(_labelSaveFieldSelection)}
-            showRequiredExplanation={false}
-            onSubmit={(e) => {
-              const form = e.target as HTMLFormElement;
-              const data = serializeForm(form, false);
-              const selectedFields = (data.fields || []) as string[];
-              const newTypedFieldsState = fields.map((f) => ({
-                ...f,
-                active: selectedFields.includes(f.name.toString()),
-              }));
-              onFieldsChange?.(newTypedFieldsState);
-              setSelectFieldsModalState(false);
-            }}
-          />
-        </Body>
-      </Modal>
+              ]}
+              labelSubmit={ucFirst(_labelSaveFieldSelection)}
+              showRequiredExplanation={false}
+              onSubmit={(e) => {
+                const form = e.target as HTMLFormElement;
+                const data = serializeForm(form, false);
+                const selectedFields = (data.fields || []) as string[];
+                const newTypedFieldsState = fields.map((f) => ({
+                  ...f,
+                  active: selectedFields.includes(f.name.toString()),
+                }));
+                onFieldsChange?.(newTypedFieldsState);
+                setSelectFieldsModalState(false);
+              }}
+            />
+          </Body>
+        </Modal>
+      )}
     </div>
   );
 };
