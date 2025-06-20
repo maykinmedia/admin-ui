@@ -209,7 +209,7 @@ export const Form = <T extends SerializedFormData = SerializedFormData>({
    * Defaults event handler for form submission.
    * @param event
    */
-  const defaultOnChange: FormProps["onChange"] = (event) => {
+  const handleChange: FormProps["onChange"] = (event) => {
     if (onChange) {
       onChange(event);
       return;
@@ -329,7 +329,7 @@ export const Form = <T extends SerializedFormData = SerializedFormData>({
                 requiredIndicator={requiredIndicator}
                 labelRequired={labelRequired}
                 value={value}
-                onChange={defaultOnChange}
+                onChange={handleChange}
                 {...field}
               ></FormControl>
             );
