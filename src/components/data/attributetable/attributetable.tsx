@@ -212,7 +212,7 @@ export const AttributeTableRow = <T extends object = object>({
         options={field.options}
         required={true}
         type={field.type === "number" ? "number" : undefined}
-        value={rawValue?.toString()}
+        defaultValue={rawValue?.toString()}
       />
     );
   };

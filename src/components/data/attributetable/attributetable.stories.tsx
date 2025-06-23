@@ -1,7 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import * as React from "react";
-import { userEvent, within } from "storybook/test";
+import { action } from "storybook/actions";
+import { expect, userEvent, within } from "storybook/test";
 
+import { FORM_TEST_DECORATOR } from "../../../../.storybook/decorators";
 import { FIXTURE_PRODUCT } from "../../../../.storybook/fixtures/products";
 import { ButtonLink } from "../../button";
 import { Outline } from "../../icon";
@@ -99,10 +101,19 @@ export const Editable: Story = {
         ],
       },
     ],
+    formProps: {
+      onSubmit: action("onSubmit"),
+    },
     object: {
       first_name: "",
       last_name: "",
       school_year: "",
+    },
+  },
+  decorators: [FORM_TEST_DECORATOR],
+  parameters: {
+    formTestDecorator: {
+      renderForm: false,
     },
   },
   play: async ({ canvasElement }) => {
@@ -116,7 +127,7 @@ export const Editable: Story = {
     const editLastName = canvas.getByLabelText('Edit "Last name"');
     await userEvent.click(editLastName, { delay: 10 });
     const lastName = canvas.getByLabelText("Last name");
-    await userEvent.type(lastName, "John", { delay: 10 });
+    await userEvent.type(lastName, "Doe", { delay: 10 });
 
     const editSchoolYear = canvas.getByLabelText('Edit "School year"');
     await userEvent.click(editSchoolYear, { delay: 10 });
@@ -127,5 +138,12 @@ export const Editable: Story = {
 
     const submit = canvas.getByText("Submit");
     await userEvent.click(submit);
+
+    const pre = canvas.getByRole("log");
+    const data = JSON.parse(pre.textContent || "{}");
+
+    expect(data.first_name).toBe("John");
+    expect(data.last_name).toBe("Doe");
+    expect(data.school_year).toBe("Junior");
   },
 };
