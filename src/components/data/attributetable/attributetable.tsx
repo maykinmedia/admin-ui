@@ -90,6 +90,7 @@ export const AttributeTable = <T extends object = object>({
             onClick: () => setIsFormOpenState(false),
           },
         ]}
+        toolbarProps={{ overrideItemProps: true }}
         {...formProps}
       >
         {renderRows()}
@@ -204,6 +205,7 @@ export const AttributeTableRow = <T extends object = object>({
     return (
       <FormControl
         id={`${id}_input`}
+        pad="h"
         defaultChecked={
           field.type === "boolean" ? Boolean(rawValue) : undefined
         }
