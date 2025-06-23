@@ -3,7 +3,7 @@
   --mykn-select-padding-h: 0;
   --mykn-select-font-size: var(--typography-font-size-body-s);
   --mykn-select-line-height: var(--typography-line-height-body-s);
-  --mykn-select-min-height: 42px;
+  --mykn-select-min-height: 0;
   --mykn-select-spacing-pill: calc(var(--spacing-xs-h) / 4);
 
   align-items: center;
@@ -32,6 +32,7 @@
   }
 
   &--pad-v {
+    --mykn-select-min-height: 42px;
     --mykn-select-padding-v: var(--mykn-select-padding-xs, var(--spacing-xs-v));
   }
 
