@@ -93,6 +93,7 @@
   }
 
   .mykn-icon {
+    pointer-events: none;
     transition: transform var(--animation-duration-medium)
       var(--animation-timing-function);
   }
