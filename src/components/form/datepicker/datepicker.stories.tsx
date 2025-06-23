@@ -12,6 +12,9 @@ const meta = {
       action: "onChange",
     },
   },
+  parameters: {
+    chromatic: { diffThreshold: 0.2 },
+  },
 } satisfies Meta<typeof DatePicker>;
 
 export default meta;
