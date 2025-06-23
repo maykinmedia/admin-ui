@@ -1,37 +1,37 @@
 import { Decorator } from "@storybook/react-vite";
 import * as React from "react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { Column, Grid, Page, serializeForm } from "../src";
 
 export const FORM_TEST_DECORATOR: Decorator = (Story, { parameters }) => {
   // Solely here to force re-rendering story on change.
   const [count, setCount] = useState(0);
-  const formRef = useRef<HTMLFormElement | null>(null);
+  const [formState, setFormState] = useState<HTMLFormElement | null>(null);
+  const data = formState && serializeForm(formState);
 
   const formTestDecoratorParameters = parameters.formTestDecorator || {};
   const { renderForm = true } = formTestDecoratorParameters;
-
   useEffect(() => {
-    formRef.current = formRef.current || document.forms[0];
+    setFormState(formState || document.forms[0]);
     const update = () => setCount(count + 1);
-    formRef.current?.addEventListener("change", update);
-    return () => formRef.current?.removeEventListener("change", update);
-  }, [formRef.current, count]);
-
-  const getData = () => {
-    return formRef.current && serializeForm(formRef.current);
-  };
+    formState?.addEventListener("change", update);
+    return () => formState?.removeEventListener("change", update);
+  }, [formState, count]);
 
   const content = (
     <>
       {Story()}
-      <pre role="log">{JSON.stringify(getData())}</pre>
+      {<pre role="log">{JSON.stringify(data)}</pre>}
     </>
   );
 
   return renderForm ? (
-    <form ref={formRef} aria-label="form" style={{ width: "100%" }}>
+    <form
+      ref={(form) => setFormState(form)}
+      aria-label="form"
+      style={{ width: "100%" }}
+    >
       {content}
     </form>
   ) : (
