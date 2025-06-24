@@ -1,6 +1,7 @@
+import { string2Title } from "@maykin-ui/client-common";
 import React from "react";
 
-import { Field, string2Title } from "../../../lib";
+import { Field } from "../../../lib";
 import { H3 } from "../../typography";
 import { Value } from "../value";
 import "./attributelist.scss";
@@ -60,7 +61,7 @@ export const AttributePair = <T extends object = object>({
   return (
     <>
       <dt className="mykn-attributelist__key">
-        {string2Title(field as string)}
+        {string2Title(field.toString())}
       </dt>
       <dd className="mykn-attributelist__value">
         <Value value={object[field]} />

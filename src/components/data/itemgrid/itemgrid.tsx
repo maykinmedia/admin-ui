@@ -1,6 +1,7 @@
+import { string2Title } from "@maykin-ui/client-common";
 import React from "react";
 
-import { DEFAULT_URL_FIELDS, FieldSet, string2Title } from "../../../lib";
+import { DEFAULT_URL_FIELDS, FieldSet } from "../../../lib";
 import {
   GroupedDataProps,
   getContextData,
@@ -139,7 +140,7 @@ export const ItemGridItem = <T extends object = object>({
   const titleField = fieldset[1].title || Object.keys(object)[0];
   const urlField = urlFields.find((f) => object[f]);
 
-  const title = object[titleField as keyof T];
+  const label = String(object[titleField as keyof T]);
   const href = urlField ? String(object[urlField]) || undefined : undefined;
   const otherFields = fields.filter(
     (field) => ![...urlFields, titleField].includes(field),
@@ -153,11 +154,11 @@ export const ItemGridItem = <T extends object = object>({
         href={href}
         object={object}
         renderPreview={renderPreview}
-        title={String(title)}
+        title={label}
         onClick={onClick}
       ></ItemGridButton>
       <P bold size="xs">
-        {string2Title(String(title))}
+        {string2Title(label)}
       </P>
 
       {otherFields.map((field) => (

@@ -119,19 +119,19 @@ export const Editable: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
-    const editFirstName = canvas.getByLabelText('Edit "First name"');
+    const editFirstName = canvas.getByLabelText('Edit "First Name"');
     await userEvent.click(editFirstName, { delay: 10 });
-    const firstName = canvas.getByLabelText("First name");
+    const firstName = canvas.getByLabelText("First Name");
     await userEvent.type(firstName, "John", { delay: 10 });
 
-    const editLastName = canvas.getByLabelText('Edit "Last name"');
+    const editLastName = canvas.getByLabelText('Edit "Last Name"');
     await userEvent.click(editLastName, { delay: 10 });
-    const lastName = canvas.getByLabelText("Last name");
+    const lastName = canvas.getByLabelText("Last Name");
     await userEvent.type(lastName, "Doe", { delay: 10 });
 
-    const editSchoolYear = canvas.getByLabelText('Edit "School year"');
+    const editSchoolYear = canvas.getByLabelText('Edit "School Year"');
     await userEvent.click(editSchoolYear, { delay: 10 });
-    const schoolYear = canvas.getByLabelText("School year");
+    const schoolYear = canvas.getByLabelText("School Year");
     await userEvent.click(schoolYear);
     const junior = canvas.getByText("Junior");
     await userEvent.click(junior);

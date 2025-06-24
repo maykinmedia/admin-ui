@@ -1,3 +1,4 @@
+import { ucFirst } from "@maykin-ui/client-common";
 import clsx from "clsx";
 import React, {
   FormEvent,
@@ -19,7 +20,6 @@ import {
   gettextFirst,
   serializeForm,
   stringifyContext,
-  ucFirst,
   useIntl,
   validateForm,
 } from "../../../lib";

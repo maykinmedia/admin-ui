@@ -1,7 +1,7 @@
+import { slugify } from "@maykin-ui/client-common";
 import clsx from "clsx";
 import React, { Children, ReactElement, isValidElement, useState } from "react";
 
-import { slugify } from "../../lib/format/string";
 import { Button } from "../button";
 import "./tabs.scss";
 
@@ -37,34 +37,44 @@ export const Tabs: React.FC<TabsProps> = ({
   return (
     <div className={clsx("mykn-tabs")} {...props}>
       <nav className="mykn-tabs__tablist" role="tablist">
-        {tabs.map((tab, index) => (
-          <React.Fragment key={tab.props.id || slugify(tab.props.label)}>
-            <Button
-              active={activeTab === index}
-              aria-controls={`tab-content-${tab.props.id || slugify(tab.props.label)}`}
-              aria-selected={activeTab === index ? "true" : "false"}
-              id={`tab-${tab.props.id || slugify(tab.props.label)}`}
-              role="tab"
-              variant="transparent"
-              onClick={() => handleTabClick(index)}
-            >
-              {tab.props.label}
-            </Button>
-          </React.Fragment>
-        ))}
+        {tabs.map((tab, index) => {
+          const slug = slugify(tab.props.label);
+          const localId = tab.props.id || slug;
+
+          return (
+            <React.Fragment key={localId}>
+              <Button
+                active={activeTab === index}
+                aria-controls={`tab-content-${localId}`}
+                aria-selected={activeTab === index ? "true" : "false"}
+                id={`tab-${localId}`}
+                role="tab"
+                variant="transparent"
+                onClick={() => handleTabClick(index)}
+              >
+                {tab.props.label}
+              </Button>
+            </React.Fragment>
+          );
+        })}
       </nav>
-      {tabs.map((tab, index) => (
-        <div
-          key={tab.props.id}
-          id={`tab-content-${tab.props.id || slugify(tab.props.label)}`}
-          role="tabpanel"
-          aria-labelledby={`tab-${tab.props.id || slugify(tab.props.label)}`}
-          hidden={activeTab !== index}
-          className="mykn-tabs__content"
-        >
-          {tab.props.children}
-        </div>
-      ))}
+      {tabs.map((tab, index) => {
+        const slug = slugify(tab.props.label);
+        const localId = tab.props.id || slug;
+
+        return (
+          <div
+            key={localId}
+            id={`tab-content-${localId}`}
+            role="tabpanel"
+            aria-labelledby={`tab-${localId}`}
+            hidden={activeTab !== index}
+            className="mykn-tabs__content"
+          >
+            {tab.props.children}
+          </div>
+        );
+      })}
     </div>
   );
 };

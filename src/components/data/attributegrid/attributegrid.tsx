@@ -1,7 +1,8 @@
+import { slugify } from "@maykin-ui/client-common";
 import clsx from "clsx";
 import React from "react";
 
-import { FieldSet, dataByFieldsets, slugify } from "../../../lib";
+import { FieldSet, dataByFieldsets } from "../../../lib";
 import { Column, Grid } from "../../layout";
 import { Toolbar } from "../../toolbar";
 import { Body, H2, Hr } from "../../typography";

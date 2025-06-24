@@ -1,7 +1,8 @@
+import { ucFirst } from "@maykin-ui/client-common";
 import clsx from "clsx";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 
-import { gettextFirst, ucFirst, useIntl } from "../../../lib";
+import { gettextFirst, useIntl } from "../../../lib";
 import { Button } from "../../button";
 import { FormControl, Option, SelectProps } from "../../form";
 import { Outline } from "../../icon";

@@ -1,13 +1,12 @@
+import { isLink, string2Title } from "@maykin-ui/client-common";
 import clsx from "clsx";
 import React, { useState } from "react";
 
 import {
   DEFAULT_URL_FIELDS,
   TypedField,
-  isLink,
   isPrimitive,
   serializeForm,
-  string2Title,
 } from "../../../lib";
 import { getByDotSeparatedPath } from "../../../lib/data/utils";
 import { BoolProps } from "../../boolean";
@@ -180,9 +179,7 @@ export const DataGridContentCell = <
           "mykn-datagrid__cell--link": link,
         },
       )}
-      aria-description={string2Title(field.name.toString(), {
-        lowerCase: false,
-      })}
+      aria-description={string2Title(field.name.toString())}
     >
       {valueIsPrimitive &&
         isEditingRow &&
