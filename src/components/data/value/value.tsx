@@ -1,13 +1,7 @@
+import { isLink } from "@maykin-ui/client-common";
 import React, { ComponentProps, MouseEventHandler } from "react";
 
-import {
-  isBool,
-  isLink,
-  isNull,
-  isNumber,
-  isString,
-  isUndefined,
-} from "../../../lib";
+import { isBool, isNull, isNumber, isString, isUndefined } from "../../../lib";
 import { Badge, BadgeProps } from "../../badge";
 import { Bool, BoolProps } from "../../boolean";
 import { A, AProps, P, PProps } from "../../typography";

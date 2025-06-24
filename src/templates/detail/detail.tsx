@@ -1,3 +1,4 @@
+import { slugify } from "@maykin-ui/client-common";
 import React from "react";
 
 import {
@@ -8,7 +9,6 @@ import {
   DataGridProps,
   H2,
 } from "../../components";
-import { slugify } from "../../lib";
 import { BodyBaseTemplateProps, CardBaseTemplate } from "../base";
 
 export type DetailTemplateProps<T extends object = object> =

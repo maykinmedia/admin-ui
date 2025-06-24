@@ -1,7 +1,8 @@
+import { ucFirst } from "@maykin-ui/client-common";
 import clsx from "clsx";
 import React from "react";
 
-import { gettextFirst, ucFirst } from "../../lib";
+import { gettextFirst } from "../../lib";
 import { Outline } from "../icon";
 import { P, PProps } from "../typography";
 import "./bool.scss";

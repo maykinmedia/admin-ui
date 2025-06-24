@@ -1,11 +1,7 @@
+import { string2Title, ucFirst } from "@maykin-ui/client-common";
 import React, { useEffect, useState } from "react";
 
-import {
-  gettextFirst,
-  serializeForm,
-  string2Title,
-  ucFirst,
-} from "../../../lib";
+import { gettextFirst, serializeForm } from "../../../lib";
 import { ButtonProps } from "../../button";
 import { Form } from "../../form";
 import { Outline } from "../../icon";
@@ -136,9 +132,7 @@ export const DataGridToolbar = <
                 {
                   name: "fields",
                   options: fields.map((f) => ({
-                    label: string2Title(f.name.toString(), {
-                      lowerCase: false,
-                    }),
+                    label: string2Title(f.name.toString()),
                     value: f.name.toString(),
                     selected: Boolean(
                       selectFieldsActiveState[f.name.toString()],

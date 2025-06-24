@@ -1,3 +1,4 @@
+import { string2Title } from "@maykin-ui/client-common";
 import clsx from "clsx";
 import React, { useId, useState } from "react";
 
@@ -7,7 +8,6 @@ import {
   TypedField,
   fields2TypedFields,
   gettextFirst,
-  string2Title,
 } from "../../../lib";
 import { Button } from "../../button";
 import { Form, FormControl, FormProps } from "../../form";

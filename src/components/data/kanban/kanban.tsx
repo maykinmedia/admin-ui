@@ -1,3 +1,4 @@
+import { string2Title } from "@maykin-ui/client-common";
 import React, { useEffect, useState } from "react";
 
 import {
@@ -6,7 +7,6 @@ import {
   GroupedDataProps,
   getContextData,
   gettextFirst,
-  string2Title,
 } from "../../../lib";
 import { Badge } from "../../badge";
 import { Button, ButtonLink, ButtonLinkProps, ButtonProps } from "../../button";
@@ -427,9 +427,7 @@ export const KanbanItem = <T extends object = object>({
   const titleField = fieldset[1].title || Object.keys(object)[0];
   const urlField = urlFields.find((f) => object[f as keyof T]);
 
-  const title = string2Title(String(object[titleField as keyof T]), {
-    unHyphen: false,
-  });
+  const label = string2Title(String(object[titleField as keyof T]));
   const href = urlField
     ? String(object[urlField as keyof T]) || undefined
     : undefined;
@@ -446,7 +444,7 @@ export const KanbanItem = <T extends object = object>({
       object,
     };
     e.dataTransfer.dropEffect = "move";
-    e.dataTransfer.setData("text/plain", title);
+    e.dataTransfer.setData("text/plain", label);
     e.dataTransfer.setData("application/json", JSON.stringify(data));
     href && e.dataTransfer.setData("text/uri-list", href);
   };
@@ -524,7 +522,7 @@ export const KanbanItem = <T extends object = object>({
         object={object}
         renderPreview={renderPreview}
         urlFields={urlFields}
-        title={title}
+        title={label}
         onClick={onClick}
         onDragStart={onDragStart}
       />

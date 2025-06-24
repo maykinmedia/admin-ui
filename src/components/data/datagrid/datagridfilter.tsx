@@ -1,12 +1,8 @@
+import { string2Title } from "@maykin-ui/client-common";
 import clsx from "clsx";
 import React from "react";
 
-import {
-  serializeForm,
-  string2Title,
-  stringifyContext,
-  useIntl,
-} from "../../../lib";
+import { serializeForm, stringifyContext, useIntl } from "../../../lib";
 import { FormControl } from "../../form";
 import { Outline } from "../../icon";
 import { useDataGridContext } from "./datagridcontext";
@@ -67,22 +63,21 @@ export const DataGridFilter = <
         ></th>
       )}
       {renderableFields.map((field) => {
-        const placeholder = string2Title(field.name.toString(), {
-          lowerCase: false,
-        });
+        const placeholder = string2Title(field.name.toString());
 
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { options, valueTransform, ...context } = field;
         const _labelFilterField = intl.formatMessage(
           labelFilterField === undefined
             ? TRANSLATIONS.LABEL_FILTER_FIELD
-            : { id: new String() as string, defaultMessage: labelFilterField },
+            : // ??? Can't remember why, should have documented this.
+              { id: new String() as string, defaultMessage: labelFilterField },
           stringifyContext(context),
         );
 
         return (
           <th
-            key={`${dataGridId}-filter-${string2Title(field.name.toString(), { lowerCase: false })}`}
+            key={`${dataGridId}-filter-${string2Title(field.name.toString())}`}
             className={clsx(
               "mykn-datagrid__cell",
               "mykn-datagrid__c" + "ell--filter",

@@ -1,6 +1,6 @@
+import { slugify, string2Title } from "@maykin-ui/client-common";
 import React, { CSSProperties, useEffect, useRef } from "react";
 
-import { string2Title } from "../../../lib";
 import { useDataGridContext } from "./datagridcontext";
 import { DataGridFilter } from "./datagridfilter";
 import { DataGridHeadingCell } from "./datagridheadingcell";
@@ -124,14 +124,20 @@ export const DataGridTHead = <
         {selectable && (
           <th className="mykn-datagrid__cell mykn-datagrid__cell--checkbox"></th>
         )}
-        {renderableFields.map((field) => (
-          <DataGridHeadingCell<T, F>
-            key={`${dataGridId}-heading-${string2Title(field.name.toString(), { lowerCase: false })}`}
-            field={field}
-          >
-            {string2Title(field.name.toString(), { lowerCase: false })}
-          </DataGridHeadingCell>
-        ))}
+        {renderableFields.map((field) => {
+          const fieldName = field.name.toString();
+          const fieldSlug = slugify(fieldName);
+          const fieldTitle = string2Title(fieldName);
+
+          return (
+            <DataGridHeadingCell<T, F>
+              key={`${dataGridId}-heading-${fieldSlug}`}
+              field={field}
+            >
+              {fieldTitle}
+            </DataGridHeadingCell>
+          );
+        })}
       </tr>
 
       {/* Filters */}

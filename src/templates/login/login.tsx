@@ -1,3 +1,4 @@
+import { ucFirst } from "@maykin-ui/client-common";
 import React, { useContext } from "react";
 
 import {
@@ -12,7 +13,7 @@ import {
   Logo,
 } from "../../components";
 import { ConfigContext } from "../../contexts";
-import { SerializedFormData, gettextFirst, ucFirst } from "../../lib";
+import { SerializedFormData, gettextFirst } from "../../lib";
 import { BaseTemplate, BaseTemplateProps } from "../base";
 import { TRANSLATIONS } from "./translations";
 

@@ -14,10 +14,11 @@ import {
   useRole,
   useTypeahead,
 } from "@floating-ui/react";
+import { ucFirst } from "@maykin-ui/client-common";
 import clsx from "clsx";
 import React, { MouseEventHandler, useEffect } from "react";
 
-import { gettextFirst, ucFirst } from "../../../lib";
+import { gettextFirst } from "../../../lib";
 import { Button } from "../../button";
 import { Outline, Solid } from "../../icon";
 import { ChoiceFieldProps, Option } from "../choicefield";
