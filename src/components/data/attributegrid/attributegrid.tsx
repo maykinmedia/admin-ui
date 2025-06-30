@@ -5,7 +5,7 @@ import React from "react";
 import { FieldSet, dataByFieldsets } from "../../../lib";
 import { Column, Grid } from "../../layout";
 import { Toolbar } from "../../toolbar";
-import { Body, H2, Hr } from "../../typography";
+import { Body, H2 } from "../../typography";
 import { AttributeList, AttributeListProps } from "../attributelist";
 import "./attributegrid.scss";
 
@@ -100,7 +100,6 @@ export const AttributeGrid = <T extends object = object>({
                 </Column>
               ))}
             </Grid>
-            {rowArray[rowIndex + 1] ? <Hr size="xxl" /> : undefined}
           </React.Fragment>
         ))}
       </Body>
