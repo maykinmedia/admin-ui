@@ -1,10 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
+import { FIXTURE_PRODUCT } from "../../../../.storybook/fixtures/products";
 import { AttributeList } from "./attributelist";
 
-const meta: Meta<typeof AttributeList> = {
+const meta: Meta<typeof AttributeList<typeof FIXTURE_PRODUCT>> = {
   title: "Data/AttributeList",
-  component: AttributeList,
+  component: AttributeList<typeof FIXTURE_PRODUCT>,
 };
 
 export default meta;
@@ -12,28 +13,40 @@ type Story = StoryObj<typeof meta>;
 
 export const AttributeListComponent: Story = {
   args: {
-    title: "Eigenschappen",
-    object: {
-      url: "https://www.example.com",
-      Omschrijving: "Afvalpas vervangen",
-      Zaaktype: "https://www.example.com",
-      Versie: 2,
-      Opmerkingen: null,
-      Actief: false,
-      Toekomstig: false,
-      Concept: true,
-    },
+    object: FIXTURE_PRODUCT,
+  },
+};
+
+export const WithTitle: Story = {
+  args: {
+    title: FIXTURE_PRODUCT.name,
+    object: FIXTURE_PRODUCT,
   },
 };
 
 export const SelectedFieldOnly: Story = {
-  ...AttributeListComponent,
   args: {
-    ...AttributeListComponent.args,
-    object: {
-      ...AttributeListComponent?.args?.object,
-      userId: 1,
-    },
-    fields: ["Omschrijving", "url"],
+    title: FIXTURE_PRODUCT.name,
+    object: FIXTURE_PRODUCT,
+    fields: ["name", "description", "price", "isAvailable"],
+  },
+};
+
+export const ColSpan: Story = {
+  args: {
+    title: FIXTURE_PRODUCT.name,
+    object: FIXTURE_PRODUCT,
+    fields: [
+      "id",
+      "name",
+      "description",
+      "price",
+      "isAvailable",
+      "stock",
+      "category",
+      "releaseDate",
+      "url",
+    ],
+    colSpan: 3,
   },
 };

@@ -16,6 +16,9 @@ export type AttributeGridProps<T extends object = object> = {
   /** The fieldsets to render. */
   fieldsets: FieldSet<T>[];
 
+  /** Props for AttributeList. */
+  attributeListProps?: Partial<AttributeListProps<T>>;
+
   /** Whether to use `height 100%;`. */
   fullHeight?: boolean;
 
@@ -34,6 +37,7 @@ export type AttributeGridProps<T extends object = object> = {
  * @typeParam T - The shape of a single data item.
  */
 export const AttributeGrid = <T extends object = object>({
+  attributeListProps = {},
   object,
   fieldsets,
   fullHeight,
@@ -48,16 +52,19 @@ export const AttributeGrid = <T extends object = object>({
   //
   // Built an Array of Array of tuples, each Array (1) represents a row with a max span of 12, the total span is defined
   // by the sum of the first key of each tuple in Array (2).
-  const rowArray: [number, AttributeListProps][][] = [[]];
+  const rowArray: [number, AttributeListProps<T>][][] = [[]];
 
   let currentRowSpan = 0;
   objectList.forEach((object, index) => {
     const fieldset = fieldsets[index];
     const span = fieldset[1].span || 6;
     const title = fieldset[0];
-    const attributeListProps: AttributeListProps = {
+    const row: AttributeListProps<T> = {
+      ...attributeListProps,
       object: object,
       title: title,
+      colSpan: fieldset[1].colSpan || attributeListProps.colSpan,
+      titleSpan: fieldset[1].titleSpan || attributeListProps.titleSpan,
     };
 
     if (currentRowSpan + span > 12) {
@@ -66,7 +73,7 @@ export const AttributeGrid = <T extends object = object>({
       currentRowSpan = 0;
     }
 
-    rowArray[rowArray.length - 1].push([span, attributeListProps]);
+    rowArray[rowArray.length - 1].push([span, row]);
     currentRowSpan += span;
   });
 
@@ -86,16 +93,16 @@ export const AttributeGrid = <T extends object = object>({
         {rowArray.map((row, rowIndex) => (
           <React.Fragment key={rowIndex}>
             <Grid>
-              {row.map(([span, props], colIndex) => (
+              {row.map(([span, attributeListProps], colIndex) => (
                 <Column key={colIndex} span={span}>
                   <AttributeList
                     key={colIndex}
                     titleId={
-                      generateTitleIds && props.title
-                        ? slugify(props.title)
+                      generateTitleIds && attributeListProps.title
+                        ? slugify(attributeListProps.title)
                         : undefined
                     }
-                    {...props}
+                    {...attributeListProps}
                   />
                 </Column>
               ))}

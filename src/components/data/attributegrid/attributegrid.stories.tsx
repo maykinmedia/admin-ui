@@ -1,45 +1,53 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import React from "react";
 
+import { FIXTURE_PRODUCT } from "../../../../.storybook/fixtures/products";
 import { AttributeGrid } from "./attributegrid";
 
-const meta: Meta<typeof AttributeGrid> = {
+const meta: Meta<typeof AttributeGrid<typeof FIXTURE_PRODUCT>> = {
   title: "Data/AttributeGrid",
-  component: AttributeGrid,
+  component: AttributeGrid<typeof FIXTURE_PRODUCT>,
 };
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof meta & { image: React.ReactNode }>;
 
 export const AttributeGridComponent: Story = {
   args: {
     fieldsets: [
       [
-        "Statussen",
+        "information",
         {
           fields: [
-            "uitgevoerd afgerond",
-            "voorstel voor besluitvorming opgesteld",
+            "id",
+            "name",
+            "description",
+            "category",
+            "releaseDate",
+            "url",
           ],
-          span: 7,
+          span: 12,
+          colSpan: 3,
         },
       ],
-      ["Rollen", { fields: ["klantcontacter", "behandelaar"], span: 5 }],
       [
-        "Eigenschappen",
-        { fields: ["einde", "begin", "datum vergadering"], span: 7 },
+        "availability",
+        {
+          fields: ["price", "isAvailable", "stock"],
+          span: 12,
+          colSpan: 3,
+        },
       ],
-      ["Resultaten", { fields: ["goedgekeurd", "afgekeurd"], span: 5 }],
+      [
+        "more",
+        {
+          fields: ["category", "releaseDate", "url"],
+          span: 6,
+          titleSpan: 6,
+          colSpan: 6,
+        },
+      ],
     ],
-    object: {
-      afgekeurd: "Goedgekeurd",
-      begin: "Erfpacht aanvraag wijzigen (2023-10-28)",
-      behandelaar: "Initiator",
-      "datum vergadering": "BInG aanvraag behandelen (2023-10-28)",
-      einde: "Erfpacht aanvraag wijzigen (2023-10-28)",
-      goedgekeurd: "Ingetrokken",
-      klantcontacter: "Beslisser",
-      "uitgevoerd afgerond": "Afgehandeld",
-      "voorstel voor besluitvorming opgesteld": "In behandeling genomen",
-    },
+    object: FIXTURE_PRODUCT,
   },
 };

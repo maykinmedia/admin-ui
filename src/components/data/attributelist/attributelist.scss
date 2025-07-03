@@ -1,22 +1,51 @@
 @use "../../../settings/constants";
 
 .mykn-attributelist {
-  align-items: flex-start;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  --mykn-attributelist-col-span-title: 0;
+  --mykn-attributelist-col-span-content: calc(
+    12 - var(--mykn-attributelist-col-span-title)
+  );
+
+  align-items: start;
+  display: grid;
   gap: var(--spacing-xs-h);
 
+  @media screen and (min-width: constants.$breakpoint-desktop) {
+    grid-auto-flow: column;
+    grid-template-columns: repeat(12, 1fr);
+
+    &:has(> .mykn-h3) {
+      --mykn-attributelist-col-span-title: 3;
+    }
+
+    @for $i from 1 through 12 {
+      &--title-span-#{$i}:has(> .mykn-h3) {
+        --mykn-attributelist-col-span-title: #{$i};
+      }
+
+      &--col-span-#{$i} &__pair {
+        grid-column: span #{$i};
+      }
+    }
+  }
+
   .mykn-h3 {
-    width: 33%;
+    grid-column: span var(--mykn-attributelist-col-span-title);
+    width: 100%;
   }
 
   &__list {
+    grid-column: span var(--mykn-attributelist-col-span-content);
     display: grid;
-    gap: 0;
-    grid-template-columns: 1fr;
+    grid-template-columns: subgrid;
+    gap: var(--spacing-xs-v);
     margin: 0;
-    width: 66%;
+    width: 100%;
+  }
+
+  &__pair {
+    grid-column: span var(--mykn-attributelist-col-span-content);
+    width: 100%;
   }
 
   &__key,
@@ -35,13 +64,5 @@
 
   &__value {
     color: var(--typography-color-muted);
-
-    &:not(:last-child) {
-      margin-bottom: var(--spacing-xs-v);
-    }
-  }
-
-  @media screen and (min-width: constants.$breakpoint-desktop) {
-    flex-direction: row;
   }
 }
