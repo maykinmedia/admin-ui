@@ -80,15 +80,21 @@ export type FieldOptions<T extends object = object> = {
   /** The fields to include in this fieldset. */
   fields: Field<T>[];
 
-  /** When shown in an ItemGrid: the field to use as title. */
-  title?: Field<T>;
+  /** When shown in a Kanban: the component to render. */
+  // eslint-disable-next-line
+  component?: React.ComponentType<any>;
+
+  /** When shown in an AttributeGrid: the number of columns to span for each field. */
+  colSpan?: number;
 
   /** When shown in an AttributeGrid: the span to use for this fieldset. */
   span?: number;
 
-  /** When shown in a Kanban: the component to render. */
-  // eslint-disable-next-line
-  component?: React.ComponentType<any>;
+  /** When shown in an ItemGrid: the field to use as title. */
+  title?: Field<T>;
+
+  /** When shown in an AttributeGrid: the number of columns to span for title. */
+  titleSpan?: number;
 };
 
 /** A Django-admin like fieldset definition. */
