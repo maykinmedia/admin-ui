@@ -6,8 +6,8 @@ import { Button } from "../button";
 import "./tabs.scss";
 
 export type TabsProps = React.PropsWithChildren<{
-  onTabChange?: (activeTabIndex: number) => void;
   activeTabIndex?: number;
+  onTabChange?: (activeTabIndex: number) => void;
 }>;
 
 /**
@@ -18,11 +18,10 @@ export type TabsProps = React.PropsWithChildren<{
  * @param props
  * @constructor
  */
-
 export const Tabs: React.FC<TabsProps> = ({
-  onTabChange,
   activeTabIndex,
   children,
+  onTabChange,
   ...props
 }) => {
   const [internalActiveTab, setInternalActiveTab] = useState(0);
