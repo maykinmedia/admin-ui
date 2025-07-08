@@ -7,24 +7,32 @@ import "./tabs.scss";
 
 export type TabsProps = React.PropsWithChildren<{
   onTabChange?: (activeTabIndex: number) => void;
+  activeTabIndex?: number;
 }>;
 
 /**
  * A tabs component meant to allow for cycling through different content sections. Allows for passing custom react nodes as content for each tab.
  * @param tabs
  * @param onTabChange
+ * @param activeTabIndex - The index of the currently active tab. If not provided, the component will manage its own state.
  * @param props
  * @constructor
  */
+
 export const Tabs: React.FC<TabsProps> = ({
   onTabChange,
+  activeTabIndex,
   children,
   ...props
 }) => {
-  const [activeTab, setActiveTab] = useState(0);
+  const [internalActiveTab, setInternalActiveTab] = useState(0);
+  const isControlled = activeTabIndex !== undefined;
+  const activeTab = isControlled ? activeTabIndex : internalActiveTab;
 
   const handleTabClick = (index: number) => {
-    setActiveTab(index);
+    if (!isControlled) {
+      setInternalActiveTab(index);
+    }
     if (onTabChange) {
       onTabChange(index);
     }
