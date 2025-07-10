@@ -7,6 +7,7 @@
   border-radius: var(--mykn-bool-radius);
   border: 1px solid;
   display: inline-flex;
+  flex-shrink: 0;
   font-size: var(--typography-font-size-body-s);
   height: var(--typography-line-height-body-s);
   justify-content: center;
@@ -34,7 +35,7 @@
   }
 
   &:before {
-    background-color: white;
+    background-color: light-dark(white, transparent);
     z-index: -2;
   }
 
