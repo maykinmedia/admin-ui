@@ -1,9 +1,10 @@
 .mykn-bool {
   --mykn-bool-color: var(--page-color-success);
+  --mykn-bool-radius: 100%;
 
   align-items: center;
   color: var(--mykn-bool-color);
-  border-radius: var(--border-radius-s);
+  border-radius: var(--mykn-bool-radius);
   border: 1px solid;
   display: inline-flex;
   font-size: var(--typography-font-size-body-s);
@@ -23,6 +24,7 @@
 
   &:before,
   &:after {
+    border-radius: var(--mykn-bool-radius);
     content: "";
     height: 100%;
     left: 0;
