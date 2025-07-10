@@ -91,14 +91,14 @@
     );
 
     @include theme(light) {
-      & > * {
+      & > *:not(.mykn-dropdown, .mykn-iconinitials) {
         --typography-color-body: var(--page-color-primary-contrast);
         --typography-color-link: var(--page-color-primary-contrast);
         --typography-color-h: var(--page-color-primary-contrast);
       }
 
-      & > .mykn-button--variant-transparent,
-      & > .mykn-dropdown .mykn-button--variant-transparent {
+      & > .mykn-button--variant-transparent:not(:focus, :hover),
+      & > .mykn-dropdown .mykn-button--variant-transparent:not(:focus, :hover) {
         --mykn-button-color-text: var(--page-color-primary-contrast);
       }
     }
