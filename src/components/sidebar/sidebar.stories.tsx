@@ -29,7 +29,7 @@ export const SidebarComponent: Story = {
           {
             children: (
               <>
-                Lorem ipsum<Badge level="success">Verwerkt</Badge>
+                Lorem ipsum<Badge variant="success">Verwerkt</Badge>
               </>
             ),
             align: "space-between",
@@ -40,7 +40,7 @@ export const SidebarComponent: Story = {
           {
             children: (
               <>
-                Dolor<Badge level="warning">In behandeling</Badge>
+                Dolor<Badge variant="warning">In behandeling</Badge>
               </>
             ),
             align: "space-between",
@@ -50,7 +50,7 @@ export const SidebarComponent: Story = {
           {
             children: (
               <>
-                Sit<Badge level="danger">Actie vereist</Badge>
+                Sit<Badge variant="danger">Actie vereist</Badge>
               </>
             ),
             align: "space-between",
@@ -60,7 +60,7 @@ export const SidebarComponent: Story = {
           {
             children: (
               <>
-                Amet<Badge level="warning">In behandeling</Badge>
+                Amet<Badge variant="warning">In behandeling</Badge>
               </>
             ),
             align: "space-between",
