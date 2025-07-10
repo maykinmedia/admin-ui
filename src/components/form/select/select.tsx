@@ -52,7 +52,7 @@ export type SelectProps = Omit<ChoiceFieldProps, "variant"> & {
   multiple?: boolean;
 
   /** The variant (style) of the form element. */
-  variant?: "normal" | "accent" | "transparent";
+  variant?: "normal" | "primary" | "secondary" | "accent" | "transparent";
 };
 
 /**
