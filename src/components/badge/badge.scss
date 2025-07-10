@@ -1,7 +1,7 @@
 .mykn-badge {
   --mykn-badge-color-background: var(--page-color-secondary);
   --mykn-badge-color-border: transparent;
-  --mykn-badge-color-text: light-dark(var(--typography-color-body), #313741);
+  --mykn-badge-color-text: var(--page-color-secondary-contrast);
 
   background-color: var(--mykn-badge-color-background);
   border: 1px solid var(--mykn-badge-color-border);
@@ -23,15 +23,19 @@
 
   &--variant-primary {
     --mykn-badge-color-background: var(--page-color-primary);
+    --mykn-badge-color-border: transparent;
     --mykn-badge-color-text: var(--page-color-primary-contrast);
   }
 
   &--variant-secondary {
     --mykn-badge-color-background: var(--page-color-secondary);
+    --mykn-badge-color-border: transparent;
+    --mykn-badge-color-text: var(--page-color-secondary-contrast);
   }
 
   &--variant-accent {
     --mykn-badge-color-background: var(--page-color-accent);
+    --mykn-badge-color-border: transparent;
     --mykn-badge-color-text: var(--typography-color-body);
   }
 
@@ -43,21 +47,25 @@
 
   &--variant-info {
     --mykn-badge-color-background: var(--page-color-info);
+    --mykn-badge-color-border: transparent;
     --mykn-badge-color-text: var(--page-color-primary-contrast);
   }
 
   &--variant-success {
     --mykn-badge-color-background: var(--page-color-success);
+    --mykn-badge-color-border: transparent;
     --mykn-badge-color-text: var(--page-color-primary-contrast);
   }
 
   &--variant-warning {
     --mykn-badge-color-background: var(--page-color-warning);
+    --mykn-badge-color-border: transparent;
     --mykn-badge-color-text: var(--page-color-primary-contrast);
   }
 
   &--variant-danger {
     --mykn-badge-color-background: var(--page-color-danger);
+    --mykn-badge-color-border: transparent;
     --mykn-badge-color-text: var(--page-color-primary-contrast);
   }
 

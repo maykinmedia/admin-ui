@@ -85,7 +85,7 @@
   --theme-blue-suede-shoes-primary-lightness: 0.5803921568627451;
   --page-color-primary: light-dark(var(--theme-purple-rain-primary-color), var(--theme-blue-suede-shoes-primary-color));
   --page-color-primary-contrast: light-dark(var(--typography-color-background), #ffffff);
-  --page-color-secondary-contrast: var(--typography-color-body);
+  --page-color-secondary-contrast: light-dark(var(--typography-color-body), #333333);
   --page-color-highlight: var(--page-color-background);
   --typography-color-h: light-dark(#282828, var(--typography-color-body));
   --button-color-background-primary: var(--page-color-primary);
