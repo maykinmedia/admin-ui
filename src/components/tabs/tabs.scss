@@ -13,6 +13,11 @@
     width: 100%;
   }
 
+  &__tablist .mykn-button {
+    border-radius: 0;
+  }
+
+  // FIXME: Is this still used?
   &__tablist .mykn-p {
     color: var(--typography-color-border);
     user-select: none;
