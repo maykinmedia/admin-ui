@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import React, { useContext } from "react";
 
 import { ModalProps } from "../../components";
 import { ModalServiceContext } from "../../contexts";
@@ -37,7 +37,7 @@ export const useAlert = () => {
           minWidth: true,
           type: "submit",
           variant: "primary",
-          onClick: (e) => {
+          onClick: (e: React.MouseEvent) => {
             e.preventDefault();
             e.stopPropagation();
             onConfirm?.();

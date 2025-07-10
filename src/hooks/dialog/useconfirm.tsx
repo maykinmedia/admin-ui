@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import React, { useContext } from "react";
 
 import { ModalProps } from "../../components";
 import { ModalServiceContext } from "../../contexts";
@@ -41,7 +41,7 @@ export const useConfirm = () => {
           minWidth: true,
           type: "button",
           variant: "secondary",
-          onClick: (e) => {
+          onClick: (e: React.MouseEvent) => {
             e.preventDefault();
             e.stopPropagation();
             onCancel?.();
@@ -53,7 +53,7 @@ export const useConfirm = () => {
           minWidth: true,
           type: "submit",
           variant: "primary",
-          onClick: (e) => {
+          onClick: (e: React.MouseEvent) => {
             e.preventDefault();
             e.stopPropagation();
             onConfirm?.();
