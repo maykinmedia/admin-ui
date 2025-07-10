@@ -11,28 +11,51 @@ const meta: Meta<typeof Badge> = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const BadgeComponent: Story = {
+export const Badges: Story = {
   args: {},
   render: (args) => (
     <>
-      <Badge level="info" {...args}>
-        Information level badge
+      <Badge variant="primary" {...args}>
+        Primary badge
       </Badge>
       <br />
       <br />
-      <Badge level="success" {...args}>
-        Success level badge
+      <Badge variant="secondary" {...args}>
+        Secondary badge
       </Badge>
       <br />
       <br />
-      <Badge level="warning" {...args}>
-        Warning level badge
+      <Badge variant="accent" {...args}>
+        Accent badge
       </Badge>
       <br />
       <br />
-      <Badge level="danger" {...args}>
-        Danger level badge
+      <Badge variant="outline" {...args}>
+        Outline badge
       </Badge>
+      <br />
+      <br />
+      <Badge variant="info" {...args}>
+        Info badge
+      </Badge>
+      <br />
+      <br />
+      <Badge variant="success" {...args}>
+        Success badge
+      </Badge>
+      <br />
+      <br />
+      <Badge variant="warning" {...args}>
+        Warning badge
+      </Badge>
+      <br />
+      <br />
+      <Badge variant="danger" {...args}>
+        Danger badge
+      </Badge>
+      <br />
+      <br />
+      <Badge {...args}>Default badge</Badge>
     </>
   ),
 };

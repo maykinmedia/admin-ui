@@ -1,7 +1,11 @@
 .mykn-badge {
-  --mykn-badge-color: var(--typography-color-muted);
-  border: 1px solid;
-  color: var(--mykn-badge-color);
+  --mykn-badge-color-background: var(--page-color-secondary);
+  --mykn-badge-color-border: transparent;
+  --mykn-badge-color-text: var(--typography-color-body);
+
+  background-color: var(--mykn-badge-color-background);
+  border: 1px solid var(--mykn-badge-color-border);
+  color: var(--mykn-badge-color-text);
   align-items: center;
   align-self: baseline; // Prevent the badge from unwanted stretching in flex content (use case: Kanban title toolbar).
   border-radius: var(--border-radius-s);
@@ -17,20 +21,42 @@
   position: relative;
   transform-style: preserve-3d;
 
-  &--level-info {
-    --mykn-badge-color: var(--page-color-info);
+  &--variant-primary {
+    --mykn-badge-color-background: var(--page-color-primary);
+    --mykn-badge-color-text: var(--page-color-primary-contrast);
   }
 
-  &--level-success {
-    --mykn-badge-color: var(--page-color-success);
+  &--variant-secondary {
+    --mykn-badge-color-background: var(--page-color-secondary);
   }
 
-  &--level-warning {
-    --mykn-badge-color: var(--page-color-warning);
+  &--variant-accent {
+    --mykn-badge-color-background: var(--page-color-accent);
   }
 
-  &--level-danger {
-    --mykn-badge-color: var(--page-color-danger);
+  &--variant-outline {
+    --mykn-badge-color-background: transparent;
+    --mykn-badge-color-border: var(--page-color-primary);
+  }
+
+  &--variant-info {
+    --mykn-badge-color-background: var(--page-color-info);
+    --mykn-badge-color-text: var(--page-color-primary-contrast);
+  }
+
+  &--variant-success {
+    --mykn-badge-color-background: var(--page-color-success);
+    --mykn-badge-color-text: var(--page-color-primary-contrast);
+  }
+
+  &--variant-warning {
+    --mykn-badge-color-background: var(--page-color-warning);
+    --mykn-badge-color-text: var(--page-color-primary-contrast);
+  }
+
+  &--variant-danger {
+    --mykn-badge-color-background: var(--page-color-danger);
+    --mykn-badge-color-text: var(--page-color-primary-contrast);
   }
 
   &[class*="level"]:before,
@@ -50,7 +76,7 @@
 
   &:after {
     z-index: -1;
-    background-color: var(--mykn-badge-color);
+    background-color: var(--mykn-badge-color-background);
     opacity: 0.025;
   }
 
