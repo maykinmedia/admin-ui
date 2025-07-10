@@ -81,7 +81,7 @@
         "value": "#eeeeee"
       },
       "secondary-contrast": {
-        "value": "{typography.color.body}"
+        "value": "light-dark({typography.color.body}, #333333)"
       },
       "accent": {
         "value": "light-dark({theme.purple-rain.accent.color}, {typography.color.background})"

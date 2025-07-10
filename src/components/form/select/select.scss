@@ -96,6 +96,7 @@
   &--variant-secondary {
     --mykn-select-color-background: var(--page-color-secondary);
     --mykn-select-color-border: transparent;
+    --mykn-select-color-text: var(--page-color-secondary-contrast);
   }
 
   &--variant-accent {
@@ -138,7 +139,8 @@
     padding: 0 0.5em; // TODO: spacing-h and spacing-v are too big for this. Add more tokens or hardcode?
     margin: var(--mykn-select-spacing-pill);
     border-radius: var(--border-radius-l);
-    background-color: var(--page-color-highlight);
+    background-color: var(--page-color-secondary);
+    color: var(--page-color-secondary-contrast);
     font-size: var(--typography-font-size-body-xs);
     line-height: var(--typography-font-size-body-xs);
 
