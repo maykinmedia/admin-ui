@@ -50,12 +50,13 @@
   &#{&}:disabled,
   &#{&}--disabled,
   &#{&}--muted {
-    --mykn-button-offset: 0 !important;
-    --mykn-button-color-text: var(--typography-color-muted);
+    --mykn-button-color-background: var(--typography-color-background-alt);
+    --mykn-button-color-text: var(--typography-color-body);
   }
 
   &:disabled,
   &--disabled {
+    --mykn-button-offset: 0 !important;
     pointer-events: none;
     opacity: 0.4;
   }
@@ -235,6 +236,15 @@
       --mykn-button-color-text: var(--button-color-text-outline-active);
       --mykn-button-offset: 0px;
     }
+
+    &#{$self}:disabled,
+    &#{$self}--disabled,
+    &#{$self}--muted {
+      --mykn-button-color-background: transparent;
+      --mykn-button-color-border: var(--button-color-border-outline);
+      --mykn-button-color-shadow: var(--button-color-shadow-outline);
+      --mykn-button-color-text: var(--button-color-text-outline);
+    }
   }
 
   &--variant-transparent {
@@ -264,6 +274,15 @@
       --mykn-button-color-shadow: var(--button-color-shadow-transparent-active);
       --mykn-button-color-text: var(--button-color-text-transparent-active);
       --mykn-button-offset: 0px;
+    }
+
+    &#{$self}:disabled,
+    &#{$self}--disabled,
+    &#{$self}--muted {
+      --mykn-button-color-background: transparent;
+      --mykn-button-color-border: var(--button-color-border-transparent);
+      --mykn-button-color-shadow: var(--button-color-shadow-transparent);
+      --mykn-button-color-text: var(--button-color-text-transparent);
     }
   }
 
