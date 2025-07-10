@@ -1,7 +1,7 @@
 .mykn-badge {
   --mykn-badge-color-background: var(--page-color-secondary);
   --mykn-badge-color-border: transparent;
-  --mykn-badge-color-text: var(--typography-color-body);
+  --mykn-badge-color-text: light-dark(var(--typography-color-body), #313741);
 
   background-color: var(--mykn-badge-color-background);
   border: 1px solid var(--mykn-badge-color-border);
@@ -32,11 +32,13 @@
 
   &--variant-accent {
     --mykn-badge-color-background: var(--page-color-accent);
+    --mykn-badge-color-text: var(--typography-color-body);
   }
 
   &--variant-outline {
     --mykn-badge-color-background: transparent;
-    --mykn-badge-color-border: var(--page-color-primary);
+    --mykn-badge-color-border: currentColor;
+    --mykn-badge-color-text: var(--typography-color-body);
   }
 
   &--variant-info {
