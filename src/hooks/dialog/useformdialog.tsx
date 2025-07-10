@@ -115,7 +115,7 @@ const PromptForm = <T extends SerializedFormData = SerializedFormData>({
           minWidth: true,
           type: "button",
           variant: "secondary",
-          onClick: (e) => {
+          onClick: (e: React.MouseEvent) => {
             e.preventDefault();
             e.stopPropagation();
             onCancel?.();
