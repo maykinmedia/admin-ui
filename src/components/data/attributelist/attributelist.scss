@@ -64,5 +64,7 @@
 
   &__value {
     color: var(--typography-color-muted);
+    display: flex;
+    gap: var(--spacing-xs-v) var(--spacing-xs-h);
   }
 }
