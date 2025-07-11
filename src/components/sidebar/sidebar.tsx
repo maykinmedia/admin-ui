@@ -12,11 +12,8 @@ import "./sidebar.scss";
 import { TRANSLATIONS } from "./translations";
 
 export type SidebarProps = React.PropsWithChildren<{
-  /** The position of this component. */
-  position?: "start" | "end";
-
-  /** Props to pass to (default) logo. */
-  logoProps?: LogoProps;
+  /** Whether the sidebar should have a border. */
+  border?: boolean;
 
   /** Whether this component is expanded. */
   expanded?: boolean;
@@ -24,17 +21,29 @@ export type SidebarProps = React.PropsWithChildren<{
   /** Whether this component can be expanded. */
   expandable?: boolean;
 
+  /** An aria-label describing the collapse action. */
+  labelCollapse?: string;
+
   /** An aria-label describing the expand action. */
   labelExpand?: string;
 
-  /** An aria-label describing the collapse action. */
-  labelCollapse?: string;
+  /** Props to pass to (default) logo. */
+  logoProps?: LogoProps;
+
+  /** Whether the sidebar should have a minimum width. */
+  minWidth?: boolean;
+
+  /** The position of this component. */
+  position?: "start" | "end";
 
   /** Whether to show the logo. */
   showLogo?: boolean;
 
   /** Logo (JSX) slot. */
   slotLogo?: React.ReactNode;
+
+  /** Whether the sidebar should be sticky (default: true). */
+  sticky?: boolean;
 }>;
 
 /**
@@ -42,14 +51,17 @@ export type SidebarProps = React.PropsWithChildren<{
  */
 export const Sidebar: React.FC<SidebarProps> = ({
   children,
+  border = true,
   expandable = true,
   expanded = true,
+  labelCollapse,
+  labelExpand,
   logoProps,
+  minWidth = true,
   position = "start",
   showLogo = false,
   slotLogo,
-  labelExpand,
-  labelCollapse,
+  sticky = true,
   ...props
 }) => {
   const id = useId();
@@ -96,7 +108,16 @@ export const Sidebar: React.FC<SidebarProps> = ({
       );
   return (
     <aside
-      className={clsx("mykn-sidebar", `mykn-sidebar--position-${position}`)}
+      className={clsx(
+        "mykn-sidebar",
+        `mykn-sidebar--position-${position}`,
+        {
+          "mykn-sidebar--sticky": sticky,
+        },
+        {
+          "mykn-sidebar--min-width": minWidth,
+        },
+      )}
       {...props}
       aria-expanded={expandedState}
       id={id}
@@ -130,7 +151,11 @@ export const Sidebar: React.FC<SidebarProps> = ({
         )}
       </div>
 
-      <div className="mykn-sidebar__body">
+      <div
+        className={clsx("mykn-sidebar__body", {
+          "mykn-sidebar__body--border": border,
+        })}
+      >
         <Card>{children}</Card>
       </div>
     </aside>
