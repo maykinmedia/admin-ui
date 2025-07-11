@@ -108,16 +108,11 @@ export const Sidebar: React.FC<SidebarProps> = ({
       );
   return (
     <aside
-      className={clsx(
-        "mykn-sidebar",
-        `mykn-sidebar--position-${position}`,
-        {
-          "mykn-sidebar--sticky": sticky,
-        },
-        {
-          "mykn-sidebar--min-width": minWidth,
-        },
-      )}
+      className={clsx("mykn-sidebar", `mykn-sidebar--position-${position}`, {
+        "mykn-sidebar--border": border,
+        "mykn-sidebar--sticky": sticky,
+        "mykn-sidebar--min-width": minWidth,
+      })}
       {...props}
       aria-expanded={expandedState}
       id={id}
@@ -151,11 +146,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
         )}
       </div>
 
-      <div
-        className={clsx("mykn-sidebar__body", {
-          "mykn-sidebar__body--border": border,
-        })}
-      >
+      <div className="mykn-sidebar__body">
         <Card>{children}</Card>
       </div>
     </aside>
