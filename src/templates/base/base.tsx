@@ -17,13 +17,13 @@ import { ConfigContext, NavigationContext } from "../../contexts";
 
 export type BaseTemplateProps = React.PropsWithChildren & {
   /** Column props. */
-  columnProps?: ColumnProps;
+  columnProps?: Partial<ColumnProps>;
 
   /** Grid props. */
-  gridProps?: GridProps;
+  gridProps?: Partial<GridProps>;
 
   /** Page props. */
-  pageProps?: PageProps;
+  pageProps?: Partial<PageProps>;
 
   /** Sidebar props. */
   sidebarProps?: ToolbarItem[];
