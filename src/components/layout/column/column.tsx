@@ -20,7 +20,7 @@ export type ColumnProps = React.PropsWithChildren<{
    */
   containerType?: "inline-size" | "size" | "normal";
 
-  /** If set, flex children in direction. */
+  /** Justification method. */
   justify?:
     | "start"
     | "end"

@@ -19,6 +19,15 @@ export type CardProps = React.PropsWithChildren<{
   /** Whether to use `height 100%;`. */
   fullHeight?: boolean;
 
+  /** Justification method. */
+  justify?:
+    | "start"
+    | "end"
+    | "center"
+    | "space-between"
+    | "space-around"
+    | "space-evenly";
+
   /** A title for the card. */
   title?: string | React.ReactNode;
 }>;
@@ -31,6 +40,7 @@ export const Card: React.FC<CardProps> = ({
   actions = controls,
   children,
   direction = "column",
+  justify,
   fullHeight = false,
   title,
   ...props
@@ -45,6 +55,7 @@ export const Card: React.FC<CardProps> = ({
       className={clsx("mykn-card", {
         "mykn-card--full-height": fullHeight,
         [`mykn-card--direction-${direction}`]: direction,
+        [`mykn-card--justify-${justify}`]: justify,
       })}
       {...props}
     >

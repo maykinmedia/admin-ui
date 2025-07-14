@@ -27,6 +27,30 @@
     height: 100%;
   }
 
+  &--justify-start {
+    justify-content: start;
+  }
+
+  &--justify-end {
+    justify-content: end;
+  }
+
+  &--justify-center {
+    justify-content: center;
+  }
+
+  &--justify-space-between {
+    justify-content: space-between;
+  }
+
+  &--justify-space-around {
+    justify-content: space-around;
+  }
+
+  &--justify-space-evenly {
+    justify-content: space-evenly;
+  }
+
   &__header {
     display: flex;
     justify-content: space-between;
