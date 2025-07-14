@@ -21,6 +21,15 @@ export type ColumnProps = React.PropsWithChildren<{
   containerType?: "inline-size" | "size" | "normal";
 
   /** If set, flex children in direction. */
+  justify?:
+    | "start"
+    | "end"
+    | "center"
+    | "space-between"
+    | "space-around"
+    | "space-evenly";
+
+  /** If set, flex children in direction. */
   direction?: "column" | "row";
 
   /** If set, add spacing between children (only if direction is set). */
@@ -46,6 +55,7 @@ export const Column: React.FC<ColumnProps> = ({
   debug,
   direction,
   gap = false,
+  justify,
   mobileSpan = 6,
   span,
   start,
@@ -64,6 +74,7 @@ export const Column: React.FC<ColumnProps> = ({
           "mykn-column--debug": _debug,
           "mykn-column--gap": direction && gap,
           [`mykn-column--direction-${direction}`]: direction,
+          [`mykn-column--justify-${justify}`]: justify,
           [`mykn-column--start-${start}`]: start,
           [`mykn-column--mobile-span-${mobileSpan}`]: mobileSpan,
         },

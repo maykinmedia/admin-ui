@@ -58,6 +58,30 @@
     gap: var(--spacing-xs-h);
   }
 
+  &--justify-start {
+    justify-content: start;
+  }
+
+  &--justify-end {
+    justify-content: end;
+  }
+
+  &--justify-center {
+    justify-content: center;
+  }
+
+  &--justify-space-between {
+    justify-content: space-between;
+  }
+
+  &--justify-space-around {
+    justify-content: space-around;
+  }
+
+  &--justify-space-evenly {
+    justify-content: space-evenly;
+  }
+
   @for $i from 1 through 6 {
     &--mobile-span-#{$i} {
       grid-column: auto / span #{$i};
