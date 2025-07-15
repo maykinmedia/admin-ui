@@ -10,6 +10,9 @@ export type CardProps = React.PropsWithChildren<{
   /** Buttons to use in the header. */
   actions?: ToolbarItem[];
 
+  /** Border around the card. */
+  border?: boolean;
+
   /** @deprecated: REMOVE IN 3.0 - Renamed to actions. */
   controls?: ButtonProps[];
 
@@ -37,6 +40,7 @@ export type CardProps = React.PropsWithChildren<{
  */
 export const Card: React.FC<CardProps> = ({
   controls = [],
+  border = false,
   actions = controls,
   children,
   direction = "column",
@@ -54,6 +58,7 @@ export const Card: React.FC<CardProps> = ({
     <div
       className={clsx("mykn-card", {
         "mykn-card--full-height": fullHeight,
+        "mykn-card--border": border,
         [`mykn-card--direction-${direction}`]: direction,
         [`mykn-card--justify-${justify}`]: justify,
       })}

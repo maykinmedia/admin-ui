@@ -51,3 +51,15 @@ export const CardWithControls: Story = {
     ),
   },
 };
+
+export const CardWithBorder: Story = {
+  args: {
+    border: true,
+    title: "Card with border",
+    children: (
+      <Body>
+        <P>The quick brown fox jumps over the lazy dog.</P>
+      </Body>
+    ),
+  },
+};

@@ -6,6 +6,11 @@
   flex-direction: column;
   //overflow: clip;  // Turned off for now to allow DatePicker to overflow Card and Modal.
   width: 100%;
+  border: unset;
+
+  &--border {
+    border: 1px solid var(--typography-color-border);
+  }
 
   &--direction--column {
     flex-direction: column;
