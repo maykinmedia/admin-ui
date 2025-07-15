@@ -1,21 +1,34 @@
 @use "../../settings/constants";
 
 .mykn-sidebar {
-  --mykn-sidebar-width: min(
-    280px,
-    calc(100vw - 40px - 48px)
-  ); // Screen width - toolbar width - 2 * toggle width.
-  $self: &;
+  --mykn-sidebar-width: none;
+  --mykn-sidebar-border: none;
 
+  $self: &;
   display: flex;
   flex-direction: column;
   height: 100cqh; // Height of container (probably Page component)
-  position: sticky;
+  position: static;
   top: 0;
   transition: all var(--animation-duration-medium)
     var(--animation-timing-function);
   width: var(--mykn-sidebar-width);
   z-index: 1000;
+
+  &--min-width {
+    --mykn-sidebar-width: min(
+      280px,
+      calc(100vw - 40px - 48px)
+    ); // Screen width - toolbar width - 2 * toggle width.
+  }
+
+  &--border {
+    --mykn-sidebar-border: 1px solid var(--typography-color-border);
+  }
+
+  &--sticky {
+    position: sticky;
+  }
 
   &:has(> &__header &__toggle) {
     z-index: 1010;
@@ -52,7 +65,7 @@
 
   &__header,
   &__body {
-    border-inline-end: 1px solid var(--typography-color-border);
+    border-inline-end: var(--mykn-sidebar-border);
     width: var(--mykn-sidebar-width);
     transition: all var(--animation-duration-medium)
       var(--animation-timing-function);
