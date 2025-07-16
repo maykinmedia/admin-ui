@@ -6,7 +6,9 @@ import { Toolbar, ToolbarItem } from "../toolbar";
 import { Body, H3 } from "../typography";
 import "./card.scss";
 
-export type CardProps = React.PropsWithChildren<{
+export type CardProps = React.PropsWithChildren<
+  React.HTMLAttributes<HTMLDivElement>
+> & {
   /** Buttons to use in the header. */
   actions?: ToolbarItem[];
 
@@ -33,7 +35,7 @@ export type CardProps = React.PropsWithChildren<{
 
   /** A title for the card. */
   title?: string | React.ReactNode;
-}>;
+};
 
 /**
  * Card component
@@ -41,6 +43,7 @@ export type CardProps = React.PropsWithChildren<{
 export const Card: React.FC<CardProps> = ({
   controls = [],
   border = false,
+  className,
   actions = controls,
   children,
   direction = "column",
@@ -56,12 +59,16 @@ export const Card: React.FC<CardProps> = ({
 
   return (
     <div
-      className={clsx("mykn-card", {
-        "mykn-card--full-height": fullHeight,
-        "mykn-card--border": border,
-        [`mykn-card--direction-${direction}`]: direction,
-        [`mykn-card--justify-${justify}`]: justify,
-      })}
+      className={clsx(
+        "mykn-card",
+        {
+          "mykn-card--full-height": fullHeight,
+          "mykn-card--border": border,
+          [`mykn-card--direction-${direction}`]: direction,
+          [`mykn-card--justify-${justify}`]: justify,
+        },
+        className,
+      )}
       {...props}
     >
       {(actions.length || title) && (
