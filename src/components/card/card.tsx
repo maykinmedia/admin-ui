@@ -3,7 +3,7 @@ import React from "react";
 
 import { ButtonProps } from "../button";
 import { Toolbar, ToolbarItem } from "../toolbar";
-import { Body, H2 } from "../typography";
+import { Body, H3 } from "../typography";
 import "./card.scss";
 
 export type CardProps = React.PropsWithChildren<
@@ -35,6 +35,9 @@ export type CardProps = React.PropsWithChildren<
 
   /** A title for the card. */
   title?: string | React.ReactNode;
+
+  /** asTitle, a component to use as the title. */
+  asTitle?: React.ElementType;
 };
 
 /**
@@ -50,6 +53,7 @@ export const Card: React.FC<CardProps> = ({
   justify,
   fullHeight = false,
   title,
+  asTitle: TitleComponent = H3,
   ...props
 }) => {
   // Controls is renamed to actions.
@@ -74,7 +78,11 @@ export const Card: React.FC<CardProps> = ({
       {(actions.length || title) && (
         <div className="mykn-card__header">
           <Body fullHeight>
-            {typeof title === "string" ? <H2>{title}</H2> : title}
+            {typeof title === "string" ? (
+              <TitleComponent>{title}</TitleComponent>
+            ) : (
+              title
+            )}
           </Body>
           {Boolean(actions?.length) && (
             <Toolbar
