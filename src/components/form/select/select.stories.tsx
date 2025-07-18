@@ -44,7 +44,7 @@ async function assertNativeValue(select: HTMLSelectElement, value: string) {
  */
 async function assertFormValue(
   select: HTMLSelectElement,
-  value: string | string[] | undefined,
+  value: string | string[],
 ) {
   const pre = await within(document.body).findByRole("log");
   const data = JSON.parse(pre?.textContent || "{}");
@@ -96,7 +96,7 @@ export const SelectComponent: Story = {
       // Test that the native select value attributes has the correct value.
       await waitFor(() => assertNativeValue(nativeSelect!, ""));
       // Test that the FormData serialization returns the correct value.
-      await waitFor(() => assertFormValue(nativeSelect!, undefined));
+      await waitFor(() => assertFormValue(nativeSelect!, ""));
 
       await userEvent.click(select, { delay: 10 });
       const junior2 = await within(select).findByText("Junior");
@@ -239,7 +239,7 @@ export const SelectMultiple: Story = {
       // Test that the native select value attributes has the correct value.
       await waitFor(() => assertNativeValue(nativeSelect!, ""));
       // Test that the FormData serialization returns the correct value.
-      await waitFor(() => assertFormValue(nativeSelect!, undefined));
+      await waitFor(() => assertFormValue(nativeSelect!, []));
 
       await userEvent.click(select, { delay: 10 });
       await userEvent.click(await within(select).findByText("Football"));

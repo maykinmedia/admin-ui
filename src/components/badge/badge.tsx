@@ -1,4 +1,4 @@
-import { deprecated } from "@maykin-ui/client-common/assert";
+import { deprecated } from "@maykin-ui/client-common";
 import clsx from "clsx";
 import React from "react";
 

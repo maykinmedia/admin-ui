@@ -1,7 +1,11 @@
-import { string2Title, ucFirst } from "@maykin-ui/client-common";
+import {
+  serializeFormElement,
+  string2Title,
+  ucFirst,
+} from "@maykin-ui/client-common";
 import React, { useEffect, useState } from "react";
 
-import { gettextFirst, serializeForm } from "../../../lib";
+import { gettextFirst } from "../../../lib";
 import { ButtonProps } from "../../button";
 import { Form } from "../../form";
 import { Outline } from "../../icon";
@@ -152,7 +156,7 @@ export const DataGridToolbar = <
               showRequiredExplanation={false}
               onSubmit={(e) => {
                 const form = e.target as HTMLFormElement;
-                const data = serializeForm(form, false);
+                const data = serializeFormElement(form, { typed: false });
                 const selectedFields = (data.fields || []) as string[];
                 const newTypedFieldsState = fields.map((f) => ({
                   ...f,

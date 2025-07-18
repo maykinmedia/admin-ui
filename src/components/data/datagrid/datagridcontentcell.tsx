@@ -1,12 +1,16 @@
-import { isLink, string2Title } from "@maykin-ui/client-common";
+import {
+  isLink,
+  serializeFormElement,
+  string2Title,
+} from "@maykin-ui/client-common";
 import clsx from "clsx";
 import React, { useState } from "react";
 
 import {
   DEFAULT_URL_FIELDS,
   TypedField,
+  TypedSerializedFormData,
   isPrimitive,
-  serializeForm,
 } from "../../../lib";
 import { getByDotSeparatedPath } from "../../../lib/data/utils";
 import { BoolProps } from "../../boolean";
@@ -120,7 +124,12 @@ export const DataGridContentCell = <
         onBlur={(e: React.FocusEvent<HTMLInputElement | HTMLSelectElement>) => {
           const data = Object.assign(
             rowData,
-            serializeForm(e.target.form as HTMLFormElement, true),
+            serializeFormElement<TypedSerializedFormData>(
+              e.target.form as HTMLFormElement,
+              {
+                typed: true,
+              },
+            ),
           );
           !pristine && onEdit?.(data);
         }}

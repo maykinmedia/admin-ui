@@ -1,4 +1,4 @@
-import { ucFirst } from "@maykin-ui/client-common";
+import { serializeFormElement, ucFirst } from "@maykin-ui/client-common";
 import clsx from "clsx";
 import React, {
   FormEvent,
@@ -18,7 +18,6 @@ import {
   getErrorFromErrors,
   getValueFromFormData,
   gettextFirst,
-  serializeForm,
   stringifyContext,
   useIntl,
   validateForm,
@@ -218,7 +217,7 @@ export const Form = <T extends SerializedFormData = SerializedFormData>({
     const form = (event.target as HTMLInputElement).form;
 
     if (form && !onChange) {
-      const data = serializeForm<keyof T & string>(form, useTypedResults) as T;
+      const data = serializeFormElement<T>(form, { typed: useTypedResults });
       setValuesState(data);
     }
   };
@@ -240,7 +239,7 @@ export const Form = <T extends SerializedFormData = SerializedFormData>({
     }
 
     const form = event.target as HTMLFormElement;
-    const data = serializeForm<keyof T & string>(form, useTypedResults) as T;
+    const data = serializeFormElement<T>(form, { typed: useTypedResults });
 
     if (onSubmit) {
       onSubmit(event, data);

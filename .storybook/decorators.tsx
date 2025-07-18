@@ -1,14 +1,15 @@
+import { serializeFormElement } from "@maykin-ui/client-common";
 import { Decorator } from "@storybook/react-vite";
 import * as React from "react";
 import { useEffect, useState } from "react";
 
-import { Column, Grid, Page, serializeForm } from "../src";
+import { Column, Grid, Page } from "../src";
 
 export const FORM_TEST_DECORATOR: Decorator = (Story, { parameters }) => {
   // Solely here to force re-rendering story on change.
   const [count, setCount] = useState(0);
   const [formState, setFormState] = useState<HTMLFormElement | null>(null);
-  const data = formState && serializeForm(formState);
+  const data = formState && serializeFormElement(formState);
 
   const formTestDecoratorParameters = parameters.formTestDecorator || {};
   const { renderForm = true } = formTestDecoratorParameters;
