@@ -1,8 +1,12 @@
-import { string2Title } from "@maykin-ui/client-common";
+import { serializeFormElement, string2Title } from "@maykin-ui/client-common";
 import clsx from "clsx";
 import React from "react";
 
-import { serializeForm, stringifyContext, useIntl } from "../../../lib";
+import {
+  TypedSerializedFormData,
+  stringifyContext,
+  useIntl,
+} from "../../../lib";
 import { FormControl } from "../../form";
 import { Outline } from "../../icon";
 import { useDataGridContext } from "./datagridcontext";
@@ -39,10 +43,11 @@ export const DataGridFilter = <
       e.preventDefault();
     }
 
-    const data = serializeForm<keyof T & string>(
-      input.form as HTMLFormElement,
-      true,
-    );
+    const data = serializeFormElement<
+      TypedSerializedFormData<keyof T & string>
+    >(input.form as HTMLFormElement, {
+      typed: true,
+    });
     const _data = (filterTransform ? filterTransform(data) : data) as F;
 
     if (_data !== undefined) {
