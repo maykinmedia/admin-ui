@@ -129,7 +129,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 title={expandedState ? _labelCollapse : _labelExpand}
                 size="xxs"
                 pad={false}
-                rounded
                 square
                 variant="outline"
                 onClick={handleClick}
