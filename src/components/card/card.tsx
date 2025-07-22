@@ -36,8 +36,8 @@ export type CardProps = React.PropsWithChildren<
   /** A title for the card. */
   title?: string | React.ReactNode;
 
-  /** asTitle, a component to use as the title. */
-  asTitle?: React.ElementType;
+  /** titleAs, a component to use as the title. */
+  titleAs?: React.ElementType;
 };
 
 /**
@@ -53,7 +53,7 @@ export const Card: React.FC<CardProps> = ({
   justify,
   fullHeight = false,
   title,
-  asTitle: TitleComponent = H3,
+  titleAs: TitleComponent = H3,
   ...props
 }) => {
   // Controls is renamed to actions.
