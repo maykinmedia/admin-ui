@@ -7,7 +7,7 @@ import { Body, H3 } from "../typography";
 import "./card.scss";
 
 export type CardProps = React.PropsWithChildren<
-  React.HTMLAttributes<HTMLDivElement>
+  Omit<React.HTMLAttributes<HTMLDivElement>, "title">
 > & {
   /** Buttons to use in the header. */
   actions?: ToolbarItem[];
