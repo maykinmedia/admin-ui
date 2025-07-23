@@ -1,6 +1,4 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import React from "react";
-import { expect, fn, userEvent, waitFor, within } from "storybook/test";
 
 import { FIXTURE_PRODUCT } from "../../../../.storybook/fixtures/products";
 import { AttributeGrid } from "./attributegrid";
@@ -55,6 +53,23 @@ export const AttributeGridComponent: Story = {
           span: 6,
           titleSpan: 6,
           colSpan: 6,
+        },
+      ],
+    ],
+    object: FIXTURE_PRODUCT,
+  },
+};
+
+export const AttributeGridWithTitleSpan12: Story = {
+  args: {
+    fieldsets: [
+      [
+        "Geldigheid",
+        {
+          titleSpan: 12,
+          fields: ["name", "description", "price"],
+          span: 12,
+          colSpan: 4,
         },
       ],
     ],
