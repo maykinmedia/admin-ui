@@ -34,6 +34,14 @@ export const WithTitle: Story = {
   },
 };
 
+export const WithTitleSpan12: Story = {
+  args: {
+    title: FIXTURE_PRODUCT.name,
+    object: FIXTURE_PRODUCT,
+    titleSpan: 12,
+  },
+};
+
 export const SelectedFieldOnly: Story = {
   args: {
     title: FIXTURE_PRODUCT.name,
