@@ -43,23 +43,33 @@ export const AttributeList = <T extends object = object>({
   object = {} as T,
   fields = Object.keys(object) as Field<T>[],
   ...props
-}: AttributeListProps<T>) => (
-  <div
-    className={clsx("mykn-attributelist", {
-      [`mykn-attributelist--col-span-${colSpan}`]: colSpan,
-      [`mykn-attributelist--title-span-${titleSpan}`]: titleSpan,
-    })}
-    {...props}
-  >
-    {title && <H3 id={titleId}>{string2Title(title)}</H3>}
+}: AttributeListProps<T>) => {
+  const renderTitle = title && <H3 id={titleId}>{string2Title(title)}</H3>;
+  const isTitleAbove = titleSpan === 12;
 
-    <dl className="mykn-attributelist__list">
-      {fields.map((f) => (
-        <AttributePair<T> key={f.toString()} object={object} field={f} />
-      ))}
-    </dl>
-  </div>
-);
+  return (
+    <>
+      {isTitleAbove && renderTitle}
+
+      <div
+        className={clsx("mykn-attributelist", {
+          [`mykn-attributelist--col-span-${colSpan}`]: colSpan,
+          [`mykn-attributelist--title-span-${titleSpan}`]:
+            !!title && titleSpan && titleSpan < 12,
+        })}
+        {...props}
+      >
+        {!isTitleAbove && renderTitle}
+
+        <dl className="mykn-attributelist__list">
+          {fields.map((f) => (
+            <AttributePair<T> key={f.toString()} object={object} field={f} />
+          ))}
+        </dl>
+      </div>
+    </>
+  );
+};
 
 export type AttributePairProps<T extends object = object> = {
   object: T;

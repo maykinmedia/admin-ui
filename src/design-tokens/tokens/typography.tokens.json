@@ -40,7 +40,7 @@
           "value": "20px"
         },
         "h3": {
-          "value": "14px"
+          "value": "16px"
         },
         "xl": {
           "value": "26px"
@@ -53,6 +53,9 @@
         }
       },
       "weight": {
+        "heading": {
+          "value": "700"
+        },
         "bold": {
           "value": "600"
         },
