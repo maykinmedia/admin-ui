@@ -55,7 +55,7 @@ export const AttributeGridWithTitleSpan12: Story = {
   args: {
     fieldsets: [
       [
-        "Geldigheid",
+        "Information",
         {
           titleSpan: 12,
           fields: ["name", "description", "price"],
