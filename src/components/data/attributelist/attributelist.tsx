@@ -58,18 +58,19 @@ export const AttributeList = <T extends object = object>({
   const isTitleAbove = titleSpan === 12;
 
   return (
-    <>
-      {isTitleAbove && renderTitle}
+    <div
+      className={clsx("mykn-attributelist", {
+        [`mykn-attributelist--col-span-${colSpan}`]: colSpan,
+        [`mykn-attributelist--title-span-${titleSpan}`]: !!title,
+      })}
+      {...props}
+    >
+      {title && isTitleAbove && (
+        <header className="mykn-attributelist__header">{renderTitle}</header>
+      )}
 
-      <div
-        className={clsx("mykn-attributelist", {
-          [`mykn-attributelist--col-span-${colSpan}`]: colSpan,
-          [`mykn-attributelist--title-span-${titleSpan}`]:
-            !!title && titleSpan && titleSpan < 12,
-        })}
-        {...props}
-      >
-        {!isTitleAbove && renderTitle}
+      <section className="mykn-attributelist__section">
+        {title && !isTitleAbove && renderTitle}
 
         <dl className="mykn-attributelist__list">
           {fields.map((f) => (
@@ -85,8 +86,8 @@ export const AttributeList = <T extends object = object>({
             />
           ))}
         </dl>
-      </div>
-    </>
+      </section>
+    </div>
   );
 };
 
