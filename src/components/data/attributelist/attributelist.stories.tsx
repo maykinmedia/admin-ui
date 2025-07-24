@@ -29,6 +29,7 @@ export const WithTitleSpan12: Story = {
     title: FIXTURE_PRODUCT.name,
     object: FIXTURE_PRODUCT,
     titleSpan: 12,
+    colSpan: 3,
   },
 };
 
