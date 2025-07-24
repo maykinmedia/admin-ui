@@ -1,30 +1,24 @@
 @use "../../../settings/constants";
 
 .mykn-attributelist {
-  --mykn-attributelist-col-span-title: 0;
+  --mykn-attributelist-col-span-title: 3;
   --mykn-attributelist-col-span-content: calc(
     12 - var(--mykn-attributelist-col-span-title)
   );
 
-  align-items: start;
-  display: grid;
-  gap: var(--spacing-xs-h);
+  display: block;
 
-  @media screen and (min-width: constants.$breakpoint-desktop) {
-    grid-template-columns: repeat(12, 1fr);
+  &__header {
+    margin-bottom: var(--spacing-xs-v);
+  }
 
-    &:has(> .mykn-h3) {
-      --mykn-attributelist-col-span-title: 3;
-    }
+  &__section {
+    display: grid;
+    gap: var(--spacing-xs-h);
+    align-items: start;
 
-    @for $i from 1 through 12 {
-      &--title-span-#{$i}:has(> .mykn-h3) {
-        --mykn-attributelist-col-span-title: #{$i};
-      }
-
-      &--col-span-#{$i} &__pair {
-        grid-column: span #{$i};
-      }
+    @media screen and (min-width: constants.$breakpoint-desktop) {
+      grid-template-columns: repeat(12, 1fr);
     }
   }
 
@@ -65,6 +59,22 @@
     color: var(--typography-color-muted);
     display: flex;
     gap: var(--spacing-xs-v) var(--spacing-xs-h);
+  }
+
+  @media screen and (min-width: constants.$breakpoint-desktop) {
+    @for $i from 1 through 12 {
+      &--title-span-#{$i}:has(.mykn-h3) {
+        --mykn-attributelist-col-span-title: #{$i};
+      }
+
+      &--col-span-#{$i} &__pair {
+        grid-column: span #{$i};
+      }
+    }
+
+    &--title-span-12 {
+      --mykn-attributelist-col-span-content: 12;
+    }
   }
 
   &__value .mykn-form-control,
