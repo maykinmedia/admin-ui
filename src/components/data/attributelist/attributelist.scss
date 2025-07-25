@@ -66,4 +66,9 @@
     display: flex;
     gap: var(--spacing-xs-v) var(--spacing-xs-h);
   }
+
+  &__value .mykn-form-control,
+  &__value .mykn-input {
+    width: 100%;
+  }
 }

@@ -18,9 +18,9 @@ export const DEFAULT_URL_FIELDS = [
 export type Field<T extends object = object> = keyof T;
 
 /** A key in object annotated with its type and optionally meta information. */
-export type TypedField<T extends object = object> = {
+export type TypedField<T extends object = object, F = Field<T> | string> = {
   /** The field name. */
-  name: Field<T> | string;
+  name: F;
 
   /** The field's values type. */
   type: FieldType | string;
@@ -109,19 +109,32 @@ export type FieldSet<T extends object = object> = [
  * @param objectList
  * @param base
  */
-export const fields2TypedFields = <T extends object>(
-  optionallyTypedFields: Array<Field<T> | TypedField<T>>,
+export const fields2TypedFields = <T extends object, F = keyof T | string>(
+  optionallyTypedFields: Array<Field<T> | TypedField<T, F>>,
   objectList: T[],
-  base?: Partial<TypedField<T>>,
-): TypedField<T>[] =>
+  base?: Partial<TypedField<T, F>>,
+): TypedField<T, F>[] =>
   optionallyTypedFields.map((field) =>
-    Object.assign(
-      { ...base },
-      isPrimitive<Field<T>>(field)
-        ? {
-            type: typeByDataArray<T>(field, objectList),
-            name: field,
-          }
-        : field,
-    ),
+    field2TypedField<T, F>(field, objectList, base),
+  );
+
+/**
+ * Converts `Field | TypedField` to `TypedField` by inspecting `objectList`.
+ * @param optionallyTypedField
+ * @param objectList
+ * @param base
+ */
+export const field2TypedField = <T extends object, F = keyof T | string>(
+  optionallyTypedField: Field<T> | TypedField<T, F>,
+  objectList: T[],
+  base?: Partial<TypedField<T, F>>,
+): TypedField<T, F> =>
+  Object.assign(
+    { ...base },
+    isPrimitive<Field<T>>(optionallyTypedField)
+      ? {
+          type: typeByDataArray<T>(optionallyTypedField, objectList),
+          name: optionallyTypedField,
+        }
+      : optionallyTypedField,
   );

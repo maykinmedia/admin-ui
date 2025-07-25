@@ -1,12 +1,13 @@
 import { slugify } from "@maykin-ui/client-common";
 import clsx from "clsx";
-import React from "react";
+import React, { useCallback } from "react";
 
 import { FieldSet, dataByFieldsets } from "../../../lib";
 import { Column, Grid } from "../../layout";
 import { Toolbar } from "../../toolbar";
 import { Body, H2 } from "../../typography";
 import { AttributeList, AttributeListProps } from "../attributelist";
+import { ValueEditableUnion } from "../value";
 import "./attributegrid.scss";
 
 export type AttributeGridProps<T extends object = object> = {
@@ -27,8 +28,10 @@ export type AttributeGridProps<T extends object = object> = {
 
   /** A title. */
   title?: React.ReactNode;
-};
 
+  /** Gets called when a value is edited. */
+  onEdit?: (value: T) => void;
+} & Omit<ValueEditableUnion, "editing" | "field" | "onEdit">;
 /**
  * AttributeGrid Component
  *
@@ -38,11 +41,16 @@ export type AttributeGridProps<T extends object = object> = {
  */
 export const AttributeGrid = <T extends object = object>({
   attributeListProps = {},
+  editable,
   object,
   fieldsets,
   fullHeight,
   generateTitleIds = false,
   title,
+  labelEdit,
+  onBlur,
+  onChange,
+  onEdit,
   ...props
 }: AttributeGridProps<T>) => {
   const objectList =
@@ -77,6 +85,17 @@ export const AttributeGrid = <T extends object = object>({
     currentRowSpan += span;
   });
 
+  /**
+   * Gets called when an <AttributeList>'s value is edited.
+   */
+  const handleEdit = useCallback<(value: T) => void>(
+    (value) => {
+      const data = { ...object, ...value };
+      onEdit?.(data);
+    },
+    [object, onEdit],
+  );
+
   return (
     <div
       className={clsx("mykn-attributegrid", {
@@ -102,6 +121,11 @@ export const AttributeGrid = <T extends object = object>({
                         ? slugify(attributeListProps.title)
                         : undefined
                     }
+                    editable={editable}
+                    labelEdit={labelEdit}
+                    onBlur={onBlur}
+                    onChange={onChange}
+                    onEdit={handleEdit}
                     {...attributeListProps}
                   />
                 </Column>

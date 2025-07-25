@@ -158,7 +158,7 @@ export const DataGridContentCell = <
       <Value
         aProps={aProps}
         badgeProps={badgeProps}
-        boolProps={boolProps as BoolProps}
+        boolProps={{ explicit: editable, ...(boolProps as BoolProps) }}
         formControlProps={{
           form: `${dataGridId}-editable-form`,
           required: true,
