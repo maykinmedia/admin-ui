@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import React from "react";
+import { expect, fn, userEvent, waitFor, within } from "storybook/test";
 
 import { FIXTURE_PRODUCT } from "../../../../.storybook/fixtures/products";
 import { AttributeGrid } from "./attributegrid";
@@ -7,6 +8,15 @@ import { AttributeGrid } from "./attributegrid";
 const meta: Meta<typeof AttributeGrid<typeof FIXTURE_PRODUCT>> = {
   title: "Data/AttributeGrid",
   component: AttributeGrid<typeof FIXTURE_PRODUCT>,
+  args: {
+    onEdit: fn(),
+  },
+  argTypes: {
+    editable: {
+      control: "boolean",
+      description: "Whether the value should be editable (requires field)",
+    },
+  },
 };
 
 export default meta;
@@ -49,5 +59,30 @@ export const AttributeGridComponent: Story = {
       ],
     ],
     object: FIXTURE_PRODUCT,
+  },
+};
+
+export const Editable: Story = {
+  ...AttributeGridComponent,
+  args: {
+    ...AttributeGridComponent.args,
+    editable: true,
+  },
+  play: async ({ args, canvasElement }) => {
+    const buttons = within(canvasElement).getAllByRole("button");
+    for (const button of buttons) {
+      await userEvent.click(button, { delay: 10 });
+
+      await waitFor(() => {
+        const canvas = within(canvasElement);
+        return (
+          canvas.queryByRole("spinbutton") ||
+          canvas.queryByRole("textbox") ||
+          canvas.queryByRole("checkbox")
+        );
+      });
+    }
+    await userEvent.tab({ delay: 10 });
+    expect(args.onEdit).toHaveBeenCalledTimes(12);
   },
 };

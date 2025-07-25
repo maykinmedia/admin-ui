@@ -25,6 +25,9 @@ export type BoolProps = React.ComponentProps<"span"> & {
   labelFalse?: string;
 
   pProps?: PProps;
+
+  /** Whether to omit HTML and give raw output. */
+  raw?: boolean;
 };
 
 /**
@@ -42,16 +45,20 @@ export const Bool: React.FC<BoolProps> = ({
   labelTrue,
   labelFalse,
   pProps,
+  raw,
   ...props
 }) => {
   const _labelTrue = gettextFirst(labelTrue, TRANSLATIONS.LABEL_TRUE);
   const _labelFalse = gettextFirst(labelFalse, TRANSLATIONS.LABEL_FALSE);
+  const label = ucFirst(value ? _labelTrue : _labelFalse);
+  const rawValue = explicit || value ? label : "";
+
+  if (raw) return rawValue;
 
   if (!decorate) {
-    const label = ucFirst(value ? _labelTrue : _labelFalse);
     return (
       <P aria-label={label} {...pProps}>
-        {explicit || value ? label : ""}
+        {rawValue}
       </P>
     );
   }

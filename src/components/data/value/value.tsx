@@ -2,6 +2,7 @@ import { isLink, serializeInputElement } from "@maykin-ui/client-common";
 import React, {
   ChangeEventHandler,
   ComponentProps,
+  FocusEventHandler,
   MouseEventHandler,
   useCallback,
   useEffect,
@@ -43,6 +44,9 @@ export type ValueProps<T extends object = object> = Omit<
   pProps?: PProps;
 
   onClick?: MouseEventHandler;
+
+  /** @private indicates that the <Value /> is used internally. */
+  nested?: boolean;
 } & ValueEditableUnion<T>;
 
 export type ValueEditableUnion<T extends object = object> = (
@@ -68,9 +72,6 @@ export type ValueEditableUnion<T extends object = object> = (
   editing?: boolean;
 
   labelEdit?: string;
-
-  /** @private indicates that the <Value /> is used internally. */
-  nested?: boolean;
 
   /** Gets called when the input is blurred. */
   onBlur?: React.FocusEventHandler;
@@ -141,13 +142,21 @@ export const Value = <T extends object = object>(rawProps: ValueProps<T>) => {
   /**
    * Gets called when the value representation is clicked.
    */
-  const handleClick: MouseEventHandler = useCallback(
+  const handleClick: MouseEventHandler = useCallback<MouseEventHandler>(
     (e) => {
       setEditingState(editable && true);
       onEdit?.(e);
       onClick?.(e);
     },
-    [editingState, onEdit],
+    [editable, editingState, onEdit],
+  );
+
+  const handleBlur = useCallback<FocusEventHandler>(
+    (e) => {
+      setEditingState(false);
+      onBlur?.(e);
+    },
+    [onBlur],
   );
 
   if (editable && !editingState) {
@@ -156,9 +165,9 @@ export const Value = <T extends object = object>(rawProps: ValueProps<T>) => {
         {...buttonProps}
         aria-label={_labelEdit}
         align="start"
-        pad={field.type !== "boolean"}
+        pad={false}
         variant="transparent"
-        wrap={false}
+        wrap={true}
         onClick={handleClick}
       >
         <Value
@@ -181,10 +190,11 @@ export const Value = <T extends object = object>(rawProps: ValueProps<T>) => {
         checked={field!.type === "boolean" && valueState ? true : undefined}
         name={field!.name.toString()}
         options={field.options}
+        pad="h"
         type={field!.type === "boolean" ? "checkbox" : field?.type}
         value={(valueState || "").toString()}
         onChange={handleChange}
-        onBlur={onBlur}
+        onBlur={handleBlur}
       />
     );
   }
@@ -240,6 +250,7 @@ export const Value = <T extends object = object>(rawProps: ValueProps<T>) => {
         pProps={{ ...pProps }}
         {...boolProps}
         decorate={decorate}
+        raw={nested && !decorate}
         value={valueState as boolean}
         {...props}
       />
