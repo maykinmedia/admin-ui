@@ -1,14 +1,32 @@
-import { isLink } from "@maykin-ui/client-common";
-import React, { ComponentProps, MouseEventHandler } from "react";
+import { isLink, serializeInputElement } from "@maykin-ui/client-common";
+import React, {
+  ChangeEventHandler,
+  ComponentProps,
+  MouseEventHandler,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 
-import { isBool, isNull, isNumber, isString, isUndefined } from "../../../lib";
+import {
+  TypedField,
+  gettextFirst,
+  isBool,
+  isNull,
+  isNumber,
+  isString,
+  isUndefined,
+} from "../../../lib";
 import { Badge, BadgeProps } from "../../badge";
 import { Bool, BoolProps } from "../../boolean";
+import { Button, ButtonProps } from "../../button";
+import { FormControl, FormControlProps } from "../../form";
 import { A, AProps, P, PProps } from "../../typography";
+import { TRANSLATIONS } from "./translations";
 
-export type ValueProps = Omit<
+export type ValueProps<T extends object = object> = Omit<
   React.ComponentProps<"a" | "p" | "span">,
-  "onClick"
+  "onBlur" | "onChange" | "onClick" | "value"
 > & {
   /** Value to render. */
   value: unknown;
@@ -24,7 +42,43 @@ export type ValueProps = Omit<
   badgeProps?: BadgeProps;
   pProps?: PProps;
 
-  onClick?: MouseEventHandler<HTMLAnchorElement>;
+  onClick?: MouseEventHandler;
+} & ValueEditableUnion<T>;
+
+export type ValueEditableUnion<T extends object = object> = (
+  | {
+      /** Whether the value should be editable (requires field). */
+      editable: true;
+
+      /** The form field to show when editing. */
+      field: TypedField<T>;
+    }
+  | {
+      /** Whether the value should be editable (requires field). */
+      editable?: false;
+
+      /** The form field to show when editing. */
+      field?: TypedField<T>;
+    }
+) & {
+  formControlProps?: Omit<Partial<FormControlProps>, "onChange">;
+  buttonProps?: Partial<ButtonProps>;
+
+  /** Whether the value is currently being edited. */
+  editing?: boolean;
+
+  labelEdit?: string;
+
+  /** @private indicates that the <Value /> is used internally. */
+  nested?: boolean;
+
+  /** Gets called when the input is blurred. */
+  onBlur?: React.FocusEventHandler;
+  /** Gets called when the value changes. */
+  onChange?: React.ChangeEventHandler;
+
+  /** Gets called when the edit button is clicked. */
+  onEdit?: React.MouseEventHandler;
 };
 
 /**
@@ -35,33 +89,129 @@ export type ValueProps = Omit<
  *  - A React.ReactNode: rendered directly.
  *  - Any other complex type is ignored.
  */
-export const Value: React.FC<ValueProps> = ({
-  aProps,
-  badgeProps,
-  boolProps,
-  decorate = false,
-  pProps,
-  href = "",
-  value,
-  onClick, // Only supported when rendering `<A>`.
-  ...props
-}) => {
-  if (React.isValidElement(value)) {
-    return value;
+export const Value = <T extends object = object>(rawProps: ValueProps<T>) => {
+  const {
+    aProps,
+    badgeProps,
+    boolProps,
+    buttonProps,
+    formControlProps,
+    pProps,
+    decorate = false,
+    editable,
+    editing,
+    field,
+    href = "",
+    labelEdit,
+    nested = false,
+    value: valueProp,
+    onBlur, // Only supported when rendering `<A>`.
+    onClick, // Only supported when rendering `<A>`.
+    onChange,
+    onEdit,
+    ...props
+  } = rawProps;
+  const _labelEdit = gettextFirst(labelEdit, TRANSLATIONS.LABEL_EDIT, {
+    ...field,
+    label: field?.name || "",
+  });
+
+  const [editingState, setEditingState] = useState<boolean>();
+  useEffect(() => {
+    setEditingState(editable && editing);
+  }, [editing]);
+
+  const [valueState, setValueStateState] = useState<unknown>();
+  useEffect(() => {
+    setValueStateState(valueProp);
+  }, [valueProp]);
+
+  /**
+   * Gets called when the value changes.
+   */
+  const handleChange: ChangeEventHandler<HTMLInputElement> = useCallback(
+    (e) => {
+      const serializedValue = serializeInputElement(e.target, { typed: true });
+      setValueStateState(serializedValue);
+      onChange?.(e);
+    },
+    [valueProp, onChange],
+  );
+
+  /**
+   * Gets called when the value representation is clicked.
+   */
+  const handleClick: MouseEventHandler = useCallback(
+    (e) => {
+      setEditingState(editable && true);
+      onEdit?.(e);
+      onClick?.(e);
+    },
+    [editingState, onEdit],
+  );
+
+  if (editable && !editingState) {
+    return (
+      <Button
+        {...buttonProps}
+        aria-label={_labelEdit}
+        align="start"
+        pad={field.type !== "boolean"}
+        variant="transparent"
+        wrap={false}
+        onClick={handleClick}
+      >
+        <Value
+          {...rawProps}
+          value={valueState}
+          editable={false}
+          nested={true}
+        />
+      </Button>
+    );
   }
 
-  if (isNull(value) || isUndefined(value)) {
+  // Returns <FormControl> when editing
+  if (editable && editingState) {
     return (
+      <FormControl
+        {...formControlProps}
+        autoFocus
+        aria-label={_labelEdit}
+        checked={field!.type === "boolean" && valueState ? true : undefined}
+        name={field!.name.toString()}
+        options={field.options}
+        type={field!.type === "boolean" ? "checkbox" : field?.type}
+        value={(valueState || "").toString()}
+        onChange={handleChange}
+        onBlur={onBlur}
+      />
+    );
+  }
+
+  if (React.isValidElement(valueState)) {
+    return valueState;
+  }
+
+  if (isNull(valueState) || isUndefined(valueState) || field?.type === "null") {
+    return nested ? (
+      "-"
+    ) : (
       <P {...pProps} {...(props as ComponentProps<"p">)}>
         -
       </P>
     );
   }
 
-  if (isString(value) || (isNumber(value) && !decorate)) {
-    const string = String(value);
+  if (
+    isString(valueState) ||
+    (isNumber(valueState) && !decorate) ||
+    field?.type === "string" ||
+    (field?.type === "number" && !decorate)
+  ) {
+    const string = String(valueState);
 
-    if (href || isLink(string)) {
+    if (!nested && (href || (isLink(string) && !editingState))) {
       return (
         <P {...pProps} {...(props as ComponentProps<"p">)}>
           <A
@@ -75,32 +225,34 @@ export const Value: React.FC<ValueProps> = ({
       );
     }
 
-    return (
-      <P {...pProps} {...(props as ComponentProps<"p">)}>
+    return nested ? (
+      string || "-"
+    ) : (
+      <P {...(props as ComponentProps<"p">)} {...pProps}>
         {string || "-"}
       </P>
     );
   }
 
-  if (isBool(value)) {
+  if (isBool(valueState) || field?.type === "boolean") {
     return (
       <Bool
-        pProps={pProps}
+        pProps={{ ...pProps }}
         {...boolProps}
         decorate={decorate}
-        value={value}
+        value={valueState as boolean}
         {...props}
       />
     );
   }
 
-  if (isNumber(value)) {
+  if (isNumber(valueState) || field?.type === "number") {
     return (
       <Badge {...badgeProps} {...props}>
-        {value}
+        {valueState as number}
       </Badge>
     );
   }
 
-  console.warn("Refusing to render complex value:", value);
+  console.warn("Refusing to render complex value:", valueState);
 };

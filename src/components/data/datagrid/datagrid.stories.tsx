@@ -3,6 +3,7 @@ import * as React from "react";
 
 import { PAGE_DECORATOR } from "../../../../.storybook/decorators";
 import { FIXTURE_PRODUCTS } from "../../../../.storybook/fixtures/products";
+import { Field } from "../../../lib";
 import { Button } from "../../button";
 import { Outline } from "../../icon/icon";
 import { DataGrid, DataGridProps } from "./datagrid";
@@ -143,7 +144,7 @@ export const FieldsSelectableOverflow: Story = {
       { name: "overflowFilter18", active: false },
       { name: "overflowFilter19", active: false },
       { name: "overflowFilter20", active: false },
-    ],
+    ] as Field<(typeof FIXTURE_PRODUCTS)[number]>[],
     fieldsSelectable: true,
   },
   argTypes: {

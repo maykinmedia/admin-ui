@@ -144,12 +144,16 @@
     }
   }
 
-  &__cell--editable:not(#{&}__cell--editing) {
-    padding-inline: var(--mykn-datagrid-spacing-h);
-  }
-
   &__cell--editable .mykn-button {
     border: none;
+    display: inline-block;
+    justify-content: inherit;
+    text-align: inherit;
+    width: 100%;
+  }
+
+  &__cell--editable:not(#{&}__cell--editing):not(#{&}__cell--type-boolean) {
+    padding-inline: 0;
   }
 
   &__cell--editable#{&}__cell--type-boolean .mykn-form-control {
@@ -176,10 +180,6 @@
   // FIXME?
   base &__cell--editable:not(#{&}__cell--type-boolean):not(#{&}__cell--link) {
     padding-inline: 0;
-  }
-
-  &__cell--link .mykn-button {
-    width: calc(100% - 1em - 3 * var(--mykn-datagrid-spacing-h));
   }
 
   &__footer {

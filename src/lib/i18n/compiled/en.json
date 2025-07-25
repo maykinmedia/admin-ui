@@ -50,6 +50,7 @@
   "mykn.components.Select.labelClear": "clear value",
   "mykn.components.Sidebar.collapse": "Collapse sidebar",
   "mykn.components.Sidebar.expand": "Expand sidebar",
+  "mykn.components.Value.labelEdit": "Edit \"{label}\"",
   "mykn.templates.Login.labelLogin": "login",
   "mykn.templates.Login.labelOidcLogin": "Login with organisation account"
 }
