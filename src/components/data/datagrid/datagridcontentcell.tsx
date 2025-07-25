@@ -4,18 +4,16 @@ import {
   string2Title,
 } from "@maykin-ui/client-common";
 import clsx from "clsx";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 
 import {
   DEFAULT_URL_FIELDS,
   TypedField,
   TypedSerializedFormData,
+  getByDotSeparatedPath,
   isPrimitive,
 } from "../../../lib";
-import { getByDotSeparatedPath } from "../../../lib/data/utils";
 import { BoolProps } from "../../boolean";
-import { Button } from "../../button";
-import { FormControl } from "../../form";
 import { Value } from "../value";
 import { useDataGridContext } from "./datagridcontext";
 
@@ -69,6 +67,9 @@ export const DataGridContentCell = <
     rowData,
     field.valueLookup || field.name.toString(),
   );
+
+  const label = field.options?.find((o) => o.value === value)?.label;
+
   const value = field.valueTransform?.(rowData) || resolvedValue;
   const valueIsPrimitive = isPrimitive(value);
 
@@ -76,106 +77,46 @@ export const DataGridContentCell = <
   const link = isImplicitLink ? String(rowUrl) : "";
 
   /**
-   * Renders a button triggering the editing state.
+   * Gets called when the <Value> is clicked.
    */
-  const renderButton = () => (
-    <Button
-      align={
-        field.type === "boolean" ||
-        field.type === "number" ||
-        field.type === "null"
-          ? "end"
-          : "start"
-      }
-      pad={field.type !== "boolean"}
-      justify={true}
-      variant="transparent"
-      wrap={false}
-      onClick={() => {
-        setEditingState([rowData, fieldIndex]);
-      }}
-    >
-      {renderValue()}
-    </Button>
+  const handleClick = useCallback<React.MouseEventHandler>(
+    (e) => {
+      setEditingState([rowData, fieldIndex]);
+      onClick?.(e, rowData);
+    },
+    [rowData, fieldIndex, onClick],
   );
 
   /**
-   * Renders a form control for editing the fields value.
+   * Gets called when the <Value>'s <>FormControl> is changed.
    */
-  const renderFormControl = () => (
-    <form
-      id={`${dataGridId}-editable-form`}
-      onSubmit={(e) => e.preventDefault()}
-    >
-      <FormControl
-        autoFocus
-        key={"datagrid-editable"}
-        name={field.name as string}
-        defaultChecked={field.type === "boolean" ? Boolean(value) : undefined}
-        options={field.options || undefined}
-        type={field.type === "number" ? "number" : undefined}
-        value={(value || "").toString()}
-        form={`${dataGridId}-editable-form`}
-        required={true}
-        onChange={(e: React.ChangeEvent) => {
-          setPristine(false);
-          onChange?.(e);
-        }}
-        onBlur={(e: React.FocusEvent<HTMLInputElement | HTMLSelectElement>) => {
-          const data = Object.assign(
-            rowData,
-            serializeFormElement<TypedSerializedFormData>(
-              e.target.form as HTMLFormElement,
-              {
-                typed: true,
-              },
-            ),
-          );
-          !pristine && onEdit?.(data);
-        }}
-      />
-    </form>
-  );
-  /**
-   * Renders a hidden input allowing the form to serialize this fields data.
-   */
-  const renderHiddenInput = () => (
-    <input
-      defaultChecked={field.type === "boolean" ? Boolean(value) : undefined}
-      defaultValue={value?.toString() || ""}
-      form={`${dataGridId}-editable-form`}
-      hidden
-      name={field.name.toString()}
-      type={
-        field.type === "boolean"
-          ? "checkbox"
-          : field.type === "number"
-            ? "number"
-            : undefined
-      }
-    />
+  const handleChange = useCallback<React.ChangeEventHandler>(
+    (e) => {
+      setPristine(false);
+      onChange?.(e);
+    },
+    [pristine, onChange],
   );
 
   /**
-   * Renders the value according to Value component
+   * Gets called when the <Value>'s <>FormControl> is blurred.
    */
-  const renderValue = () => {
-    // Support label from select
-    const label = field.options?.find((o) => o.value === value)?.label;
-
-    return (
-      <Value
-        aProps={aProps}
-        badgeProps={badgeProps}
-        boolProps={boolProps as BoolProps}
-        pProps={pProps}
-        href={link}
-        decorate={decorate}
-        value={label || (field.type === "boolean" ? Boolean(value) : value)}
-        onClick={(e) => onClick?.(e, rowData)}
-      />
-    );
-  };
+  const handleBlur = useCallback<React.FocusEventHandler>(
+    (e: React.FocusEvent<HTMLInputElement | HTMLSelectElement>) => {
+      const data = Object.assign(
+        rowData,
+        serializeFormElement<TypedSerializedFormData>(
+          e.target.form as HTMLFormElement,
+          {
+            typed: true,
+          },
+        ),
+      );
+      setEditingState([null, null]);
+      !pristine && onEdit?.(data);
+    },
+    [rowData, pristine, onEdit],
+  );
 
   return (
     <td
@@ -190,13 +131,49 @@ export const DataGridContentCell = <
       )}
       aria-description={string2Title(field.name.toString())}
     >
-      {valueIsPrimitive &&
-        isEditingRow &&
-        !isEditingField &&
-        renderHiddenInput()}
-      {valueIsPrimitive && isEditingField && renderFormControl()}
-      {valueIsPrimitive && !isEditingField && fieldEditable && renderButton()}
-      {!isEditingField && !fieldEditable && renderValue()}
+      {isEditingRow && isEditingField && (
+        <form
+          id={`${dataGridId}-editable-form`}
+          onSubmit={(e) => e.preventDefault()}
+        />
+      )}
+
+      {valueIsPrimitive && isEditingRow && !isEditingField && (
+        <input
+          defaultChecked={field.type === "boolean" ? Boolean(value) : undefined}
+          defaultValue={value?.toString() || ""}
+          form={`${dataGridId}-editable-form`}
+          hidden
+          name={field.name.toString()}
+          type={
+            field.type === "boolean"
+              ? "checkbox"
+              : field.type === "number"
+                ? "number"
+                : undefined
+          }
+        />
+      )}
+
+      <Value
+        aProps={aProps}
+        badgeProps={badgeProps}
+        boolProps={boolProps as BoolProps}
+        formControlProps={{
+          form: `${dataGridId}-editable-form`,
+          required: true,
+        }}
+        pProps={pProps}
+        href={link}
+        decorate={decorate}
+        editable={editable}
+        editing={isEditingField}
+        field={field}
+        value={label || (field.type === "boolean" ? Boolean(value) : value)}
+        onBlur={handleBlur}
+        onChange={handleChange}
+        onClick={handleClick}
+      />
     </td>
   );
 };

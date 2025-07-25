@@ -6,6 +6,7 @@
   color: var(--mykn-bool-color);
   border-radius: var(--mykn-bool-radius);
   border: 1px solid;
+  box-sizing: border-box;
   display: inline-flex;
   flex-shrink: 0;
   font-size: var(--typography-font-size-body-s);

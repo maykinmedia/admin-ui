@@ -26,6 +26,7 @@ import { Label } from "../label";
 import { Radio } from "../radio";
 import "./formcontrol.scss";
 
+// FIXME: Clashes in types, add generic for FormField?
 export type FormControlProps = FormField & {
   /** The direction in which to render the form. */
   direction?: "vertical" | "horizontal";

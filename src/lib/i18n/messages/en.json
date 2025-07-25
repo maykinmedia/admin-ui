@@ -254,6 +254,11 @@
     "description": "mykn.components.Sidebar: An aria-label describing the expand action",
     "originalDefault": "Zijbalk uitklappen"
   },
+  "mykn.components.Value.labelEdit": {
+    "defaultMessage": "Edit \"{label}\"",
+    "description": "mykn.components.Value: The edit value (accessible) label",
+    "originalDefault": "Bewerk \"{label}\""
+  },
   "mykn.templates.Login.labelLogin": {
     "defaultMessage": "login",
     "description": "templates.Login: The login button label",

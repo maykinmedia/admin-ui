@@ -200,10 +200,7 @@ export type DataGridProps<T extends object = object, F extends object = T> = {
   onSelectAllPages?: (selected: boolean) => void;
 
   /** Gets called when an object is selected. */
-  onClick?: (
-    event: React.MouseEvent<HTMLAnchorElement>,
-    attributeData: T,
-  ) => void;
+  onClick?: (event: React.MouseEvent, attributeData: T) => void;
 
   /** Gets called when a row value is edited. */
   onChange?: (event: React.ChangeEvent) => void;
