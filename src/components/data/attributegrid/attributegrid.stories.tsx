@@ -63,6 +63,7 @@ export const AttributeGridComponent: Story = {
 
 export const AttributeGridWithTitleSpan12: Story = {
   args: {
+    separator: true,
     fieldsets: [
       [
         "Information",
@@ -71,6 +72,24 @@ export const AttributeGridWithTitleSpan12: Story = {
           fields: ["name", "description", "price"],
           span: 12,
           colSpan: 4,
+        },
+      ],
+      [
+        "Availability",
+        {
+          fields: ["isAvailable", "stock"],
+          span: 12,
+          colSpan: 4,
+          titleSpan: 12,
+        },
+      ],
+      [
+        "More",
+        {
+          fields: ["category", "releaseDate", "url"],
+          span: 12,
+          colSpan: 4,
+          titleSpan: 12,
         },
       ],
     ],

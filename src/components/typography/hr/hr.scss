@@ -3,6 +3,18 @@
   border-bottom: 1px solid var(--typography-color-border);
   margin: 0;
 
+  &--size-xs {
+    margin: var(--spacing-xs-v) 0;
+  }
+
+  &--size-s {
+    margin: var(--spacing-s-v) 0;
+  }
+
+  &--size-m {
+    margin: var(--spacing-m-v) 0;
+  }
+
   &--size-xxl {
     margin: var(--spacing-xs-v) 0;
   }

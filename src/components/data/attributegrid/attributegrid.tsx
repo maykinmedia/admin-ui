@@ -5,7 +5,7 @@ import React, { useCallback } from "react";
 import { FieldSet, dataByFieldsets } from "../../../lib";
 import { Column, Grid } from "../../layout";
 import { Toolbar } from "../../toolbar";
-import { Body, H2 } from "../../typography";
+import { Body, H2, Hr } from "../../typography";
 import { AttributeList, AttributeListProps } from "../attributelist";
 import { ValueEditableUnion } from "../value";
 import "./attributegrid.scss";
@@ -31,6 +31,9 @@ export type AttributeGridProps<T extends object = object> = {
 
   /** Gets called when a value is edited. */
   onEdit?: (value: T) => void;
+
+  /** Whether a separator is shown in between each section. */
+  separator?: boolean;
 } & Omit<ValueEditableUnion, "editing" | "field" | "onEdit">;
 /**
  * AttributeGrid Component
@@ -48,6 +51,7 @@ export const AttributeGrid = <T extends object = object>({
   generateTitleIds = false,
   title,
   labelEdit,
+  separator,
   onBlur,
   onChange,
   onEdit,
@@ -128,6 +132,9 @@ export const AttributeGrid = <T extends object = object>({
                     onEdit={handleEdit}
                     {...attributeListProps}
                   />
+                  {separator && rowIndex < rowArray.length - 1 && (
+                    <Hr size="s" />
+                  )}
                 </Column>
               ))}
             </Grid>
