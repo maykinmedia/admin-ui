@@ -101,6 +101,9 @@ export const AttributeGrid = <T extends object = object>({
     [object, onEdit],
   );
 
+  const hasTitle = (row: [number, AttributeListProps<T>][]) =>
+    row.some(([, props]) => props.title && props.title.trim() !== "");
+
   return (
     <div
       className={clsx("mykn-attributegrid", {
@@ -116,6 +119,7 @@ export const AttributeGrid = <T extends object = object>({
       <Body>
         {rowArray.map((row, rowIndex) => (
           <React.Fragment key={rowIndex}>
+            {rowIndex > 0 && separator && hasTitle(row) && <Hr margin="s" />}
             <Grid>
               {row.map(([span, attributeListProps], colIndex) => (
                 <Column key={colIndex} span={span}>
@@ -133,9 +137,6 @@ export const AttributeGrid = <T extends object = object>({
                     onEdit={handleEdit}
                     {...attributeListProps}
                   />
-                  {separator && rowIndex < rowArray.length - 1 && (
-                    <Hr margin="s" />
-                  )}
                 </Column>
               ))}
             </Grid>
