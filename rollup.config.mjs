@@ -11,6 +11,7 @@ const EXTERNAL = [
   "@floating-ui/react",
   "@heroicons/react/24/outline",
   "@heroicons/react/24/solid",
+  "@maykin-ui/client-common",
   "clsx",
   "date-fns",
   "date-fns/locale",
