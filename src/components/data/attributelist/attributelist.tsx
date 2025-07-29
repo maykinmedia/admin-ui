@@ -36,7 +36,10 @@ export type AttributeListProps<T extends object = object> = Omit<
 
   /** Gets called when a value is edited. */
   onEdit?: (value: T) => void;
-} & Omit<ValueEditableUnion, "editing" | "field" | "onEdit">;
+} & Pick<
+    ValueEditableUnion,
+    "editable" | "labelEdit" | "onChange" | "formControlProps"
+  >;
 
 /**
  * AttributeList Component
@@ -50,6 +53,7 @@ export const AttributeList = <T extends object = object>({
   object = {} as T,
   editable,
   fields = Object.keys(object) as Field<T>[],
+  formControlProps,
   labelEdit,
   title = "",
   titleId,
@@ -85,6 +89,7 @@ export const AttributeList = <T extends object = object>({
                 object={object}
                 editable={editable}
                 field={f}
+                formControlProps={formControlProps}
                 labelEdit={labelEdit}
                 onBlur={onBlur}
                 onChange={onChange}
@@ -102,7 +107,10 @@ export type AttributePairProps<T extends object = object> = {
   object: T;
   field: Field<T> | TypedField<T>;
   onEdit?: (value: T) => void;
-} & Omit<ValueEditableUnion, "editing" | "field" | "onEdit">;
+} & Pick<
+  ValueEditableUnion,
+  "formControlProps" | "editable" | "labelEdit" | "onBlur" | "onChange"
+>;
 
 /**
  * A single attribute in an AttributeList
@@ -110,6 +118,7 @@ export type AttributePairProps<T extends object = object> = {
 export const AttributePair = <T extends object = object>({
   object,
   field,
+  formControlProps,
   editable,
   labelEdit,
   onBlur,
@@ -142,8 +151,11 @@ export const AttributePair = <T extends object = object>({
         <Value
           editable={editable}
           field={typedField}
-          // @ts-expect-error - Some entries in union may not have pad.
-          formControlProps={{ justify: "stretch", pad: false }}
+          formControlProps={{
+            justify: "stretch",
+            pad: false,
+            ...formControlProps,
+          }}
           labelEdit={labelEdit}
           value={object[typedField.name]}
           onBlur={handleBlur}
