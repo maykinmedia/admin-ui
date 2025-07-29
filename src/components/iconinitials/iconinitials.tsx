@@ -7,6 +7,7 @@ import "./iconinitials.scss";
 export type IconInitialsProps = React.HTMLAttributes<HTMLParagraphElement> & {
   // Name should be the First and Last name
   name: string;
+  // FIXME: Consistency
   size?: "sm" | "md" | "lg";
 };
 

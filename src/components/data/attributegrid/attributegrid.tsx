@@ -133,7 +133,7 @@ export const AttributeGrid = <T extends object = object>({
                     {...attributeListProps}
                   />
                   {separator && rowIndex < rowArray.length - 1 && (
-                    <Hr size="s" />
+                    <Hr margin="s" />
                   )}
                 </Column>
               ))}
