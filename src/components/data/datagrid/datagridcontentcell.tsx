@@ -68,10 +68,9 @@ export const DataGridContentCell = <
     field.valueLookup || field.name.toString(),
   );
 
-  const label = field.options?.find((o) => o.value === value)?.label;
-
   const value = field.valueTransform?.(rowData) || resolvedValue;
   const valueIsPrimitive = isPrimitive(value);
+  const label = field.options?.find((o) => o.value === value)?.label;
 
   const isImplicitLink = rowUrl && fieldIndex === 0 && !isLink(String(value));
   const link = isImplicitLink ? String(rowUrl) : "";
