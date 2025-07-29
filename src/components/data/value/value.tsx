@@ -66,7 +66,7 @@ export type ValueEditableUnion<T extends object = object> = (
       field?: TypedField<T>;
     }
 ) & {
-  formControlProps?: Omit<Partial<FormControlProps>, "onChange">;
+  formControlProps?: Partial<FormControlProps>;
   buttonProps?: Partial<ButtonProps>;
 
   /** Whether the value is currently being edited. */

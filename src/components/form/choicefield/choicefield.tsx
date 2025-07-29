@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FocusEventHandler } from "react";
 
 import { CheckboxGroup, CheckboxGroupProps } from "../checkbox/checkboxgroup";
 import { RadioGroup, RadioGroupProps } from "../radio";
@@ -33,7 +33,7 @@ export type ChoiceFieldProps<
   variant?: "normal" | "transparent";
 
   /** Gets called when the input is blurred. */
-  onBlur?: React.FormEventHandler<FormElement>;
+  onBlur?: FocusEventHandler;
 
   /**
    *

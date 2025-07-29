@@ -34,7 +34,10 @@ export type AttributeGridProps<T extends object = object> = {
 
   /** Whether a separator is shown in between each section. */
   separator?: boolean;
-} & Omit<ValueEditableUnion, "editing" | "field" | "onEdit">;
+} & Pick<
+  ValueEditableUnion,
+  "editable" | "labelEdit" | "onBlur" | "onChange" | "formControlProps"
+>;
 /**
  * AttributeGrid Component
  *
@@ -47,6 +50,7 @@ export const AttributeGrid = <T extends object = object>({
   editable,
   object,
   fieldsets,
+  formControlProps = {},
   fullHeight,
   generateTitleIds = false,
   title,
@@ -132,6 +136,7 @@ export const AttributeGrid = <T extends object = object>({
                     }
                     editable={editable}
                     labelEdit={labelEdit}
+                    formControlProps={formControlProps}
                     onBlur={onBlur}
                     onChange={onChange}
                     onEdit={handleEdit}
