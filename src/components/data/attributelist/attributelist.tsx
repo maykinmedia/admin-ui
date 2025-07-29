@@ -31,7 +31,10 @@ export type AttributeListProps<T extends object = object> = Omit<
 
   /** Gets called when a value is edited. */
   onEdit?: (value: T) => void;
-} & Omit<ValueEditableUnion, "editing" | "field" | "onEdit">;
+} & Pick<
+    ValueEditableUnion,
+    "editable" | "labelEdit" | "onChange" | "formControlProps"
+  >;
 
 /**
  * AttributeList Component
@@ -45,6 +48,7 @@ export const AttributeList = <T extends object = object>({
   object = {} as T,
   editable,
   fields = Object.keys(object) as Field<T>[],
+  formControlProps,
   labelEdit,
   title = "",
   titleId,
@@ -79,6 +83,7 @@ export const AttributeList = <T extends object = object>({
               object={object}
               editable={editable}
               field={f}
+              formControlProps={formControlProps}
               labelEdit={labelEdit}
               onBlur={onBlur}
               onChange={onChange}
@@ -95,7 +100,10 @@ export type AttributePairProps<T extends object = object> = {
   object: T;
   field: Field<T> | TypedField<T, keyof T>;
   onEdit?: (value: T) => void;
-} & Omit<ValueEditableUnion, "editing" | "field" | "onEdit">;
+} & Pick<
+  ValueEditableUnion,
+  "formControlProps" | "editable" | "labelEdit" | "onBlur" | "onChange"
+>;
 
 /**
  * A single attribute in an AttributeList
@@ -103,6 +111,7 @@ export type AttributePairProps<T extends object = object> = {
 export const AttributePair = <T extends object = object>({
   object,
   field,
+  formControlProps,
   editable,
   labelEdit,
   onBlur,
@@ -139,6 +148,7 @@ export const AttributePair = <T extends object = object>({
           value={object[typedField.name]}
           onBlur={handleBlur}
           onChange={onChange}
+          formControlProps={formControlProps}
         />
       </dd>
     </div>
