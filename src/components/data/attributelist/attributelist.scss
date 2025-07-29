@@ -1,7 +1,7 @@
 @use "../../../settings/constants";
 
 .mykn-attributelist {
-  --mykn-attributelist-col-span-title: 3;
+  --mykn-attributelist-col-span-title: 0;
   --mykn-attributelist-col-span-content: calc(
     12 - var(--mykn-attributelist-col-span-title)
   );
