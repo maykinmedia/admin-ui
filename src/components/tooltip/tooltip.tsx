@@ -28,6 +28,7 @@ type TooltipProps = React.PropsWithChildren<{
   /* The placement of the tooltip */
   placement?: Placement;
 
+  // FIXME: Consistency
   /* The size of the tooltip, defaults to md */
   size?: "sm" | "md" | "lg";
 }>;
