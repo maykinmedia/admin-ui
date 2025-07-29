@@ -69,7 +69,7 @@ export const AttributeList = <T extends object = object>({
         <header className="mykn-attributelist__header">{renderTitle}</header>
       )}
 
-      <section className="mykn-attributelist__section">
+      <section className="mykn-attributelist__body">
         {title && !isTitleAbove && renderTitle}
 
         <dl className="mykn-attributelist__list">
