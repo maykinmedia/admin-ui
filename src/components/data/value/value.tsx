@@ -65,7 +65,7 @@ export type ValueEditableUnion<T extends object = object> = (
       field?: TypedField<T>;
     }
 ) & {
-  formControlProps?: Omit<Partial<FormControlProps>, "onChange">;
+  formControlProps?: Partial<FormControlProps>;
   buttonProps?: Partial<ButtonProps>;
 
   /** Whether the value is currently being edited. */
@@ -184,17 +184,18 @@ export const Value = <T extends object = object>(rawProps: ValueProps<T>) => {
   if (editable && editingState) {
     return (
       <FormControl
-        {...formControlProps}
         autoFocus
         aria-label={_labelEdit}
         checked={field!.type === "boolean" && valueState ? true : undefined}
         name={field!.name.toString()}
+        // @ts-expect-error - Runtime check included
         options={field.options}
         pad="h"
         type={field!.type === "boolean" ? "checkbox" : field?.type}
         value={(valueState || "").toString()}
         onChange={handleChange}
         onBlur={handleBlur}
+        {...formControlProps}
       />
     );
   }
