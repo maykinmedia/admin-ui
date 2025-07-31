@@ -190,6 +190,7 @@ export const Value = <T extends object = object>(rawProps: ValueProps<T>) => {
         autoFocus
         aria-label={_labelEdit}
         name={field!.name.toString()}
+        // @ts-expect-error - Runtime check included
         options={field.options}
         pad="h"
         type={type}
@@ -198,6 +199,7 @@ export const Value = <T extends object = object>(rawProps: ValueProps<T>) => {
         value={(valueState || "").toString()}
         onChange={handleChange}
         onBlur={handleBlur}
+        {...formControlProps}
       />
     );
   }

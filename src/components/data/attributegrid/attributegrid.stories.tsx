@@ -102,6 +102,47 @@ export const Editable: Story = {
   args: {
     ...AttributeGridComponent.args,
     editable: true,
+    separator: true,
+    formControlProps: {
+      pad: true,
+    },
+    fieldsets: [
+      [
+        "Information",
+        {
+          span: 12,
+          titleSpan: 12,
+          fields: ["id"],
+        },
+      ],
+      [
+        "",
+        {
+          fields: ["name", "descriptionLong", "category", "url", "releaseDate"],
+          span: 12,
+          colSpan: 6,
+        },
+      ],
+
+      [
+        "Availability",
+        {
+          fields: ["isAvailable", "stock"],
+          span: 12,
+          colSpan: 6,
+        },
+      ],
+      [
+        "More",
+        {
+          fields: ["price", "description"],
+          span: 12,
+          colSpan: 6,
+          titleSpan: 12,
+        },
+      ],
+    ],
+    object: FIXTURE_PRODUCT,
   },
   play: async ({ args, canvasElement }) => {
     const buttons = within(canvasElement).getAllByRole("button");
@@ -118,6 +159,6 @@ export const Editable: Story = {
       });
     }
     await userEvent.tab({ delay: 10 });
-    expect(args.onEdit).toHaveBeenCalledTimes(12);
+    expect(args.onEdit).toHaveBeenCalledTimes(10);
   },
 };
