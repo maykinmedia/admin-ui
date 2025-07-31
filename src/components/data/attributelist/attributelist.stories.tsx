@@ -31,6 +31,7 @@ export const WithTitle: Story = {
   args: {
     title: FIXTURE_PRODUCT.name,
     object: FIXTURE_PRODUCT,
+    titleSpan: 3,
   },
 };
 
@@ -48,6 +49,7 @@ export const SelectedFieldOnly: Story = {
     title: FIXTURE_PRODUCT.name,
     object: FIXTURE_PRODUCT,
     fields: ["name", "description", "price", "isAvailable"],
+    titleSpan: 3,
   },
 };
 
@@ -67,6 +69,7 @@ export const ColSpan: Story = {
       "url",
     ],
     colSpan: 3,
+    titleSpan: 3,
   },
 };
 
@@ -90,6 +93,6 @@ export const Editable: Story = {
       });
     }
     await userEvent.tab({ delay: 10 });
-    expect(args.onEdit).toHaveBeenCalledTimes(9);
+    expect(args.onEdit).toHaveBeenCalledTimes(10);
   },
 };

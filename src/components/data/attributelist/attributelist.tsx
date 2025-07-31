@@ -119,7 +119,6 @@ export const AttributePair = <T extends object = object>({
   onEdit,
 }: AttributePairProps<T>) => {
   const typedField = field2TypedField<T, keyof T>(field, [object]);
-
   /**
    * Gets called when the <Value>'s <FormControl> is blurred.
    */
