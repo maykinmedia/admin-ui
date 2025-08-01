@@ -6,6 +6,7 @@ import {
   FieldSet,
   GroupedDataProps,
   getContextData,
+  getFieldName,
   gettextFirst,
 } from "../../../lib";
 import { Badge } from "../../badge";
@@ -565,7 +566,7 @@ export const KanbanButton = <T extends object = object>({
   const fields = fieldset[1].fields;
   const titleField = fieldset[1].title || Object.keys(object)[0];
   const otherFields = fields.filter(
-    (field) => ![...urlFields, titleField].includes(field),
+    (field) => ![...urlFields, titleField].includes(getFieldName(field)),
   );
   const _onClick = (object.onClick || onClick) as typeof onClick;
 
@@ -601,10 +602,10 @@ export const KanbanButton = <T extends object = object>({
           >
             {otherFields.map((field) => (
               <Value
-                key={field.toString()}
+                key={getFieldName(field).toString()}
                 decorate={true}
                 pProps={{ size: "xs" }}
-                value={object[field]}
+                value={object[getFieldName(field)]}
               />
             ))}
           </Toolbar>

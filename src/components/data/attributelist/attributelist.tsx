@@ -2,7 +2,12 @@ import { serializeElement, string2Title } from "@maykin-ui/client-common";
 import clsx from "clsx";
 import React, { useCallback } from "react";
 
-import { Field, TypedField, field2TypedField } from "../../../lib";
+import {
+  Field,
+  TypedField,
+  field2TypedField,
+  getFieldName,
+} from "../../../lib";
 import { H3 } from "../../typography";
 import { Value, ValueEditableUnion } from "../value";
 import "./attributelist.scss";
@@ -18,7 +23,7 @@ export type AttributeListProps<T extends object = object> = Omit<
   colSpan?: number;
 
   /** The fields in object to show. */
-  fields?: Array<keyof T>;
+  fields: Array<Field<T> | TypedField<T>>;
 
   /** A title for the attribute list. */
   title?: string;
@@ -73,18 +78,20 @@ export const AttributeList = <T extends object = object>({
         {title && !isTitleAbove && renderTitle}
 
         <dl className="mykn-attributelist__list">
-          {fields.map((f) => (
-            <AttributePair<T>
-              key={f.toString()}
-              object={object}
-              editable={editable}
-              field={f}
-              labelEdit={labelEdit}
-              onBlur={onBlur}
-              onChange={onChange}
-              onEdit={onEdit}
-            />
-          ))}
+          {fields.map((f, i) => {
+            return (
+              <AttributePair<T>
+                key={i}
+                object={object}
+                editable={editable}
+                field={f}
+                labelEdit={labelEdit}
+                onBlur={onBlur}
+                onChange={onChange}
+                onEdit={onEdit}
+              />
+            );
+          })}
         </dl>
       </section>
     </div>
@@ -93,7 +100,7 @@ export const AttributeList = <T extends object = object>({
 
 export type AttributePairProps<T extends object = object> = {
   object: T;
-  field: Field<T> | TypedField<T, keyof T>;
+  field: Field<T> | TypedField<T>;
   onEdit?: (value: T) => void;
 } & Omit<ValueEditableUnion, "editing" | "field" | "onEdit">;
 
@@ -109,7 +116,7 @@ export const AttributePair = <T extends object = object>({
   onChange,
   onEdit,
 }: AttributePairProps<T>) => {
-  const typedField = field2TypedField<T, keyof T>(field, [object]);
+  const typedField = field2TypedField<T>(field, [object]);
 
   /**
    * Gets called when the <Value>'s <FormControl> is blurred.
@@ -129,7 +136,7 @@ export const AttributePair = <T extends object = object>({
   return (
     <div className="mykn-attributelist__pair">
       <dt className="mykn-attributelist__key">
-        {string2Title(field.toString())}
+        {string2Title(getFieldName(field).toString())}
       </dt>
       <dd className="mykn-attributelist__value">
         <Value

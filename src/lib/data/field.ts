@@ -18,7 +18,7 @@ export const DEFAULT_URL_FIELDS = [
 export type Field<T extends object = object> = keyof T;
 
 /** A key in object annotated with its type and optionally meta information. */
-export type TypedField<T extends object = object, F = Field<T> | string> = {
+export type TypedField<T extends object = object, F = keyof T> = {
   /** The field name. */
   name: F;
 
@@ -76,9 +76,9 @@ export type FieldType =
   | "jsx";
 
 /** A Django-admin like field_options definition. */
-export type FieldOptions<T extends object = object> = {
-  /** The fields to include in this fieldset. */
-  fields: Field<T>[];
+export type FieldOptions<T extends object = object, F = keyof T> = {
+  /** A `string[]` or `TypedField[]` containing the keys in to show data for. */
+  fields: Array<Field<T> | TypedField<T, F>>;
 
   /** When shown in a Kanban: the component to render. */
   // eslint-disable-next-line
@@ -98,9 +98,9 @@ export type FieldOptions<T extends object = object> = {
 };
 
 /** A Django-admin like fieldset definition. */
-export type FieldSet<T extends object = object> = [
+export type FieldSet<T extends object = object, F = keyof T> = [
   string | undefined,
-  FieldOptions<T>,
+  FieldOptions<T, F>,
 ];
 
 /**
@@ -109,7 +109,7 @@ export type FieldSet<T extends object = object> = [
  * @param objectList
  * @param base
  */
-export const fields2TypedFields = <T extends object, F = keyof T | string>(
+export const fields2TypedFields = <T extends object, F = keyof T>(
   optionallyTypedFields: Array<Field<T> | TypedField<T, F>>,
   objectList: T[],
   base?: Partial<TypedField<T, F>>,
@@ -124,7 +124,7 @@ export const fields2TypedFields = <T extends object, F = keyof T | string>(
  * @param objectList
  * @param base
  */
-export const field2TypedField = <T extends object, F = keyof T | string>(
+export const field2TypedField = <T extends object, F = keyof T>(
   optionallyTypedField: Field<T> | TypedField<T, F>,
   objectList: T[],
   base?: Partial<TypedField<T, F>>,
@@ -138,3 +138,27 @@ export const field2TypedField = <T extends object, F = keyof T | string>(
         }
       : optionallyTypedField,
   );
+
+/**
+ * Returns the name of a field.
+ *
+ * - If `field` is a primitive key (e.g., string, number, symbol), returns it directly.
+ * - If `field` is a `TypedField`, returns its `.name` property.
+ *
+ * @template T - The type of the source object.
+ * @template F - The type of the field name in a `TypedField` (defaults to keyof T or string).
+ * @param field - A field key or a typed field object.
+ * @returns The field name (key).
+ */
+export function getFieldName<T extends object>(field: Field<T>): keyof T;
+export function getFieldName<T extends object, F = keyof T>(
+  field: TypedField<T, F>,
+): F;
+export function getFieldName<T extends object, F = keyof T>(
+  field: Field<T> | TypedField<T, F>,
+): keyof T | F;
+export function getFieldName<T extends object, F = keyof T>(
+  field: Field<T> | TypedField<T, F>,
+): keyof T | F {
+  return isPrimitive(field) ? field : (field as TypedField<T, F>).name;
+}

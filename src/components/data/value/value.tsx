@@ -172,9 +172,10 @@ export const Value = <T extends object = object>(rawProps: ValueProps<T>) => {
       >
         <Value
           {...rawProps}
-          value={valueState}
+          boolProps={{ explicit: true }}
           editable={false}
           nested={true}
+          value={valueState}
         />
       </Button>
     );
@@ -187,7 +188,7 @@ export const Value = <T extends object = object>(rawProps: ValueProps<T>) => {
         {...formControlProps}
         autoFocus
         aria-label={_labelEdit}
-        checked={field!.type === "boolean" && valueState ? true : undefined}
+        checked={field!.type === "boolean" ? Boolean(valueState) : undefined}
         name={field!.name.toString()}
         options={field.options}
         pad="h"

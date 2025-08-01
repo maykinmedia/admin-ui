@@ -2,8 +2,7 @@ import React from "react";
 
 import { Kanban as KanbanComponent, KanbanProps } from "../../components";
 import { FieldSet } from "../../lib";
-import { CardBaseTemplate } from "../base";
-import { BodyBaseTemplateProps } from "../base/bodyBase";
+import { BodyBaseTemplateProps, CardBaseTemplate } from "../base";
 
 export type KanbanTemplateProps<T extends object = object> =
   BodyBaseTemplateProps & {

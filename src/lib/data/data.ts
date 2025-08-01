@@ -1,4 +1,4 @@
-import { Field, FieldSet, FieldType } from "./field";
+import { Field, FieldSet, FieldType, TypedField, getFieldName } from "./field";
 
 /**
  * Creates an array of new objects containing only the specified fields from the provided object,
@@ -27,15 +27,21 @@ export const dataByFieldsets = <T extends object = object>(
  */
 export const dataByFields = <T extends object = object>(
   object: T,
-  fields: Field<T>[],
-): T =>
-  fields.reduce(
-    (acc, val) => ({
+  fields: Array<Field<T> | TypedField<T>>,
+): T => {
+  return fields.reduce((acc, val) => {
+    const key = getFieldName(val);
+
+    if (!(key in object)) {
+      return acc;
+    }
+
+    return {
       ...acc,
-      [val]: object[val],
-    }),
-    {} as T,
-  );
+      [key]: object[key as keyof T],
+    };
+  }, {} as T);
+};
 
 /**
  * Attempts to find `field`'s type based on its presence in a row in `objectList`.

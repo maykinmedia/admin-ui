@@ -69,6 +69,10 @@ export const isInput = (props: FormField): props is InputProps =>
   !isDatePicker(props) &&
   !isRadio(props);
 
+/**
+ * Typeguard for InputProps.
+ * TODO: KEEP IN SYNC WITH OTHER TYPEGUARDS!
+ */
 /** Typeguard for ChoiceFieldProps. */
 export const isChoiceField = (props: FormField): props is ChoiceFieldProps =>
   // @ts-expect-error - Check if exists.

@@ -99,5 +99,5 @@ export const getContextData = <T extends object = object>(
     );
     return [_fieldsets, _objectLists];
   }
-  return [fieldsets as FieldSet[], objectLists as T[][]];
+  return [fieldsets as FieldSet<T>[], objectLists as T[][]];
 };
