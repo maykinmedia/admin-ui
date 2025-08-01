@@ -73,6 +73,7 @@ export const AttributeGrid = <T extends object = object>({
     const title = fieldset[0];
     const row: AttributeListProps<T> = {
       ...attributeListProps,
+      fields: fieldset[1].fields,
       object: object,
       title: title,
       colSpan: fieldset[1].colSpan || attributeListProps.colSpan,
