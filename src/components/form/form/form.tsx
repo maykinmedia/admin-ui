@@ -114,7 +114,7 @@ export type FormProps<T extends SerializedFormData = SerializedFormData> = Omit<
   validators?: Validator[];
 
   /** Gets passed to `fields` if they don't specify their own handler. */
-  onChange?: React.ChangeEventHandler<HTMLInputElement | HTMLSelectElement>;
+  onChange?: React.ChangeEventHandler;
 
   /** Gets called when the form is submitted, setting this overrides default implementation. */
   onSubmit?: (event: FormEvent<HTMLFormElement>, data: T) => void;

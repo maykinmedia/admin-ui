@@ -23,7 +23,7 @@ export type TypedField<T extends object = object, F = keyof T> = {
   name: F;
 
   /** The field's values type. */
-  type: FieldType | string;
+  type: FieldType;
 
   /** Whether the field should be active by default. */
   active?: boolean;
@@ -73,6 +73,7 @@ export type FieldType =
   | "null"
   | "number"
   | "string"
+  | "text" // Similar to string but  when rendered uses <Textarea />.
   | "jsx";
 
 /** A Django-admin like field_options definition. */

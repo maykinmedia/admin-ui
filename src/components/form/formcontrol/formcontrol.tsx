@@ -13,6 +13,7 @@ import {
   isInput,
   isRadio,
   isRadioGroup,
+  isTextarea,
 } from "../../../lib";
 import { Checkbox } from "../checkbox";
 import { ChoiceField } from "../choicefield";
@@ -24,6 +25,7 @@ import { TRANSLATIONS } from "../form/translations";
 import { Input, InputProps } from "../input";
 import { Label } from "../label";
 import { Radio } from "../radio";
+import { Textarea } from "../textarea";
 import "./formcontrol.scss";
 
 // FIXME: Clashes in types, add generic for FormField?
@@ -119,10 +121,9 @@ export const FormControl: React.FC<FormControlProps> = ({
         aria-invalid={!!error}
         aria-describedby={error ? idError : undefined}
         {...props}
-        onChange={(
-          e: React.ChangeEvent<HTMLInputElement & HTMLSelectElement>,
-        ) => {
+        onChange={(e: React.ChangeEvent) => {
           setIsDirty(true);
+          // @ts-expect-error - EventTarget type not resolved.
           props.onChange?.(e);
         }}
       />
@@ -163,6 +164,10 @@ export const FormWidget: React.FC<FormField> = ({ ...props }) => {
 
   if (isChoiceField(props)) {
     return <ChoiceField {...props} />;
+  }
+
+  if (isTextarea(props)) {
+    return <Textarea {...props} />;
   }
 
   if (isInput(props)) {
