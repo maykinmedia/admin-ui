@@ -73,6 +73,7 @@ const playFormComponent = async ({
   const math = canvas.getByLabelText("Math");
   const yes = canvas.getByLabelText("Yes");
   const no = canvas.getByLabelText("No");
+  const comments = canvas.getByLabelText("Comments");
   const acceptTos = canvas.getByLabelText(
     "I have read and accept the terms and conditions",
   );
@@ -160,6 +161,17 @@ const playFormComponent = async ({
   await expect(no).toBeChecked();
   await expectLogToBe(canvasElement, "subscribe_newsletter", "no");
 
+  await userEvent.clear(comments);
+  await userEvent.type(comments, "Nothing to here please disperse", {
+    delay: 10,
+  });
+  await expect(comments).toHaveValue("Nothing to here please disperse");
+  await expectLogToBe(
+    canvasElement,
+    "comments",
+    "Nothing to here please disperse",
+  );
+
   await userEvent.click(acceptTos);
   await expect(acceptTos).toBeChecked();
   if (formik) {
@@ -181,6 +193,7 @@ export const FormComponent: Story = {
       { label: "Last name", name: "last_name", required: true },
       { label: "Age", name: "age", type: "number", required: true },
       { label: "Address", name: "address", required: true, inputSize: 50 },
+
       {
         label: "Address (addition)",
         name: "address",
@@ -188,12 +201,14 @@ export const FormComponent: Story = {
         required: true,
         inputSize: 10,
       },
+
       {
         label: "Date of birth",
         name: "date_of_birth",
         type: "date",
         required: true,
       },
+
       {
         label: "Select school year",
         name: "school_year",
@@ -206,6 +221,7 @@ export const FormComponent: Story = {
           { label: "Graduate" },
         ],
       },
+
       {
         label: "Select courses",
         name: "courses",
@@ -217,6 +233,7 @@ export const FormComponent: Story = {
           { label: "Science", value: "science" },
         ],
       },
+
       {
         options: [
           { label: "Football", value: "football" },
@@ -231,6 +248,7 @@ export const FormComponent: Story = {
         label: "Favourite sport",
         multiple: true,
       },
+
       {
         label: "Receive newsletter",
         name: "subscribe_newsletter",
@@ -240,6 +258,13 @@ export const FormComponent: Story = {
           { label: "Yes", value: "yes" },
           { label: "No", value: "no" },
         ],
+      },
+
+      {
+        label: "Comments",
+        name: "comments",
+        rows: 5,
+        cols: 50,
       },
 
       {
@@ -286,13 +311,16 @@ export const UsageWithFormik: Story = {
       { label: "Last name", name: "last_name", required: true },
       { label: "Age", name: "age", type: "number", required: true },
       { label: "Address", name: "address[0]", required: true },
+
       {
         label: "Address (addition)",
         name: "address[1]",
         type: "number",
         required: true,
       },
+
       { label: "Date of birth", name: "date_of_birth", type: "date" },
+
       {
         label: "Select school year",
         name: "school_year",
@@ -305,6 +333,7 @@ export const UsageWithFormik: Story = {
           { label: "Graduate" },
         ],
       },
+
       {
         label: "Select courses",
         name: "courses",
@@ -316,6 +345,7 @@ export const UsageWithFormik: Story = {
           { label: "Science", value: "science" },
         ],
       },
+
       {
         options: [
           { label: "Football", value: "football" },
@@ -330,6 +360,7 @@ export const UsageWithFormik: Story = {
         label: "Favourite sport",
         multiple: true,
       },
+
       {
         label: "Receive newsletter",
         name: "subscribe_newsletter",
@@ -340,6 +371,14 @@ export const UsageWithFormik: Story = {
           { label: "No", value: "no" },
         ],
       },
+
+      {
+        label: "Comments",
+        name: "comments",
+        rows: 5,
+        cols: 50,
+      },
+
       {
         label: "I have read and accept the terms and conditions",
         name: "accept_tos",

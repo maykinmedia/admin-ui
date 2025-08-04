@@ -30,7 +30,7 @@ export const AttributeGridComponent: Story = {
           fields: [
             "id",
             "name",
-            "description",
+            { name: "description", type: "text" },
             "category",
             "releaseDate",
             "url",

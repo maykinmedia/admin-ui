@@ -1,0 +1,169 @@
+.mykn-textarea {
+  --mykn-textarea-padding-v: 0;
+  --mykn-textarea-padding-h: 0;
+  --mykn-textarea-font-size: var(--typography-font-size-body-s);
+  --mykn-textarea-font-weight: var(--typography-font-weight-normal);
+  --mykn-textarea-line-height: var(--typography-line-height-body-s);
+
+  appearance: none;
+  align-items: center;
+  background: var(--typography-color-background);
+  border: 1px solid var(--form-color-border);
+  border-radius: var(--border-radius-s);
+  box-sizing: border-box;
+  color: var(--typography-color-body);
+  font-family: var(--typography-font-family-body);
+  font-size: var(--mykn-textarea-font-size);
+  font-weight: var(--mykn-textarea-font-weight);
+  line-height: calc(var(--mykn-textarea-line-height) - 2px);
+  margin: 0;
+  padding-block: var(--mykn-textarea-padding-v);
+  padding-inline: var(--mykn-textarea-padding-h);
+  position: relative;
+  max-width: 100%;
+
+  &--pad-h {
+    --mykn-textarea-padding-h: var(--spacing-xs-h);
+  }
+
+  &--pad-v {
+    --mykn-textarea-padding-v: var(
+      --mykn-textarea-padding-xs,
+      var(--spacing-xs-v)
+    );
+  }
+
+  &--size-xl {
+    --mykn-textarea-font-size: var(--typography-font-size-xl);
+    --mykn-textarea-line-height: var(--typography-line-height-xl);
+    --mykn-textarea-padding-xs: calc(var(--spacing-xs-h) / 2);
+  }
+
+  &--size-xs {
+    --mykn-textarea-font-size: var(--typography-font-size-body-xs);
+    --mykn-textarea-line-height: var(--typography-line-height-body-xs);
+    --mykn-textarea-padding-xs: calc(var(--spacing-xs-h) / 2);
+  }
+
+  &--size-xxs {
+    --mykn-textarea-font-size: var(--typography-font-size-body-xs);
+    --mykn-textarea-line-height: var(--typography-line-height-body-xs);
+    --mykn-textarea-padding-xs: calc(var(--spacing-xs-h) / 2);
+    --mykn-textarea-height: calc(3 * var(--spacing-xs-h) + 2px) !important;
+    --mykn-textarea-width: calc(3 * var(--spacing-xs-h) + 2px) !important;
+  }
+
+  &:disabled,
+  &--disabled,
+  &--muted {
+    color: var(--typography-color-muted);
+    opacity: 0.4;
+  }
+
+  &::placeholder {
+    color: var(--typography-color-muted);
+  }
+
+  &[maxlength],
+  &[size] {
+    width: auto;
+  }
+
+  &[type="checkbox"],
+  &[type="radio"] {
+    cursor: pointer;
+    height: 16px;
+    max-width: 16px;
+    min-width: 16px;
+    width: 16px;
+  }
+
+  &[type="checkbox"] {
+    &:checked {
+      background-color: var(--page-color-primary);
+    }
+
+    &:checked:before {
+      background-color: var(--page-color-primary-contrast);
+      mask-image: url(data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2217%22%20height%3D%2216%22%20viewBox%3D%220%200%2017%2016%22%20fill%3D%22none%22%3E%3Cpath%20d%3D%22m3.594%208%204.019%204.019a1%201%200%200%200%201.601-.26L13.594%203%22%20stroke%3D%22%23341A90%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22%2F%3E%3C%2Fsvg%3E);
+      mask-position: center;
+      mask-repeat: no-repeat;
+      mask-size: calc(100% - 2px); // Not bound to spacing.
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  &[type="radio"] {
+    background-color: var(--typography-color-background);
+    border-radius: 50%;
+
+    &:checked:before {
+      background-color: var(--page-color-primary);
+      border-radius: 50%;
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 12px;
+      height: 12px;
+    }
+  }
+
+  &[type="color"] {
+    min-height: 38px;
+    overflow: hidden;
+    padding: 0;
+
+    &::-webkit-color-swatch-wrapper {
+      padding: 0;
+    }
+
+    &::-webkit-color-swatch {
+      border: none;
+    }
+
+    &:before,
+    &:after {
+      align-items: center;
+      color: var(--typography-color-body);
+      content: attr(value);
+      display: flex;
+      height: 50%;
+      left: 50%;
+      position: absolute;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    &:before {
+      opacity: 0.9;
+      background-color: var(--typography-color-background);
+      border-radius: 6px;
+      color: transparent;
+      padding: var(--spacing-xs-v) var(--spacing-xs-h);
+    }
+  }
+
+  &[type="file"] {
+    border: none;
+  }
+
+  &--variant-transparent {
+    background-color: transparent;
+  }
+
+  .mykn-stackctx & + .mykn-icon {
+    pointer-events: none;
+    color: var(--typography-color-muted);
+    inset-block-start: 50%;
+    inset-inline-end: var(--spacing-xs-h);
+    position: absolute;
+    transform: translateY(-50%);
+  }
+}

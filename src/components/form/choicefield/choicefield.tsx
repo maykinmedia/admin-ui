@@ -5,8 +5,8 @@ import { RadioGroup, RadioGroupProps } from "../radio";
 import { Select, SelectProps } from "../select";
 
 export type ChoiceFieldProps<
-  Element = HTMLDivElement,
-  FormElement = HTMLSelectElement,
+  Element extends HTMLElement = HTMLDivElement,
+  FormElement extends HTMLElement = HTMLSelectElement,
 > = Omit<React.HTMLAttributes<Element>, "onChange" | "value"> & {
   /** Can be used to generate `SelectOption` components from an array of objects. */
   options: Option[];

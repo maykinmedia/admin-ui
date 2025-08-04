@@ -142,6 +142,8 @@ export const AttributePair = <T extends object = object>({
         <Value
           editable={editable}
           field={typedField}
+          // @ts-expect-error - Some entries in union may not have pad.
+          formControlProps={{ justify: "stretch", pad: false }}
           labelEdit={labelEdit}
           value={object[typedField.name]}
           onBlur={handleBlur}

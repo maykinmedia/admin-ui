@@ -11,6 +11,7 @@ import React, {
 
 import {
   TypedField,
+  getFormFieldTypeByFieldType,
   gettextFirst,
   isBool,
   isNull,
@@ -183,16 +184,17 @@ export const Value = <T extends object = object>(rawProps: ValueProps<T>) => {
 
   // Returns <FormControl> when editing
   if (editable && editingState) {
+    const type = getFormFieldTypeByFieldType(field.type);
     return (
       <FormControl
-        {...formControlProps}
         autoFocus
         aria-label={_labelEdit}
-        checked={field!.type === "boolean" ? Boolean(valueState) : undefined}
         name={field!.name.toString()}
         options={field.options}
         pad="h"
-        type={field!.type === "boolean" ? "checkbox" : field?.type}
+        type={type}
+        {...formControlProps}
+        checked={field!.type === "boolean" ? Boolean(valueState) : undefined}
         value={(valueState || "").toString()}
         onChange={handleChange}
         onBlur={handleBlur}
