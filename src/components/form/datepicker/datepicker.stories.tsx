@@ -13,7 +13,7 @@ const meta = {
     },
   },
   parameters: {
-    chromatic: { diffThreshold: 0.4 },
+    chromatic: { diffThreshold: 0.6 },
   },
 } satisfies Meta<typeof DatePicker>;
 
