@@ -118,7 +118,7 @@ export const Editable: Story = {
       [
         "",
         {
-          fields: ["name", "descriptionLong", "category", "url", "releaseDate"],
+          fields: ["name", "description", "category", "url", "releaseDate"],
           span: 12,
           colSpan: 6,
         },
