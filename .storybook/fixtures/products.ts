@@ -3,8 +3,6 @@ export const FIXTURE_PRODUCTS = [
     id: 1,
     name: "Wireless Headphones",
     description: "High-quality wireless headphones with noise cancellation.",
-    descriptionLong:
-      "These wireless headphones offer superior sound quality and comfort, perfect for long listening sessions. They feature active noise cancellation, a long-lasting battery, and a sleek design.",
     url: "https://www.example.com/products/1",
     price: 99.99,
     stock: 50,
@@ -16,8 +14,6 @@ export const FIXTURE_PRODUCTS = [
     id: 2,
     name: "Smartwatch",
     description: "A smartwatch with fitness tracking and notifications.",
-    descriptionLong:
-      "This smartwatch not only tells time but also tracks your fitness activities, monitors your heart rate, and keeps you connected with notifications from your smartphone. It has a stylish design and is water-resistant.",
     url: "https://www.example.com/products/2",
     price: 199.99,
     stock: 30,
@@ -29,8 +25,6 @@ export const FIXTURE_PRODUCTS = [
     id: 3,
     name: "Laptop Stand",
     description: "An ergonomic laptop stand to improve posture while working.",
-    descriptionLong:
-      "This laptop stand is designed to elevate your laptop to eye level, reducing neck strain and improving your posture. It is adjustable, lightweight, and made from durable materials.",
     url: "https://www.example.com/products/3",
     price: 39.99,
     stock: 100,
@@ -42,8 +36,6 @@ export const FIXTURE_PRODUCTS = [
     id: 4,
     name: "Bluetooth Speaker",
     description: "Portable Bluetooth speaker with rich sound quality.",
-    descriptionLong:
-      "Enjoy your music on the go with this portable Bluetooth speaker. It delivers rich sound quality, has a long battery life, and is compatible with all Bluetooth-enabled devices. Perfect for parties or outdoor activities.",
     url: "https://www.example.com/products/4",
     price: 49.99,
     stock: 75,
@@ -55,8 +47,6 @@ export const FIXTURE_PRODUCTS = [
     id: 5,
     name: "4K Monitor",
     description: "High-resolution 4K monitor for stunning visuals.",
-    descriptionLong:
-      "This 4K monitor provides stunning visuals with vibrant colors and sharp details. It is perfect for gaming, graphic design, or watching movies. The monitor features multiple connectivity options and an adjustable stand for comfort.",
     url: "https://www.example.com/products/5",
     price: 299.99,
     stock: 20,
@@ -68,8 +58,6 @@ export const FIXTURE_PRODUCTS = [
     id: 6,
     name: "Wireless Mouse",
     description: "Ergonomic wireless mouse with customizable buttons.",
-    descriptionLong:
-      "This ergonomic wireless mouse is designed for comfort and efficiency. It features customizable buttons, a high-precision sensor, and a long battery life. Ideal for both work and gaming.",
     url: "https://www.example.com/products/6",
     price: 29.99,
     stock: 150,
@@ -81,8 +69,6 @@ export const FIXTURE_PRODUCTS = [
     id: 7,
     name: "Gaming Keyboard",
     description: "Mechanical gaming keyboard with RGB lighting.",
-    descriptionLong:
-      "This mechanical gaming keyboard features customizable RGB lighting, responsive keys, and a durable design. It is perfect for gamers who want a competitive edge and a stylish setup.",
     url: "https://www.example.com/products/7",
     price: 89.99,
     stock: 60,
@@ -94,8 +80,6 @@ export const FIXTURE_PRODUCTS = [
     id: 8,
     name: "External Hard Drive",
     description: "1TB external hard drive for data storage.",
-    descriptionLong:
-      "This 1TB external hard drive provides ample storage for your files, photos, and videos. It is compact, portable, and features fast data transfer speeds. Perfect for backing up important data or expanding your storage capacity.",
     url: "https://www.example.com/products/8",
     price: 69.99,
     stock: 40,
@@ -107,8 +91,6 @@ export const FIXTURE_PRODUCTS = [
     id: 9,
     name: "Phone Case",
     description: "Durable phone case with shock absorption.",
-    descriptionLong:
-      "This durable phone case is designed to protect your device from drops and scratches. It features shock absorption technology, a slim profile, and precise cutouts for easy access to buttons and ports.",
     url: "https://www.example.com/products/9",
     price: 19.99,
     stock: 200,
@@ -121,8 +103,6 @@ export const FIXTURE_PRODUCTS = [
     name: "Smart TV",
     description:
       "65-inch smart TV with 4K resolution and streaming capabilities.",
-    descriptionLong:
-      "This 65-inch smart TV offers stunning 4K resolution, vibrant colors, and built-in streaming capabilities. Enjoy your favorite shows, movies, and games with exceptional clarity and sound quality. It also features voice control and multiple HDMI ports.",
     url: "https://www.example.com/products/10",
     price: 599.99,
     stock: 10,
