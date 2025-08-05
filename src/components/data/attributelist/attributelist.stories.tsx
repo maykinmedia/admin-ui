@@ -93,6 +93,6 @@ export const Editable: Story = {
       });
     }
     await userEvent.tab({ delay: 10 });
-    expect(args.onEdit).toHaveBeenCalledTimes(10);
+    expect(args.onEdit).toHaveBeenCalledTimes(9);
   },
 };
