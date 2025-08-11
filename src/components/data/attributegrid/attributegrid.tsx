@@ -36,7 +36,12 @@ export type AttributeGridProps<T extends object = object> = {
   separator?: boolean;
 } & Pick<
   ValueEditableUnion,
-  "editable" | "labelEdit" | "onBlur" | "onChange" | "formControlProps"
+  | "editable"
+  | "editing"
+  | "labelEdit"
+  | "onBlur"
+  | "onChange"
+  | "formControlProps"
 >;
 /**
  * AttributeGrid Component
@@ -48,6 +53,7 @@ export type AttributeGridProps<T extends object = object> = {
 export const AttributeGrid = <T extends object = object>({
   attributeListProps = {},
   editable,
+  editing,
   object,
   fieldsets,
   formControlProps = {},
@@ -77,6 +83,7 @@ export const AttributeGrid = <T extends object = object>({
     const title = fieldset[0];
     const row: AttributeListProps<T> = {
       ...attributeListProps,
+      editing: editing,
       fields: fieldset[1].fields,
       object: object,
       title: title,

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { expect, fn, userEvent, waitFor, within } from "storybook/test";
+import { expect, fn, userEvent, within } from "storybook/test";
 
 import { FIXTURE_PRODUCT } from "../../../../.storybook/fixtures/products";
 import { AttributeGrid } from "./attributegrid";
@@ -8,12 +8,17 @@ const meta: Meta<typeof AttributeGrid<typeof FIXTURE_PRODUCT>> = {
   title: "Data/AttributeGrid",
   component: AttributeGrid<typeof FIXTURE_PRODUCT>,
   args: {
-    onEdit: fn(),
+    onBlur: fn(),
   },
   argTypes: {
     editable: {
       control: "boolean",
-      description: "Whether the value should be editable (requires field)",
+      description:
+        "Whether the value are editable (defaults to field.editable)",
+    },
+    editing: {
+      control: "boolean",
+      description: "Whether the values are currently being edited.",
     },
   },
 };
@@ -102,6 +107,7 @@ export const Editable: Story = {
   args: {
     ...AttributeGridComponent.args,
     editable: true,
+    editing: true,
     separator: true,
     formControlProps: {
       pad: true,
@@ -145,20 +151,16 @@ export const Editable: Story = {
     object: FIXTURE_PRODUCT,
   },
   play: async ({ args, canvasElement }) => {
-    const buttons = within(canvasElement).getAllByRole("button");
-    for (const button of buttons) {
-      await userEvent.click(button, { delay: 10 });
+    const spinbuttons = within(canvasElement).getAllByRole("spinbutton");
+    const textboxes = within(canvasElement).getAllByRole("textbox");
+    const checkboxes = within(canvasElement).getAllByRole("checkbox");
+    const controls = [...spinbuttons, ...textboxes, ...checkboxes];
 
-      await waitFor(() => {
-        const canvas = within(canvasElement);
-        return (
-          canvas.queryByRole("spinbutton") ||
-          canvas.queryByRole("textbox") ||
-          canvas.queryByRole("checkbox")
-        );
-      });
+    await userEvent.click(spinbuttons[0]);
+    for (let i = 0; i < controls.length; i++) {
+      await userEvent.tab({ delay: 100 });
     }
-    await userEvent.tab({ delay: 10 });
-    expect(args.onEdit).toHaveBeenCalledTimes(10);
+
+    expect(args.onBlur).toHaveBeenCalledTimes(10);
   },
 };

@@ -38,7 +38,7 @@ export type AttributeListProps<T extends object = object> = Omit<
   onEdit?: (value: T) => void;
 } & Pick<
     ValueEditableUnion,
-    "editable" | "labelEdit" | "onChange" | "formControlProps"
+    "editable" | "editing" | "labelEdit" | "onChange" | "formControlProps"
   >;
 
 /**
@@ -52,6 +52,7 @@ export const AttributeList = <T extends object = object>({
   colSpan,
   object = {} as T,
   editable,
+  editing,
   fields = Object.keys(object) as Field<T>[],
   formControlProps,
   labelEdit,
@@ -88,6 +89,7 @@ export const AttributeList = <T extends object = object>({
                 key={i}
                 object={object}
                 editable={editable}
+                editing={editing}
                 field={f}
                 formControlProps={formControlProps}
                 labelEdit={labelEdit}
@@ -109,7 +111,12 @@ export type AttributePairProps<T extends object = object> = {
   onEdit?: (value: T) => void;
 } & Pick<
   ValueEditableUnion,
-  "formControlProps" | "editable" | "labelEdit" | "onBlur" | "onChange"
+  | "formControlProps"
+  | "editable"
+  | "editing"
+  | "labelEdit"
+  | "onBlur"
+  | "onChange"
 >;
 
 /**
@@ -120,6 +127,7 @@ export const AttributePair = <T extends object = object>({
   field,
   formControlProps,
   editable,
+  editing,
   labelEdit,
   onBlur,
   onChange,
@@ -150,6 +158,7 @@ export const AttributePair = <T extends object = object>({
       <dd className="mykn-attributelist__value">
         <Value
           editable={editable}
+          editing={editing}
           field={typedField}
           formControlProps={{
             justify: "stretch",

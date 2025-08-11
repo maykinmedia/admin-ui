@@ -8,7 +8,8 @@ const meta: Meta<typeof Value> = {
   argTypes: {
     editable: {
       control: "boolean",
-      description: "Whether the value should be editable (requires field)",
+      description:
+        "Whether the value should be editable (defaults to field.editable)",
     },
     field: {
       control: "object",
@@ -52,11 +53,16 @@ export const Null = {
 
 export const Editable = {
   args: {
-    editable: true,
+    editing: true,
+    error: "Please enter valid value",
     value: "John Doe",
     field: {
+      editable: true,
       name: "name",
       type: "string",
+    },
+    formControlProps: {
+      forceShowError: true,
     },
   },
 } as Story;

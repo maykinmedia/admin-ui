@@ -36,6 +36,9 @@ export type ValueProps<T extends object = object> = Omit<
   /** Whether to use a "decorative" component instead of `<P>` if applicable. */
   decorate?: boolean;
 
+  /** An error message to show. */
+  error?: string;
+
   /** Is set, renders an `<A>` with `href` set. */
   href?: string;
 
@@ -97,12 +100,13 @@ export const Value = <T extends object = object>(rawProps: ValueProps<T>) => {
     badgeProps,
     boolProps,
     buttonProps,
+    error,
     formControlProps,
     pProps,
     decorate = false,
-    editable,
     editing,
     field,
+    editable = field?.editable,
     href = "",
     labelEdit,
     nested = false,
@@ -118,10 +122,12 @@ export const Value = <T extends object = object>(rawProps: ValueProps<T>) => {
     label: field?.name || "",
   });
 
-  const [editingState, setEditingState] = useState<boolean>();
+  const [editingState, setEditingState] = useState<boolean>(
+    Boolean(editable && editing),
+  );
   useEffect(() => {
-    setEditingState(editable && editing);
-  }, [editing]);
+    setEditingState(Boolean(editable && editing));
+  }, [editable, editing]);
 
   const [valueState, setValueStateState] = useState<unknown>();
   useEffect(() => {
@@ -145,7 +151,7 @@ export const Value = <T extends object = object>(rawProps: ValueProps<T>) => {
    */
   const handleClick: MouseEventHandler = useCallback<MouseEventHandler>(
     (e) => {
-      setEditingState(editable && true);
+      setEditingState(Boolean(editable && true));
       onEdit?.(e);
       onClick?.(e);
     },
@@ -154,10 +160,10 @@ export const Value = <T extends object = object>(rawProps: ValueProps<T>) => {
 
   const handleBlur = useCallback<FocusEventHandler>(
     (e) => {
-      setEditingState(false);
+      if (typeof editing === "undefined") setEditingState(false);
       onBlur?.(e);
     },
-    [onBlur],
+    [editing, onBlur],
   );
 
   if (editable && !editingState) {
@@ -184,11 +190,13 @@ export const Value = <T extends object = object>(rawProps: ValueProps<T>) => {
 
   // Returns <FormControl> when editing
   if (editable && editingState) {
+    // @ts-expect-error - Fields is set here.
     const type = getFormFieldTypeByFieldType(field.type);
     return (
       <FormControl
-        autoFocus
+        autoFocus={typeof editing === "undefined"}
         aria-label={_labelEdit}
+        error={error}
         name={field!.name.toString()}
         // @ts-expect-error - Runtime check included
         options={field.options}
