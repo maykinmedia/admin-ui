@@ -1,7 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, fn, userEvent, within } from "storybook/test";
 
-import { FIXTURE_PRODUCT } from "../../../../.storybook/fixtures/products";
+import {
+  FIXTURE_PRODUCT,
+  FIXTURE_PRODUCT_FIELDS,
+} from "../../../../.storybook/fixtures/products";
 import { AttributeList } from "./attributelist";
 
 const meta: Meta<typeof AttributeList<typeof FIXTURE_PRODUCT>> = {
@@ -9,8 +12,8 @@ const meta: Meta<typeof AttributeList<typeof FIXTURE_PRODUCT>> = {
   component: AttributeList<typeof FIXTURE_PRODUCT>,
   args: {
     onBlur: fn(),
-    // onEdit: fn(),
-    // onChange: fn(),
+    onEdit: fn(),
+    onChange: fn(),
   },
   argTypes: {
     editable: {
@@ -79,24 +82,18 @@ export const ColSpan: Story = {
     titleSpan: 3,
   },
 };
-
 export const Editable: Story = {
   args: {
     editable: true,
     editing: true,
+    fields: FIXTURE_PRODUCT_FIELDS,
+    formControlProps: { forceShowError: true },
     object: FIXTURE_PRODUCT,
   },
-  play: async ({ args, canvasElement }) => {
-    const spinbuttons = within(canvasElement).getAllByRole("spinbutton");
-    const textboxes = within(canvasElement).getAllByRole("textbox");
-    const checkboxes = within(canvasElement).getAllByRole("checkbox");
-    const controls = [...spinbuttons, ...textboxes, ...checkboxes];
-
-    await userEvent.click(spinbuttons[0]);
-    for (let i = 0; i < controls.length; i++) {
-      await userEvent.tab({ delay: 100 });
-    }
-
-    expect(args.onBlur).toHaveBeenCalledTimes(9);
+  play: async ({ canvasElement }) => {
+    const url = await within(canvasElement).findByLabelText('Edit "url"');
+    await userEvent.clear(url);
+    const error = await within(canvasElement).findByRole("alert");
+    expect(error).toBeVisible();
   },
 };

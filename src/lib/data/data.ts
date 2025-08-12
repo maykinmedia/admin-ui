@@ -51,7 +51,7 @@ export const dataByFields = <T extends object = object>(
  */
 export const typeByDataArray = <T extends object = object>(
   field: Field<T>,
-  objectList: T[],
+  objectList: T[] = [],
 ): FieldType => {
   const validTypes = ["string", "number", "boolean", "null"];
   const fieldPopulatedRow = objectList.find(

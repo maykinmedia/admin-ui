@@ -1,7 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, fn, userEvent, within } from "storybook/test";
 
-import { FIXTURE_PRODUCT } from "../../../../.storybook/fixtures/products";
+import {
+  FIXTURE_PRODUCT,
+  FIXTURE_PRODUCT_FIELDSETS,
+} from "../../../../.storybook/fixtures/products";
 import { AttributeGrid } from "./attributegrid";
 
 const meta: Meta<typeof AttributeGrid<typeof FIXTURE_PRODUCT>> = {
@@ -9,6 +12,7 @@ const meta: Meta<typeof AttributeGrid<typeof FIXTURE_PRODUCT>> = {
   component: AttributeGrid<typeof FIXTURE_PRODUCT>,
   args: {
     onBlur: fn(),
+    onChange: fn(),
   },
   argTypes: {
     editable: {
@@ -103,64 +107,21 @@ export const AttributeGridWithTitleSpan12: Story = {
 };
 
 export const Editable: Story = {
-  ...AttributeGridComponent,
   args: {
-    ...AttributeGridComponent.args,
     editable: true,
     editing: true,
     separator: true,
     formControlProps: {
       pad: true,
+      forceShowError: true,
     },
-    fieldsets: [
-      [
-        "Information",
-        {
-          span: 12,
-          titleSpan: 12,
-          fields: ["id"],
-        },
-      ],
-      [
-        "",
-        {
-          fields: ["name", "description", "category", "url", "releaseDate"],
-          span: 12,
-          colSpan: 6,
-        },
-      ],
-
-      [
-        "Availability",
-        {
-          fields: ["isAvailable", "stock"],
-          span: 12,
-          colSpan: 6,
-        },
-      ],
-      [
-        "More",
-        {
-          fields: ["price", "description"],
-          span: 12,
-          colSpan: 6,
-          titleSpan: 12,
-        },
-      ],
-    ],
+    fieldsets: FIXTURE_PRODUCT_FIELDSETS,
     object: FIXTURE_PRODUCT,
   },
-  play: async ({ args, canvasElement }) => {
-    const spinbuttons = within(canvasElement).getAllByRole("spinbutton");
-    const textboxes = within(canvasElement).getAllByRole("textbox");
-    const checkboxes = within(canvasElement).getAllByRole("checkbox");
-    const controls = [...spinbuttons, ...textboxes, ...checkboxes];
-
-    await userEvent.click(spinbuttons[0]);
-    for (let i = 0; i < controls.length; i++) {
-      await userEvent.tab({ delay: 100 });
-    }
-
-    expect(args.onBlur).toHaveBeenCalledTimes(10);
+  play: async ({ canvasElement }) => {
+    const url = await within(canvasElement).findByLabelText('Edit "url"');
+    await userEvent.clear(url);
+    const error = await within(canvasElement).findByRole("alert");
+    expect(error).toBeVisible();
   },
 };

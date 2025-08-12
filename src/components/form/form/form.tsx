@@ -1,4 +1,8 @@
-import { serializeFormElement, ucFirst } from "@maykin-ui/client-common";
+import {
+  forceArray,
+  serializeFormElement,
+  ucFirst,
+} from "@maykin-ui/client-common";
 import clsx from "clsx";
 import React, {
   FormEvent,
@@ -11,16 +15,19 @@ import React, {
 import { ConfigContext } from "../../../contexts";
 import {
   DEFAULT_VALIDATION_ERROR_REQUIRED,
+  FieldErrors,
   FormField,
+  FormValidator,
   SerializedFormData,
   Validator,
-  forceArray,
+  errors2errorsArray,
   getErrorFromErrors,
   getValueFromFormData,
   gettextFirst,
   stringifyContext,
   useIntl,
   validateForm,
+  validateRequired,
 } from "../../../lib";
 import { ButtonProps } from "../../button";
 import { Toolbar, ToolbarItem, ToolbarProps } from "../../toolbar";
@@ -56,7 +63,7 @@ export type FormProps<T extends SerializedFormData = SerializedFormData> = Omit<
   values?: T;
 
   /** Error messages, applied to automatically rendered field. */
-  errors?: Record<keyof FormProps["fields"], string>;
+  errors?: FieldErrors | Record<string, string>;
 
   /** Error messages, not applicable to a specific field. */
   nonFieldErrors?: string | string[];
@@ -101,11 +108,7 @@ export type FormProps<T extends SerializedFormData = SerializedFormData> = Omit<
   useTypedResults?: boolean;
 
   /** A validation function. */
-  validate?: (
-    values: T,
-    fields: FormField[],
-    validators?: Validator[],
-  ) => FormProps["errors"] | void;
+  validate?: FormValidator;
 
   /** Whether to run validation on every change. */
   validateOnChange?: boolean;
@@ -155,9 +158,9 @@ export const Form = <T extends SerializedFormData = SerializedFormData>({
   requiredExplanation,
   toolbarProps,
   useTypedResults = false,
-  validate = validateForm<T>,
+  validate = validateForm,
   validateOnChange = false,
-  validators,
+  validators = [validateRequired],
   values,
   ...props
 }: FormProps<T>) => {
@@ -169,14 +172,19 @@ export const Form = <T extends SerializedFormData = SerializedFormData>({
   const _nonFieldErrors = forceArray(nonFieldErrors);
 
   const [valuesState, setValuesState] = useState<T>(initialValues);
-  const [errorsState, setErrorsState] = useState(errors || {});
+
+  const [errorsState, setErrorsState] = useState<
+    FieldErrors<typeof fields, typeof validators>
+  >({});
+  const [forceShowErrorsState, setForceShowErrorsState] =
+    useState(!validateOnChange);
 
   useEffect(() => {
     values && setValuesState(values);
   }, [values]);
 
   useEffect(() => {
-    errors && setErrorsState(errors);
+    setErrorsState(errors2errorsArray(errors));
   }, [errors]);
 
   const _requiredIndicator = gettextFirst(
@@ -195,29 +203,27 @@ export const Form = <T extends SerializedFormData = SerializedFormData>({
   const _labelSubmit = gettextFirst(labelSubmit, TRANSLATIONS.LABEL_SUBMIT);
 
   /**
-   * Revalidate on state change.
-   */
-  useEffect(() => {
-    if (validateOnChange && validate) {
-      const errors = validate(valuesState, fields, validators);
-      setErrorsState(errors || {});
-    }
-  }, [valuesState]);
-
-  /**
    * Defaults event handler for form submission.
    * @param event
    */
   const handleChange: FormProps["onChange"] = (event) => {
+    if (validateOnChange && validate && formRef.current) {
+      const validateData = serializeFormElement<T>(formRef.current, {
+        trimCheckboxArray: false,
+      });
+      const errors = validate(validateData, fields, validators);
+      setErrorsState(errors || {});
+    }
+
     if (onChange) {
       onChange(event);
       return;
     }
 
-    const form = (event.target as HTMLInputElement).form;
-
-    if (form && !onChange) {
-      const data = serializeFormElement<T>(form, { typed: useTypedResults });
+    if (formRef.current && !onChange) {
+      const data = serializeFormElement<T>(formRef.current, {
+        typed: useTypedResults,
+      });
       setValuesState(data);
     }
   };
@@ -228,25 +234,31 @@ export const Form = <T extends SerializedFormData = SerializedFormData>({
    */
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault();
+    const form = event.target as HTMLFormElement;
 
     if (validate) {
-      const errors = validate(valuesState, fields, validators);
+      const validateData = serializeFormElement<T>(form, {
+        trimCheckboxArray: false,
+      });
+
+      const errors = validate(validateData, fields, validators);
       setErrorsState(errors || {});
+      setForceShowErrorsState(true);
 
       if (errors && Object.keys(errors).length) {
         return;
       }
     }
 
-    const form = event.target as HTMLFormElement;
-    const data = serializeFormElement<T>(form, { typed: useTypedResults });
+    const outputDate = serializeFormElement<T>(form, {
+      typed: useTypedResults,
+    });
 
     if (onSubmit) {
-      onSubmit(event, data);
+      onSubmit(event, outputDate);
       return;
     }
-
-    setValuesState(data);
+    setValuesState(outputDate);
   };
 
   /**
@@ -282,9 +294,9 @@ export const Form = <T extends SerializedFormData = SerializedFormData>({
       onReset={handleReset}
       {...props}
     >
-      {_nonFieldErrors?.length && (
+      {Boolean(_nonFieldErrors?.length) && (
         <div className="mykn-form__non-field-errors">
-          {_nonFieldErrors?.map((error) => (
+          {_nonFieldErrors?.map((error: string) => (
             <ErrorMessage key={error}>{error}</ErrorMessage>
           ))}
         </div>
@@ -301,6 +313,7 @@ export const Form = <T extends SerializedFormData = SerializedFormData>({
               (field.value as string) ||
               getValueFromFormData<T>(fields, valuesState, field);
 
+            // TODO: CLEAN UP
             const _labelValidationErrorRequired = intl.formatMessage(
               labelValidationErrorRequired === undefined
                 ? TRANSLATIONS.LABEL_VALIDATION_ERROR_REQUIRED
@@ -311,18 +324,20 @@ export const Form = <T extends SerializedFormData = SerializedFormData>({
               stringifyContext({ ...field, label, value }),
             );
 
-            const error = getErrorFromErrors(fields, errorsState, field);
-            const message =
-              error === DEFAULT_VALIDATION_ERROR_REQUIRED
-                ? _labelValidationErrorRequired
-                : error;
+            const errors =
+              getErrorFromErrors(fields, errorsState, field)?.map((error) => {
+                return error === DEFAULT_VALIDATION_ERROR_REQUIRED
+                  ? _labelValidationErrorRequired
+                  : error;
+              }) ?? [];
+            const message = errors.join(", ");
 
             return (
               <FormControl
                 key={field.id || index}
                 direction={direction}
                 error={message}
-                forceShowError={!validateOnChange}
+                forceShowError={forceShowErrorsState}
                 justify={justify}
                 showRequiredIndicator={showRequiredIndicator}
                 requiredIndicator={requiredIndicator}
@@ -337,8 +352,11 @@ export const Form = <T extends SerializedFormData = SerializedFormData>({
       )}
 
       {children && <div className={fieldsetClassName}>{children}</div>}
-
-      {_debug && <pre role="log">{JSON.stringify(valuesState)}</pre>}
+      {_debug && (
+        <pre role="log">
+          {JSON.stringify({ valuesState, errorsState }, null, 2)}
+        </pre>
+      )}
 
       {showActions && (
         <Toolbar

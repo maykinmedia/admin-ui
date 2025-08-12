@@ -1,6 +1,6 @@
+import { forceArray } from "@maykin-ui/client-common";
 import React from "react";
 
-import { forceArray } from "../../../lib";
 import { Body } from "../../typography";
 import { ErrorMessage, ErrorMessageProps } from "../errormessage";
 
@@ -15,17 +15,13 @@ export const Errors: React.FC<ErrorsProps> = ({
 }) => {
   const _errors = forceArray(errors);
 
-  return (
-    <>
-      {_errors && _errors.length > 0 && (
-        <Body>
-          {_errors.map((e) => (
-            <ErrorMessage key={String(e)} {...errorMessageProps}>
-              {e}
-            </ErrorMessage>
-          ))}
-        </Body>
-      )}
-    </>
-  );
+  return _errors.length > 0 ? (
+    <Body>
+      {_errors.map((e) => (
+        <ErrorMessage key={String(e)} {...errorMessageProps}>
+          {e}
+        </ErrorMessage>
+      ))}
+    </Body>
+  ) : null;
 };

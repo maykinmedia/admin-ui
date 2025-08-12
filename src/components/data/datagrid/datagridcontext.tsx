@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 
-import type { TypedField } from "../../../lib";
+import { FieldErrors, FormField, TypedField, Validator } from "../../../lib";
 import type { DataGridProps } from "./datagrid";
 
 export type DataGridContextType<T extends object, F extends object> = Omit<
@@ -15,6 +15,9 @@ export type DataGridContextType<T extends object, F extends object> = Omit<
   editable: boolean;
   editingFieldIndex: number | null; // TODO: undefined?
   editingRow: T | null;
+  errorsState: FieldErrors<FormField[], Validator[]>;
+  formFields: FormField[];
+  setErrorsState: React.Dispatch<FieldErrors<FormField[], Validator[]>>;
   equalityChecker: (item1: T, item2: T) => boolean;
   fields: TypedField<T>[];
   pages: number;

@@ -36,9 +36,6 @@ export type ValueProps<T extends object = object> = Omit<
   /** Whether to use a "decorative" component instead of `<P>` if applicable. */
   decorate?: boolean;
 
-  /** An error message to show. */
-  error?: string;
-
   /** Is set, renders an `<A>` with `href` set. */
   href?: string;
 
@@ -74,6 +71,9 @@ export type ValueEditableUnion<T extends object = object> = (
 
   /** Whether the value is currently being edited. */
   editing?: boolean;
+
+  /** An error message to show. */
+  error?: string;
 
   labelEdit?: string;
 

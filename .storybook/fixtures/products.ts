@@ -1,3 +1,5 @@
+import { Field, FieldSet, TypedField } from "../../src";
+
 export const FIXTURE_PRODUCTS = [
   {
     id: 1,
@@ -8,7 +10,7 @@ export const FIXTURE_PRODUCTS = [
     stock: 50,
     category: "Electronics",
     isAvailable: true,
-    releaseDate: "2023-01-15", // YYYY-MM-DD format
+    releaseDate: "2023-01-15" // YYYY-MM-DD format
   },
   {
     id: 2,
@@ -19,7 +21,7 @@ export const FIXTURE_PRODUCTS = [
     stock: 30,
     category: "Wearables",
     isAvailable: false,
-    releaseDate: "2023-02-20",
+    releaseDate: "2023-02-20"
   },
   {
     id: 3,
@@ -30,7 +32,7 @@ export const FIXTURE_PRODUCTS = [
     stock: 100,
     category: "Accessories",
     isAvailable: true,
-    releaseDate: "2023-03-10",
+    releaseDate: "2023-03-10"
   },
   {
     id: 4,
@@ -41,7 +43,7 @@ export const FIXTURE_PRODUCTS = [
     stock: 75,
     category: "Audio",
     isAvailable: true,
-    releaseDate: "2023-04-25",
+    releaseDate: "2023-04-25"
   },
   {
     id: 5,
@@ -52,7 +54,7 @@ export const FIXTURE_PRODUCTS = [
     stock: 20,
     category: "Monitors",
     isAvailable: false,
-    releaseDate: "2023-05-15",
+    releaseDate: "2023-05-15"
   },
   {
     id: 6,
@@ -63,7 +65,7 @@ export const FIXTURE_PRODUCTS = [
     stock: 150,
     category: "Accessories",
     isAvailable: true,
-    releaseDate: "2023-06-30",
+    releaseDate: "2023-06-30"
   },
   {
     id: 7,
@@ -74,7 +76,7 @@ export const FIXTURE_PRODUCTS = [
     stock: 60,
     category: "Gaming",
     isAvailable: false,
-    releaseDate: "2023-07-18",
+    releaseDate: "2023-07-18"
   },
   {
     id: 8,
@@ -85,7 +87,7 @@ export const FIXTURE_PRODUCTS = [
     stock: 40,
     category: "Storage",
     isAvailable: true,
-    releaseDate: "2023-08-05",
+    releaseDate: "2023-08-05"
   },
   {
     id: 9,
@@ -96,7 +98,7 @@ export const FIXTURE_PRODUCTS = [
     stock: 200,
     category: "Accessories",
     isAvailable: true,
-    releaseDate: "2023-09-12",
+    releaseDate: "2023-09-12"
   },
   {
     id: 10,
@@ -108,8 +110,87 @@ export const FIXTURE_PRODUCTS = [
     stock: 10,
     category: "Electronics",
     isAvailable: false,
-    releaseDate: "2023-10-01",
-  },
+    releaseDate: "2023-10-01"
+  }
 ];
 
 export const FIXTURE_PRODUCT = FIXTURE_PRODUCTS[0];
+export type TYPE_FIXTURE_PRODUCT = typeof FIXTURE_PRODUCT;
+
+export const FIXTURE_PRODUCT_CATEGORY_OPTIONS = [
+  { label: "Electronics", value: "Electronics" },
+  { label: "Wearables", value: "Wearables" },
+  { label: "Accessories", value: "Accessories" },
+  { label: "Audio", value: "Audio" },
+  { label: "Monitors", value: "Monitors" },
+  { label: "Gaming", value: "Gaming" },
+  { label: "Storage", value: "Storage" }
+];
+
+export const FIXTURE_PRODUCT_FIELDS: Array<
+  Field<TYPE_FIXTURE_PRODUCT> | TypedField<TYPE_FIXTURE_PRODUCT>
+> = Object.keys(FIXTURE_PRODUCT).map((f) => {
+  const field = f as keyof typeof FIXTURE_PRODUCT;
+  switch (field) {
+    case "category":
+      return {
+        name: field,
+        type: "string",
+        options: FIXTURE_PRODUCT_CATEGORY_OPTIONS,
+      };
+    case "name":
+    case "url":
+      return { name: field, type: "string", required: true };
+    case "releaseDate":
+      return { name: field, type: "date" };
+    default:
+      return field;
+  }
+});
+
+export const FIXTURE_PRODUCT_FIELDSETS: FieldSet<typeof FIXTURE_PRODUCT>[] = [
+  [
+    "Information",
+    {
+      span: 12,
+      titleSpan: 12,
+      fields: ["id"]
+    }
+  ],
+  [
+    "",
+    {
+      fields: [
+        "name",
+        "description",
+        {
+          name: "category",
+          type: "string",
+          options: FIXTURE_PRODUCT_CATEGORY_OPTIONS
+        },
+        { name: "url", type: "string", required: true },
+        { name: "releaseDate", type: "date" }
+      ],
+      span: 12,
+      colSpan: 6
+    }
+  ],
+
+  [
+    "Availability",
+    {
+      fields: ["isAvailable", "stock"],
+      span: 12,
+      colSpan: 6
+    }
+  ],
+  [
+    "More",
+    {
+      fields: ["price", "description"],
+      span: 12,
+      colSpan: 6,
+      titleSpan: 12
+    }
+  ]
+];

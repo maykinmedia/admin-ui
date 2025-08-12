@@ -1,12 +1,20 @@
 import { serializeElement, string2Title } from "@maykin-ui/client-common";
 import clsx from "clsx";
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
 import {
   Field,
+  FieldErrors,
+  FormValidator,
   TypedField,
+  Validator,
+  errors2errorsArray,
+  field2FormField,
   field2TypedField,
+  getErrorFromErrors,
   getFieldName,
+  validateForm,
+  validateRequired,
 } from "../../../lib";
 import { H3 } from "../../typography";
 import { Value, ValueEditableUnion } from "../value";
@@ -22,6 +30,9 @@ export type AttributeListProps<T extends object = object> = Omit<
   /** The number of columns to span for each field, 12 means 1 pair per row. */
   colSpan?: number;
 
+  /** Error messages, applied to automatically rendered field. */
+  errors?: FieldErrors | Partial<Record<keyof T, string>>;
+
   /** The fields in object to show. */
   fields: Array<Field<T> | TypedField<T>>;
 
@@ -34,10 +45,16 @@ export type AttributeListProps<T extends object = object> = Omit<
   /** The number of columns to span for the title. */
   titleSpan?: number;
 
+  /** A validation function. */
+  validate?: FormValidator;
+
+  /** If set, use this custom set of `Validator`s. */
+  validators?: Validator[];
+
   /** Gets called when a value is edited. */
   onEdit?: (value: T) => void;
 } & Pick<
-    ValueEditableUnion,
+    ValueEditableUnion<T>, // TODO: Drop of TypedField<,F>, test multiple valiators and getErrorFromErrors
     "editable" | "editing" | "labelEdit" | "onChange" | "formControlProps"
   >;
 
@@ -53,6 +70,7 @@ export const AttributeList = <T extends object = object>({
   object = {} as T,
   editable,
   editing,
+  errors,
   fields = Object.keys(object) as Field<T>[],
   formControlProps,
   labelEdit,
@@ -62,10 +80,35 @@ export const AttributeList = <T extends object = object>({
   onBlur,
   onChange,
   onEdit,
+  validate = validateForm,
+  validators = [validateRequired],
   ...props
 }: AttributeListProps<T>) => {
+  const formFields = fields.map((field) => field2FormField<T>(field, [object]));
+
+  const [errorsState, setErrorsState] = useState<
+    FieldErrors<typeof formFields, typeof validators>
+  >({});
+
+  useEffect(() => {
+    setErrorsState(errors2errorsArray(errors));
+  }, [errors]);
+
   const renderTitle = title && <H3 id={titleId}>{string2Title(title)}</H3>;
   const isTitleAbove = titleSpan === 12;
+
+  const handleChange = useCallback<React.ChangeEventHandler>(
+    (e: React.ChangeEvent) => {
+      const name = (e.target as HTMLInputElement).name;
+      const value = serializeElement(e.target, { typed: true });
+      const data = { ...object, [name]: value };
+      const errors = validate(data, formFields, validators);
+      setErrorsState(errors);
+
+      onChange?.(e);
+    },
+    [object, validate, formFields, validators, onChange],
+  );
 
   return (
     <div
@@ -84,17 +127,26 @@ export const AttributeList = <T extends object = object>({
 
         <dl className="mykn-attributelist__list">
           {fields.map((f, i) => {
+            const fieldErrors = getErrorFromErrors(
+              formFields,
+              errorsState,
+              formFields[i],
+            );
+            const message = fieldErrors?.join(", ");
+
+            // FIXME ERROR
             return (
               <AttributePair<T>
                 key={i}
                 object={object}
                 editable={editable}
                 editing={editing}
+                error={message}
                 field={f}
                 formControlProps={formControlProps}
                 labelEdit={labelEdit}
                 onBlur={onBlur}
-                onChange={onChange}
+                onChange={handleChange}
                 onEdit={onEdit}
               />
             );
@@ -108,6 +160,7 @@ export const AttributeList = <T extends object = object>({
 export type AttributePairProps<T extends object = object> = {
   object: T;
   field: Field<T> | TypedField<T>;
+  error?: string;
   onEdit?: (value: T) => void;
 } & Pick<
   ValueEditableUnion,
@@ -128,6 +181,7 @@ export const AttributePair = <T extends object = object>({
   formControlProps,
   editable,
   editing,
+  error,
   labelEdit,
   onBlur,
   onChange,
@@ -159,6 +213,7 @@ export const AttributePair = <T extends object = object>({
         <Value
           editable={editable}
           editing={editing}
+          error={error}
           field={typedField}
           formControlProps={{
             justify: "stretch",
