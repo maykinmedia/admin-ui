@@ -30,18 +30,18 @@ export type TypedFormDataEntryValue =
  * @param values
  * @param field
  */
-export const getValueFromFormData = <
-  T extends SerializedFormData = SerializedFormData,
->(
+export const getValueFromFormData = <T extends object = object>(
   fields: FormField[],
   values: T,
   field: FormField,
 ): number | string | undefined => {
+  if (!field.name) return undefined;
+
   // Support Formik array field names (field[1]).
-  const [name, formikIndex] = parseFieldName(field.name);
+  const [name, formikIndex] = parseFieldName<T>(field.name);
 
   // Get value from values.
-  const value = name && values[name as keyof T];
+  const value = name && values[name];
 
   // Get value from array of values.
   if (Array.isArray(value)) {
@@ -62,7 +62,7 @@ export const getValueFromFormData = <
  * Converts `data` to JSX friendly value.
  * @param data
  */
-export const data2Value = (data: unknown): number | string | undefined => {
+export function data2Value(data: unknown): number | string | undefined {
   if (data === null || data === undefined) {
     return undefined;
   }
@@ -81,29 +81,35 @@ export const data2Value = (data: unknown): number | string | undefined => {
         ? data
         : String(data || "");
   }
-};
+}
 
 /**
- * Parses `name` as Formik array field name (field[0]) to ["field", 0]. If `name` does not have such a format,
- * ["field", undefined] format will be used.
- * @param name
+ * Parses a field name that may include Formik array syntax (e.g., "field[0]") into a tuple.
+ *
+ * - If `name` includes array syntax, returns `[baseFieldName, index]`.
+ * - Otherwise, returns `[name, undefined]`.
+ *
+ * @template T - The object type whose keys may appear as the (base) field name.
+ * @param name - A string representing the field name. It may follow Formik array notation but doesn't have to.
+ * @returns A tuple where:
+ *   - The first element is the base field name as a key of `T`.
+ *   - The second element is the array index if present, otherwise `undefined`.
+ *
+ * @example
+ * parseFieldName<SomeForm>("emails[2]") // => ["emails", 2]
+ * parseFieldName<SomeForm>("username")  // => ["username", undefined]
+ * parseFieldName<SomeForm>("customName") // => ["customName", undefined]
  */
-export const parseFieldName = (
-  name: string | undefined,
-): [string | undefined, number | undefined] => {
-  if (typeof name === "undefined") {
-    return [undefined, undefined];
-  }
-
-  // Support Formik array field names (field[1]).
-  const regexFormikArrayFieldName = /\[(\d)+\]/; // Matches field[1] syntax.
+export const parseFieldName = <T extends object = Record<string, unknown>>(
+  name: string,
+): [keyof T, number | undefined] => {
+  const regexFormikArrayFieldName = /\[(\d+)\]/; // Matches array syntax like [0], [1], etc.
   const formikFieldNameMatch = name?.match(regexFormikArrayFieldName);
 
-  // Normalize (Formik array) name.
   return formikFieldNameMatch
     ? [
-        name?.replace(regexFormikArrayFieldName, ""),
+        name.replace(regexFormikArrayFieldName, "") as keyof T,
         parseInt(formikFieldNameMatch[1]),
       ]
-    : [name, undefined];
+    : [name as keyof T, undefined];
 };

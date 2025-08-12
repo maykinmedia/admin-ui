@@ -1,8 +1,12 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import * as React from "react";
+import { expect, userEvent, within } from "storybook/test";
 
 import { PAGE_DECORATOR } from "../../../../.storybook/decorators";
-import { FIXTURE_PRODUCTS } from "../../../../.storybook/fixtures/products";
+import {
+  FIXTURE_PRODUCTS,
+  FIXTURE_PRODUCT_FIELDS,
+} from "../../../../.storybook/fixtures/products";
 import { Field } from "../../../lib";
 import { Button } from "../../button";
 import { Outline } from "../../icon/icon";
@@ -79,12 +83,20 @@ export const Decorated: Story = {
 export const Editable: Story = {
   args: {
     objectList: FIXTURE_PRODUCTS,
-    fields: ["name", "category", "price", "stock", "isAvailable"],
+    fields: FIXTURE_PRODUCT_FIELDS,
     editable: true,
   },
   argTypes: {
     ...DataGridComponent.argTypes,
     onEdit: { action: "onEdit" },
+  },
+  play: async ({ canvasElement }) => {
+    const name = await within(canvasElement).findByText("4K Monitor");
+    await userEvent.click(name);
+    const input = await within(canvasElement).findByRole("textbox");
+    await userEvent.clear(input);
+    const error = await within(canvasElement).findByRole("alert");
+    expect(error).toBeVisible();
   },
 };
 
@@ -293,6 +305,7 @@ export const FieldExcludedFromSortable: Story = {
       "price",
       "stock",
       "isAvailable",
+      // @ts-expect-error - Not in  FIXTURE_PRODUCT.
       { name: "action", type: "jsx", sortable: false },
     ],
     objectList: FIXTURE_PRODUCTS.map((item) => ({

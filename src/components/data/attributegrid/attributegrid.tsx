@@ -2,7 +2,15 @@ import { slugify } from "@maykin-ui/client-common";
 import clsx from "clsx";
 import React, { useCallback } from "react";
 
-import { FieldSet, dataByFieldsets } from "../../../lib";
+import {
+  FieldErrors,
+  FieldSet,
+  FormValidator,
+  Validator,
+  dataByFieldsets,
+  validateForm,
+  validateRequired,
+} from "../../../lib";
 import { Column, Grid } from "../../layout";
 import { Toolbar } from "../../toolbar";
 import { Body, H2, Hr } from "../../typography";
@@ -20,6 +28,9 @@ export type AttributeGridProps<T extends object = object> = {
   /** Props for AttributeList. */
   attributeListProps?: Partial<AttributeListProps<T>>;
 
+  /** Error messages, applied to automatically rendered field. */
+  errors?: FieldErrors | Partial<Record<keyof T, string>>;
+
   /** Whether to use `height 100%;`. */
   fullHeight?: boolean;
 
@@ -28,6 +39,12 @@ export type AttributeGridProps<T extends object = object> = {
 
   /** A title. */
   title?: React.ReactNode;
+
+  /** A validation function. */
+  validate?: FormValidator;
+
+  /** If set, use this custom set of `Validator`s. */
+  validators?: Validator[];
 
   /** Gets called when a value is edited. */
   onEdit?: (value: T) => void;
@@ -54,6 +71,7 @@ export const AttributeGrid = <T extends object = object>({
   attributeListProps = {},
   editable,
   editing,
+  errors,
   object,
   fieldsets,
   formControlProps = {},
@@ -65,6 +83,8 @@ export const AttributeGrid = <T extends object = object>({
   onBlur,
   onChange,
   onEdit,
+  validate = validateForm,
+  validators = [validateRequired],
   ...props
 }: AttributeGridProps<T>) => {
   const objectList =
@@ -141,9 +161,12 @@ export const AttributeGrid = <T extends object = object>({
                         ? slugify(attributeListProps.title)
                         : undefined
                     }
+                    errors={errors}
                     editable={editable}
                     labelEdit={labelEdit}
                     formControlProps={formControlProps}
+                    validate={validate}
+                    validators={validators}
                     onBlur={onBlur}
                     onChange={onChange}
                     onEdit={handleEdit}

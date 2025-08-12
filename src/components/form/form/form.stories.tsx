@@ -3,7 +3,7 @@ import { Formik } from "formik";
 import * as React from "react";
 import { expect, userEvent, waitFor, within } from "storybook/test";
 
-import { validateForm } from "../../../lib";
+import { validateForm, validateRequired } from "../../../lib";
 import { Form } from "./form";
 
 const meta: Meta<typeof Form> = {
@@ -24,8 +24,7 @@ const getParameterFromPre = (pre: HTMLElement, parameter: string) => {
   const text = pre.textContent || "";
   try {
     const parsedText = JSON.parse(text);
-    const value = parsedText[parameter];
-    return value;
+    return parsedText.valuesState[parameter];
   } catch (error) {
     console.error("Error parsing JSON", error);
   }
@@ -81,11 +80,7 @@ const playFormComponent = async ({
   await userEvent.clear(firstName);
   await userEvent.type(firstName, "John", { delay: 10 });
   await expect(firstName).toHaveValue("John");
-  await expectLogToBe(
-    canvasElement,
-    "first_name",
-    typedResults ? "John" : "John",
-  );
+  await expectLogToBe(canvasElement, "first_name", "John");
 
   await userEvent.clear(lastName);
   await userEvent.type(lastName, "Doe", { delay: 10 });
@@ -174,15 +169,7 @@ const playFormComponent = async ({
 
   await userEvent.click(acceptTos);
   await expect(acceptTos).toBeChecked();
-  if (formik) {
-    await expectLogToBe(canvasElement, "accept_tos", ["on"]);
-  } else {
-    await expectLogToBe(
-      canvasElement,
-      "accept_tos",
-      typedResults ? true : "on",
-    );
-  }
+  await expectLogToBe(canvasElement, "accept_tos", typedResults ? true : "on");
 };
 
 export const FormComponent: Story = {
@@ -310,8 +297,8 @@ export const UsageWithFormik: Story = {
       { label: "First name", name: "first_name", required: true },
       { label: "Last name", name: "last_name", required: true },
       { label: "Age", name: "age", type: "number", required: true },
-      { label: "Address", name: "address[0]", required: true },
 
+      { label: "Address", name: "address[0]", required: true },
       {
         label: "Address (addition)",
         name: "address[1]",
@@ -399,11 +386,15 @@ export const UsageWithFormik: Story = {
   render: (args) => {
     return (
       <Formik
-        initialValues={{}}
+        initialValues={{ accept_tos: false }}
         onSubmit={(data) => console.log(data)}
-        validate={(values) =>
-          args.validate && args.validate(values, args.fields || [])
-        }
+        validate={(values) => {
+          return args.validate?.(
+            values,
+            args.fields || [],
+            args.validators || [validateRequired],
+          );
+        }}
         validateOnChange={args.validateOnChange}
       >
         {({ errors, values, handleChange, handleSubmit }) => (
@@ -498,7 +489,8 @@ export const FormAllDisabled: Story = {
         initialValues={{}}
         onSubmit={(data) => console.log(data)}
         validate={(values) =>
-          args.validate && args.validate(values, args.fields || [])
+          args.validate &&
+          args.validate(values, args.fields || [], args.validators || [])
         }
         validateOnChange={args.validateOnChange}
       >

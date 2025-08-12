@@ -1,5 +1,6 @@
 import {
   isLink,
+  serializeElement,
   serializeFormElement,
   string2Title,
 } from "@maykin-ui/client-common";
@@ -11,6 +12,7 @@ import {
   TypedField,
   TypedSerializedFormData,
   getByDotSeparatedPath,
+  getErrorFromErrors,
   isPrimitive,
 } from "../../../lib";
 import { BoolProps } from "../../boolean";
@@ -46,9 +48,15 @@ export const DataGridContentCell = <
     editable,
     editingFieldIndex,
     editingRow,
+    errorsState,
+    fields,
+    setErrorsState,
+    formFields,
     renderableFields = [],
     setEditingState,
     urlFields = DEFAULT_URL_FIELDS,
+    validate,
+    validators,
     onClick,
     onChange,
     onEdit,
@@ -91,10 +99,25 @@ export const DataGridContentCell = <
    */
   const handleChange = useCallback<React.ChangeEventHandler>(
     (e) => {
+      const name = (e.target as HTMLInputElement).name;
+      const value = serializeElement(e.target, { typed: true });
+      const data = { ...rowData, [name]: value };
+      const errors = validate?.(data, formFields, validators || []);
+      setErrorsState(errors || {});
+
       setPristine(false);
       onChange?.(e);
     },
-    [pristine, onChange],
+    [
+      rowData,
+      validate,
+      formFields,
+      validators,
+      setErrorsState,
+      setPristine,
+      onChange,
+      pristine,
+    ],
   );
 
   /**
@@ -116,6 +139,13 @@ export const DataGridContentCell = <
     },
     [rowData, pristine, onEdit],
   );
+
+  const fieldErrors = getErrorFromErrors(
+    formFields,
+    errorsState,
+    formFields[fields.indexOf(field)],
+  );
+  const message = fieldErrors?.join(", ");
 
   return (
     <td
@@ -167,6 +197,7 @@ export const DataGridContentCell = <
         decorate={decorate}
         editable={editable}
         editing={isEditingField}
+        error={message}
         field={field}
         value={label || (field.type === "boolean" ? Boolean(value) : value)}
         onBlur={handleBlur}

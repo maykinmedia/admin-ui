@@ -1,4 +1,5 @@
 import { ChoiceFieldProps } from "../../components";
+import { FormField, getFormFieldTypeByFieldType } from "../form";
 import { typeByDataArray } from "./data";
 import { isPrimitive } from "./primitive";
 
@@ -18,9 +19,9 @@ export const DEFAULT_URL_FIELDS = [
 export type Field<T extends object = object> = keyof T;
 
 /** A key in object annotated with its type and optionally meta information. */
-export type TypedField<T extends object = object, F = keyof T> = {
+export type TypedField<T extends object = object> = {
   /** The field name. */
-  name: F;
+  name: keyof T;
 
   /** The field's values type. */
   type: FieldType;
@@ -42,6 +43,9 @@ export type TypedField<T extends object = object, F = keyof T> = {
 
   /** The value for this field's filter. */
   filterValue?: string | number;
+
+  /** Whether a value is required. */
+  required?: boolean;
 
   /** Used by DataGrid to determine whether the field should be sortable. */
   sortable?: boolean;
@@ -77,9 +81,9 @@ export type FieldType =
   | "jsx";
 
 /** A Django-admin like field_options definition. */
-export type FieldOptions<T extends object = object, F = keyof T> = {
+export type FieldOptions<T extends object = object> = {
   /** A `string[]` or `TypedField[]` containing the keys in to show data for. */
-  fields: Array<Field<T> | TypedField<T, F>>;
+  fields: Array<Field<T> | TypedField<T>>;
 
   /** When shown in a Kanban: the component to render. */
   // eslint-disable-next-line
@@ -99,38 +103,49 @@ export type FieldOptions<T extends object = object, F = keyof T> = {
 };
 
 /** A Django-admin like fieldset definition. */
-export type FieldSet<T extends object = object, F = keyof T> = [
+export type FieldSet<T extends object = object> = [
   string | undefined,
-  FieldOptions<T, F>,
+  FieldOptions<T>,
 ];
 
 /**
- * Converts `Array<Field | TypedField>` to `TypedField[]` by inspecting `objectList`.
- * @param optionallyTypedFields
- * @param objectList
- * @param base
+ * Converts an array of `Field` or `TypedField` into an array of `TypedField`.
+ * Each element is normalized by inspecting the optional `objectList` and
+ * extending with the optional `base` properties.
+ *
+ * @template T - The type of the source objects.
+ * @param optionallyTypedFields - An array of field keys or typed field objects.
+ * @param objectList - Optional array of source objects used to infer field types.
+ * @param base - Optional base properties to merge into each resulting `TypedField`.
+ * @returns An array of fully normalized `TypedField` objects.
  */
-export const fields2TypedFields = <T extends object, F = keyof T>(
-  optionallyTypedFields: Array<Field<T> | TypedField<T, F>>,
-  objectList: T[],
-  base?: Partial<TypedField<T, F>>,
-): TypedField<T, F>[] =>
-  optionallyTypedFields.map((field) =>
-    field2TypedField<T, F>(field, objectList, base),
+export function fields2TypedFields<T extends object>(
+  optionallyTypedFields: Array<Field<T> | TypedField<T>>,
+  objectList?: T[],
+  base?: Partial<TypedField<T>>,
+): TypedField<T>[] {
+  return optionallyTypedFields.map((field) =>
+    field2TypedField<T>(field, objectList, base),
   );
+}
 
 /**
- * Converts `Field | TypedField` to `TypedField` by inspecting `objectList`.
- * @param optionallyTypedField
- * @param objectList
- * @param base
+ * Converts a single `Field` or `TypedField` into a `TypedField`.
+ * If a primitive key is provided, its type is inferred from the optional `objectList`.
+ * Any additional properties from `base` are merged into the resulting `TypedField`.
+ *
+ * @template T - The type of the source objects.
+ * @param optionallyTypedField - A field key or a typed field object.
+ * @param objectList - Optional array of source objects used to infer field types.
+ * @param base - Optional base properties to merge into the resulting `TypedField`.
+ * @returns A fully normalized `TypedField` object.
  */
-export const field2TypedField = <T extends object, F = keyof T>(
-  optionallyTypedField: Field<T> | TypedField<T, F>,
-  objectList: T[],
-  base?: Partial<TypedField<T, F>>,
-): TypedField<T, F> =>
-  Object.assign(
+export function field2TypedField<T extends object>(
+  optionallyTypedField: Field<T> | TypedField<T>,
+  objectList?: T[],
+  base?: Partial<TypedField<T>>,
+): TypedField<T> {
+  return Object.assign(
     { ...base },
     isPrimitive<Field<T>>(optionallyTypedField)
       ? {
@@ -139,27 +154,44 @@ export const field2TypedField = <T extends object, F = keyof T>(
         }
       : optionallyTypedField,
   );
+}
 
 /**
- * Returns the name of a field.
+ * Converts a `Field` or `TypedField` into a `FormField` suitable for forms.
+ * The field is first normalized to a `TypedField`, then mapped to form-specific properties.
  *
- * - If `field` is a primitive key (e.g., string, number, symbol), returns it directly.
- * - If `field` is a `TypedField`, returns its `.name` property.
+ * @template T - The type of the source objects.
+ * @param optionallyTypedField - A field key or a typed field object.
+ * @param objectList - Optional array of source objects used to infer field types.
+ * @returns A `FormField` object with `name`, `type`, `options`, and `required` properties.
+ */
+export function field2FormField<T extends object>(
+  optionallyTypedField: Field<T> | TypedField<T>,
+  objectList?: T[],
+): FormField {
+  const typedField = field2TypedField<T>(optionallyTypedField, objectList);
+  return {
+    name: getFieldName(typedField)?.toString(),
+    options: typedField.options,
+    required: typedField.required,
+    type: getFormFieldTypeByFieldType(typedField.type),
+  };
+}
+
+/**
+ * Retrieves the name of a field.
+ *
+ * - If the field is a primitive key (e.g., string, number, or symbol), returns it directly.
+ * - If the field is a `TypedField`, returns its `.name` property.
  *
  * @template T - The type of the source object.
- * @template F - The type of the field name in a `TypedField` (defaults to keyof T or string).
- * @param field - A field key or a typed field object.
- * @returns The field name (key).
+ * @param optionallyTypedField - A field key or a typed field object.
+ * @returns The name of the field as a key.
  */
-export function getFieldName<T extends object>(field: Field<T>): keyof T;
-export function getFieldName<T extends object, F = keyof T>(
-  field: TypedField<T, F>,
-): F;
-export function getFieldName<T extends object, F = keyof T>(
-  field: Field<T> | TypedField<T, F>,
-): keyof T | F;
-export function getFieldName<T extends object, F = keyof T>(
-  field: Field<T> | TypedField<T, F>,
-): keyof T | F {
-  return isPrimitive(field) ? field : (field as TypedField<T, F>).name;
+export function getFieldName<T extends object>(
+  optionallyTypedField: Field<T> | TypedField<T>,
+) {
+  return isPrimitive(optionallyTypedField)
+    ? optionallyTypedField
+    : (optionallyTypedField as TypedField<T>).name;
 }

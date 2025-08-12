@@ -12,12 +12,18 @@ import React, {
 import {
   DEFAULT_URL_FIELDS,
   Field,
+  FieldErrors,
+  FormValidator,
   SerializedFormData,
   TypedField,
   TypedSerializedFormData,
+  Validator,
+  field2FormField,
   fields2TypedFields,
   filterDataArray,
   sortDataArray,
+  validateForm,
+  validateRequired,
 } from "../../../lib";
 import { BadgeProps } from "../../badge";
 import { BoolProps } from "../../boolean";
@@ -177,6 +183,12 @@ export type DataGridProps<T extends object = object, F extends object = T> = {
   /** Can be used to specify how to compare the selected items and the items in the data grid */
   equalityChecker?: (item1: T, item2: T) => boolean;
 
+  /** A validation function. */
+  validate?: FormValidator;
+
+  /** If set, use this custom set of `Validator`s. */
+  validators?: Validator[];
+
   /** Whether wrapping should be allowed. */
   wrap?: boolean;
 
@@ -264,6 +276,8 @@ export const DataGrid = <T extends object = object, F extends object = T>(
     urlFields: DEFAULT_URL_FIELDS,
     page: props.paginatorProps?.page,
     wrap: false,
+    validate: validateForm,
+    validators: [validateRequired],
   };
 
   // Create a props object with defaults applied.
@@ -308,6 +322,8 @@ export const DataGrid = <T extends object = object, F extends object = T>(
     labelSelectAll,
     labelSelectAllPages,
     labelSelectFields,
+    validate,
+    validators,
 
     // Events
     onChange,
@@ -354,6 +370,14 @@ export const DataGrid = <T extends object = object, F extends object = T>(
   const [fieldsState, setFieldsState] = useState<
     Array<Field<T> | TypedField<T>>
   >([]);
+
+  const formFields = fieldsState.map((field) =>
+    field2FormField<T>(field, objectList),
+  );
+
+  const [errorsState, setErrorsState] = useState<
+    FieldErrors<typeof formFields, Exclude<typeof validators, undefined>>
+  >({});
 
   // Update selectedState when selected prop changes.
   useEffect(() => {
@@ -618,6 +642,9 @@ export const DataGrid = <T extends object = object, F extends object = T>(
           editable: Boolean(renderableFields.find((f) => f.editable)),
           editingFieldIndex: editingState[1],
           editingRow: editingState[0],
+          errorsState: errorsState,
+          formFields: formFields,
+          setErrorsState: setErrorsState,
           fields: typedFields,
           pages: _pages,
           renderableFields: renderableFields,
@@ -629,6 +656,8 @@ export const DataGrid = <T extends object = object, F extends object = T>(
           sortField: sortField,
           titleId: titleId,
           wrap: wrap,
+          validate,
+          validators,
 
           // Events
           onFieldsChange: (typedFields: TypedField<T>[]) => {

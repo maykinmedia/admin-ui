@@ -67,11 +67,6 @@
   &__thead &__row--filter {
     background-color: var(--typography-color-background-alt);
 
-    .mykn-form-control {
-      gap: 0;
-      width: 100%;
-    }
-
     .mykn-stackctx,
     .mykn-input,
     .mykn-select {
@@ -85,6 +80,12 @@
 
   &__thead &__cell {
     text-align: start;
+  }
+
+  &__thead .mykn-form-control,
+  &__tbody .mykn-form-control {
+    gap: 0;
+    width: 100%;
   }
 
   &__row--selected {
