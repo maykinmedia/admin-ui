@@ -100,6 +100,9 @@ export const FormControl: React.FC<FormControlProps> = ({
         "mykn-form-control",
         `mykn-form-control--direction-${direction}`,
         `mykn-form-control--justify-${justify}`,
+        {
+          "mykn-form-control--error": error,
+        },
       )}
     >
       {props.label && (
