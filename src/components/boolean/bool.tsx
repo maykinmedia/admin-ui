@@ -72,8 +72,8 @@ export const Bool: React.FC<BoolProps> = ({
       title={ucFirst(value ? _labelTrue : _labelFalse)}
       aria-label={ucFirst(value ? _labelTrue : _labelFalse)}
     >
-      {value && <Outline.CheckIcon />}
-      {!value && <Outline.XMarkIcon />}
+      {value && <Outline.CheckCircleIcon />}
+      {!value && <Outline.XCircleIcon />}
     </span>
   );
 };

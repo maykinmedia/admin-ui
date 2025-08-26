@@ -1,20 +1,9 @@
 .mykn-bool {
   --mykn-bool-color: var(--page-color-success);
-  --mykn-bool-radius: 100%;
+  --mykn-bool-size: 1em;
 
-  align-items: center;
+  height: var(--mykn-icon-size);
   color: var(--mykn-bool-color);
-  border-radius: var(--mykn-bool-radius);
-  border: 1px solid;
-  box-sizing: border-box;
-  display: inline-flex;
-  flex-shrink: 0;
-  font-size: var(--typography-font-size-body-s);
-  height: var(--typography-line-height-body-s);
-  justify-content: center;
-  position: relative;
-  transform-style: preserve-3d;
-  width: var(--typography-line-height-body-s);
 
   &--value-false {
     --mykn-bool-color: var(--page-color-danger);
@@ -22,27 +11,5 @@
 
   &--value-false:not(#{&}--explicit) {
     visibility: hidden;
-  }
-
-  &:before,
-  &:after {
-    border-radius: var(--mykn-bool-radius);
-    content: "";
-    height: 100%;
-    left: 0;
-    position: absolute;
-    top: 0;
-    width: 100%;
-  }
-
-  &:before {
-    background-color: light-dark(white, transparent);
-    z-index: -2;
-  }
-
-  &:after {
-    z-index: -1;
-    background-color: var(--mykn-bool-color);
-    opacity: 0.025;
   }
 }
