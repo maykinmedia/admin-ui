@@ -1,5 +1,6 @@
 import clsx from "clsx";
 import React from "react";
+import { createPortal } from "react-dom";
 
 import { DataGridContentCell } from "./datagridcontentcell";
 import { useDataGridContext } from "./datagridcontext";
@@ -14,7 +15,9 @@ export const DataGridTBody = <
   F extends object = T,
 >() => {
   const {
+    dataGridRef,
     dataGridId,
+    editingState,
     page,
     renderableFields,
     renderableRows,
@@ -27,34 +30,50 @@ export const DataGridTBody = <
 
   return (
     <tbody className="mykn-datagrid__tbody" role="rowgroup">
-      {renderableRows.map((rowData, index) => (
-        <tr
-          key={`${dataGridId}-row-${index}`}
-          className={clsx("mykn-datagrid__row", {
-            "mykn-datagrid__row--selected": !!selectedRows.find((element) =>
-              equalityChecker(element, rowData),
-            ),
-          })}
-        >
-          {selectable && (
-            <td
-              className={clsx(
-                "mykn-datagrid__cell",
-                `mykn-datagrid__cell--checkbox`,
+      {renderableRows.map((rowData, renderableRowIndex) => {
+        const isEditingRow =
+          typeof editingState === "boolean"
+            ? editingState
+            : editingState[0] === rowData;
+
+        return (
+          <tr
+            key={`${dataGridId}-row-${renderableRowIndex}`}
+            className={clsx("mykn-datagrid__row", {
+              "mykn-datagrid__row--selected": !!selectedRows.find((element) =>
+                equalityChecker(element, rowData),
+              ),
+            })}
+          >
+            {Boolean(isEditingRow && dataGridRef.current) &&
+              createPortal(
+                <form
+                  id={`${dataGridId}-editable-form-${renderableRowIndex}`}
+                  onSubmit={(e) => e.preventDefault()}
+                />,
+                dataGridRef.current,
               )}
-            >
-              <DataGridSelectionCheckbox<T> rowData={rowData} />
-            </td>
-          )}
-          {renderableFields.map((field) => (
-            <DataGridContentCell<T>
-              key={`sort-${sortField}${sortDirection}-page-${page}-row-${renderableRows.indexOf(rowData)}-column-${renderableFields.indexOf(field)}`}
-              field={field}
-              rowData={rowData}
-            />
-          ))}
-        </tr>
-      ))}
+
+            {selectable && (
+              <td
+                className={clsx(
+                  "mykn-datagrid__cell",
+                  `mykn-datagrid__cell--checkbox`,
+                )}
+              >
+                <DataGridSelectionCheckbox<T> rowData={rowData} />
+              </td>
+            )}
+            {renderableFields.map((field) => (
+              <DataGridContentCell<T>
+                key={`sort-${sortField}${sortDirection}-page-${page}-row-${renderableRows.indexOf(rowData)}-column-${renderableFields.indexOf(field)}`}
+                field={field}
+                renderableRowIndex={renderableRowIndex}
+              />
+            ))}
+          </tr>
+        );
+      })}
     </tbody>
   );
 };

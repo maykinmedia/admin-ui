@@ -63,6 +63,13 @@ export type DataGridProps<T extends object = object, F extends object = T> = {
    */
   editable?: boolean;
 
+  /**
+   * Whether the value is currently being edited, can be set to a specific
+   * `[object, columnIndex]` in `objectList` or a boolean value (`true`) sets
+   * all rows to editing.
+   */
+  editing?: [T, number] | boolean;
+
   /** A `string[]` or `TypedField[]` containing the keys in `objectList` to show object for. */
   fields?: Array<Field<T> | TypedField<T>>;
 
@@ -269,6 +276,7 @@ export const DataGrid = <T extends object = object, F extends object = T>(
     allPagesSelected: false,
     allPagesSelectedManaged: true,
     fieldsSelectable: false,
+    editing: false,
     equalityChecker: (item1: T, item2: T) => item1 == item2,
     selectionActions: [],
     toolbarItems: [],
@@ -294,6 +302,7 @@ export const DataGrid = <T extends object = object, F extends object = T>(
     decorate,
     objectList,
     editable,
+    editing,
     equalityChecker,
     fields,
     filterable,
@@ -352,10 +361,12 @@ export const DataGrid = <T extends object = object, F extends object = T>(
   const onFilterTimeoutRef = useRef<NodeJS.Timeout>(undefined);
 
   // Row that's being edited.
-  const [editingState, setEditingState] = useState<[T, number] | [null, null]>([
-    null,
-    null,
-  ]);
+  const [editingState, setEditingState] = useState<
+    [T, number] | [null, null] | boolean
+  >(editing || false);
+  useEffect(() => {
+    setEditingState(editing || false);
+  }, [editing]);
 
   const [filterState, setFilterState] = useState<F | null>();
   const [selectedState, setSelectedState] = useState<T[] | null>(null);
@@ -629,6 +640,7 @@ export const DataGrid = <T extends object = object, F extends object = T>(
       // @ts-expect-error - DataGridContext doesn't have DataGridContextType with generic T and F yet.
       value={
         {
+          dataGridRef,
           toolbarRef,
 
           ...defaultedProps,
@@ -640,8 +652,7 @@ export const DataGrid = <T extends object = object, F extends object = T>(
           count: _count,
           dataGridId: id,
           editable: Boolean(renderableFields.find((f) => f.editable)),
-          editingFieldIndex: editingState[1],
-          editingRow: editingState[0],
+          editingState: editingState,
           errorsState: errorsState,
           formFields: formFields,
           setErrorsState: setErrorsState,

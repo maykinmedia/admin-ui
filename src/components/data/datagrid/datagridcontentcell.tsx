@@ -25,7 +25,7 @@ export type DataGridContentCellProps<
   F extends object = T,
 > = {
   field: TypedField<T>;
-  rowData: T;
+  renderableRowIndex: number;
 };
 
 /**
@@ -36,7 +36,7 @@ export const DataGridContentCell = <
   F extends object = T,
 >({
   field,
-  rowData,
+  renderableRowIndex,
 }: DataGridContentCellProps<T, F>) => {
   const {
     aProps,
@@ -46,12 +46,12 @@ export const DataGridContentCell = <
     dataGridId,
     decorate,
     editable,
-    editingFieldIndex,
-    editingRow,
+    editingState,
     errorsState,
     fields,
     setErrorsState,
     formFields,
+    renderableRows,
     renderableFields = [],
     setEditingState,
     urlFields = DEFAULT_URL_FIELDS,
@@ -61,14 +61,13 @@ export const DataGridContentCell = <
     onChange,
     onEdit,
   } = useDataGridContext<T, F>();
+  const rowData = renderableRows[renderableRowIndex];
   const [pristine, setPristine] = useState<boolean>(true);
 
   const fieldEditable =
     typeof field.editable === "boolean" ? field.editable : editable;
   const fieldIndex = renderableFields.findIndex((f) => f.name === field.name);
-  const isEditingRow = editingRow === rowData;
-  const isEditingField =
-    isEditingRow && editingFieldIndex === renderableFields.indexOf(field);
+
   const urlField = urlFields.find((f) => rowData[f as keyof T]);
   const rowUrl = urlField ? rowData[urlField as keyof T] : null;
   const resolvedValue = getByDotSeparatedPath(
@@ -78,10 +77,19 @@ export const DataGridContentCell = <
 
   const value = field.valueTransform?.(rowData) || resolvedValue;
   const valueIsPrimitive = isPrimitive(value);
-  const label = field.options?.find((o) => o.value === value)?.label;
 
   const isImplicitLink = rowUrl && fieldIndex === 0 && !isLink(String(value));
   const link = isImplicitLink ? String(rowUrl) : "";
+
+  const isEditingRow =
+    typeof editingState === "boolean"
+      ? editingState
+      : editingState[0] === rowData;
+
+  const isEditingField =
+    typeof editingState === "boolean"
+      ? editingState
+      : isEditingRow && editingState[1] === renderableFields.indexOf(field);
 
   /**
    * Gets called when the <Value> is clicked.
@@ -134,7 +142,10 @@ export const DataGridContentCell = <
           },
         ),
       );
-      setEditingState([null, null]);
+
+      if (Array.isArray(editingState)) {
+        setEditingState([null, null]);
+      }
       !pristine && onEdit?.(data);
     },
     [rowData, pristine, onEdit],
@@ -160,13 +171,6 @@ export const DataGridContentCell = <
       )}
       aria-description={string2Title(field.name.toString())}
     >
-      {isEditingRow && isEditingField && (
-        <form
-          id={`${dataGridId}-editable-form`}
-          onSubmit={(e) => e.preventDefault()}
-        />
-      )}
-
       {valueIsPrimitive && isEditingRow && !isEditingField && (
         <input
           defaultChecked={field.type === "boolean" ? Boolean(value) : undefined}
@@ -189,7 +193,7 @@ export const DataGridContentCell = <
         badgeProps={badgeProps}
         boolProps={{ explicit: editable, ...(boolProps as BoolProps) }}
         formControlProps={{
-          form: `${dataGridId}-editable-form`,
+          form: `${dataGridId}-editable-form-${renderableRowIndex}`,
           required: true,
         }}
         pProps={pProps}
@@ -198,7 +202,7 @@ export const DataGridContentCell = <
         editing={isEditingField}
         error={message}
         field={field}
-        value={label || (field.type === "boolean" ? Boolean(value) : value)}
+        value={value}
         onBlur={handleBlur}
         onChange={handleChange}
         onClick={handleClick}
