@@ -195,7 +195,6 @@ export const DataGridContentCell = <
         pProps={pProps}
         href={link}
         decorate={decorate}
-        editable={editable}
         editing={isEditingField}
         error={message}
         field={field}
