@@ -7,14 +7,14 @@ export type DataGridContextType<T extends object, F extends object> = Omit<
   DataGridProps<T, F>,
   "equalityChecker" | "fields" | "onSelect" | "onSort"
 > & {
+  dataGridRef: React.RefObject<HTMLDivElement>;
   toolbarRef: React.RefObject<HTMLDivElement>;
 
   amountSelected: number;
   count: number;
   dataGridId: string;
   editable: boolean;
-  editingFieldIndex: number | null; // TODO: undefined?
-  editingRow: T | null;
+  editingState: [object, number] | boolean;
   errorsState: FieldErrors<FormField[], Validator[]>;
   formFields: FormField[];
   setErrorsState: React.Dispatch<FieldErrors<FormField[], Validator[]>>;
