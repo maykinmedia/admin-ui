@@ -1,6 +1,6 @@
 {
   "name": "@maykin-ui/admin-ui",
-  "version": "2.0.0-alpha.23",
+  "version": "2.0.0-alpha.24",
   "description": "",
   "scripts": {
     "create-component": "./bin/create_component.sh",
