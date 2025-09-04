@@ -92,7 +92,7 @@ export const AttributeList = <T extends object = object>({
 
   useEffect(() => {
     setErrorsState(errors2errorsArray(errors));
-  }, [errors]);
+  }, [JSON.stringify(errors)]);
 
   const renderTitle = title && <H3 id={titleId}>{string2Title(title)}</H3>;
   const isTitleAbove = titleSpan === 12;
