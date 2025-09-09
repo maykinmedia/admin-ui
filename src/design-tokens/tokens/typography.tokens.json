@@ -8,19 +8,19 @@
         "value": "light-dark(#333333, #c5c6ce)"
       },
       "border": {
-        "value": "light-dark(#ebebeb, #535353)"
+        "value": "light-dark(#CCCCCC, #535353)"
       },
       "link": {
-        "value": "{page.color.primary}"
+        "value": "#331A81"
       },
       "muted": {
-        "value": "light-dark(#696969, #8c8c8c)"
+        "value": "light-dark(#CCCCCC, #8c8c8c)"
       },
       "background": {
         "value": "light-dark(#fff, #313741)"
       },
       "background-alt": {
-        "value": "light-dark(#f8f8f8, #252f3d)"
+        "value": "light-dark(#EDEDED, #252f3d)"
       }
     },
     "font": {
