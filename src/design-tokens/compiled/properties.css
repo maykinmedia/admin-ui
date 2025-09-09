@@ -20,9 +20,9 @@
   --spacing-s-v: 16px;
   --spacing-xs-h: 8px;
   --spacing-xs-v: 8px;
-  --theme-purple-rain-primary-color: hsl(253 69% 33%);
+  --theme-purple-rain-primary-color: hsl(208 72% 53%);
   --theme-blue-suede-shoes-primary-color: hsl(200 60% 58%);
-  --page-color-secondary: #eeeeee;
+  --page-color-secondary: #BED9F1;
   --page-color-background: light-dark(#f5f7fd, #252f3d);
   --page-color-background-alt: #fafafa;
   --page-color-shadow: rgba(12, 12, 12, 0.3);
@@ -32,10 +32,11 @@
   --page-color-danger: #ff4949;
   --page-container-size: 1240px;
   --typography-color-body: light-dark(#333333, #c5c6ce);
-  --typography-color-border: light-dark(#ebebeb, #535353);
-  --typography-color-muted: light-dark(#696969, #8c8c8c);
+  --typography-color-border: light-dark(#CCCCCC, #535353);
+  --typography-color-link: #331A81;
+  --typography-color-muted: light-dark(#CCCCCC, #8c8c8c);
   --typography-color-background: light-dark(#fff, #313741);
-  --typography-color-background-alt: light-dark(#f8f8f8, #252f3d);
+  --typography-color-background-alt: light-dark(#EDEDED, #252f3d);
   --typography-font-family-h: "Roboto Slab", sans-serif;
   --typography-font-family-body: Lato, sans-serif;
   --typography-font-size-h1: 32px;
@@ -78,9 +79,9 @@
   --button-color-text-success: var(--page-color-success);
   --button-color-text-warning: var(--page-color-warning);
   --button-color-text-danger: var(--page-color-danger);
-  --theme-purple-rain-primary-hue: 253.22033898305085;
-  --theme-purple-rain-primary-saturation: 0.6941176470588236;
-  --theme-purple-rain-primary-lightness: 0.3333333333333333;
+  --theme-purple-rain-primary-hue: 207.9310344827586;
+  --theme-purple-rain-primary-saturation: 0.71900826446281;
+  --theme-purple-rain-primary-lightness: 0.5254901960784314;
   --theme-blue-suede-shoes-primary-hue: 200.15625;
   --theme-blue-suede-shoes-primary-saturation: 0.5981308411214954;
   --theme-blue-suede-shoes-primary-lightness: 0.5803921568627451;
@@ -106,7 +107,6 @@
   --theme-purple-rain-accent-color: hsl(var(--theme-purple-rain-primary-hue) 100% 95%);
   --theme-blue-suede-shoes-accent-color: hsl(var(--theme-blue-suede-shoes-primary-hue) 100% 95%);
   --page-color-logo: light-dark(var(--page-color-primary), var(--page-color-primary-contrast));
-  --typography-color-link: var(--page-color-primary);
   --button-color-background-primary-hover: var(--button-color-background-primary);
   --button-color-background-secondary-active: var(--button-color-background-secondary-hover);
   --button-color-background-outline-active: var(--button-color-background-outline-hover);
