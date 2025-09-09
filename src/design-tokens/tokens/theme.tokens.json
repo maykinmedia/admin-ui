@@ -4,7 +4,7 @@
       "primary": {
         "color": {
           "type": "color",
-          "value": "#341a90"
+          "value": "#2f8CDD"
         },
         "hue": {
           "type": "color",
@@ -78,7 +78,7 @@
         "value": "light-dark({typography.color.background}, #ffffff)"
       },
       "secondary": {
-        "value": "#eeeeee"
+        "value": "#BED9F1"
       },
       "secondary-contrast": {
         "value": "light-dark({typography.color.body}, #333333)"
