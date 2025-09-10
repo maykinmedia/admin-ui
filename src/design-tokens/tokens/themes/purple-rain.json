@@ -1,0 +1,67 @@
+{
+  "theme": {
+    "brand": {
+      "primary": {
+        "default": { "value": "light-dark(#2078C5, #66B2FF)" },
+        "hover": { "value": "light-dark(#2573B2, #3399FF)" },
+        "pressed": { "value": "light-dark(#1A5C94, #1A7ACC)" },
+        "active": { "value": "light-dark(#2078C5, #66B2FF)" },
+        "text": { "value": "light-dark(#FFFFFF, #0A0A0A)" }
+      },
+      "secondary": {
+        "default": { "value": "light-dark(#BBDDF1, #374151)" },
+        "hover": { "value": "light-dark(#BBDDF1, #4B5563)" },
+        "pressed": { "value": "light-dark(#BBDDF1, #1F2937)" },
+        "active": { "value": "light-dark(#BBDDF1, #374151)" },
+        "text": { "value": "light-dark(#333333, #FFFFFF)" }
+      },
+      "accent": {
+        "default": { "value": "light-dark(#E9F1F9, #1E40AF)" },
+        "hover": { "value": "light-dark(#BBDDF1, #1D4ED8)" },
+        "pressed": { "value": "light-dark(#E9F1F9, #1E3A8A)" },
+        "active": { "value": "light-dark(#E9F1F9, #1E40AF)" },
+        "text": { "value": "light-dark(#1A5C94, #FFFFFF)" }
+      }
+    },
+    "base": {
+      "100": { "value": "light-dark(#FFFFFF, #0F172A)" },
+      "200": { "value": "light-dark(#EDEDED, #1E293B)" },
+      "300": { "value": "light-dark(#CCCCCC, #334155)" },
+      "400": { "value": "light-dark(#767676, #475569)" },
+      "500": { "value": "light-dark(#595959, #64748B)" },
+      "600": { "value": "light-dark(#404040, #94A3B8)" },
+      "700": { "value": "light-dark(#333333, #CBD5E1)" },
+      "blue": { "value": "light-dark(#331A81, #66B2FF)" }
+    },
+    "intent": {
+      "success": {
+        "default": { "value": "light-dark(#2E843D, #22C55E)" },
+        "hover": { "value": "light-dark(#2D7F3A, #16A34A)" },
+        "pressed": { "value": "light-dark(#256631, #15803D)" },
+        "active": { "value": "light-dark(#2E843D, #22C55E)" },
+        "text": { "value": "light-dark(#FFFFFF, #0F172A)" }
+      },
+      "warning": {
+        "default": { "value": "light-dark(#EC9700, #FACC15)" },
+        "hover": { "value": "light-dark(#EC9700, #EAB308)" },
+        "pressed": { "value": "light-dark(#EC9700, #CA8A04)" },
+        "active": { "value": "light-dark(#EC9700, #FACC15)" },
+        "text": { "value": "light-dark(#FFFFFF, #0F172A)" }
+      },
+      "danger": {
+        "default": { "value": "light-dark(#EB0000, #F87171)" },
+        "hover": { "value": "light-dark(#DE3535, #EF4444)" },
+        "pressed": { "value": "light-dark(#C43333, #DC2626)" },
+        "active": { "value": "light-dark(#EB0000, #F87171)" },
+        "text": { "value": "light-dark(#FFFFFF, #0F172A)" }
+      },
+      "info": {
+        "default": { "value": "light-dark(#00BFCB, #38BDF8)" },
+        "hover": { "value": "light-dark(#00BFCB, #0EA5E9)" },
+        "pressed": { "value": "light-dark(#00BFCB, #0284C7)" },
+        "active": { "value": "light-dark(#00BFCB, #38BDF8)" },
+        "text": { "value": "light-dark(#FFFFFF, #0F172A)" }
+      }
+    }
+  }
+}

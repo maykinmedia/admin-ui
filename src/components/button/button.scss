@@ -1,10 +1,10 @@
 .mykn-button {
   $self: &;
 
-  --mykn-button-color-background: var(--typography-color-background);
-  --mykn-button-color-border: var(--form-color-border);
-  --mykn-button-color-shadow: var(--page-color-shadow);
-  --mykn-button-color-text: var(--typography-color-body);
+  --mykn-button-color-background: var(--button-primary-default-bg);
+  --mykn-button-color-border: var(--button-primary-default-border);
+  --mykn-button-color-text: var(--button-primary-default-text);
+  --mykn-button-color-shadow: var(--button-primray-default-shadow);
 
   --mykn-button-font-size: var(--typography-font-size-body-s);
   --mykn-button-font-weight: var(--typography-font-weight-normal);
@@ -32,7 +32,7 @@
   cursor: pointer;
   gap: 0.5em;
   height: var(--mykn-button-height);
-  font-family: var(--typography-font-family-body);
+  font-family: var(--typography-font-family-body), serif;
   font-size: var(--mykn-button-font-size);
   font-weight: var(--mykn-button-font-weight);
   line-height: calc(var(--mykn-button-line-height) - 2px);
@@ -45,13 +45,6 @@
 
   &:not([hidden]) {
     display: inline-flex;
-  }
-
-  &#{&}:disabled,
-  &#{&}--disabled,
-  &#{&}--muted {
-    --mykn-button-color-background: var(--typography-color-background-alt);
-    --mykn-button-color-text: var(--typography-color-body);
   }
 
   &:disabled,
@@ -140,170 +133,177 @@
   }
 
   &--variant-primary {
-    --mykn-button-color-background: var(--button-color-background-primary);
-    --mykn-button-color-border: var(--button-color-border-primary);
-    --mykn-button-color-shadow: var(--button-color-shadow-primary);
-    --mykn-button-color-text: var(--button-color-text-primary);
-
-    &#{$self}:disabled,
-    &#{$self}--disabled,
-    &#{$self}--muted {
-      --mykn-button-color-background: var(--button-color-background-secondary);
-      --mykn-button-color-border: var(--button-color-border-secondary);
-      --mykn-button-color-shadow: var(--button-color-shadow-secondary);
-      --mykn-button-color-text: var(--button-color-text-secondary);
-    }
-
+    --mykn-button-color-background: var(--button-primary-default-bg);
+    --mykn-button-color-border: var(--button-primary-default-border);
+    --mykn-button-color-text: var(--button-primary-default-text);
+    --mykn-button-color-shadow: var(--button-primary-default-shadow);
     &:focus,
     &:hover {
-      --mykn-button-color-background: var(
-        --button-color-background-primary-hover
-      );
-      --mykn-button-color-border: var(--button-color-border-primary-hover);
-      --mykn-button-color-shadow: var(--button-color-shadow-primary-hover);
-      --mykn-button-color-text: var(--button-color-text-primary-hover);
+      --mykn-button-color-background: var(--button-primary-hover-bg);
+      --mykn-button-color-border: var(--button-primary-hover-border);
+      --mykn-button-color-text: var(--button-primary-hover-text);
+      --mykn-button-color-shadow: var(--button-primary-hover-shadow);
       --mykn-button-offset: -2px;
     }
 
     &[aria-expanded="true"],
     &:active,
     &#{$self}--active {
-      --mykn-button-color-background: var(
-        --button-color-background-primary-active
-      );
-      --mykn-button-color-border: var(--button-color-border-primary-active);
-      --mykn-button-color-shadow: var(--button-color-shadow-primary-active);
-      --mykn-button-color-text: var(--button-color-text-primary-active);
+      --mykn-button-color-background: var(--button-primary-pressed-bg);
+      --mykn-button-color-border: var(--button-primary-pressed-border);
+      --mykn-button-color-text: var(--button-primary-pressed-text);
+      --mykn-button-color-shadow: var(--button-primary-pressed-shadow);
       --mykn-button-offset: 0px;
+    }
+
+    &:disabled,
+    &#{$self}--disabled,
+    &#{$self}--muted {
+      --mykn-button-color-background: var(--button-primary-disabled-bg);
+      --mykn-button-color-border: var(--button-primary-disabled-border);
+      --mykn-button-color-text: var(--button-primary-disabled-text);
+      --mykn-button-color-shadow: var(--button-primary-disabled-shadow);
     }
   }
 
   &--variant-secondary {
-    --mykn-button-color-background: var(--button-color-background-secondary);
-    --mykn-button-color-border: var(--button-color-border-secondary);
-    --mykn-button-color-shadow: var(--button-color-shadow-secondary);
-    --mykn-button-color-text: var(--button-color-text-secondary);
+    --mykn-button-color-background: var(--button-secondary-default-bg);
+    --mykn-button-color-border: var(--button-secondary-default-border);
+    --mykn-button-color-text: var(--button-secondary-default-text);
+    --mykn-button-color-shadow: var(--button-secondary-default-shadow);
 
     &:focus,
     &:hover {
-      --mykn-button-color-background: var(
-        --button-color-background-secondary-hover
-      );
-      --mykn-button-color-border: var(--button-color-border-secondary-hover);
-      --mykn-button-color-shadow: var(--button-color-shadow-secondary-hover);
-      --mykn-button-color-text: var(--button-color-text-secondary-hover);
+      --mykn-button-color-background: var(--button-secondary-hover-bg);
+      --mykn-button-color-border: var(--button-secondary-hover-border);
+      --mykn-button-color-text: var(--button-secondary-hover-text);
+      --mykn-button-color-shadow: var(--button-secondary-hover-shadow);
       --mykn-button-offset: -2px;
     }
 
     &[aria-expanded="true"],
     &:active,
     &#{$self}--active {
-      --mykn-button-color-background: var(
-        --button-color-background-secondary-active
-      );
-      --mykn-button-color-border: var(--button-color-border-secondary-active);
-      --mykn-button-color-shadow: var(--button-color-shadow-secondary-active);
-      --mykn-button-color-text: var(--button-color-text-secondary-active);
+      --mykn-button-color-background: var(--button-secondary-pressed-bg);
+      --mykn-button-color-border: var(--button-secondary-pressed-border);
+      --mykn-button-color-text: var(--button-secondary-pressed-text);
+      --mykn-button-color-shadow: var(--button-secondary-pressed-shadow);
       --mykn-button-offset: 0px;
+    }
+
+    &:disabled,
+    &#{$self}--disabled,
+    &#{$self}--muted {
+      --mykn-button-color-background: var(--button-secondary-disabled-bg);
+      --mykn-button-color-border: var(--button-secondary-disabled-border);
+      --mykn-button-color-text: var(--button-secondary-disabled-text);
+      --mykn-button-color-shadow: var(--button-secondary-disabled-shadow);
     }
   }
 
   &--variant-outline {
-    --mykn-button-color-background: var(--button-color-background-outline);
-    --mykn-button-color-border: var(--button-color-border-outline);
-    --mykn-button-color-shadow: var(--button-color-shadow-outline);
-    --mykn-button-color-text: var(--button-color-text-outline);
+    --mykn-button-color-background: var(--button-outline-default-bg);
+    --mykn-button-color-border: var(--button-outline-default-border);
+    --mykn-button-color-text: var(--button-outline-default-text);
+    --mykn-button-color-shadow: var(--button-outline-default-shadow);
 
     &:focus,
     &:hover {
-      --mykn-button-color-background: var(
-        --button-color-background-outline-hover
-      );
-      --mykn-button-color-border: var(--button-color-border-outline-hover);
-      --mykn-button-color-shadow: var(--button-color-shadow-outline-hover);
-      --mykn-button-color-text: var(--button-color-text-outline-hover);
+      --mykn-button-color-background: var(--button-outline-hover-bg);
+      --mykn-button-color-border: var(--button-outline-hover-border);
+      --mykn-button-color-text: var(--button-outline-hover-text);
+      --mykn-button-color-shadow: var(--button-outline-hover-shadow);
       --mykn-button-offset: -2px;
     }
 
     &[aria-expanded="true"],
     &:active,
     &#{$self}--active {
-      --mykn-button-color-background: var(
-        --button-color-background-outline-active
-      );
-      --mykn-button-color-border: var(--button-color-border-outline-active);
-      --mykn-button-color-shadow: var(--button-color-shadow-outline-active);
-      --mykn-button-color-text: var(--button-color-text-outline-active);
+      --mykn-button-color-background: var(--button-outline-pressed-bg);
+      --mykn-button-color-border: var(--button-outline-pressed-border);
+      --mykn-button-color-text: var(--button-outline-pressed-text);
+      --mykn-button-color-shadow: var(--button-outline-pressed-shadow);
       --mykn-button-offset: 0px;
     }
 
-    &#{$self}:disabled,
+    &:disabled,
     &#{$self}--disabled,
     &#{$self}--muted {
-      --mykn-button-color-background: transparent;
-      --mykn-button-color-border: var(--button-color-border-outline);
-      --mykn-button-color-shadow: var(--button-color-shadow-outline);
-      --mykn-button-color-text: var(--button-color-text-outline);
+      --mykn-button-color-background: var(--button-outline-disabled-bg);
+      --mykn-button-color-border: var(--button-outline-disabled-border);
+      --mykn-button-color-text: var(--button-outline-disabled-text);
+      --mykn-button-color-shadow: var(--button-outline-disabled-shadow);
     }
   }
 
   &--variant-transparent {
-    --mykn-button-color-background: var(--button-color-background-transparent);
-    --mykn-button-color-border: var(--button-color-border-transparent);
-    --mykn-button-color-shadow: var(--button-color-shadow-transparent);
-    --mykn-button-color-text: var(--button-color-text-transparent);
+    --mykn-button-color-background: var(--button-transparent-default-bg);
+    --mykn-button-color-border: var(--button-transparent-default-border);
+    --mykn-button-color-text: var(--button-transparent-default-text);
+    --mykn-button-color-shadow: var(--button-transparent-default-shadow);
 
     &:focus,
     &:hover {
-      --mykn-button-color-background: var(
-        --button-color-background-transparent-hover
-      );
-      --mykn-button-color-border: var(--button-color-border-transparent-hover);
-      --mykn-button-color-shadow: var(--button-color-shadow-transparent-hover);
-      --mykn-button-color-text: var(--button-color-text-transparent-hover);
+      --mykn-button-color-background: var(--button-transparent-hover-bg);
+      --mykn-button-color-border: var(--button-transparent-hover-border);
+      --mykn-button-color-text: var(--button-transparent-hover-text);
+      --mykn-button-color-shadow: var(--button-transparent-hover-shadow);
       --mykn-button-offset: -2px;
     }
 
     &[aria-expanded="true"],
     &:active,
     &#{$self}--active {
-      --mykn-button-color-background: var(
-        --button-color-background-transparent-active
-      );
-      --mykn-button-color-border: var(--button-color-border-transparent-active);
-      --mykn-button-color-shadow: var(--button-color-shadow-transparent-active);
-      --mykn-button-color-text: var(--button-color-text-transparent-active);
+      --mykn-button-color-background: var(--button-transparent-pressed-bg);
+      --mykn-button-color-border: var(--button-transparent-pressed-border);
+      --mykn-button-color-text: var(--button-transparent-pressed-text);
+      --mykn-button-color-shadow: var(--button-transparent-pressed-shadow);
       --mykn-button-offset: 0px;
     }
 
-    &#{$self}:disabled,
+    &:disabled,
     &#{$self}--disabled,
     &#{$self}--muted {
-      --mykn-button-color-background: transparent;
-      --mykn-button-color-border: var(--button-color-border-transparent);
-      --mykn-button-color-shadow: var(--button-color-shadow-transparent);
-      --mykn-button-color-text: var(--button-color-text-transparent);
+      --mykn-button-color-background: var(--button-transparent-disabled-bg);
+      --mykn-button-color-border: var(--button-transparent-disabled-border);
+      --mykn-button-color-text: var(--button-transparent-disabled-text);
+      --mykn-button-color-shadow: var(--button-transparent-disabled-shadow);
     }
   }
 
-  @each $variant in ("info" "success" "warning" "danger") {
+  @each $variant in ("info", "success", "warning", "danger") {
     &--variant-#{$variant} {
-      --mykn-button-color-background: var(
-        --button-color-background-#{$variant}
-      );
-      --mykn-button-color-border: var(--button-color-border-#{$variant});
-      --mykn-button-color-shadow: var(--button-color-shadow-#{$variant});
-      --mykn-button-color-text: var(--button-color-text-#{$variant});
+      --mykn-button-color-background: var(--button-#{$variant}-default-bg);
+      --mykn-button-color-border: var(--button-#{$variant}-default-border);
+      --mykn-button-color-text: var(--button-#{$variant}-default-text);
+      --mykn-button-color-shadow: var(--button-#{$variant}-default-shadow);
 
       &:focus,
       &:hover {
+        --mykn-button-color-background: var(--button-#{$variant}-hover-bg);
+        --mykn-button-color-border: var(--button-#{$variant}-hover-border);
+        --mykn-button-color-text: var(--button-#{$variant}-hover-text);
+        --mykn-button-color-shadow: var(--button-#{$variant}-hover-shadow);
         --mykn-button-offset: -2px;
       }
 
       &[aria-expanded="true"],
       &:active,
       &#{$self}--active {
+        --mykn-button-color-background: var(--button-#{$variant}-pressed-bg);
+        --mykn-button-color-border: var(--button-#{$variant}-pressed-border);
+        --mykn-button-color-text: var(--button-#{$variant}-pressed-text);
+        --mykn-button-color-shadow: var(--button-#{$variant}-pressed-shadow);
         --mykn-button-offset: 0px;
+      }
+
+      &:disabled,
+      &#{$self}--disabled,
+      &#{$self}--muted {
+        --mykn-button-color-background: var(--button-#{$variant}-disabled-bg);
+        --mykn-button-color-border: var(--button-#{$variant}-disabled-border);
+        --mykn-button-color-text: var(--button-#{$variant}-disabled-text);
+        --mykn-button-color-shadow: var(--button-#{$variant}-disabled-shadow);
       }
     }
   }
