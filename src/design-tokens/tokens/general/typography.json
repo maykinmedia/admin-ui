@@ -2,25 +2,25 @@
   "typography": {
     "color": {
       "h": {
-        "value": "light-dark(#282828, {typography.color.body})"
+        "value": "{theme.base.700}"
       },
       "body": {
-        "value": "light-dark(#333333, #c5c6ce)"
+        "value": "{theme.base.700}"
       },
       "border": {
-        "value": "light-dark(#CCCCCC, #535353)"
+        "value": "{theme.base.200}"
       },
       "link": {
-        "value": "#331A81"
+        "value": "{theme.base.blue}"
       },
       "muted": {
-        "value": "light-dark(#CCCCCC, #8c8c8c)"
+        "value": "{theme.base.300}"
       },
       "background": {
-        "value": "light-dark(#fff, #313741)"
+        "value": "{theme.base.100}"
       },
       "background-alt": {
-        "value": "light-dark(#EDEDED, #252f3d)"
+        "value": "{theme.base.200}"
       }
     },
     "font": {
