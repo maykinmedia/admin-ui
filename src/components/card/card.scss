@@ -1,6 +1,6 @@
 .mykn-card {
-  background-color: var(--typography-color-background);
-  border-radius: var(--border-radius-s);
+  background-color: var(--card-background);
+  border-radius: var(--sizes-border-radius-s);
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -9,7 +9,7 @@
   border: unset;
 
   &--border {
-    border: 1px solid var(--typography-color-border);
+    border: 1px solid var(--card-border);
   }
 
   &--direction--column {
@@ -59,11 +59,11 @@
   &__header {
     display: flex;
     justify-content: space-between;
-    padding-block-start: var(--spacing-xs-v);
+    padding-block-start: var(--sizes-spacing-xs-v);
   }
 
   & + & {
-    margin-block-start: var(--spacing-xs-v);
+    margin-block-start: var(--sizes-spacing-xs-v);
   }
 
   &:has(> .mykn-body),

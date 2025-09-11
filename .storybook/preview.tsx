@@ -1,4 +1,4 @@
-import { withThemeByClassName } from "@storybook/addon-themes";
+import { withThemeByDataAttribute } from "@storybook/addon-themes";
 import type { Preview } from "@storybook/react-webpack5";
 
 import "../src/index.scss";
@@ -13,40 +13,33 @@ const preview: Preview = {
         "dark desktop": allModes["dark desktop"],
         "dark mobile": allModes["dark mobile"],
       },
-      controls: {
-        matchers: {
-          color: /(background|color)$/i,
-          date: /Date$/i,
-        },
-      },
-      layout: "fullscreen",
-    },
-    controls: {
-      matchers: {
-        color: /(background|color)$/i,
-        date: /Date$/i,
-      },
     },
     layout: "fullscreen",
     options: {
       storySort: {
-        order: ['Manual', ['Introduction', 'Internationalization', 'Design tokens', 'Release Procedure']]
+        order: [
+          "Manual",
+          [
+            "Introduction",
+            "Internationalization",
+            "Design tokens",
+            "Release Procedure",
+          ],
+        ],
       },
-    }
+    },
   },
 
   decorators: [
-    withThemeByClassName({
-      themes: {
-        system: "view--system",
-        light: "view--light",
-        dark: "view--dark",
-      },
+    withThemeByDataAttribute({
+      themes: { light: "light", dark: "dark" },
       defaultTheme: "light",
-    }) as any,
+      attributeName: "data-mode",
+      parentSelector: "html",
+    }),
   ],
 
-  tags: ["autodocs"]
+  tags: ["autodocs"],
 };
 
 export default preview;

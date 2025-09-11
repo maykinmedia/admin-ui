@@ -2,7 +2,7 @@
 
 .mykn-page {
   justify-content: start;
-  background-color: var(--page-color-background);
+  background-color: var(--page-background);
   container-name: page;
   display: flex;
   //flex-direction: column;  // Removed to facilitate NavBar move in BaseTemplate.
@@ -23,14 +23,14 @@
   }
 
   &--pad-h {
-    padding-inline: var(--spacing-xs-h);
+    padding-inline: var(--sizes-spacing-xs-h);
   }
 
   &--pad-v {
-    padding-block: var(--spacing-xs-h);
+    padding-block: var(--sizes-spacing-xs-h);
 
     @media screen and (min-width: constants.$breakpoint-desktop) {
-      padding-block: var(--spacing-xs-v);
+      padding-block: var(--sizes-spacing-xs-v);
     }
   }
 

@@ -1,0 +1,5 @@
+{
+  "modal": {
+    "shadow": { "value": "{theme.base.shadow}" }
+  }
+}

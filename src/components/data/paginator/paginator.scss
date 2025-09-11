@@ -17,13 +17,13 @@
   grid-template-columns: auto 1fr auto auto;
   grid-template-areas: "meta spacer options nav";
   justify-content: space-between;
-  column-gap: var(--spacing-m-h);
-  row-gap: var(--spacing-xs-v);
+  column-gap: var(--sizes-spacing-m-h);
+  row-gap: var(--sizes-spacing-xs-v);
   position: relative;
   width: 100%;
 
   @media screen and (max-width: constants.$breakpoint-desktop - 1px) {
-    column-gap: var(--spacing-xs-h);
+    column-gap: var(--sizes-spacing-xs-h);
     grid-template-columns: auto auto;
     grid-template-rows: repeat(2, auto);
     grid-template-areas:
@@ -43,7 +43,7 @@
   &__section {
     display: flex;
     align-items: center;
-    gap: var(--spacing-xs-h);
+    gap: var(--sizes-spacing-xs-h);
   }
 
   &__section--meta {
@@ -61,6 +61,6 @@
   &__buttons {
     display: flex;
     align-items: center;
-    gap: var(--spacing-xs-v);
+    gap: var(--sizes-spacing-xs-v);
   }
 }

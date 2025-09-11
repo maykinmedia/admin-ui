@@ -9,12 +9,12 @@
   display: block;
 
   &__header {
-    margin-bottom: var(--spacing-xs-v);
+    margin-bottom: var(--sizes-spacing-xs-v);
   }
 
   &__body {
     display: grid;
-    gap: var(--spacing-xs-h);
+    gap: var(--sizes-spacing-xs-h);
     align-items: start;
 
     @media screen and (min-width: constants.$breakpoint-desktop) {
@@ -31,7 +31,7 @@
     grid-column: span var(--mykn-attributelist-col-span-content);
     display: grid;
     grid-template-columns: subgrid;
-    gap: var(--spacing-xs-v);
+    gap: var(--sizes-spacing-xs-v);
     margin: 0;
     width: 100%;
   }
@@ -51,14 +51,13 @@
   }
 
   &__key {
-    color: var(--typography-color-muted);
+    color: var(--typography-color-body);
     font-weight: var(--typography-font-weight-bold);
   }
 
   &__value {
-    color: var(--typography-color-muted);
     display: flex;
-    gap: var(--spacing-xs-v) var(--spacing-xs-h);
+    gap: var(--sizes-spacing-xs-v) var(--sizes-spacing-xs-h);
   }
 
   @media screen and (min-width: constants.$breakpoint-desktop) {

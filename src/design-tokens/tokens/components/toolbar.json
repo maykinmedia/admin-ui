@@ -1,0 +1,24 @@
+{
+  "toolbar": {
+    "default": {
+      "background": { "value": "{theme.base.background}" },
+      "text": { "value": "{typography.color.body}" }
+    },
+    "primary": {
+      "background": { "value": "{theme.brand.primary.default}" },
+      "text": { "value": "{theme.brand.primary.contrast}" }
+    },
+    "accent": {
+      "background": { "value": "{theme.brand.accent.default}" },
+      "text": { "value": "{theme.brand.accent.contrast}" }
+    },
+    "alternate": {
+      "background": { "value": "{theme.base.background-alternate}" },
+      "text": { "value": "{typography.color.body}" }
+    },
+    "transparent": {
+      "background": { "value": "transparent" },
+      "text": { "value": "{typography.color.body}" }
+    }
+  }
+}

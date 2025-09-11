@@ -1,18 +1,18 @@
 @use "../../../settings/constants";
 
 .mykn-datagrid {
-  --mykn-datagrid-spacing-h: var(--spacing-s-h);
-  --mykn-datagrid-spacing-v: var(--spacing-s-v);
+  --mykn-datagrid-spacing-h: var(--sizes-spacing-s-h);
+  --mykn-datagrid-spacing-v: var(--sizes-spacing-s-v);
 
-  background-color: var(--typography-color-background);
-  border-radius: var(--border-radius-s);
+  background-color: var(--datagrid-background);
+  border-radius: var(--sizes-border-radius-s);
   display: flex;
   flex-direction: column;
   width: 100%;
 
   &--compact {
-    --mykn-datagrid-spacing-h: var(--spacing-xs-h);
-    --mykn-datagrid-spacing-v: var(--spacing-xs-v);
+    --mykn-datagrid-spacing-h: var(--sizes-spacing-xs-h);
+    --mykn-datagrid-spacing-v: var(--sizes-spacing-xs-v);
   }
 
   &__toolbar {
@@ -34,7 +34,7 @@
   }
 
   &__scrollpane ~ .mykn-toolbar {
-    border-block-start: 1px solid var(--typography-color-border);
+    border-block-start: 1px solid var(--datagrid-border);
   }
 
   &__header {
@@ -54,7 +54,7 @@
   }
 
   &__thead {
-    background-color: var(--typography-color-background);
+    background-color: var(--datagrid-background);
     position: sticky;
     top: 0;
     z-index: 20;
@@ -65,7 +65,7 @@
   }
 
   &__thead &__row--filter {
-    background-color: var(--typography-color-background-alt);
+    background-color: var(--datagrid-header-background);
 
     .mykn-stackctx,
     .mykn-input,
@@ -89,12 +89,12 @@
   }
 
   &__row--selected {
-    background-color: var(--page-color-highlight);
+    background-color: var(--datagrid-row-active);
   }
 
   &__cell {
     border-block-start: 1px solid transparent;
-    border-block-end: 1px solid var(--typography-color-border);
+    border-block-end: 1px solid var(--datagrid-border);
     box-sizing: border-box;
     padding: var(--mykn-datagrid-spacing-v) var(--mykn-datagrid-spacing-h);
     position: relative;
@@ -123,8 +123,8 @@
   }
 
   &__cell--filter {
-    padding-inline: var(--spacing-xs-h);
-    padding-block: var(--spacing-xs-v);
+    padding-inline: var(--sizes-spacing-xs-h);
+    padding-block: var(--sizes-spacing-xs-v);
   }
 
   &__cell--checkbox,
@@ -170,7 +170,7 @@
 
   &__footer {
     box-sizing: border-box;
-    padding: var(--spacing-xs-v) var(--spacing-xs-h);
+    padding: var(--sizes-spacing-xs-v) var(--sizes-spacing-xs-h);
   }
 
   .mykn-body {

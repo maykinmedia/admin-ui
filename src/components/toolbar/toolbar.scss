@@ -39,14 +39,15 @@
   --typography-color-link: var(--typography-color-body);
 
   $self: &;
-  background-color: var(--typography-color-background);
+  background-color: var(--toolbar-default-background);
+  color: var(--toolbar-default-text);
   box-sizing: border-box;
-  column-gap: var(--spacing-xs-h);
+  column-gap: var(--sizes-spacing-xs-h);
   display: flex;
   flex-direction: column;
   max-height: 100cqh;
   justify-content: flex-start;
-  row-gap: var(--spacing-xs-v);
+  row-gap: var(--sizes-spacing-xs-v);
   text-align: start;
   width: fit-content;
   z-index: 10;
@@ -65,66 +66,67 @@
 
   &--pad-a .mykn-a {
     box-sizing: border-box;
-    padding: var(--spacing-xs-v) var(--spacing-xs-h);
+    padding: var(--sizes-spacing-xs-v) var(--sizes-spacing-xs-h);
   }
 
   &--pad-h {
-    padding-inline: var(--spacing-xs-h);
+    padding-inline: var(--sizes-spacing-xs-h);
   }
 
   &--pad-size-xs#{&}--pad-h {
-    padding-inline: calc(var(--spacing-xs-h) / 2);
+    padding-inline: calc(var(--sizes-spacing-xs-h) / 2);
   }
 
   &--pad-v {
-    padding-block: var(--spacing-xs-v);
+    padding-block: var(--sizes-spacing-xs-v);
   }
 
   &--pad-size-xs-#{&}--pad-v {
-    padding-inline: calc(var(--spacing-xs-v) / 2);
+    padding-inline: calc(var(--sizes-spacing-xs-v) / 2);
   }
 
   &--variant-primary {
-    background-color: light-dark(
-      var(--page-color-primary),
-      var(--typography-color-background-alt)
-    );
+    background-color: var(--toolbar-primary-background);
+    color: var(--toolbar-primary-text);
 
     @include theme(light) {
       & > *:not(.mykn-dropdown, .mykn-iconinitials) {
-        --typography-color-body: var(--page-color-primary-contrast);
-        --typography-color-link: var(--page-color-primary-contrast);
-        --typography-color-h: var(--page-color-primary-contrast);
+        --typography-color-body: var(--toolbar-primary-text);
+        --typography-color-link: var(--toolbar-primary-text);
+        --typography-color-h: var(--toolbar-primary-text);
       }
 
       & > .mykn-button--variant-transparent:not(:focus, :hover),
       & > .mykn-dropdown .mykn-button--variant-transparent:not(:focus, :hover) {
-        --mykn-button-color-text: var(--page-color-primary-contrast);
+        --mykn-button-color-text: var(--toolbar-primary-text);
       }
     }
   }
 
   &--variant-accent {
-    background-color: var(--page-color-accent);
+    background-color: var(--toolbar-accent-background);
+    color: var(--toolbar-accent-text);
   }
 
   &--variant-alt {
-    background-color: var(--typography-color-background-alt);
+    background-color: var(--toolbar-alternate-background);
+    color: var(--toolbar-alternate-text);
   }
 
   @include horizontal {
     &#{$self}--variant-alt {
-      border-block: 1px solid var(--typography-color-border);
+      //border-block: 1px solid var(--typography-color-border);
     }
   }
   @include vertical {
     &#{$self}--variant-alt {
-      border-inline: 1px solid var(--typography-color-border);
+      //border-inline: 1px solid var(--typography-color-border);
     }
   }
 
   &--variant-transparent {
-    background-color: transparent;
+    background-color: var(--toolbar-transparent-background);
+    color: var(--toolbar-transparent-text);
   }
 
   &--size-fit-content {
@@ -154,7 +156,7 @@
     text-decoration: none;
 
     &[aria-current] {
-      color: var(--page-color-primary);
+      color: var(--toolbar-primary-text);
     }
 
     &:hover {

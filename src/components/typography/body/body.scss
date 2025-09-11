@@ -1,7 +1,7 @@
 @use "../../../settings/constants";
 
 .mykn-body {
-  padding: var(--spacing-xs-v) var(--spacing-xs-h);
+  padding: var(--sizes-spacing-xs-v) var(--sizes-spacing-xs-h);
 
   .mykn-h1,
   .mykn-h2,
@@ -10,7 +10,7 @@
   .mykn-ol,
   .mykn-ul {
     &:not(:last-child) {
-      margin-block-end: var(--spacing-xs-v);
+      margin-block-end: var(--sizes-spacing-xs-v);
     }
   }
 
@@ -27,6 +27,6 @@
   }
 
   @media screen and (min-width: constants.$breakpoint-desktop) {
-    padding: var(--spacing-xs-v) var(--spacing-xs-h);
+    padding: var(--sizes-spacing-xs-v) var(--sizes-spacing-xs-h);
   }
 }

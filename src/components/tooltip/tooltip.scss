@@ -2,9 +2,9 @@
   transition: all 0.5s;
   transform: scale(0.8);
   opacity: 0;
-  border-radius: var(--border-radius-s);
-  background-color: var(--typography-color-background);
-  border: 2px solid var(--typography-color-border);
+  border-radius: var(--sizes-border-radius-s);
+  background-color: var(--tooltip-background);
+  border: 2px solid var(--tooltip-border);
   z-index: -1 !important;
 
   &--open {
@@ -14,11 +14,11 @@
   }
 
   &__arrow {
-    fill: var(--typography-color-border);
+    fill: var(--tooltip-border);
   }
 
   &__content {
-    padding: var(--spacing-xs-h) var(--spacing-xs-v);
+    padding: var(--sizes-spacing-xs-h) var(--sizes-spacing-xs-v);
     box-sizing: border-box;
     overflow-wrap: break-word;
 

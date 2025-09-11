@@ -24,11 +24,11 @@
     "commitlint": "commitlint --edit",
     "rollup": "rollup -c",
     "rollup:watch": "rollup -cw",
-    "build:design-tokens": "style-dictionary build -c style-dictionary.config.mjs --verbose",
+    "build:design-tokens": "node bin/build-design-tokens.mjs",
     "prepare": "husky install"
   },
   "main": "dist/cjs/index.js",
-  "module": "src/esm/index.js",
+  "module": "dist/esm/index.js",
   "style": "dist/esm/index.css",
   "lang": "dist/esm/lib/i18n/compiled",
   "supportedLocales": [
@@ -47,7 +47,15 @@
     "./lib": "./dist/esm/lib/index.js",
     "./messages/*": "./dist/esm/lib/i18n/compiled/*.js",
     "./templates": "./dist/esm/templates/index.js",
-    "./style": "./dist/esm/index.css"
+    "./style": "./dist/esm/index.css",
+    "./themes/blue-suede-shoes": {
+      "default": "./dist/esm/design-tokens/compiled/themes/blue-suede-shoes.css",
+      "types": "./types/theme-css.d.ts"
+    },
+    "./themes/purple-rain": {
+      "default": "./dist/esm/design-tokens/compiled/themes/purple-rain.css",
+      "types": "./types/theme-css.d.ts"
+    }
   },
   "types": "dist/esm/index.d.ts",
   "repository": {
@@ -103,6 +111,7 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "rollup": "^4.9.2",
+    "rollup-plugin-copy": "^3.5.0",
     "rollup-plugin-dts": "^6.1.0",
     "rollup-plugin-styler": "^2.0.0",
     "rollup-plugin-typescript2": "^0.36.0",

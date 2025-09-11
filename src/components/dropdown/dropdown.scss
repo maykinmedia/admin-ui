@@ -10,14 +10,14 @@
   }
 
   &--open > .mykn-button {
-    outline: 1px solid var(--page-color-primary);
+    outline: 1px solid var(--dropdown-border);
   }
 
   @at-root {
     &__dropdown {
       width: fit-content;
-      border: 1px solid var(--page-color-primary);
-      border-radius: var(--border-radius-s);
+      border: 1px solid var(--dropdown-border);
+      border-radius: var(--sizes-border-radius-s);
       box-sizing: border-box;
       z-index: 2000;
 
@@ -31,7 +31,10 @@
     @media screen and (max-width: constants.$breakpoint-desktop - 1px) {
       &__dropdown {
         width: 100%; // Fallback.
-        width: min(100%, max(calc(100vw - 2 * var(--spacing-xs-h)), 100cqw));
+        width: min(
+          100%,
+          max(calc(100vw - 2 * var(--sizes-spacing-xs-h)), 100cqw)
+        );
       }
     }
 

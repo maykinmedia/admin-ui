@@ -20,11 +20,11 @@
   }
 
   &::backdrop {
-    background-color: var(--page-color-shadow);
+    background-color: var(--modal-shadow);
   }
 
   &--position-float {
-    border-radius: var(--border-radius-s);
+    border-radius: var(--sizes-border-radius-s);
     margin: auto;
 
     &[open] {
@@ -77,11 +77,11 @@
   }
 
   &--type-dialog#{&}--position-float {
-    box-shadow: 0 0 20px var(--page-color-shadow);
+    box-shadow: 0 0 20px var(--modal-shadow);
   }
 
   &--type-dialog#{&}--position-side {
-    box-shadow: -4px 0 20px var(--page-color-shadow);
+    box-shadow: -4px 0 20px var(--modal-shadow);
   }
 }
 

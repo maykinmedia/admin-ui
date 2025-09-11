@@ -7,9 +7,9 @@
 
   appearance: none;
   align-items: center;
-  background: var(--typography-color-background);
-  border: 1px solid var(--form-color-border);
-  border-radius: var(--border-radius-s);
+  background: var(--form-input-background);
+  border: 1px solid var(--form-border);
+  border-radius: var(--sizes-border-radius-s);
   box-sizing: border-box;
   color: var(--typography-color-body);
   font-family: var(--typography-font-family-body);
@@ -23,31 +23,34 @@
   max-width: 100%;
 
   &--pad-h {
-    --mykn-input-padding-h: var(--spacing-xs-h);
+    --mykn-input-padding-h: var(--sizes-spacing-xs-h);
   }
 
   &--pad-v {
-    --mykn-input-padding-v: var(--mykn-input-padding-xs, var(--spacing-xs-v));
+    --mykn-input-padding-v: var(
+      --mykn-input-padding-xs,
+      var(--sizes-spacing-xs-v)
+    );
   }
 
   &--size-xl {
     --mykn-input-font-size: var(--typography-font-size-xl);
     --mykn-input-line-height: var(--typography-line-height-xl);
-    --mykn-input-padding-xs: calc(var(--spacing-xs-h) / 2);
+    --mykn-input-padding-xs: calc(var(--sizes-spacing-xs-h) / 2);
   }
 
   &--size-xs {
     --mykn-input-font-size: var(--typography-font-size-body-xs);
     --mykn-input-line-height: var(--typography-line-height-body-xs);
-    --mykn-input-padding-xs: calc(var(--spacing-xs-h) / 2);
+    --mykn-input-padding-xs: calc(var(--sizes-spacing-xs-h) / 2);
   }
 
   &--size-xxs {
     --mykn-input-font-size: var(--typography-font-size-body-xs);
     --mykn-input-line-height: var(--typography-line-height-body-xs);
-    --mykn-input-padding-xs: calc(var(--spacing-xs-h) / 2);
-    --mykn-input-height: calc(3 * var(--spacing-xs-h) + 2px) !important;
-    --mykn-input-width: calc(3 * var(--spacing-xs-h) + 2px) !important;
+    --mykn-input-padding-xs: calc(var(--sizes-spacing-xs-h) / 2);
+    --mykn-input-height: calc(3 * var(--sizes-spacing-xs-h) + 2px) !important;
+    --mykn-input-width: calc(3 * var(--sizes-spacing-xs-h) + 2px) !important;
   }
 
   &:disabled,
@@ -77,11 +80,11 @@
 
   &[type="checkbox"] {
     &:checked {
-      background-color: var(--page-color-primary);
+      background-color: var(--form-checkbox-active-background);
     }
 
     &:checked:before {
-      background-color: var(--page-color-primary-contrast);
+      background-color: var(--form-checkbox-active-text);
       mask-image: url(data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2217%22%20height%3D%2216%22%20viewBox%3D%220%200%2017%2016%22%20fill%3D%22none%22%3E%3Cpath%20d%3D%22m3.594%208%204.019%204.019a1%201%200%200%200%201.601-.26L13.594%203%22%20stroke%3D%22%23341A90%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22%2F%3E%3C%2Fsvg%3E);
       mask-position: center;
       mask-repeat: no-repeat;
@@ -96,11 +99,11 @@
   }
 
   &[type="radio"] {
-    background-color: var(--typography-color-background);
+    background-color: var(--form-radio-default-background);
     border-radius: 50%;
 
     &:checked:before {
-      background-color: var(--page-color-primary);
+      background-color: var(--form-radio-active-background);
       border-radius: 50%;
       content: "";
       position: absolute;
@@ -128,7 +131,7 @@
     &:before,
     &:after {
       align-items: center;
-      color: var(--typography-color-body);
+      color: var(--form-color-text);
       content: attr(value);
       display: flex;
       height: 50%;
@@ -140,15 +143,15 @@
 
     &:before {
       opacity: 0.9;
-      background-color: var(--typography-color-background);
+      background-color: var(--form-color-background);
       border-radius: 6px;
       color: transparent;
-      padding: var(--spacing-xs-v) var(--spacing-xs-h);
+      padding: var(--sizes-spacing-xs-v) var(--sizes-spacing-xs-h);
     }
   }
 
   &[type="file"] {
-    border: none;
+    border: var(--form-file-border);
   }
 
   &--variant-transparent {
@@ -159,7 +162,7 @@
     pointer-events: none;
     color: var(--typography-color-muted);
     inset-block-start: 50%;
-    inset-inline-end: var(--spacing-xs-h);
+    inset-inline-end: var(--sizes-spacing-xs-h);
     position: absolute;
     transform: translateY(-50%);
   }

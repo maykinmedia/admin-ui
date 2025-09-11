@@ -1,0 +1,44 @@
+{
+  "badge": {
+    "primary": {
+      "background": { "value": "{theme.brand.primary.default}" },
+      "text": { "value": "{theme.brand.primary.contrast}" },
+      "border": { "value": "transparent" }
+    },
+    "secondary": {
+      "background": { "value": "{theme.brand.secondary.default}" },
+      "text": { "value": "{theme.brand.secondary.contrast}" },
+      "border": { "value": "transparent" }
+    },
+    "accent": {
+      "background": { "value": "{theme.brand.accent.default}" },
+      "text": { "value": "{theme.brand.accent.contrast}" },
+      "border": { "value": "transparent" }
+    },
+    "outline": {
+      "background": { "value": "transparent" },
+      "text": { "value": "{typography.color.body}" },
+      "border": { "value": "{typography.color.border}" }
+    },
+    "info": {
+      "background": { "value": "{theme.intent.info.default}" },
+      "text": { "value": "{theme.intent.info.contrast}" },
+      "border": { "value": "transparent" }
+    },
+    "success": {
+      "background": { "value": "{theme.intent.success.default}" },
+      "text": { "value": "{theme.intent.success.contrast}" },
+      "border": { "value": "transparent" }
+    },
+    "warning": {
+      "background": { "value": "{theme.intent.warning.default}" },
+      "text": { "value": "{theme.intent.warning.contrast}" },
+      "border": { "value": "transparent" }
+    },
+    "danger": {
+      "background": { "value": "{theme.intent.danger.default}" },
+      "text": { "value": "{theme.intent.danger.contrast}" },
+      "border": { "value": "transparent" }
+    }
+  }
+}

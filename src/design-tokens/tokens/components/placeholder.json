@@ -1,0 +1,10 @@
+{
+  "placeholder": {
+    "background-dark": {
+      "value": "{theme.base.foreground-muted}"
+    },
+    "background-light": {
+      "value": "{theme.base.background-alternate}"
+    }
+  }
+}

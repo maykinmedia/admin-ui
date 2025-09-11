@@ -1,12 +1,12 @@
 .mykn-bool {
-  --mykn-bool-color: var(--page-color-success);
+  --mykn-bool-color: var(--bool-success-background);
   --mykn-bool-size: 1em;
 
   height: var(--mykn-icon-size);
   color: var(--mykn-bool-color);
 
   &--value-false {
-    --mykn-bool-color: var(--page-color-danger);
+    --mykn-bool-color: var(--bool-danger-background);
   }
 
   &--value-false:not(#{&}--explicit) {
