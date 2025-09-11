@@ -23,15 +23,15 @@
   }
 
   &--gutter-true {
-    gap: var(--spacing-s-v) var(--spacing-s-h);
+    gap: var(--sizes-spacing-s-v) var(--sizes-spacing-s-h);
   }
 
   &--gutter-v {
-    gap: var(--spacing-s-v) 0;
+    gap: var(--sizes-spacing-s-v) 0;
   }
 
-  &--spacing-xs-h {
-    gap: 0 var(--spacing-s-h);
+  &--sizes-spacing-xs-h {
+    gap: 0 var(--sizes-spacing-s-h);
   }
 
   &--full-height {
@@ -52,15 +52,15 @@
     }
 
     &--gutter-true {
-      gap: var(--spacing-s-v) var(--spacing-s-h);
+      gap: var(--sizes-spacing-s-v) var(--sizes-spacing-s-h);
     }
 
-    &--spacing-xs-h {
-      gap: 0 var(--spacing-s-h-desktop);
+    &--sizes-spacing-xs-h {
+      gap: 0 var(--sizes-spacing-s-h-desktop);
     }
 
     &--gutter-v {
-      gap: var(--spacing-s-v) 0;
+      gap: var(--sizes-spacing-s-v) 0;
     }
 
     @for $i from 1 through 12 {

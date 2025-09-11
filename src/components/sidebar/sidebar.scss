@@ -110,18 +110,18 @@
       :has(:not(.mykn-sidebar__toggle):focus)
     ):not(:has(&__body:hover)) {
     width: calc(
-      var(--typography-line-height-body-xs) + 2 * var(--spacing-xs-h)
+      var(--typography-line-height-body-xs) + 2 * var(--sizes-spacing-xs-h)
     );
 
     #{$self}__header,
     #{$self}__body {
       width: calc(
-        var(--typography-line-height-body-xs) + 2 * var(--spacing-xs-h)
+        var(--typography-line-height-body-xs) + 2 * var(--sizes-spacing-xs-h)
       );
     }
 
     #{$self}__header .mykn-body {
-      padding-inline: calc(0.5 * var(--spacing-xs-h));
+      padding-inline: calc(0.5 * var(--sizes-spacing-xs-h));
     }
 
     .mykn-logo .mykn-logo__handle {
@@ -132,7 +132,7 @@
   &:not([aria-expanded="true"]):has(:not(.mykn-sidebar__toggle):focus),
   &:not([aria-expanded="true"]):has(&__body:hover) {
     width: calc(
-      var(--typography-line-height-body-xs) + 2 * var(--spacing-xs-h)
+      var(--typography-line-height-body-xs) + 2 * var(--sizes-spacing-xs-h)
     );
   }
 
@@ -148,7 +148,8 @@
 
   @media screen and (max-width: constants.$breakpoint-desktop - 1px) {
     width: calc(
-      var(--typography-line-height-body-xs) + 2 * var(--spacing-xs-h) + 2.1px
+      var(--typography-line-height-body-xs) + 2 * var(--sizes-spacing-xs-h) +
+        2.1px
     );
   }
 }

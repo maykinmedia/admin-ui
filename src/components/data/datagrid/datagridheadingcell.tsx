@@ -42,7 +42,6 @@ export const DataGridHeadingCell = <
           align="space-between"
           bold={isSorted}
           justify={true}
-          muted
           pad={false}
           size="xs"
           variant={"transparent"}

@@ -1,7 +1,7 @@
 .mykn-button {
   $self: &;
 
-  --mykn-button-color-background: var(--button-primary-default-bg);
+  --mykn-button-color-background: var(--button-primary-default-background);
   --mykn-button-color-border: var(--button-primary-default-border);
   --mykn-button-color-text: var(--button-primary-default-text);
   --mykn-button-color-shadow: var(--button-primray-default-shadow);
@@ -24,7 +24,7 @@
   padding-inline: var(--mykn-button-padding-h);
   background-color: var(--mykn-button-color-background);
   border: 1px solid var(--mykn-button-color-border, transparent);
-  border-radius: var(--border-radius-s);
+  border-radius: var(--sizes-border-radius-s);
   box-shadow: 0 calc(var(--mykn-button-offset) * -1)
     var(--mykn-button-color-shadow);
   box-sizing: border-box;
@@ -87,31 +87,34 @@
   }
 
   &--pad-h {
-    --mykn-button-padding-h: var(--spacing-xs-h);
+    --mykn-button-padding-h: var(--sizes-spacing-xs-h);
   }
 
   &--pad-v {
-    --mykn-button-padding-v: var(--mykn-button-padding-xs, var(--spacing-xs-v));
+    --mykn-button-padding-v: var(
+      --mykn-button-padding-xs,
+      var(--sizes-spacing-xs-v)
+    );
   }
 
   &--size-xl {
     --mykn-button-font-size: var(--typography-font-size-xl);
     --mykn-button-line-height: var(--typography-line-height-xl);
-    --mykn-button-padding-xs: calc(var(--spacing-xs-h) / 2);
+    --mykn-button-padding-xs: calc(var(--sizes-spacing-xs-h) / 2);
   }
 
   &--size-xs {
     --mykn-button-font-size: var(--typography-font-size-body-xs);
     --mykn-button-line-height: var(--typography-line-height-body-xs);
-    --mykn-button-padding-xs: calc(var(--spacing-xs-h) / 2);
+    --mykn-button-padding-xs: calc(var(--sizes-spacing-xs-h) / 2);
   }
 
   &--size-xxs {
     --mykn-button-font-size: var(--typography-font-size-body-xs);
     --mykn-button-line-height: var(--typography-line-height-body-xs);
-    --mykn-button-padding-xs: calc(var(--spacing-xs-h) / 2);
-    --mykn-button-height: calc(3 * var(--spacing-xs-h) + 2px) !important;
-    --mykn-button-width: calc(3 * var(--spacing-xs-h) + 2px) !important;
+    --mykn-button-padding-xs: calc(var(--sizes-spacing-xs-h) / 2);
+    --mykn-button-height: calc(3 * var(--sizes-spacing-xs-h) + 2px) !important;
+    --mykn-button-width: calc(3 * var(--sizes-spacing-xs-h) + 2px) !important;
   }
 
   &--rounded {
@@ -133,13 +136,13 @@
   }
 
   &--variant-primary {
-    --mykn-button-color-background: var(--button-primary-default-bg);
+    --mykn-button-color-background: var(--button-primary-default-background);
     --mykn-button-color-border: var(--button-primary-default-border);
     --mykn-button-color-text: var(--button-primary-default-text);
     --mykn-button-color-shadow: var(--button-primary-default-shadow);
     &:focus,
     &:hover {
-      --mykn-button-color-background: var(--button-primary-hover-bg);
+      --mykn-button-color-background: var(--button-primary-hover-background);
       --mykn-button-color-border: var(--button-primary-hover-border);
       --mykn-button-color-text: var(--button-primary-hover-text);
       --mykn-button-color-shadow: var(--button-primary-hover-shadow);
@@ -149,7 +152,7 @@
     &[aria-expanded="true"],
     &:active,
     &#{$self}--active {
-      --mykn-button-color-background: var(--button-primary-pressed-bg);
+      --mykn-button-color-background: var(--button-primary-pressed-background);
       --mykn-button-color-border: var(--button-primary-pressed-border);
       --mykn-button-color-text: var(--button-primary-pressed-text);
       --mykn-button-color-shadow: var(--button-primary-pressed-shadow);
@@ -159,7 +162,7 @@
     &:disabled,
     &#{$self}--disabled,
     &#{$self}--muted {
-      --mykn-button-color-background: var(--button-primary-disabled-bg);
+      --mykn-button-color-background: var(--button-primary-disabled-background);
       --mykn-button-color-border: var(--button-primary-disabled-border);
       --mykn-button-color-text: var(--button-primary-disabled-text);
       --mykn-button-color-shadow: var(--button-primary-disabled-shadow);
@@ -167,14 +170,14 @@
   }
 
   &--variant-secondary {
-    --mykn-button-color-background: var(--button-secondary-default-bg);
+    --mykn-button-color-background: var(--button-secondary-default-background);
     --mykn-button-color-border: var(--button-secondary-default-border);
     --mykn-button-color-text: var(--button-secondary-default-text);
     --mykn-button-color-shadow: var(--button-secondary-default-shadow);
 
     &:focus,
     &:hover {
-      --mykn-button-color-background: var(--button-secondary-hover-bg);
+      --mykn-button-color-background: var(--button-secondary-hover-background);
       --mykn-button-color-border: var(--button-secondary-hover-border);
       --mykn-button-color-text: var(--button-secondary-hover-text);
       --mykn-button-color-shadow: var(--button-secondary-hover-shadow);
@@ -184,7 +187,9 @@
     &[aria-expanded="true"],
     &:active,
     &#{$self}--active {
-      --mykn-button-color-background: var(--button-secondary-pressed-bg);
+      --mykn-button-color-background: var(
+        --button-secondary-pressed-background
+      );
       --mykn-button-color-border: var(--button-secondary-pressed-border);
       --mykn-button-color-text: var(--button-secondary-pressed-text);
       --mykn-button-color-shadow: var(--button-secondary-pressed-shadow);
@@ -194,7 +199,9 @@
     &:disabled,
     &#{$self}--disabled,
     &#{$self}--muted {
-      --mykn-button-color-background: var(--button-secondary-disabled-bg);
+      --mykn-button-color-background: var(
+        --button-secondary-disabled-background
+      );
       --mykn-button-color-border: var(--button-secondary-disabled-border);
       --mykn-button-color-text: var(--button-secondary-disabled-text);
       --mykn-button-color-shadow: var(--button-secondary-disabled-shadow);
@@ -202,14 +209,14 @@
   }
 
   &--variant-outline {
-    --mykn-button-color-background: var(--button-outline-default-bg);
+    --mykn-button-color-background: var(--button-outline-default-background);
     --mykn-button-color-border: var(--button-outline-default-border);
     --mykn-button-color-text: var(--button-outline-default-text);
     --mykn-button-color-shadow: var(--button-outline-default-shadow);
 
     &:focus,
     &:hover {
-      --mykn-button-color-background: var(--button-outline-hover-bg);
+      --mykn-button-color-background: var(--button-outline-hover-background);
       --mykn-button-color-border: var(--button-outline-hover-border);
       --mykn-button-color-text: var(--button-outline-hover-text);
       --mykn-button-color-shadow: var(--button-outline-hover-shadow);
@@ -219,7 +226,7 @@
     &[aria-expanded="true"],
     &:active,
     &#{$self}--active {
-      --mykn-button-color-background: var(--button-outline-pressed-bg);
+      --mykn-button-color-background: var(--button-outline-pressed-background);
       --mykn-button-color-border: var(--button-outline-pressed-border);
       --mykn-button-color-text: var(--button-outline-pressed-text);
       --mykn-button-color-shadow: var(--button-outline-pressed-shadow);
@@ -229,7 +236,7 @@
     &:disabled,
     &#{$self}--disabled,
     &#{$self}--muted {
-      --mykn-button-color-background: var(--button-outline-disabled-bg);
+      --mykn-button-color-background: var(--button-outline-disabled-background);
       --mykn-button-color-border: var(--button-outline-disabled-border);
       --mykn-button-color-text: var(--button-outline-disabled-text);
       --mykn-button-color-shadow: var(--button-outline-disabled-shadow);
@@ -237,14 +244,18 @@
   }
 
   &--variant-transparent {
-    --mykn-button-color-background: var(--button-transparent-default-bg);
+    --mykn-button-color-background: var(
+      --button-transparent-default-background
+    );
     --mykn-button-color-border: var(--button-transparent-default-border);
     --mykn-button-color-text: var(--button-transparent-default-text);
     --mykn-button-color-shadow: var(--button-transparent-default-shadow);
 
     &:focus,
     &:hover {
-      --mykn-button-color-background: var(--button-transparent-hover-bg);
+      --mykn-button-color-background: var(
+        --button-transparent-hover-background
+      );
       --mykn-button-color-border: var(--button-transparent-hover-border);
       --mykn-button-color-text: var(--button-transparent-hover-text);
       --mykn-button-color-shadow: var(--button-transparent-hover-shadow);
@@ -254,7 +265,9 @@
     &[aria-expanded="true"],
     &:active,
     &#{$self}--active {
-      --mykn-button-color-background: var(--button-transparent-pressed-bg);
+      --mykn-button-color-background: var(
+        --button-transparent-pressed-background
+      );
       --mykn-button-color-border: var(--button-transparent-pressed-border);
       --mykn-button-color-text: var(--button-transparent-pressed-text);
       --mykn-button-color-shadow: var(--button-transparent-pressed-shadow);
@@ -264,7 +277,9 @@
     &:disabled,
     &#{$self}--disabled,
     &#{$self}--muted {
-      --mykn-button-color-background: var(--button-transparent-disabled-bg);
+      --mykn-button-color-background: var(
+        --button-transparent-disabled-background
+      );
       --mykn-button-color-border: var(--button-transparent-disabled-border);
       --mykn-button-color-text: var(--button-transparent-disabled-text);
       --mykn-button-color-shadow: var(--button-transparent-disabled-shadow);
@@ -273,14 +288,18 @@
 
   @each $variant in ("info", "success", "warning", "danger") {
     &--variant-#{$variant} {
-      --mykn-button-color-background: var(--button-#{$variant}-default-bg);
+      --mykn-button-color-background: var(
+        --button-#{$variant}-default-background
+      );
       --mykn-button-color-border: var(--button-#{$variant}-default-border);
       --mykn-button-color-text: var(--button-#{$variant}-default-text);
       --mykn-button-color-shadow: var(--button-#{$variant}-default-shadow);
 
       &:focus,
       &:hover {
-        --mykn-button-color-background: var(--button-#{$variant}-hover-bg);
+        --mykn-button-color-background: var(
+          --button-#{$variant}-hover-background
+        );
         --mykn-button-color-border: var(--button-#{$variant}-hover-border);
         --mykn-button-color-text: var(--button-#{$variant}-hover-text);
         --mykn-button-color-shadow: var(--button-#{$variant}-hover-shadow);
@@ -290,7 +309,9 @@
       &[aria-expanded="true"],
       &:active,
       &#{$self}--active {
-        --mykn-button-color-background: var(--button-#{$variant}-pressed-bg);
+        --mykn-button-color-background: var(
+          --button-#{$variant}-pressed-background
+        );
         --mykn-button-color-border: var(--button-#{$variant}-pressed-border);
         --mykn-button-color-text: var(--button-#{$variant}-pressed-text);
         --mykn-button-color-shadow: var(--button-#{$variant}-pressed-shadow);
@@ -300,7 +321,9 @@
       &:disabled,
       &#{$self}--disabled,
       &#{$self}--muted {
-        --mykn-button-color-background: var(--button-#{$variant}-disabled-bg);
+        --mykn-button-color-background: var(
+          --button-#{$variant}-disabled-background
+        );
         --mykn-button-color-border: var(--button-#{$variant}-disabled-border);
         --mykn-button-color-text: var(--button-#{$variant}-disabled-text);
         --mykn-button-color-shadow: var(--button-#{$variant}-disabled-shadow);

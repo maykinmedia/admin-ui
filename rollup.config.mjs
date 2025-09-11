@@ -1,11 +1,12 @@
 import { transform } from "@formatjs/ts-transformer";
 import commonjs from "@rollup/plugin-commonjs";
-import terser from "@rollup/plugin-terser";
-import typescript from "rollup-plugin-typescript2";
-import styles from "rollup-plugin-styler";
-import postcss_url from "postcss-url";
 import json from "@rollup/plugin-json";
+import terser from "@rollup/plugin-terser";
+import postcss_url from "postcss-url";
+import copy from "rollup-plugin-copy";
 import { dts } from "rollup-plugin-dts";
+import styles from "rollup-plugin-styler";
+import typescript from "rollup-plugin-typescript2";
 
 const EXTERNAL = [
   "@floating-ui/react",
@@ -19,26 +20,29 @@ const EXTERNAL = [
   "react-datepicker",
   "react-datepicker/dist/react-datepicker.css",
   "react-dom",
-  "react-intl"
+  "react-intl",
 ];
 
 export default [
   {
     external: EXTERNAL,
     input: "src/index.ts",
-    output: [{
-      assetFileNames: "[name][extname]",
-      dir: "dist/cjs",
-      format: "cjs",
-      sourcemap: true,
-      preserveModules: true
-    }, {
-      assetFileNames: "[name][extname]",
-      dir: "dist/esm",
-      format: "esm",
-      sourcemap: true,
-      preserveModules: true
-    }],
+    output: [
+      {
+        assetFileNames: "[name][extname]",
+        dir: "dist/cjs",
+        format: "cjs",
+        sourcemap: true,
+        preserveModules: true,
+      },
+      {
+        assetFileNames: "[name][extname]",
+        dir: "dist/esm",
+        format: "esm",
+        sourcemap: true,
+        preserveModules: true,
+      },
+    ],
     plugins: [
       commonjs(),
       typescript({
@@ -46,10 +50,11 @@ export default [
           before: [
             transform({
               overrideIdFn: "[sha512:contenthash:base64:6]",
-              ast: true
-            })
-          ]
-        }), tsconfig: "./tsconfig.json"
+              ast: true,
+            }),
+          ],
+        }),
+        tsconfig: "./tsconfig.json",
       }),
       styles({
         url: false,
@@ -59,21 +64,33 @@ export default [
         plugins: [
           postcss_url({
             basePath: process.cwd(),
-            url: "inline"
-          })
-        ]
+            url: "inline",
+          }),
+        ],
+      }),
+      copy({
+        targets: [{ src: "src/design-tokens/compiled/**", dest: "dist/esm" }],
+        flatten: false,
+        overwrite: true,
       }),
       terser(),
-      json()
-    ]
-
+      json(),
+    ],
   },
   {
     external: [...EXTERNAL, /\.scss$/],
     input: "src/index.ts",
     output: [{ dir: "dist/esm", format: "esm", preserveModules: true }],
-    plugins: [dts()]
+    plugins: [dts()],
   },
-  { input: "src/lib/i18n/compiled/en.json", output: { dir: "dist/esm/lib/i18n/compiled" }, plugins: [json()] },
-  { input: "src/lib/i18n/compiled/nl.json", output: { dir: "dist/esm/lib/i18n/compiled" }, plugins: [json()] }
+  {
+    input: "src/lib/i18n/compiled/en.json",
+    output: { dir: "dist/esm/lib/i18n/compiled" },
+    plugins: [json()],
+  },
+  {
+    input: "src/lib/i18n/compiled/nl.json",
+    output: { dir: "dist/esm/lib/i18n/compiled" },
+    plugins: [json()],
+  },
 ];

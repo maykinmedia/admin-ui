@@ -1,0 +1,7 @@
+{
+  "dropdown": {
+    "border": {
+      "value": "{theme.brand.primary.default}"
+    }
+  }
+}

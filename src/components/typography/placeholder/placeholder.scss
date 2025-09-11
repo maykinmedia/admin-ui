@@ -1,6 +1,6 @@
 .mykn-placeholder {
-  --mykn-placeholder-color-dark: var(--typography-color-border);
-  --mykn-placeholder-color-light: var(--typography-color-background-alt);
+  --mykn-placeholder-color-dark: var(--placeholder-background-dark);
+  --mykn-placeholder-color-light: var(--placeholder-background-light);
 
   animation: shift-background var(--animation-duration-slow) infinite
     var(--animation-timing-function) reverse;

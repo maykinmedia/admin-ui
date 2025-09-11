@@ -51,11 +51,11 @@
   }
 
   &--direction-column#{&}--gap {
-    gap: var(--spacing-xs-v);
+    gap: var(--sizes-spacing-xs-v);
   }
 
   &--direction-row#{&}--gap {
-    gap: var(--spacing-xs-h);
+    gap: var(--sizes-spacing-xs-h);
   }
 
   &--justify-start {

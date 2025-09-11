@@ -1,0 +1,6 @@
+{
+  "tooltip": {
+    "background": { "value": "{theme.base.background}" },
+    "border": { "value": "{typography.color.border}" }
+  }
+}

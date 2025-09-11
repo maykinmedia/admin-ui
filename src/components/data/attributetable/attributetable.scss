@@ -1,6 +1,6 @@
 .mykn-attributetable {
   display: table;
-  background-color: var(--typography-color-background);
+  background-color: var(--attributetable-background);
   width: 100%;
   white-space: nowrap;
 
@@ -32,23 +32,23 @@
   &__body {
     display: grid;
     grid-template-columns: 1fr;
-    column-gap: var(--spacing-xs-h);
+    column-gap: var(--sizes-spacing-xs-h);
     row-gap: 0;
   }
 
   &__row {
     display: grid;
     grid-template-columns: 1fr 2fr;
-    column-gap: var(--spacing-xs-h);
+    column-gap: var(--sizes-spacing-xs-h);
     align-items: center;
 
-    border-block-start: 1px solid var(--typography-color-border);
-    padding-block-end: var(--spacing-xs-v);
-    padding-block-start: var(--spacing-xs-v);
+    border-block-start: 1px solid var(--attributetable-border);
+    padding-block-end: var(--sizes-spacing-xs-v);
+    padding-block-start: var(--sizes-spacing-xs-v);
 
     &:last-of-type {
-      border-block-end: 1px solid var(--typography-color-border);
-      padding-block-end: var(--spacing-xs-v);
+      border-block-end: 1px solid var(--attributetable-border);
+      padding-block-end: var(--sizes-spacing-xs-v);
     }
   }
 
@@ -67,7 +67,7 @@
       grid-column: 1;
 
       > .mykn-icon:last-child {
-        margin-inline-start: var(--spacing-xs-h);
+        margin-inline-start: var(--sizes-spacing-xs-h);
       }
     }
 
@@ -76,7 +76,7 @@
     }
 
     > .mykn-icon {
-      margin-inline-end: var(--spacing-xs-h);
+      margin-inline-end: var(--sizes-spacing-xs-h);
     }
   }
 

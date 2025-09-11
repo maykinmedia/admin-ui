@@ -16,9 +16,6 @@ const meta: Meta<typeof Button> = {
         <Button {...args} variant="secondary">
           Secondary Button
         </Button>
-        <Button {...args} variant="outline">
-          Outline Button
-        </Button>
         <Button {...args} variant="transparent">
           Tranparent Button
         </Button>
@@ -116,9 +113,6 @@ export const SquareButtons: Story = {
         <Button {...args} variant="secondary">
           2
         </Button>
-        <Button {...args} variant="outline">
-          4
-        </Button>
         <Button {...args} variant="transparent">
           3
         </Button>
@@ -155,9 +149,6 @@ export const ButtonLinkComponent: StoryObj<typeof ButtonLink> = {
         </ButtonLink>
         <ButtonLink {...args} variant="secondary">
           Secondary ButtonLink
-        </ButtonLink>
-        <ButtonLink {...args} variant="outline">
-          Outline ButtonLink
         </ButtonLink>
         <ButtonLink {...args} variant="transparent">
           Tranparent ButtonLink

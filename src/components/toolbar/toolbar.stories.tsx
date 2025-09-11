@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import * as React from "react";
 
-import { PAGE_DECORATOR } from "../../../.storybook/decorators";
 import { ButtonLinkProps, ButtonProps } from "../button";
 import { DropdownProps } from "../dropdown";
 import { FormControlProps } from "../form";
@@ -13,7 +12,7 @@ import { Toolbar, ToolbarProps } from "./toolbar";
 const meta: Meta<typeof Toolbar> = {
   title: "Building Blocks/Toolbar",
   component: Toolbar,
-  decorators: [PAGE_DECORATOR],
+  // decorators: [PAGE_DECORATOR],
 };
 
 export default meta;

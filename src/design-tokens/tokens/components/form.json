@@ -1,0 +1,62 @@
+{
+  "form": {
+    "border": { "value": "{typography.color.border}" },
+    "input": {
+      "background": { "value": "{theme.base.background}" }
+    },
+    "textarea": {
+      "background": { "value": "{theme.base.background}" }
+    },
+    "formcontrol": {
+      "danger": {
+        "border": { "value": "{theme.intent.danger.default}" }
+      }
+    },
+    "errormessage": {
+      "text": { "value": "{theme.intent.danger.default}" }
+    },
+    "select": {
+      "default": {
+        "background": { "value": "{theme.base.background}" },
+        "text": { "value": "{typography.color.body}" }
+      },
+      "primary": {
+        "background": { "value": "{theme.brand.primary.default}" },
+        "border": { "value": "transparent" },
+        "text": { "value": "{theme.brand.primary.contrast}" }
+      },
+      "secondary": {
+        "background": { "value": "{theme.brand.secondary.default}" },
+        "border": { "value": "transparent" },
+        "text": { "value": "{theme.brand.secondary.contrast}" }
+      },
+      "accent": {
+        "background": { "value": "{theme.brand.accent.default}" },
+        "border": { "value": "transparent" },
+        "text": { "value": "{theme.brand.accent.contrast}" }
+      }
+    },
+    "checkbox": {
+      "active": {
+        "background": { "value": "{theme.brand.primary.default}" },
+        "text": { "value": "{theme.brand.primary.contrast}" }
+      }
+    },
+    "radio": {
+      "default": {
+        "background": { "value": "{theme.base.background}" }
+      },
+      "active": {
+        "background": { "value": "{theme.brand.primary.default}" },
+        "text": { "value": "{theme.brand.primary.contrast}" }
+      }
+    },
+    "color": {
+      "background": { "value": "{theme.base.background}" },
+      "text": { "value": "{typography.color.body}" }
+    },
+    "file": {
+      "border": { "value": "transparent" }
+    }
+  }
+}

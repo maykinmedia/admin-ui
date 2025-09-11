@@ -24,11 +24,11 @@
   }
 
   &__body &__drop-indicator {
-    background-color: var(--page-color-accent);
-    border: 1px dashed var(--page-color-primary);
+    background-color: var(--kanban-drop-indicator-background);
+    border: 1px dashed var(--kanban-drop-indicator-border);
     box-sizing: content-box;
     height: calc(var(--typography-line-height-body-s) * 2);
-    padding-block: var(--spacing-xs-v);
+    padding-block: var(--sizes-spacing-xs-v);
     z-index: 10;
   }
 
@@ -48,13 +48,13 @@
   }
 
   &__track:before {
-    background-color: var(--typography-color-background-alt);
+    background-color: var(--kanban-background);
     content: "";
     height: 100%;
     inset-block-start: 0;
-    inset-inline-start: calc(-2 * var(--spacing-xs-h));
+    inset-inline-start: calc(-2 * var(--sizes-spacing-xs-h));
     position: absolute;
-    width: calc(100% + 2 * var(--spacing-xs-h));
+    width: calc(100% + 2 * var(--sizes-spacing-xs-h));
   }
 
   &__body &__button {
@@ -66,8 +66,8 @@
   }
 
   &__select {
-    inset-block-end: var(--spacing-xs-v);
-    inset-inline-end: var(--spacing-xs-h);
+    inset-block-end: var(--sizes-spacing-xs-v);
+    inset-inline-end: var(--sizes-spacing-xs-h);
     position: absolute;
     opacity: 0;
     pointer-events: none;

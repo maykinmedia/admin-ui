@@ -1,14 +1,14 @@
 .mykn-badge {
-  --mykn-badge-color-background: var(--page-color-secondary);
+  --mykn-badge-color-background: var(--badge-secondary-background);
   --mykn-badge-color-border: transparent;
-  --mykn-badge-color-text: var(--page-color-secondary-contrast);
+  --mykn-badge-color-text: var(--badge-secondary-text);
 
   background-color: var(--mykn-badge-color-background);
   border: 1px solid var(--mykn-badge-color-border);
   color: var(--mykn-badge-color-text);
   align-items: center;
   align-self: baseline; // Prevent the badge from unwanted stretching in flex content (use case: Kanban title toolbar).
-  border-radius: var(--border-radius-s);
+  border-radius: var(--sizes-border-radius-s);
   display: inline-flex;
   flex-shrink: 0;
   font-family: var(--typography-font-family-body);
@@ -17,56 +17,56 @@
   justify-content: center;
   line-height: var(--typography-line-height-body-xs);
   overflow: hidden;
-  padding: 0 var(--spacing-xs-h);
+  padding: 0 var(--sizes-spacing-xs-h);
   position: relative;
   transform-style: preserve-3d;
 
   &--variant-primary {
-    --mykn-badge-color-background: var(--page-color-primary);
-    --mykn-badge-color-border: transparent;
-    --mykn-badge-color-text: var(--page-color-primary-contrast);
+    --mykn-badge-color-background: var(--badge-primary-background);
+    --mykn-badge-color-border: var(--badge-primary-border);
+    --mykn-badge-color-text: var(--badge-primary-text);
   }
 
   &--variant-secondary {
-    --mykn-badge-color-background: var(--page-color-secondary);
-    --mykn-badge-color-border: transparent;
-    --mykn-badge-color-text: var(--page-color-secondary-contrast);
+    --mykn-badge-color-background: var(--badge-secondary-background);
+    --mykn-badge-color-border: var(--badge-secondary-border);
+    --mykn-badge-color-text: var(--badge-secondary-text);
   }
 
   &--variant-accent {
-    --mykn-badge-color-background: var(--page-color-accent);
-    --mykn-badge-color-border: transparent;
-    --mykn-badge-color-text: var(--typography-color-body);
+    --mykn-badge-color-background: var(--badge-accent-background);
+    --mykn-badge-color-border: var(--badge-accent-border);
+    --mykn-badge-color-text: var(--badge-accent-text);
   }
 
   &--variant-outline {
-    --mykn-badge-color-background: transparent;
-    --mykn-badge-color-border: currentColor;
-    --mykn-badge-color-text: var(--typography-color-body);
+    --mykn-badge-color-background: var(--badge-outline-background);
+    --mykn-badge-color-border: var(--badge-outline-border);
+    --mykn-badge-color-text: var(--badge-outline-text);
   }
 
   &--variant-info {
-    --mykn-badge-color-background: var(--page-color-info);
-    --mykn-badge-color-border: transparent;
-    --mykn-badge-color-text: var(--page-color-primary-contrast);
+    --mykn-badge-color-background: var(--badge-info-background);
+    --mykn-badge-color-border: var(--badge-info-border);
+    --mykn-badge-color-text: var(--badge-info-text);
   }
 
   &--variant-success {
-    --mykn-badge-color-background: var(--page-color-success);
-    --mykn-badge-color-border: transparent;
-    --mykn-badge-color-text: var(--page-color-primary-contrast);
+    --mykn-badge-color-background: var(--badge-success-background);
+    --mykn-badge-color-border: var(--badge-success-border);
+    --mykn-badge-color-text: var(--badge-success-text);
   }
 
   &--variant-warning {
-    --mykn-badge-color-background: var(--page-color-warning);
-    --mykn-badge-color-border: transparent;
-    --mykn-badge-color-text: var(--page-color-primary-contrast);
+    --mykn-badge-color-background: var(--badge-warning-background);
+    --mykn-badge-color-border: var(--badge-warning-border);
+    --mykn-badge-color-text: var(--badge-warning-text);
   }
 
   &--variant-danger {
-    --mykn-badge-color-background: var(--page-color-danger);
-    --mykn-badge-color-border: transparent;
-    --mykn-badge-color-text: var(--page-color-primary-contrast);
+    --mykn-badge-color-background: var(--badge-danger-background);
+    --mykn-badge-color-border: var(--badge-danger-border);
+    --mykn-badge-color-text: var(--badge-danger-text);
   }
 
   &[class*="level"]:before,
@@ -80,7 +80,7 @@
   }
 
   &:before {
-    background-color: var(--typography-color-background);
+    background-color: var(--mykn-badge-color-background);
     z-index: -2;
   }
 
@@ -95,6 +95,6 @@
   }
 
   .mykn-icon {
-    margin-inline-end: var(--spacing-xs-h);
+    margin-inline-end: var(--sizes-spacing-xs-h);
   }
 }

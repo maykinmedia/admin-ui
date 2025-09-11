@@ -1,8 +1,8 @@
 .react-datepicker-wrapper {
   // Invert icon position.
   .react-datepicker__view-calendar-icon input {
-    padding-inline: var(--spacing-xs-h);
-    padding-block: var(--spacing-xs-v);
+    padding-inline: var(--sizes-spacing-xs-h);
+    padding-block: var(--sizes-spacing-xs-v);
   }
 
   // Fix z-index issue for icon.
@@ -10,7 +10,7 @@
     pointer-events: none;
     color: var(--typography-color-muted);
     inset-block-start: 50%;
-    inset-inline-end: var(--spacing-xs-h);
+    inset-inline-end: var(--sizes-spacing-xs-h);
     position: absolute;
     transform: translateY(-50%);
     z-index: 10;
@@ -18,7 +18,7 @@
 
   // Fix color of clear button.
   .mykn-datepicker + .react-datepicker__close-icon {
-    inset-inline-end: calc(1rem + var(--spacing-xs-h) * 2);
+    inset-inline-end: calc(1rem + var(--sizes-spacing-xs-h) * 2);
 
     &:after {
       border: 1px solid var(--typography-color-body);

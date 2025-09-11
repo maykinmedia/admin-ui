@@ -1,0 +1,7 @@
+{
+  "logo": {
+    "background": {
+      "value": "{theme.base.background-alternate}"
+    }
+  }
+}

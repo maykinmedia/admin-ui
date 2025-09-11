@@ -1,0 +1,15 @@
+{
+  "kanban": {
+    "background": {
+      "value": "{theme.base.background-alternate}"
+    },
+    "drop-indicator": {
+      "background": {
+        "value": "{theme.brand.accent.default}"
+      },
+      "border": {
+        "value": "{theme.brand.primary.default}"
+      }
+    }
+  }
+}

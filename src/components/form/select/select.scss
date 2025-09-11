@@ -1,19 +1,19 @@
 .mykn-select {
-  --mykn-select-color-background: var(--typography-color-background);
-  --mykn-select-color-text: var(--typography-color-body);
-  --mykn-select-color-border: var(--form-color-border);
+  --mykn-select-color-background: var(--form-select-default-background);
+  --mykn-select-color-text: var(--form-select-default-text);
+  --mykn-select-color-border: var(--form-border);
 
   --mykn-select-padding-v: 0;
   --mykn-select-padding-h: 0;
   --mykn-select-font-size: var(--typography-font-size-body-s);
   --mykn-select-line-height: var(--typography-line-height-body-s);
   --mykn-select-min-height: 0;
-  --mykn-select-spacing-pill: calc(var(--spacing-xs-h) / 4);
+  --mykn-select-spacing-pill: calc(var(--sizes-spacing-xs-h) / 4);
 
   align-items: center;
   background: var(--mykn-select-color-background);
   border: 1px solid var(--mykn-select-color-border);
-  border-radius: var(--border-radius-s);
+  border-radius: var(--sizes-border-radius-s);
   box-sizing: border-box;
   color: var(--mykn-select-color-text);
   cursor: pointer;
@@ -32,17 +32,20 @@
   text-align: start;
 
   &--pad-h {
-    --mykn-select-padding-h: var(--spacing-xs-h);
+    --mykn-select-padding-h: var(--sizes-spacing-xs-h);
   }
 
   &--pad-v {
     --mykn-select-min-height: 42px;
-    --mykn-select-padding-v: var(--mykn-select-padding-xs, var(--spacing-xs-v));
+    --mykn-select-padding-v: var(
+      --mykn-select-padding-xs,
+      var(--sizes-spacing-xs-v)
+    );
   }
 
   &--multiple#{&}--pad-v {
     --mykn-select-padding-v: calc(
-      var(--mykn-select-padding-xs, var(--spacing-xs-v)) - var(
+      var(--mykn-select-padding-xs, var(--sizes-spacing-xs-v)) - var(
           --mykn-select-spacing-pill
         ) *
         2
@@ -58,16 +61,16 @@
     --mykn-select-font-size: var(--typography-font-size-body-xs);
     --mykn-select-line-height: var(--typography-line-height-body-xs);
     --mykn-select-min-height: 0;
-    --mykn-select-padding-xs: calc(var(--spacing-xs-h) / 2);
+    --mykn-select-padding-xs: calc(var(--sizes-spacing-xs-h) / 2);
   }
 
   &--size-xxs {
     --mykn-select-font-size: var(--typography-font-size-body-xs);
     --mykn-select-line-height: var(--typography-line-height-body-xs);
     --mykn-select-min-height: 0;
-    --mykn-select-padding-xs: calc(var(--spacing-xs-h) / 2);
-    --mykn-select-height: calc(3 * var(--spacing-xs-h) + 2px) !important;
-    --mykn-select-width: calc(3 * var(--spacing-xs-h) + 2px) !important;
+    --mykn-select-padding-xs: calc(var(--sizes-spacing-xs-h) / 2);
+    --mykn-select-height: calc(3 * var(--sizes-spacing-xs-h) + 2px) !important;
+    --mykn-select-width: calc(3 * var(--sizes-spacing-xs-h) + 2px) !important;
   }
 
   &[aria-hidden="true"] {
@@ -88,20 +91,21 @@
   }
 
   &--variant-primary {
-    --mykn-select-color-background: var(--page-color-primary);
-    --mykn-select-color-border: transparent;
-    --mykn-select-color-text: var(--page-color-primary-contrast);
+    --mykn-select-color-background: var(--form-select-primary-background);
+    --mykn-select-color-border: var(--form-select-primary-border);
+    --mykn-select-color-text: var(--form-select-primary-text);
   }
 
   &--variant-secondary {
-    --mykn-select-color-background: var(--page-color-secondary);
-    --mykn-select-color-border: transparent;
-    --mykn-select-color-text: var(--page-color-secondary-contrast);
+    --mykn-select-color-background: var(--form-select-secondary-background);
+    --mykn-select-color-border: var(--form-select-secondary-border);
+    --mykn-select-color-text: var(--form-select-secondary-text);
   }
 
   &--variant-accent {
-    --mykn-select-color-background: var(--page-color-accent);
-    --mykn-select-color-border: transparent;
+    --mykn-select-color-background: var(--form-select-accent-background);
+    --mykn-select-color-border: var(--form-select-accent-border);
+    --mykn-select-color-text: var(--form-select-accent-text);
   }
 
   &--variant-transparent {
@@ -138,9 +142,9 @@
     align-items: center;
     padding: 0 0.5em; // TODO: spacing-h and spacing-v are too big for this. Add more tokens or hardcode?
     margin: var(--mykn-select-spacing-pill);
-    border-radius: var(--border-radius-l);
-    background-color: var(--page-color-secondary);
-    color: var(--page-color-secondary-contrast);
+    border-radius: var(--sizes-border-radius-l);
+    background-color: var(--form-select-secondary-background);
+    color: var(--form-select-secondary-text);
     font-size: var(--typography-font-size-body-xs);
     line-height: var(--typography-font-size-body-xs);
 
@@ -155,7 +159,7 @@
     border: none;
     color: var(--typography-color-body);
     margin: 0;
-    margin-inline-end: var(--spacing-xs-h);
+    margin-inline-end: var(--sizes-spacing-xs-h);
     padding: 0;
     flex-shrink: 0;
   }
@@ -165,21 +169,21 @@
   }
 
   &__dropdown {
-    background: var(--typography-color-background);
-    border: 1px solid var(--form-color-border);
-    border-radius: var(--border-radius-s);
+    background: var(--form-select-default-background);
+    border: 1px solid var(--form-border);
+    border-radius: var(--sizes-border-radius-s);
     box-sizing: border-box;
     min-width: 100%;
     overflow: auto;
-    padding: var(--spacing-xs-v) 0;
+    padding: var(--sizes-spacing-xs-v) 0;
     width: fit-content;
     z-index: 1000;
   }
 }
 
 .mykn-option {
-  --mykn-option-color-background: var(--typography-color-background);
-  --mykn-option-color-body: var(--typography-color-body);
+  --mykn-option-color-background: var(--form-select-default-background);
+  --mykn-option-color-body: var(--form-select-default-text);
   --mykn-option-font-weight: var(--typography-font-weight-normal);
 
   background: var(--mykn-option-color-background);
@@ -190,17 +194,17 @@
   font-size: var(--mykn-select-font-size);
   font-weight: var(--mykn-option-font-weight);
   line-height: var(--mykn-select-line-height);
-  padding: 0 var(--spacing-xs-h);
+  padding: 0 var(--sizes-spacing-xs-h);
   text-align: start;
   white-space: nowrap;
 
   &[aria-selected="true"] {
-    --mykn-option-color-background: var(--typography-color-background-alt);
+    --mykn-option-color-body: var(--form-select-secondary-text);
     --mykn-option-font-weight: var(--typography-font-weight-bold);
   }
 
   &#{&}--active {
-    --mykn-option-color-background: var(--page-color-primary);
-    --mykn-option-color-body: var(--page-color-primary-contrast);
+    --mykn-option-color-background: var(--form-select-primary-background);
+    --mykn-option-color-body: var(--form-select-primary-text);
   }
 }

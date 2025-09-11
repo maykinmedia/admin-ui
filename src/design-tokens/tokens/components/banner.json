@@ -1,0 +1,26 @@
+{
+  "banner": {
+    "background": { "value": "{theme.base.background-alternate}" },
+    "border": { "value": "{typography.color.border}" },
+    "info": {
+      "background": { "value": "{theme.intent.info.default}" },
+      "text": { "value": "{theme.intent.info.contrast}" },
+      "border": { "value": "{theme.intent.info.default}" }
+    },
+    "success": {
+      "background": { "value": "{theme.intent.success.default}" },
+      "text": { "value": "{theme.intent.success.contrast}" },
+      "border": { "value": "{theme.intent.success.default}" }
+    },
+    "warning": {
+      "background": { "value": "{theme.intent.warning.default}" },
+      "text": { "value": "{theme.intent.warning.contrast}" },
+      "border": { "value": "{theme.intent.warning.default}" }
+    },
+    "danger": {
+      "background": { "value": "{theme.intent.danger.default}" },
+      "text": { "value": "{theme.intent.danger.contrast}" },
+      "border": { "value": "{theme.intent.danger.default}" }
+    }
+  }
+}

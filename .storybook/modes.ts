@@ -1,28 +1,23 @@
+// modes.ts
 export const allModes = {
   "light desktop": {
     backgrounds: "light",
-    theme: "light",
     viewport: "large",
+    globals: { theme: "light" },
   },
   "light mobile": {
     backgrounds: "light",
-    theme: "light",
-    viewport: {
-      width: 320,
-      height: 568,
-    },
+    viewport: { width: 320, height: 568 },
+    globals: { theme: "light" },
   },
   "dark desktop": {
     backgrounds: "dark",
-    theme: "dark",
     viewport: "large",
+    globals: { theme: "dark" },
   },
   "dark mobile": {
     backgrounds: "dark",
-    theme: "dark",
-    viewport: {
-      width: 320,
-      height: 568,
-    },
+    viewport: { width: 320, height: 568 },
+    globals: { theme: "dark" },
   },
 };
