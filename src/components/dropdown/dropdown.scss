@@ -10,13 +10,13 @@
   }
 
   &--open > .mykn-button {
-    outline: 1px solid var(--page-color-primary);
+    outline: 1px solid var(--theme-brand-primary-default);
   }
 
   @at-root {
     &__dropdown {
       width: fit-content;
-      border: 1px solid var(--page-color-primary);
+      border: 1px solid var(--theme-brand-primary-default);
       border-radius: var(--border-radius-s);
       box-sizing: border-box;
       z-index: 2000;

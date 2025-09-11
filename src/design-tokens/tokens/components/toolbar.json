@@ -1,0 +1,20 @@
+{
+  "toolbar": {
+    "default": {
+      "bg": { "value": "{theme.base.100}" },
+      "text": { "value": "{typography.color.body}" }
+    },
+    "primary": {
+      "bg": { "value": "{theme.brand.primary.default}" },
+      "text": { "value": "{theme.brand.primary.text}" }
+    },
+    "secondary": {
+      "bg": { "value": "{theme.brand.secondary.default}" },
+      "text": { "value": "{theme.brand.secondary.text}" }
+    },
+    "accent": {
+      "bg": { "value": "{theme.brand.accent.default}" },
+      "text": { "value": "{theme.brand.accent.text}" }
+    }
+  }
+}

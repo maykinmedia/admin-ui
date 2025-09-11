@@ -1,0 +1,48 @@
+{
+  "form": {
+    "border": { "value": "{typography.color.border}" },
+    "select": {
+      "default": {
+        "bg": { "value": "{theme.base.100}" },
+        "text": { "value": "{typography.color.body}" }
+      },
+      "primary": {
+        "bg": { "value": "{theme.brand.primary.default}" },
+        "border": { "value": "transparent" },
+        "text": { "value": "{theme.brand.primary.text}" }
+      },
+      "secondary": {
+        "bg": { "value": "{theme.brand.secondary.default}" },
+        "border": { "value": "transparent" },
+        "text": { "value": "{theme.brand.secondary.text}" }
+      },
+      "accent": {
+        "bg": { "value": "{theme.brand.accent.default}" },
+        "border": { "value": "transparent" },
+        "text": { "value": "{theme.brand.accent.text}" }
+      }
+    },
+    "checkbox": {
+      "active": {
+        "bg": { "value": "{theme.brand.primary.default}" },
+        "text": { "value": "{theme.brand.primary.text}" }
+      }
+    },
+    "radio": {
+      "default": {
+        "bg": { "value": "{theme.base.100}" }
+      },
+      "active": {
+        "bg": { "value": "{theme.brand.primary.default}" },
+        "text": { "value": "{theme.brand.primary.text}" }
+      }
+    },
+    "color": {
+      "bg": { "value": "{theme.base.100}" },
+      "text": { "value": "{typography.color.body}" }
+    },
+    "file": {
+      "border": { "value": "transparent" }
+    }
+  }
+}

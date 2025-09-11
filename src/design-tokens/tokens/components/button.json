@@ -1,23 +1,24 @@
 {
   "button": {
+    "shadow": { "value": "{theme.brand.primary.default}" },
     "primary": {
       "default": {
         "bg": { "value": "{theme.brand.primary.default}" },
         "text": { "value": "{theme.brand.primary.text}" },
         "border": { "value": "{theme.brand.primary.default}" },
-        "shadow": { "value": "{theme.brand.primary.default}" }
+        "shadow": { "value": "{button.shadow}" }
       },
       "hover": {
         "bg": { "value": "{theme.brand.primary.hover}" },
         "text": { "value": "{theme.brand.primary.text}" },
         "border": { "value": "{theme.brand.primary.hover}" },
-        "shadow": { "value": "{theme.brand.primary.hover}" }
+        "shadow": { "value": "{button.shadow}" }
       },
       "pressed": {
         "bg": { "value": "{theme.brand.primary.pressed}" },
         "text": { "value": "{theme.brand.primary.text}" },
         "border": { "value": "{theme.brand.primary.pressed}" },
-        "shadow": { "value": "{theme.brand.primary.pressed}" }
+        "shadow": { "value": "{button.shadow}" }
       },
       "disabled": {
         "bg": { "value": "{theme.base.200}" },
@@ -31,19 +32,19 @@
         "bg": { "value": "{theme.brand.secondary.default}" },
         "text": { "value": "{theme.brand.secondary.text}" },
         "border": { "value": "{theme.brand.secondary.default}" },
-        "shadow": { "value": "{theme.brand.secondary.default}" }
+        "shadow": { "value": "{button.shadow}" }
       },
       "hover": {
         "bg": { "value": "{theme.brand.secondary.hover}" },
         "text": { "value": "{theme.brand.secondary.text}" },
         "border": { "value": "{theme.brand.secondary.hover}" },
-        "shadow": { "value": "{theme.brand.secondary.hover}" }
+        "shadow": { "value": "{button.shadow}" }
       },
       "pressed": {
         "bg": { "value": "{theme.brand.secondary.pressed}" },
         "text": { "value": "{theme.brand.secondary.text}" },
         "border": { "value": "{theme.brand.secondary.pressed}" },
-        "shadow": { "value": "{theme.brand.secondary.pressed}" }
+        "shadow": { "value": "{button.shadow}" }
       },
       "disabled": {
         "bg": { "value": "{theme.base.200}" },
@@ -58,19 +59,19 @@
         "bg": { "value": "transparent" },
         "text": { "value": "{typography.color.body}" },
         "border": { "value": "transparent" },
-        "shadow": { "value": "{theme.brand.accent.default}" }
+        "shadow": { "value": "{button.shadow}" }
       },
       "hover": {
         "bg": { "value": "transparent" },
         "text": { "value": "{typography.color.body}" },
         "border": { "value": "transparent" },
-        "shadow": { "value": "transparent" }
+        "shadow": { "value": "{button.shadow}" }
       },
       "pressed": {
         "bg": { "value": "transparent" },
         "text": { "value": "{typography.color.body}" },
         "border": { "value": "transparent" },
-        "shadow": { "value": "transparent" }
+        "shadow": { "value": "{button.shadow}" }
       },
       "disabled": {
         "bg": { "value": "{theme.base.200}" },
@@ -85,19 +86,19 @@
         "bg": { "value": "transparent" },
         "text": { "value": "{typography.color.body}" },
         "border": { "value": "{theme.brand.secondary.default}" },
-        "shadow": { "value": "{theme.brand.secondary.default}" }
+        "shadow": { "value": "{button.shadow}" }
       },
       "hover": {
         "bg": { "value": "{theme.brand.secondary.hover}" },
         "text": { "value": "{typography.color.body}" },
         "border": { "value": "{theme.brand.secondary.hover}" },
-        "shadow": { "value": "{theme.brand.secondary.hover}" }
+        "shadow": { "value": "{button.shadow}" }
       },
       "pressed": {
         "bg": { "value": "{theme.brand.secondary.pressed}" },
         "text": { "value": "{typography.color.body}" },
         "border": { "value": "{theme.brand.secondary.pressed}" },
-        "shadow": { "value": "{theme.brand.secondary.pressed}" }
+        "shadow": { "value": "{button.shadow}" }
       },
       "disabled": {
         "bg": { "value": "{theme.base.200}" },

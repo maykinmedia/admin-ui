@@ -8,7 +8,7 @@
         "value": "{theme.base.700}"
       },
       "border": {
-        "value": "{theme.base.200}"
+        "value": "{theme.base.300}"
       },
       "link": {
         "value": "{theme.base.blue}"

@@ -11,7 +11,7 @@
   }
 
   &--error {
-    --form-color-border: var(--page-color-danger);
+    --form-border: var(--theme-intent-danger-default);
   }
 
   &--justify-stretch {

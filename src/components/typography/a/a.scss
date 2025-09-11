@@ -11,25 +11,25 @@
   width: fit-content;
 
   &:not(
-      .mykn-h1 .mykn-a,
-      .mykn-h2 .mykn-a,
-      .mykn-h3 .mykn-a,
-      .mykn-li .mykn-a,
-      .mykn-p .mykn-a
-    ) {
-    font-family: var(--typography-font-family-body);
+    .mykn-h1 .mykn-a,
+    .mykn-h2 .mykn-a,
+    .mykn-h3 .mykn-a,
+    .mykn-li .mykn-a,
+    .mykn-p .mykn-a
+  ) {
+    font-family: var(--typography-font-family-body), serif;
     font-size: var(--typography-font-size-body-s);
     line-height: var(--typography-line-height-body-s);
   }
 
   &--size-xs {
     &:not(
-        .mykn-h1 .mykn-a,
-        .mykn-h2 .mykn-a,
-        .mykn-h3 .mykn-a,
-        .mykn-li .mykn-a,
-        .mykn-p .mykn-a
-      ) {
+      .mykn-h1 .mykn-a,
+      .mykn-h2 .mykn-a,
+      .mykn-h3 .mykn-a,
+      .mykn-li .mykn-a,
+      .mykn-p .mykn-a
+    ) {
       font-size: var(--typography-font-size-body-xs);
       line-height: var(--typography-line-height-body-xs);
     }
