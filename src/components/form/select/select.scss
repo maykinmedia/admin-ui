@@ -1,7 +1,7 @@
 .mykn-select {
-  --mykn-select-color-background: var(--typography-color-background);
-  --mykn-select-color-text: var(--typography-color-body);
-  --mykn-select-color-border: var(--form-color-border);
+  --mykn-select-color-background: var(--form-select-default-bg);
+  --mykn-select-color-text: var(--form-select-default-text);
+  --mykn-select-color-border: var(--form-border);
 
   --mykn-select-padding-v: 0;
   --mykn-select-padding-h: 0;
@@ -88,20 +88,21 @@
   }
 
   &--variant-primary {
-    --mykn-select-color-background: var(--page-color-primary);
-    --mykn-select-color-border: transparent;
-    --mykn-select-color-text: var(--page-color-primary-contrast);
+    --mykn-select-color-background: var(--form-select-primary-bg);
+    --mykn-select-color-border: var(--form-select-primary-border);
+    --mykn-select-color-text: var(--form-select-primary-text);
   }
 
   &--variant-secondary {
-    --mykn-select-color-background: var(--page-color-secondary);
-    --mykn-select-color-border: transparent;
-    --mykn-select-color-text: var(--page-color-secondary-contrast);
+    --mykn-select-color-background: var(--form-select-secondary-bg);
+    --mykn-select-color-border: var(--form-select-secondary-border);
+    --mykn-select-color-text: var(--form-select-secondary-text);
   }
 
   &--variant-accent {
-    --mykn-select-color-background: var(--page-color-accent);
-    --mykn-select-color-border: transparent;
+    --mykn-select-color-background: var(--form-select-accent-bg);
+    --mykn-select-color-border: var(--form-select-accent-border);
+    --mykn-select-color-text: var(--form-select-accent-text);
   }
 
   &--variant-transparent {
@@ -139,8 +140,8 @@
     padding: 0 0.5em; // TODO: spacing-h and spacing-v are too big for this. Add more tokens or hardcode?
     margin: var(--mykn-select-spacing-pill);
     border-radius: var(--border-radius-l);
-    background-color: var(--page-color-secondary);
-    color: var(--page-color-secondary-contrast);
+    background-color: var(--form-select-secondary-bg);
+    color: var(--form-select-secondary-text);
     font-size: var(--typography-font-size-body-xs);
     line-height: var(--typography-font-size-body-xs);
 
@@ -165,8 +166,8 @@
   }
 
   &__dropdown {
-    background: var(--typography-color-background);
-    border: 1px solid var(--form-color-border);
+    background: var(--form-select-default-bg);
+    border: 1px solid var(--form-border);
     border-radius: var(--border-radius-s);
     box-sizing: border-box;
     min-width: 100%;
@@ -178,8 +179,8 @@
 }
 
 .mykn-option {
-  --mykn-option-color-background: var(--typography-color-background);
-  --mykn-option-color-body: var(--typography-color-body);
+  --mykn-option-color-background: var(--form-select-default-bg);
+  --mykn-option-color-body: var(--form-select-default-text);
   --mykn-option-font-weight: var(--typography-font-weight-normal);
 
   background: var(--mykn-option-color-background);
@@ -195,12 +196,12 @@
   white-space: nowrap;
 
   &[aria-selected="true"] {
-    --mykn-option-color-background: var(--typography-color-background-alt);
+    --mykn-option-color-body: var(--form-select-secondary-text);
     --mykn-option-font-weight: var(--typography-font-weight-bold);
   }
 
   &#{&}--active {
-    --mykn-option-color-background: var(--page-color-primary);
-    --mykn-option-color-body: var(--page-color-primary-contrast);
+    --mykn-option-color-background: var(--form-select-primary-bg);
+    --mykn-option-color-body: var(--form-select-primary-text);
   }
 }

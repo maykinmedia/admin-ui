@@ -39,7 +39,8 @@
   --typography-color-link: var(--typography-color-body);
 
   $self: &;
-  background-color: var(--typography-color-background);
+  background-color: var(--toolbar-default-bg);
+  color: var(--toolbar-default-text);
   box-sizing: border-box;
   column-gap: var(--spacing-xs-h);
   display: flex;
@@ -85,31 +86,28 @@
   }
 
   &--variant-primary {
-    background-color: light-dark(
-      var(--page-color-primary),
-      var(--typography-color-background-alt)
-    );
+    background-color: var(--toolbar-primary-bg);
 
     @include theme(light) {
       & > *:not(.mykn-dropdown, .mykn-iconinitials) {
-        --typography-color-body: var(--page-color-primary-contrast);
-        --typography-color-link: var(--page-color-primary-contrast);
-        --typography-color-h: var(--page-color-primary-contrast);
+        --typography-color-body: var(--toolbar-primary-text);
+        --typography-color-link: var(--toolbar-primary-text);
+        --typography-color-h: var(--toolbar-primary-text);
       }
 
       & > .mykn-button--variant-transparent:not(:focus, :hover),
       & > .mykn-dropdown .mykn-button--variant-transparent:not(:focus, :hover) {
-        --mykn-button-color-text: var(--page-color-primary-contrast);
+        --mykn-button-color-text: var(--toolbar-primary-text);
       }
     }
   }
 
   &--variant-accent {
-    background-color: var(--page-color-accent);
+    background-color: var(--toolbar-accent-bg);
   }
 
   &--variant-alt {
-    background-color: var(--typography-color-background-alt);
+    background-color: var(--theme-base-200);
   }
 
   @include horizontal {
@@ -154,7 +152,7 @@
     text-decoration: none;
 
     &[aria-current] {
-      color: var(--page-color-primary);
+      color: var(--toolbar-primary-text);
     }
 
     &:hover {

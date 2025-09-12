@@ -1,0 +1,10 @@
+{
+  "bool": {
+    "success": {
+      "bg": { "value": "{theme.intent.success.default}" }
+    },
+    "danger": {
+      "bg": { "value": "{theme.intent.danger.default}" }
+    }
+  }
+}
