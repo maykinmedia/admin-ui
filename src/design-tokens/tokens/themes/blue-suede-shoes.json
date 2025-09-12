@@ -2,7 +2,7 @@
   "theme": {
     "brand": {
       "primary": {
-        "default": { "value": "light-dark(#2078C5, #66B2FF)" },
+        "default": { "value": "light-dark(#20785, #66B2FF)" },
         "hover": { "value": "light-dark(#2573B2, #3399FF)" },
         "pressed": { "value": "light-dark(#1A5C94, #1A7ACC)" },
         "active": { "value": "light-dark(#2078C5, #66B2FF)" },

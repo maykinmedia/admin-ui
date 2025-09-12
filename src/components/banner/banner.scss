@@ -14,23 +14,23 @@
   min-height: 60px;
 
   &--variant-info {
-    --mykn-banner-color: var(--banner-info-default-bg);
-    --mykn-banner-border-color: var(--banner-info-default-border);
+    --mykn-banner-color: var(--banner-info-bg);
+    --mykn-banner-border-color: var(--banner-info-border);
   }
 
   &--variant-success {
-    --mykn-banner-color: var(--banner-success-default-bg);
-    --mykn-banner-border-color: var(--banner-success-default-border);
+    --mykn-banner-color: var(--banner-success-bg);
+    --mykn-banner-border-color: var(--banner-success-border);
   }
 
   &--variant-warning {
-    --mykn-banner-color: var(--banner-warning-default-bg);
-    --mykn-banner-border-color: var(--banner-warning-default-border);
+    --mykn-banner-color: var(--banner-warning-bg);
+    --mykn-banner-border-color: var(--banner-warning-border);
   }
 
   &--variant-danger {
-    --mykn-banner-color: var(--banner-danger-default-bg);
-    --mykn-banner-border-color: var(--banner-danger-default-border);
+    --mykn-banner-color: var(--banner-danger-bg);
+    --mykn-banner-border-color: var(--banner-danger-border);
   }
 
   &__icon {

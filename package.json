@@ -47,7 +47,8 @@
     "./lib": "./dist/esm/lib/index.js",
     "./messages/*": "./dist/esm/lib/i18n/compiled/*.js",
     "./templates": "./dist/esm/templates/index.js",
-    "./style": "./dist/esm/index.css"
+    "./style": "./dist/esm/index.css",
+    "./theme/*": "./src/design-tokens/compiled/themes/*.css"
   },
   "types": "dist/esm/index.d.ts",
   "repository": {

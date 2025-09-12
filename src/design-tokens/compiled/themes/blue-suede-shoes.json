@@ -1,0 +1,997 @@
+{
+  "theme": {
+    "brand": {
+      "primary": {
+        "default": {
+          "key": "{theme.brand.primary.default}",
+          "value": "light-dark(#20785, #66B2FF)",
+          "filePath": "src/design-tokens/tokens/themes/blue-suede-shoes.json",
+          "isSource": true,
+          "original": {
+            "value": "light-dark(#20785, #66B2FF)",
+            "key": "{theme.brand.primary.default}"
+          },
+          "name": "theme-brand-primary-default",
+          "attributes": {
+            "category": "theme",
+            "type": "brand",
+            "item": "primary",
+            "subitem": "default"
+          },
+          "path": [
+            "theme",
+            "brand",
+            "primary",
+            "default"
+          ]
+        },
+        "hover": {
+          "key": "{theme.brand.primary.hover}",
+          "value": "light-dark(#2573B2, #3399FF)",
+          "filePath": "src/design-tokens/tokens/themes/blue-suede-shoes.json",
+          "isSource": true,
+          "original": {
+            "value": "light-dark(#2573B2, #3399FF)",
+            "key": "{theme.brand.primary.hover}"
+          },
+          "name": "theme-brand-primary-hover",
+          "attributes": {
+            "category": "theme",
+            "type": "brand",
+            "item": "primary",
+            "subitem": "hover"
+          },
+          "path": [
+            "theme",
+            "brand",
+            "primary",
+            "hover"
+          ]
+        },
+        "pressed": {
+          "key": "{theme.brand.primary.pressed}",
+          "value": "light-dark(#1A5C94, #1A7ACC)",
+          "filePath": "src/design-tokens/tokens/themes/blue-suede-shoes.json",
+          "isSource": true,
+          "original": {
+            "value": "light-dark(#1A5C94, #1A7ACC)",
+            "key": "{theme.brand.primary.pressed}"
+          },
+          "name": "theme-brand-primary-pressed",
+          "attributes": {
+            "category": "theme",
+            "type": "brand",
+            "item": "primary",
+            "subitem": "pressed"
+          },
+          "path": [
+            "theme",
+            "brand",
+            "primary",
+            "pressed"
+          ]
+        },
+        "active": {
+          "key": "{theme.brand.primary.active}",
+          "value": "light-dark(#2078C5, #66B2FF)",
+          "filePath": "src/design-tokens/tokens/themes/blue-suede-shoes.json",
+          "isSource": true,
+          "original": {
+            "value": "light-dark(#2078C5, #66B2FF)",
+            "key": "{theme.brand.primary.active}"
+          },
+          "name": "theme-brand-primary-active",
+          "attributes": {
+            "category": "theme",
+            "type": "brand",
+            "item": "primary",
+            "subitem": "active"
+          },
+          "path": [
+            "theme",
+            "brand",
+            "primary",
+            "active"
+          ]
+        },
+        "text": {
+          "key": "{theme.brand.primary.text}",
+          "value": "light-dark(#FFFFFF, #0A0A0A)",
+          "filePath": "src/design-tokens/tokens/themes/blue-suede-shoes.json",
+          "isSource": true,
+          "original": {
+            "value": "light-dark(#FFFFFF, #0A0A0A)",
+            "key": "{theme.brand.primary.text}"
+          },
+          "name": "theme-brand-primary-text",
+          "attributes": {
+            "category": "theme",
+            "type": "brand",
+            "item": "primary",
+            "subitem": "text"
+          },
+          "path": [
+            "theme",
+            "brand",
+            "primary",
+            "text"
+          ]
+        }
+      },
+      "secondary": {
+        "default": {
+          "key": "{theme.brand.secondary.default}",
+          "value": "light-dark(#BBDDF1, #374151)",
+          "filePath": "src/design-tokens/tokens/themes/blue-suede-shoes.json",
+          "isSource": true,
+          "original": {
+            "value": "light-dark(#BBDDF1, #374151)",
+            "key": "{theme.brand.secondary.default}"
+          },
+          "name": "theme-brand-secondary-default",
+          "attributes": {
+            "category": "theme",
+            "type": "brand",
+            "item": "secondary",
+            "subitem": "default"
+          },
+          "path": [
+            "theme",
+            "brand",
+            "secondary",
+            "default"
+          ]
+        },
+        "hover": {
+          "key": "{theme.brand.secondary.hover}",
+          "value": "light-dark(#BBDDF1, #4B5563)",
+          "filePath": "src/design-tokens/tokens/themes/blue-suede-shoes.json",
+          "isSource": true,
+          "original": {
+            "value": "light-dark(#BBDDF1, #4B5563)",
+            "key": "{theme.brand.secondary.hover}"
+          },
+          "name": "theme-brand-secondary-hover",
+          "attributes": {
+            "category": "theme",
+            "type": "brand",
+            "item": "secondary",
+            "subitem": "hover"
+          },
+          "path": [
+            "theme",
+            "brand",
+            "secondary",
+            "hover"
+          ]
+        },
+        "pressed": {
+          "key": "{theme.brand.secondary.pressed}",
+          "value": "light-dark(#BBDDF1, #1F2937)",
+          "filePath": "src/design-tokens/tokens/themes/blue-suede-shoes.json",
+          "isSource": true,
+          "original": {
+            "value": "light-dark(#BBDDF1, #1F2937)",
+            "key": "{theme.brand.secondary.pressed}"
+          },
+          "name": "theme-brand-secondary-pressed",
+          "attributes": {
+            "category": "theme",
+            "type": "brand",
+            "item": "secondary",
+            "subitem": "pressed"
+          },
+          "path": [
+            "theme",
+            "brand",
+            "secondary",
+            "pressed"
+          ]
+        },
+        "active": {
+          "key": "{theme.brand.secondary.active}",
+          "value": "light-dark(#BBDDF1, #374151)",
+          "filePath": "src/design-tokens/tokens/themes/blue-suede-shoes.json",
+          "isSource": true,
+          "original": {
+            "value": "light-dark(#BBDDF1, #374151)",
+            "key": "{theme.brand.secondary.active}"
+          },
+          "name": "theme-brand-secondary-active",
+          "attributes": {
+            "category": "theme",
+            "type": "brand",
+            "item": "secondary",
+            "subitem": "active"
+          },
+          "path": [
+            "theme",
+            "brand",
+            "secondary",
+            "active"
+          ]
+        },
+        "text": {
+          "key": "{theme.brand.secondary.text}",
+          "value": "light-dark(#333333, #FFFFFF)",
+          "filePath": "src/design-tokens/tokens/themes/blue-suede-shoes.json",
+          "isSource": true,
+          "original": {
+            "value": "light-dark(#333333, #FFFFFF)",
+            "key": "{theme.brand.secondary.text}"
+          },
+          "name": "theme-brand-secondary-text",
+          "attributes": {
+            "category": "theme",
+            "type": "brand",
+            "item": "secondary",
+            "subitem": "text"
+          },
+          "path": [
+            "theme",
+            "brand",
+            "secondary",
+            "text"
+          ]
+        }
+      },
+      "accent": {
+        "default": {
+          "key": "{theme.brand.accent.default}",
+          "value": "light-dark(#E9F1F9, #1E40AF)",
+          "filePath": "src/design-tokens/tokens/themes/blue-suede-shoes.json",
+          "isSource": true,
+          "original": {
+            "value": "light-dark(#E9F1F9, #1E40AF)",
+            "key": "{theme.brand.accent.default}"
+          },
+          "name": "theme-brand-accent-default",
+          "attributes": {
+            "category": "theme",
+            "type": "brand",
+            "item": "accent",
+            "subitem": "default"
+          },
+          "path": [
+            "theme",
+            "brand",
+            "accent",
+            "default"
+          ]
+        },
+        "hover": {
+          "key": "{theme.brand.accent.hover}",
+          "value": "light-dark(#BBDDF1, #1D4ED8)",
+          "filePath": "src/design-tokens/tokens/themes/blue-suede-shoes.json",
+          "isSource": true,
+          "original": {
+            "value": "light-dark(#BBDDF1, #1D4ED8)",
+            "key": "{theme.brand.accent.hover}"
+          },
+          "name": "theme-brand-accent-hover",
+          "attributes": {
+            "category": "theme",
+            "type": "brand",
+            "item": "accent",
+            "subitem": "hover"
+          },
+          "path": [
+            "theme",
+            "brand",
+            "accent",
+            "hover"
+          ]
+        },
+        "pressed": {
+          "key": "{theme.brand.accent.pressed}",
+          "value": "light-dark(#E9F1F9, #1E3A8A)",
+          "filePath": "src/design-tokens/tokens/themes/blue-suede-shoes.json",
+          "isSource": true,
+          "original": {
+            "value": "light-dark(#E9F1F9, #1E3A8A)",
+            "key": "{theme.brand.accent.pressed}"
+          },
+          "name": "theme-brand-accent-pressed",
+          "attributes": {
+            "category": "theme",
+            "type": "brand",
+            "item": "accent",
+            "subitem": "pressed"
+          },
+          "path": [
+            "theme",
+            "brand",
+            "accent",
+            "pressed"
+          ]
+        },
+        "active": {
+          "key": "{theme.brand.accent.active}",
+          "value": "light-dark(#E9F1F9, #1E40AF)",
+          "filePath": "src/design-tokens/tokens/themes/blue-suede-shoes.json",
+          "isSource": true,
+          "original": {
+            "value": "light-dark(#E9F1F9, #1E40AF)",
+            "key": "{theme.brand.accent.active}"
+          },
+          "name": "theme-brand-accent-active",
+          "attributes": {
+            "category": "theme",
+            "type": "brand",
+            "item": "accent",
+            "subitem": "active"
+          },
+          "path": [
+            "theme",
+            "brand",
+            "accent",
+            "active"
+          ]
+        },
+        "text": {
+          "key": "{theme.brand.accent.text}",
+          "value": "light-dark(#1A5C94, #FFFFFF)",
+          "filePath": "src/design-tokens/tokens/themes/blue-suede-shoes.json",
+          "isSource": true,
+          "original": {
+            "value": "light-dark(#1A5C94, #FFFFFF)",
+            "key": "{theme.brand.accent.text}"
+          },
+          "name": "theme-brand-accent-text",
+          "attributes": {
+            "category": "theme",
+            "type": "brand",
+            "item": "accent",
+            "subitem": "text"
+          },
+          "path": [
+            "theme",
+            "brand",
+            "accent",
+            "text"
+          ]
+        }
+      }
+    },
+    "base": {
+      "100": {
+        "key": "{theme.base.100}",
+        "value": "light-dark(#FFFFFF, #0F172A)",
+        "filePath": "src/design-tokens/tokens/themes/blue-suede-shoes.json",
+        "isSource": true,
+        "original": {
+          "value": "light-dark(#FFFFFF, #0F172A)",
+          "key": "{theme.base.100}"
+        },
+        "name": "theme-base-100",
+        "attributes": {
+          "category": "theme",
+          "type": "base",
+          "item": "100"
+        },
+        "path": [
+          "theme",
+          "base",
+          "100"
+        ]
+      },
+      "200": {
+        "key": "{theme.base.200}",
+        "value": "light-dark(#EDEDED, #1E293B)",
+        "filePath": "src/design-tokens/tokens/themes/blue-suede-shoes.json",
+        "isSource": true,
+        "original": {
+          "value": "light-dark(#EDEDED, #1E293B)",
+          "key": "{theme.base.200}"
+        },
+        "name": "theme-base-200",
+        "attributes": {
+          "category": "theme",
+          "type": "base",
+          "item": "200"
+        },
+        "path": [
+          "theme",
+          "base",
+          "200"
+        ]
+      },
+      "300": {
+        "key": "{theme.base.300}",
+        "value": "light-dark(#CCCCCC, #334155)",
+        "filePath": "src/design-tokens/tokens/themes/blue-suede-shoes.json",
+        "isSource": true,
+        "original": {
+          "value": "light-dark(#CCCCCC, #334155)",
+          "key": "{theme.base.300}"
+        },
+        "name": "theme-base-300",
+        "attributes": {
+          "category": "theme",
+          "type": "base",
+          "item": "300"
+        },
+        "path": [
+          "theme",
+          "base",
+          "300"
+        ]
+      },
+      "400": {
+        "key": "{theme.base.400}",
+        "value": "light-dark(#767676, #475569)",
+        "filePath": "src/design-tokens/tokens/themes/blue-suede-shoes.json",
+        "isSource": true,
+        "original": {
+          "value": "light-dark(#767676, #475569)",
+          "key": "{theme.base.400}"
+        },
+        "name": "theme-base-400",
+        "attributes": {
+          "category": "theme",
+          "type": "base",
+          "item": "400"
+        },
+        "path": [
+          "theme",
+          "base",
+          "400"
+        ]
+      },
+      "500": {
+        "key": "{theme.base.500}",
+        "value": "light-dark(#595959, #64748B)",
+        "filePath": "src/design-tokens/tokens/themes/blue-suede-shoes.json",
+        "isSource": true,
+        "original": {
+          "value": "light-dark(#595959, #64748B)",
+          "key": "{theme.base.500}"
+        },
+        "name": "theme-base-500",
+        "attributes": {
+          "category": "theme",
+          "type": "base",
+          "item": "500"
+        },
+        "path": [
+          "theme",
+          "base",
+          "500"
+        ]
+      },
+      "600": {
+        "key": "{theme.base.600}",
+        "value": "light-dark(#404040, #94A3B8)",
+        "filePath": "src/design-tokens/tokens/themes/blue-suede-shoes.json",
+        "isSource": true,
+        "original": {
+          "value": "light-dark(#404040, #94A3B8)",
+          "key": "{theme.base.600}"
+        },
+        "name": "theme-base-600",
+        "attributes": {
+          "category": "theme",
+          "type": "base",
+          "item": "600"
+        },
+        "path": [
+          "theme",
+          "base",
+          "600"
+        ]
+      },
+      "700": {
+        "key": "{theme.base.700}",
+        "value": "light-dark(#333333, #CBD5E1)",
+        "filePath": "src/design-tokens/tokens/themes/blue-suede-shoes.json",
+        "isSource": true,
+        "original": {
+          "value": "light-dark(#333333, #CBD5E1)",
+          "key": "{theme.base.700}"
+        },
+        "name": "theme-base-700",
+        "attributes": {
+          "category": "theme",
+          "type": "base",
+          "item": "700"
+        },
+        "path": [
+          "theme",
+          "base",
+          "700"
+        ]
+      },
+      "blue": {
+        "key": "{theme.base.blue}",
+        "value": "light-dark(#331A81, #66B2FF)",
+        "filePath": "src/design-tokens/tokens/themes/blue-suede-shoes.json",
+        "isSource": true,
+        "original": {
+          "value": "light-dark(#331A81, #66B2FF)",
+          "key": "{theme.base.blue}"
+        },
+        "name": "theme-base-blue",
+        "attributes": {
+          "category": "theme",
+          "type": "base",
+          "item": "blue"
+        },
+        "path": [
+          "theme",
+          "base",
+          "blue"
+        ]
+      }
+    },
+    "intent": {
+      "success": {
+        "default": {
+          "key": "{theme.intent.success.default}",
+          "value": "light-dark(#2E843D, #22C55E)",
+          "filePath": "src/design-tokens/tokens/themes/blue-suede-shoes.json",
+          "isSource": true,
+          "original": {
+            "value": "light-dark(#2E843D, #22C55E)",
+            "key": "{theme.intent.success.default}"
+          },
+          "name": "theme-intent-success-default",
+          "attributes": {
+            "category": "theme",
+            "type": "intent",
+            "item": "success",
+            "subitem": "default"
+          },
+          "path": [
+            "theme",
+            "intent",
+            "success",
+            "default"
+          ]
+        },
+        "hover": {
+          "key": "{theme.intent.success.hover}",
+          "value": "light-dark(#2D7F3A, #16A34A)",
+          "filePath": "src/design-tokens/tokens/themes/blue-suede-shoes.json",
+          "isSource": true,
+          "original": {
+            "value": "light-dark(#2D7F3A, #16A34A)",
+            "key": "{theme.intent.success.hover}"
+          },
+          "name": "theme-intent-success-hover",
+          "attributes": {
+            "category": "theme",
+            "type": "intent",
+            "item": "success",
+            "subitem": "hover"
+          },
+          "path": [
+            "theme",
+            "intent",
+            "success",
+            "hover"
+          ]
+        },
+        "pressed": {
+          "key": "{theme.intent.success.pressed}",
+          "value": "light-dark(#256631, #15803D)",
+          "filePath": "src/design-tokens/tokens/themes/blue-suede-shoes.json",
+          "isSource": true,
+          "original": {
+            "value": "light-dark(#256631, #15803D)",
+            "key": "{theme.intent.success.pressed}"
+          },
+          "name": "theme-intent-success-pressed",
+          "attributes": {
+            "category": "theme",
+            "type": "intent",
+            "item": "success",
+            "subitem": "pressed"
+          },
+          "path": [
+            "theme",
+            "intent",
+            "success",
+            "pressed"
+          ]
+        },
+        "active": {
+          "key": "{theme.intent.success.active}",
+          "value": "light-dark(#2E843D, #22C55E)",
+          "filePath": "src/design-tokens/tokens/themes/blue-suede-shoes.json",
+          "isSource": true,
+          "original": {
+            "value": "light-dark(#2E843D, #22C55E)",
+            "key": "{theme.intent.success.active}"
+          },
+          "name": "theme-intent-success-active",
+          "attributes": {
+            "category": "theme",
+            "type": "intent",
+            "item": "success",
+            "subitem": "active"
+          },
+          "path": [
+            "theme",
+            "intent",
+            "success",
+            "active"
+          ]
+        },
+        "text": {
+          "key": "{theme.intent.success.text}",
+          "value": "light-dark(#FFFFFF, #0F172A)",
+          "filePath": "src/design-tokens/tokens/themes/blue-suede-shoes.json",
+          "isSource": true,
+          "original": {
+            "value": "light-dark(#FFFFFF, #0F172A)",
+            "key": "{theme.intent.success.text}"
+          },
+          "name": "theme-intent-success-text",
+          "attributes": {
+            "category": "theme",
+            "type": "intent",
+            "item": "success",
+            "subitem": "text"
+          },
+          "path": [
+            "theme",
+            "intent",
+            "success",
+            "text"
+          ]
+        }
+      },
+      "warning": {
+        "default": {
+          "key": "{theme.intent.warning.default}",
+          "value": "light-dark(#EC9700, #FACC15)",
+          "filePath": "src/design-tokens/tokens/themes/blue-suede-shoes.json",
+          "isSource": true,
+          "original": {
+            "value": "light-dark(#EC9700, #FACC15)",
+            "key": "{theme.intent.warning.default}"
+          },
+          "name": "theme-intent-warning-default",
+          "attributes": {
+            "category": "theme",
+            "type": "intent",
+            "item": "warning",
+            "subitem": "default"
+          },
+          "path": [
+            "theme",
+            "intent",
+            "warning",
+            "default"
+          ]
+        },
+        "hover": {
+          "key": "{theme.intent.warning.hover}",
+          "value": "light-dark(#EC9700, #EAB308)",
+          "filePath": "src/design-tokens/tokens/themes/blue-suede-shoes.json",
+          "isSource": true,
+          "original": {
+            "value": "light-dark(#EC9700, #EAB308)",
+            "key": "{theme.intent.warning.hover}"
+          },
+          "name": "theme-intent-warning-hover",
+          "attributes": {
+            "category": "theme",
+            "type": "intent",
+            "item": "warning",
+            "subitem": "hover"
+          },
+          "path": [
+            "theme",
+            "intent",
+            "warning",
+            "hover"
+          ]
+        },
+        "pressed": {
+          "key": "{theme.intent.warning.pressed}",
+          "value": "light-dark(#EC9700, #CA8A04)",
+          "filePath": "src/design-tokens/tokens/themes/blue-suede-shoes.json",
+          "isSource": true,
+          "original": {
+            "value": "light-dark(#EC9700, #CA8A04)",
+            "key": "{theme.intent.warning.pressed}"
+          },
+          "name": "theme-intent-warning-pressed",
+          "attributes": {
+            "category": "theme",
+            "type": "intent",
+            "item": "warning",
+            "subitem": "pressed"
+          },
+          "path": [
+            "theme",
+            "intent",
+            "warning",
+            "pressed"
+          ]
+        },
+        "active": {
+          "key": "{theme.intent.warning.active}",
+          "value": "light-dark(#EC9700, #FACC15)",
+          "filePath": "src/design-tokens/tokens/themes/blue-suede-shoes.json",
+          "isSource": true,
+          "original": {
+            "value": "light-dark(#EC9700, #FACC15)",
+            "key": "{theme.intent.warning.active}"
+          },
+          "name": "theme-intent-warning-active",
+          "attributes": {
+            "category": "theme",
+            "type": "intent",
+            "item": "warning",
+            "subitem": "active"
+          },
+          "path": [
+            "theme",
+            "intent",
+            "warning",
+            "active"
+          ]
+        },
+        "text": {
+          "key": "{theme.intent.warning.text}",
+          "value": "light-dark(#FFFFFF, #0F172A)",
+          "filePath": "src/design-tokens/tokens/themes/blue-suede-shoes.json",
+          "isSource": true,
+          "original": {
+            "value": "light-dark(#FFFFFF, #0F172A)",
+            "key": "{theme.intent.warning.text}"
+          },
+          "name": "theme-intent-warning-text",
+          "attributes": {
+            "category": "theme",
+            "type": "intent",
+            "item": "warning",
+            "subitem": "text"
+          },
+          "path": [
+            "theme",
+            "intent",
+            "warning",
+            "text"
+          ]
+        }
+      },
+      "danger": {
+        "default": {
+          "key": "{theme.intent.danger.default}",
+          "value": "light-dark(#EB0000, #F87171)",
+          "filePath": "src/design-tokens/tokens/themes/blue-suede-shoes.json",
+          "isSource": true,
+          "original": {
+            "value": "light-dark(#EB0000, #F87171)",
+            "key": "{theme.intent.danger.default}"
+          },
+          "name": "theme-intent-danger-default",
+          "attributes": {
+            "category": "theme",
+            "type": "intent",
+            "item": "danger",
+            "subitem": "default"
+          },
+          "path": [
+            "theme",
+            "intent",
+            "danger",
+            "default"
+          ]
+        },
+        "hover": {
+          "key": "{theme.intent.danger.hover}",
+          "value": "light-dark(#DE3535, #EF4444)",
+          "filePath": "src/design-tokens/tokens/themes/blue-suede-shoes.json",
+          "isSource": true,
+          "original": {
+            "value": "light-dark(#DE3535, #EF4444)",
+            "key": "{theme.intent.danger.hover}"
+          },
+          "name": "theme-intent-danger-hover",
+          "attributes": {
+            "category": "theme",
+            "type": "intent",
+            "item": "danger",
+            "subitem": "hover"
+          },
+          "path": [
+            "theme",
+            "intent",
+            "danger",
+            "hover"
+          ]
+        },
+        "pressed": {
+          "key": "{theme.intent.danger.pressed}",
+          "value": "light-dark(#C43333, #DC2626)",
+          "filePath": "src/design-tokens/tokens/themes/blue-suede-shoes.json",
+          "isSource": true,
+          "original": {
+            "value": "light-dark(#C43333, #DC2626)",
+            "key": "{theme.intent.danger.pressed}"
+          },
+          "name": "theme-intent-danger-pressed",
+          "attributes": {
+            "category": "theme",
+            "type": "intent",
+            "item": "danger",
+            "subitem": "pressed"
+          },
+          "path": [
+            "theme",
+            "intent",
+            "danger",
+            "pressed"
+          ]
+        },
+        "active": {
+          "key": "{theme.intent.danger.active}",
+          "value": "light-dark(#EB0000, #F87171)",
+          "filePath": "src/design-tokens/tokens/themes/blue-suede-shoes.json",
+          "isSource": true,
+          "original": {
+            "value": "light-dark(#EB0000, #F87171)",
+            "key": "{theme.intent.danger.active}"
+          },
+          "name": "theme-intent-danger-active",
+          "attributes": {
+            "category": "theme",
+            "type": "intent",
+            "item": "danger",
+            "subitem": "active"
+          },
+          "path": [
+            "theme",
+            "intent",
+            "danger",
+            "active"
+          ]
+        },
+        "text": {
+          "key": "{theme.intent.danger.text}",
+          "value": "light-dark(#FFFFFF, #0F172A)",
+          "filePath": "src/design-tokens/tokens/themes/blue-suede-shoes.json",
+          "isSource": true,
+          "original": {
+            "value": "light-dark(#FFFFFF, #0F172A)",
+            "key": "{theme.intent.danger.text}"
+          },
+          "name": "theme-intent-danger-text",
+          "attributes": {
+            "category": "theme",
+            "type": "intent",
+            "item": "danger",
+            "subitem": "text"
+          },
+          "path": [
+            "theme",
+            "intent",
+            "danger",
+            "text"
+          ]
+        }
+      },
+      "info": {
+        "default": {
+          "key": "{theme.intent.info.default}",
+          "value": "light-dark(#00BFCB, #38BDF8)",
+          "filePath": "src/design-tokens/tokens/themes/blue-suede-shoes.json",
+          "isSource": true,
+          "original": {
+            "value": "light-dark(#00BFCB, #38BDF8)",
+            "key": "{theme.intent.info.default}"
+          },
+          "name": "theme-intent-info-default",
+          "attributes": {
+            "category": "theme",
+            "type": "intent",
+            "item": "info",
+            "subitem": "default"
+          },
+          "path": [
+            "theme",
+            "intent",
+            "info",
+            "default"
+          ]
+        },
+        "hover": {
+          "key": "{theme.intent.info.hover}",
+          "value": "light-dark(#00BFCB, #0EA5E9)",
+          "filePath": "src/design-tokens/tokens/themes/blue-suede-shoes.json",
+          "isSource": true,
+          "original": {
+            "value": "light-dark(#00BFCB, #0EA5E9)",
+            "key": "{theme.intent.info.hover}"
+          },
+          "name": "theme-intent-info-hover",
+          "attributes": {
+            "category": "theme",
+            "type": "intent",
+            "item": "info",
+            "subitem": "hover"
+          },
+          "path": [
+            "theme",
+            "intent",
+            "info",
+            "hover"
+          ]
+        },
+        "pressed": {
+          "key": "{theme.intent.info.pressed}",
+          "value": "light-dark(#00BFCB, #0284C7)",
+          "filePath": "src/design-tokens/tokens/themes/blue-suede-shoes.json",
+          "isSource": true,
+          "original": {
+            "value": "light-dark(#00BFCB, #0284C7)",
+            "key": "{theme.intent.info.pressed}"
+          },
+          "name": "theme-intent-info-pressed",
+          "attributes": {
+            "category": "theme",
+            "type": "intent",
+            "item": "info",
+            "subitem": "pressed"
+          },
+          "path": [
+            "theme",
+            "intent",
+            "info",
+            "pressed"
+          ]
+        },
+        "active": {
+          "key": "{theme.intent.info.active}",
+          "value": "light-dark(#00BFCB, #38BDF8)",
+          "filePath": "src/design-tokens/tokens/themes/blue-suede-shoes.json",
+          "isSource": true,
+          "original": {
+            "value": "light-dark(#00BFCB, #38BDF8)",
+            "key": "{theme.intent.info.active}"
+          },
+          "name": "theme-intent-info-active",
+          "attributes": {
+            "category": "theme",
+            "type": "intent",
+            "item": "info",
+            "subitem": "active"
+          },
+          "path": [
+            "theme",
+            "intent",
+            "info",
+            "active"
+          ]
+        },
+        "text": {
+          "key": "{theme.intent.info.text}",
+          "value": "light-dark(#FFFFFF, #0F172A)",
+          "filePath": "src/design-tokens/tokens/themes/blue-suede-shoes.json",
+          "isSource": true,
+          "original": {
+            "value": "light-dark(#FFFFFF, #0F172A)",
+            "key": "{theme.intent.info.text}"
+          },
+          "name": "theme-intent-info-text",
+          "attributes": {
+            "category": "theme",
+            "type": "intent",
+            "item": "info",
+            "subitem": "text"
+          },
+          "path": [
+            "theme",
+            "intent",
+            "info",
+            "text"
+          ]
+        }
+      }
+    }
+  }
+}

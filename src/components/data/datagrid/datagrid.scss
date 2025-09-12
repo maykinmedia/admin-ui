@@ -4,7 +4,7 @@
   --mykn-datagrid-spacing-h: var(--spacing-s-h);
   --mykn-datagrid-spacing-v: var(--spacing-s-v);
 
-  background-color: var(--typography-color-background);
+  background-color: var(--datagrid-bg);
   border-radius: var(--border-radius-s);
   display: flex;
   flex-direction: column;
@@ -34,7 +34,7 @@
   }
 
   &__scrollpane ~ .mykn-toolbar {
-    border-block-start: 1px solid var(--typography-color-border);
+    border-block-start: 1px solid var(--datagrid-border);
   }
 
   &__header {
@@ -54,7 +54,7 @@
   }
 
   &__thead {
-    background-color: var(--typography-color-background);
+    background-color: var(--datagrid-bg);
     position: sticky;
     top: 0;
     z-index: 20;
@@ -65,7 +65,7 @@
   }
 
   &__thead &__row--filter {
-    background-color: var(--typography-color-background-alt);
+    background-color: var(--datagrid-header-bg);
 
     .mykn-stackctx,
     .mykn-input,
@@ -89,12 +89,12 @@
   }
 
   &__row--selected {
-    background-color: var(--page-color-highlight);
+    background-color: var(--datagrid-row-active);
   }
 
   &__cell {
     border-block-start: 1px solid transparent;
-    border-block-end: 1px solid var(--typography-color-border);
+    border-block-end: 1px solid var(--datagrid-border);
     box-sizing: border-box;
     padding: var(--mykn-datagrid-spacing-v) var(--mykn-datagrid-spacing-h);
     position: relative;
