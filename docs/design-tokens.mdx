@@ -18,9 +18,9 @@ import { Meta } from "@storybook/addon-docs/blocks";
 6. [Component tokens in practice](#component-tokens-in-practice)
 7. [Typography, spacing, motion, assets](#typography-spacing-motion-assets)
 8. [Theming & modes (light/dark)](#theming--modes-lightdark)
+   - [Attribute-driven dark mode](#attribute-driven-dark-mode)
+   - [Roadmap: Theme API & persistence](#roadmap-theme-api--persistence)
 
-   * [Attribute-driven dark mode](#attribute-driven-dark-mode)
-   * [Roadmap: Theme API & persistence](#roadmap-theme-api--persistence)
 9. [Authoring tokens](#authoring-tokens)
 10. [Naming & structure conventions](#naming--structure-conventions)
 11. [Recipes](#recipes)
@@ -62,11 +62,14 @@ import { Meta } from "@storybook/addon-docs/blocks";
 ### Install & import (order matters)
 
 ```tsx
-// 1) Base styling (fonts + all tokens)
-import "@your-scope/admin-ui/style";
+/* 1) Base styling (fonts + all tokens) */
+import "@maykin-ui/admin-ui/style";
 
-// 2) Pick ONE theme
-import "@your-scope/admin-ui/themes/blue-suede-shoes";
+/* 2) Theme Choose one */
+import "@maykin-ui/admin-ui/style/themes/blue-suede-shoes.css";
+
+/* or */
+import "@maykin-ui/admin-ui/style/themes/purple-rain.css";
 ```
 
 > Replace `@your-scope/admin-ui` with this package name in your registry.
@@ -77,9 +80,9 @@ import "@your-scope/admin-ui/themes/blue-suede-shoes";
 
 All tokens are exposed as CSS Custom Properties under `:root`. Names follow the kebab-cased JSON path.
 
-* `button.primary.default.background` → `--button-primary-default-background`
-* `typography.font.size.h1` → `--typography-font-size-h1`
-* `sizes.spacing.s.h` → `--sizes-spacing-s-h`
+- `button.primary.default.background` → `--button-primary-default-background`
+- `typography.font.size.h1` → `--typography-font-size-h1`
+- `sizes.spacing.s.h` → `--sizes-spacing-s-h`
 
 ```css
 .button {
@@ -100,14 +103,14 @@ All tokens are exposed as CSS Custom Properties under `:root`. Names follow the 
 
 ## How tokens relate: base → theme → component
 
-* **Base**: universal primitives (typography colors, font families, spacing, motion). Stable across themes.
-* **Theme**: semantic colors for brand and intents (success/warning/info/danger) plus base surfaces/foregrounds.
-* **Component**: stateful tokens (default/hover/pressed/disabled) that map to theme semantics, not raw hex.
+- **Base**: universal primitives (typography colors, font families, spacing, motion). Stable across themes.
+- **Theme**: semantic colors for brand and intents (success/warning/info/danger) plus base surfaces/foregrounds.
+- **Component**: stateful tokens (default/hover/pressed/disabled) that map to theme semantics, not raw hex.
 
 This lets you:
 
-* Change *brand primary* once → all **button.primary** states update automatically.
-* Adjust type scale once → all components inheriting typography tokens update.
+- Change _brand primary_ once → all **button.primary** states update automatically.
+- Adjust type scale once → all components inheriting typography tokens update.
 
 ---
 
@@ -117,11 +120,23 @@ This lets you:
 
 ```css
 /* button.css — only reads component token vars */
-.button { transition: var(--animation-duration-medium) var(--animation-timing-function); }
-.button--primary        { background: var(--button-primary-default-background); color: var(--button-primary-default-text); }
-.button--primary:hover  { background: var(--button-primary-hover-background); }
-.button--primary:active { background: var(--button-primary-pressed-background); }
-.button--disabled       { background: var(--button-primary-disabled-background); color: var(--button-primary-disabled-text); }
+.button {
+  transition: var(--animation-duration-medium) var(--animation-timing-function);
+}
+.button--primary {
+  background: var(--button-primary-default-background);
+  color: var(--button-primary-default-text);
+}
+.button--primary:hover {
+  background: var(--button-primary-hover-background);
+}
+.button--primary:active {
+  background: var(--button-primary-pressed-background);
+}
+.button--disabled {
+  background: var(--button-primary-disabled-background);
+  color: var(--button-primary-disabled-text);
+}
 ```
 
 **Badges** follow the same pattern.
@@ -130,20 +145,33 @@ This lets you:
 
 ## Typography, spacing, motion, assets
 
-* **Typography**: fonts, sizes, weights, line-heights, and neutral text colors.
-* **Sizes**: spacing scale, container widths, radii.
-* **Animation**: timing functions + duration scale.
-* **Assets**: font files and formats; `compiled/fonts.css` is generated from here.
+- **Typography**: fonts, sizes, weights, line-heights, and neutral text colors.
+- **Sizes**: spacing scale, container widths, radii.
+- **Animation**: timing functions + duration scale.
+- **Assets**: font files and formats; `compiled/fonts.css` is generated from here.
 
 Use them directly in CSS when building layouts, but prefer **component tokens** inside component styles.
 
 ```css
-.page { max-width: var(--sizes-container-max); padding: var(--sizes-spacing-m-v) var(--sizes-spacing-m-h); }
+.page {
+  max-width: var(--sizes-container-max);
+  padding: var(--sizes-spacing-m-v) var(--sizes-spacing-m-h);
+}
 
-h1 { font-family: var(--typography-font-family-h); font-weight: var(--typography-font-weight-heading); font-size: var(--typography-font-size-h1); line-height: var(--typography-line-height-h1); color: var(--typography-color-h); }
+h1 {
+  font-family: var(--typography-font-family-h);
+  font-weight: var(--typography-font-weight-heading);
+  font-size: var(--typography-font-size-h1);
+  line-height: var(--typography-line-height-h1);
+  color: var(--typography-color-h);
+}
 
-a { color: var(--typography-color-link); }
-small { font-size: var(--typography-font-size-body-xs); }
+a {
+  color: var(--typography-color-link);
+}
+small {
+  font-size: var(--typography-font-size-body-xs);
+}
 ```
 
 ---
@@ -159,25 +187,28 @@ Tokens can specify an optional `dark` override. Example:
   "theme": {
     "brand": {
       "primary": {
-        "default": { "value": "#341A90", "dark": "#8B82FF" }
-      }
-    }
-  }
+        "default": { "value": "#341A90", "dark": "#8B82FF" },
+      },
+    },
+  },
 }
 ```
 
 The build emits three rule blocks **only for tokens that include `dark`**:
 
 ```css
-:root {                         /* default (light) */
-  --theme-brand-primary-default: #341A90;
+:root {
+  /* default (light) */
+  --theme-brand-primary-default: #341a90;
 }
-:root[data-mode="dark"] {      /* explicit attribute */
-  --theme-brand-primary-default: #8B82FF;
+:root[data-mode="dark"] {
+  /* explicit attribute */
+  --theme-brand-primary-default: #8b82ff;
 }
 @media (prefers-color-scheme: dark) {
-  :root:not([data-mode]) {      /* follow system when attribute absent */
-    --theme-brand-primary-default: #8B82FF;
+  :root:not([data-mode]) {
+    /* follow system when attribute absent */
+    --theme-brand-primary-default: #8b82ff;
   }
 }
 ```
@@ -188,8 +219,12 @@ The build emits three rule blocks **only for tokens that include `dark`**:
 2. **Force a mode**: set `data-mode="light" | "dark"` on `<html>` or any container to scope it.
 
 ```html
-<html lang="en" data-mode="dark"> <!-- force dark globally -->
-<section class="preview" data-mode="light"> <!-- light for a subtree -->
+<html lang="en" data-mode="dark">
+  <!-- force dark globally -->
+  <section class="preview" data-mode="light">
+    <!-- light for a subtree -->
+  </section>
+</html>
 ```
 
 ### Roadmap: Theme API & persistence
@@ -197,17 +232,17 @@ The build emits three rule blocks **only for tokens that include `dark`**:
 A friendly runtime API will expose helpers to switch and remember the mode:
 
 ```ts
-import { getMode, setMode, onModeChange } from "@your-scope/admin-ui/theme";
+import { getMode, onModeChange, setMode } from "@your-scope/admin-ui/theme";
 
-setMode("dark");   // persist + set attribute
-setMode(null);      // remove attribute, follow system
+setMode("dark"); // persist + set attribute
+setMode(null); // remove attribute, follow system
 const current = getMode();
 const off = onModeChange(cb);
 ```
 
-* `setMode("light" | "dark")` → sets `data-mode` (default scope: `<html>`), persists choice, notifies listeners.
-* `setMode(null)` → clears persistence + attribute; falls back to system.
-* `getMode()` → effective persisted choice or `null`.
+- `setMode("light" | "dark")` → sets `data-mode` (default scope: `<html>`), persists choice, notifies listeners.
+- `setMode(null)` → clears persistence + attribute; falls back to system.
+- `getMode()` → effective persisted choice or `null`.
 
 ---
 
@@ -225,14 +260,26 @@ const off = onModeChange(cb);
 {
   "toggle": {
     "on": {
-      "background": { "value": "{theme.brand.accent.default}", "dark": "{theme.brand.accent.default}" },
-      "thumb":      { "value": "{theme.base.background}", "dark": "{theme.base.background}" }
+      "background": {
+        "value": "{theme.brand.accent.default}",
+        "dark": "{theme.brand.accent.default}",
+      },
+      "thumb": {
+        "value": "{theme.base.background}",
+        "dark": "{theme.base.background}",
+      },
     },
     "off": {
-      "background": { "value": "{theme.base.background-alternate}", "dark": "{theme.base.background-alternate}" },
-      "thumb":      { "value": "{theme.base.foreground}", "dark": "{theme.base.foreground}" }
-    }
-  }
+      "background": {
+        "value": "{theme.base.background-alternate}",
+        "dark": "{theme.base.background-alternate}",
+      },
+      "thumb": {
+        "value": "{theme.base.foreground}",
+        "dark": "{theme.base.foreground}",
+      },
+    },
+  },
 }
 ```
 
@@ -250,10 +297,10 @@ Add to `tokens/base/` to grow your design language (e.g., new spacing sizes). Co
 
 ## Naming & structure conventions
 
-* **Kebab-case CSS vars** mirror the **dot-path** in JSON: `a.b.c` → `--a-b-c`.
-* Component tokens are **stateful** (e.g., `default`, `hover`, `pressed`, `disabled`).
-* Theme tokens are **semantic**: `brand.primary`, `intent.success`, `base.foreground`.
-* Prefer **indirection**: component → theme/base; never component → hex.
+- **Kebab-case CSS vars** mirror the **dot-path** in JSON: `a.b.c` → `--a-b-c`.
+- Component tokens are **stateful** (e.g., `default`, `hover`, `pressed`, `disabled`).
+- Theme tokens are **semantic**: `brand.primary`, `intent.success`, `base.foreground`.
+- Prefer **indirection**: component → theme/base; never component → hex.
 
 ---
 
@@ -268,12 +315,17 @@ Add to `tokens/base/` to grow your design language (e.g., new spacing sizes). Co
   gap: var(--sizes-spacing-xs-h);
   border-radius: var(--sizes-border-radius-s);
   padding: var(--sizes-spacing-xs-v) var(--sizes-spacing-s-h);
-  font: var(--typography-font-weight-normal) var(--typography-font-size-body-s)/var(--typography-line-height-body-s) var(--typography-font-family-body);
+  font: var(--typography-font-weight-normal)
+    var(--typography-font-size-body-s) / var(--typography-line-height-body-s)
+    var(--typography-font-family-body);
   background: var(--chip-default-background);
   color: var(--chip-default-text);
   border: 1px solid var(--chip-default-border);
 }
-.chip--success { background: var(--chip-success-background); color: var(--chip-success-text); }
+.chip--success {
+  background: var(--chip-success-background);
+  color: var(--chip-success-text);
+}
 ```
 
 ### React + CSS file
@@ -281,6 +333,7 @@ Add to `tokens/base/` to grow your design language (e.g., new spacing sizes). Co
 ```tsx
 // DangerLink.tsx
 import React from "react";
+
 import "./danger-link.css";
 
 export function DangerLink({ children }: { children: React.ReactNode }) {
@@ -290,8 +343,12 @@ export function DangerLink({ children }: { children: React.ReactNode }) {
 
 ```css
 /* danger-link.css */
-.link { text-decoration: underline; }
-.link--danger { color: var(--badge-danger-text); }
+.link {
+  text-decoration: underline;
+}
+.link--danger {
+  color: var(--badge-danger-text);
+}
 ```
 
 > This example consumes a **component** token (badge danger text) from `compiled/vars.css`.
@@ -316,21 +373,21 @@ Provide `dark` overrides where needed. Consumers can force mode with `data-mode=
 
 ## Checklist before shipping a component
 
-* [ ] All colors come from **component tokens**, not raw hex.
-* [ ] Typography uses **typography** base tokens.
-* [ ] Spacing/radii use **sizes** base tokens.
-* [ ] Motion uses **animation** base tokens.
-* [ ] No CSS imports a **theme** var directly.
-* [ ] States (hover/pressed/disabled) are defined in tokens.
+- [ ] All colors come from **component tokens**, not raw hex.
+- [ ] Typography uses **typography** base tokens.
+- [ ] Spacing/radii use **sizes** base tokens.
+- [ ] Motion uses **animation** base tokens.
+- [ ] No CSS imports a **theme** var directly.
+- [ ] States (hover/pressed/disabled) are defined in tokens.
 
 ---
 
 ## Appendix: example token lookups
 
-* Button primary default background → `--button-primary-default-background`
-* Badge outline border → `--badge-outline-border`
-* Typography body text color → `--typography-color-body`
-* Container max width → `--sizes-container-max`
-* Animation medium duration → `--animation-duration-medium`
+- Button primary default background → `--button-primary-default-background`
+- Badge outline border → `--badge-outline-border`
+- Typography body text color → `--typography-color-body`
+- Container max width → `--sizes-container-max`
+- Animation medium duration → `--animation-duration-medium`
 
 Keep building with tokens—your UI stays consistent while themes remain swappable and accessible in both light and dark modes.

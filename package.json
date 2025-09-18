@@ -48,14 +48,7 @@
     "./messages/*": "./dist/esm/lib/i18n/compiled/*.js",
     "./templates": "./dist/esm/templates/index.js",
     "./style": "./dist/esm/index.css",
-    "./themes/blue-suede-shoes": {
-      "default": "./dist/esm/design-tokens/compiled/themes/blue-suede-shoes.css",
-      "types": "./types/theme-css.d.ts"
-    },
-    "./themes/purple-rain": {
-      "default": "./dist/esm/design-tokens/compiled/themes/purple-rain.css",
-      "types": "./types/theme-css.d.ts"
-    }
+    "./style/themes/*": "./dist/esm/design-tokens/compiled/themes/*"
   },
   "types": "dist/esm/index.d.ts",
   "repository": {

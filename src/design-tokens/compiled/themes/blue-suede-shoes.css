@@ -30,8 +30,8 @@
   --theme-intent-warning-default: #EC9700;
   --theme-intent-warning-hover: #EC9700;
   --theme-intent-warning-pressed: #EC9700;
-  --theme-intent-warning-active: #EC9700;
-  --theme-intent-warning-contrast: #FFFFFF;
+  --theme-intent-warning-active: #FFA305;
+  --theme-intent-warning-contrast: #383838;
   --theme-intent-danger-default: #EB0000;
   --theme-intent-danger-hover: #DE3535;
   --theme-intent-danger-pressed: #C43333;
@@ -41,7 +41,7 @@
   --theme-intent-info-hover: #00BFCB;
   --theme-intent-info-pressed: #00BFCB;
   --theme-intent-info-active: #00BFCB;
-  --theme-intent-info-contrast: #FFFFFF;
+  --theme-intent-info-contrast: #383838;
 }
 
 :root[data-mode="dark"] {

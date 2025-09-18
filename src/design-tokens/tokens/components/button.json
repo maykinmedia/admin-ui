@@ -21,9 +21,9 @@
         "shadow": { "value": "{button.shadow}" }
       },
       "active": {
-        "background": { "value": "{theme.brand.primary.default}" },
+        "background": { "value": "{theme.brand.primary.active}" },
         "text": { "value": "{theme.brand.primary.contrast}" },
-        "border": { "value": "{theme.brand.primary.default}" },
+        "border": { "value": "{theme.brand.primary.active}" },
         "shadow": { "value": "{button.shadow}" }
       },
       "disabled": {
@@ -41,20 +41,20 @@
         "shadow": { "value": "{button.shadow}" }
       },
       "hover": {
-        "background": { "value": "{theme.brand.primary.default}" },
-        "text": { "value": "{theme.brand.primary.contrast}" },
+        "background": { "value": "{theme.brand.secondary.hover}" },
+        "text": { "value": "{theme.brand.secondary.contrast}" },
         "border": { "value": "{theme.brand.primary.default}" },
         "shadow": { "value": "{button.shadow}" }
       },
       "pressed": {
-        "background": { "value": "{theme.brand.primary.hover}" },
-        "text": { "value": "{theme.brand.primary.contrast}" },
-        "border": { "value": "{theme.brand.primary.hover}" },
+        "background": { "value": "{theme.brand.secondary.pressed}" },
+        "text": { "value": "{theme.brand.secondary.contrast}" },
+        "border": { "value": "{theme.brand.primary.default}" },
         "shadow": { "value": "{button.shadow}" }
       },
       "active": {
         "background": { "value": "transparent" },
-        "text": { "value": "{theme.brand.primary.default}" },
+        "text": { "value": "{theme.brand.secondary.contrast}" },
         "border": { "value": "{theme.brand.primary.default}" },
         "shadow": { "value": "{button.shadow}" }
       },
@@ -118,6 +118,12 @@
         "border": { "value": "{theme.intent.danger.pressed}" },
         "shadow": { "value": "{theme.intent.danger.pressed}" }
       },
+      "active": {
+        "background": { "value": "{theme.intent.danger.active}" },
+        "text": { "value": "{theme.intent.danger.contrast}" },
+        "border": { "value": "{theme.intent.danger.default}" },
+        "shadow": { "value": "{theme.intent.danger.default}" }
+      },
       "disabled": {
         "background": { "value": "{theme.base.background-alternate}" },
         "text": { "value": "{theme.base.foreground-disabled}" },
@@ -143,6 +149,12 @@
         "text": { "value": "{theme.intent.warning.contrast}" },
         "border": { "value": "{theme.intent.warning.pressed}" },
         "shadow": { "value": "{theme.intent.warning.pressed}" }
+      },
+      "active": {
+        "background": { "value": "{theme.intent.warning.active}" },
+        "text": { "value": "{theme.intent.warning.contrast}" },
+        "border": { "value": "{theme.intent.warning.default}" },
+        "shadow": { "value": "{theme.intent.warning.default}" }
       },
       "disabled": {
         "background": { "value": "{theme.base.background-alternate}" },
@@ -170,6 +182,12 @@
         "border": { "value": "{theme.intent.info.pressed}" },
         "shadow": { "value": "{theme.intent.info.pressed}" }
       },
+      "active": {
+        "background": { "value": "{theme.intent.info.active}" },
+        "text": { "value": "{theme.intent.info.contrast}" },
+        "border": { "value": "{theme.intent.info.default}" },
+        "shadow": { "value": "{theme.intent.info.default}" }
+      },
       "disabled": {
         "background": { "value": "{theme.base.background-alternate}" },
         "text": { "value": "{theme.base.foreground-disabled}" },
@@ -195,6 +213,12 @@
         "text": { "value": "{theme.intent.success.contrast}" },
         "border": { "value": "{theme.intent.success.pressed}" },
         "shadow": { "value": "{theme.intent.success.pressed}" }
+      },
+      "active": {
+        "background": { "value": "{theme.intent.success.active}" },
+        "text": { "value": "{theme.intent.success.contrast}" },
+        "border": { "value": "{theme.intent.success.default}" },
+        "shadow": { "value": "{theme.intent.success.default}" }
       },
       "disabled": {
         "background": { "value": "{theme.base.background-alternate}" },
