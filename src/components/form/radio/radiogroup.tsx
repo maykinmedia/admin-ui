@@ -3,13 +3,18 @@ import React, { useEffect, useId, useState } from "react";
 
 import { ChoiceFieldProps } from "../choicefield";
 import { Radio } from "./radio";
+import "./radiogroup.scss";
 
 export type RadioGroupProps = ChoiceFieldProps<
   HTMLDivElement,
   HTMLInputElement
->;
+> & {
+  /** Whether the items appear horizontally (h) or vertically (v), mobile devices always use vertical. */
+  direction?: "h" | "v";
+};
 export const RadioGroup: React.FC<RadioGroupProps> = ({
   id = "",
+  direction = "v",
   label,
   name,
   options,
@@ -45,7 +50,14 @@ export const RadioGroup: React.FC<RadioGroupProps> = ({
   };
 
   return (
-    <div className={clsx("mykn-radiogroup")} aria-label={label} id={_id}>
+    <div
+      className={clsx(
+        "mykn-radiogroup",
+        `mykn-radiogroup--direction-${direction}`,
+      )}
+      aria-label={label}
+      id={_id}
+    >
       {options.map((option, index) => {
         const radioId = `${_id}-choice-${index}`;
         const optionValue = option.value || option.label;
