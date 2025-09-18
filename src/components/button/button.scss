@@ -149,14 +149,22 @@
       --mykn-button-offset: -2px;
     }
 
-    &[aria-expanded="true"],
-    &:active,
-    &#{$self}--active {
+    &:active {
+      // pressed
       --mykn-button-color-background: var(--button-primary-pressed-background);
       --mykn-button-color-border: var(--button-primary-pressed-border);
       --mykn-button-color-text: var(--button-primary-pressed-text);
       --mykn-button-color-shadow: var(--button-primary-pressed-shadow);
       --mykn-button-offset: 0px;
+    }
+
+    &[aria-expanded="true"],
+    &#{$self}--active {
+      --mykn-button-color-background: var(--button-primary-active-background);
+      --mykn-button-color-border: var(--button-primary-active-border);
+      --mykn-button-color-text: var(--button-primary-active-text);
+      --mykn-button-color-shadow: var(--button-primary-active-shadow);
+      --mykn-button-font-weight: var(--typography-font-weight-bold);
     }
 
     &:disabled,
@@ -184,9 +192,8 @@
       --mykn-button-offset: -2px;
     }
 
-    &[aria-expanded="true"],
-    &:active,
-    &#{$self}--active {
+    &:active {
+      // pressed
       --mykn-button-color-background: var(
         --button-secondary-pressed-background
       );
@@ -194,6 +201,15 @@
       --mykn-button-color-text: var(--button-secondary-pressed-text);
       --mykn-button-color-shadow: var(--button-secondary-pressed-shadow);
       --mykn-button-offset: 0px;
+    }
+
+    &[aria-expanded="true"],
+    &#{$self}--active {
+      --mykn-button-color-background: var(--button-secondary-active-background);
+      --mykn-button-color-border: var(--button-secondary-active-border);
+      --mykn-button-color-text: var(--button-secondary-active-text);
+      --mykn-button-color-shadow: var(--button-secondary-active-shadow);
+      --mykn-button-font-weight: var(--typography-font-weight-bold);
     }
 
     &:disabled,
@@ -223,14 +239,22 @@
       --mykn-button-offset: -2px;
     }
 
-    &[aria-expanded="true"],
-    &:active,
-    &#{$self}--active {
+    &:active {
+      // pressed
       --mykn-button-color-background: var(--button-outline-pressed-background);
       --mykn-button-color-border: var(--button-outline-pressed-border);
       --mykn-button-color-text: var(--button-outline-pressed-text);
       --mykn-button-color-shadow: var(--button-outline-pressed-shadow);
-      --mykn-button-offset: 0px;
+      //--mykn-button-offset: 0px;
+    }
+
+    &[aria-expanded="true"],
+    &#{$self}--active {
+      --mykn-button-color-background: var(--button-outline-active-background);
+      --mykn-button-color-border: var(--button-outline-active-border);
+      --mykn-button-color-text: var(--button-outline-active-text);
+      --mykn-button-color-shadow: var(--button-outline-active-shadow);
+      --mykn-button-font-weight: var(--typography-font-weight-bold);
     }
 
     &:disabled,
@@ -262,9 +286,8 @@
       --mykn-button-offset: -2px;
     }
 
-    &[aria-expanded="true"],
-    &:active,
-    &#{$self}--active {
+    &:active {
+      // pressed
       --mykn-button-color-background: var(
         --button-transparent-pressed-background
       );
@@ -272,6 +295,17 @@
       --mykn-button-color-text: var(--button-transparent-pressed-text);
       --mykn-button-color-shadow: var(--button-transparent-pressed-shadow);
       --mykn-button-offset: 0px;
+    }
+
+    &[aria-expanded="true"],
+    &#{$self}--active {
+      --mykn-button-color-background: var(
+        --button-transparent-active-background
+      );
+      --mykn-button-color-border: var(--button-transparent-active-border);
+      --mykn-button-color-text: var(--button-transparent-active-text);
+      --mykn-button-color-shadow: var(--button-transparent-active-shadow);
+      --mykn-button-font-weight: var(--typography-font-weight-bold);
     }
 
     &:disabled,
@@ -306,9 +340,8 @@
         --mykn-button-offset: -2px;
       }
 
-      &[aria-expanded="true"],
-      &:active,
-      &#{$self}--active {
+      &:active {
+        // pressed
         --mykn-button-color-background: var(
           --button-#{$variant}-pressed-background
         );
@@ -316,6 +349,17 @@
         --mykn-button-color-text: var(--button-#{$variant}-pressed-text);
         --mykn-button-color-shadow: var(--button-#{$variant}-pressed-shadow);
         --mykn-button-offset: 0px;
+      }
+
+      &[aria-expanded="true"],
+      &#{$self}--active {
+        --mykn-button-color-background: var(
+          --button-#{$variant}-active-background
+        );
+        --mykn-button-color-border: var(--button-#{$variant}-active-border);
+        --mykn-button-color-text: var(--button-#{$variant}-active-text);
+        --mykn-button-color-shadow: var(--button-#{$variant}-active-shadow);
+        --mykn-button-font-weight: var(--typography-font-weight-bold);
       }
 
       &:disabled,

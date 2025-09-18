@@ -20,6 +20,12 @@
         "border": { "value": "{theme.brand.primary.pressed}" },
         "shadow": { "value": "{button.shadow}" }
       },
+      "active": {
+        "background": { "value": "{theme.brand.primary.default}" },
+        "text": { "value": "{theme.brand.primary.contrast}" },
+        "border": { "value": "{theme.brand.primary.default}" },
+        "shadow": { "value": "{button.shadow}" }
+      },
       "disabled": {
         "background": { "value": "{theme.base.background-alternate}" },
         "text": { "value": "{theme.base.foreground-disabled}" },
@@ -29,28 +35,34 @@
     },
     "secondary": {
       "default": {
-        "background": { "value": "{theme.base.background}" },
+        "background": { "value": "transparent" },
         "text": { "value": "{theme.brand.primary.default}" },
         "border": { "value": "{theme.brand.primary.default}" },
         "shadow": { "value": "{button.shadow}" }
       },
       "hover": {
-        "background": { "value": "{button.primary.default.background}" },
-        "text": { "value": "{button.primary.default.text}" },
-        "border": { "value": "{button.primary.default.border}" },
-        "shadow": { "value": "{button.primary.default.shadow}" }
+        "background": { "value": "{theme.brand.primary.default}" },
+        "text": { "value": "{theme.brand.primary.contrast}" },
+        "border": { "value": "{theme.brand.primary.default}" },
+        "shadow": { "value": "{button.shadow}" }
       },
       "pressed": {
-        "background": { "value": "{button.primary.hover.background}" },
-        "text": { "value": "{button.primary.hover.text}" },
-        "border": { "value": "{button.primary.hover.border}" },
-        "shadow": { "value": "{button.primary.hover.shadow}" }
+        "background": { "value": "{theme.brand.primary.hover}" },
+        "text": { "value": "{theme.brand.primary.contrast}" },
+        "border": { "value": "{theme.brand.primary.hover}" },
+        "shadow": { "value": "{button.shadow}" }
+      },
+      "active": {
+        "background": { "value": "transparent" },
+        "text": { "value": "{theme.brand.primary.default}" },
+        "border": { "value": "{theme.brand.primary.default}" },
+        "shadow": { "value": "{button.shadow}" }
       },
       "disabled": {
-        "background": { "value": "{theme.base.background}" },
+        "background": { "value": "transparent" },
         "text": { "value": "{theme.base.foreground-disabled}" },
-        "border": { "value": "{theme.base.foreground-disabled}" },
-        "shadow": { "value": "{button.secondary.default.shadow}" }
+        "border": { "value": "{theme.base.background-alternate}" },
+        "shadow": { "value": "{theme.base.foreground}" }
       }
     },
 
@@ -62,22 +74,28 @@
         "shadow": { "value": "{button.shadow}" }
       },
       "hover": {
-        "background": { "value": "{button.primary.default.background}" },
-        "text": { "value": "{button.primary.default.text}" },
-        "border": { "value": "{button.primary.default.border}" },
-        "shadow": { "value": "{button.primary.default.shadow}" }
+        "background": { "value": "{theme.brand.secondary.hover}" },
+        "text": { "value": "{theme.brand.secondary.contrast}" },
+        "border": { "value": "{theme.brand.secondary.hover}" },
+        "shadow": { "value": "{button.shadow}" }
       },
       "pressed": {
-        "background": { "value": "{button.primary.hover.background}" },
-        "text": { "value": "{button.primary.hover.text}" },
-        "border": { "value": "{button.primary.hover.border}" },
-        "shadow": { "value": "{button.primary.hover.shadow}" }
+        "background": { "value": "{theme.brand.secondary.pressed}" },
+        "text": { "value": "{theme.brand.secondary.contrast}" },
+        "border": { "value": "{theme.brand.secondary.pressed}" },
+        "shadow": { "value": "{button.shadow}" }
+      },
+      "active": {
+        "background": { "value": "transparent" },
+        "text": { "value": "{typography.color.body}" },
+        "border": { "value": "transparent" },
+        "shadow": { "value": "{button.shadow}" }
       },
       "disabled": {
         "background": { "value": "transparent" },
         "text": { "value": "{theme.base.foreground-disabled}" },
         "border": { "value": "transparent" },
-        "shadow": { "value": "{button.transparent.default.shadow}" }
+        "shadow": { "value": "{theme.base.foreground}" }
       }
     },
 

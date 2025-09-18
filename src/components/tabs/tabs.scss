@@ -5,7 +5,7 @@
 
   &__tablist {
     align-items: center;
-    border-block-end: 2px solid var(--typography-color-border);
+    border-block-end: 1px solid var(--typography-color-border);
     box-sizing: border-box;
     display: flex;
     flex-wrap: wrap;
@@ -14,17 +14,14 @@
   }
 
   &__tablist .mykn-button {
-    border-radius: 0;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
   }
 
   // FIXME: Is this still used?
   &__tablist .mykn-p {
     color: var(--typography-color-border);
     user-select: none;
-  }
-
-  .mykn-button {
-    background-color: transparent;
   }
 
   [aria-selected="true"] {

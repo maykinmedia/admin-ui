@@ -9,11 +9,11 @@
   --theme-brand-secondary-pressed: #E7E0FF;
   --theme-brand-secondary-active: #E7E0FF;
   --theme-brand-secondary-contrast: #341A90;
-  --theme-brand-accent-default: #E6FFFF;
-  --theme-brand-accent-hover: #E6FFFF;
-  --theme-brand-accent-pressed: #E6FFFF;
-  --theme-brand-accent-active: #E6FFFF;
-  --theme-brand-accent-contrast: #341A90;
+  --theme-brand-accent-default: #E9F1F9;
+  --theme-brand-accent-hover: #E9F1F9;
+  --theme-brand-accent-pressed: #E9F1F9;
+  --theme-brand-accent-active: #E9F1F9;
+  --theme-brand-accent-contrast: #1A5C94;
   --theme-base-background: #FFFFFF;
   --theme-base-background-alternate: #EDEDED;
   --theme-base-foreground: #333333;
@@ -59,7 +59,7 @@
   --theme-brand-accent-hover: #152424;
   --theme-brand-accent-pressed: #0B1313;
   --theme-brand-accent-active: #0F1B1B;
-  --theme-brand-accent-contrast: #8B82FF;
+  --theme-brand-accent-contrast: #84C8FF;
   --theme-base-background: #0F141A;
   --theme-base-background-alternate: #141B24;
   --theme-base-foreground: #E6EAF0;
@@ -106,7 +106,7 @@
   --theme-brand-accent-hover: #152424;
   --theme-brand-accent-pressed: #0B1313;
   --theme-brand-accent-active: #0F1B1B;
-  --theme-brand-accent-contrast: #8B82FF;
+  --theme-brand-accent-contrast: #84C8FF;
   --theme-base-background: #0F141A;
   --theme-base-background-alternate: #141B24;
   --theme-base-foreground: #E6EAF0;

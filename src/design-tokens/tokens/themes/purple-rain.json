@@ -16,11 +16,11 @@
         "contrast": { "value": "#341A90", "dark": "#E6EAF0" }
       },
       "accent": {
-        "default": { "value": "#E6FFFF", "dark": "#0F1B1B" },
-        "hover": { "value": "#E6FFFF", "dark": "#152424" },
-        "pressed": { "value": "#E6FFFF", "dark": "#0B1313" },
-        "active": { "value": "#E6FFFF", "dark": "#0F1B1B" },
-        "contrast": { "value": "#341A90", "dark": "#8B82FF" }
+        "default": { "value": "#E9F1F9", "dark": "#0F1B1B" },
+        "hover": { "value": "#E9F1F9", "dark": "#152424" },
+        "pressed": { "value": "#E9F1F9", "dark": "#0B1313" },
+        "active": { "value": "#E9F1F9", "dark": "#0F1B1B" },
+        "contrast": { "value": "#1A5C94", "dark": "#84C8FF" }
       }
     },
     "base": {
