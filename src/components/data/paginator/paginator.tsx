@@ -296,7 +296,7 @@ export const PaginatorNav: React.FC<PaginatorNavProps> = ({
       variant="transparent"
     >
       <FormControl
-        direction="horizontal"
+        direction="h"
         max={pageCount}
         label={_labelPageSelect}
         min={1}
@@ -468,7 +468,7 @@ export const PaginatorOptions: React.FC<PaginatorOptionsProps> = ({
   return (
     <>
       <FormControl
-        direction="horizontal"
+        direction="h"
         showRequiredIndicator={false}
         label={ucFirst(_labelPageSize)}
         options={pageSizeOptions}
