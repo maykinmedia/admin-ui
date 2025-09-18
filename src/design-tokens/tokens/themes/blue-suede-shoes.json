@@ -48,8 +48,8 @@
         "default": { "value": "#EC9700", "dark": "#FFC14A" },
         "hover": { "value": "#EC9700", "dark": "#FFB63B" },
         "pressed": { "value": "#EC9700", "dark": "#E29D2C" },
-        "active": { "value": "#EC9700", "dark": "#FFC14A" },
-        "contrast": { "value": "#FFFFFF", "dark": "#0B0F14" }
+        "active": { "value": "#FFA305", "dark": "#FFC14A" },
+        "contrast": { "value": "#383838", "dark": "#0B0F14" }
       },
       "danger": {
         "default": { "value": "#EB0000", "dark": "#FF5A5A" },
@@ -63,7 +63,7 @@
         "hover": { "value": "#00BFCB", "dark": "#3FD2DD" },
         "pressed": { "value": "#00BFCB", "dark": "#34BFC9" },
         "active": { "value": "#00BFCB", "dark": "#4ADDE8" },
-        "contrast": { "value": "#FFFFFF", "dark": "#0B0F14" }
+        "contrast": { "value": "#383838", "dark": "#0B0F14" }
       }
     }
   }
