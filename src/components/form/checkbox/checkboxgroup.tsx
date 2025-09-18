@@ -3,14 +3,19 @@ import React, { useId } from "react";
 
 import { ChoiceFieldProps } from "../choicefield";
 import { Checkbox } from "./checkbox";
+import "./checkboxgroup.scss";
 
 export type CheckboxGroupProps = ChoiceFieldProps<
   HTMLDivElement,
   HTMLInputElement
->;
+> & {
+  /** Whether the items appear horizontally (h) or vertically (v), mobile devices always use vertical. */
+  direction?: "h" | "v";
+};
 
 export const CheckboxGroup: React.FC<CheckboxGroupProps> = ({
   form,
+  direction = "v",
   id = "",
   label,
   name,
@@ -25,7 +30,13 @@ export const CheckboxGroup: React.FC<CheckboxGroupProps> = ({
   const _id = id || reactId;
 
   return (
-    <div className={clsx("mykn-checkboxgroup")} aria-label={label}>
+    <div
+      className={clsx(
+        "mykn-checkboxgroup",
+        `mykn-checkboxgroup--direction-${direction}`,
+      )}
+      aria-label={label}
+    >
       {options.map((option, index) => {
         const checkboxId = `${_id}-choice-${index}`;
 

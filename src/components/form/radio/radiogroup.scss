@@ -1,0 +1,11 @@
+.mykn-radiogroup {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  gap: 0;
+
+  &--direction-h {
+    flex-direction: row;
+    gap: var(--sizes-spacing-s-h);
+  }
+}

@@ -1,3 +1,4 @@
+import { deprecated } from "@maykin-ui/client-common";
 import clsx from "clsx";
 import React, { useId, useState } from "react";
 
@@ -31,7 +32,7 @@ import "./formcontrol.scss";
 // FIXME: Clashes in types, add generic for FormField?
 export type FormControlProps = FormField & {
   /** The direction in which to render the form. */
-  direction?: "vertical" | "horizontal";
+  direction?: "v" | "h" | "vertical" | "horizontal"; // TODO: deprecate horizontal and vertical
 
   /** Justification type. */
   justify?: "baseline" | "stretch";
@@ -66,7 +67,7 @@ export type FormControlProps = FormField & {
  * @constructor
  */
 export const FormControl: React.FC<FormControlProps> = ({
-  direction = "vertical",
+  direction = "v",
   justify = "baseline",
   error = "",
   forceShowError,
@@ -75,6 +76,18 @@ export const FormControl: React.FC<FormControlProps> = ({
   labelRequired,
   ...props
 }) => {
+  deprecated(
+    direction === "horizontal",
+    'direction="horizontal"',
+    `mykn.components.FormControl: direction="horizontal" is deprecated, use direction="h" instead`,
+  );
+
+  deprecated(
+    direction === "vertical",
+    'direction="vertical"',
+    `mykn.components.FormControl: direction="vertical" is deprecated, use direction="v" instead`,
+  );
+
   const [isDirty, setIsDirty] = useState(false);
   const id = useId();
   const _id = props.id || id;
@@ -94,6 +107,10 @@ export const FormControl: React.FC<FormControlProps> = ({
     { label: props.label },
   );
 
+  const _props =
+    isCheckboxGroup(props) || isRadioGroup(props)
+      ? { ...props, direction: direction[0] }
+      : props;
   return (
     <div
       className={clsx(
@@ -123,7 +140,7 @@ export const FormControl: React.FC<FormControlProps> = ({
         id={_id}
         aria-invalid={!!error}
         aria-describedby={error ? idError : undefined}
-        {...props}
+        {..._props}
         onChange={(e: React.ChangeEvent) => {
           setIsDirty(true);
           // @ts-expect-error - EventTarget type not resolved.
