@@ -1,5 +1,6 @@
 {
   "theme": {
+    "color-scheme": "light",
     "brand": {
       "primary": {
         "default": { "value": "#341A90" },
@@ -31,8 +32,7 @@
       "foreground-muted": { "value": "#595959" },
       "border": { "value": "#949494" },
       "shadow": {
-        "value": "rgba(0, 0, 0, 0.10)",
-        "dark": "rgba(0, 0, 0, 0.60)"
+        "value": "rgba(0, 0, 0, 0.10)"
       },
       "link": { "value": "#341A90" }
     },

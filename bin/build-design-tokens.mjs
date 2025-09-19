@@ -1,4 +1,4 @@
-import { readdirSync } from "node:fs";
+import { readFileSync, readdirSync } from "node:fs";
 import { basename, extname, join } from "node:path";
 import StyleDictionary from "style-dictionary";
 
@@ -48,36 +48,28 @@ StyleDictionary.registerFormat({
 });
 
 StyleDictionary.registerFormat({
-  name: "css/variables-with-dark-attribute",
+  name: "css/variables-with-scheme",
   format: ({ dictionary, options }) => {
+    const scheme = options?.colorScheme === "dark" ? "dark" : "light";
     const selectorLight = options?.selectorLight ?? ":root";
     const selectorDark = options?.selectorDark ?? ':root[data-mode="dark"]';
     const addMediaFallback = options?.addMediaFallback ?? true;
 
-    const lightLines = [];
-    const darkLines = [];
+    const isColorSchemeToken = (t) =>
+      Array.isArray(t.path) && t.path.includes("color-scheme");
 
-    for (const t of dictionary.allTokens) {
-      const cssVar = `--${t.name}`;
-      lightLines.push(`  ${cssVar}: ${t.value};`);
+    const lines = dictionary.allTokens
+      .filter((t) => !isColorSchemeToken(t))
+      .map((t) => `  --${t.name}: ${t.value};`);
 
-      const hasDark = Object.prototype.hasOwnProperty.call(
-        t.original ?? {},
-        "dark",
-      );
-      if (hasDark) {
-        darkLines.push(`  ${cssVar}: ${t.original.dark};`);
-      }
+    if (scheme === "light") {
+      return `${selectorLight} {\n${lines.join("\n")}\n}\n`;
     }
 
-    let out = `${selectorLight} {\n${lightLines.join("\n")}\n}\n`;
+    let out = `${selectorDark} {\n${lines.join("\n")}\n}\n`;
 
-    if (darkLines.length) {
-      out += `\n${selectorDark} {\n${darkLines.join("\n")}\n}\n`;
-
-      if (addMediaFallback) {
-        out += `\n@media (prefers-color-scheme: dark) {\n  ${selectorLight}:not([data-mode]) {\n${darkLines.join("\n")}\n  }\n}\n`;
-      }
+    if (addMediaFallback) {
+      out += `\n@media (prefers-color-scheme: dark) {\n  ${selectorLight}:not([data-mode]) {\n${lines.join("\n")}\n  }\n}\n`;
     }
     return out;
   },
@@ -103,10 +95,19 @@ await sd({
   const base = sd({
     include: [join(BASE, "**/*.json"), join(COMPONENTS, "**/*.json")],
   });
+
   for (const file of themeFiles) {
     const name = basename(file, extname(file));
+    const themePath = join(THEMES, file);
+    const themeJson = JSON.parse(readFileSync(themePath, "utf8"));
+    const colorScheme =
+      themeJson?.theme?.["color-scheme"] ??
+      themeJson?.["color-scheme"] ??
+      themeJson?.meta?.["color-scheme"] ??
+      "light";
+
     const themed = await base.extend({
-      source: [join(THEMES, file)],
+      source: [themePath],
       platforms: {
         css: {
           transformGroup: "css",
@@ -114,10 +115,12 @@ await sd({
           files: [
             {
               destination: `${name}.css`,
-              format: "css/variables-with-dark-attribute",
+              format: "css/variables-with-scheme",
               options: {
+                colorScheme,
                 selectorLight: ":root",
                 selectorDark: ':root[data-mode="dark"]',
+                addMediaFallback: true,
               },
               filter: (t) =>
                 typeof t.filePath === "string" &&
@@ -127,6 +130,7 @@ await sd({
         },
       },
     });
+
     await themed.buildAllPlatforms();
   }
 }
@@ -145,9 +149,7 @@ await sd({
         {
           destination: "vars.css",
           format: "css/variables",
-          options: {
-            outputReferences: true,
-          },
+          options: { outputReferences: true },
           filter: (t) =>
             !(t.path[0] === "asset" && t.path[1] === "font") &&
             !(
