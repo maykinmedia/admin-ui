@@ -21,12 +21,13 @@ import { Meta } from "@storybook/addon-docs/blocks";
    - [Attribute-driven dark mode](#attribute-driven-dark-mode)
    - [Roadmap: Theme API & persistence](#roadmap-theme-api--persistence)
 
-9. [Authoring tokens](#authoring-tokens)
-10. [Naming & structure conventions](#naming--structure-conventions)
-11. [Recipes](#recipes)
-12. [FAQ](#faq)
-13. [Checklist before shipping a component](#checklist-before-shipping-a-component)
-14. [Appendix: example token lookups](#appendix-example-token-lookups)
+9. [Theme tokens quick guide (what to define)](#theme-tokens-quick-guide-what-to-define)
+10. [Authoring tokens](#authoring-tokens)
+11. [Naming & structure conventions](#naming--structure-conventions)
+12. [Recipes](#recipes)
+13. [FAQ](#faq)
+14. [Checklist before shipping a component](#checklist-before-shipping-a-component)
+15. [Appendix: example token lookups](#appendix-example-token-lookups)
 
 ---
 
@@ -243,6 +244,146 @@ const off = onModeChange(cb);
 - `setMode("light" | "dark")` → sets `data-mode` (default scope: `<html>`), persists choice, notifies listeners.
 - `setMode(null)` → clears persistence + attribute; falls back to system.
 - `getMode()` → effective persisted choice or `null`.
+
+---
+
+## Theme tokens quick guide (what to define)
+
+> **Who is this for?** People creating or tweaking **themes** under `tokens/themes/`. Component authors can skip this.
+
+### Overall structure
+
+```jsonc
+{
+  "theme": {
+    "brand": {
+      /* primary, secondary, accent */
+    },
+    "base": {
+      /* backgrounds, foregrounds, borders, shadow, link */
+    },
+    "intent": {
+      /* success, warning, danger, info */
+    },
+  },
+}
+```
+
+Each leaf can contain **stateful entries** (e.g. `default`, `hover`, `pressed`, `active`, `contrast`) with:
+
+- `value`: the light-mode color/value
+- `dark` (optional): the dark-mode override
+
+Only tokens that provide `dark` produce dark-mode CSS.
+
+---
+
+### `theme.brand.*` — brand palette for actions & highlights
+
+- **`brand.primary`**: Used for **primary actions** and highly prominent highlights.
+  - Define: `default`, `hover`, `pressed`, `active`, `contrast` (text/icon on top).
+  - Tips: Keep `hover` a bit brighter (light theme) / lighter (dark theme) than `default`. Ensure `contrast` passes WCAG on top of the background.
+
+- **`brand.secondary`**: Used for **subtle accents**, secondary buttons, chips, and info surfaces.
+  - Define the same states. Often lower-contrast tints relative to `primary`.
+
+- **`brand.accent`**: Used for **neutral highlight surfaces** (e.g., selected rows, info banners) that shouldn't look like a call-to-action.
+  - Define the same states. Keep `contrast` readable for text/icons placed on accent surfaces.
+
+**Example**
+
+```jsonc
+{
+  "theme": {
+    "brand": {
+      "primary": {
+        "default": { "value": "#2078C5", "dark": "#5AB4FF" },
+        "hover": { "value": "#2573B2", "dark": "#4AA8F3" },
+        "pressed": { "value": "#1A5C94", "dark": "#2A8AD6" },
+        "active": { "value": "#2078C5", "dark": "#5AB4FF" },
+        "contrast": { "value": "#FFFFFF", "dark": "#0B0F14" },
+      },
+    },
+  },
+}
+```
+
+> **Contrast** is the text/icon color when content is placed **on top** of the intent surface.
+
+---
+
+### `theme.base.*` — neutrals for surfaces & text
+
+- **`background`**: App background. Cards & panels may layer on top with slight elevation.
+- **`background-alternate`**: Subtle alternate surface (e.g., table headers, striped rows).
+- **`foreground`**: Primary text/icon color on top of `background`.
+- **`foreground-muted`**: Secondary text (helper labels, meta info).
+- **`foreground-disabled`**: Disabled text/icon state.
+- **`border`**: Neutral border/stroke color for dividers and outlines.
+- **`shadow`**: Box-shadow color (RGBA). Dark mode usually has **higher opacity**.
+- **`link`**: Default link color.
+
+**Example**
+
+```jsonc
+{
+  "theme": {
+    "base": {
+      "background": { "value": "#FFFFFF", "dark": "#0F141A" },
+      "background-alternate": { "value": "#EDEDED", "dark": "#141B24" },
+      "foreground": { "value": "#333333", "dark": "#E6EAF0" },
+      "foreground-muted": { "value": "#595959", "dark": "#B3BDC9" },
+      "foreground-disabled": { "value": "#767676", "dark": "#8A93A1" },
+      "border": { "value": "#949494", "dark": "#2A3442" },
+      "shadow": { "value": "rgba(0,0,0,.10)", "dark": "rgba(0,0,0,.60)" },
+      "link": { "value": "#331A81", "dark": "#B7A8FF" },
+    },
+  },
+}
+```
+
+---
+
+### `theme.intent.*` — semantic statuses
+
+Used by components like badges, alerts, toasts, progress indicators.
+
+Define for each intent: `default`, `hover`, `pressed`, `active`, `contrast`.
+
+- **`success`**: Positive/complete state.
+- **`warning`**: Caution/needs attention (non-blocking).
+- **`danger`**: Errors/destructive actions.
+- **`info`**: Neutral information.
+
+**Example**
+
+```jsonc
+{
+  "theme": {
+    "intent": {
+      "success": {
+        "default": { "value": "#2E843D", "dark": "#56D685" },
+        "hover": { "value": "#2D7F3A", "dark": "#4BCC79" },
+        "pressed": { "value": "#256631", "dark": "#3EAF67" },
+        "active": { "value": "#2E843D", "dark": "#56D685" },
+        "contrast": { "value": "#FFFFFF", "dark": "#0B0F14" },
+      },
+    },
+  },
+}
+```
+
+> **Contrast** is the text/icon color when content is placed **on top** of the intent surface.
+
+---
+
+### Minimal checklist for defining a **new theme**
+
+- [ ] For **brand.primary/secondary/accent**, provide `default/hover/pressed/active/contrast`.
+- [ ] For **base**, provide at least `background`, `foreground`, `border`, `link`; add alternates/muted/disabled/shadow.
+- [ ] For **intent**, provide the 4 intents with states + `contrast`.
+- [ ] Supply **`dark` overrides** where the light value would fail in dark mode.
+- [ ] Build & smoke test: buttons, links, badges, cards, table header, disabled controls.
 
 ---
 
