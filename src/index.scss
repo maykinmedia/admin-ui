@@ -12,10 +12,17 @@
   }
 }
 
-html.view--light {
+html {
   color-scheme: light;
 }
 
-html.view--dark {
+/* Dark mode when attribute is set */
+html[data-mode="dark"] {
   color-scheme: dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  html:not([data-mode]) {
+    color-scheme: dark;
+  }
 }
