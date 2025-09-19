@@ -225,7 +225,7 @@ export const Select: React.FC<SelectProps> = ({
   const selectValue = multiple
     ? selectedIndices.map((i) => String(options[i].value) ?? options[i].label)
     : selectedIndices[0] !== undefined && selectedIndices[0] !== null
-      ? options[selectedIndices[0]].value
+      ? options[selectedIndices[0]]?.value || ""
       : "";
 
   const { onMouseDown, ...referenceProps } = getReferenceProps();
