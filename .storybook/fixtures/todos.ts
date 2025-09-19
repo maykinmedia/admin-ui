@@ -7,8 +7,9 @@ export const FIXTURE_TODOS = [
     completed: false,
     dueDate: "2024-11-01",
     priority: "High",
-    description: "Complete the documentation for the new feature implementation.",
-    status: "in_progress",
+    description:
+      "Complete the documentation for the new feature implementation.",
+    status: "In_Progress",
   },
   {
     id: 2,
@@ -19,7 +20,7 @@ export const FIXTURE_TODOS = [
     dueDate: "2024-10-10",
     priority: "Medium",
     description: "Review the pull requests and merge if everything looks good.",
-    status: "done",
+    status: "Done",
   },
   {
     id: 3,
@@ -30,7 +31,7 @@ export const FIXTURE_TODOS = [
     dueDate: "2024-10-20",
     priority: "Low",
     description: "Fix the minor bugs reported in the user feedback.",
-    status: "todo",
+    status: "Todo",
   },
   {
     id: 4,
@@ -41,7 +42,7 @@ export const FIXTURE_TODOS = [
     dueDate: "2024-09-30",
     priority: "High",
     description: "Prepare the quarterly financial report for the team meeting.",
-    status: "done",
+    status: "Done",
   },
   {
     id: 5,
@@ -51,8 +52,9 @@ export const FIXTURE_TODOS = [
     completed: false,
     dueDate: "2024-11-15",
     priority: "Low",
-    description: "Organize and archive older project files to save storage space.",
-    status: "in_review",
+    description:
+      "Organize and archive older project files to save storage space.",
+    status: "In_Review",
   },
   {
     id: 6,
@@ -63,7 +65,7 @@ export const FIXTURE_TODOS = [
     dueDate: "2024-10-12",
     priority: "Medium",
     description: "Conduct interviews for the new developer positions.",
-    status: "done",
+    status: "Done",
   },
   {
     id: 7,
@@ -74,7 +76,7 @@ export const FIXTURE_TODOS = [
     dueDate: "2024-11-05",
     priority: "High",
     description: "Draft the proposal for the new client project.",
-    status: "in_progress",
+    status: "In_Progress",
   },
   {
     id: 8,
@@ -84,8 +86,9 @@ export const FIXTURE_TODOS = [
     completed: false,
     dueDate: "2024-12-01",
     priority: "Medium",
-    description: "Update the company website with the latest blog posts and testimonials.",
-    status: "todo",
+    description:
+      "Update the company website with the latest blog posts and testimonials.",
+    status: "Todo",
   },
   {
     id: 9,
@@ -95,8 +98,9 @@ export const FIXTURE_TODOS = [
     completed: true,
     dueDate: "2024-10-08",
     priority: "Low",
-    description: "Review and approve the marketing materials for the product launch.",
-    status: "done",
+    description:
+      "Review and approve the marketing materials for the product launch.",
+    status: "Done",
   },
   {
     id: 10,
@@ -107,23 +111,22 @@ export const FIXTURE_TODOS = [
     dueDate: "2024-10-25",
     priority: "High",
     description: "Plan the upcoming team-building event and book the venue.",
-    status: "todo",
+    status: "Todo",
   },
 ];
 
-
 export const FIXTURE_TODOS_STATUS_TODO = FIXTURE_TODOS.filter(
-  (t) => t.status === "todo",
+  (t) => t.status.toLowerCase() === "todo",
 );
 
 export const FIXTURE_TODOS_STATUS_IN_PROGRESS = FIXTURE_TODOS.filter(
-  (t) => t.status === "in_progress",
+  (t) => t.status.toLowerCase() === "in_progress",
 );
 
 export const FIXTURE_TODOS_STATUS_IN_REVIEW = FIXTURE_TODOS.filter(
-  (t) => t.status === "in_review",
+  (t) => t.status.toLowerCase() === "in_review",
 );
 
 export const FIXTURE_TODOS_STATUS_DONE = FIXTURE_TODOS.filter(
-  (t) => t.status === "done",
+  (t) => t.status.toLowerCase() === "done",
 );
