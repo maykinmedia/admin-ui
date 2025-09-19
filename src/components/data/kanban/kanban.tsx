@@ -1,4 +1,3 @@
-import { string2Title } from "@maykin-ui/client-common";
 import React, { useEffect, useState } from "react";
 
 import {
@@ -331,7 +330,7 @@ export const KanbanSection = <T extends object = object>({
     >
       {fieldset[0] && (
         <Toolbar directionResponsive={false} pad={false} variant="transparent">
-          <H3>{string2Title(fieldset[0])}</H3>
+          <H3>{fieldset[0]}</H3>
           <Badge rounded>{objectList.length}</Badge>
         </Toolbar>
       )}
@@ -428,7 +427,7 @@ export const KanbanItem = <T extends object = object>({
   const titleField = fieldset[1].title || Object.keys(object)[0];
   const urlField = urlFields.find((f) => object[f as keyof T]);
 
-  const label = string2Title(String(object[titleField as keyof T]));
+  const label = String(object[titleField as keyof T]);
   const href = urlField
     ? String(object[urlField as keyof T]) || undefined
     : undefined;
