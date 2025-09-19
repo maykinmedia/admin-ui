@@ -2,68 +2,68 @@
   "theme": {
     "brand": {
       "primary": {
-        "default": { "value": "#2078C5", "dark": "#5AB4FF" },
-        "hover": { "value": "#2573B2", "dark": "#4AA8F3" },
-        "pressed": { "value": "#1A5C94", "dark": "#2A8AD6" },
-        "active": { "value": "#2078C5", "dark": "#5AB4FF" },
-        "contrast": { "value": "#FFFFFF", "dark": "#0B0F14" }
+        "default": { "value": "#2078C5" },
+        "hover": { "value": "#2573B2" },
+        "pressed": { "value": "#1A5C94" },
+        "active": { "value": "#2078C5" },
+        "contrast": { "value": "#FFFFFF" }
       },
       "secondary": {
-        "default": { "value": "#BBDDF1", "dark": "#1D2A36" },
-        "hover": { "value": "#BBDDF1", "dark": "#223545" },
-        "pressed": { "value": "#BBDDF1", "dark": "#182430" },
-        "active": { "value": "#BBDDF1", "dark": "#1D2A36" },
-        "contrast": { "value": "#333333", "dark": "#E6EAF0" }
+        "default": { "value": "#BBDDF1" },
+        "hover": { "value": "#BBDDF1" },
+        "pressed": { "value": "#BBDDF1" },
+        "active": { "value": "#BBDDF1" },
+        "contrast": { "value": "#333333" }
       },
       "accent": {
-        "default": { "value": "#E9F1F9", "dark": "#0F1B24" },
-        "hover": { "value": "#BBDDF1", "dark": "#152433" },
-        "pressed": { "value": "#E9F1F9", "dark": "#0C131A" },
-        "active": { "value": "#E9F1F9", "dark": "#0F1B24" },
-        "contrast": { "value": "#1A5C94", "dark": "#84C8FF" }
+        "default": { "value": "#E9F1F9" },
+        "hover": { "value": "#BBDDF1" },
+        "pressed": { "value": "#E9F1F9" },
+        "active": { "value": "#E9F1F9" },
+        "contrast": { "value": "#1A5C94" }
       }
     },
     "base": {
-      "background": { "value": "#FFFFFF", "dark": "#0F141A" },
-      "background-alternate": { "value": "#EDEDED", "dark": "#141B24" },
-      "foreground": { "value": "#333333", "dark": "#E6EAF0" },
-      "foreground-disabled": { "value": "#767676", "dark": "#8A93A1" },
-      "foreground-muted": { "value": "#595959", "dark": "#B3BDC9" },
-      "border": { "value": "#949494", "dark": "#2A3442" },
+      "background": { "value": "#FFFFFF" },
+      "background-alternate": { "value": "#EDEDED" },
+      "foreground": { "value": "#333333" },
+      "foreground-disabled": { "value": "#767676" },
+      "foreground-muted": { "value": "#595959" },
+      "border": { "value": "#949494" },
       "shadow": {
         "value": "rgba(0, 0, 0, 0.10)",
         "dark": "rgba(0, 0, 0, 0.60)"
       },
-      "link": { "value": "#331A81", "dark": "#B7A8FF" }
+      "link": { "value": "#2078C5" }
     },
     "intent": {
       "success": {
-        "default": { "value": "#2E843D", "dark": "#56D685" },
-        "hover": { "value": "#2D7F3A", "dark": "#4BCC79" },
-        "pressed": { "value": "#256631", "dark": "#3EAF67" },
-        "active": { "value": "#2E843D", "dark": "#56D685" },
-        "contrast": { "value": "#FFFFFF", "dark": "#0B0F14" }
+        "default": { "value": "#2E843D" },
+        "hover": { "value": "#2D7F3A" },
+        "pressed": { "value": "#256631" },
+        "active": { "value": "#2E843D" },
+        "contrast": { "value": "#FFFFFF" }
       },
       "warning": {
-        "default": { "value": "#EC9700", "dark": "#FFC14A" },
-        "hover": { "value": "#EC9700", "dark": "#FFB63B" },
-        "pressed": { "value": "#EC9700", "dark": "#E29D2C" },
-        "active": { "value": "#FFA305", "dark": "#FFC14A" },
-        "contrast": { "value": "#383838", "dark": "#0B0F14" }
+        "default": { "value": "#EC9700" },
+        "hover": { "value": "#EC9700" },
+        "pressed": { "value": "#EC9700" },
+        "active": { "value": "#FFA305" },
+        "contrast": { "value": "#383838" }
       },
       "danger": {
-        "default": { "value": "#EB0000", "dark": "#FF5A5A" },
-        "hover": { "value": "#DE3535", "dark": "#FF4747" },
-        "pressed": { "value": "#C43333", "dark": "#E23C3C" },
-        "active": { "value": "#EB0000", "dark": "#FF5A5A" },
-        "contrast": { "value": "#FFFFFF", "dark": "#FFFFFF" }
+        "default": { "value": "#EB0000" },
+        "hover": { "value": "#DE3535" },
+        "pressed": { "value": "#C43333" },
+        "active": { "value": "#EB0000" },
+        "contrast": { "value": "#FFFFFF" }
       },
       "info": {
-        "default": { "value": "#00BFCB", "dark": "#4ADDE8" },
-        "hover": { "value": "#00BFCB", "dark": "#3FD2DD" },
-        "pressed": { "value": "#00BFCB", "dark": "#34BFC9" },
-        "active": { "value": "#00BFCB", "dark": "#4ADDE8" },
-        "contrast": { "value": "#383838", "dark": "#0B0F14" }
+        "default": { "value": "#00BFCB" },
+        "hover": { "value": "#00BFCB" },
+        "pressed": { "value": "#00BFCB" },
+        "active": { "value": "#00BFCB" },
+        "contrast": { "value": "#383838" }
       }
     }
   }
