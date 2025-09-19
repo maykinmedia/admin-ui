@@ -1,0 +1,67 @@
+{
+  "theme": {
+    "brand": {
+      "primary": {
+        "default": { "value": "hsl(210 40% 15%)" },
+        "hover": { "value": "hsl(210 40% 20%)" },
+        "pressed": { "value": "hsl(210 40% 12%)" },
+        "active": { "value": "hsl(210 40% 15%)" },
+        "contrast": { "value": "#E6EAF0" }
+      },
+      "secondary": {
+        "default": { "value": "#1D2A36" },
+        "hover": { "value": "#223545" },
+        "pressed": { "value": "#182430" },
+        "active": { "value": "#1D2A36" },
+        "contrast": { "value": "#E6EAF0" }
+      },
+      "accent": {
+        "default": { "value": "#0F1B24" },
+        "hover": { "value": "#152433" },
+        "pressed": { "value": "#0C131A" },
+        "active": { "value": "#0F1B24" },
+        "contrast": { "value": "#84C8FF" }
+      }
+    },
+    "base": {
+      "background": { "value": "#0F141A" },
+      "background-alternate": { "value": "#141B24" },
+      "foreground": { "value": "#E6EAF0" },
+      "foreground-disabled": { "value": "#8A93A1" },
+      "foreground-muted": { "value": "#B3BDC9" },
+      "border": { "value": "#2A3442" },
+      "shadow": { "value": "rgba(0, 0, 0, 0.60)" },
+      "link": { "value": "#2383D7" }
+    },
+    "intent": {
+      "success": {
+        "default": { "value": "#56D685" },
+        "hover": { "value": "#4BCC79" },
+        "pressed": { "value": "#3EAF67" },
+        "active": { "value": "#56D685" },
+        "contrast": { "value": "#0B0F14" }
+      },
+      "warning": {
+        "default": { "value": "#FFC14A" },
+        "hover": { "value": "#FFB63B" },
+        "pressed": { "value": "#E29D2C" },
+        "active": { "value": "#FFC14A" },
+        "contrast": { "value": "#0B0F14" }
+      },
+      "danger": {
+        "default": { "value": "#FF5A5A" },
+        "hover": { "value": "#FF4747" },
+        "pressed": { "value": "#E23C3C" },
+        "active": { "value": "#FF5A5A" },
+        "contrast": { "value": "#FFFFFF" }
+      },
+      "info": {
+        "default": { "value": "#4ADDE8" },
+        "hover": { "value": "#3FD2DD" },
+        "pressed": { "value": "#34BFC9" },
+        "active": { "value": "#4ADDE8" },
+        "contrast": { "value": "#0B0F14" }
+      }
+    }
+  }
+}
