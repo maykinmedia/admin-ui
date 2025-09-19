@@ -23,6 +23,27 @@ const EXTERNAL = [
   "react-intl",
 ];
 
+/**
+ * A Rollup plugin that emits a `index.css.d.ts` file alongside the bundled CSS.
+ * Emits a module declaration for the CSS file and a wildcard for our themes declaration (so consumers don't get type-errors when importing themes).
+ */
+const emitStyleDts = () => ({
+  name: "emit-style-dts",
+  generateBundle() {
+    const source = [
+      "export {};",
+      "declare module '@maykin-ui/admin-ui/style/themes/*' { export {}; }",
+      "",
+    ].join("\n");
+
+    this.emitFile({
+      type: "asset",
+      fileName: "index.css.d.ts",
+      source,
+    });
+  },
+});
+
 export default [
   {
     external: EXTERNAL,
@@ -73,6 +94,7 @@ export default [
         flatten: false,
         overwrite: true,
       }),
+      emitStyleDts(),
       terser(),
       json(),
     ],
