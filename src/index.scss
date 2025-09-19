@@ -1,6 +1,7 @@
 @import "design-tokens/compiled/fonts.css";
 @import "design-tokens/compiled/vars.css";
 @import "design-tokens/compiled/themes/blue-suede-shoes.css";
+@import "design-tokens/compiled/themes/paint-it-black.css";
 
 :root {
   color-scheme: light dark;
@@ -16,7 +17,6 @@ html {
   color-scheme: light;
 }
 
-/* Dark mode when attribute is set */
 html[data-mode="dark"] {
   color-scheme: dark;
 }

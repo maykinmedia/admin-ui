@@ -18,8 +18,8 @@ import { Meta } from "@storybook/addon-docs/blocks";
 6. [Component tokens in practice](#component-tokens-in-practice)
 7. [Typography, spacing, motion, assets](#typography-spacing-motion-assets)
 8. [Theming & modes (light/dark)](#theming--modes-lightdark)
-   - [Attribute-driven dark mode](#attribute-driven-dark-mode)
-   - [Roadmap: Theme API & persistence](#roadmap-theme-api--persistence)
+   - [Scheme-based themes](#scheme-based-themes)
+   - [Attribute-driven mode control](#attribute-driven-mode-control)
 
 9. [Theme tokens quick guide (what to define)](#theme-tokens-quick-guide-what-to-define)
 10. [Authoring tokens](#authoring-tokens)
@@ -36,7 +36,7 @@ import { Meta } from "@storybook/addon-docs/blocks";
 ```
 .
 ├── compiled
-│   ├── fonts.css                # @font-face declarations generated from tokens/assets.json
+│   ├── fonts.css                # @font-face declarations generated from tokens/base/assets.json
 │   ├── vars.css                 # All base + component tokens as CSS Custom Properties
 │   └── themes/
 │       ├── blue-suede-shoes.css # Theme-specific CSS variables (semantic colors)
@@ -44,17 +44,16 @@ import { Meta } from "@storybook/addon-docs/blocks";
 └── tokens
     ├── base/                    # Global, brand-agnostic primitives (typography, sizes, animation, assets)
     ├── components/              # Per-component semantic tokens (button, badge, datagrid, …)
-    └── themes/                  # Brand palettes + intents per theme (base/bg, brand, intent, …)
+    └── themes/                  # Theme JSON files with color semantics + a color-scheme identifier
 ```
 
 ---
 
 ## Core principles
 
-1. **Never reference a theme variable directly** in `.css` files. Only use **component** tokens or **base** tokens.
-2. **Component CSS references its own component tokens** (preferred) or base tokens (typography, sizes, animation).
-3. **All theme usage happens in tokens** (JSON), not in component CSS. Components don't know which theme they're on; they just read their own token values.
-4. **Dark mode is variable-driven**. Don't branch component CSS on media queries — tokens+variables handle it.
+1. **Never reference theme variables directly** in component CSS. Only use **component** tokens (preferred) or **base** tokens.
+2. **Component CSS references its own component tokens**; components are theme-agnostic.
+3. **All theme usage happens in token JSON**. Themes map brand/intents to values; components only consume variables.
 
 ---
 
@@ -66,20 +65,19 @@ import { Meta } from "@storybook/addon-docs/blocks";
 /* 1) Base styling (fonts + all tokens) */
 import "@maykin-ui/admin-ui/style";
 
-/* 2) Theme Choose one */
+/* 2) Pick exactly one theme */
 import "@maykin-ui/admin-ui/style/themes/blue-suede-shoes.css";
-
-/* or */
+// or
 import "@maykin-ui/admin-ui/style/themes/purple-rain.css";
 ```
 
-> Replace `@your-scope/admin-ui` with this package name in your registry.
+> Replace the import path with your package scope if different.
 
 ---
 
 ## Using tokens in CSS
 
-All tokens are exposed as CSS Custom Properties under `:root`. Names follow the kebab-cased JSON path.
+All tokens are exposed as CSS Custom Properties under `:root` (or the active mode wrapper). Names mirror the kebab-cased JSON path.
 
 - `button.primary.default.background` → `--button-primary-default-background`
 - `typography.font.size.h1` → `--typography-font-size-h1`
@@ -104,23 +102,20 @@ All tokens are exposed as CSS Custom Properties under `:root`. Names follow the 
 
 ## How tokens relate: base → theme → component
 
-- **Base**: universal primitives (typography colors, font families, spacing, motion). Stable across themes.
-- **Theme**: semantic colors for brand and intents (success/warning/info/danger) plus base surfaces/foregrounds.
-- **Component**: stateful tokens (default/hover/pressed/disabled) that map to theme semantics, not raw hex.
+- **Base**: primitives (typography, spacing, motion). Stable across themes.
+- **Theme**: semantic colors for brand & intents (success/warning/info/danger) plus base surfaces/foregrounds.
+- **Component**: stateful tokens (default/hover/pressed/disabled) that reference theme semantics, not raw hex.
 
-This lets you:
-
-- Change _brand primary_ once → all **button.primary** states update automatically.
-- Adjust type scale once → all components inheriting typography tokens update.
+Change the theme once → components update automatically.
 
 ---
 
 ## Component tokens in practice
 
-**Buttons** define all states as component tokens, referencing theme + base. A primary button doesn't hardcode a hex; it uses `theme.brand.primary.*` and `typography.*` through component tokens. CSS reads **only** `--button-…` variables.
+Component CSS only reads its component tokens:
 
 ```css
-/* button.css — only reads component token vars */
+/* button.css */
 .button {
   transition: var(--animation-duration-medium) var(--animation-timing-function);
 }
@@ -140,22 +135,14 @@ This lets you:
 }
 ```
 
-**Badges** follow the same pattern.
-
 ---
 
 ## Typography, spacing, motion, assets
 
-- **Typography**: fonts, sizes, weights, line-heights, and neutral text colors.
-- **Sizes**: spacing scale, container widths, radii.
-- **Animation**: timing functions + duration scale.
-- **Assets**: font files and formats; `compiled/fonts.css` is generated from here.
-
-Use them directly in CSS when building layouts, but prefer **component tokens** inside component styles.
+Use **base** tokens for layout/typography/motion; prefer **component** tokens inside components.
 
 ```css
 .page {
-  max-width: var(--sizes-container-max);
   padding: var(--sizes-spacing-m-v) var(--sizes-spacing-m-h);
 }
 
@@ -164,14 +151,6 @@ h1 {
   font-weight: var(--typography-font-weight-heading);
   font-size: var(--typography-font-size-h1);
   line-height: var(--typography-line-height-h1);
-  color: var(--typography-color-h);
-}
-
-a {
-  color: var(--typography-color-link);
-}
-small {
-  font-size: var(--typography-font-size-body-xs);
 }
 ```
 
@@ -179,211 +158,113 @@ small {
 
 ## Theming & modes (light/dark)
 
-### Attribute-driven dark mode
+### Scheme-based themes
 
-Tokens can specify an optional `dark` override. Example:
+Each theme JSON includes a **top-level identifier**:
 
 ```jsonc
 {
   "theme": {
-    "brand": {
-      "primary": {
-        "default": { "value": "#341A90", "dark": "#8B82FF" },
-      },
-    },
-  },
-}
-```
-
-The build emits three rule blocks **only for tokens that include `dark`**:
-
-```css
-:root {
-  /* default (light) */
-  --theme-brand-primary-default: #341a90;
-}
-:root[data-mode="dark"] {
-  /* explicit attribute */
-  --theme-brand-primary-default: #8b82ff;
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-mode]) {
-    /* follow system when attribute absent */
-    --theme-brand-primary-default: #8b82ff;
+    "color-scheme": "light" | "dark",
+    "brand": { /* … */ },
+    "base": { /* … */ },
+    "intent": { /* … */ }
   }
 }
 ```
 
-**Usage options**
+**Build output rules**:
 
-1. **Follow system**: omit the attribute; users get OS preference via `prefers-color-scheme`.
-2. **Force a mode**: set `data-mode="light" | "dark"` on `<html>` or any container to scope it.
+- If a theme is **light**, its variables are emitted under `:root` in `compiled/themes/<name>.css`.
+- If a theme is **dark**, its variables are emitted under `:root[data-mode="dark"]`, **plus** a system-dark fallback block so dark applies when no explicit mode is set:
+
+```css
+/* dark theme file */
+:root[data-mode="dark"] {
+  /* variables for dark theme */
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-mode]) {
+    /* same variables to follow OS setting */
+  }
+}
+```
+
+> The `color-scheme` value is **metadata** used by the build to choose wrappers. It is **not** emitted as a CSS variable or property.
+
+### Attribute-driven mode control
+
+Consumers control mode via an attribute:
 
 ```html
-<html lang="en" data-mode="dark">
-  <!-- force dark globally -->
-  <section class="preview" data-mode="light">
-    <!-- light for a subtree -->
-  </section>
+<html data-mode="light">
+  …
 </html>
+<!-- force light -->
+<html data-mode="dark">
+  …
+</html>
+<!-- force dark  -->
 ```
 
-### Roadmap: Theme API & persistence
-
-A friendly runtime API will expose helpers to switch and remember the mode:
-
-```ts
-import { getMode, onModeChange, setMode } from "@your-scope/admin-ui/theme";
-
-setMode("dark"); // persist + set attribute
-setMode(null); // remove attribute, follow system
-const current = getMode();
-const off = onModeChange(cb);
-```
-
-- `setMode("light" | "dark")` → sets `data-mode` (default scope: `<html>`), persists choice, notifies listeners.
-- `setMode(null)` → clears persistence + attribute; falls back to system.
-- `getMode()` → effective persisted choice or `null`.
+If the attribute is **absent**, dark themes will follow the user’s OS setting through the `prefers-color-scheme` fallback in the theme CSS.
 
 ---
 
 ## Theme tokens quick guide (what to define)
 
-> **Who is this for?** People creating or tweaking **themes** under `tokens/themes/`. Component authors can skip this.
+> For authors creating or tweaking **themes** under `tokens/themes/`.
 
-### Overall structure
-
-```jsonc
-{
-  "theme": {
-    "brand": {
-      /* primary, secondary, accent */
-    },
-    "base": {
-      /* backgrounds, foregrounds, borders, shadow, link */
-    },
-    "intent": {
-      /* success, warning, danger, info */
-    },
-  },
-}
-```
-
-Each leaf can contain **stateful entries** (e.g. `default`, `hover`, `pressed`, `active`, `contrast`) with:
-
-- `value`: the light-mode color/value
-- `dark` (optional): the dark-mode override
-
-Only tokens that provide `dark` produce dark-mode CSS.
-
----
-
-### `theme.brand.*` — brand palette for actions & highlights
-
-- **`brand.primary`**: Used for **primary actions** and highly prominent highlights.
-  - Define: `default`, `hover`, `pressed`, `active`, `contrast` (text/icon on top).
-  - Tips: Keep `hover` a bit brighter (light theme) / lighter (dark theme) than `default`. Ensure `contrast` passes WCAG on top of the background.
-
-- **`brand.secondary`**: Used for **subtle accents**, secondary buttons, chips, and info surfaces.
-  - Define the same states. Often lower-contrast tints relative to `primary`.
-
-- **`brand.accent`**: Used for **neutral highlight surfaces** (e.g., selected rows, info banners) that shouldn't look like a call-to-action.
-  - Define the same states. Keep `contrast` readable for text/icons placed on accent surfaces.
-
-**Example**
+### Structure
 
 ```jsonc
 {
   "theme": {
+    "color-scheme": "light", // or "dark"
     "brand": {
       "primary": {
-        "default": { "value": "#2078C5", "dark": "#5AB4FF" },
-        "hover": { "value": "#2573B2", "dark": "#4AA8F3" },
-        "pressed": { "value": "#1A5C94", "dark": "#2A8AD6" },
-        "active": { "value": "#2078C5", "dark": "#5AB4FF" },
-        "contrast": { "value": "#FFFFFF", "dark": "#0B0F14" },
+        "default": { "value": "#2078C5" },
+        "hover": { "value": "#2573B2" },
+        "pressed": { "value": "#1A5C94" },
+        "active": { "value": "#2078C5" },
+        "contrast": { "value": "#FFFFFF" },
+      },
+      "secondary": {
+        /* same states */
+      },
+      "accent": {
+        /* same states */
       },
     },
-  },
-}
-```
-
-> **Contrast** is the text/icon color when content is placed **on top** of the intent surface.
-
----
-
-### `theme.base.*` — neutrals for surfaces & text
-
-- **`background`**: App background. Cards & panels may layer on top with slight elevation.
-- **`background-alternate`**: Subtle alternate surface (e.g., table headers, striped rows).
-- **`foreground`**: Primary text/icon color on top of `background`.
-- **`foreground-muted`**: Secondary text (helper labels, meta info).
-- **`foreground-disabled`**: Disabled text/icon state.
-- **`border`**: Neutral border/stroke color for dividers and outlines.
-- **`shadow`**: Box-shadow color (RGBA). Dark mode usually has **higher opacity**.
-- **`link`**: Default link color.
-
-**Example**
-
-```jsonc
-{
-  "theme": {
     "base": {
-      "background": { "value": "#FFFFFF", "dark": "#0F141A" },
-      "background-alternate": { "value": "#EDEDED", "dark": "#141B24" },
-      "foreground": { "value": "#333333", "dark": "#E6EAF0" },
-      "foreground-muted": { "value": "#595959", "dark": "#B3BDC9" },
-      "foreground-disabled": { "value": "#767676", "dark": "#8A93A1" },
-      "border": { "value": "#949494", "dark": "#2A3442" },
-      "shadow": { "value": "rgba(0,0,0,.10)", "dark": "rgba(0,0,0,.60)" },
-      "link": { "value": "#331A81", "dark": "#B7A8FF" },
+      "background": { "value": "#FFFFFF" },
+      "background-alternate": { "value": "#EDEDED" },
+      "foreground": { "value": "#333333" },
+      "foreground-muted": { "value": "#595959" },
+      "foreground-disabled": { "value": "#767676" },
+      "border": { "value": "#949494" },
+      "shadow": { "value": "rgba(0,0,0,.10)" },
+      "link": { "value": "#331A81" },
     },
-  },
-}
-```
-
----
-
-### `theme.intent.*` — semantic statuses
-
-Used by components like badges, alerts, toasts, progress indicators.
-
-Define for each intent: `default`, `hover`, `pressed`, `active`, `contrast`.
-
-- **`success`**: Positive/complete state.
-- **`warning`**: Caution/needs attention (non-blocking).
-- **`danger`**: Errors/destructive actions.
-- **`info`**: Neutral information.
-
-**Example**
-
-```jsonc
-{
-  "theme": {
     "intent": {
       "success": {
-        "default": { "value": "#2E843D", "dark": "#56D685" },
-        "hover": { "value": "#2D7F3A", "dark": "#4BCC79" },
-        "pressed": { "value": "#256631", "dark": "#3EAF67" },
-        "active": { "value": "#2E843D", "dark": "#56D685" },
-        "contrast": { "value": "#FFFFFF", "dark": "#0B0F14" },
+        /* default/hover/pressed/active/contrast */
+      },
+      "warning": {
+        /* … */
+      },
+      "danger": {
+        /* … */
+      },
+      "info": {
+        /* … */
       },
     },
   },
 }
 ```
 
-> **Contrast** is the text/icon color when content is placed **on top** of the intent surface.
-
----
-
-### Minimal checklist for defining a **new theme**
-
-- [ ] For **brand.primary/secondary/accent**, provide `default/hover/pressed/active/contrast`.
-- [ ] For **base**, provide at least `background`, `foreground`, `border`, `link`; add alternates/muted/disabled/shadow.
-- [ ] For **intent**, provide the 4 intents with states + `contrast`.
-- [ ] Supply **`dark` overrides** where the light value would fail in dark mode.
-- [ ] Build & smoke test: buttons, links, badges, cards, table header, disabled controls.
+Create two separate theme files if you need both a light **and** a dark variant of a brand. The build will wrap each correctly based on its `color-scheme`.
 
 ---
 
@@ -392,7 +273,7 @@ Define for each intent: `default`, `hover`, `pressed`, `active`, `contrast`.
 ### Add a new component token file
 
 1. Create `tokens/components/<component>.json`.
-2. Define stateful properties referencing theme/base tokens (use `dark` where needed).
+2. Define stateful properties referencing **theme** and **base** tokens.
 3. Rebuild to regenerate `compiled/vars.css`.
 4. Update your component CSS to consume the new variables.
 
@@ -401,24 +282,12 @@ Define for each intent: `default`, `hover`, `pressed`, `active`, `contrast`.
 {
   "toggle": {
     "on": {
-      "background": {
-        "value": "{theme.brand.accent.default}",
-        "dark": "{theme.brand.accent.default}",
-      },
-      "thumb": {
-        "value": "{theme.base.background}",
-        "dark": "{theme.base.background}",
-      },
+      "background": { "value": "{theme.brand.accent.default}" },
+      "thumb": { "value": "{theme.base.background}" },
     },
     "off": {
-      "background": {
-        "value": "{theme.base.background-alternate}",
-        "dark": "{theme.base.background-alternate}",
-      },
-      "thumb": {
-        "value": "{theme.base.foreground}",
-        "dark": "{theme.base.foreground}",
-      },
+      "background": { "value": "{theme.base.background-alternate}" },
+      "thumb": { "value": "{theme.base.foreground}" },
     },
   },
 }
@@ -426,13 +295,9 @@ Define for each intent: `default`, `hover`, `pressed`, `active`, `contrast`.
 
 ### Add or modify a theme
 
-1. Create `tokens/themes/<theme>.json` with `brand`, `base`, and `intent` groups.
+1. Create `tokens/themes/<theme>.json` with `color-scheme`, `brand`, `base`, and `intent` groups.
 2. Rebuild to get `compiled/themes/<theme>.css`.
 3. Import that CSS to apply.
-
-### Expand base primitives
-
-Add to `tokens/base/` to grow your design language (e.g., new spacing sizes). Components will pick them up once you wire them into component tokens.
 
 ---
 
@@ -492,34 +357,35 @@ export function DangerLink({ children }: { children: React.ReactNode }) {
 }
 ```
 
-> This example consumes a **component** token (badge danger text) from `compiled/vars.css`.
+> This example consumes a **component** token from `compiled/vars.css`.
 
 ---
 
 ## FAQ
 
 **Can I import only the tokens I need?**
-`compiled/vars.css` is already small and tree-shaking CSS variables is non-trivial. Import once at app root.
+`compiled/vars.css` is already small; import once at app root.
 
 **Can I read theme vars directly in CSS?**
-No. Reference **component** or **base** tokens. Theme vars are an implementation detail of tokens → components mapping.
+No. Use **component** or **base** tokens. Theme vars are an implementation detail.
 
 **How do I add fonts?**
-Add to `tokens/base/assets.json`, rebuild, and import `compiled/fonts.css`.
+Add to `tokens/base/assets.json`, rebuild.
 
 **How do I support dark mode now?**
-Provide `dark` overrides where needed. Consumers can force mode with `data-mode="dark"|"light"`; if absent, we respect `prefers-color-scheme`. The attribute wins over the media query.
+Create a separate **dark** theme file with `"color-scheme": "dark"`. Consumers can force mode with `data-mode="dark"|"light"`; if absent, dark themes respect `prefers-color-scheme`.
 
 ---
 
 ## Checklist before shipping a component
 
-- [ ] All colors come from **component tokens**, not raw hex.
+- [ ] All colors come from **component tokens** (no raw hex).
 - [ ] Typography uses **typography** base tokens.
 - [ ] Spacing/radii use **sizes** base tokens.
 - [ ] Motion uses **animation** base tokens.
 - [ ] No CSS imports a **theme** var directly.
 - [ ] States (hover/pressed/disabled) are defined in tokens.
+- [ ] Works in both a **light** and a **dark** theme file.
 
 ---
 
@@ -530,5 +396,3 @@ Provide `dark` overrides where needed. Consumers can force mode with `data-mode=
 - Typography body text color → `--typography-color-body`
 - Container max width → `--sizes-container-max`
 - Animation medium duration → `--animation-duration-medium`
-
-Keep building with tokens—your UI stays consistent while themes remain swappable and accessible in both light and dark modes.

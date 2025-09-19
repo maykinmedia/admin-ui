@@ -1,5 +1,6 @@
 {
   "theme": {
+    "color-scheme": "dark",
     "brand": {
       "primary": {
         "default": { "value": "hsl(210 40% 15%)" },
