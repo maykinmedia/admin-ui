@@ -56,7 +56,7 @@
   --toolbar-transparent-background: transparent;
   --typography-color-h: var(--theme-base-foreground);
   --typography-color-body: var(--theme-base-foreground);
-  --typography-color-border: var(--theme-base-border);
+  --typography-color-border: var(--theme-base-shadow);
   --typography-color-link: var(--theme-base-link);
   --typography-color-muted: var(--theme-base-foreground-muted);
   --attributetable-background: var(--theme-base-background);
@@ -212,6 +212,7 @@
   --datagrid-header-background: var(--theme-base-background-alternate);
   --datagrid-row-active: var(--theme-brand-accent-active);
   --dropdown-border: var(--theme-brand-primary-default);
+  --form-border: var(--theme-base-border);
   --form-input-background: var(--theme-base-background);
   --form-textarea-background: var(--theme-base-background);
   --form-formcontrol-danger-border: var(--theme-intent-danger-default);
@@ -265,7 +266,6 @@
   --button-transparent-active-shadow: var(--button-shadow);
   --card-border: var(--typography-color-border);
   --datagrid-border: var(--typography-color-border);
-  --form-border: var(--typography-color-border);
   --form-select-default-text: var(--typography-color-body);
   --form-color-text: var(--typography-color-body);
   --toolbar-default-text: var(--typography-color-body);

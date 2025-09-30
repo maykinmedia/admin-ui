@@ -8,7 +8,7 @@
         "value": "{theme.base.foreground}"
       },
       "border": {
-        "value": "{theme.base.border}"
+        "value": "{theme.base.shadow}"
       },
       "link": {
         "value": "{theme.base.link}"
