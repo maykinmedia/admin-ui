@@ -155,10 +155,6 @@
   .mykn-a {
     text-decoration: none;
 
-    &[aria-current] {
-      color: var(--toolbar-primary-text);
-    }
-
     &:hover {
       text-decoration: underline;
     }
