@@ -1,6 +1,6 @@
 {
   "form": {
-    "border": { "value": "{typography.color.border}" },
+    "border": { "value": "{theme.base.border}" },
     "input": {
       "background": { "value": "{theme.base.background}" }
     },
