@@ -11,6 +11,7 @@ import {
   isDateInput,
   isDatePicker,
   isDateRangeInput,
+  isDurationInput,
   isInput,
   isRadio,
   isRadioGroup,
@@ -21,6 +22,7 @@ import { ChoiceField } from "../choicefield";
 import { DateInput } from "../dateinput";
 import { DatePicker } from "../datepicker";
 import { DateRangeInput } from "../daterangeinput";
+import { DurationInput } from "../durationinput";
 import { ErrorMessage } from "../errormessage";
 import { TRANSLATIONS } from "../form/translations";
 import { Input, InputProps } from "../input";
@@ -188,6 +190,10 @@ export const FormWidget: React.FC<FormField> = ({ ...props }) => {
 
   if (isTextarea(props)) {
     return <Textarea {...props} />;
+  }
+
+  if (isDurationInput(props)) {
+    return <DurationInput {...props} />;
   }
 
   if (isInput(props)) {

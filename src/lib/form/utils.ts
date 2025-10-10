@@ -34,7 +34,7 @@ export const getValueFromFormData = <T extends object = object>(
   fields: FormField[],
   values: T,
   field: FormField,
-): number | string | undefined => {
+) => {
   if (!field.name) return undefined;
 
   // Support Formik array field names (field[1]).

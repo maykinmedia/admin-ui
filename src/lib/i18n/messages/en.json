@@ -144,6 +144,46 @@
     "description": "mykn.components.DateRangeInput: The start date (accessible) label",
     "originalDefault": "startdatum"
   },
+  "mykn.components.DurationInput.labelDays": {
+    "defaultMessage": "Days",
+    "description": "mykn.components.DurationInput: The days field (accessible) label",
+    "originalDefault": "Dagen"
+  },
+  "mykn.components.DurationInput.labelMonths": {
+    "defaultMessage": "Months",
+    "description": "mykn.components.DurationInput: The months field (accessible) label",
+    "originalDefault": "Maanden"
+  },
+  "mykn.components.DurationInput.labelWeeks": {
+    "defaultMessage": "Weeks",
+    "description": "mykn.components.DurationInput: The weeks field (accessible) label",
+    "originalDefault": "Weken"
+  },
+  "mykn.components.DurationInput.labelYears": {
+    "defaultMessage": "Years",
+    "description": "mykn.components.DurationInput: The years field (accessible) label",
+    "originalDefault": "Jaren"
+  },
+  "mykn.components.DurationInput.placeholderDays": {
+    "defaultMessage": "dd",
+    "description": "mykn.components.DurationInput: The days field placeholder",
+    "originalDefault": "dd"
+  },
+  "mykn.components.DurationInput.placeholderMonths": {
+    "defaultMessage": "mm",
+    "description": "mykn.components.DurationInput: The months field placeholder",
+    "originalDefault": "mm"
+  },
+  "mykn.components.DurationInput.placeholderWeeks": {
+    "defaultMessage": "ww",
+    "description": "mykn.components.DurationInput: The weeks field placeholder",
+    "originalDefault": "ww"
+  },
+  "mykn.components.DurationInput.placeholderYears": {
+    "defaultMessage": "yy",
+    "description": "mykn.components.DurationInput: The years field placeholder",
+    "originalDefault": "jj"
+  },
   "mykn.components.Form.labelRequired": {
     "defaultMessage": "Field {label} is required",
     "description": "mykn.components.Form: The required (accessible) label",

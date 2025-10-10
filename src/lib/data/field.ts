@@ -74,6 +74,7 @@ export type FieldType =
   | "boolean"
   | "date"
   | "daterange"
+  | "duration"
   | "null"
   | "number"
   | "string"

@@ -9,6 +9,7 @@ import {
 } from "../../components";
 import { DateInputProps } from "../../components/form/dateinput";
 import { DateRangeInputProps } from "../../components/form/daterangeinput";
+import { DurationInputProps } from "../../components/form/durationinput";
 import { TextareaProps } from "../../components/form/textarea";
 import { FieldType } from "../data";
 
@@ -19,6 +20,7 @@ export type FormField =
   | DateInputProps
   | DateRangeInputProps
   | DatePickerProps
+  | DurationInputProps
   | InputProps
   | SelectProps
   | TextareaProps;
@@ -32,6 +34,7 @@ export function getFormFieldTypeByFieldType(fieldType: "date"): "date";
 export function getFormFieldTypeByFieldType(
   fieldType: "daterange",
 ): "daterange";
+export function getFormFieldTypeByFieldType(fieldType: "duration"): "duration";
 export function getFormFieldTypeByFieldType(fieldType: "number"): "number";
 export function getFormFieldTypeByFieldType(fieldType: "string"): "text";
 export function getFormFieldTypeByFieldType(fieldType: "text"): "textarea";
@@ -48,6 +51,7 @@ export function getFormFieldTypeByFieldType(
       return "checkbox";
     case "date":
     case "daterange":
+    case "duration":
     case "number":
       return fieldType;
     case "text":
@@ -67,37 +71,44 @@ export const isFormControl = (props: unknown): props is FormControlProps =>
   isRadio(props as RadioProps) ||
   isDateInput(props as DateInputProps) ||
   isDatePicker(props as DatePickerProps) ||
+  isDateRangeInput(props as DateRangeInputProps) ||
+  isDurationInput(props as DateRangeInputProps) ||
   isChoiceField(props as ChoiceFieldProps) ||
   isTextarea(props as TextareaProps) ||
   isInput(props as InputProps);
 
 /** Typeguard for CheckboxProps. */
 export const isCheckbox = (props: FormField): props is CheckboxProps =>
-  _isInput(props) &&
+  _isNonChoiceInput(props) &&
   (props.type === "checkbox" ||
     typeof props.checked !== "undefined" ||
     typeof props.defaultChecked !== "undefined");
 
 export const isRadio = (props: FormField): props is RadioProps =>
-  _isInput(props) &&
+  _isNonChoiceInput(props) &&
   (props.type === "radio" ||
     typeof props.checked !== "undefined" ||
     typeof props.defaultChecked !== "undefined");
 
 /** Typeguard for DateInputProps. */
 export const isDateInput = (props: FormField): props is DateInputProps =>
-  _isInput(props) && props.type === "date";
+  _isNonChoiceInput(props) && props.type === "date";
 
 /** Typeguard for DateInputProps. */
 export const isDateRangeInput = (
   props: FormField,
 ): props is DateRangeInputProps =>
-  _isInput(props) && props.type === "daterange";
+  _isNonChoiceInput(props) && props.type === "daterange";
 
 /** Typeguard for DatePickerProps. */
 export const isDatePicker = (props: FormField): props is DatePickerProps =>
-  _isInput(props) &&
+  _isNonChoiceInput(props) &&
   Boolean(props.type?.match("date") && props.type?.match("picker"));
+
+export const isDurationInput = (
+  props: FormField,
+): props is DurationInputProps =>
+  _isNonChoiceInput(props) && props.type === "duration";
 
 /**
  * Typeguard for InputProps.
@@ -110,7 +121,7 @@ export const isTextarea = (props: FormField): props is TextareaProps =>
  * TODO: KEEP IN SYNC WITH OTHER TYPEGUARDS!
  */
 export const isInput = (props: FormField): props is InputProps =>
-  _isInput(props) &&
+  _isNonChoiceInput(props) &&
   !isCheckbox(props) &&
   !isDatePicker(props) &&
   !isRadio(props) &&
@@ -135,5 +146,5 @@ export const isRadioGroup = (props: FormField): props is ChoiceFieldProps =>
 /**
  * Typeguard for InputProps.
  */
-const _isInput = (props: FormField): props is InputProps =>
+const _isNonChoiceInput = (props: FormField): props is InputProps =>
   !isChoiceField(props);
