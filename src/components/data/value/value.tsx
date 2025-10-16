@@ -231,29 +231,15 @@ export const Value = <T extends object = object>(rawProps: ValueProps<T>) => {
   }
 
   /**
-   * Checks if a value is a valid ISO 8601 duration string.
-   * @param value
+   * Renders a duration using Temporal.Duration the type is duration, whilst decorate is true.
    */
-  function isIsoDuration(value: unknown): boolean {
-    if (typeof value !== "string") return false;
-    try {
-      Temporal.Duration.from(value);
-      return true;
-    } catch {
-      return false;
-    }
-  }
-
-  /**
-   * Renders a duration using Temporal.Duration if the value is a valid ISO 8601 duration string, whilst decorate is true.
-   */
-  if (decorate && (field?.type === "duration" || isIsoDuration(valueState))) {
+  if (decorate && field?.type === "duration") {
     const duration = Temporal.Duration.from(valueState);
 
     return (
       <P {...(props as ComponentProps<"p">)} {...pProps}>
         {duration.toLocaleString(intl.locale, {
-          style: "narrow",
+          style: "long",
         })}
       </P>
     );

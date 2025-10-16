@@ -41,13 +41,6 @@ export const AttributeListComponent: Story = {
   },
 };
 
-export const AttributeListComponentDecorated: Story = {
-  args: {
-    object: FIXTURE_PRODUCT,
-    decorate: true,
-  },
-};
-
 export const WithTitle: Story = {
   args: {
     title: FIXTURE_PRODUCT.name,
