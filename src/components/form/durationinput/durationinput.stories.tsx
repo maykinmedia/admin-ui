@@ -84,7 +84,7 @@ export const DesignatorWithWeeks: Story = {
     const days = findBySection(canvasElement, "DD");
     const log = getLog(canvasElement);
 
-    await expect(log).toHaveTextContent("P56D");
+    await waitFor(() => expect(log).toHaveTextContent("P56D"));
 
     await userEvent.clear(years);
     await userEvent.type(years, "1", { delay: 5 });
