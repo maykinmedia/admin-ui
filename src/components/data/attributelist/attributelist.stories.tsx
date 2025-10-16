@@ -25,6 +25,10 @@ const meta: Meta<typeof AttributeList<typeof FIXTURE_PRODUCT>> = {
       control: "boolean",
       description: "Whether the values are currently being edited.",
     },
+    decorate: {
+      control: "boolean",
+      description: "Whether to decorate the value, if applicable.",
+    },
   },
 };
 
@@ -34,6 +38,13 @@ type Story = StoryObj<typeof meta>;
 export const AttributeListComponent: Story = {
   args: {
     object: FIXTURE_PRODUCT,
+  },
+};
+
+export const AttributeListComponentDecorated: Story = {
+  args: {
+    object: FIXTURE_PRODUCT,
+    decorate: true,
   },
 };
 

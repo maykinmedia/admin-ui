@@ -24,6 +24,10 @@ const meta: Meta<typeof AttributeGrid<typeof FIXTURE_PRODUCT>> = {
       control: "boolean",
       description: "Whether the values are currently being edited.",
     },
+    decorate: {
+      control: "boolean",
+      description: "Whether to decorate the value, if applicable.",
+    },
   },
 };
 
@@ -43,6 +47,55 @@ export const AttributeGridComponent: Story = {
             "category",
             "releaseDate",
             "url",
+            {
+              name: "warrantyTerm",
+              type: "duration",
+            },
+          ],
+          span: 12,
+          colSpan: 3,
+        },
+      ],
+      [
+        "availability",
+        {
+          fields: ["price", "isAvailable", "stock"],
+          span: 12,
+          colSpan: 3,
+        },
+      ],
+      [
+        "more",
+        {
+          fields: ["category", "releaseDate", "url"],
+          span: 6,
+          titleSpan: 6,
+          colSpan: 6,
+        },
+      ],
+    ],
+    object: FIXTURE_PRODUCT,
+  },
+};
+
+export const AttributeGridComponentDecorated: Story = {
+  args: {
+    decorate: true,
+    fieldsets: [
+      [
+        "information",
+        {
+          fields: [
+            "id",
+            "name",
+            { name: "description", type: "text" },
+            "category",
+            "releaseDate",
+            "url",
+            {
+              name: "warrantyTerm",
+              type: "duration",
+            },
           ],
           span: 12,
           colSpan: 3,

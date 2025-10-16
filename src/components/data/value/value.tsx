@@ -1,3 +1,4 @@
+import { Temporal } from "@js-temporal/polyfill";
 import { isLink, serializeInputElement } from "@maykin-ui/client-common";
 import React, {
   ChangeEventHandler,
@@ -18,6 +19,7 @@ import {
   isNumber,
   isString,
   isUndefined,
+  useIntl,
 } from "../../../lib";
 import { Badge, BadgeProps } from "../../badge";
 import { Bool, BoolProps } from "../../boolean";
@@ -166,6 +168,8 @@ export const Value = <T extends object = object>(rawProps: ValueProps<T>) => {
     [editing, onBlur],
   );
 
+  const intl = useIntl();
+
   if (editable && !editingState) {
     return (
       <Button
@@ -226,6 +230,46 @@ export const Value = <T extends object = object>(rawProps: ValueProps<T>) => {
     );
   }
 
+  /**
+   * Checks if a value is a valid ISO 8601 duration string.
+   * @param value
+   */
+  function isIsoDuration(value: unknown): boolean {
+    if (typeof value !== "string") return false;
+    try {
+      Temporal.Duration.from(value);
+      return true;
+    } catch {
+      return false;
+    }
+  }
+
+  /**
+   * Renders a duration using Temporal.Duration if the value is a valid ISO 8601 duration string, whilst decorate is true.
+   */
+  if (decorate && (field?.type === "duration" || isIsoDuration(valueState))) {
+    const duration = Temporal.Duration.from(valueState);
+
+    return (
+      <P {...(props as ComponentProps<"p">)} {...pProps}>
+        {duration.toLocaleString(intl.locale, {
+          style: "narrow",
+        })}
+      </P>
+    );
+  }
+
+  /**
+   * Renders primitive string or number values as text or links.
+   *
+   * Conditions:
+   * - If the value is a string, or a number without `decorate` mode, or the field type is "string" / "number".
+   * - Converts the value to a string and renders it as:
+   *
+   * Notes:
+   * - Returns "-" if the string is empty.
+   * - When nested, only returns the plain string instead of wrapping it in a paragraph.
+   */
   if (
     isString(valueState) ||
     (isNumber(valueState) && !decorate) ||
@@ -257,6 +301,13 @@ export const Value = <T extends object = object>(rawProps: ValueProps<T>) => {
     );
   }
 
+  /**
+   * Renders boolean values using a `<Bool>` component.
+   *
+   * Conditions:
+   * - If the value is a boolean or the field type is explicitly "boolean".
+   * - Supports decoration via the `decorate` flag.
+   */
   if (isBool(valueState) || field?.type === "boolean") {
     return (
       <Bool
@@ -270,6 +321,17 @@ export const Value = <T extends object = object>(rawProps: ValueProps<T>) => {
     );
   }
 
+  /**
+   * Renders numeric values as a stylized badge.
+   *
+   * Conditions:
+   * - If the value is a number or the field type is explicitly "number".
+   * - Always wraps the value in a `<Badge>` component for visual emphasis.
+   *
+   * Notes:
+   * - This block only runs when `decorate` is true, since undecorated numbers
+   *   are handled by the earlier string/number condition.
+   */
   if (isNumber(valueState) || field?.type === "number") {
     return (
       <Badge {...badgeProps} {...props}>
