@@ -10,6 +10,7 @@ import {
 } from "../../../../.storybook/decorators";
 import { Button } from "../../button";
 import { Toolbar } from "../../toolbar";
+import { Option } from "../choicefield";
 import { Select } from "./select";
 
 const meta: Meta<typeof Select> = {
@@ -97,6 +98,7 @@ export const SelectComponent: Story = {
       await waitFor(() => assertNativeValue(nativeSelect!, ""));
       // Test that the FormData serialization returns the correct value.
       await waitFor(() => assertFormValue(nativeSelect!, ""));
+      await userEvent.click(clear, { delay: 10 });
 
       await userEvent.click(select, { delay: 10 });
       const junior2 = await within(select).findByText("Junior");
@@ -310,5 +312,183 @@ export const UsageWithFormik: Story = {
     }
 
     await userEvent.click(clear, { delay: 10 });
+  },
+};
+
+const ALL_COUNTRIES: Option[] = [
+  { label: "Netherlands", value: "NL" },
+  { label: "Germany", value: "DE" },
+  { label: "Belgium", value: "BE" },
+  { label: "France", value: "FR" },
+  { label: "España", value: "ES" },
+  { label: "Côte d’Ivoire", value: "CI" },
+  { label: "Åland Islands", value: "AX" },
+  { label: "Curaçao", value: "CW" },
+  { label: "United Kingdom", value: "GB" },
+  { label: "United States", value: "US" },
+  { label: "Switzerland", value: "CH" },
+  { label: "Sweden", value: "SE" },
+  { label: "Norway", value: "NO" },
+  { label: "Denmark", value: "DK" },
+  { label: "Poland", value: "PL" },
+  { label: "Portugal", value: "PT" },
+  { label: "Czechia", value: "CZ" },
+  { label: "Slovakia", value: "SK" },
+  { label: "Slovenia", value: "SI" },
+  { label: "Türkiye", value: "TR" },
+  { label: "Greece", value: "GR" },
+  { label: "Iceland", value: "IS" },
+  { label: "Ireland", value: "IE" },
+  { label: "Italy", value: "IT" },
+  { label: "Austria", value: "AT" },
+  { label: "Romania", value: "RO" },
+  { label: "Bulgaria", value: "BG" },
+  { label: "Hungary", value: "HU" },
+  { label: "Lithuania", value: "LT" },
+  { label: "Latvia", value: "LV" },
+  { label: "Estonia", value: "EE" },
+];
+
+const getSelectOptionsAsync = (inputValue: string) =>
+  new Promise<Option[]>((resolve) => {
+    setTimeout(() => {
+      const normalize = (s: string) => s.toLowerCase();
+      const q = normalize(inputValue ?? "");
+
+      const filtered = ALL_COUNTRIES.filter((o) => {
+        const label = normalize(String(o.label ?? ""));
+        const val = normalize(String(o.value ?? ""));
+        return label.includes(q) || val.includes(q);
+      });
+      // Limit to 10 options.
+      resolve(filtered.slice(0, 10));
+    }, 600);
+  });
+
+export const AsyncOptions: Story = {
+  args: {
+    searchDebounceMs: 50,
+    name: "country",
+    placeholder: "Select country",
+    fetchOnMount: false,
+    options: (inputValue: string, callback: (options: Option[]) => void) => {
+      getSelectOptionsAsync(inputValue).then((options) => callback(options));
+    },
+  },
+  decorators: [FORM_TEST_DECORATOR],
+  render: ({ name = "select", ...args }) => (
+    <Select name={name} variant="normal" {...args} />
+  ),
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const select = canvas.getByRole("combobox");
+    const nativeSelect =
+      select.querySelector<HTMLSelectElement>("select[hidden]")!;
+
+    await userEvent.click(select);
+    const searchbox = within(select).getByRole("textbox");
+
+    await userEvent.type(searchbox, "lan");
+    await expect(
+      await within(select).findByRole("status", { name: "Opties laden…" }),
+    ).toBeInTheDocument();
+
+    const netherlands = await within(select).findByText("Netherlands");
+    await userEvent.click(netherlands);
+
+    await waitFor(() => assertNativeValue(nativeSelect, "NL"));
+    await waitFor(() => assertFormValue(nativeSelect, "NL"));
+
+    await userEvent.click(select);
+    await userEvent.click(within(select).getByLabelText("Zoekopdracht wissen"));
+
+    const clear = within(select).getByLabelText("Clear value");
+    await userEvent.click(clear);
+    await waitFor(() => assertNativeValue(nativeSelect, ""));
+    await waitFor(() => assertFormValue(nativeSelect, ""));
+  },
+};
+
+export const AsyncOptionsMultiple: Story = {
+  args: {
+    searchDebounceMs: 50,
+    name: "countries",
+    placeholder: "Select countries",
+    multiple: true,
+    fetchOnMount: false,
+    options: (inputValue: string, callback: (options: Option[]) => void) => {
+      getSelectOptionsAsync(inputValue).then((options) => callback(options));
+    },
+  },
+  decorators: [FORM_TEST_DECORATOR],
+  render: ({ name = "select", ...args }) => (
+    <Select name={name} variant="normal" {...args} />
+  ),
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const select = canvas.getByRole("combobox");
+    const nativeSelect =
+      select.querySelector<HTMLSelectElement>("select[hidden]")!;
+
+    await userEvent.click(select);
+    const searchbox = within(select).getByRole("textbox");
+
+    await userEvent.type(searchbox, "lan", { delay: 200 });
+    await expect(
+      await within(select).findByRole("status", { name: "Opties laden…" }),
+    ).toBeInTheDocument();
+
+    const netherlands = await within(select).findByText("Netherlands");
+    const switzerland = await within(select).findByText("Switzerland");
+    const iceland = await within(select).findByText("Iceland");
+
+    await userEvent.click(netherlands);
+    await userEvent.click(switzerland);
+    await userEvent.click(iceland);
+
+    await waitFor(() => assertNativeValue(nativeSelect, "NL"));
+    await waitFor(() => assertFormValue(nativeSelect, ["NL", "CH", "IS"]));
+
+    await userEvent.click(within(select).getByLabelText("Zoekopdracht wissen"));
+
+    const clear = within(select).getByLabelText("Clear value");
+    await userEvent.click(clear);
+    await waitFor(() => assertNativeValue(nativeSelect, ""));
+    await waitFor(() => assertFormValue(nativeSelect, []));
+  },
+};
+
+export const AsyncOptionsNoOptions: Story = {
+  args: {
+    name: "country",
+    placeholder: "Select country",
+    fetchOnMount: false,
+    options: (inputValue: string, callback: (options: Option[]) => void) => {
+      // Always return no options.
+      setTimeout(() => {
+        callback([]);
+      }, 200);
+    },
+  },
+  decorators: [FORM_TEST_DECORATOR],
+  render: ({ name = "select", ...args }) => (
+    <Select name={name} variant="normal" {...args} />
+  ),
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const select = canvas.getByRole("combobox");
+
+    await userEvent.click(select);
+    const searchbox = within(select).getByRole("textbox");
+
+    await userEvent.type(searchbox, "zzzz");
+    await expect(
+      await within(select).findByRole("status", { name: "Opties laden…" }),
+    ).toBeInTheDocument();
+
+    const empty = await within(select).findByText("Geen resultaten");
+    await expect(empty).toBeInTheDocument();
+
+    await userEvent.click(within(select).getByLabelText("Zoekopdracht wissen"));
   },
 };
