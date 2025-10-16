@@ -173,11 +173,42 @@
     border: 1px solid var(--form-border);
     border-radius: var(--sizes-border-radius-s);
     box-sizing: border-box;
+    cursor: default;
+    display: flex;
+    flex-direction: column;
+    max-height: var(--mykn-select-dropdown-max-h);
     min-width: 100%;
     overflow: auto;
     padding: var(--sizes-spacing-xs-v) 0;
     width: fit-content;
     z-index: 1000;
+  }
+
+  &__loading {
+    display: flex;
+    justify-content: center;
+    padding: var(--sizes-spacing-s-v) 0;
+  }
+
+  &__options {
+    overflow: auto;
+  }
+
+  &__search {
+    align-items: center;
+    display: flex;
+    margin: 0 auto;
+    max-width: 90%;
+    padding: var(--sizes-spacing-xs-v) 0;
+    position: relative;
+  }
+
+  &__search-clear {
+    padding: 0;
+    position: absolute;
+    right: var(--sizes-spacing-xs-h);
+    top: 50%;
+    transform: translateY(-50%);
   }
 }
 
