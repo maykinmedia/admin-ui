@@ -70,6 +70,11 @@ const playFormComponent = async ({
   const dateOfBirth = canvas.getByLabelText("Date of birth", { exact: false });
   const english = canvas.getByLabelText("English");
   const math = canvas.getByLabelText("Math");
+
+  const years = canvas.getByLabelText("Years");
+  const months = canvas.getByLabelText("Months");
+  const days = canvas.getByLabelText("Days");
+
   const yes = canvas.getByLabelText("Yes");
   const no = canvas.getByLabelText("No");
   const comments = canvas.getByLabelText("Comments");
@@ -136,6 +141,13 @@ const playFormComponent = async ({
   await userEvent.click(math);
   await expect(math).toBeChecked();
   await expectLogToBe(canvasElement, "courses", ["english", "math"]);
+
+  await userEvent.type(years, "1", { delay: 10 });
+  await userEvent.type(months, "2", { delay: 10 });
+  await userEvent.type(days, "3", { delay: 10 });
+  await userEvent.tab();
+
+  await expectLogToBe(canvasElement, "duration", "P1Y2M3D");
 
   await userEvent.click(favouriteSport, { delay: 100 });
   const football = await canvas.findByText("Football");
@@ -220,7 +232,12 @@ export const FormComponent: Story = {
           { label: "Science", value: "science" },
         ],
       },
-
+      {
+        label: "Termijn",
+        name: "duration",
+        type: "duration",
+        required: true,
+      },
       {
         options: [
           { label: "Football", value: "football" },
@@ -332,7 +349,12 @@ export const UsageWithFormik: Story = {
           { label: "Science", value: "science" },
         ],
       },
-
+      {
+        label: "Termijn",
+        name: "duration",
+        type: "duration",
+        required: true,
+      },
       {
         options: [
           { label: "Football", value: "football" },
