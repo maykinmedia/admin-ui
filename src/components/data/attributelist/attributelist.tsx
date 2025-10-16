@@ -30,6 +30,9 @@ export type AttributeListProps<T extends object = object> = Omit<
   /** The number of columns to span for each field, 12 means 1 pair per row. */
   colSpan?: number;
 
+  /** Whether to decorate the value, if applicable. */
+  decorate?: boolean;
+
   /** Error messages, applied to automatically rendered field. */
   errors?: FieldErrors | Partial<Record<keyof T, string>>;
 
@@ -70,6 +73,7 @@ export const AttributeList = <T extends object = object>({
   object = {} as T,
   editable,
   editing,
+  decorate,
   errors,
   fields = Object.keys(object) as Field<T>[],
   formControlProps,
@@ -141,6 +145,7 @@ export const AttributeList = <T extends object = object>({
                 object={object}
                 editable={editable}
                 editing={editing}
+                decorate={decorate}
                 error={message}
                 field={f}
                 formControlProps={formControlProps}
@@ -160,6 +165,7 @@ export const AttributeList = <T extends object = object>({
 export type AttributePairProps<T extends object = object> = {
   object: T;
   field: Field<T> | TypedField<T>;
+  decorate?: boolean;
   error?: string;
   onEdit?: (value: T) => void;
 } & Pick<
@@ -181,6 +187,7 @@ export const AttributePair = <T extends object = object>({
   formControlProps,
   editable,
   editing,
+  decorate,
   error,
   labelEdit,
   onBlur,
@@ -213,6 +220,7 @@ export const AttributePair = <T extends object = object>({
         <Value
           editable={editable}
           editing={editing}
+          decorate={decorate}
           error={error}
           field={typedField}
           formControlProps={{

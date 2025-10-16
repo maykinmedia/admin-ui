@@ -25,6 +25,10 @@ const meta: Meta<typeof AttributeList<typeof FIXTURE_PRODUCT>> = {
       control: "boolean",
       description: "Whether the values are currently being edited.",
     },
+    decorate: {
+      control: "boolean",
+      description: "Whether to decorate the value, if applicable.",
+    },
   },
 };
 

@@ -28,6 +28,9 @@ export type AttributeGridProps<T extends object = object> = {
   /** Props for AttributeList. */
   attributeListProps?: Partial<AttributeListProps<T>>;
 
+  /* Whether to decorate the value, if applicable. */
+  decorate?: boolean;
+
   /** Error messages, applied to automatically rendered field. */
   errors?: FieldErrors | Partial<Record<keyof T, string>>;
 
@@ -71,6 +74,7 @@ export const AttributeGrid = <T extends object = object>({
   attributeListProps = {},
   editable,
   editing,
+  decorate,
   errors,
   object,
   fieldsets,
@@ -161,6 +165,7 @@ export const AttributeGrid = <T extends object = object>({
                         ? slugify(attributeListProps.title)
                         : undefined
                     }
+                    decorate={decorate}
                     errors={errors}
                     editable={editable}
                     labelEdit={labelEdit}
