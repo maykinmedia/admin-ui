@@ -30,6 +30,9 @@ export type DurationInputProps = {
   /** Component title attribute */
   label?: string;
 
+  /** Whether to apply padding. */
+  pad?: boolean | "h" | "v";
+
   /** The id, is set: passed to the first input. */
   id?: string;
 
@@ -86,6 +89,7 @@ const toPosInt = (s: string): number =>
 export const DurationInput: React.FC<DurationInputProps> = ({
   id,
   name,
+  pad,
   form,
   required,
   disabled = false,
@@ -219,6 +223,7 @@ export const DurationInput: React.FC<DurationInputProps> = ({
               <Input
                 id={inputId}
                 aria-label={placeholder}
+                pad={pad}
                 placeholder={placeholder}
                 {...inputProps}
                 form={form}
