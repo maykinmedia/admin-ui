@@ -130,7 +130,8 @@ export const AttributeList = <T extends object = object>({
         {title && !isTitleAbove && renderTitle}
 
         <dl className="mykn-attributelist__list">
-          {fields.map((f, i) => {
+          {fields.map((field, i) => {
+            const key = getFieldName(field).toString() + i;
             const fieldErrors = getErrorFromErrors(
               formFields,
               errorsState,
@@ -141,13 +142,13 @@ export const AttributeList = <T extends object = object>({
             // FIXME ERROR
             return (
               <AttributePair<T>
-                key={i}
+                key={key}
                 object={object}
                 editable={editable}
                 editing={editing}
                 decorate={decorate}
                 error={message}
-                field={f}
+                field={field}
                 formControlProps={formControlProps}
                 labelEdit={labelEdit}
                 onBlur={onBlur}
