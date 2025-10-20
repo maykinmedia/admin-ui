@@ -15,47 +15,47 @@ export type DurationNoTime = Pick<
 >;
 
 export type DurationInputProps = {
-  /** Which ISO flavor to use for parsing and formatting. Default "designator" */
-  mode?: DurationMode;
-
-  /** ISO 8601 duration value for the chosen mode. Empty or null renders zeros */
-  value?: string;
-
-  /* Render this if it's "duration" */
-  type?: "duration";
-
-  /** Gets called when the value is changed. */
-  onChange?: React.ChangeEventHandler<HTMLInputElement>;
-
-  /** Component title attribute */
-  label?: string;
-
-  /** Whether to apply padding. */
-  pad?: boolean | "h" | "v";
-
   /** The id, is set: passed to the first input. */
   id?: string;
 
-  /** The name. */
-  name?: string;
-
-  /** The associated form's id. */
-  form?: string;
-
-  /** Whether a value is required. */
-  required?: boolean;
+  /* Additional props are passed to the input fields */
+  inputProps?: InputProps;
 
   /** Disabled state. */
   disabled?: boolean;
 
-  /* Additional props are passed to the input fields */
-  inputProps?: InputProps;
+  /** The associated form's id. */
+  form?: string;
+
+  /** Component title attribute */
+  label?: string;
+
+  /** Which ISO flavor to use for parsing and formatting. Default "designator" */
+  mode?: DurationMode;
+
+  /** The name. */
+  name?: string;
+
+  /** Whether to apply padding. */
+  pad?: boolean | "h" | "v";
+
+  /** Whether a value is required. */
+  required?: boolean;
+
+  /* Render this if it's "duration" */
+  type?: "duration";
+
+  /** ISO 8601 duration value for the chosen mode. Empty or null renders zeros */
+  value?: string;
 
   /** Optional label overrides for individual fields */
   labelOverrides?: Partial<Record<keyof DurationNoTime, string>>;
 
   /** Optional placeholder overrides for individual fields */
   placeholderOverrides?: Partial<Record<keyof DurationNoTime, string>>;
+
+  /** Gets called when the value is changed. */
+  onChange?: React.ChangeEventHandler<HTMLInputElement>;
 };
 
 type Key = keyof DurationNoTime;
@@ -88,16 +88,16 @@ const toPosInt = (s: string): number =>
  */
 export const DurationInput: React.FC<DurationInputProps> = ({
   id,
-  name,
-  pad,
-  form,
-  required,
+  inputProps,
   disabled = false,
+  form,
   label = "Duration",
   mode = "designator",
+  name,
+  pad,
+  required,
   value,
   onChange,
-  inputProps,
   labelOverrides,
   placeholderOverrides,
   ...rest
