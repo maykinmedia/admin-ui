@@ -206,7 +206,6 @@ export const Value = <T extends object = object>(rawProps: ValueProps<T>) => {
         options={field.options}
         pad="h"
         type={type}
-        {...formControlProps}
         checked={field!.type === "boolean" ? Boolean(valueState) : undefined}
         value={(valueState || "").toString()}
         onChange={handleChange}
