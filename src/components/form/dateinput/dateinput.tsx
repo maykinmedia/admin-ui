@@ -91,7 +91,6 @@ export const DateInput: React.FC<DateInputProps> = ({
   ...props
 }) => {
   type SanitizedValues = { DD: string; MM: string; YY: string };
-  const debounceRef = useRef<NodeJS.Timeout>(undefined);
   const fakeInputRef = useRef<HTMLInputElement>(null);
   const [isPristine, setIsPristine] = useState(true);
   const [sanitizedValuesState, setSanitizedValuesState] = useState<
@@ -214,26 +213,6 @@ export const DateInput: React.FC<DateInputProps> = ({
   );
 
   /**
-   * Focuses input section identified by `section`.
-   * @param section
-   */
-  const focusSection = useCallback(
-    (target: HTMLInputElement | null) => {
-      const fn = () => {
-        if (!target) {
-          return;
-        }
-        target?.focus();
-        target?.select();
-      };
-
-      clearTimeout(debounceRef?.current);
-      debounceRef.current = setTimeout(fn, 30);
-    },
-    [debounceRef.current, fakeInputRef.current],
-  );
-
-  /**
    * Gets called when any of the section inputs is changed.
    */
   const handleChange = useCallback<React.ChangeEventHandler<HTMLInputElement>>(
@@ -319,33 +298,6 @@ export const DateInput: React.FC<DateInputProps> = ({
     [sanitizedValuesState],
   );
 
-  /**
-   * Gets called when a key is pressed when any of the section inputs has focus.
-   * Focuses the next applicable section input.
-   * @param event
-   */
-  const onKeyUp = useCallback<React.KeyboardEventHandler<HTMLInputElement>>(
-    (event) => {
-      // No numeric value and no backspace.
-      if (!event.key.match(/^\d$/) && event.key !== "Backspace") {
-        return;
-      }
-      const { dataset, value } = event.target as HTMLInputElement;
-      const section = dataset.section as "DD" | "MM" | "YY";
-      const isCompleted =
-        section === "YY" ? value.length === 4 : value.length === 2;
-      const isCleared = !value && event.key === "Backspace";
-
-      const input = event.target as HTMLInputElement;
-      if (isCompleted) {
-        focusSection(input.nextElementSibling as HTMLInputElement | null);
-      } else if (isCleared) {
-        focusSection(input.previousElementSibling as HTMLInputElement | null);
-      }
-    },
-    [focusSection],
-  );
-
   // Format as array of sections, "YYYY" is replaced with "YY".
   const sanitizedFormat = useMemo(() => {
     return format.replace("YYYY", "YY").match(/([\w]{2})/g) as (
@@ -364,7 +316,6 @@ export const DateInput: React.FC<DateInputProps> = ({
       onFocus: (e: React.FocusEvent<HTMLInputElement>) =>
         setTimeout(() => e.target.select()),
       onKeyDown: onKeyDown,
-      onKeyUp: onKeyUp,
       size,
       type: "text",
       pad: pad,
