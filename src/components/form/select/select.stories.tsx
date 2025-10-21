@@ -390,7 +390,7 @@ export const AsyncOptions: Story = {
 
     await userEvent.type(searchbox, "lan");
     await expect(
-      await within(select).findByRole("status", { name: "Opties laden…" }),
+      await within(select).findByRole("status", { name: "Loading options..." }),
     ).toBeInTheDocument();
 
     const netherlands = await within(select).findByText("Netherlands");
@@ -400,7 +400,7 @@ export const AsyncOptions: Story = {
     await waitFor(() => assertFormValue(nativeSelect, "NL"));
 
     await userEvent.click(select);
-    await userEvent.click(within(select).getByLabelText("Zoekopdracht wissen"));
+    await userEvent.click(within(select).getByLabelText("Clear search"));
 
     const clear = within(select).getByLabelText("Clear value");
     await userEvent.click(clear);
@@ -435,7 +435,7 @@ export const AsyncOptionsMultiple: Story = {
 
     await userEvent.type(searchbox, "lan", { delay: 200 });
     await expect(
-      await within(select).findByRole("status", { name: "Opties laden…" }),
+      await within(select).findByRole("status", { name: "Loading options..." }),
     ).toBeInTheDocument();
 
     const netherlands = await within(select).findByText("Netherlands");
@@ -449,7 +449,7 @@ export const AsyncOptionsMultiple: Story = {
     await waitFor(() => assertNativeValue(nativeSelect, "NL"));
     await waitFor(() => assertFormValue(nativeSelect, ["NL", "CH", "IS"]));
 
-    await userEvent.click(within(select).getByLabelText("Zoekopdracht wissen"));
+    await userEvent.click(within(select).getByLabelText("Clear search"));
 
     const clear = within(select).getByLabelText("Clear value");
     await userEvent.click(clear);
@@ -483,12 +483,12 @@ export const AsyncOptionsNoOptions: Story = {
 
     await userEvent.type(searchbox, "zzzz");
     await expect(
-      await within(select).findByRole("status", { name: "Opties laden…" }),
+      await within(select).findByRole("status", { name: "Loading options..." }),
     ).toBeInTheDocument();
 
-    const empty = await within(select).findByText("Geen resultaten");
+    const empty = await within(select).findByText("No results");
     await expect(empty).toBeInTheDocument();
 
-    await userEvent.click(within(select).getByLabelText("Zoekopdracht wissen"));
+    await userEvent.click(within(select).getByLabelText("Clear search"));
   },
 };
