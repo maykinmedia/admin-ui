@@ -1,0 +1,44 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Hooks/useDebounce" />
+
+# useDebounce
+
+## Summary
+
+The `useDebounce` hook delays updating a value until after a specified period of inactivity.
+This helps reduce unnecessary re-renders or calls to expensive operations like API requests or filtering while a user types.
+
+## Installation
+
+Import and use it inside a React component.
+
+```tsx
+import { useDebounce } from "./useDebounce";
+```
+
+```tsx
+import { useState } from "react";
+
+import { useDebounce } from "./useDebounce";
+
+export const SearchBox = () => {
+  const [query, setQuery] = useState("");
+  const debouncedQuery = useDebounce(query, 300);
+
+  // use debouncedQuery for side effects like fetching
+  // e.g. useEffect(() => fetchData(debouncedQuery), [debouncedQuery]);
+
+  return (
+    <input
+      value={query}
+      onChange={(e) => setQuery(e.target.value)}
+      placeholder="Search..."
+    />
+  );
+};
+```
+
+## Utilization
+
+Use the debounced value for operations that should not trigger on every change, such as network calls or heavy computations.
