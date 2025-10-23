@@ -47,6 +47,7 @@ export type FormProps<T extends SerializedFormData = SerializedFormData> = Omit<
   /** If set, show `valuesState`. */
   debug?: boolean;
 
+  // TODO: Migrate to h/v.
   /** The direction in which to render the form. */
   direction?: "vertical" | "horizontal";
 
@@ -335,7 +336,7 @@ export const Form = <T extends SerializedFormData = SerializedFormData>({
             return (
               <FormControl
                 key={field.id || index}
-                direction={direction}
+                direction={direction[0] as "h" | "v"}
                 error={message}
                 forceShowError={forceShowErrorsState}
                 justify={justify}
