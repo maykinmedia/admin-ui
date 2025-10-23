@@ -130,7 +130,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 size="xxs"
                 pad={false}
                 square
-                variant="outline"
+                variant="secondary"
                 onClick={handleClick}
               >
                 <Outline.ChevronLeftIcon
