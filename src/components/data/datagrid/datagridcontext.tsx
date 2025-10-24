@@ -15,9 +15,9 @@ export type DataGridContextType<T extends object, F extends object> = Omit<
   dataGridId: string;
   editable: boolean;
   editingState: [object, number] | boolean;
-  errorsState: FieldErrors<FormField[], Validator[]>;
   formFields: FormField[];
-  setErrorsState: React.Dispatch<FieldErrors<FormField[], Validator[]>>;
+  errorsState: FieldErrors<FormField[], Validator[]>[];
+  setErrorsState: React.Dispatch<FieldErrors<FormField[], Validator[]>[]>;
   equalityChecker: (item1: T, item2: T) => boolean;
   fields: TypedField<T>[];
   pages: number;
