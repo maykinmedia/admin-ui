@@ -48,8 +48,8 @@ export const DataGridContentCell = <
     editable,
     editingState,
     errorsState,
-    fields,
     setErrorsState,
+    fields,
     formFields,
     renderableRows,
     renderableFields = [],
@@ -110,8 +110,13 @@ export const DataGridContentCell = <
       const name = (e.target as HTMLInputElement).name;
       const value = serializeElement(e.target, { typed: true });
       const data = { ...rowData, [name]: value };
-      const errors = validate?.(data, formFields, validators || []);
-      setErrorsState(errors || {});
+      const errors = validate?.(data, formFields, validators || []) || {};
+
+      const newErrorsState = errorsState.map((existingErrors, index) =>
+        index === renderableRowIndex ? errors : existingErrors,
+      );
+
+      setErrorsState(newErrorsState);
 
       setPristine(false);
       onChange?.(e);
@@ -153,7 +158,7 @@ export const DataGridContentCell = <
 
   const fieldErrors = getErrorFromErrors(
     formFields,
-    errorsState,
+    errorsState[renderableRowIndex] || {},
     formFields[fields.indexOf(field)],
   );
   const message = fieldErrors?.join(", ");
@@ -193,6 +198,7 @@ export const DataGridContentCell = <
         badgeProps={badgeProps}
         boolProps={{ explicit: editable, ...(boolProps as BoolProps) }}
         formControlProps={{
+          forceShowError: true,
           form: `${dataGridId}-editable-form-${renderableRowIndex}`,
           required: true,
         }}
