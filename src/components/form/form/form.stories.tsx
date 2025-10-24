@@ -68,6 +68,9 @@ const playFormComponent = async ({
   const address = canvas.getByLabelText("Address");
   const address_addition = canvas.getByLabelText("Address (addition)");
   const dateOfBirth = canvas.getByLabelText("Date of birth", { exact: false });
+  const dateOfBirthFields = await within(
+    dateOfBirth.parentElement as HTMLElement, // FIXME: Improve
+  ).findAllByRole("textbox");
   const english = canvas.getByLabelText("English");
   const math = canvas.getByLabelText("Math");
 
@@ -120,9 +123,9 @@ const playFormComponent = async ({
     typedResults ? ["Keizersgracht 117", 2] : ["Keizersgracht 117", "2"],
   );
 
-  await userEvent.clear(dateOfBirth);
-  await userEvent.type(dateOfBirth, "15092023", { delay: 60 });
-  await userEvent.type(dateOfBirth, "{enter}");
+  await userEvent.type(dateOfBirthFields[0], "15", { delay: 60 });
+  await userEvent.type(dateOfBirthFields[1], "09", { delay: 60 });
+  await userEvent.type(dateOfBirthFields[2], "2023", { delay: 60 });
   await expect(dateOfBirth).toHaveValue("15");
   await expectLogToBe(
     canvasElement,
@@ -458,6 +461,9 @@ export const FormAllDisabled: Story = {
     const dateOfBirth = canvas.getByLabelText("Date of birth", {
       exact: false,
     });
+    const dateOfBirthFields = await within(
+      dateOfBirth.parentElement as HTMLElement, // FIXME: Improve
+    ).findAllByRole("textbox");
     const english = canvas.getByLabelText("English");
     const math = canvas.getByLabelText("Math");
     const yes = canvas.getByLabelText("Yes");
@@ -474,6 +480,9 @@ export const FormAllDisabled: Story = {
     await expect(address).toHaveAttribute("disabled");
     await expect(address_addition).toHaveAttribute("disabled");
     await expect(dateOfBirth).toHaveAttribute("disabled");
+    await expect(dateOfBirthFields[0]).toHaveAttribute("disabled");
+    await expect(dateOfBirthFields[1]).toHaveAttribute("disabled");
+    await expect(dateOfBirthFields[2]).toHaveAttribute("disabled");
     await expect(english).toHaveAttribute("disabled");
     await expect(math).toHaveAttribute("disabled");
     await expect(yes).toHaveAttribute("disabled");
