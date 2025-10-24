@@ -57,6 +57,7 @@
 
   &__value {
     display: flex;
+    flex-wrap: wrap;
     gap: var(--sizes-spacing-xs-v) var(--sizes-spacing-xs-h);
   }
 
