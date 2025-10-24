@@ -12,7 +12,9 @@
   .mykn-input {
     box-sizing: content-box;
     text-align: center;
-    width: 2em !important;
+    min-width: 2em;
+    max-width: 4em;
+    flex-shrink: 1.2;
   }
 
   .mykn-input:focus {
@@ -20,7 +22,8 @@
   }
 
   .mykn-input[data-section="YY"] {
-    width: 3em !important;
+    min-width: 3em;
+    flex-shrink: 1;
   }
 
   .mykn-input:has(+ .mykn-input) {

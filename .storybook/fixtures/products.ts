@@ -150,6 +150,8 @@ export const FIXTURE_PRODUCT_FIELDS: Array<
       return { name: field, type: "string", required: true };
     case "releaseDate":
       return { name: field, type: "date" };
+    case "warrantyTerm":
+      return { name: field, type: "duration" };
     default:
       return field;
   }
