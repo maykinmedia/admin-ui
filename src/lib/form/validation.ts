@@ -1,3 +1,5 @@
+import { forceArray } from "@maykin-ui/client-common";
+
 import { FormField } from "./typeguards";
 import { parseFieldName } from "./utils";
 
@@ -278,10 +280,10 @@ export const getErrorFromErrors = <
  * ```
  */
 export const errors2errorsArray = <T extends object>(
-  record?: FieldErrors | Partial<Record<keyof T, string>>,
+  record?: FieldErrors | Partial<Record<keyof T, string | string[]>>,
 ): Partial<Record<keyof T, string[]>> =>
   ((record &&
     Object.fromEntries(
-      Object.entries(record).map(([key, value]) => [key, [value]]),
+      Object.entries(record).map(([key, value]) => [key, forceArray(value)]),
     )) ||
     {}) as Partial<Record<keyof T, string[]>>;

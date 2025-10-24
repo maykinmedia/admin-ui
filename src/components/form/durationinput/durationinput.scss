@@ -9,7 +9,6 @@
 
   &__fields {
     display: flex;
-    flex-wrap: wrap;
     gap: var(--sizes-spacing-xs-h);
   }
 
@@ -20,7 +19,7 @@
 
   .mykn-input {
     text-align: center;
-    max-width: 7ch;
-    min-width: 4ch;
+    min-width: 2em;
+    max-width: 4em;
   }
 }

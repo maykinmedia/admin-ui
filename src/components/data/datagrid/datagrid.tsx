@@ -18,6 +18,7 @@ import {
   TypedField,
   TypedSerializedFormData,
   Validator,
+  errors2errorsArray,
   field2FormField,
   fields2TypedFields,
   filterDataArray,
@@ -69,6 +70,9 @@ export type DataGridProps<T extends object = object, F extends object = T> = {
    * all rows to editing.
    */
   editing?: [T, number] | boolean;
+
+  /** Array of error messages, each row must match a row in objectList. */
+  errors?: FieldErrors[] | Partial<Record<keyof T, string>>[];
 
   /** A `string[]` or `TypedField[]` containing the keys in `objectList` to show object for. */
   fields?: Array<Field<T> | TypedField<T>>;
@@ -278,6 +282,7 @@ export const DataGrid = <T extends object = object, F extends object = T>(
     fieldsSelectable: false,
     editing: false,
     equalityChecker: (item1: T, item2: T) => item1 == item2,
+    errors: undefined,
     selectionActions: [],
     toolbarItems: [],
     title: "",
@@ -289,7 +294,7 @@ export const DataGrid = <T extends object = object, F extends object = T>(
   };
 
   // Create a props object with defaults applied.
-  const defaultedProps = { ...defaults, ...props };
+  const defaultedProps = useMemo(() => ({ ...defaults, ...props }), [props]);
 
   // Strip all `props` from `attrs`, allowing `attrs` to be passed to the DOM.
   /* eslint-disable @typescript-eslint/no-unused-vars */
@@ -304,6 +309,7 @@ export const DataGrid = <T extends object = object, F extends object = T>(
     editable,
     editing,
     equalityChecker,
+    errors,
     fields,
     filterable,
     filterTransform,
@@ -385,10 +391,6 @@ export const DataGrid = <T extends object = object, F extends object = T>(
   const formFields = fieldsState.map((field) =>
     field2FormField<T>(field, objectList),
   );
-
-  const [errorsState, setErrorsState] = useState<
-    FieldErrors<typeof formFields, Exclude<typeof validators, undefined>>
-  >({});
 
   // Update selectedState when selected prop changes.
   useEffect(() => {
@@ -523,6 +525,20 @@ export const DataGrid = <T extends object = object, F extends object = T>(
     [onSort, sortField, sortDirection, filteredObjectList],
   );
 
+  const [errorsState, setErrorsState] = useState<
+    FieldErrors<typeof formFields, Exclude<typeof validators, undefined>>[]
+  >(renderableRows.map(() => ({})));
+
+  useEffect(() => {
+    const _errors =
+      typeof errors === "undefined"
+        ? renderableRows.map(() => ({}))
+        : errors.map((error) => {
+            return errors2errorsArray(error);
+          });
+
+    setErrorsState(_errors);
+  }, [renderableRows, errors]);
   /**
    * Gets called when the select checkbox is clicked.
    */
