@@ -19,7 +19,7 @@
   cursor: pointer;
   display: inline-flex;
   justify-content: space-between;
-  font-family: var(--typography-font-family-body);
+  font-family: var(--typography-font-family-body), sans-serif;
   font-size: var(--mykn-select-font-size);
   font-weight: var(--typography-font-weight-normal);
   line-height: var(--mykn-select-line-height);
@@ -173,11 +173,45 @@
     border: 1px solid var(--form-border);
     border-radius: var(--sizes-border-radius-s);
     box-sizing: border-box;
+    cursor: default;
+    display: flex;
+    flex-direction: column;
+    max-height: var(--mykn-select-dropdown-max-h);
     min-width: 100%;
     overflow: auto;
     padding: var(--sizes-spacing-xs-v) 0;
     width: fit-content;
     z-index: 1000;
+  }
+
+  &__loading {
+    display: flex;
+    justify-content: center;
+    padding: var(--sizes-spacing-s-v) 0;
+  }
+
+  &__options {
+    overflow: auto;
+  }
+
+  &__search {
+    position: relative;
+    margin: var(--sizes-spacing-xs-v) var(--sizes-spacing-xs-h);
+    .mykn-input {
+      width: 100%;
+    }
+  }
+
+  &__search-clear {
+    position: absolute;
+    right: var(--sizes-spacing-xs-h);
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  &__no-results {
+    display: flex;
+    justify-content: center;
   }
 }
 
@@ -190,7 +224,7 @@
   box-sizing: border-box;
   color: var(--mykn-option-color-body);
   cursor: pointer;
-  font-family: var(--typography-font-family-body);
+  font-family: var(--typography-font-family-body), sans-serif;
   font-size: var(--mykn-select-font-size);
   font-weight: var(--mykn-option-font-weight);
   line-height: var(--mykn-select-line-height);
