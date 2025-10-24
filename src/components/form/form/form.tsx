@@ -186,7 +186,7 @@ export const Form = <T extends SerializedFormData = SerializedFormData>({
 
   useEffect(() => {
     setErrorsState(errors2errorsArray(errors));
-  }, [errors]);
+  }, [fields, errors]);
 
   const _requiredIndicator = gettextFirst(
     requiredIndicator,
