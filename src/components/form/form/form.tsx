@@ -141,7 +141,7 @@ export const Form = <T extends SerializedFormData = SerializedFormData>({
   debug = false,
   direction = "vertical",
   errors,
-  fields = [],
+  fields,
   fieldsetClassName = "mykn-form__fieldset",
   justify,
   initialValues = {} as T,
@@ -175,7 +175,7 @@ export const Form = <T extends SerializedFormData = SerializedFormData>({
   const [valuesState, setValuesState] = useState<T>(initialValues);
 
   const [errorsState, setErrorsState] = useState<
-    FieldErrors<typeof fields, typeof validators>
+    FieldErrors<FormField[], typeof validators>
   >({});
   const [forceShowErrorsState, setForceShowErrorsState] =
     useState(!validateOnChange);
@@ -212,7 +212,7 @@ export const Form = <T extends SerializedFormData = SerializedFormData>({
       const validateData = serializeFormElement<T>(formRef.current, {
         trimCheckboxArray: false,
       });
-      const errors = validate(validateData, fields, validators);
+      const errors = validate(validateData, fields || [], validators);
       setErrorsState(errors || {});
     }
 
@@ -242,7 +242,7 @@ export const Form = <T extends SerializedFormData = SerializedFormData>({
         trimCheckboxArray: false,
       });
 
-      const errors = validate(validateData, fields, validators);
+      const errors = validate(validateData, fields || [], validators);
       setErrorsState(errors || {});
       setForceShowErrorsState(true);
 
@@ -307,12 +307,12 @@ export const Form = <T extends SerializedFormData = SerializedFormData>({
 
       {Boolean(fields?.length) && (
         <div className={fieldsetClassName}>
-          {fields.map((field, index) => {
+          {fields?.map((field, index) => {
             const label = field.label ?? field.name;
 
             const value =
               (field.value as string) ||
-              getValueFromFormData<T>(fields, valuesState, field);
+              getValueFromFormData<T>(fields || [], valuesState, field);
 
             // TODO: CLEAN UP
             const _labelValidationErrorRequired = intl.formatMessage(
@@ -326,11 +326,13 @@ export const Form = <T extends SerializedFormData = SerializedFormData>({
             );
 
             const errors =
-              getErrorFromErrors(fields, errorsState, field)?.map((error) => {
-                return error === DEFAULT_VALIDATION_ERROR_REQUIRED
-                  ? _labelValidationErrorRequired
-                  : error;
-              }) ?? [];
+              getErrorFromErrors(fields || [], errorsState, field)?.map(
+                (error) => {
+                  return error === DEFAULT_VALIDATION_ERROR_REQUIRED
+                    ? _labelValidationErrorRequired
+                    : error;
+                },
+              ) ?? [];
             const message = errors.join(", ");
 
             return (
