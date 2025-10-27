@@ -12,6 +12,7 @@ import React, {
 
 import {
   TypedField,
+  date2DateString,
   getFormFieldTypeByFieldType,
   gettextFirst,
   isBool,
@@ -225,6 +226,19 @@ export const Value = <T extends object = object>(rawProps: ValueProps<T>) => {
     ) : (
       <P {...pProps} {...(props as ComponentProps<"p">)}>
         -
+      </P>
+    );
+  }
+
+  /**
+   * Renders a Date when the type is date, whilst decorate is true.
+   */
+  if (decorate && field?.type === "date") {
+    return (
+      <P {...(props as ComponentProps<"p">)} {...pProps}>
+        {valueState
+          ? date2DateString(new Date(valueState.toString()), "DDMMYYYY")
+          : "-"}
       </P>
     );
   }

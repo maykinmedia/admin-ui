@@ -100,7 +100,7 @@ export const DateRangeInput: React.FC<DateRangeInputProps> = ({
     const dates = values
       ?.map(value2Date)
       .filter((v): v is Date => Boolean(v))
-      .map(date2DateString);
+      .map((date) => date2DateString(date));
 
     if (!dates?.length || (dates?.length && dates?.length < 2)) {
       setValuesState(undefined);
@@ -181,7 +181,7 @@ export const DateRangeInput: React.FC<DateRangeInputProps> = ({
         const dates = normalizeValuesState(queuedValueState.current)
           ?.map(value2Date)
           .filter((v): v is Date => Boolean(v))
-          .map(date2DateString);
+          .map((date) => date2DateString(date));
 
         const dateString = dates?.length === 2 && dates.join("/");
         dispatchEvent(dateString || "");
@@ -205,7 +205,7 @@ export const DateRangeInput: React.FC<DateRangeInputProps> = ({
         const dates = normalizeValuesState(queuedValueState.current)
           ?.map(value2Date)
           .filter((v): v is Date => Boolean(v))
-          .map(date2DateString);
+          .map((date) => date2DateString(date));
 
         const dateString = dates?.length === 2 && dates.join("/");
         dispatchEvent(dateString || "");
