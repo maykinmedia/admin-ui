@@ -156,9 +156,6 @@ export const DateRangeInput: React.FC<DateRangeInputProps> = ({
    */
   const handleChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>, index: number) => {
-      event?.preventDefault();
-      event?.stopPropagation();
-
       const flippedIndex = index ? 0 : 1;
       const _values = queuedValueState.current || [];
       const value = event.target.value;
@@ -167,59 +164,20 @@ export const DateRangeInput: React.FC<DateRangeInputProps> = ({
       newValues[index] = value;
       newValues[flippedIndex] = _values[flippedIndex];
       queuedValueState.current = newValues;
+
+      const dates = normalizeValuesState(queuedValueState.current)
+        ?.map(value2Date)
+        .filter((v): v is Date => Boolean(v))
+        .map((date) => date2DateString(date));
+
+      const dateString = dates?.length === 2 && dates.join("/");
+      dispatchEvent(dateString || "");
     },
     [queuedValueState.current],
   );
 
-  /**
-   * Gets called when a keyUp event is received.
-   * Implements enter key change trigger..
-   */
-  const handleKeyUp = useCallback<React.KeyboardEventHandler<HTMLInputElement>>(
-    (e) => {
-      if (e.key === "Enter") {
-        const dates = normalizeValuesState(queuedValueState.current)
-          ?.map(value2Date)
-          .filter((v): v is Date => Boolean(v))
-          .map((date) => date2DateString(date));
-
-        const dateString = dates?.length === 2 && dates.join("/");
-        dispatchEvent(dateString || "");
-      }
-    },
-    [queuedValueState.current, normalizeValuesState],
-  );
-
-  /**
-   * Gets called when a blur event is received.
-   * @param event
-   * @param index The index of the date input (0: start, 1: end).
-   */
-  const handleBlur = useCallback<React.FocusEventHandler<HTMLInputElement>>(
-    (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-
-      const { currentTarget, relatedTarget } = e;
-      if (!relatedTarget || !currentTarget.contains(relatedTarget)) {
-        const dates = normalizeValuesState(queuedValueState.current)
-          ?.map(value2Date)
-          .filter((v): v is Date => Boolean(v))
-          .map((date) => date2DateString(date));
-
-        const dateString = dates?.length === 2 && dates.join("/");
-        dispatchEvent(dateString || "");
-      }
-    },
-    [document.activeElement, queuedValueState.current, normalizeValuesState],
-  );
   return (
-    <div
-      ref={nodeRef}
-      className="mykn-daterangeinput"
-      onBlur={handleBlur}
-      onKeyUp={handleKeyUp}
-    >
+    <div ref={nodeRef} className="mykn-daterangeinput">
       <input
         ref={fakeInputRef}
         className="mykn-daterangeinput__input"
