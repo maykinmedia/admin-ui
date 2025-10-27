@@ -36,6 +36,7 @@ export const SeparatedInputs: Story = {
     await userEvent.type(day, "15", { delay: 60 });
     await userEvent.type(month, "09", { delay: 60 });
     await userEvent.type(year, "2023", { delay: 60 });
+    await userEvent.tab();
 
     await expect(JSON.parse(log.textContent || "{}").date).toBe("2023-09-15");
   },
@@ -56,6 +57,7 @@ export const IsoFormat: Story = {
     await userEvent.type(inputs[0], "2023", { delay: 60 });
     await userEvent.type(inputs[1], "09", { delay: 60 });
     await userEvent.type(inputs[2], "15", { delay: 60 });
+    await userEvent.tab();
     await expect(JSON.parse(log.textContent || "{}").date).toBe("2023-09-15");
   },
 };

@@ -247,9 +247,6 @@ export const DateInput: React.FC<DateInputProps> = ({
    */
   const handleBlur = useCallback<React.FocusEventHandler<HTMLInputElement>>(
     (event) => {
-      event.preventDefault();
-      event.stopPropagation();
-
       // Construct SanitizedValues.
       const { dataset, value } = event.target;
       const section = dataset.section as "DD" | "MM" | "YY";

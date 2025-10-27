@@ -126,6 +126,7 @@ const playFormComponent = async ({
   await userEvent.type(dateOfBirthFields[0], "15", { delay: 60 });
   await userEvent.type(dateOfBirthFields[1], "09", { delay: 60 });
   await userEvent.type(dateOfBirthFields[2], "2023", { delay: 60 });
+  await userEvent.tab();
   await expect(dateOfBirth).toHaveValue("15");
   await expectLogToBe(
     canvasElement,
