@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { expect, userEvent, within } from "storybook/test";
+import { expect, userEvent, waitFor, within } from "storybook/test";
 
 import { FORM_TEST_DECORATOR } from "../../../../.storybook/decorators";
 import { DateRangeInput } from "./daterangeinput";
@@ -51,10 +51,12 @@ export const SeparatedInputs: Story = {
     await userEvent.type(dayEnd, "15", { delay: 60 });
     await userEvent.type(monthEnd, "09", { delay: 60 });
     await userEvent.type(yearEnd, "2023", { delay: 60 });
-    await userEvent.tab({ delay: 60 });
+    await userEvent.tab();
 
-    await expect(JSON.parse(log.textContent || "{}").date).toBe(
-      "1988-08-02/2023-09-15",
+    await waitFor(() =>
+      expect(JSON.parse(log.textContent || "{}").date).toBe(
+        "1988-08-02/2023-09-15",
+      ),
     );
   },
 };
@@ -77,11 +79,12 @@ export const NormalizeStartEnd: Story = {
     await userEvent.type(inputs[3], "02", { delay: 60 });
     await userEvent.type(inputs[4], "08", { delay: 60 });
     await userEvent.type(inputs[5], "1988", { delay: 60 });
-
     await userEvent.tab();
 
-    await expect(JSON.parse(log.textContent || "{}").date).toBe(
-      "1988-08-02/2023-09-15",
+    await waitFor(() =>
+      expect(JSON.parse(log.textContent || "{}").date).toBe(
+        "1988-08-02/2023-09-15",
+      ),
     );
   },
 };
@@ -104,11 +107,12 @@ export const IsoFormat: Story = {
     await userEvent.type(inputs[3], "2023", { delay: 60 });
     await userEvent.type(inputs[4], "09", { delay: 60 });
     await userEvent.type(inputs[5], "15", { delay: 60 });
-
     await userEvent.tab();
 
-    await expect(JSON.parse(log.textContent || "{}").date).toBe(
-      "1988-08-02/2023-09-15",
+    await waitFor(() =>
+      expect(JSON.parse(log.textContent || "{}").date).toBe(
+        "1988-08-02/2023-09-15",
+      ),
     );
   },
 };
