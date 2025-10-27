@@ -238,6 +238,36 @@ export const DateInput: React.FC<DateInputProps> = ({
         ...newSanitizedValues,
       };
       setSanitizedValuesState(newSanitizedValuesState);
+    },
+    [sanitizedValuesState, isPristine],
+  );
+
+  /**
+   * Gets called when any of the section inputs is blurred.
+   */
+  const handleBlur = useCallback<React.FocusEventHandler<HTMLInputElement>>(
+    (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+
+      // Construct SanitizedValues.
+      const { dataset, value } = event.target;
+      const section = dataset.section as "DD" | "MM" | "YY";
+      const newSanitizedValues = {
+        ...(sanitizedValuesState || {
+          DD: "",
+          MM: "",
+          YY: "",
+        }),
+      };
+
+      // State update.
+      newSanitizedValues[section] = value;
+      const newSanitizedValuesState = {
+        ...sanitizedValuesState,
+        ...newSanitizedValues,
+      };
+      setSanitizedValuesState(newSanitizedValuesState);
 
       const date =
         newSanitizedValuesState &&
@@ -313,6 +343,7 @@ export const DateInput: React.FC<DateInputProps> = ({
       form,
       pattern: "[0-9]*",
       onChange: handleChange,
+      onBlur: handleBlur,
       onFocus: (e: React.FocusEvent<HTMLInputElement>) =>
         setTimeout(() => e.target.select()),
       onKeyDown: onKeyDown,
