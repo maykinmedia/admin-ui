@@ -27,6 +27,7 @@ export const DatepickerComponent: Story = {
     type: "datepicker",
     name: "date",
     value: "2023-09-15",
+    placeholder: "yyyy-mm-dd",
   },
   decorators: [FORM_TEST_DECORATOR],
   play: async ({ canvasElement }) => {
