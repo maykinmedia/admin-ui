@@ -315,7 +315,7 @@ export const PaginatorNav: React.FC<PaginatorNavProps> = ({
           className="mykn-paginator__button mykn-paginator__button--page"
           size="xs"
           square
-          variant="outline"
+          variant="secondary"
           onClick={() => onPageSizeChange(1)}
           disabled={currentPage === 1}
         >
@@ -326,7 +326,7 @@ export const PaginatorNav: React.FC<PaginatorNavProps> = ({
           className="mykn-paginator__button mykn-paginator__button--previous"
           disabled={!previousPage}
           size="xs"
-          variant="outline"
+          variant="secondary"
           aria-label={intl.formatMessage(
             { id: labelPrevious, defaultMessage: labelPrevious },
             { page: previousPage },
@@ -342,7 +342,7 @@ export const PaginatorNav: React.FC<PaginatorNavProps> = ({
           className="mykn-paginator__button mykn-paginator__button--next"
           disabled={!nextPage}
           size="xs"
-          variant="outline"
+          variant="secondary"
           aria-label={intl.formatMessage(
             { id: labelNext, defaultMessage: labelNext },
             { page: nextPage },
@@ -362,7 +362,7 @@ export const PaginatorNav: React.FC<PaginatorNavProps> = ({
           className="mykn-paginator__button mykn-paginator__button--page"
           size="xs"
           square
-          variant="outline"
+          variant="secondary"
           onClick={() => onPageSizeChange(pageCount)}
           disabled={currentPage === pageCount}
         >
