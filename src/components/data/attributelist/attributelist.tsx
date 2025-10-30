@@ -212,11 +212,11 @@ export const AttributePair = <T extends object = object>({
     [object, typedField, onEdit, onBlur],
   );
 
+  const label = string2Title(getFieldName(field).toString());
+
   return (
     <div className="mykn-attributelist__pair">
-      <dt className="mykn-attributelist__key">
-        {string2Title(getFieldName(field).toString())}
-      </dt>
+      {!editing && <dt className="mykn-attributelist__key">{label}</dt>}
       <dd className="mykn-attributelist__value">
         <Value
           editable={editable}
@@ -226,7 +226,9 @@ export const AttributePair = <T extends object = object>({
           field={typedField}
           formControlProps={{
             justify: "stretch",
+            label: editing ? label : undefined,
             pad: false,
+            required: Boolean(typedField.required),
             ...formControlProps,
           }}
           labelEdit={labelEdit}

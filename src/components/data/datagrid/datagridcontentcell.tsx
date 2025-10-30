@@ -200,7 +200,7 @@ export const DataGridContentCell = <
         formControlProps={{
           forceShowError: true,
           form: `${dataGridId}-editable-form-${renderableRowIndex}`,
-          required: true,
+          required: field.required,
         }}
         pProps={pProps}
         href={link}
