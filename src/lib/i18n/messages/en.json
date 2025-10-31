@@ -279,10 +279,35 @@
     "description": "mykn.components.Paginator: The go to previous page (accessible) label",
     "originalDefault": "Ga naar de vorige pagina (pagina {page})"
   },
+  "mykn.components.Select.ariaClearSearch": {
+    "defaultMessage": "clear search",
+    "description": "mykn.components.Select: Accessible label for the clear-search button",
+    "originalDefault": "zoekopdracht wissen"
+  },
+  "mykn.components.Select.ariaLoading": {
+    "defaultMessage": "loading options...",
+    "description": "mykn.components.Select: Status text announced while options are loading",
+    "originalDefault": "opties laden…"
+  },
+  "mykn.components.Select.ariaRemoveValue": {
+    "defaultMessage": "remove {value}",
+    "description": "mykn.components.Select: Accessible label for removing a selected value in multi-select",
+    "originalDefault": "verwijder {value}"
+  },
   "mykn.components.Select.labelClear": {
     "defaultMessage": "clear value",
-    "description": "mykn.components.Select: The clear value (accessible) label",
-    "originalDefault": "waarde wissen"
+    "description": "mykn.components.Select: Accessible label for the clear-value button",
+    "originalDefault": "waarde Wissen"
+  },
+  "mykn.components.Select.labelNoOptions": {
+    "defaultMessage": "no results",
+    "description": "mykn.components.Select: Message shown when no options match the search",
+    "originalDefault": "geen resultaten"
+  },
+  "mykn.components.Select.placeholderSearch": {
+    "defaultMessage": "search…",
+    "description": "mykn.components.Select: Placeholder text for the async search input",
+    "originalDefault": "zoeken…"
   },
   "mykn.components.Sidebar.collapse": {
     "defaultMessage": "Collapse sidebar",

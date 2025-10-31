@@ -16,44 +16,26 @@ import {
 } from "@floating-ui/react";
 import { ucFirst } from "@maykin-ui/client-common";
 import clsx from "clsx";
-import React, { MouseEventHandler, useEffect } from "react";
+import React, {
+  MouseEventHandler,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 
 import { gettextFirst } from "../../../lib";
 import { Button } from "../../button";
 import { Outline, Solid } from "../../icon";
+import { P } from "../../typography";
 import { ChoiceFieldProps, Option } from "../choicefield";
-import { eventFactory } from "../eventFactory";
+import { Input } from "../input";
 import "./select.scss";
-import { TRANSLATIONS } from "./translations";
+import { TRANSLATIONS } from "./select.translations";
+import { useSelectState } from "./useSelectState";
 
-export type SelectProps = Omit<ChoiceFieldProps, "variant"> & {
-  /** Component to use as icon. */
-  icon?: React.ReactNode;
-
-  /** Whether to apply padding. */
-  pad?: boolean | "h" | "v";
-
-  /** Placeholder text. */
-  placeholder?: string;
-
-  /** Can be set to `fit-content` to apply auto sizing based on content width. */
-  inputSize?: "fit-content";
-
-  /** The size. */
-  size?: "xl" | "s" | "xs" | "xxs";
-
-  /** The clear value (accessible) label. */
-  labelClear?: string;
-
-  /** Disabled state */
-  disabled?: boolean;
-
-  /** allow selecting more than one option */
-  multiple?: boolean;
-
-  /** The variant (style) of the form element. */
-  variant?: "normal" | "primary" | "secondary" | "accent" | "transparent";
-};
+export type LoadOptionsFn = (inputValue: string) => Promise<Option[]>;
 
 /**
  * Select component, aims to be compatible with native change event and FormData
@@ -63,29 +45,110 @@ export type SelectProps = Omit<ChoiceFieldProps, "variant"> & {
  * @param props
  * @constructor
  */
+export type SelectProps = Omit<ChoiceFieldProps, "variant" | "options"> & {
+  /** Options for the select. Can be a function for async loading. */
+  options: Option[] | LoadOptionsFn; // TODO: Cache async options? LRU? Research
+
+  /** Can be set to `fit-content` to apply auto sizing based on content width. */
+  inputSize?: "fit-content";
+  /** Component to use as icon. */
+  icon?: React.ReactNode;
+  /** Disabled state */
+  disabled?: boolean;
+  /** allow selecting more than one option */
+  multiple?: boolean;
+  /** Whether to apply padding. */
+  pad?: boolean | "h" | "v";
+  /** Placeholder text. */
+  placeholder?: string;
+  /** The size. */
+  size?: "xl" | "s" | "xs" | "xxs";
+  /** The variant (style) of the form element. */
+  variant?: "normal" | "primary" | "secondary" | "accent" | "transparent";
+
+  /** If true, fetch on mount rather than on open */
+  fetchOnMount?: boolean;
+  /** Minimum characters before async search triggers. */
+  minSearchChars?: number;
+  /** Debounce for search (ms). */
+  searchDebounceMs?: number;
+
+  /** i18n labels */
+  ariaClearSearch?: string;
+  ariaLoading?: string;
+  ariaRemoveValue?: string;
+  labelClear?: string;
+  labelNoOptions?: string;
+  placeholderSearch?: string;
+};
+
+/**
+ * Select component, aims to be compatible with native change event and FormData
+ * serialization.
+ * @param options
+ * @param className
+ * @param disabled
+ * @param form
+ * @param hidden
+ * @param icon
+ * @param id
+ * @param inputSize
+ * @param label
+ * @param multiple
+ * @param name
+ * @param pad
+ * @param placeholder
+ * @param required
+ * @param size
+ * @param variant
+ * @param value
+ * @param fetchOnMount
+ * @param minSearchChars
+ * @param searchDebounceMs
+ * @param ariaClearSearch
+ * @param ariaLoading
+ * @param ariaRemoveValue
+ * @param labelClear
+ * @param labelNoOptions
+ * @param placeholderSearch
+ * @param onBlur
+ * @param onChange
+ * @param props
+ * @constructor
+ */
 export const Select: React.FC<SelectProps> = ({
+  options,
   className,
+  disabled = false,
+  form,
+  hidden,
   icon,
   id,
-  hidden,
-  name,
-  options = [],
-  onBlur,
-  onChange,
+  inputSize,
   label,
-  labelClear,
+  multiple = false,
+  name,
   pad = true,
   placeholder = "",
   required = false,
   size = "s",
-  inputSize,
   value = null,
   variant = "normal",
-  form,
-  disabled = false,
-  multiple = false,
+  fetchOnMount = false,
+  minSearchChars = 2,
+  searchDebounceMs = 250,
+  ariaClearSearch,
+  ariaLoading,
+  ariaRemoveValue,
+  labelClear,
+  labelNoOptions,
+  placeholderSearch,
+  onBlur,
+  onChange,
   ...props
 }) => {
+  const isAsync = typeof options === "function";
+
   const i18nContext = {
     name: name || "",
     placeholder: placeholder,
@@ -99,12 +162,53 @@ export const Select: React.FC<SelectProps> = ({
     TRANSLATIONS.LABEL_CLEAR,
     i18nContext,
   );
+  const _labelNoOptions = gettextFirst(
+    labelNoOptions,
+    TRANSLATIONS.LABEL_NO_OPTIONS,
+    i18nContext,
+  );
+  const _placeholderSearch = gettextFirst(
+    placeholderSearch,
+    TRANSLATIONS.PLACEHOLDER_SEARCH,
+    i18nContext,
+  );
+  const _ariaClearSearch = gettextFirst(
+    ariaClearSearch,
+    TRANSLATIONS.ARIA_CLEAR_SEARCH,
+    i18nContext,
+  );
+  const _ariaLoading = gettextFirst(
+    ariaLoading,
+    TRANSLATIONS.ARIA_LOADING,
+    i18nContext,
+  );
 
-  const fakeInputRef = React.useRef<HTMLSelectElement>(null);
-  const [isOpen, setIsOpen] = React.useState(false);
-  const [activeIndex, setActiveIndex] = React.useState<number | null>(null);
-  const [selectedIndices, setSelectedIndices] = React.useState<number[]>([]);
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
+  const {
+    state: { isOpen, selectedValues, options: optionsState, isLoading, search },
+    actions: {
+      setIsOpen,
+      setSearch,
+      handleChange,
+      handleBlur,
+      clear,
+      removeValue,
+    },
+    meta: { getIndex, getLabel },
+    hiddenSelectProps,
+  } = useSelectState({
+    options,
+    value,
+    multiple,
+    onChange,
+    onBlur,
+    fetchOnMount,
+    searchDebounceMs,
+    minSearchChars,
+  });
+
+  // Floating UI
   const { refs, floatingStyles, context } = useFloating({
     placement: "bottom-start",
     open: isOpen,
@@ -120,6 +224,7 @@ export const Select: React.FC<SelectProps> = ({
           Object.assign(elements.floating.style, {
             maxWidth: `${Math.max(0, availableWidth)}px`,
             maxHeight: `${Math.max(0, availableHeight)}px`,
+            ["--mykn-select-dropdown-max-h"]: `${Math.max(0, availableHeight)}px`,
           });
         },
       }),
@@ -131,104 +236,8 @@ export const Select: React.FC<SelectProps> = ({
   const role = useRole(context, { role: "listbox" });
   const { getReferenceProps } = useInteractions([dismiss, role, click]);
 
-  useEffect(() => {
-    let indices: number[] = [];
-    if (multiple && Array.isArray(value)) {
-      indices = options
-        .map((o, i) =>
-          o.selected ||
-          o.value?.toString() ===
-            value.find((v) => v.toString() === o.value?.toString())
-            ? i
-            : -1,
-        )
-        .filter((i) => i !== -1);
-    } else {
-      const idx = options.findIndex(
-        (o) =>
-          o.selected ||
-          (o.value
-            ? o.value.toString() === value?.toString()
-            : o.label === value),
-      );
-      if (idx !== -1) indices = [idx];
-    }
-    setSelectedIndices(indices);
-  }, [value, options, multiple]);
-
-  /**
-   * Handles a blur.
-   * @param event
-   */
-  const handleBlur = (event: React.FocusEvent) => {
-    event.preventDefault();
-    setTimeout(() => {
-      const blurEvent = eventFactory("blur", undefined, false, false, false);
-      fakeInputRef?.current?.dispatchEvent(blurEvent);
-      onBlur?.(blurEvent as unknown as React.FocusEvent<HTMLSelectElement>);
-    });
-  };
-
-  /**
-   * Handles a change of the selected (option) index.
-   * @param _
-   * @param index
-   */
-  const handleChange = (_: React.UIEvent, index: number | null) => {
-    const selectedOption = index !== null ? options[index] : null;
-
-    // Multiple select, add/remove.
-    if (multiple && index !== null) {
-      const next = selectedIndices.includes(index)
-        ? selectedIndices.filter((i) => i !== index) // Remove
-        : [...selectedIndices, index]; // Add
-      setSelectedIndices(next);
-    }
-
-    // Single
-    else {
-      setSelectedIndices(index !== null ? [index] : []); // To array.
-      setIsOpen(false);
-    }
-
-    /*
-     * Dispatch change event.
-     *
-     * A custom "change" event created with `detail` set to the selected option.
-     * The event is dispatched on `fakeInputRef.current` setting `target` to a
-     * native select (which in itself can be used to obtain the value without
-     * the use of events).
-     *
-     * This aims to improve compatibility with various approaches of dealing
-     * with forms.
-     *
-     * NOTE: Dispatching is delayed to allow React to `fakeInputRef.current`
-     * before dispatching.
-     */
-    const fakeInput = fakeInputRef.current as HTMLSelectElement;
-    setTimeout(() => {
-      const changeEvent = eventFactory(
-        "change",
-        selectedOption,
-        true,
-        false,
-        false,
-      );
-      fakeInput.dispatchEvent(changeEvent);
-      onChange &&
-        onChange(
-          changeEvent as unknown as React.ChangeEvent<HTMLSelectElement>,
-        );
-    });
-  };
-
-  const selectValue = multiple
-    ? selectedIndices.map((i) => String(options[i].value) ?? options[i].label)
-    : selectedIndices[0] !== undefined && selectedIndices[0] !== null
-      ? options[selectedIndices[0]]?.value || ""
-      : "";
-
   const { onMouseDown, ...referenceProps } = getReferenceProps();
+
   return (
     <>
       <div
@@ -239,7 +248,7 @@ export const Select: React.FC<SelectProps> = ({
             "mykn-select--multiple": multiple,
             "mykn-select--pad-h": pad === true || pad === "h",
             "mykn-select--pad-v": pad === true || pad === "v",
-            "mykn-select--selected": selectedIndices.length > 0,
+            "mykn-select--selected": selectedValues.length > 0,
             [`mykn-select--input-size-${inputSize}`]: inputSize,
           },
           className,
@@ -247,9 +256,9 @@ export const Select: React.FC<SelectProps> = ({
         tabIndex={0}
         ref={refs.setReference}
         aria-autocomplete="none"
-        title={label || undefined}
-        aria-hidden={hidden}
         aria-disabled={disabled}
+        aria-hidden={hidden}
+        title={label || undefined}
         onBlur={handleBlur}
         {...referenceProps}
         onMouseDown={(e) => {
@@ -262,48 +271,65 @@ export const Select: React.FC<SelectProps> = ({
         }}
         {...props}
       >
-        {/* This is here for compatibility with native forms, as well as a providing a target for change events. */}
+        {/* This is here for compatibility with native forms, as well as providing a target for change events. */}
         <select
-          ref={fakeInputRef}
+          {...hiddenSelectProps}
           disabled={disabled}
           form={form}
           hidden
           id={id}
-          multiple={multiple}
           name={name}
-          value={selectValue}
           // Silence React value without onChange error as this is deliberate.
           onChange={() => {}}
         >
-          {options.map((opt, i) =>
-            selectedIndices.includes(i) ? (
-              <option key={i} value={opt.value ?? opt.label}>
-                {opt.label}
-              </option>
-            ) : null,
-          )}
+          {multiple
+            ? selectedValues.map((val) => (
+                <option key={val} value={val}>
+                  {getLabel(val)}
+                </option>
+              ))
+            : selectedValues[0] != null && (
+                <option value={selectedValues[0]}>
+                  {getLabel(selectedValues[0])}
+                </option>
+              )}
         </select>
 
         <div className="mykn-select__label">
-          {selectedIndices.length > 0 ? (
-            selectedIndices.map((i) => {
+          {selectedValues.length > 0 ? (
+            selectedValues.map((val) => {
+              const label = getLabel(val);
+
               if (multiple) {
                 return (
-                  <span key={i} className="mykn-select__pill">
-                    {options[i]?.label}
+                  <span key={val} className="mykn-select__pill">
+                    {label}
                     <Button
-                      aria-label={`Remove ${options[i]?.label}`}
+                      aria-label={ucFirst(
+                        gettextFirst(
+                          ariaRemoveValue,
+                          TRANSLATIONS.ARIA_REMOVE_VALUE,
+                          { value: label },
+                        ),
+                      )}
                       className="mykn-select__pill-remove"
                       variant="transparent"
                       size="xs"
-                      onClick={(e) => handleChange(e, i)}
+                      onClick={() => {
+                        const idx = getIndex(String(val));
+                        if (idx != null) {
+                          handleChange({} as React.UIEvent, idx);
+                        } else {
+                          removeValue(String(val));
+                        }
+                      }}
                     >
                       <Outline.XMarkIcon />
                     </Button>
                   </span>
                 );
               }
-              return options[i]?.label;
+              return label;
             })
           ) : (
             <span className="mykn-select__placeholder">{placeholder}</span>
@@ -314,7 +340,7 @@ export const Select: React.FC<SelectProps> = ({
             className="mykn-select__clear"
             type="button"
             aria-label={ucFirst(_labelClear)}
-            onClick={(e) => handleChange(e, null)}
+            onClick={() => clear()}
           >
             <Outline.XCircleIcon />
           </button>
@@ -323,17 +349,25 @@ export const Select: React.FC<SelectProps> = ({
       </div>
 
       <SelectDropdown
-        ref={refs.setFloating}
         activeIndex={activeIndex}
-        selectedIndices={selectedIndices}
         context={context}
         floatingStyles={floatingStyles}
-        handleChange={handleChange}
+        getIndex={getIndex}
+        isAsync={isAsync}
         open={isOpen}
-        options={options}
+        options={optionsState}
         portalRoot={refs.reference.current as HTMLDivElement}
+        search={search}
+        selectedValues={selectedValues}
         setActiveIndex={setActiveIndex}
-        setSelectedIndices={setSelectedIndices}
+        setSearch={setSearch}
+        ariaClearSearch={_ariaClearSearch}
+        ariaLoading={_ariaLoading}
+        labelNoOptions={_labelNoOptions}
+        placeholderSearch={_placeholderSearch}
+        handleChange={handleChange}
+        ref={refs.setFloating}
+        isLoading={isLoading}
       />
     </>
   );
@@ -341,80 +375,130 @@ export const Select: React.FC<SelectProps> = ({
 
 export type SelectDropdownProps = React.PropsWithChildren<{
   activeIndex: number | null;
-  setActiveIndex: (index: number | null) => void;
-  selectedIndices: number[];
-  setSelectedIndices: (prev: (prev: number[]) => number[]) => void;
   context: FloatingContext;
   floatingStyles: React.CSSProperties;
+  getIndex: (v: string) => number | undefined;
+  isAsync: boolean;
   open: boolean;
   options: Option[];
   portalRoot: HTMLElement;
+  search: string;
+  selectedValues: string[];
+  setActiveIndex: (index: number | null) => void;
+  setSearch: (s: string) => void;
+  ariaClearSearch: string;
+  ariaLoading: string;
+  labelNoOptions: string;
+  placeholderSearch: string;
   handleChange: (event: React.UIEvent, index: number) => void;
   forwardedRef?: React.ForwardedRef<HTMLDivElement>;
+  isLoading?: boolean;
 }>;
 
 /**
  * Base select dropdown component.
  * @param activeIndex
- * @param selectedIndices
  * @param context
  * @param floatingStyles
- * @param forwardedRef
- * @param handleChange
+ * @param getIndex
+ * @param isAsync
  * @param open
  * @param options
  * @param portalRoot
+ * @param search
+ * @param selectedValues
  * @param setActiveIndex
- * @param setSelectedIndices
+ * @param setSearch
+ * @param ariaClearSearch
+ * @param ariaLoading
+ * @param labelNoOptions
+ * @param placeholderSearch
+ * @param handleChange
+ * @param forwardedRef
+ * @param isLoading
  * @private
  * @constructor
  */
 const BaseSelectDropdown: React.FC<SelectDropdownProps> = ({
   activeIndex,
-  selectedIndices,
   context,
   floatingStyles,
-  forwardedRef,
-  handleChange,
+  getIndex,
+  isAsync,
   open,
   options = [],
   portalRoot,
+  search,
+  selectedValues,
   setActiveIndex,
-  setSelectedIndices,
+  setSearch,
+  ariaClearSearch,
+  ariaLoading,
+  labelNoOptions,
+  placeholderSearch,
+  handleChange,
+  forwardedRef,
+  isLoading,
 }) => {
-  const isTypingRef = React.useRef(false);
-  const nodeRef = React.useRef<HTMLDivElement[]>([]);
+  const isTypingRef = useRef(false);
+  const nodeRef = useRef<HTMLDivElement[]>([]);
 
-  const listRef = React.useRef<string[]>([]);
+  const listRef = useRef<string[]>([]);
+
   useEffect(() => {
-    listRef.current = options.map(({ label }) => label.toString());
+    listRef.current = options.map((o) => String(o.label ?? ""));
   }, [options]);
+
+  const searchContainerRef = useRef<HTMLDivElement | null>(null);
+  const inputWasFocusedRef = useRef(false);
+
+  const focusSearchInput = () => {
+    const el = searchContainerRef.current?.querySelector("input");
+    el?.focus();
+  };
+
+  useEffect(() => {
+    if (open && isAsync) {
+      queueMicrotask(focusSearchInput);
+    }
+  }, [open, isAsync]);
+
+  // if input was focused before, re-focus after options change or loading flips
+  useEffect(() => {
+    if (open && isAsync && inputWasFocusedRef.current) {
+      queueMicrotask(focusSearchInput);
+    }
+  }, [open, isAsync, options, isLoading]);
 
   const click = useClick(context, { event: "mousedown" });
   const dismiss = useDismiss(context);
   const role = useRole(context, { role: "listbox" });
+  const selectedIndices = useMemo(
+    () =>
+      selectedValues
+        .map((v) => getIndex(String(v)))
+        .filter((i): i is number => i != null),
+    [selectedValues, getIndex],
+  );
+
   const listNav = useListNavigation(context, {
     listRef: nodeRef,
     activeIndex,
     selectedIndex: selectedIndices[0] ?? null,
     onNavigate: setActiveIndex,
   });
-
   const typeahead = useTypeahead(context, {
-    listRef: listRef,
+    listRef,
     activeIndex,
     selectedIndex: selectedIndices[0] ?? null,
-    onMatch: (index) => {
-      if (open) {
-        setActiveIndex(index);
-      } else {
-        toggleSelection(index);
-      }
+    onMatch: (matchIndex) => {
+      setActiveIndex(matchIndex);
     },
     onTypingChange(isTyping) {
       isTypingRef.current = isTyping;
     },
   });
+
   const { getFloatingProps, getItemProps } = useInteractions([
     dismiss,
     role,
@@ -423,63 +507,156 @@ const BaseSelectDropdown: React.FC<SelectDropdownProps> = ({
     click,
   ]);
 
-  const toggleSelection = (index: number) => {
-    setSelectedIndices((prev) => {
-      if (prev.includes(index)) {
-        return prev.filter((i) => i !== index);
-      } else {
-        return [...prev, index];
-      }
-    });
-  };
-
-  const onClick = (event: React.MouseEvent, index: number) => {
-    event.preventDefault();
-    toggleSelection(index);
-    handleChange(event, index);
-  };
-
-  const onKeyDown = (event: React.KeyboardEvent, index: number) => {
-    if (event.key === "Enter" || (event.key === " " && !isTypingRef.current)) {
+  /**
+   * Handles mouse clicks on an option.
+   *
+   * @param event
+   * @param index
+   * @return void
+   */
+  const handleOptionClick = useCallback(
+    (event: React.MouseEvent, index: number) => {
       event.preventDefault();
-      toggleSelection(index);
       handleChange(event, index);
-    }
-  };
+    },
+    [handleChange],
+  );
 
   /**
-   * Renders the `SelectOption` components
+   * Handles keyboard interactions for option elements inside the dropdown.
+   *
+   * @param event
+   * @param index
+   * @return void
    */
-  const renderOptions = () =>
-    options.map(({ label, value }, i) => (
-      <SelectOption
-        key={`${label}-${value || label}`}
-        ref={(node) => {
-          if (node) nodeRef.current[i] = node;
-        }}
-        active={i === activeIndex}
-        selected={selectedIndices.includes(i)}
-        tabIndex={i === activeIndex ? 0 : -1}
-        {...getItemProps({
-          onClick: (e) => onClick(e, i),
-          onKeyDown: (e) => onKeyDown(e, i),
-        })}
-      >
-        {label}
-      </SelectOption>
-    ));
+  const handleOptionKeyDown = useCallback(
+    (event: React.KeyboardEvent, index: number) => {
+      if (
+        event.key === "Enter" ||
+        (event.key === " " && !isTypingRef.current)
+      ) {
+        event.preventDefault();
+        handleChange(event, index);
+        return;
+      }
+    },
+    [handleChange],
+  );
+
+  /**
+   * Handles key presses within the async search input.
+   *
+   * @param e
+   * @return void
+   */
+  const handleInputKeyDown = useCallback(
+    (e: React.KeyboardEvent<HTMLInputElement>) => {
+      switch (e.key) {
+        case "Escape":
+          setSearch("");
+          e.stopPropagation();
+          break;
+
+        case "ArrowDown":
+          e.preventDefault();
+          setActiveIndex(0);
+          break;
+
+        case "Backspace":
+        case "Delete":
+          e.stopPropagation();
+          break;
+
+        default:
+          if (e.key.length === 1) e.stopPropagation();
+          break;
+      }
+    },
+    [setSearch, setActiveIndex],
+  );
+
+  const handleClearSearch = useCallback(() => {
+    setSearch("");
+    focusSearchInput();
+  }, [setSearch]);
 
   return (
     open && (
       <FloatingPortal root={portalRoot}>
-        <FloatingFocusManager context={context} modal={false}>
+        <FloatingFocusManager context={context} modal={false} initialFocus={-1}>
           <div
             ref={forwardedRef}
             className="mykn-select__dropdown"
+            role="listbox"
             style={floatingStyles}
-            {...getFloatingProps()}
           >
-            {renderOptions()}
+            {isAsync && (
+              <div className="mykn-select__search" ref={searchContainerRef}>
+                <Input
+                  type="text"
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                  placeholder={ucFirst(placeholderSearch)}
+                  onKeyDown={handleInputKeyDown}
+                  onFocus={() => {
+                    inputWasFocusedRef.current = true;
+                  }}
+                  onBlur={() => {
+                    inputWasFocusedRef.current = false;
+                  }}
+                />
+                <Button
+                  type="button"
+                  className="mykn-select__search-clear"
+                  aria-label={ucFirst(ariaClearSearch)}
+                  variant="transparent"
+                  size="xs"
+                  onClick={handleClearSearch}
+                >
+                  <Outline.XMarkIcon />
+                </Button>
+              </div>
+            )}
+
+            <div className="mykn-select__options" {...getFloatingProps()}>
+              {isLoading ? (
+                <div
+                  className="mykn-select__loading"
+                  role="status"
+                  aria-live="polite"
+                  aria-label={ucFirst(ariaLoading)}
+                >
+                  <Outline.ArrowPathIcon spin={true} aria-hidden="true" />
+                </div>
+              ) : options.length === 0 ? (
+                <P
+                  className="mykn-select__no-results"
+                  role="status"
+                  aria-live="polite"
+                  muted
+                >
+                  {ucFirst(labelNoOptions)}
+                </P>
+              ) : (
+                options.map(({ label, value }, i) => (
+                  <SelectOption
+                    key={value ?? i}
+                    ref={(node) => {
+                      if (node) nodeRef.current[i] = node;
+                    }}
+                    active={i === activeIndex}
+                    selected={selectedIndices.includes(i)}
+                    tabIndex={i === activeIndex ? 0 : -1}
+                    {...getItemProps({
+                      onClick: (e) => handleOptionClick(e, i),
+                      onKeyDown: (e) => handleOptionKeyDown(e, i),
+                    })}
+                  >
+                    {label}
+                  </SelectOption>
+                ))
+              )}
+            </div>
           </div>
         </FloatingFocusManager>
       </FloatingPortal>
@@ -498,25 +675,25 @@ const SelectDropdown = React.forwardRef<HTMLDivElement, SelectDropdownProps>(
 
 export type OptionProps = React.HTMLAttributes<HTMLDivElement> & {
   active?: boolean;
-  selected?: boolean;
   forwardedRef?: React.ForwardedRef<HTMLDivElement>;
+  selected?: boolean;
 };
 
 /**
  * Base select option component
  * @param active
- * @param selected
  * @param children
  * @param forwardedRef
+ * @param selected
  * @param props
  * @private
  * @constructor
  */
 const BaseSelectOption: React.FC<OptionProps> = ({
   active = false,
-  selected = false,
   children,
   forwardedRef,
+  selected = false,
   ...props
 }) => (
   <div
@@ -532,8 +709,8 @@ const BaseSelectOption: React.FC<OptionProps> = ({
 );
 
 /**
- * Select option  component
- * Wraps `BaseSelectOption` with `React.forwardRef`
+ * Select option component
+ * Wraps `BaseSelectOption` with `React.forwardRef`.
  * @private
  */
 export const SelectOption = React.forwardRef<HTMLDivElement, OptionProps>(

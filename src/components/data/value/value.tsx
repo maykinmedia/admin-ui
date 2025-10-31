@@ -195,6 +195,11 @@ export const Value = <T extends object = object>(rawProps: ValueProps<T>) => {
 
   // Returns <FormControl> when editing
   if (editable && editingState) {
+    let _value: string | string[] = (valueState || "").toString();
+    if (field!.multiple && Array.isArray(valueState)) {
+      _value = Array.isArray(valueState) ? valueState.map(String) : [];
+    }
+
     // @ts-expect-error - Fields is set here.
     const type = getFormFieldTypeByFieldType(field.type);
     return (
@@ -205,10 +210,12 @@ export const Value = <T extends object = object>(rawProps: ValueProps<T>) => {
         name={field!.name.toString()}
         // @ts-expect-error - Runtime check included
         options={field.options}
+        multiple={field!.multiple}
+        placeholder={field!.placeholder}
         pad="h"
         type={type}
         checked={field!.type === "boolean" ? Boolean(valueState) : undefined}
-        value={(valueState || "").toString()}
+        value={_value as string} // FIXME: Type as string is needed as typescript doesn't have enough context
         onChange={handleChange}
         onBlur={handleBlur}
         {...formControlProps}
@@ -241,6 +248,10 @@ export const Value = <T extends object = object>(rawProps: ValueProps<T>) => {
           : "-"}
       </P>
     );
+  }
+
+  if (decorate && field?.multiple && Array.isArray(valueState)) {
+    return valueState.map((value) => <Badge key={value}>{value}</Badge>);
   }
 
   /**
