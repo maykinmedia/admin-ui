@@ -138,9 +138,6 @@
     "react-datepicker": "^7.6.0",
     "react-intl": "^7.1.6"
   },
-  "optionalDependencies": {
-    "@rollup/rollup-linux-x64-gnu": "latest"
-  },
   "overrides": {
     "storybook": "$storybook"
   }
