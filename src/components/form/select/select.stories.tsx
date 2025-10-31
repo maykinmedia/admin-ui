@@ -349,21 +349,17 @@ const ALL_COUNTRIES: Option[] = [
   { label: "Estonia", value: "EE" },
 ];
 
-const getSelectOptionsAsync = (inputValue: string) =>
-  new Promise<Option[]>((resolve) => {
-    setTimeout(() => {
-      const normalize = (s: string) => s.toLowerCase();
-      const q = normalize(inputValue ?? "");
-
-      const filtered = ALL_COUNTRIES.filter((o) => {
-        const label = normalize(String(o.label ?? ""));
-        const val = normalize(String(o.value ?? ""));
-        return label.includes(q) || val.includes(q);
-      });
-      // Limit to 10 options.
-      resolve(filtered.slice(0, 10));
-    }, 600);
+const getSelectOptionsAsync = async (inputValue) => {
+  await new Promise((r) => setTimeout(r, 600));
+  const normalize = (s: string) => s.toLowerCase();
+  const q = normalize(inputValue ?? "");
+  const filtered = ALL_COUNTRIES.filter((o) => {
+    const label = normalize(String(o.label ?? ""));
+    const val = normalize(String(o.value ?? ""));
+    return label.includes(q) || val.includes(q);
   });
+  return filtered.slice(0, 10);
+};
 
 export const AsyncOptions: Story = {
   args: {
@@ -371,9 +367,7 @@ export const AsyncOptions: Story = {
     name: "country",
     placeholder: "Select country",
     fetchOnMount: false,
-    options: (inputValue: string, callback: (options: Option[]) => void) => {
-      getSelectOptionsAsync(inputValue).then((options) => callback(options));
-    },
+    options: getSelectOptionsAsync,
   },
   decorators: [FORM_TEST_DECORATOR],
   render: ({ name = "select", ...args }) => (
@@ -416,9 +410,7 @@ export const AsyncOptionsMultiple: Story = {
     placeholder: "Select countries",
     multiple: true,
     fetchOnMount: false,
-    options: (inputValue: string, callback: (options: Option[]) => void) => {
-      getSelectOptionsAsync(inputValue).then((options) => callback(options));
-    },
+    options: getSelectOptionsAsync,
   },
   decorators: [FORM_TEST_DECORATOR],
   render: ({ name = "select", ...args }) => (
@@ -458,17 +450,17 @@ export const AsyncOptionsMultiple: Story = {
   },
 };
 
+const getOptionsNoOptionsAsync = async (): Promise<Option[]> => {
+  await new Promise((r) => setTimeout(r, 600));
+  return [];
+};
+
 export const AsyncOptionsNoOptions: Story = {
   args: {
     name: "country",
     placeholder: "Select country",
     fetchOnMount: false,
-    options: (inputValue: string, callback: (options: Option[]) => void) => {
-      // Always return no options.
-      setTimeout(() => {
-        callback([]);
-      }, 200);
-    },
+    options: getOptionsNoOptionsAsync,
   },
   decorators: [FORM_TEST_DECORATOR],
   render: ({ name = "select", ...args }) => (

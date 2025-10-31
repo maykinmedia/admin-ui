@@ -1,4 +1,4 @@
-import { ChoiceFieldProps } from "../../components";
+import { LoadOptionsFn, Option } from "../../components";
 import { FormField, getFormFieldTypeByFieldType } from "../form";
 import { typeByDataArray } from "./data";
 import { isPrimitive } from "./primitive";
@@ -63,7 +63,13 @@ export type TypedField<T extends object = object> = {
   valueTransform?: (value: T) => unknown;
 
   /** Used by AttributeTable/DataGrid when editable=true. */
-  options?: ChoiceFieldProps["options"];
+  options?: Option[] | LoadOptionsFn;
+
+  /** Whether it's a multiple choice field. Used by forms. */
+  multiple?: boolean;
+
+  /** The placeholder shown when there's no value */
+  placeholder: string;
 
   /** Used by DataGrid to set column width. */
   width?: string;
