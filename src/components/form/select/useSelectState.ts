@@ -105,12 +105,14 @@ export function useSelectState({
   const [isOpen, setIsOpen] = useState(false);
 
   /** Normalize value prop to string array for internal use. */
-  const toStringArray = (valueProp: UseSelectStateProps["value"]): string[] =>
-    Array.isArray(valueProp)
-      ? valueProp.map(String)
-      : valueProp != null
-        ? [String(valueProp)]
-        : [];
+  const toStringArray = (valueProp: UseSelectStateProps["value"]): string[] => {
+    if (Array.isArray(valueProp)) {
+      return valueProp.map(String).filter((v) => v.trim() !== "");
+    }
+    if (valueProp == null) return [];
+    const string = String(valueProp);
+    return string.trim() === "" ? [] : [string];
+  };
 
   const [selectedValues, setSelectedValues] = useState<string[]>(
     toStringArray(value),
@@ -169,13 +171,25 @@ export function useSelectState({
     const id = ++requestIdRef.current;
     const query = shouldInitialFetch ? "" : clearingToEmpty ? "" : searchQuery;
 
-    loadOptions(query, (opts) => {
-      if (id !== requestIdRef.current) return; // stale
-      setOptionsState(opts);
-      setIsLoading(false);
-      hasLoadedRef.current = true;
-      lastQueryRef.current = query;
-    });
+    loadOptions(query)
+      .then((opts) => {
+        if (id !== requestIdRef.current) return;
+        setOptionsState(opts);
+        setIsLoading(false);
+        hasLoadedRef.current = true;
+        lastQueryRef.current = query;
+
+        for (const option of opts) {
+          const key = String(option.value ?? option.label ?? "");
+          const label = String(option.label ?? key);
+          if (key && label) labelCacheRef.current.set(key, label);
+        }
+      })
+      .catch(() => {
+        if (id !== requestIdRef.current) return;
+        setOptionsState([]);
+        setIsLoading(false);
+      });
   }, [isOpen, fetchOnMount, debouncedSearch, minSearchChars, loadOptions]);
 
   /** Internal meta map for value -> { index, label }. */

@@ -35,10 +35,7 @@ import "./select.scss";
 import { TRANSLATIONS } from "./select.translations";
 import { useSelectState } from "./useSelectState";
 
-export type LoadOptionsFn = (
-  inputValue: string,
-  callback: (options: Option[]) => void,
-) => void;
+export type LoadOptionsFn = (inputValue: string) => Promise<Option[]>;
 
 /**
  * Select component, aims to be compatible with native change event and FormData
@@ -240,6 +237,7 @@ export const Select: React.FC<SelectProps> = ({
   const { getReferenceProps } = useInteractions([dismiss, role, click]);
 
   const { onMouseDown, ...referenceProps } = getReferenceProps();
+
   return (
     <>
       <div
