@@ -106,16 +106,20 @@ export function useSelectState({
 
   /** Normalize value prop to string array for internal use. */
   const toStringArray = (valueProp: UseSelectStateProps["value"]): string[] => {
-    if (Array.isArray(valueProp)) {
-      return valueProp.map(String).filter((v) => v.trim() !== "");
-    }
+    if (Array.isArray(valueProp)) return valueProp.map(String).filter(Boolean);
     if (valueProp == null) return [];
     const string = String(valueProp);
-    return string.trim() === "" ? [] : [string];
+    return string.trim() ? [string] : [];
   };
 
+  const initialFromOptions = !Array.isArray(options)
+    ? null
+    : (options.find((option) => option.selected)?.value ??
+      options.find((option) => option.selected)?.label ??
+      null);
+
   const [selectedValues, setSelectedValues] = useState<string[]>(
-    toStringArray(value),
+    toStringArray(value ?? initialFromOptions),
   );
 
   const [optionsState, setOptionsState] = useState<Option[]>(
@@ -128,12 +132,14 @@ export function useSelectState({
 
   /** Mirror external value prop into internal selectedValues. */
   useEffect(() => {
-    const next = toStringArray(value);
-    setSelectedValues((prev) =>
-      prev.length === next.length && prev.every((v, i) => v === next[i])
-        ? prev
-        : next,
-    );
+    if (value !== null) {
+      const next = toStringArray(value);
+      setSelectedValues((prev) =>
+        prev.length === next.length && prev.every((v, i) => v === next[i])
+          ? prev
+          : next,
+      );
+    }
   }, [value]);
 
   /** Keep optionsState updated when not using async loading. Also learn labels from current options. */
@@ -161,9 +167,9 @@ export function useSelectState({
     const searchQuery = debouncedSearch.trim();
     const shouldInitialFetch =
       (isOpen || fetchOnMount) && !hasLoadedRef.current;
-    const shouldQuery =
-      searchQuery.length >= (searchQuery ? minSearchChars : 0);
-    const clearingToEmpty = searchQuery === "" && lastQueryRef.current !== "";
+    const shouldQuery = isOpen && searchQuery.length >= minSearchChars;
+    const clearingToEmpty =
+      isOpen && searchQuery === "" && lastQueryRef.current !== "";
 
     if (!shouldInitialFetch && !shouldQuery && !clearingToEmpty) return;
 
