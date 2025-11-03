@@ -263,10 +263,14 @@ export const Select: React.FC<SelectProps> = ({
         {...referenceProps}
         onMouseDown={(e) => {
           const target = e.target as HTMLElement;
-          // Override floating ui behavior for remove/close buttons.
-          if (target.classList.contains("mykn-icon")) {
+
+          // If clicking clear button, always force close
+          if (target.closest(".mykn-select__clear")) {
+            e.stopPropagation();
+            setIsOpen(false);
             return;
           }
+
           (onMouseDown as MouseEventHandler)(e);
         }}
         {...props}
