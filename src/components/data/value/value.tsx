@@ -212,6 +212,7 @@ export const Value = <T extends object = object>(rawProps: ValueProps<T>) => {
         options={field.options}
         multiple={field!.multiple}
         placeholder={field!.placeholder}
+        fetchOnMount={field!.fetchOnMount}
         pad="h"
         type={type}
         checked={field!.type === "boolean" ? Boolean(valueState) : undefined}

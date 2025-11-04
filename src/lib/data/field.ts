@@ -65,11 +65,14 @@ export type TypedField<T extends object = object> = {
   /** Used by AttributeTable/DataGrid when editable=true. */
   options?: Option[] | LoadOptionsFn;
 
+  /** Whether to fetch options on mount. Used by forms. */
+  fetchOnMount?: boolean;
+
   /** Whether it's a multiple choice field. Used by forms. */
   multiple?: boolean;
 
   /** The placeholder shown when there's no value */
-  placeholder: string;
+  placeholder?: string;
 
   /** Used by DataGrid to set column width. */
   width?: string;
