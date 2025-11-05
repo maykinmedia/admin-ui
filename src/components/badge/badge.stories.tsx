@@ -59,3 +59,54 @@ export const Badges: Story = {
     </>
   ),
 };
+
+export const BadgesLink: Story = {
+  args: {},
+  render: (args) => (
+    <>
+      <Badge href="#" variant="primary" {...args}>
+        Primary badge
+      </Badge>
+      <br />
+      <br />
+      <Badge href="#" variant="secondary" {...args}>
+        Secondary badge
+      </Badge>
+      <br />
+      <br />
+      <Badge href="#" variant="accent" {...args}>
+        Accent badge
+      </Badge>
+      <br />
+      <br />
+      <Badge href="#" variant="outline" {...args}>
+        Outline badge
+      </Badge>
+      <br />
+      <br />
+      <Badge href="#" variant="info" {...args}>
+        Info badge
+      </Badge>
+      <br />
+      <br />
+      <Badge href="#" variant="success" {...args}>
+        Success badge
+      </Badge>
+      <br />
+      <br />
+      <Badge href="#" variant="warning" {...args}>
+        Warning badge
+      </Badge>
+      <br />
+      <br />
+      <Badge href="#" variant="danger" {...args}>
+        Danger badge
+      </Badge>
+      <br />
+      <br />
+      <Badge href="#" {...args}>
+        Default badge
+      </Badge>
+    </>
+  ),
+};
