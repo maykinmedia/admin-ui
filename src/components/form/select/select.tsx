@@ -182,6 +182,9 @@ export const Select: React.FC<SelectProps> = ({
     TRANSLATIONS.ARIA_LOADING,
     i18nContext,
   );
+  const _ariaRemoveValue = ucFirst(
+    gettextFirst(ariaRemoveValue, TRANSLATIONS.ARIA_REMOVE_VALUE),
+  );
 
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
@@ -309,13 +312,7 @@ export const Select: React.FC<SelectProps> = ({
                   <span key={val} className="mykn-select__pill">
                     {label}
                     <Button
-                      aria-label={ucFirst(
-                        gettextFirst(
-                          ariaRemoveValue,
-                          TRANSLATIONS.ARIA_REMOVE_VALUE,
-                          { value: label },
-                        ),
-                      )}
+                      aria-label={_ariaRemoveValue.replace("{value}", label)} // Fixme: using gettextFirst causes possibly inconsistent hook count here.
                       className="mykn-select__pill-remove"
                       variant="transparent"
                       size="xs"
