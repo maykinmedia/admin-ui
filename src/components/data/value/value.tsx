@@ -249,10 +249,10 @@ export const Value = <T extends object = object>(rawProps: ValueProps<T>) => {
   }
 
   if (decorate && field?.multiple && Array.isArray(valueState)) {
-    return valueState.map((value) => {
+    return valueState.map((value, index) => {
       const label =
         !isPrimitive(value) && "label" in value ? value.label : value;
-      return <Badge key={value}>{label}</Badge>;
+      return <Badge key={label + index}>{label}</Badge>;
     });
   }
 
