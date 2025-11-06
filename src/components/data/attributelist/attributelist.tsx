@@ -17,7 +17,7 @@ import {
   validateRequired,
 } from "../../../lib";
 import { H3 } from "../../typography";
-import { Value, ValueEditableUnion } from "../value";
+import { Value, ValueEditableUnion, ValueProps } from "../value";
 import "./attributelist.scss";
 
 export type AttributeListProps<T extends object = object> = Omit<
@@ -54,6 +54,9 @@ export type AttributeListProps<T extends object = object> = Omit<
   /** If set, use this custom set of `Validator`s. */
   validators?: Validator[];
 
+  /** Props for Value. */
+  valueProps?: Partial<ValueProps>;
+
   /** Gets called when a value is edited. */
   onEdit?: (value: T) => void;
 } & Pick<
@@ -86,6 +89,7 @@ export const AttributeList = <T extends object = object>({
   onEdit,
   validate = validateForm,
   validators = [validateRequired],
+  valueProps,
   ...props
 }: AttributeListProps<T>) => {
   const formFields = fields.map((field) => field2FormField<T>(field, [object]));
@@ -151,6 +155,7 @@ export const AttributeList = <T extends object = object>({
                 field={field}
                 formControlProps={formControlProps}
                 labelEdit={labelEdit}
+                valueProps={valueProps}
                 onBlur={onBlur}
                 onChange={handleChange}
                 onEdit={onEdit}
@@ -168,6 +173,7 @@ export type AttributePairProps<T extends object = object> = {
   field: Field<T> | TypedField<T>;
   decorate?: boolean;
   error?: string;
+  valueProps?: Partial<ValueProps>;
   onEdit?: (value: T) => void;
 } & Pick<
   ValueEditableUnion,
@@ -191,6 +197,7 @@ export const AttributePair = <T extends object = object>({
   decorate,
   error,
   labelEdit,
+  valueProps,
   onBlur,
   onChange,
   onEdit,
@@ -235,6 +242,7 @@ export const AttributePair = <T extends object = object>({
           value={object[typedField.name]}
           onBlur={handleBlur}
           onChange={onChange}
+          {...valueProps}
         />
       </dd>
     </div>
