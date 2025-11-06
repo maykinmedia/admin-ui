@@ -15,7 +15,7 @@ import { Column, Grid } from "../../layout";
 import { Toolbar } from "../../toolbar";
 import { Body, H2, Hr } from "../../typography";
 import { AttributeList, AttributeListProps } from "../attributelist";
-import { ValueEditableUnion } from "../value";
+import { ValueEditableUnion, ValueProps } from "../value";
 import "./attributegrid.scss";
 
 export type AttributeGridProps<T extends object = object> = {
@@ -48,6 +48,9 @@ export type AttributeGridProps<T extends object = object> = {
 
   /** If set, use this custom set of `Validator`s. */
   validators?: Validator[];
+
+  /** Props for Value. */
+  valueProps?: Partial<ValueProps>;
 
   /** Gets called when a value is edited. */
   onEdit?: (value: T) => void;
@@ -84,11 +87,12 @@ export const AttributeGrid = <T extends object = object>({
   title,
   labelEdit,
   separator,
+  validate = validateForm,
+  validators = [validateRequired],
+  valueProps,
   onBlur,
   onChange,
   onEdit,
-  validate = validateForm,
-  validators = [validateRequired],
   ...props
 }: AttributeGridProps<T>) => {
   const objectList =
@@ -172,6 +176,7 @@ export const AttributeGrid = <T extends object = object>({
                     formControlProps={formControlProps}
                     validate={validate}
                     validators={validators}
+                    valueProps={valueProps}
                     onBlur={onBlur}
                     onChange={onChange}
                     onEdit={handleEdit}
