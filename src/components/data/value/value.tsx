@@ -18,6 +18,7 @@ import {
   isBool,
   isNull,
   isNumber,
+  isPrimitive,
   isString,
   isUndefined,
   useIntl,
@@ -25,7 +26,7 @@ import {
 import { Badge, BadgeProps } from "../../badge";
 import { Bool, BoolProps } from "../../boolean";
 import { Button, ButtonProps } from "../../button";
-import { FormControl, FormControlProps } from "../../form";
+import { FormControl, FormControlProps, Option } from "../../form";
 import { A, AProps, P, PProps } from "../../typography";
 import { TRANSLATIONS } from "./translations";
 
@@ -195,11 +196,6 @@ export const Value = <T extends object = object>(rawProps: ValueProps<T>) => {
 
   // Returns <FormControl> when editing
   if (editable && editingState) {
-    let _value: string | string[] = (valueState || "").toString();
-    if (field!.multiple && Array.isArray(valueState)) {
-      _value = Array.isArray(valueState) ? valueState.map(String) : [];
-    }
-
     // @ts-expect-error - Fields is set here.
     const type = getFormFieldTypeByFieldType(field.type);
     return (
@@ -216,7 +212,8 @@ export const Value = <T extends object = object>(rawProps: ValueProps<T>) => {
         pad="h"
         type={type}
         checked={field!.type === "boolean" ? Boolean(valueState) : undefined}
-        value={_value as string} // FIXME: Type as string is needed as typescript doesn't have enough context
+        // @ts-expect-error - TS can't check that value is dependent on the type of control properly.
+        value={valueProp as string | Array<string | Option>}
         onChange={handleChange}
         onBlur={handleBlur}
         {...formControlProps}
@@ -252,7 +249,11 @@ export const Value = <T extends object = object>(rawProps: ValueProps<T>) => {
   }
 
   if (decorate && field?.multiple && Array.isArray(valueState)) {
-    return valueState.map((value) => <Badge key={value}>{value}</Badge>);
+    return valueState.map((value) => {
+      const label =
+        !isPrimitive(value) && "label" in value ? value.label : value;
+      return <Badge key={value}>{label}</Badge>;
+    });
   }
 
   /**

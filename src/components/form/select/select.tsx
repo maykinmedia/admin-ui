@@ -65,7 +65,8 @@ export type SelectProps = Omit<ChoiceFieldProps, "variant" | "options"> & {
   size?: "xl" | "s" | "xs" | "xxs";
   /** The variant (style) of the form element. */
   variant?: "normal" | "primary" | "secondary" | "accent" | "transparent";
-
+  /** Value of the form element */
+  value?: Option["value"] | Option | Array<Option["value"] | Option> | null;
   /** If true, fetch on mount rather than on open */
   fetchOnMount?: boolean;
   /** Minimum characters before async search triggers. */

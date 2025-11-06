@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 
 import { useDebounce } from "../../../hooks";
+import { isPrimitive } from "../../../lib";
 import { Option } from "../choicefield";
 import { eventFactory } from "../eventFactory";
 import { LoadOptionsFn, SelectProps } from "./select";
@@ -9,7 +10,7 @@ export type UseSelectStateProps = {
   /** Either a static array or an async loader. */
   options: SelectProps["options"];
   /** Controlled selected value(s). Values are the source of truth. */
-  value: string | number | Array<string | number> | null;
+  value: Option["value"] | Option | Array<Option["value"] | Option> | null;
   /** Enable multi-select behavior. */
   multiple: boolean;
 
@@ -82,7 +83,7 @@ export type UseSelectStateResult = {
  */
 export function useSelectState({
   options,
-  value,
+  value = null,
   multiple,
   fetchOnMount = false,
   minSearchChars = 2,
@@ -105,11 +106,21 @@ export function useSelectState({
   const [isOpen, setIsOpen] = useState(false);
 
   /** Normalize value prop to string array for internal use. */
-  const toStringArray = (valueProp: UseSelectStateProps["value"]): string[] => {
-    if (Array.isArray(valueProp)) return valueProp.map(String).filter(Boolean);
-    if (valueProp == null) return [];
-    const string = String(valueProp);
-    return string.trim() ? [string] : [];
+  const valueOrValuesToStringArray = (
+    valueProp: UseSelectStateProps["value"],
+  ): string[] => {
+    if (valueProp === null || valueProp === undefined) return [];
+
+    return Array.isArray(valueProp)
+      ? valueProp.map(normalizeValue).filter((v) => typeof v === "string")
+      : [valueProp.toString()];
+  };
+
+  /** Normalize value prop to value for internal use. */
+  const normalizeValue = (valueProp: Option["value"] | Option | null) => {
+    if (valueProp === null || valueProp === undefined) return null;
+    if (isPrimitive(valueProp)) return String(valueProp).trim();
+    return String(valueProp.value).trim();
   };
 
   const initialFromOptions = !Array.isArray(options)
@@ -119,7 +130,7 @@ export function useSelectState({
       null);
 
   const [selectedValues, setSelectedValues] = useState<string[]>(
-    toStringArray(value ?? initialFromOptions),
+    valueOrValuesToStringArray(value ?? initialFromOptions),
   );
 
   const [optionsState, setOptionsState] = useState<Option[]>(
@@ -133,7 +144,7 @@ export function useSelectState({
   /** Mirror external value prop into internal selectedValues. */
   useEffect(() => {
     if (value !== null) {
-      const next = toStringArray(value);
+      const next = valueOrValuesToStringArray(value);
       setSelectedValues((prev) =>
         prev.length === next.length && prev.every((v, i) => v === next[i])
           ? prev
@@ -289,6 +300,7 @@ export function useSelectState({
   const removeValue = (val: string): void => {
     if (!multiple) return;
     const next = (prev: string[]) => prev.filter((v) => v !== val);
+
     setSelectedValues(next);
     const element = hiddenRef.current;
     if (!element) return;
@@ -323,8 +335,17 @@ export function useSelectState({
     },
     meta: {
       getIndex: (v: string) => valueMeta.get(v)?.index,
-      getLabel: (v: string) =>
-        labelCacheRef.current.get(v) ?? valueMeta.get(v)?.label ?? v,
+      getLabel: (v: string) => {
+        // If value contains options, attempt to resolve the value based on them.
+        if (Array.isArray(value)) {
+          const options = value.filter((v): v is Option => !isPrimitive(v));
+          const option = options.find((o) => o.value === v);
+          if (option?.label) return option.label.toString();
+        }
+
+        // Use the cache to resolve seen labels.
+        return labelCacheRef.current.get(v) ?? valueMeta.get(v)?.label ?? v;
+      },
     },
     hiddenSelectProps: {
       multiple,
