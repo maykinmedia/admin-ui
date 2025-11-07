@@ -213,7 +213,7 @@ export const Value = <T extends object = object>(rawProps: ValueProps<T>) => {
         type={type}
         checked={field!.type === "boolean" ? Boolean(valueState) : undefined}
         // @ts-expect-error - TS can't check that value is dependent on the type of control properly.
-        value={valueProp as string | Array<string | Option>}
+        value={valueState as string | Array<string | Option>}
         onChange={handleChange}
         onBlur={handleBlur}
         {...formControlProps}
