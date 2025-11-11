@@ -337,7 +337,7 @@ export const Select: React.FC<SelectProps> = ({
             <span className="mykn-select__placeholder">{placeholder}</span>
           )}
         </div>
-        {!required && (
+        {!required && selectedValues.length > 0 && (
           <button
             className="mykn-select__clear"
             type="button"
