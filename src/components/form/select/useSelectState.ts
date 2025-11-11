@@ -109,11 +109,13 @@ export function useSelectState({
   const valueOrValuesToStringArray = (
     valueProp: UseSelectStateProps["value"],
   ): string[] => {
-    if (valueProp === null || valueProp === undefined) return [];
+    if (valueProp == null) return [];
 
-    return Array.isArray(valueProp)
-      ? valueProp.map(normalizeValue).filter((v) => typeof v === "string")
-      : [valueProp.toString()];
+    const values = Array.isArray(valueProp) ? valueProp : [valueProp];
+
+    return values
+      .map(normalizeValue)
+      .filter((v): v is string => typeof v === "string" && v.trim() !== "");
   };
 
   /** Normalize value prop to value for internal use. */
