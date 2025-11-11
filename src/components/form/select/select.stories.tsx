@@ -209,7 +209,6 @@ export const SelectMultiple: Story = {
     for (const select of selects) {
       const nativeSelect =
         select.querySelector<HTMLSelectElement>("select[hidden]");
-      const clear = within(select).getByLabelText("Clear value");
 
       const spy = fn();
       select.addEventListener("change", spy);
@@ -233,7 +232,7 @@ export const SelectMultiple: Story = {
           "cycling",
         ]),
       );
-
+      const clear = within(select).getByLabelText("Clear value");
       await userEvent.click(clear, { delay: 10 });
 
       // Test that event listener on the (custom) select gets called.
@@ -296,7 +295,6 @@ export const UsageWithFormik: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     const select = canvas.getByRole("combobox");
-    const clear = canvas.getByLabelText("Clear value");
 
     userEvent.click(select, { delay: 10 });
     const junior = await canvas.findByText("Junior");
@@ -310,6 +308,7 @@ export const UsageWithFormik: Story = {
       const data = JSON.parse(pre?.textContent || "{}");
       await expect(data.school_year).toBe("JR");
     }
+    const clear = canvas.getByLabelText("Clear value");
 
     await userEvent.click(clear, { delay: 10 });
   },
