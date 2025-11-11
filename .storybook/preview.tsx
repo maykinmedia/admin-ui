@@ -1,7 +1,4 @@
-import {
-  withThemeByClassName,
-  withThemeByDataAttribute,
-} from "@storybook/addon-themes";
+import { withThemeByDataAttribute } from "@storybook/addon-themes";
 import type { Preview } from "@storybook/react-webpack5";
 
 import "../src/index.scss";
@@ -12,8 +9,6 @@ const preview: Preview = {
     chromatic: {
       modes: {
         "light desktop": allModes["light desktop"],
-        "light mobile": allModes["light mobile"],
-        "dark desktop": allModes["dark desktop"],
         "dark mobile": allModes["dark mobile"],
       },
       controls: {
