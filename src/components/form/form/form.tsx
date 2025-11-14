@@ -185,6 +185,7 @@ export const Form = <T extends SerializedFormData = SerializedFormData>({
   }, [values]);
 
   useEffect(() => {
+    if (typeof errors === "undefined") return;
     setErrorsState(errors2errorsArray(errors));
   }, [fields, errors]);
 
