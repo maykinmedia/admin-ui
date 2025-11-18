@@ -104,7 +104,7 @@ export const WithToolbar: Story = {
     toolbarProps: {
       items: [
         {
-          direction: "horizontal",
+          direction: "h",
           label: "Sorteren",
           required: true,
           showRequiredIndicator: false,
