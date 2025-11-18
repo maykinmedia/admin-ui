@@ -93,7 +93,7 @@ export const CardBaseTemplate: React.FC<CardBaseTemplateProps> = ({
     _secondaryNavigationItems?.length ? (
       <Toolbar
         align="end"
-        direction="horizontal"
+        direction="h"
         items={
           (secondaryNavigationItems.length
             ? secondaryNavigationItems

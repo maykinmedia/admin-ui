@@ -170,7 +170,7 @@ export const HorizontalDropdown: Story = {
       </>
     ),
     toolbarProps: {
-      direction: "horizontal",
+      direction: "h",
     },
     children: (
       <>

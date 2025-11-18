@@ -117,9 +117,9 @@ export const FormControl: React.FC<FormControlProps> = ({
     <div
       className={clsx(
         "mykn-form-control",
-        `mykn-form-control--direction-${direction}`,
         `mykn-form-control--justify-${justify}`,
         {
+          [`mykn-form-control--direction-${direction[0]}`]: direction,
           "mykn-form-control--error": error,
         },
       )}
