@@ -517,7 +517,7 @@ export const AdditionalToolBarItems: Story = {
         type: "search",
       },
       {
-        variant: "outline",
+        variant: "secondary",
         children: (
           <>
             <Outline.AdjustmentsHorizontalIcon />

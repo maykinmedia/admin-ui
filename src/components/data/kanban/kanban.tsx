@@ -630,7 +630,7 @@ export const KanbanButton = <T extends object = object>({
       justify
       pad={false}
       title={title}
-      variant="outline"
+      variant="secondary"
       wrap={false}
       {...buttonLinkProps}
       onClick={(e) => _onClick?.(e, object)}
@@ -654,7 +654,7 @@ export const KanbanButton = <T extends object = object>({
       justify
       pad={false}
       title={title}
-      variant="outline"
+      variant="secondary"
       wrap={false}
       {...buttonProps}
       onClick={(e) => _onClick?.(e, object)}
