@@ -105,7 +105,7 @@ export const DataGridToolbar = <
     ...toolbarItems,
     fieldsSelectable
       ? {
-          variant: "outline",
+          variant: "secondary",
           wrap: false,
           onClick: () => setSelectFieldsModalState(true),
           children: (

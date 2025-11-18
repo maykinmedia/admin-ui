@@ -80,7 +80,7 @@ export const Banner: React.FC<BannerProps> = ({
       </div>
       {actionText && onActionClick && (
         <Button
-          variant="outline"
+          variant="secondary"
           onClick={onActionClick}
           className="mykn-banner__button"
         >

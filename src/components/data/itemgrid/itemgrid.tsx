@@ -195,7 +195,7 @@ export const ItemGridButton = <T extends object = object>({
     <ButtonLink
       href={href}
       title={title}
-      variant="outline"
+      variant="secondary"
       {...buttonLinkProps}
       onClick={(e) => onClick?.(e, object)}
     >
@@ -204,7 +204,7 @@ export const ItemGridButton = <T extends object = object>({
   ) : (
     <Button
       title={title}
-      variant="outline"
+      variant="secondary"
       {...buttonProps}
       onClick={(e) => onClick?.(e, object)}
     >
