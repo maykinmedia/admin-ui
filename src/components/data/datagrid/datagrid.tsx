@@ -233,7 +233,7 @@ export type DataGridProps<T extends object = object, F extends object = T> = {
 
   /**
    *  Gets called when a row value is filtered.
-   *  This callback is debounced every 300 milliseconds.
+   *  This callback is debounced.
    */
   onFilter?: (rowData: F) => void;
 
@@ -279,6 +279,7 @@ export const DataGrid = <T extends object = object, F extends object = T>(
     allowSelectAllPages: false,
     allPagesSelected: false,
     allPagesSelectedManaged: true,
+    filterable: false,
     fieldsSelectable: false,
     editing: false,
     equalityChecker: (item1: T, item2: T) => item1 == item2,
@@ -616,20 +617,10 @@ export const DataGrid = <T extends object = object, F extends object = T>(
    */
   const handleFilter = useCallback(
     (data: F) => {
-      if (onFilter) {
-        const handler = () => onFilter(data);
-        if (onFilterTimeoutRef.current) {
-          clearTimeout(onFilterTimeoutRef.current);
-        }
-        onFilterTimeoutRef.current = setTimeout(handler, 300);
-        setFilterState(null);
-        return;
-      }
-
-      const hasFilterData = Object.keys(data).some(
-        (key) => data[key as keyof typeof data],
-      );
+      const hasFilterData = Object.values(data).some(Boolean);
       setFilterState(hasFilterData ? data : null);
+      if (!onFilter) return;
+      onFilter?.(data);
     },
     [onFilter, onFilterTimeoutRef, setFilterState],
   );
@@ -670,6 +661,8 @@ export const DataGrid = <T extends object = object, F extends object = T>(
           editable: Boolean(renderableFields.find((f) => f.editable)),
           editingState: editingState,
           errorsState: errorsState,
+          filterable,
+          filterState,
           formFields: formFields,
           setErrorsState: setErrorsState,
           fields: typedFields,
