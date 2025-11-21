@@ -15,6 +15,8 @@ export type DataGridContextType<T extends object, F extends object> = Omit<
   dataGridId: string;
   editable: boolean;
   editingState: [object, number] | boolean;
+  filterable: boolean;
+  filterState: F | null;
   formFields: FormField[];
   errorsState: FieldErrors<FormField[], Validator[]>[];
   setErrorsState: React.Dispatch<FieldErrors<FormField[], Validator[]>[]>;

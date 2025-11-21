@@ -1,8 +1,19 @@
-import { serializeFormElement, string2Title } from "@maykin-ui/client-common";
+import {
+  debounce,
+  serializeFormElement,
+  string2Title,
+} from "@maykin-ui/client-common";
 import clsx from "clsx";
-import React from "react";
+import React, {
+  SyntheticEvent,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 
 import {
+  TypedField,
   TypedSerializedFormData,
   stringifyContext,
   useIntl,
@@ -32,28 +43,80 @@ export const DataGridFilter = <
   } = useDataGridContext<T, F>();
 
   /**
+   * Returns the filter state based on `renderableFields`.
+   */
+  const getFilterStateFromFields = () =>
+    renderableFields.reduce<F>((acc, typedField) => {
+      if (!typedField.filterable) return acc;
+      const lookup = typedField.filterLookup || typedField.name;
+      return { ...acc, [lookup]: typedField.filterValue };
+    }, {} as F);
+
+  /**
+   * Returns the filter value for single `field`.
+   * @param field
+   */
+  const getFilterValue = (field: TypedField<T>) => {
+    const lookup = field.filterLookup ?? field.name;
+    return Object.hasOwn(filterState, lookup)
+      ? (filterState[lookup as keyof typeof filterState] as string)
+      : "";
+  };
+
+  const [filterState, setFilterState] = useState<F>(getFilterStateFromFields());
+
+  // Sync `filterState` with `renderableFields`.
+  useEffect(() => {
+    setFilterState(getFilterStateFromFields());
+  }, [renderableFields.map((r) => r.filterValue).join()]);
+
+  /**
+   * Dispatches filter values to `onFilter` prop.
+   */
+  const dispatchFilter = useCallback(
+    (e: SyntheticEvent<HTMLInputElement | HTMLSelectElement>) => {
+      const input = e.target as HTMLInputElement;
+      if (input.type !== "checkbox") {
+        e.preventDefault();
+      }
+
+      const data = serializeFormElement<
+        TypedSerializedFormData<keyof T & string>
+      >(input.form as HTMLFormElement, {
+        typed: true,
+      });
+      const _data = (filterTransform ? filterTransform(data) : data) as F;
+
+      if (_data !== undefined) {
+        onFilter(_data);
+        return;
+      }
+    },
+    [serializeFormElement, filterTransform, onFilter],
+  );
+
+  /**
+   * Debounced version of `dispatchFilter`.
+   */
+  const debouncedDispatchFilter = useMemo(
+    () => debounce(dispatchFilter, 550), // Backspace on MacOS might cause huge delay in input.
+    [dispatchFilter],
+  );
+
+  /**
    * Gets called when a filter is changed.
    * @param e
    */
   const handleFilter: React.EventHandler<
-    React.SyntheticEvent<HTMLInputElement>
+    SyntheticEvent<HTMLInputElement | HTMLSelectElement>
   > = (e) => {
-    const input = e.target as HTMLInputElement;
-    if (input.type !== "checkbox") {
-      e.preventDefault();
-    }
-
-    const data = serializeFormElement<
-      TypedSerializedFormData<keyof T & string>
-    >(input.form as HTMLFormElement, {
-      typed: true,
+    const target = e.target as HTMLInputElement | HTMLSelectElement;
+    setFilterState({
+      ...filterState,
+      [target.name]: target.value,
     });
-    const _data = (filterTransform ? filterTransform(data) : data) as F;
 
-    if (_data !== undefined) {
-      onFilter(_data);
-      return;
-    }
+    debouncedDispatchFilter(e);
   };
 
   return (
@@ -85,7 +148,7 @@ export const DataGridFilter = <
             key={`${dataGridId}-filter-${string2Title(field.name.toString())}`}
             className={clsx(
               "mykn-datagrid__cell",
-              "mykn-datagrid__c" + "ell--filter",
+              "mykn-datagrid__cell--filter",
             )}
             style={field.width ? { width: field.width } : {}}
           >
@@ -104,18 +167,23 @@ export const DataGridFilter = <
                 pad={field.type === "daterange" ? "v" : undefined}
                 placeholder={placeholder}
                 type={field.type === "boolean" ? "checkbox" : field.type}
-                value={field.filterValue}
+                value={getFilterValue(field)}
                 onChange={
                   field.type !== "boolean"
-                    ? (e: React.ChangeEvent<HTMLInputElement>) =>
-                        handleFilter(e)
+                    ? (
+                        e: React.ChangeEvent<
+                          HTMLInputElement | HTMLSelectElement
+                        >,
+                      ) => handleFilter(e)
                     : undefined
                 }
                 onClick={
                   field.type === "boolean"
-                    ? (e: React.MouseEvent<HTMLInputElement>) => {
-                        handleFilter(e);
-                      }
+                    ? (
+                        e: React.MouseEvent<
+                          HTMLInputElement | HTMLSelectElement
+                        >,
+                      ) => handleFilter(e)
                     : undefined
                 }
               />
