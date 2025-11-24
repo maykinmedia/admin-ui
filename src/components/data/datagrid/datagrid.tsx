@@ -1,3 +1,4 @@
+import { invariant } from "@maykin-ui/client-common";
 import clsx from "clsx";
 import React, {
   CSSProperties,
@@ -375,7 +376,55 @@ export const DataGrid = <T extends object = object, F extends object = T>(
     setEditingState(editing || false);
   }, [editing]);
 
+  const [fieldsState, setFieldsState] = useState<
+    Array<Field<T> | TypedField<T>>
+  >([]);
+
+  // Convert `Array<Field|TypedField>` to `TypedField[]`.
+  const typedFields = useMemo(
+    () =>
+      fields2TypedFields(fieldsState, objectList, {
+        editable: Boolean(editable),
+        filterable: Boolean(filterable),
+        sortable: Boolean(sort),
+      }).filter((f) => !(urlFields || []).includes(String(f.name))),
+    [fieldsState, objectList, urlFields, editable, filterable],
+  );
+
   const [filterState, setFilterState] = useState<F | null>();
+  // Sync `filterState` with `renderableFields`.
+  useEffect(() => {
+    setFilterState(getFilterStateFromFields());
+  }, [typedFields?.map((r) => r.filterValue).join()]);
+
+  /**
+   * Returns the filter state based on `renderableFields`.
+   */
+  const getFilterStateFromFields = () =>
+    renderableFields.reduce<F>((acc, typedField) => {
+      if (!typedField.filterable) return acc;
+      const filterLookup = typedField.filterLookup || typedField.name;
+      const filterValue = typedField.filterValue;
+
+      if (
+        filterValue &&
+        Array.isArray(filterLookup) &&
+        typedField.type === "daterange"
+      ) {
+        const filterValues = String(filterValue).split("/");
+        invariant(
+          filterValues.length === filterLookup.length,
+          "Invalid filter configuration!",
+        );
+
+        const filter = String(filterValue)
+          .split("/")
+          .reduce((acc, val, i) => ({ ...acc, [filterLookup[i]]: val }), {});
+        return { ...acc, ...filter };
+      }
+      return { ...acc, [filterLookup]: filterValue };
+    }, {} as F);
+
   const [selectedState, setSelectedState] = useState<T[] | null>(null);
 
   const [allPagesSelectedState, setAllPagesSelectedState] =
@@ -384,10 +433,6 @@ export const DataGrid = <T extends object = object, F extends object = T>(
   const [sortState, setSortState] = useState<
     [keyof T | string, "ASC" | "DESC"] | undefined
   >();
-
-  const [fieldsState, setFieldsState] = useState<
-    Array<Field<T> | TypedField<T>>
-  >([]);
 
   const formFields = fieldsState.map((field) =>
     field2FormField<T>(field, objectList),
@@ -480,17 +525,6 @@ export const DataGrid = <T extends object = object, F extends object = T>(
     };
   });
 
-  // Convert `Array<Field|TypedField>` to `TypedField[]`.
-  const typedFields = useMemo(
-    () =>
-      fields2TypedFields(fieldsState, objectList, {
-        editable: Boolean(editable),
-        filterable: Boolean(filterable),
-        sortable: Boolean(sort),
-      }).filter((f) => !(urlFields || []).includes(String(f.name))),
-    [fieldsState, objectList, urlFields, editable, filterable],
-  );
-
   // Exclude inactive fields.
   const renderableFields = useMemo(
     () => typedFields.filter((f) => f.active !== false),
@@ -513,7 +547,9 @@ export const DataGrid = <T extends object = object, F extends object = T>(
   // Filter rows.
   const filteredObjectList = useMemo(
     () =>
-      filterState ? filterDataArray(objectList, filterState) : objectList || [],
+      filterable && filterState && !onFilter
+        ? filterDataArray(objectList, filterState)
+        : objectList || [],
     [objectList, filterState],
   );
 
@@ -642,6 +678,7 @@ export const DataGrid = <T extends object = object, F extends object = T>(
       "Either `pageSize` or `paginatorProps.pageSize` should be set when `showPaginator` is `true`.",
     );
   }
+
   return (
     <DataGridContext.Provider
       // @ts-expect-error - DataGridContext doesn't have DataGridContextType with generic T and F yet.

@@ -1,5 +1,6 @@
 import {
   debounce,
+  invariant,
   serializeFormElement,
   string2Title,
 } from "@maykin-ui/client-common";
@@ -48,8 +49,26 @@ export const DataGridFilter = <
   const getFilterStateFromFields = () =>
     renderableFields.reduce<F>((acc, typedField) => {
       if (!typedField.filterable) return acc;
-      const lookup = typedField.filterLookup || typedField.name;
-      return { ...acc, [lookup]: typedField.filterValue };
+      const filterLookup = typedField.filterLookup || typedField.name;
+      const filterValue = typedField.filterValue;
+
+      if (
+        filterValue &&
+        Array.isArray(filterLookup) &&
+        typedField.type === "daterange"
+      ) {
+        const filterValues = String(filterValue).split("/");
+        invariant(
+          filterValues.length === filterLookup.length,
+          "Invalid filter configuration!",
+        );
+
+        const filter = String(filterValue)
+          .split("/")
+          .reduce((acc, val, i) => ({ ...acc, [filterLookup[i]]: val }), {});
+        return { ...acc, ...filter };
+      }
+      return { ...acc, [filterLookup]: filterValue };
     }, {} as F);
 
   /**
