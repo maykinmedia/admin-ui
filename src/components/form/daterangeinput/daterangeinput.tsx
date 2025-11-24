@@ -1,3 +1,4 @@
+import { invariant } from "@maykin-ui/client-common";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 
 import { date2DateString, gettextFirst, value2Date } from "../../../lib";
@@ -42,7 +43,6 @@ export const DateRangeInput: React.FC<DateRangeInputProps> = ({
   const nodeRef = useRef<HTMLDivElement>(null);
   const fakeInputRef = useRef<HTMLInputElement>(null);
   const [valuesState, setValuesState] = useState<string[]>();
-  const queuedValueState = useRef<string[]>(undefined);
 
   /**
    * Dispatch change event.
@@ -130,51 +130,35 @@ export const DateRangeInput: React.FC<DateRangeInputProps> = ({
   }, []);
 
   /**
-   * Gets called when the start date is changed.
-   * @param event
-   */
-  const handleStartChange: React.ChangeEventHandler<HTMLInputElement> = (
-    event,
-  ) => {
-    handleChange(event, 0);
-  };
-
-  /**
-   * Gets called when the end date is changed.
-   * @param event
-   */
-  const handleEndChange: React.ChangeEventHandler<HTMLInputElement> = (
-    event,
-  ) => {
-    handleChange(event, 1);
-  };
-
-  /**
    * Gets called when any of the dates is changed.
    * @param event
    * @param index The index of the date input (0: start, 1: end).
    */
-  const handleChange = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>, index: number) => {
-      const flippedIndex = index ? 0 : 1;
-      const _values = queuedValueState.current || [];
-      const value = event.target.value;
+  const handleChange = useCallback(() => {
+    // Get the raw date values.
+    const node = nodeRef.current;
+    const hiddenDates = node?.querySelectorAll<HTMLInputElement>(
+      '[type="date"]:not([name])',
+    );
+    invariant(hiddenDates, "Unable to identify date fields!");
+    invariant(hiddenDates.length == 2, "hiddenDates.length must be 2!");
 
-      const newValues = new Array(2);
-      newValues[index] = value;
-      newValues[flippedIndex] = _values[flippedIndex];
-      queuedValueState.current = newValues;
+    // Parse/validate the dates.
+    const arrStrDates = [...hiddenDates].map((input) => input.value);
+    const arrStrDatesChecked = normalizeValuesState(arrStrDates)
+      ?.map(value2Date)
+      .filter((v): v is Date => Boolean(v))
+      .map((date) => date2DateString(date));
 
-      const dates = normalizeValuesState(queuedValueState.current)
-        ?.map(value2Date)
-        .filter((v): v is Date => Boolean(v))
-        .map((date) => date2DateString(date));
+    // Format the output string.
+    const strDates =
+      arrStrDatesChecked && arrStrDatesChecked.length === 2
+        ? arrStrDatesChecked.join("/")
+        : "";
 
-      const dateString = dates?.length === 2 && dates.join("/");
-      dispatchEvent(dateString || "");
-    },
-    [queuedValueState.current, normalizeValuesState, dispatchEvent],
-  );
+    // Dispatch event.
+    dispatchEvent(strDates);
+  }, []);
 
   return (
     <div ref={nodeRef} className="mykn-daterangeinput">
@@ -194,14 +178,14 @@ export const DateRangeInput: React.FC<DateRangeInputProps> = ({
         {...props}
         label={gettextFirst(labelStartDate, TRANSLATIONS.LABEL_START_DATE)}
         value={valuesState?.[0]}
-        onChange={handleStartChange}
+        onChange={handleChange}
       />
       {icon}
       <DateInput
         {...props}
         label={gettextFirst(labelEndDate, TRANSLATIONS.LABEL_END_DATE)}
         value={valuesState?.[1]}
-        onChange={handleEndChange}
+        onChange={handleChange}
       />
     </div>
   );
