@@ -173,7 +173,7 @@ export const DateRangeInput: React.FC<DateRangeInputProps> = ({
       const dateString = dates?.length === 2 && dates.join("/");
       dispatchEvent(dateString || "");
     },
-    [queuedValueState.current],
+    [queuedValueState.current, normalizeValuesState, dispatchEvent],
   );
 
   return (
