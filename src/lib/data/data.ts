@@ -76,9 +76,11 @@ export const filterDataArray = <T extends object = object>(
   data: T | object,
 ): T[] => {
   return objectList.filter((obj) => {
-    for (const key in data) {
-      const attributeValue = obj[key as keyof T];
+    return Object.entries(obj).every(([key, attributeValue]) => {
+      if (!(key in data)) return true;
+
       const filterValue = data[key as keyof typeof data];
+      if (typeof filterValue === "undefined") return true;
 
       switch (typeof attributeValue) {
         case "undefined":
@@ -108,9 +110,8 @@ export const filterDataArray = <T extends object = object>(
           }
           break;
       }
-
       return true;
-    }
+    });
   });
 };
 

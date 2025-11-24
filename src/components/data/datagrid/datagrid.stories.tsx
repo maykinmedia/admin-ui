@@ -1,3 +1,4 @@
+import { delay } from "@maykin-ui/client-common";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import * as React from "react";
 import { expect, userEvent, within } from "storybook/test";
@@ -206,6 +207,27 @@ export const LocalFilter: Story = {
       { name: "stock", type: "number", filterable: false },
       { name: "isAvailable", type: "boolean" },
     ],
+  },
+  play: async ({ canvasElement }) => {
+    expect(await within(canvasElement).findByText("Smartwatch")).toBeVisible();
+    expect(await within(canvasElement).queryByText("Smart TV")).toBeVisible();
+    const inputName = await within(canvasElement).findByLabelText(
+      'filter field "name"',
+    );
+
+    const inputCategory = await within(canvasElement).findByLabelText(
+      'filter field "category"',
+    );
+    await userEvent.clear(inputName);
+
+    await userEvent.clear(inputCategory);
+    await userEvent.type(inputName, "smart");
+
+    await userEvent.type(inputCategory, "wear");
+
+    await delay(1000);
+    expect(await within(canvasElement).findByText("Smartwatch")).toBeVisible();
+    expect(await within(canvasElement).queryByText("Smart TV")).toBeNull();
   },
 };
 

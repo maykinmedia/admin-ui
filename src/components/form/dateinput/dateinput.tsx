@@ -93,6 +93,7 @@ export const DateInput: React.FC<DateInputProps> = ({
   type SanitizedValues = { DD: string; MM: string; YY: string };
   const fakeInputRef = useRef<HTMLInputElement>(null);
   const [isPristine, setIsPristine] = useState(true);
+  const [valueState, setValueState] = useState(value);
   const [sanitizedValuesState, setSanitizedValuesState] = useState<
     SanitizedValues | undefined
   >();
@@ -149,20 +150,6 @@ export const DateInput: React.FC<DateInputProps> = ({
     [fakeInputRef, onChange],
   );
 
-  // Update sanitizedValuesState.
-  useEffect(() => {
-    if (!value) {
-      setSanitizedValuesState(undefined);
-      return;
-    }
-    const date = value2Date(value);
-
-    if (date) {
-      const sanitizedValues = date2SanitizedValues(date);
-      setSanitizedValuesState(sanitizedValues);
-    }
-  }, [value]);
-
   /**
    * Returns `SanitizedValues` for the optionally given `Date`, if date is omitted, result contains empty values.
    */
@@ -173,6 +160,21 @@ export const DateInput: React.FC<DateInputProps> = ({
       YY: sanitizedValue.getFullYear().toString().padStart(2, "0"),
     };
   }, []);
+
+  // Update sanitizedValuesState.
+  useEffect(() => {
+    setValueState(value);
+    if (!value) {
+      setSanitizedValuesState(undefined);
+      return;
+    }
+    const date = value2Date(value);
+
+    if (date) {
+      const sanitizedValues = date2SanitizedValues(date);
+      setSanitizedValuesState(sanitizedValues);
+    }
+  }, [value, date2SanitizedValues]);
 
   /**
    * Returns whether `date` is a valid date.
@@ -273,7 +275,10 @@ export const DateInput: React.FC<DateInputProps> = ({
       if (date) {
         // Date is valid, dispatch `dateString`.
         const dateString = date2DateString(date);
+        if (dateString === valueState) return; // No change detected.
+
         dispatchEvent(dateString);
+        setValueState(dateString);
         setIsPristine(false);
       } else {
         if (isPristine) {
@@ -281,9 +286,10 @@ export const DateInput: React.FC<DateInputProps> = ({
         }
         // Date is invalid after previous valid value, dispatch "".
         dispatchEvent("");
+        setValueState(null);
       }
     },
-    [sanitizedValuesState, isPristine, dispatchEvent],
+    [sanitizedValuesState, isPristine, dispatchEvent, sanitizedValues2Date],
   );
 
   /**
