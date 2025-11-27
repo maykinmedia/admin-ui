@@ -87,8 +87,6 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version-file: '.nvmrc'
-          cache: npm
-
 
       - name: Install dependencies
         run: npm ci
@@ -123,7 +121,6 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version-file: '.nvmrc'
-          cache: npm
 
       - name: Install dependencies
         run: npm ci
@@ -157,17 +154,23 @@ jobs:
     environment:
       name: release
       url: https://www.npmjs.com/package/@maykin-ui/admin-ui
+
     permissions:
       id-token: write
       contents: read
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          fetch-tags: true
       - uses: actions/setup-node@v4
         with:
           node-version-file: '.nvmrc'
-          cache: npm
           registry-url: 'https://registry.npmjs.org'
+
+      - name: Update NPM
+        run: npm install -g npm@latest
 
       - name: Download build artifact
         id: download
@@ -189,6 +192,10 @@ jobs:
             TAG="beta"
           fi
 
-          FILE=$(ls artifacts/*.tgz)
-          echo "Publishing version $VERSION with tag $TAG"
+          cd artifacts/
+
+          FILE=$(ls *.tgz)
+
+          file $FILE
+          echo "Publishing $FILE with version $VERSION and tag $TAG"
           npm publish "$FILE" --access public --tag $TAG

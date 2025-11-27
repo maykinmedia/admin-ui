@@ -88,8 +88,8 @@
     "@types/react-dom": "^19.0.0",
     "@typescript-eslint/eslint-plugin": "^6.17.0",
     "@typescript-eslint/parser": "^6.17.0",
-    "@vitest/browser": "^3.2.1",
-    "@vitest/coverage-v8": "^3.2.1",
+    "@vitest/browser": "^3.2.4",
+    "@vitest/coverage-v8": "^3.2.4",
     "commitlint": "^19.0.0",
     "concurrently": "^8.2.2",
     "eslint": "^8.56.0",
@@ -118,7 +118,7 @@
     "ts-loader": "^9.5.1",
     "tslib": "^2.6.2",
     "typescript": "^5.3.3",
-    "vitest": "^3.2.1"
+    "vitest": "^3.2.4"
   },
   "peerDependencies": {
     "react": "^18.0.0 || ^19.0.0",
@@ -140,8 +140,5 @@
   },
   "optionalDependencies": {
     "@rollup/rollup-linux-x64-gnu": "latest"
-  },
-  "overrides": {
-    "storybook": "$storybook"
   }
 }
