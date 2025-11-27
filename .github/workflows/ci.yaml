@@ -20,13 +20,14 @@ concurrency:
 
 jobs:
   build:
+    name: Create 'production' build
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v4
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
       - name: Build source
         env:
@@ -36,7 +37,15 @@ jobs:
       - name: build package
         run: npm pack
 
+      - name: Store build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: build
+          path: maykin-ui-admin-ui-*.tgz
+          retention-days: 1
+
   commitlint:
+    name: Validate the commit messages
     runs-on: ubuntu-latest
 
     steps:
@@ -53,20 +62,21 @@ jobs:
         if: github.event_name == 'pull_request'
         run: npx commitlint --from ${{ github.event.pull_request.head.sha }}~${{ github.event.pull_request.commits }} --to ${{ github.event.pull_request.head.sha }} --verbose
 
-
   lint:
+    name: Run linters
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v4
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
       - name: Run linters
         run: npm run lint
 
   test:
+    name: Run tests
     runs-on: ubuntu-latest
 
     steps:
@@ -75,6 +85,10 @@ jobs:
           fetch-depth: 0
 
       - uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          cache: npm
+
 
       - name: Install dependencies
         run: npm ci
@@ -99,3 +113,82 @@ jobs:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           autoAcceptChanges: "main"
           onlyChanged: true
+
+  i18n-check:
+    name: Check for missing translations
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Make and compile messages
+        run: |
+          npm run makemessages
+          npm run compilemessages
+
+      - name: Check for uncommitted changes
+        run: |
+          # Check for changes in the repo
+          if [[ -n "$(git status --porcelain)" ]]; then
+            echo "There are uncommitted changes. Stopping the workflow."
+            exit 1
+          fi
+
+  publish:
+    name: Publish the NPM package
+    runs-on: ubuntu-latest
+    needs:
+      - build
+      - commitlint
+      - lint
+      - test
+      - i18n-check
+
+    # do not publish in forks or non-tag pushes
+    if: startsWith(github.ref, 'refs/tags/') && github.repository_owner == 'maykinmedia'
+
+    environment:
+      name: release
+      url: https://www.npmjs.com/package/@maykin-ui/admin-ui
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          cache: npm
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Download build artifact
+        id: download
+        uses: actions/download-artifact@v4
+        with:
+          name: build
+          path: artifacts
+
+      - name: Publish package to NPM
+        run: |
+          shopt -s nocasematch
+
+          VERSION=$(node -p "require('./package.json').version")
+          TAG="latest"
+
+          if [[ "$VERSION" == *alpha* ]]; then
+            TAG="alpha"
+          elif [[ "$VERSION" == *beta* ]]; then
+            TAG="beta"
+          fi
+
+          FILE=$(ls artifacts/*.tgz)
+          echo "Publishing version $VERSION with tag $TAG"
+          npm publish "$FILE" --access public --tag $TAG
