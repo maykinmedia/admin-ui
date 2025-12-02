@@ -210,7 +210,7 @@ export const Form = <T extends SerializedFormData = SerializedFormData>({
    */
   const handleChange: FormProps["onChange"] = (event) => {
     if (validateOnChange && validate && formRef.current) {
-      const validateData = serializeFormElement<T>(formRef.current, {
+      const validateData: T = serializeFormElement(formRef.current, {
         trimCheckboxArray: false,
       });
       const errors = validate(validateData, fields || [], validators);
@@ -223,7 +223,7 @@ export const Form = <T extends SerializedFormData = SerializedFormData>({
     }
 
     if (formRef.current && !onChange) {
-      const data = serializeFormElement<T>(formRef.current, {
+      const data: T = serializeFormElement(formRef.current, {
         typed: useTypedResults,
       });
       setValuesState(data);
@@ -239,7 +239,7 @@ export const Form = <T extends SerializedFormData = SerializedFormData>({
     const form = event.target as HTMLFormElement;
 
     if (validate) {
-      const validateData = serializeFormElement<T>(form, {
+      const validateData: T = serializeFormElement(form, {
         trimCheckboxArray: false,
       });
 
@@ -252,7 +252,7 @@ export const Form = <T extends SerializedFormData = SerializedFormData>({
       }
     }
 
-    const outputDate = serializeFormElement<T>(form, {
+    const outputDate: T = serializeFormElement(form, {
       typed: useTypedResults,
     });
 

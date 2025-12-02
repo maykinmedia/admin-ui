@@ -99,11 +99,10 @@ export const DataGridFilter = <
         e.preventDefault();
       }
 
-      const data = serializeFormElement<
-        TypedSerializedFormData<keyof T & string>
-      >(input.form as HTMLFormElement, {
-        typed: true,
-      });
+      const data: TypedSerializedFormData<keyof T & string> =
+        serializeFormElement(input.form as HTMLFormElement, {
+          typed: true,
+        });
       const _data = (filterTransform ? filterTransform(data) : data) as F;
 
       if (_data !== undefined) {
