@@ -133,7 +133,7 @@
     "@floating-ui/react": "^0.27.5",
     "@heroicons/react": "^2.2.0",
     "@js-temporal/polyfill": "^0.5.1",
-    "@maykin-ui/client-common": "^0.0.6",
+    "@maykin-ui/client-common": "^0.0.7",
     "clsx": "^2.1.1",
     "react-datepicker": "^7.6.0",
     "react-intl": "^7.1.6"

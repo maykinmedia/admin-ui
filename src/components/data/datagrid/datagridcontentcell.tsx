@@ -140,12 +140,9 @@ export const DataGridContentCell = <
     (e: React.FocusEvent<HTMLInputElement | HTMLSelectElement>) => {
       const data = Object.assign(
         rowData,
-        serializeFormElement<TypedSerializedFormData>(
-          e.target.form as HTMLFormElement,
-          {
-            typed: true,
-          },
-        ),
+        serializeFormElement(e.target.form as HTMLFormElement, {
+          typed: true,
+        }) as TypedSerializedFormData,
       );
 
       if (Array.isArray(editingState)) {
