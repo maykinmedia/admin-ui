@@ -311,9 +311,10 @@ export const Form = <T extends SerializedFormData = SerializedFormData>({
           {fields?.map((field, index) => {
             const label = field.label ?? field.name;
 
-            const value =
-              (field.value as string) ||
-              getValueFromFormData<T>(fields || [], valuesState, field);
+            const value = (
+              field.value ??
+              getValueFromFormData<T>(fields || [], valuesState, field)
+            )?.toString();
 
             // TODO: CLEAN UP
             const _labelValidationErrorRequired = intl.formatMessage(
@@ -336,6 +337,7 @@ export const Form = <T extends SerializedFormData = SerializedFormData>({
               ) ?? [];
             const message = errors.join(", ");
 
+            const valueProps = "defaultValue" in field ? {} : { value };
             return (
               <FormControl
                 key={field.id || index}
@@ -346,8 +348,8 @@ export const Form = <T extends SerializedFormData = SerializedFormData>({
                 showRequiredIndicator={showRequiredIndicator}
                 requiredIndicator={requiredIndicator}
                 labelRequired={labelRequired}
-                value={value}
                 onChange={handleChange}
+                {...valueProps}
                 {...field}
               ></FormControl>
             );

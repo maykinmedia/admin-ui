@@ -70,12 +70,18 @@ export const DataGridContentCell = <
 
   const urlField = urlFields.find((f) => rowData[f as keyof T]);
   const rowUrl = urlField ? rowData[urlField as keyof T] : null;
-  const resolvedValue = getByDotSeparatedPath(
-    rowData,
-    field.valueLookup || field.name.toString(),
-  );
 
-  const value = field.valueTransform?.(rowData) || resolvedValue;
+  // Resolve value either from:
+  // - Value transform
+  // - Value lookup
+  // - Field name.
+  const value = field.valueTransform
+    ? field.valueTransform?.(rowData)
+    : getByDotSeparatedPath(
+        rowData,
+        field.valueLookup || field.name.toString(),
+      );
+
   const valueIsPrimitive = isPrimitive(value);
 
   const isImplicitLink = rowUrl && fieldIndex === 0 && !isLink(String(value));
