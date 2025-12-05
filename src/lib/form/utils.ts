@@ -55,6 +55,10 @@ export const getValueFromFormData = <T extends object = object>(
     return data2Value(_value);
   }
 
+  if (field.type === "checkbox") {
+    return value;
+  }
+
   return data2Value(value);
 };
 
@@ -64,7 +68,7 @@ export const getValueFromFormData = <T extends object = object>(
  */
 export function data2Value(data: unknown): number | string | undefined {
   if (data === null || data === undefined) {
-    return undefined;
+    return "";
   }
   switch (typeof data) {
     case "boolean":
