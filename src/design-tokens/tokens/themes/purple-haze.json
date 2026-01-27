@@ -38,32 +38,32 @@
     },
     "intent": {
       "success": {
-        "default": { "value": "#2E843D" },
-        "hover": { "value": "#2D7F3A" },
-        "pressed": { "value": "#256631" },
-        "active": { "value": "#2E843D" },
-        "contrast": { "value": "#FFFFFF" }
+        "default": { "value": "#EDFFF3" },
+        "hover": { "value": "#EDFFF3" },
+        "pressed": { "value": "#EDFFF3" },
+        "active": { "value": "#EDFFF3" },
+        "contrast": { "value": "#2E843D" }
       },
       "warning": {
-        "default": { "value": "#FFA305" },
-        "hover": { "value": "#FFA305" },
-        "pressed": { "value": "#FFA305" },
-        "active": { "value": "#FFA305" },
-        "contrast": { "value": "#333333" }
+        "default": { "value": "#FFEEE1" },
+        "hover": { "value": "#FFEEE1" },
+        "pressed": { "value": "#FFEEE1" },
+        "active": { "value": "#FFEEE1" },
+        "contrast": { "value": "#AC501B" }
       },
       "danger": {
-        "default": { "value": "#EB0000" },
-        "hover": { "value": "#DE3535" },
-        "pressed": { "value": "#C43333" },
-        "active": { "value": "#EB0000" },
-        "contrast": { "value": "#FFFFFF" }
+        "default": { "value": "#FFE3E3" },
+        "hover": { "value": "#FFE3E3" },
+        "pressed": { "value": "#FFE3E3" },
+        "active": { "value": "#FFE3E3" },
+        "contrast": { "value": "#D10000" }
       },
       "info": {
-        "default": { "value": "#00BFCB" },
-        "hover": { "value": "#00BFCB" },
-        "pressed": { "value": "#00BFCB" },
-        "active": { "value": "#00BFCB" },
-        "contrast": { "value": "#333333" }
+        "default": { "value": "#E3FFFF" },
+        "hover": { "value": "#E3FFFF" },
+        "pressed": { "value": "#E3FFFF" },
+        "active": { "value": "#E3FFFF" },
+        "contrast": { "value": "#007C85" }
       }
     }
   }
