@@ -1,0 +1,70 @@
+{
+  "theme": {
+    "color-scheme": "light",
+    "brand": {
+      "primary": {
+        "default": { "value": "#341A90" },
+        "hover": { "value": "#25116D" },
+        "pressed": { "value": "#25116D" },
+        "active": { "value": "#341A90" },
+        "contrast": { "value": "#FFFFFF" }
+      },
+      "secondary": {
+        "default": { "value": "#E7E0FF" },
+        "hover": { "value": "#6F5AB7" },
+        "pressed": { "value": "#341A90" },
+        "active": { "value": "#E7E0FF" },
+        "contrast": { "value": "#FFFFFF" }
+      },
+      "accent": {
+        "default": { "value": "#BCB8C8" },
+        "hover": { "value": "#BCB8C8" },
+        "pressed": { "value": "#BCB8C8" },
+        "active": { "value": "#BCB8C8" },
+        "contrast": { "value": "#25116D" }
+      }
+    },
+    "base": {
+      "background": { "value": "#FFFFFF" },
+      "background-alternate": { "value": "#EDEDED" },
+      "foreground": { "value": "#333333" },
+      "foreground-disabled": { "value": "#767676" },
+      "foreground-muted": { "value": "#595959" },
+      "border": { "value": "#949494" },
+      "shadow": {
+        "value": "rgba(0, 0, 0, 0.10)"
+      },
+      "link": { "value": "#341A90" }
+    },
+    "intent": {
+      "success": {
+        "default": { "value": "#2E843D" },
+        "hover": { "value": "#2D7F3A" },
+        "pressed": { "value": "#256631" },
+        "active": { "value": "#2E843D" },
+        "contrast": { "value": "#FFFFFF" }
+      },
+      "warning": {
+        "default": { "value": "#FFA305" },
+        "hover": { "value": "#FFA305" },
+        "pressed": { "value": "#FFA305" },
+        "active": { "value": "#FFA305" },
+        "contrast": { "value": "#333333" }
+      },
+      "danger": {
+        "default": { "value": "#EB0000" },
+        "hover": { "value": "#DE3535" },
+        "pressed": { "value": "#C43333" },
+        "active": { "value": "#EB0000" },
+        "contrast": { "value": "#FFFFFF" }
+      },
+      "info": {
+        "default": { "value": "#00BFCB" },
+        "hover": { "value": "#00BFCB" },
+        "pressed": { "value": "#00BFCB" },
+        "active": { "value": "#00BFCB" },
+        "contrast": { "value": "#333333" }
+      }
+    }
+  }
+}
