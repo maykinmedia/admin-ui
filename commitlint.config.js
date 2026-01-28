@@ -1,10 +1,10 @@
 /**
  * @example: :sparkles: #1 - feat: implement new feature
- * @see {@link https://regexr.com/8fcbf RegExr}
+ * @see {@link https://regexr.com/8jg18 RegExr}
  * @type {RegExp}
  */
 const COMMIT_PATTERN =
-  /(:\w+\:)(?:\s+(#\d+))?\s-\s([\w\s]+)(?:\((\w+)\))?!?:\s(.+)/;
+  /(:\w+\:)(?:\s+([\w/-]*#\d+))?\s-\s([\w\s]+)(?:\((\w+)\))?!?:\s(.+)/;
 
 // We can't use commitlint type enum here due to gitmoji.
 const TYPE_ENUM = [
