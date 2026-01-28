@@ -9,7 +9,7 @@ import "./breadcrumbs.scss";
 
 export type BreadcrumbItem = {
   /** The label of the item. */
-  label: string;
+  label: React.ReactNode;
 
   /** The href of the item. */
   href: string;
