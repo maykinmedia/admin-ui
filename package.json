@@ -25,7 +25,8 @@
     "rollup": "rollup -c",
     "rollup:watch": "rollup -cw",
     "build:design-tokens": "node bin/build-design-tokens.mjs",
-    "prepare": "husky install"
+    "build:if-needed": "node bin/build-if-needed.mjs",
+    "prepare": "husky install & npm run build:if-needed"
   },
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
