@@ -76,7 +76,7 @@ export const DataGridContentCell = <
   // - Value lookup
   // - Field name.
   const value = field.valueTransform
-    ? field.valueTransform?.(rowData)
+    ? field.valueTransform(rowData)
     : getByDotSeparatedPath(
         rowData,
         field.valueLookup || field.name.toString(),
