@@ -78,7 +78,8 @@ export function data2Value(data: unknown): number | string | undefined {
       if (data instanceof Date) {
         return date2DateString(data);
       }
-      break;
+      // TODO: Investigate whether we should return "" here.
+      return undefined;
 
     default:
       return isPrimitive<Exclude<Primitive, boolean | null | undefined>>(data)
