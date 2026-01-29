@@ -312,8 +312,7 @@ export const Form = <T extends SerializedFormData = SerializedFormData>({
             const label = field.label ?? field.name;
 
             const value = (
-              field.value ??
-              getValueFromFormData<T>(fields || [], valuesState, field)
+              field.value ?? getValueFromFormData<T>(fields, valuesState, field)
             )?.toString();
 
             // TODO: CLEAN UP
