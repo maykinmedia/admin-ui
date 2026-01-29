@@ -337,7 +337,16 @@ export const Form = <T extends SerializedFormData = SerializedFormData>({
               ) ?? [];
             const message = errors.join(", ");
 
-            const valueProps = "defaultValue" in field ? {} : { value };
+            const isValueSet = value !== null && value !== undefined;
+            const isCheckbox = field.type === "checkbox";
+            const hasDefaultValue = "defaultValue" in field;
+            const isCheckboxWithoutValue = isCheckbox && !isValueSet;
+
+            const valueProps =
+              hasDefaultValue || isCheckboxWithoutValue
+                ? {}
+                : { value: value ?? "" };
+
             return (
               <FormControl
                 key={field.id || index}
