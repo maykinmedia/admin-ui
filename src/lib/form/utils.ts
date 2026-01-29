@@ -81,7 +81,7 @@ export function data2Value(data: unknown): number | string | undefined {
       break;
 
     default:
-      return isPrimitive<Exclude<Primitive, boolean>>(data)
+      return isPrimitive<Exclude<Primitive, boolean | null | undefined>>(data)
         ? data
         : String(data || "");
   }
