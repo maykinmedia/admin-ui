@@ -103,26 +103,26 @@
       "default": {
         "background": { "value": "{theme.intent.danger.default}" },
         "text": { "value": "{theme.intent.danger.contrast}" },
-        "border": { "value": "{theme.intent.danger.default}" },
-        "shadow": { "value": "{theme.intent.danger.default}" }
+        "border": { "value": "{theme.intent.danger.contrast}" },
+        "shadow": { "value": "{theme.intent.danger.contrast}" }
       },
       "hover": {
         "background": { "value": "{theme.intent.danger.hover}" },
         "text": { "value": "{theme.intent.danger.contrast}" },
-        "border": { "value": "{theme.intent.danger.hover}" },
-        "shadow": { "value": "{theme.intent.danger.hover}" }
+        "border": { "value": "{theme.intent.danger.contrast}" },
+        "shadow": { "value": "{theme.intent.danger.contrast}" }
       },
       "pressed": {
         "background": { "value": "{theme.intent.danger.pressed}" },
         "text": { "value": "{theme.intent.danger.contrast}" },
-        "border": { "value": "{theme.intent.danger.pressed}" },
-        "shadow": { "value": "{theme.intent.danger.pressed}" }
+        "border": { "value": "{theme.intent.danger.contrast}" },
+        "shadow": { "value": "{theme.intent.danger.contrast}" }
       },
       "active": {
         "background": { "value": "{theme.intent.danger.active}" },
         "text": { "value": "{theme.intent.danger.contrast}" },
-        "border": { "value": "{theme.intent.danger.default}" },
-        "shadow": { "value": "{theme.intent.danger.default}" }
+        "border": { "value": "{theme.intent.danger.contrast}" },
+        "shadow": { "value": "{theme.intent.danger.contrast}" }
       },
       "disabled": {
         "background": { "value": "{theme.base.background-alternate}" },
@@ -135,26 +135,26 @@
       "default": {
         "background": { "value": "{theme.intent.warning.default}" },
         "text": { "value": "{theme.intent.warning.contrast}" },
-        "border": { "value": "{theme.intent.warning.default}" },
-        "shadow": { "value": "{theme.intent.warning.default}" }
+        "border": { "value": "{theme.intent.warning.contrast}" },
+        "shadow": { "value": "{theme.intent.warning.contrast}" }
       },
       "hover": {
         "background": { "value": "{theme.intent.warning.hover}" },
         "text": { "value": "{theme.intent.warning.contrast}" },
-        "border": { "value": "{theme.intent.warning.hover}" },
-        "shadow": { "value": "{theme.intent.warning.hover}" }
+        "border": { "value": "{theme.intent.warning.contrast}" },
+        "shadow": { "value": "{theme.intent.warning.contrast}" }
       },
       "pressed": {
         "background": { "value": "{theme.intent.warning.pressed}" },
         "text": { "value": "{theme.intent.warning.contrast}" },
-        "border": { "value": "{theme.intent.warning.pressed}" },
-        "shadow": { "value": "{theme.intent.warning.pressed}" }
+        "border": { "value": "{theme.intent.warning.contrast}" },
+        "shadow": { "value": "{theme.intent.warning.contrast}" }
       },
       "active": {
         "background": { "value": "{theme.intent.warning.active}" },
         "text": { "value": "{theme.intent.warning.contrast}" },
-        "border": { "value": "{theme.intent.warning.default}" },
-        "shadow": { "value": "{theme.intent.warning.default}" }
+        "border": { "value": "{theme.intent.warning.contrast}" },
+        "shadow": { "value": "{theme.intent.warning.contrast}" }
       },
       "disabled": {
         "background": { "value": "{theme.base.background-alternate}" },
@@ -167,26 +167,26 @@
       "default": {
         "background": { "value": "{theme.intent.info.default}" },
         "text": { "value": "{theme.intent.info.contrast}" },
-        "border": { "value": "{theme.intent.info.default}" },
-        "shadow": { "value": "{theme.intent.info.default}" }
+        "border": { "value": "{theme.intent.info.contrast}" },
+        "shadow": { "value": "{theme.intent.info.contrast}" }
       },
       "hover": {
         "background": { "value": "{theme.intent.info.hover}" },
         "text": { "value": "{theme.intent.info.contrast}" },
-        "border": { "value": "{theme.intent.info.hover}" },
-        "shadow": { "value": "{theme.intent.info.hover}" }
+        "border": { "value": "{theme.intent.info.contrast}" },
+        "shadow": { "value": "{theme.intent.info.contrast}" }
       },
       "pressed": {
         "background": { "value": "{theme.intent.info.pressed}" },
         "text": { "value": "{theme.intent.info.contrast}" },
-        "border": { "value": "{theme.intent.info.pressed}" },
-        "shadow": { "value": "{theme.intent.info.pressed}" }
+        "border": { "value": "{theme.intent.info.contrast}" },
+        "shadow": { "value": "{theme.intent.info.contrast}" }
       },
       "active": {
         "background": { "value": "{theme.intent.info.active}" },
         "text": { "value": "{theme.intent.info.contrast}" },
-        "border": { "value": "{theme.intent.info.default}" },
-        "shadow": { "value": "{theme.intent.info.default}" }
+        "border": { "value": "{theme.intent.info.contrast}" },
+        "shadow": { "value": "{theme.intent.info.contrast}" }
       },
       "disabled": {
         "background": { "value": "{theme.base.background-alternate}" },
@@ -199,26 +199,26 @@
       "default": {
         "background": { "value": "{theme.intent.success.default}" },
         "text": { "value": "{theme.intent.success.contrast}" },
-        "border": { "value": "{theme.intent.success.default}" },
-        "shadow": { "value": "{theme.intent.success.default}" }
+        "border": { "value": "{theme.intent.success.contrast}" },
+        "shadow": { "value": "{theme.intent.success.contrast}" }
       },
       "hover": {
         "background": { "value": "{theme.intent.success.hover}" },
         "text": { "value": "{theme.intent.success.contrast}" },
-        "border": { "value": "{theme.intent.success.hover}" },
-        "shadow": { "value": "{theme.intent.success.hover}" }
+        "border": { "value": "{theme.intent.success.contrast}" },
+        "shadow": { "value": "{theme.intent.success.contrast}" }
       },
       "pressed": {
         "background": { "value": "{theme.intent.success.pressed}" },
         "text": { "value": "{theme.intent.success.contrast}" },
-        "border": { "value": "{theme.intent.success.pressed}" },
-        "shadow": { "value": "{theme.intent.success.pressed}" }
+        "border": { "value": "{theme.intent.success.contrast}" },
+        "shadow": { "value": "{theme.intent.success.contrast}" }
       },
       "active": {
         "background": { "value": "{theme.intent.success.active}" },
         "text": { "value": "{theme.intent.success.contrast}" },
-        "border": { "value": "{theme.intent.success.default}" },
-        "shadow": { "value": "{theme.intent.success.default}" }
+        "border": { "value": "{theme.intent.success.contrast}" },
+        "shadow": { "value": "{theme.intent.success.contrast}" }
       },
       "disabled": {
         "background": { "value": "{theme.base.background-alternate}" },
