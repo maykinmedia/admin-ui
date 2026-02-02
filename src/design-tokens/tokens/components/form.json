@@ -9,11 +9,11 @@
     },
     "formcontrol": {
       "danger": {
-        "border": { "value": "{theme.intent.danger.default}" }
+        "border": { "value": "{theme.intent.danger.contrast}" }
       }
     },
     "errormessage": {
-      "text": { "value": "{theme.intent.danger.default}" }
+      "text": { "value": "{theme.intent.danger.contrast}" }
     },
     "select": {
       "default": {
