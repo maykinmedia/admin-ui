@@ -21,24 +21,24 @@
       "border": { "value": "{typography.color.border}" }
     },
     "info": {
-      "background": { "value": "{theme.intent.info.contrast}" },
-      "text": { "value": "{theme.intent.info.default}" },
-      "border": { "value": "{theme.intent.info.default}" }
+      "background": { "value": "{theme.intent.info.default}" },
+      "text": { "value": "{theme.intent.info.contrast}" },
+      "border": { "value": "{theme.intent.info.contrast}" }
     },
     "success": {
-      "background": { "value": "{theme.intent.success.contrast}" },
-      "text": { "value": "{theme.intent.success.default}" },
-      "border": { "value": "{theme.intent.success.default}" }
+      "background": { "value": "{theme.intent.success.default}" },
+      "text": { "value": "{theme.intent.success.contrast}" },
+      "border": { "value": "{theme.intent.success.contrast}" }
     },
     "warning": {
-      "background": { "value": "{theme.intent.warning.contrast}" },
-      "text": { "value": "{theme.intent.warning.default}" },
-      "border": { "value": "{theme.intent.warning.default}" }
+      "background": { "value": "{theme.intent.warning.default}" },
+      "text": { "value": "{theme.intent.warning.contrast}" },
+      "border": { "value": "{theme.intent.warning.contrast}" }
     },
     "danger": {
-      "background": { "value": "{theme.intent.danger.contrast}" },
-      "text": { "value": "{theme.intent.danger.default}" },
-      "border": { "value": "{theme.intent.danger.default}" }
+      "background": { "value": "{theme.intent.danger.default}" },
+      "text": { "value": "{theme.intent.danger.contrast}" },
+      "border": { "value": "{theme.intent.danger.contrast}" }
     }
   }
 }

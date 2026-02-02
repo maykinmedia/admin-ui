@@ -1,5 +1,5 @@
 .mykn-banner {
-  --mykn-banner-icon-color: var(--banner-background);
+  --mykn-banner-background: var(--banner-background);
   --mykn-banner-border-color: var(--banner-border);
 
   border: 1px solid;
@@ -8,28 +8,32 @@
   display: flex;
   align-items: center;
   padding: var(--sizes-spacing-xs-v);
-  background-color: var(--banner-background);
+  background-color: var(--mykn-banner-background);
   color: var(--mykn-banner-color);
   position: relative;
   min-height: 60px;
 
   &--variant-info {
-    --mykn-banner-color: var(--banner-info-background);
+    --mykn-banner-color: var(--banner-info-text);
+    --mykn-banner-background: var(--banner-info-background);
     --mykn-banner-border-color: var(--banner-info-border);
   }
 
   &--variant-success {
-    --mykn-banner-color: var(--banner-success-background);
+    --mykn-banner-color: var(--banner-success-text);
+    --mykn-banner-background: var(--banner-success-background);
     --mykn-banner-border-color: var(--banner-success-border);
   }
 
   &--variant-warning {
-    --mykn-banner-color: var(--banner-warning-background);
+    --mykn-banner-color: var(--banner-warning-text);
+    --mykn-banner-background: var(--banner-warning-background);
     --mykn-banner-border-color: var(--banner-warning-border);
   }
 
   &--variant-danger {
-    --mykn-banner-color: var(--banner-danger-background);
+    --mykn-banner-color: var(--banner-danger-text);
+    --mykn-banner-background: var(--banner-danger-background);
     --mykn-banner-border-color: var(--banner-danger-border);
   }
 
