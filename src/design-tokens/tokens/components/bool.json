@@ -1,10 +1,10 @@
 {
   "bool": {
     "success": {
-      "background": { "value": "{theme.intent.success.default}" }
+      "background": { "value": "{theme.intent.success.contrast}" }
     },
     "danger": {
-      "background": { "value": "{theme.intent.danger.default}" }
+      "background": { "value": "{theme.intent.danger.contrast}" }
     }
   }
 }
