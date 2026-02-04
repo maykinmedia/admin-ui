@@ -68,6 +68,20 @@ export const ToolbarComponent: Story = {
         ],
       },
       {
+        componentType: "accordion",
+        children: "Accordion",
+        items: [
+          {
+            componentType: "button",
+            children: "Button 1",
+          },
+          {
+            componentType: "button",
+            children: "Button 2",
+          },
+        ],
+      },
+      {
         componentType: "formControl",
         placeholder: "FormControl",
       },
