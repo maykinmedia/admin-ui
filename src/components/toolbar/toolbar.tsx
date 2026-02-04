@@ -1,21 +1,44 @@
+import { deprecated } from "@maykin-ui/client-common";
 import clsx from "clsx";
 import React from "react";
 
 import { isFormControl } from "../../lib";
 import { Button, ButtonLink, ButtonLinkProps, ButtonProps } from "../button";
 import { Dropdown, DropdownProps } from "../dropdown";
-import { FormControl, FormControlProps } from "../form/formcontrol";
+import { FormControl, FormControlProps } from "../form";
 import { A, AProps } from "../typography";
 import "./toolbar.scss";
 
-export type ToolbarItem =
-  | AProps
-  | ButtonProps
-  | ButtonLinkProps
-  | DropdownProps
-  | FormControlProps
-  | "spacer"
-  | React.ReactNode;
+const toolbarItemComponentMap = {
+  anchor: {} as AProps,
+  button: {} as ButtonProps,
+  buttonLink: {} as ButtonLinkProps,
+  dropdown: {} as DropdownProps,
+  formControl: {} as FormControlProps,
+};
+
+type ToolbarItemComponents = typeof toolbarItemComponentMap;
+type ToolbarItemComponentType = keyof ToolbarItemComponents;
+
+/**
+ * Type safe toolbar item components.
+ *
+ * Using the `componentType` property, TypeScript understands which properties are
+ * available on the various components. This increases type safety and makes the toolbar
+ * easier to use for developers.
+ */
+export type ToolbarItemComponent = {
+  [K in ToolbarItemComponentType]: ToolbarItemComponents[K] & {
+    /**
+     * The type of the item, used to identify the component to render.
+     *
+     * @deprecated Optional for backwards compatibility. Will become required in 4.0.
+     */
+    componentType?: K;
+  };
+}[ToolbarItemComponentType];
+
+export type ToolbarItem = ToolbarItemComponent | "spacer" | React.ReactNode;
 
 export type ToolbarProps = React.PropsWithChildren<
   React.HTMLAttributes<HTMLElement>
@@ -100,12 +123,7 @@ export function Toolbar({
         ? "vertical"
         : (_direction as "horizontal" | "vertical");
 
-  type ToolbarItemProps =
-    | React.ComponentProps<typeof A>
-    | React.ComponentProps<typeof ButtonLink>
-    | React.ComponentProps<typeof Dropdown>
-    | React.ComponentProps<typeof Button>
-    | React.ComponentProps<typeof FormControl>;
+  type ToolbarItemProps = Exclude<ToolbarItemComponent, "componentType">;
 
   /**
    * Returns the React.FC and default props to apply to it for the item based on
@@ -123,78 +141,143 @@ export function Toolbar({
       return [() => item, {}];
     }
 
-    if (isA(item)) {
-      return [
-        A,
-        overrideItemProps
-          ? {
-              size: direction === "horizontal" ? "xs" : undefined,
-            }
-          : {},
-      ];
+    let type: ToolbarItemComponentType | undefined;
+    if (isToolbarItemComponent(item)) type = item.componentType;
+
+    if (!type) {
+      // From version 4.0, items should have a componentType property.
+      // For backward compatibility reasons, we still allow the 'old' way of identifying
+      // the component type.
+
+      if (isA(item)) type = "anchor";
+      else if (isButton(item)) type = "button";
+      else if (isButtonLink(item)) type = "buttonLink";
+      else if (isDropdown(item)) type = "dropdown";
+      else if (isFormControl(item)) type = "formControl";
+
+      let deprecatedAlternative =
+        "mykn.components.toolbar: items should have a componentType property";
+      if (type !== undefined) {
+        deprecatedAlternative += `, add componentType='${type}' to your item`;
+      }
+
+      deprecated(
+        true,
+        "items.componentType=undefined",
+        deprecatedAlternative,
+        "4.0",
+      );
     }
 
-    if (isButton(item)) {
-      return [
-        Button,
-        overrideItemProps
-          ? {
-              size: direction === "horizontal" ? "xs" : undefined,
-              variant: "transparent",
-            }
-          : {},
-      ];
-    }
+    if (type) {
+      switch (type) {
+        case "anchor": {
+          const itemProps: Partial<ToolbarItemComponents[typeof type]> =
+            overrideItemProps
+              ? {
+                  size: direction === "horizontal" ? "xs" : undefined,
+                }
+              : {};
+          return [A, itemProps];
+        }
 
-    if (isButtonLink(item)) {
-      return [
-        ButtonLink,
-        overrideItemProps
-          ? {
-              size: direction === "horizontal" ? "xs" : undefined,
-              variant: "transparent",
-            }
-          : {},
-      ];
-    }
+        case "button": {
+          const itemProps: Partial<ToolbarItemComponents[typeof type]> =
+            overrideItemProps
+              ? {
+                  size: direction === "horizontal" ? "xs" : undefined,
+                  variant: "transparent",
+                }
+              : {};
+          return [Button, itemProps];
+        }
 
-    if (isDropdown(item)) {
-      return [
-        Dropdown as React.FC,
-        overrideItemProps
-          ? {
-              size: direction === "horizontal" ? "xs" : undefined,
-              variant: "transparent",
-            }
-          : {},
-      ];
-    }
+        case "buttonLink": {
+          const itemProps: Partial<ToolbarItemComponents[typeof type]> =
+            overrideItemProps
+              ? {
+                  size: direction === "horizontal" ? "xs" : undefined,
+                  variant: "transparent",
+                }
+              : {};
+          return [ButtonLink, itemProps];
+        }
 
-    if (isFormControl(item)) {
-      return [
-        FormControl,
-        overrideItemProps
-          ? {
-              size: direction === "horizontal" ? "xs" : undefined,
-              variant: "transparent",
-            }
-          : {},
-      ];
+        case "dropdown": {
+          const itemProps: Partial<ToolbarItemComponents[typeof type]> =
+            overrideItemProps
+              ? {
+                  size: direction === "horizontal" ? "xs" : undefined,
+                  variant: "transparent",
+                }
+              : {};
+          return [Dropdown as React.FC, itemProps];
+        }
+
+        case "formControl": {
+          const itemProps: Partial<ToolbarItemComponents[typeof type]> =
+            overrideItemProps
+              ? {
+                  size: direction === "horizontal" ? "xs" : undefined,
+                  variant: "transparent",
+                }
+              : {};
+          return [FormControl, itemProps];
+        }
+      }
     }
 
     throw new Error("Unknown toolbar item type!");
   };
 
+  const toolbarItemComponentTypes = Object.keys(
+    toolbarItemComponentMap,
+  ) as ToolbarItemComponentType[];
+
+  /**
+   * Checks if the item is a ToolbarItemComponent with a valid componentType property.
+   * @param item
+   */
+  const isToolbarItemComponent = (
+    item: unknown,
+  ): item is ToolbarItemComponent =>
+    item != null &&
+    typeof item === "object" &&
+    "componentType" in item &&
+    toolbarItemComponentTypes.includes(
+      item.componentType as ToolbarItemComponentType,
+    );
+
+  /**
+   * @deprecated REMOVE in 4.0 - items should have a componentType property,
+   * and be automatically picked up by isToolbarItemComponent.
+   * @param item
+   */
   const isA = (item: unknown): item is AProps =>
     Object.hasOwn(Object(item), "textDecoration");
 
+  /**
+   * @deprecated REMOVE in 4.0 - items should have a componentType property,
+   * and be automatically picked up by isToolbarItemComponent.
+   * @param item
+   */
   const isButton = (item: unknown): item is ButtonProps =>
     !Object.hasOwn(Object(item), "href") &&
     Object.hasOwn(Object(item), "children"); // Does button always have children?
 
+  /**
+   * @deprecated REMOVE in 4.0 - items should have a componentType property,
+   * and be automatically picked up by isToolbarItemComponent.
+   * @param item
+   */
   const isButtonLink = (item: unknown): item is ButtonLinkProps =>
     Object.hasOwn(Object(item), "href");
 
+  /**
+   * @deprecated REMOVE in 4.0 - items should have a componentType property,
+   * and be automatically picked up by isToolbarItemComponent.
+   * @param item
+   */
   const isDropdown = (item: unknown): item is DropdownProps =>
     Object.hasOwn(Object(item), "items"); // Mandatory on Dropdown if passed to toolbar items.
 
