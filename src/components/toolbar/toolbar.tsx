@@ -3,6 +3,7 @@ import clsx from "clsx";
 import React from "react";
 
 import { isFormControl } from "../../lib";
+import { Accordion, AccordionProps } from "../accordion";
 import { Button, ButtonLink, ButtonLinkProps, ButtonProps } from "../button";
 import { Dropdown, DropdownProps } from "../dropdown";
 import { FormControl, FormControlProps } from "../form";
@@ -10,6 +11,7 @@ import { A, AProps } from "../typography";
 import "./toolbar.scss";
 
 const toolbarItemComponentMap = {
+  accordion: {} as AccordionProps,
   anchor: {} as AProps,
   button: {} as ButtonProps,
   buttonLink: {} as ButtonLinkProps,
@@ -171,6 +173,17 @@ export function Toolbar({
 
     if (type) {
       switch (type) {
+        case "accordion": {
+          const itemProps: Partial<ToolbarItemComponents[typeof type]> =
+            overrideItemProps
+              ? {
+                  size: direction === "horizontal" ? "xs" : undefined,
+                  variant: "transparent",
+                }
+              : {};
+          return [Accordion, itemProps];
+        }
+
         case "anchor": {
           const itemProps: Partial<ToolbarItemComponents[typeof type]> =
             overrideItemProps

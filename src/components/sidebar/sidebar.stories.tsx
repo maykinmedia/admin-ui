@@ -3,6 +3,7 @@ import * as React from "react";
 
 import { PAGE_DECORATOR } from "../../../.storybook/decorators";
 import { Badge } from "../badge";
+import { Outline } from "../icon";
 import { Toolbar } from "../toolbar";
 import { Sidebar } from "./sidebar";
 
@@ -70,6 +71,25 @@ export const SidebarComponent: Story = {
             align: "space-between",
             justify: true,
             variant: "transparent",
+          },
+          {
+            componentType: "accordion",
+            children: (
+              <>
+                <Outline.AcademicCapIcon />
+                Consectetur
+              </>
+            ),
+            items: [
+              {
+                componentType: "button",
+                children: "Adipiscing elit",
+              },
+              {
+                componentType: "button",
+                children: "Elit sed do",
+              },
+            ],
           },
         ]}
       ></Toolbar>
