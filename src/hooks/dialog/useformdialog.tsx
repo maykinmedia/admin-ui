@@ -111,6 +111,7 @@ const PromptForm = <T extends SerializedFormData = SerializedFormData>({
       labelSubmit={labelConfirm}
       secondaryActions={[
         {
+          componentType: "button",
           children: labelCancel,
           minWidth: true,
           type: "button",

@@ -1,12 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import * as React from "react";
 
-import { ButtonLinkProps, ButtonProps } from "../button";
-import { DropdownProps } from "../dropdown";
-import { FormControlProps } from "../form";
 import { IconInitials } from "../iconinitials";
 import { Logo } from "../logo";
-import { A, AProps, H3 } from "../typography";
+import { A, H3 } from "../typography";
 import { Toolbar, ToolbarProps } from "./toolbar";
 
 const meta: Meta<typeof Toolbar> = {
@@ -26,45 +23,54 @@ export const ToolbarComponent: Story = {
       <Logo key="Logo" abbreviated />,
       "spacer",
       {
+        componentType: "anchor",
         children: "Anchor",
         href: "https://www.example.com",
         textDecoration: "underline",
-      } as AProps,
+      },
       {
+        componentType: "buttonLink",
         children: "ButtonLink",
         href: "https://www.example.com",
-      } as ButtonLinkProps,
+      },
       {
+        componentType: "button",
         children: "Button",
         onClick: () => alert("Button clicked."),
-      } as ButtonProps,
+      },
       {
+        componentType: "dropdown",
         label: "Dropdown",
         toolbarProps: { align: "center" },
         items: [
           <Logo key="logo" abbreviated />,
           "spacer",
           {
+            componentType: "anchor",
             children: "Anchor",
             href: "https://www.example.com",
             textDecoration: "underline",
           },
           {
+            componentType: "buttonLink",
             children: "ButtonLink",
             href: "https://www.example.com",
           },
           {
+            componentType: "button",
             children: "Button",
             onClick: () => alert("Button clicked."),
           },
           {
+            componentType: "formControl",
             placeholder: "FormControl",
           },
         ],
-      } as DropdownProps,
+      },
       {
+        componentType: "formControl",
         placeholder: "FormControl",
-      } as FormControlProps,
+      },
       <IconInitials key="IconInitials" name="Maykin Media" />,
     ],
   },

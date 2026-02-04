@@ -533,12 +533,14 @@ export const AdditionalToolBarItems: Story = {
     fields: ["name", "category", "price", "stock", "isAvailable"],
     toolbarItems: [
       {
+        componentType: "formControl",
         icon: <Outline.MagnifyingGlassIcon />,
         name: "query",
         placeholder: "search",
         type: "search",
       },
       {
+        componentType: "button",
         variant: "secondary",
         children: (
           <>
@@ -548,6 +550,7 @@ export const AdditionalToolBarItems: Story = {
         ),
       },
       {
+        componentType: "button",
         variant: "primary",
         children: (
           <>

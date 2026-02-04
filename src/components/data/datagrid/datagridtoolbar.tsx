@@ -6,11 +6,10 @@ import {
 import React, { useEffect, useState } from "react";
 
 import { gettextFirst } from "../../../lib";
-import { ButtonProps } from "../../button";
 import { Form } from "../../form";
 import { Outline } from "../../icon";
 import { Modal } from "../../modal";
-import { Toolbar, ToolbarItem } from "../../toolbar";
+import { Toolbar, ToolbarItem, ToolbarItemComponent } from "../../toolbar";
 import { Body, H3 } from "../../typography";
 import { useDataGridContext } from "./datagridcontext";
 import { DataGridSelectionCheckbox } from "./datagridselectioncheckbox";
@@ -85,7 +84,8 @@ export const DataGridToolbar = <
     ) : null,
 
     ...selectionActions.map(
-      (buttonProps): ButtonProps => ({
+      (buttonProps): ToolbarItemComponent => ({
+        componentType: "button",
         variant: "secondary",
         ...buttonProps,
         onClick: () => {
@@ -105,6 +105,7 @@ export const DataGridToolbar = <
     ...toolbarItems,
     fieldsSelectable
       ? {
+          componentType: "button",
           variant: "secondary",
           wrap: false,
           onClick: () => setSelectFieldsModalState(true),

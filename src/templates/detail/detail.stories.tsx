@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import * as React from "react";
 
 import { Badge, Outline } from "../../components";
-import { DetailTemplate } from "./detail";
+import { DetailTemplate as DetailTemplateComponent } from "./detail";
 
 const FIXTURE = {
   afgekeurd: "Goedgekeurd",
@@ -16,16 +16,16 @@ const FIXTURE = {
   "voorstel voor besluitvorming opgesteld": "In behandeling genomen",
 };
 
-const meta: Meta<typeof DetailTemplate<typeof FIXTURE>> = {
+const meta: Meta<typeof DetailTemplateComponent<typeof FIXTURE>> = {
   title: "Templates/Detail",
-  component: DetailTemplate<typeof FIXTURE>,
+  component: DetailTemplateComponent<typeof FIXTURE>,
   argTypes: { onSubmit: { action: "onSubmit" } },
 };
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const detailTemplate: Story = {
+export const DetailTemplate: Story = {
   args: {
     attributeGridProps: {
       title: "Detailweergave",
@@ -52,20 +52,33 @@ export const detailTemplate: Story = {
       { label: "Detail template", href: "#" },
     ],
     primaryNavigationItems: [
-      { children: <Outline.HomeIcon />, title: "Home" },
+      {
+        componentType: "button",
+        children: <Outline.HomeIcon />,
+        title: "Home",
+      },
       "spacer",
-      { children: <Outline.CogIcon />, title: "Instellingen" },
-      { children: <Outline.ArrowRightOnRectangleIcon />, title: "Uitloggen" },
+      {
+        componentType: "button",
+        children: <Outline.CogIcon />,
+        title: "Instellingen",
+      },
+      {
+        componentType: "button",
+        children: <Outline.ArrowRightOnRectangleIcon />,
+        title: "Uitloggen",
+      },
     ],
   },
 };
 
-export const WithSidebar = {
-  ...detailTemplate,
+export const WithSidebar: Story = {
+  ...DetailTemplate,
   args: {
-    ...detailTemplate.args,
+    ...DetailTemplate.args,
     sidebarItems: [
       {
+        componentType: "button",
         active: true,
         align: "space-between",
         children: (
@@ -77,6 +90,7 @@ export const WithSidebar = {
         variant: "transparent",
       },
       {
+        componentType: "button",
         align: "space-between",
         children: (
           <>
@@ -87,6 +101,7 @@ export const WithSidebar = {
         variant: "transparent",
       },
       {
+        componentType: "button",
         align: "space-between",
         children: (
           <>
@@ -97,6 +112,7 @@ export const WithSidebar = {
         variant: "transparent",
       },
       {
+        componentType: "button",
         align: "space-between",
         children: (
           <>
@@ -110,7 +126,7 @@ export const WithSidebar = {
   },
 };
 
-export const WithSecondaryNavigation = {
+export const WithSecondaryNavigation: Story = {
   ...WithSidebar,
   args: {
     ...WithSidebar.args,
@@ -118,6 +134,7 @@ export const WithSecondaryNavigation = {
       <Badge key="badge">In bewerking</Badge>,
       "spacer",
       {
+        componentType: "button",
         children: (
           <>
             <Outline.CloudArrowUpIcon />
@@ -129,6 +146,7 @@ export const WithSecondaryNavigation = {
         wrap: false,
       },
       {
+        componentType: "button",
         children: (
           <>
             <Outline.CheckIcon />

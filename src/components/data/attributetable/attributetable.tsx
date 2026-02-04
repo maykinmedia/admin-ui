@@ -85,6 +85,7 @@ export const AttributeTable = <T extends object = object>({
         showActions={isFormOpenState}
         secondaryActions={[
           {
+            componentType: "button",
             children: _labelCancel,
             variant: "secondary",
             onClick: () => setIsFormOpenState(false),

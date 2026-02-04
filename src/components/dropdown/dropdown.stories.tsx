@@ -339,6 +339,7 @@ export const DropdownWithItemsProp: Story = {
     ),
     items: [
       {
+        componentType: "button",
         variant: "transparent",
         children: (
           <>
@@ -348,6 +349,7 @@ export const DropdownWithItemsProp: Story = {
         ),
       },
       {
+        componentType: "button",
         variant: "transparent",
         children: (
           <>
@@ -357,6 +359,7 @@ export const DropdownWithItemsProp: Story = {
         ),
       },
       {
+        componentType: "buttonLink",
         href: "https://www.example.com",
         target: "_blank",
         variant: "transparent",
@@ -367,6 +370,7 @@ export const DropdownWithItemsProp: Story = {
         ),
       },
       {
+        componentType: "button",
         variant: "transparent",
         children: (
           <>

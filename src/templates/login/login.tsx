@@ -7,10 +7,11 @@ import {
   Column,
   Container,
   Form,
-  FormProps,
+  type FormProps,
   Grid,
   Hr,
   Logo,
+  type ToolbarItem,
 } from "../../components";
 import { ConfigContext } from "../../contexts";
 import { SerializedFormData, gettextFirst } from "../../lib";
@@ -62,9 +63,10 @@ export const LoginTemplate = <
     TRANSLATIONS.LABEL_OIDC_LOGIN,
   );
 
-  const secondaryActions = [];
+  const secondaryActions: ToolbarItem[] = [];
   if (urlOidcLogin)
     secondaryActions.push({
+      componentType: "buttonLink",
       href: urlOidcLogin,
       variant: "secondary",
       children: _labelOidcLogin,

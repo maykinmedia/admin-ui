@@ -27,6 +27,7 @@ export const SidebarComponent: Story = {
         variant="transparent"
         items={[
           {
+            componentType: "button",
             children: (
               <>
                 Lorem ipsum<Badge variant="success">Verwerkt</Badge>
@@ -38,6 +39,7 @@ export const SidebarComponent: Story = {
             active: true,
           },
           {
+            componentType: "button",
             children: (
               <>
                 Dolor<Badge variant="warning">In behandeling</Badge>
@@ -48,6 +50,7 @@ export const SidebarComponent: Story = {
             variant: "transparent",
           },
           {
+            componentType: "button",
             children: (
               <>
                 Sit<Badge variant="danger">Actie vereist</Badge>
@@ -58,6 +61,7 @@ export const SidebarComponent: Story = {
             variant: "transparent",
           },
           {
+            componentType: "button",
             children: (
               <>
                 Amet<Badge variant="warning">In behandeling</Badge>

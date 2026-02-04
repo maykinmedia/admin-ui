@@ -1,17 +1,18 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
-import { LoginTemplate } from "./login";
+import { LoginTemplate as LoginTemplateComponent } from "./login";
 
-const meta: Meta<typeof LoginTemplate<{ username: string; password: string }>> =
-  {
-    title: "Templates/Login",
-    component: LoginTemplate<{ username: string; password: string }>,
-  };
+const meta: Meta<
+  typeof LoginTemplateComponent<{ username: string; password: string }>
+> = {
+  title: "Templates/Login",
+  component: LoginTemplateComponent<{ username: string; password: string }>,
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const loginTemplate: Story = {
+export const LoginTemplate: Story = {
   args: {
     formProps: {
       autoComplete: "off",

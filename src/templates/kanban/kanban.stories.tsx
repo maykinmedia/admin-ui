@@ -8,11 +8,11 @@ import {
   KanbanComponent as KanbanComponentStory,
   WithToolbar as WithToolbarComponentStory,
 } from "../../components/data/kanban/kanban.stories";
-import { KanbanTemplate } from "./kanban";
+import { KanbanTemplate as KanbanTemplateComponent } from "./kanban";
 
-const meta: Meta<typeof KanbanTemplate> = {
+const meta: Meta<typeof KanbanTemplateComponent> = {
   title: "Templates/Kanban",
-  component: KanbanTemplate,
+  component: KanbanTemplateComponent,
   // @ts-expect-error - Fix missing onClick on type
   argTypes: { onClick: { action: "onClick" } },
 };
@@ -20,7 +20,7 @@ const meta: Meta<typeof KanbanTemplate> = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const kanbanTemplate: Story = {
+export const KanbanTemplate: Story = {
   args: {
     kanbanProps: KanbanComponentStory.args,
     breadcrumbItems: [
@@ -29,20 +29,33 @@ export const kanbanTemplate: Story = {
       { label: "Kanban template", href: "#" },
     ],
     primaryNavigationItems: [
-      { children: <Outline.HomeIcon />, title: "Home" },
+      {
+        componentType: "button",
+        children: <Outline.HomeIcon />,
+        title: "Home",
+      },
       "spacer",
-      { children: <Outline.CogIcon />, title: "Instellingen" },
-      { children: <Outline.ArrowRightOnRectangleIcon />, title: "Uitloggen" },
+      {
+        componentType: "button",
+        children: <Outline.CogIcon />,
+        title: "Instellingen",
+      },
+      {
+        componentType: "button",
+        children: <Outline.ArrowRightOnRectangleIcon />,
+        title: "Uitloggen",
+      },
     ],
   },
 };
 
 export const WithSidebar: Story = {
-  ...kanbanTemplate,
+  ...KanbanTemplate,
   args: {
-    ...kanbanTemplate.args,
+    ...KanbanTemplate.args,
     sidebarItems: [
       {
+        componentType: "button",
         active: true,
         align: "space-between",
         children: (
@@ -54,6 +67,7 @@ export const WithSidebar: Story = {
         variant: "transparent",
       },
       {
+        componentType: "button",
         align: "space-between",
         children: (
           <>
@@ -64,6 +78,7 @@ export const WithSidebar: Story = {
         variant: "transparent",
       },
       {
+        componentType: "button",
         align: "space-between",
         children: (
           <>
@@ -74,6 +89,7 @@ export const WithSidebar: Story = {
         variant: "transparent",
       },
       {
+        componentType: "button",
         align: "space-between",
         children: (
           <>
@@ -95,6 +111,7 @@ export const WithSecondaryNavigation: Story = {
       <Badge key="badge">In bewerking</Badge>,
       "spacer",
       {
+        componentType: "button",
         children: (
           <>
             <Outline.CloudArrowUpIcon />
@@ -106,6 +123,7 @@ export const WithSecondaryNavigation: Story = {
         wrap: false,
       },
       {
+        componentType: "button",
         children: (
           <>
             <Outline.CheckIcon />
@@ -121,25 +139,25 @@ export const WithSecondaryNavigation: Story = {
 };
 
 export const CustomPreview: Story = {
-  ...kanbanTemplate,
+  ...KanbanTemplate,
   args: {
-    ...kanbanTemplate.args,
+    ...KanbanTemplate.args,
     kanbanProps: CustomPreviewComponentStory.args,
   },
 };
 
 export const Draggable: Story = {
-  ...kanbanTemplate,
+  ...KanbanTemplate,
   args: {
-    ...kanbanTemplate.args,
+    ...KanbanTemplate.args,
     kanbanProps: DraggableComponentStory.args,
   },
 };
 
 export const WithToolbar: Story = {
-  ...kanbanTemplate,
+  ...KanbanTemplate,
   args: {
-    ...kanbanTemplate.args,
+    ...KanbanTemplate.args,
     kanbanProps: WithToolbarComponentStory.args,
   },
 };

@@ -379,6 +379,7 @@ export const Form = <T extends SerializedFormData = SerializedFormData>({
           items={[
             ...secondaryActions,
             {
+              componentType: "button",
               children: ucFirst(_labelSubmit),
               disabled:
                 validateOnChange && Boolean(Object.keys(errorsState).length),
