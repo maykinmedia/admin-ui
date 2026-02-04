@@ -33,6 +33,7 @@ export const useAlert = () => {
       [
         "spacer",
         {
+          componentType: "button",
           children: labelConfirm,
           minWidth: true,
           type: "submit",

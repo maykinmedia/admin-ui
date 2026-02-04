@@ -104,6 +104,7 @@ export const WithToolbar: Story = {
     toolbarProps: {
       items: [
         {
+          componentType: "formControl",
           direction: "h",
           label: "Sorteren",
           required: true,
@@ -115,6 +116,7 @@ export const WithToolbar: Story = {
         },
         "spacer",
         {
+          componentType: "button",
           children: "Item toevoegen",
           variant: "primary",
         },

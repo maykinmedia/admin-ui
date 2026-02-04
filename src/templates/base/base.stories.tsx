@@ -2,34 +2,34 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import * as React from "react";
 
 import { P } from "../../components";
-import { BaseTemplate } from "./base";
-import { BodyBaseTemplate } from "./bodyBase";
-import { CardBaseTemplate } from "./cardBase";
+import { BaseTemplate as BaseTemplateComponent } from "./base";
+import { BodyBaseTemplate as BodyBaseTemplateComponent } from "./bodyBase";
+import { CardBaseTemplate as CardBaseTemplateComponent } from "./cardBase";
 
-const meta: Meta<typeof BaseTemplate> = {
+const meta: Meta<typeof BaseTemplateComponent> = {
   title: "Templates/Base",
-  component: BaseTemplate,
+  component: BaseTemplateComponent,
 };
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const baseTemplate: Story = {
+export const BaseTemplate: Story = {
   args: {
     children: <P>The quick brown fox jumps over the lazy dog.</P>,
   },
 };
 
-export const cardBaseTemplate: Story = {
+export const CardBaseTemplate: Story = {
   args: {
     children: <P>The quick brown fox jumps over the lazy dog.</P>,
   },
-  render: (args) => <CardBaseTemplate {...args} />,
+  render: (args) => <CardBaseTemplateComponent {...args} />,
 };
 
-export const bodyBaseTemplate: Story = {
+export const BodyBaseTemplate: Story = {
   args: {
     children: <P>The quick brown fox jumps over the lazy dog.</P>,
   },
-  render: (args) => <BodyBaseTemplate {...args} />,
+  render: (args) => <BodyBaseTemplateComponent {...args} />,
 };

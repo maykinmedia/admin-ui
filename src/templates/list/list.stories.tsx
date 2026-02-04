@@ -3,17 +3,17 @@ import * as React from "react";
 
 import { Badge, DataGridProps, Outline } from "../../components";
 import { FilterablePaginatedSelectableSortable } from "../../components/data/datagrid/datagrid.stories";
-import { ListTemplate } from "./list";
+import { ListTemplate as ListTemplateComponent } from "./list";
 
-const meta: Meta<typeof ListTemplate> = {
+const meta: Meta<typeof ListTemplateComponent> = {
   title: "Templates/List",
-  component: ListTemplate,
+  component: ListTemplateComponent,
 };
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const listTemplate: Story = {
+export const ListTemplate: Story = {
   args: {
     dataGridProps: FilterablePaginatedSelectableSortable.args as DataGridProps,
     breadcrumbItems: [
@@ -22,20 +22,33 @@ export const listTemplate: Story = {
       { label: "List template", href: "#" },
     ],
     primaryNavigationItems: [
-      { children: <Outline.HomeIcon />, title: "Home" },
+      {
+        componentType: "button",
+        children: <Outline.HomeIcon />,
+        title: "Home",
+      },
       "spacer",
-      { children: <Outline.CogIcon />, title: "Instellingen" },
-      { children: <Outline.ArrowRightOnRectangleIcon />, title: "Uitloggen" },
+      {
+        componentType: "button",
+        children: <Outline.CogIcon />,
+        title: "Instellingen",
+      },
+      {
+        componentType: "button",
+        children: <Outline.ArrowRightOnRectangleIcon />,
+        title: "Uitloggen",
+      },
     ],
   },
 };
 
 export const WithSidebar: Story = {
-  ...listTemplate,
+  ...ListTemplate,
   args: {
-    ...listTemplate.args,
+    ...ListTemplate.args,
     sidebarItems: [
       {
+        componentType: "button",
         active: true,
         align: "space-between",
         children: (
@@ -47,6 +60,7 @@ export const WithSidebar: Story = {
         variant: "transparent",
       },
       {
+        componentType: "button",
         align: "space-between",
         children: (
           <>
@@ -57,6 +71,7 @@ export const WithSidebar: Story = {
         variant: "transparent",
       },
       {
+        componentType: "button",
         align: "space-between",
         children: (
           <>
@@ -67,6 +82,7 @@ export const WithSidebar: Story = {
         variant: "transparent",
       },
       {
+        componentType: "button",
         align: "space-between",
         children: (
           <>
@@ -88,6 +104,7 @@ export const WithSecondaryNavigation: Story = {
       <Badge key="badge">In bewerking</Badge>,
       "spacer",
       {
+        componentType: "button",
         children: (
           <>
             <Outline.CloudArrowUpIcon />
@@ -99,6 +116,7 @@ export const WithSecondaryNavigation: Story = {
         wrap: false,
       },
       {
+        componentType: "button",
         children: (
           <>
             <Outline.CheckIcon />

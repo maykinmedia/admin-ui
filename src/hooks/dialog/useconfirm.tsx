@@ -37,6 +37,7 @@ export const useConfirm = () => {
       body,
       [
         {
+          componentType: "button",
           children: labelCancel,
           minWidth: true,
           type: "button",
@@ -49,6 +50,7 @@ export const useConfirm = () => {
           },
         },
         {
+          componentType: "button",
           children: labelConfirm,
           minWidth: true,
           type: "submit",

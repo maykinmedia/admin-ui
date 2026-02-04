@@ -151,6 +151,7 @@ export const Modal: React.FC<ModalProps> = ({
       ? [
           ...actions,
           {
+            componentType: "button",
             "aria-label": _labelClose,
             children: showLabelClose ? (
               <>
