@@ -1,7 +1,6 @@
 import clsx from "clsx";
 import React from "react";
 
-import { ButtonProps } from "../button";
 import { Toolbar, ToolbarItem } from "../toolbar";
 import { Body, H3 } from "../typography";
 import "./card.scss";
@@ -14,9 +13,6 @@ export type CardProps = React.PropsWithChildren<
 
   /** Border around the card. */
   border?: boolean;
-
-  /** @deprecated: REMOVE IN 3.0 - Renamed to actions. */
-  controls?: ButtonProps[];
 
   /** The (flex) direction. */
   direction?: React.CSSProperties["flexDirection"];
@@ -44,10 +40,9 @@ export type CardProps = React.PropsWithChildren<
  * Card component
  */
 export const Card: React.FC<CardProps> = ({
-  controls = [],
   border = false,
   className,
-  actions = controls,
+  actions = [],
   children,
   direction = "column",
   justify,
@@ -56,11 +51,6 @@ export const Card: React.FC<CardProps> = ({
   titleAs: TitleComponent = H3,
   ...props
 }) => {
-  // Controls is renamed to actions.
-  if (controls && controls.length) {
-    console.warn('mykn.components.Card: use of deprecated prop "controls"');
-  }
-
   return (
     <div
       className={clsx(
