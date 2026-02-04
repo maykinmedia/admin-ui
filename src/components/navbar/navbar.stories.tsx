@@ -17,10 +17,22 @@ type Story = StoryObj<typeof meta>;
 export const NavbarComponent: Story = {
   args: {
     items: [
-      { children: <Outline.HomeIcon />, title: "Home" },
+      {
+        componentType: "button",
+        children: <Outline.HomeIcon />,
+        title: "Home",
+      },
       "spacer",
-      { children: <Outline.CogIcon />, title: "Instellingen" },
-      { children: <Outline.ArrowRightOnRectangleIcon />, title: "Uitloggen" },
+      {
+        componentType: "button",
+        children: <Outline.CogIcon />,
+        title: "Instellingen",
+      },
+      {
+        componentType: "button",
+        children: <Outline.ArrowRightOnRectangleIcon />,
+        title: "Uitloggen",
+      },
     ],
   },
 };

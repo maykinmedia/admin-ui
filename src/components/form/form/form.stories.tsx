@@ -284,7 +284,9 @@ export const FormComponent: Story = {
     ],
     validate: validateForm,
     validateOnChange: true,
-    secondaryActions: [{ type: "reset", value: "Reset" }],
+    secondaryActions: [
+      { componentType: "formControl", type: "reset", value: "Reset" },
+    ],
   },
   play: playFormComponent,
 };
@@ -305,7 +307,12 @@ export const SecondaryActions: Story = {
   args: {
     ...FormComponent.args,
     secondaryActions: [
-      { children: "Clear form", type: "reset", variant: "secondary" },
+      {
+        componentType: "button",
+        children: "Clear form",
+        type: "reset",
+        variant: "secondary",
+      },
     ],
   },
 };

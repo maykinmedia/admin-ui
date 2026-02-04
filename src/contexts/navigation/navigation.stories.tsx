@@ -24,10 +24,19 @@ export const Navigation: Story = {
           { label: "Navigation context", href: "#" },
         ],
         primaryNavigationItems: [
-          { children: <Outline.HomeIcon />, title: "Home" },
-          "spacer",
-          { children: <Outline.CogIcon />, title: "Instellingen" },
           {
+            componentType: "button",
+            children: <Outline.HomeIcon />,
+            title: "Home",
+          },
+          "spacer",
+          {
+            componentType: "button",
+            children: <Outline.CogIcon />,
+            title: "Instellingen",
+          },
+          {
+            componentType: "button",
             children: <Outline.ArrowRightOnRectangleIcon />,
             title: "Uitloggen",
           },
@@ -36,6 +45,7 @@ export const Navigation: Story = {
           <Badge key="badge">In bewerking</Badge>,
           "spacer",
           {
+            componentType: "button",
             children: (
               <>
                 <Outline.CloudArrowUpIcon />
@@ -47,6 +57,7 @@ export const Navigation: Story = {
             wrap: false,
           },
           {
+            componentType: "button",
             children: (
               <>
                 <Outline.CheckIcon />
@@ -60,6 +71,7 @@ export const Navigation: Story = {
         ],
         sidebarItems: [
           {
+            componentType: "button",
             active: true,
             align: "space-between",
             children: (
@@ -71,6 +83,7 @@ export const Navigation: Story = {
             variant: "transparent",
           },
           {
+            componentType: "button",
             align: "space-between",
             children: (
               <>
@@ -81,6 +94,7 @@ export const Navigation: Story = {
             variant: "transparent",
           },
           {
+            componentType: "button",
             align: "space-between",
             children: (
               <>
@@ -91,6 +105,7 @@ export const Navigation: Story = {
             variant: "transparent",
           },
           {
+            componentType: "button",
             align: "space-between",
             children: (
               <>

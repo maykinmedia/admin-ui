@@ -38,11 +38,15 @@ export const CardWithTitle: Story = {
   },
 };
 
-export const CardWithControls: Story = {
+export const CardWithActions: Story = {
   args: {
     title: "Card title",
-    controls: [
-      { children: "Click me", onClick: () => alert("Button clicked.") },
+    actions: [
+      {
+        componentType: "button",
+        children: "Click me",
+        onClick: () => alert("Button clicked."),
+      },
     ],
     children: (
       <Body>
