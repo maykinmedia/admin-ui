@@ -96,8 +96,18 @@
         --typography-color-h: var(--toolbar-primary-text);
       }
 
+      & > .mykn-form-control .mykn-input--variant-transparent {
+        --typography-color-muted: var(--toolbar-primary-text);
+      }
+
       & > .mykn-button--variant-transparent:not(:focus, :hover),
-      & > .mykn-dropdown .mykn-button--variant-transparent:not(:focus, :hover) {
+      & > .mykn-dropdown .mykn-button--variant-transparent:not(:focus, :hover),
+      &
+        > .mykn-accordion
+        > .mykn-button--variant-transparent:not(:focus, :hover),
+      &
+        > .mykn-accordion
+        > .mykn-button--variant-transparent[aria-expanded="true"] {
         --mykn-button-color-text: var(--toolbar-primary-text);
       }
     }
@@ -199,6 +209,15 @@
     .mykn-p:has(+ .mykn-p) {
       margin-block-end: 0;
     }
+
+    // Prevent the expended menu from changing the toolbar height
+    .mykn-accordion {
+      position: relative;
+
+      .mykn-accordion__items {
+        position: absolute;
+      }
+    }
   }
 
   // Horizontal on mobile.
@@ -217,6 +236,7 @@
     }
 
     .mykn-a,
+    .mykn-accordion,
     .mykn-button,
     .mykn-dropdown,
     .mykn-form-control,
