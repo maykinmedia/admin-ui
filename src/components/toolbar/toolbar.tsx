@@ -3,44 +3,19 @@ import clsx from "clsx";
 import React from "react";
 
 import { isFormControl } from "../../lib";
-import { Accordion, AccordionProps } from "../accordion";
+import { Accordion } from "../accordion";
 import { Button, ButtonLink, ButtonLinkProps, ButtonProps } from "../button";
 import { Dropdown, DropdownProps } from "../dropdown";
-import { FormControl, FormControlProps } from "../form";
+import { FormControl } from "../form";
 import { A, AProps } from "../typography";
 import "./toolbar.scss";
-
-const toolbarItemComponentMap = {
-  accordion: {} as AccordionProps,
-  anchor: {} as AProps,
-  button: {} as ButtonProps,
-  buttonLink: {} as ButtonLinkProps,
-  dropdown: {} as DropdownProps,
-  formControl: {} as FormControlProps,
-};
-
-type ToolbarItemComponents = typeof toolbarItemComponentMap;
-type ToolbarItemComponentType = keyof ToolbarItemComponents;
-
-/**
- * Type safe toolbar item components.
- *
- * Using the `componentType` property, TypeScript understands which properties are
- * available on the various components. This increases type safety and makes the toolbar
- * easier to use for developers.
- */
-export type ToolbarItemComponent = {
-  [K in ToolbarItemComponentType]: ToolbarItemComponents[K] & {
-    /**
-     * The type of the item, used to identify the component to render.
-     *
-     * @deprecated Optional for backwards compatibility. Will become required in 4.0.
-     */
-    componentType?: K;
-  };
-}[ToolbarItemComponentType];
-
-export type ToolbarItem = ToolbarItemComponent | "spacer" | React.ReactNode;
+import type {
+  ToolbarItem,
+  ToolbarItemComponent,
+  ToolbarItemComponentType,
+  ToolbarItemComponents,
+} from "./types";
+import { toolbarItemComponentTypes } from "./types";
 
 export type ToolbarProps = React.PropsWithChildren<
   React.HTMLAttributes<HTMLElement>
@@ -242,10 +217,6 @@ export function Toolbar({
 
     throw new Error("Unknown toolbar item type!");
   };
-
-  const toolbarItemComponentTypes = Object.keys(
-    toolbarItemComponentMap,
-  ) as ToolbarItemComponentType[];
 
   /**
    * Checks if the item is a ToolbarItemComponent with a valid componentType property.
