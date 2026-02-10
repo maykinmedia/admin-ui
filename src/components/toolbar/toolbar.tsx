@@ -118,104 +118,103 @@ export function Toolbar({
       return [() => item, {}];
     }
 
-    let type: ToolbarItemComponentType | undefined;
-    if (isToolbarItemComponent(item)) type = item.componentType;
+    const componentType = getToolbarItemComponentType(item);
 
-    if (!type) {
-      // From version 4.0, items should have a componentType property.
-      // For backward compatibility reasons, we still allow the 'old' way of identifying
-      // the component type.
-
-      if (isA(item)) type = "anchor";
-      else if (isButton(item)) type = "button";
-      else if (isButtonLink(item)) type = "buttonLink";
-      else if (isDropdown(item)) type = "dropdown";
-      else if (isFormControl(item)) type = "formControl";
-
-      let deprecatedAlternative =
-        "mykn.components.toolbar: items should have a componentType property";
-      if (type !== undefined) {
-        deprecatedAlternative += `, add componentType='${type}' to your item`;
-      }
-
-      deprecated(
-        true,
-        "items.componentType=undefined",
-        deprecatedAlternative,
-        "4.0",
-      );
-    }
-
-    if (type) {
-      switch (type) {
+    if (componentType) {
+      switch (componentType) {
         case "accordion": {
-          const itemProps: Partial<ToolbarItemComponents[typeof type]> =
-            overrideItemProps
-              ? {
-                  size: direction === "horizontal" ? "xs" : undefined,
-                  variant: "transparent",
-                }
-              : {};
+          const itemProps: Partial<
+            ToolbarItemComponents[typeof componentType]
+          > = overrideItemProps
+            ? {
+                size: direction === "horizontal" ? "xs" : undefined,
+                variant: "transparent",
+              }
+            : {};
           return [Accordion, itemProps];
         }
 
         case "anchor": {
-          const itemProps: Partial<ToolbarItemComponents[typeof type]> =
-            overrideItemProps
-              ? {
-                  size: direction === "horizontal" ? "xs" : undefined,
-                }
-              : {};
+          const itemProps: Partial<
+            ToolbarItemComponents[typeof componentType]
+          > = overrideItemProps
+            ? {
+                size: direction === "horizontal" ? "xs" : undefined,
+              }
+            : {};
           return [A, itemProps];
         }
 
         case "button": {
-          const itemProps: Partial<ToolbarItemComponents[typeof type]> =
-            overrideItemProps
-              ? {
-                  size: direction === "horizontal" ? "xs" : undefined,
-                  variant: "transparent",
-                }
-              : {};
+          const itemProps: Partial<
+            ToolbarItemComponents[typeof componentType]
+          > = overrideItemProps
+            ? {
+                size: direction === "horizontal" ? "xs" : undefined,
+                variant: "transparent",
+              }
+            : {};
           return [Button, itemProps];
         }
 
         case "buttonLink": {
-          const itemProps: Partial<ToolbarItemComponents[typeof type]> =
-            overrideItemProps
-              ? {
-                  size: direction === "horizontal" ? "xs" : undefined,
-                  variant: "transparent",
-                }
-              : {};
+          const itemProps: Partial<
+            ToolbarItemComponents[typeof componentType]
+          > = overrideItemProps
+            ? {
+                size: direction === "horizontal" ? "xs" : undefined,
+                variant: "transparent",
+              }
+            : {};
           return [ButtonLink, itemProps];
         }
 
         case "dropdown": {
-          const itemProps: Partial<ToolbarItemComponents[typeof type]> =
-            overrideItemProps
-              ? {
-                  size: direction === "horizontal" ? "xs" : undefined,
-                  variant: "transparent",
-                }
-              : {};
+          const itemProps: Partial<
+            ToolbarItemComponents[typeof componentType]
+          > = overrideItemProps
+            ? {
+                size: direction === "horizontal" ? "xs" : undefined,
+                variant: "transparent",
+              }
+            : {};
           return [Dropdown as React.FC, itemProps];
         }
 
         case "formControl": {
-          const itemProps: Partial<ToolbarItemComponents[typeof type]> =
-            overrideItemProps
-              ? {
-                  size: direction === "horizontal" ? "xs" : undefined,
-                  variant: "transparent",
-                }
-              : {};
+          const itemProps: Partial<
+            ToolbarItemComponents[typeof componentType]
+          > = overrideItemProps
+            ? {
+                size: direction === "horizontal" ? "xs" : undefined,
+                variant: "transparent",
+              }
+            : {};
           return [FormControl, itemProps];
         }
       }
     }
 
     throw new Error("Unknown toolbar item type!");
+  };
+
+  const getToolbarItemComponentType = (
+    item: unknown,
+  ): ToolbarItemComponentType | undefined => {
+    if (isToolbarItemComponent(item)) return item.componentType;
+
+    deprecated(
+      true,
+      "items.componentType=undefined",
+      "mykn.components.toolbar: items should have a componentType property",
+      "4.0",
+    );
+
+    if (isA(item)) return "anchor";
+    else if (isButton(item)) return "button";
+    else if (isButtonLink(item)) return "buttonLink";
+    else if (isDropdown(item)) return "dropdown";
+    else if (isFormControl(item)) return "formControl";
   };
 
   /**
