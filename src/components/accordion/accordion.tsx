@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useId } from "react";
 
 import { Button, ButtonProps } from "../button";
 import { Outline } from "../icon";
-import { Toolbar, ToolbarItem } from "../toolbar";
+import { Toolbar, ToolbarItem, ToolbarProps } from "../toolbar";
 import "./accordion.scss";
 
 export type AccordionProps = ButtonProps & {
@@ -16,6 +16,9 @@ export type AccordionProps = ButtonProps & {
 
   /** Gets called when the accordion is closed. */
   onClose?: () => void;
+
+  /** Toolbar props. */
+  toolbarProps?: ToolbarProps;
 };
 
 export const Accordion: React.FC<AccordionProps> = ({
@@ -24,6 +27,7 @@ export const Accordion: React.FC<AccordionProps> = ({
   onOpen,
   onClose,
   children,
+  toolbarProps,
   ...buttonProps
 }) => {
   const [isOpen, setIsOpen] = React.useState(false);
@@ -83,6 +87,7 @@ export const Accordion: React.FC<AccordionProps> = ({
           pad={false}
           align="start"
           items={items}
+          {...toolbarProps}
         />
       </div>
     </div>
