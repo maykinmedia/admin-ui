@@ -1,4 +1,5 @@
 // Auto-generated file. Do not modify manually.
+export * from "./accordion";
 export * from "./badge";
 export * from "./banner";
 export * from "./boolean";
