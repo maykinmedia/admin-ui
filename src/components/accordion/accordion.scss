@@ -1,5 +1,20 @@
 .mykn-accordion {
+  $self: &;
+
   &__trigger-icon {
     margin-inline-start: auto;
+  }
+
+  &__items {
+    // Because the accordion is also used in the toolbar, we need to offset the items
+    // using margin. If we used flexbox + gap, then we would cause the toolbar to grow
+    // when expanding the accordion.
+    margin-block-start: var(--sizes-spacing-xs-v);
+  }
+
+  &--compact {
+    #{$self}__items {
+      margin-block-start: 0;
+    }
   }
 }

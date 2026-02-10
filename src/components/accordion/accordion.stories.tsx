@@ -118,3 +118,22 @@ export const AccordionInitiallyOpened: Story = {
     ).toBeVisible();
   },
 };
+
+export const CompactAccordion: Story = {
+  args: {
+    variant: "primary",
+    children: "Open accordion",
+    compact: true,
+    items: [
+      {
+        componentType: "button",
+        children: "Accordion item 1",
+      },
+      {
+        componentType: "button",
+        children: "Accordion item 2",
+      },
+    ],
+    open: true,
+  },
+};
