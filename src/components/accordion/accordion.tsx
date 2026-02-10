@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import React, { useCallback, useEffect, useId } from "react";
 
 import { Button, ButtonProps } from "../button";
@@ -17,6 +18,12 @@ export type AccordionProps = ButtonProps & {
   /** Gets called when the accordion is closed. */
   onClose?: () => void;
 
+  /**
+   * When set to true, the gap between the accordion button and toolbar,
+   * and the gap between the toolbar items, is removed.
+   */
+  compact?: boolean;
+
   /** Toolbar props. */
   toolbarProps?: ToolbarProps;
 };
@@ -27,6 +34,7 @@ export const Accordion: React.FC<AccordionProps> = ({
   onOpen,
   onClose,
   children,
+  compact = false,
   toolbarProps,
   ...buttonProps
 }) => {
@@ -58,7 +66,9 @@ export const Accordion: React.FC<AccordionProps> = ({
   );
 
   return (
-    <div className="mykn-accordion">
+    <div
+      className={clsx("mykn-accordion", { "mykn-accordion--compact": compact })}
+    >
       <Button
         {...buttonProps}
         id={accordionTriggerId}
@@ -83,7 +93,7 @@ export const Accordion: React.FC<AccordionProps> = ({
         <Toolbar
           className="mykn-accordion__items"
           direction="v"
-          compact
+          compact={compact}
           pad={false}
           align="start"
           items={items}
