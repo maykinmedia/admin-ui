@@ -90,6 +90,7 @@
     "@typescript-eslint/parser": "^6.17.0",
     "@vitest/browser": "^3.2.4",
     "@vitest/coverage-v8": "^3.2.4",
+    "color": "^5.0.3",
     "commitlint": "^19.0.0",
     "concurrently": "^8.2.2",
     "eslint": "^8.56.0",
