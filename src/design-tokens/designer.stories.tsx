@@ -32,10 +32,15 @@ export const ThemeDesignerStory: Story = {
   args: {},
 };
 
-type ThemeDesignerFormType = Record<string, string>;
+/** Minimal contrast for colors, matches WCAG AA standard. */
+const MIN_CONTRAST = 4.5;
+
+type CSSVariableName = `--${string}`;
+type CSSVariableDictionary = Record<CSSVariableName, string>;
+type JSON = { [key: string]: string | JSON };
 
 /**
- * The theme designer, allows generating theme code.
+ * The theme designer allows generating theme code.
  */
 function ThemeDesigner() {
   /**
@@ -48,33 +53,35 @@ function ThemeDesigner() {
   const findRecursiveDesignTokens = (
     object: Record<string | number | symbol, unknown>,
     path: string = "",
-    resultSet: Record<string, string> = {},
-  ) => {
-    const value = getByDotSeparatedPath(object, path);
+    resultSet: CSSVariableDictionary = {},
+  ): CSSVariableDictionary => {
+    const tokenObject = getByDotSeparatedPath(object, path);
 
     // This is not a proper design token as it does not contain a "value".
-    // Return current `resultSet`.
-    if (isPrimitive(value) || value === undefined) {
+    // Return the current `resultSet`.
+    if (isPrimitive(tokenObject) || tokenObject === undefined) {
       return resultSet;
     }
 
     // This is a design token, return updated `resultSet`.
-    if (Object.hasOwn(value, "value")) {
-      const tokenPath = path.replaceAll(".", "-");
-      const token = `--${tokenPath}`;
-      const _value = (value as { value: string }).value;
+    if (Object.hasOwn(tokenObject, "value")) {
+      const dashedPath = path.replaceAll(".", "-");
+      const cssVariableName: CSSVariableName = `--${dashedPath}`;
+      const value = (tokenObject as { value: string }).value;
 
+      // Attempt to create a `Color` for `value`. Fall back to raw value for
+      // non-colors.
       try {
-        const color = Color(_value);
-        resultSet[token] = color.hex();
+        const color = Color(value);
+        resultSet[cssVariableName] = color.hex();
       } catch (error) {
-        resultSet[token] = _value;
+        resultSet[cssVariableName] = value;
       }
       return resultSet;
     }
 
     // This is a branch node, recurse further.
-    for (const key of Object.keys(value)) {
+    for (const key of Object.keys(tokenObject)) {
       const newPath = path ? `${path}.${key}` : key;
       resultSet = findRecursiveDesignTokens(object, newPath, resultSet);
     }
@@ -83,108 +90,122 @@ function ThemeDesigner() {
   };
 
   const referenceValues = findRecursiveDesignTokens(PurpleRain, "theme");
-  const [values, setValues] = useState<ThemeDesignerFormType>(referenceValues);
+  const [CSSVariablesState, setCSSVariablesState] =
+    useState<CSSVariableDictionary>(referenceValues);
 
   const fields = Object.entries(referenceValues).map(([key]) => ({
-    // direction: "h",
     justify: "stretch",
     name: key,
     label: key,
-    value: Color(values[key]).hex(),
+    value: CSSVariablesState[key as CSSVariableName],
     type: "color",
   }));
 
   /**
    * Converts an object containing CSS properties and values into a serialized CSS string.
    *
-   * @param {ThemeDesignerFormType} data - An object where keys represent CSS properties and values represent corresponding CSS values.
+   * @param {CSSVariableDictionary} data - An object where keys represent CSS properties and values represent corresponding CSS values.
    * @return {string} A string representing the serialized CSS, with each property-value pair joined by a colon and space, and each pair separated by a newline character.
    */
-  const serializeCSS = (data: ThemeDesignerFormType) =>
+  const serializeCSS = (data: CSSVariableDictionary): string =>
     Object.entries(data)
-      .map((entry) => entry.join(": "))
+      .map((entry) => {
+        return entry.join(": ");
+      })
       .join(";\n");
 
   /**
    * Serializes a ThemeDesignerFormType object into a nested JSON structure.
    *
-   * @param {ThemeDesignerFormType} data - The input data object, where keys represent hierarchical paths separated by "--" or "-".
+   * For a key/value record (`ThemeDesignerFormType`) where:
+   *  - `key` is a CSS variable, e.g.: `--root-branch-leaf`
+   *  - `value is a CSS value, e.g.: `#FFFF00`
+   *
+   * Construct a "design tokens" JSON structure, e.g.;
+   *
+   * {
+   *   root: {
+   *     branch: {
+   *       leaf: {
+   *         value: "#FFFF00"
+   *       }
+   *     }
+   *   }
+   * }
+   *
+   * @param {CSSVariableDictionary} data - The input data object, where keys represent hierarchical paths separated by "--" or "-".
    * @return {Object} A nested JSON object reflecting the hierarchical structure implied by the input keys.
    */
-  const serializeJSON = (data: ThemeDesignerFormType) => {
-    type JSON = { [key: string | symbol]: string | JSON };
-    const placeholder = Symbol();
+  const serializeJSON = (data: CSSVariableDictionary): JSON => {
+    // The result object to build.
+    // This object gets mutated by updates to `current`.
     const result: JSON = {};
 
     for (const key in data) {
+      // Split the CSS variable name in an array of segments; each segment represents
+      // either the root, a branch or a leaf in the object tree.
       const parts = key.replace("--", "").split("-");
+
+      // A view on `result` to the current branch.
+      // Due to JS' "pass by reference" behavior for objects, mutations are
+      // reflected in `result`.
       let current: JSON = result;
 
       parts.forEach((part, i) => {
         const isLast = i === parts.length - 1;
+        const type = isLast ? "leaf" : "branch";
 
-        if (isLast) {
-          // Leaf node
-          if (typeof current[part] === "object" && current[part] !== null) {
-            (current[part] as JSON)[placeholder] = data[key];
-          } else {
-            current[part] = data[key];
-          }
-        } else {
-          // Branch node
-          if (typeof current[part] === "string") {
-            // convert leaf node into object with default
-            current[part] = { [placeholder]: current[part] };
-          }
+        switch (type) {
+          case "branch": // The "root" or a "branch" in the object containing nested tokens segments.
+            current[part] ??= {}; // Create the object if it doesn't exist yet.
+            current = current[part] as JSON; // Update `current` with new branch of the `result` object.
+            break;
 
-          current[part] ??= {};
-          current = current[part] as JSON;
+          case "leaf": // A "leaf" in the object containing the value object.
+            current[part] = { value: data[key as CSSVariableName] };
         }
       });
     }
     return result;
   };
 
+  // Nasty CSS update.
+  const root = document.documentElement;
+  for (const [key, value] of Object.entries(CSSVariablesState)) {
+    root.style.setProperty(key, value);
+  }
   return (
-    <>
-      <style>
-        :root &#123;
-        {serializeCSS(values)}
-        &#&#125;;
-      </style>
+    <Tabs>
+      <Tab label="Designer">
+        <Body>
+          <Grid>
+            <Column span={4}>
+              <ThemeDesignerForm
+                title="Theme Designer"
+                fields={fields}
+                onValuesChange={setCSSVariablesState}
+              />
+            </Column>
+            <Column span={8}>
+              <Toolbar sticky="top">
+                <ThemeDesignerPreview />
+              </Toolbar>
+            </Column>
+          </Grid>
+        </Body>
+      </Tab>
 
-      <Tabs>
-        <Tab label="Designer">
-          <Body>
-            <Grid>
-              <Column span={4}>
-                <ThemeDesignerForm
-                  title="Theme Designer"
-                  fields={fields}
-                  onValuesChange={setValues}
-                />
-              </Column>
-              <Column span={8}>
-                <Toolbar sticky="top">
-                  <ThemeDesignerPreview />
-                </Toolbar>
-              </Column>
-            </Grid>
-          </Body>
-        </Tab>
-
-        <Tab label="CSS">
-          <Body>
-            <pre>{serializeCSS(values)}</pre>
-          </Body>
-        </Tab>
-        <Tab label="JSON">
-          <Body>
-            <pre>{JSON.stringify(serializeJSON(values), null, 2)}</pre>
-          </Body>
-        </Tab>
-      </Tabs>
-    </>
+      <Tab label="CSS">
+        <Body>
+          <pre>{serializeCSS(CSSVariablesState)}</pre>
+        </Body>
+      </Tab>
+      <Tab label="JSON">
+        <Body>
+          <pre>{JSON.stringify(serializeJSON(CSSVariablesState), null, 2)}</pre>
+        </Body>
+      </Tab>
+    </Tabs>
   );
 }
 
@@ -201,7 +222,7 @@ function ThemeDesignerForm<T extends FormField & { name: string }>({
 }: {
   title: string;
   fields: T[];
-  onValuesChange: (values: ThemeDesignerFormType) => void;
+  onValuesChange: (values: CSSVariableDictionary) => void;
 }) {
   /**
    * Retrieves the contrast version of a given field, if applicable.
@@ -212,7 +233,6 @@ function ThemeDesignerForm<T extends FormField & { name: string }>({
    *                     or the field itself is a contrast field.
    */
   const getContrastField = (field: T): T | void => {
-    const name = field.name;
     const states = ["default", "hover", "pressed", "active"];
 
     // This is the contrast field, cannot reverse into one of multiple state fields.
@@ -221,15 +241,29 @@ function ThemeDesignerForm<T extends FormField & { name: string }>({
     }
 
     // This is a state field, find the contrast field.
-    const matchedState = states.find((state) => name.match(state));
+    const matchedState = states.find((state) => field.name.match(state));
     if (matchedState) {
-      const contrastFieldName = name.replace(matchedState, "contrast");
+      const contrastFieldName = field.name.replace(matchedState, "contrast");
       return fields.find((field) => field.name === contrastFieldName);
     }
 
     // This isa foreground field, find the background field.
-    if (name.match("foreground")) {
-      const contrastFieldName = name.replace(/foreground.*/, "background");
+    if (field.name.match("foreground")) {
+      const contrastFieldName = field.name.replace(
+        /foreground.*/,
+        "background",
+      );
+
+      return fields.find((field) => field.name === contrastFieldName);
+    }
+
+    // This isa background field, find the foreground field.
+    if (field.name.match("background")) {
+      const contrastFieldName = field.name.replace(
+        /background.*/,
+        "foreground",
+      );
+
       return fields.find((field) => field.name === contrastFieldName);
     }
   };
@@ -242,11 +276,13 @@ function ThemeDesignerForm<T extends FormField & { name: string }>({
    * for a given field and the contrast ratio between the field's value and the contrast field's value
    * is below the threshold, an error message is added to the validation result for that field.
    *
-   * @param {ThemeDesignerFormType} data - The form data object containing field names and values.
+   * @param {CSSVariableDictionary} data - The form data object containing field names and values.
    * @returns {Object} An object representing validation errors, where each key is a field name and
    *                   its value is an array of error messages for the respective field.
    */
-  const validate = (data: ThemeDesignerFormType) => {
+  const validate = (
+    data: CSSVariableDictionary,
+  ): Record<CSSVariableName, string[]> => {
     onValuesChange(data);
     const entries = Object.entries(data);
     const stateEntries = entries.filter(([k]) => !k.match("contrast"));
@@ -254,15 +290,20 @@ function ThemeDesignerForm<T extends FormField & { name: string }>({
     return stateEntries.reduce((acc, [fieldName, value]) => {
       const field = fields.find((field) => field.name === fieldName);
       const contrastFieldName = field && getContrastField(field)?.name;
-      const contrastValue = contrastFieldName && data[contrastFieldName];
+      const contrastFieldValue =
+        contrastFieldName && data[contrastFieldName as CSSVariableName];
 
-      if (contrastValue && contrastRatio(value, contrastValue) < 4) {
-        return {
-          ...acc,
-          [fieldName]: [`Contrast to low compared to ${contrastFieldName}!`],
-        };
-      }
-      return acc;
+      if (!contrastFieldValue) return acc;
+
+      const contrast = getContrast(value, contrastFieldValue);
+      if (contrast >= MIN_CONTRAST) return acc;
+
+      return {
+        ...acc,
+        [fieldName]: [
+          `Contrast of ${contrast.toFixed(2)} too low compared to ${contrastFieldName}!`,
+        ],
+      };
     }, {});
   };
 
@@ -271,14 +312,14 @@ function ThemeDesignerForm<T extends FormField & { name: string }>({
    * @param a - The first color.
    * @param b - The second color.
    */
-  const contrastRatio = (a: string, b: string) => {
+  const getContrast = (a: string, b: string): number => {
     const colorA = Color(a);
     const colorB = Color(b);
     return colorA.contrast(colorB);
   };
 
   return (
-    <Form<ThemeDesignerFormType>
+    <Form<CSSVariableDictionary>
       title={title}
       fields={fields}
       showActions={false}
