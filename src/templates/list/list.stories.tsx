@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import * as React from "react";
 
-import { Badge, DataGridProps, Outline } from "../../components";
-import { FilterablePaginatedSelectableSortable } from "../../components/data/datagrid/datagrid.stories";
+import { FIXTURE_PRODUCTS } from "../../../.storybook/fixtures/products";
+import { Badge, Outline } from "../../components";
 import { ListTemplate as ListTemplateComponent } from "./list";
 
 const meta: Meta<typeof ListTemplateComponent> = {
@@ -15,7 +15,9 @@ type Story = StoryObj<typeof meta>;
 
 export const ListTemplate: Story = {
   args: {
-    dataGridProps: FilterablePaginatedSelectableSortable.args as DataGridProps,
+    dataGridProps: {
+      objectList: FIXTURE_PRODUCTS,
+    },
     breadcrumbItems: [
       { label: "Home", href: "/" },
       { label: "Templates", href: "#" },
