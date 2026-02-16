@@ -43,6 +43,7 @@ type BaseButtonProps = {
     | "primary"
     /** @deprecated use 'secondary' instead */
     | "outline"
+    | "accent"
     | "transparent"
     | "info"
     | "success"

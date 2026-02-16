@@ -267,6 +267,48 @@
     }
   }
 
+  &--variant-accent {
+    --mykn-button-color-background: var(--button-accent-default-background);
+    --mykn-button-color-border: var(--button-accent-default-border);
+    --mykn-button-color-text: var(--button-accent-default-text);
+    --mykn-button-color-shadow: var(--button-accent-default-shadow);
+    &:focus,
+    &:hover {
+      --mykn-button-color-background: var(--button-accent-hover-background);
+      --mykn-button-color-border: var(--button-accent-hover-border);
+      --mykn-button-color-text: var(--button-accent-hover-text);
+      --mykn-button-color-shadow: var(--button-accent-hover-shadow);
+      --mykn-button-offset: -2px;
+    }
+
+    &:active {
+      // pressed
+      --mykn-button-color-background: var(--button-accent-pressed-background);
+      --mykn-button-color-border: var(--button-accent-pressed-border);
+      --mykn-button-color-text: var(--button-accent-pressed-text);
+      --mykn-button-color-shadow: var(--button-accent-pressed-shadow);
+      --mykn-button-offset: 0px;
+    }
+
+    &[aria-expanded="true"],
+    &#{$self}--active {
+      --mykn-button-color-background: var(--button-accent-active-background);
+      --mykn-button-color-border: var(--button-accent-active-border);
+      --mykn-button-color-text: var(--button-accent-active-text);
+      --mykn-button-color-shadow: var(--button-accent-active-shadow);
+      --mykn-button-font-weight: var(--typography-font-weight-bold);
+    }
+
+    &:disabled,
+    &#{$self}--disabled,
+    &#{$self}--muted {
+      --mykn-button-color-background: var(--button-accent-disabled-background);
+      --mykn-button-color-border: var(--button-accent-disabled-border);
+      --mykn-button-color-text: var(--button-accent-disabled-text);
+      --mykn-button-color-shadow: var(--button-accent-disabled-shadow);
+    }
+  }
+
   &--variant-transparent {
     --mykn-button-color-background: var(
       --button-transparent-default-background

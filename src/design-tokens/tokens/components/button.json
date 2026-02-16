@@ -65,6 +65,38 @@
         "shadow": { "value": "{theme.base.foreground}" }
       }
     },
+    "accent": {
+      "default": {
+        "background": { "value": "{theme.brand.accent.default}" },
+        "text": { "value": "{theme.brand.accent.contrast}" },
+        "border": { "value": "{theme.brand.accent.default}" },
+        "shadow": { "value": "{button.shadow}" }
+      },
+      "hover": {
+        "background": { "value": "{theme.brand.accent.hover}" },
+        "text": { "value": "{theme.brand.accent.contrast}" },
+        "border": { "value": "{theme.brand.accent.hover}" },
+        "shadow": { "value": "{button.shadow}" }
+      },
+      "pressed": {
+        "background": { "value": "{theme.brand.accent.pressed}" },
+        "text": { "value": "{theme.brand.accent.contrast}" },
+        "border": { "value": "{theme.brand.accent.pressed}" },
+        "shadow": { "value": "{button.shadow}" }
+      },
+      "active": {
+        "background": { "value": "{theme.brand.accent.active}" },
+        "text": { "value": "{theme.brand.accent.contrast}" },
+        "border": { "value": "{theme.brand.accent.active}" },
+        "shadow": { "value": "{button.shadow}" }
+      },
+      "disabled": {
+        "background": { "value": "{theme.base.background-alternate}" },
+        "text": { "value": "{theme.base.foreground-disabled}" },
+        "border": { "value": "{theme.base.background-alternate}" },
+        "shadow": { "value": "{theme.base.foreground}" }
+      }
+    },
 
     "transparent": {
       "default": {
