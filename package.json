@@ -19,7 +19,7 @@
     "test": "vitest",
     "test:coverage": "vitest --coverage --watch=false",
     "build-storybook": "storybook build",
-    "test-storybook": "test-storybook",
+    "test-storybook": "vitest --run --project=storybook",
     "chromatic": "npx chromatic",
     "commitlint": "commitlint --edit",
     "rollup": "rollup -c",
