@@ -1,4 +1,3 @@
-import { deprecated } from "@maykin-ui/client-common";
 import clsx from "clsx";
 import React, { LegacyRef } from "react";
 
@@ -41,8 +40,7 @@ type BaseButtonProps = {
   variant?:
     | "secondary"
     | "primary"
-    /** @deprecated use 'secondary' instead */
-    | "outline"
+    | "accent"
     | "transparent"
     | "info"
     | "success"
@@ -91,12 +89,6 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     },
     ref,
   ) => {
-    deprecated(
-      variant === "outline",
-      "variant='outline'",
-      `mykn.components.Button: variant 'outline' is deprecated, use 'secondary' instead`,
-    );
-    const _variant = variant === "outline" ? "secondary" : variant;
     return (
       <button
         ref={ref as LegacyRef<HTMLButtonElement>}
@@ -104,7 +96,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           "mykn-button",
           `mykn-button--align-${align}`,
           `mykn-button--size-${size}`,
-          `mykn-button--variant-${_variant}`,
+          `mykn-button--variant-${variant}`,
           {
             "mykn-button--active": active,
             "mykn-button--bold": bold,
@@ -150,12 +142,6 @@ export const ButtonLink = React.forwardRef<HTMLAnchorElement, ButtonLinkProps>(
     },
     ref,
   ) => {
-    deprecated(
-      variant === "outline",
-      "variant='outline'",
-      `mykn.components.ButtonLink: variant 'outline' is deprecated, use 'secondary' instead`,
-    );
-    const _variant = variant === "outline" ? "secondary" : variant;
     return (
       <a
         ref={ref as LegacyRef<HTMLAnchorElement>}
@@ -164,7 +150,7 @@ export const ButtonLink = React.forwardRef<HTMLAnchorElement, ButtonLinkProps>(
           "mykn-button",
           `mykn-button--align-${align}`,
           `mykn-button--size-${size}`,
-          `mykn-button--variant-${_variant}`,
+          `mykn-button--variant-${variant}`,
           {
             "mykn-button--active": active,
             "mykn-button--bold": bold,
