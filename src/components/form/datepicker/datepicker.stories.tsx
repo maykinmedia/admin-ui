@@ -136,6 +136,17 @@ export const DateRangePicker: Story = {
     await waitFor(testFormDataSerialization.bind(this, ""));
     await waitFor(testEventListener.bind(this, ""));
 
+    // Test type date.
+    await userEvent.type(input, "2023/09/14 - 2023/09/15", { delay: 10 });
+    // Close and re-open the datepicker to update the UI
+    await userEvent.tab();
+    await userEvent.click(input, { delay: 10 });
+
+    await waitFor(
+      testFormDataSerialization.bind(this, "2023-09-14/2023-09-15"),
+    );
+    await waitFor(testEventListener.bind(this, "09/14/2023 - 09/15/2023"));
+
     async function testFormDataSerialization(expectedDate: string) {
       const pre = await canvas.findByRole("log");
       const data = JSON.parse(pre?.textContent || "{}");
