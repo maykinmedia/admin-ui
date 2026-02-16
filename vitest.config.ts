@@ -14,7 +14,7 @@ export default defineConfig({
     coverage: {
       exclude: [...coverageConfigDefaults.exclude, "**/*.config.*"],
     },
-    workspace: [
+    projects: [
       {
         extends: true,
         plugins: [
