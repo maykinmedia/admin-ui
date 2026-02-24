@@ -1,7 +1,7 @@
 :root {
   --theme-brand-primary-default: #341A90;
-  --theme-brand-primary-hover: #341A90;
-  --theme-brand-primary-pressed: #341A90;
+  --theme-brand-primary-hover: #25116D;
+  --theme-brand-primary-pressed: #25116D;
   --theme-brand-primary-active: #341A90;
   --theme-brand-primary-contrast: #FFFFFF;
   --theme-brand-secondary-default: #E7E0FF;
@@ -9,11 +9,11 @@
   --theme-brand-secondary-pressed: #E7E0FF;
   --theme-brand-secondary-active: #E7E0FF;
   --theme-brand-secondary-contrast: #341A90;
-  --theme-brand-accent-default: #E9F1F9;
-  --theme-brand-accent-hover: #E9F1F9;
-  --theme-brand-accent-pressed: #E9F1F9;
-  --theme-brand-accent-active: #E9F1F9;
-  --theme-brand-accent-contrast: #1A5C94;
+  --theme-brand-accent-default: #E7E0FF;
+  --theme-brand-accent-hover: #E7E0FF;
+  --theme-brand-accent-pressed: #E7E0FF;
+  --theme-brand-accent-active: #E7E0FF;
+  --theme-brand-accent-contrast: #25116D;
   --theme-base-background: #FFFFFF;
   --theme-base-background-alternate: #EDEDED;
   --theme-base-foreground: #333333;

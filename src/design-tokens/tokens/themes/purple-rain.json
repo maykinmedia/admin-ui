@@ -4,8 +4,8 @@
     "brand": {
       "primary": {
         "default": { "value": "#341A90" },
-        "hover": { "value": "#341A90" },
-        "pressed": { "value": "#341A90" },
+        "hover": { "value": "#25116D" },
+        "pressed": { "value": "#25116D" },
         "active": { "value": "#341A90" },
         "contrast": { "value": "#FFFFFF" }
       },
@@ -17,11 +17,11 @@
         "contrast": { "value": "#341A90" }
       },
       "accent": {
-        "default": { "value": "#E9F1F9" },
-        "hover": { "value": "#E9F1F9" },
-        "pressed": { "value": "#E9F1F9" },
-        "active": { "value": "#E9F1F9" },
-        "contrast": { "value": "#1A5C94" }
+        "default": { "value": "#E7E0FF" },
+        "hover": { "value": "#E7E0FF" },
+        "pressed": { "value": "#E7E0FF" },
+        "active": { "value": "#E7E0FF" },
+        "contrast": { "value": "#25116D" }
       }
     },
     "base": {
