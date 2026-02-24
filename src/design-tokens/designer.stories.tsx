@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import Color from "color";
 import * as React from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { FIXTURE_PRODUCTS } from "../../.storybook/fixtures/products";
 import {
@@ -15,6 +15,7 @@ import {
   Tabs,
   Toolbar,
 } from "../components";
+import PaintItBlack from "../design-tokens/tokens/themes/paint-it-black.json";
 import PurpleRain from "../design-tokens/tokens/themes/purple-rain.json";
 import { FormField, isPrimitive } from "../lib";
 import { ListTemplate } from "../templates";
@@ -30,6 +31,10 @@ type Story = StoryObj<typeof meta>;
 export const ThemeDesignerStory: Story = {
   name: "ThemeDesigner",
   args: {},
+  render: (args, { globals }) => {
+    const isDark = globals.theme === "dark";
+    return <ThemeDesigner {...args} isDark={isDark} />;
+  },
 };
 
 /** Minimal contrast for colors, matches WCAG AA standard. */
@@ -42,7 +47,7 @@ type JSON = { [key: string]: string | JSON };
 /**
  * The theme designer allows generating theme code.
  */
-function ThemeDesigner() {
+function ThemeDesigner({ isDark }: { isDark: boolean }) {
   /**
    * Finds design tokens in `object` recursively.
    *
@@ -89,15 +94,20 @@ function ThemeDesigner() {
     return resultSet;
   };
 
-  const referenceValues = findRecursiveDesignTokens(PurpleRain, "theme");
   const [CSSVariablesState, setCSSVariablesState] =
-    useState<CSSVariableDictionary>(referenceValues);
+    useState<CSSVariableDictionary>(PurpleRain);
 
-  const fields = Object.entries(referenceValues).map(([key]) => ({
+  useEffect(() => {
+    const themeTokens = isDark ? PaintItBlack : PurpleRain;
+    const referenceValues = findRecursiveDesignTokens(themeTokens, "theme");
+    setCSSVariablesState(referenceValues);
+  }, [isDark]);
+
+  const fields = Object.entries(CSSVariablesState).map(([key, value]) => ({
     justify: "stretch",
     name: key,
     label: key,
-    value: CSSVariablesState[key as CSSVariableName],
+    value: value,
     type: "color",
   }));
 
