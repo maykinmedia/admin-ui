@@ -2,13 +2,18 @@
   "form": {
     "border": { "value": "{theme.base.border}" },
     "input": {
-      "background": { "value": "{theme.base.background}" }
+      "default": {
+        "background": { "value": "{theme.base.background}" }
+      },
+      "invalid": {
+        "border": { "value": "{theme.intent.danger.contrast}" }
+      }
     },
     "textarea": {
-      "background": { "value": "{theme.base.background}" }
-    },
-    "formcontrol": {
-      "danger": {
+      "default": {
+        "background": { "value": "{theme.base.background}" }
+      },
+      "invalid": {
         "border": { "value": "{theme.intent.danger.contrast}" }
       }
     },
@@ -34,12 +39,19 @@
         "background": { "value": "{theme.brand.accent.default}" },
         "border": { "value": "transparent" },
         "text": { "value": "{theme.brand.accent.contrast}" }
+      },
+      "invalid": {
+        "border": { "value": "{theme.intent.danger.contrast}" }
       }
     },
     "checkbox": {
       "active": {
         "background": { "value": "{theme.brand.primary.default}" },
         "text": { "value": "{theme.brand.primary.contrast}" }
+      },
+      "invalid": {
+        "background": { "value": "{theme.intent.danger.default}" },
+        "text": { "value": "{theme.intent.danger.contrast}" }
       }
     },
     "radio": {
@@ -49,6 +61,10 @@
       "active": {
         "background": { "value": "{theme.brand.primary.default}" },
         "text": { "value": "{theme.brand.primary.contrast}" }
+      },
+      "invalid": {
+        "background": { "value": "{theme.intent.danger.default}" },
+        "text": { "value": "{theme.intent.danger.contrast}" }
       }
     },
     "toggle": {
