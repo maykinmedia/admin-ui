@@ -7,7 +7,7 @@
 
   appearance: none;
   align-items: center;
-  background: var(--form-textarea-background);
+  background: var(--form-textarea-default-background);
   border: 1px solid var(--form-border);
   border-radius: var(--sizes-border-radius-s);
   box-sizing: border-box;
@@ -68,6 +68,12 @@
 
   &[maxlength] {
     width: auto;
+  }
+
+  // Invalid state
+  &:invalid,
+  &[aria-invalid="true"] {
+    --form-border: var(--form-textarea-invalid-border);
   }
 
   &--variant-transparent {

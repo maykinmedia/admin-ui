@@ -122,7 +122,6 @@ export const FormControl: React.FC<FormControlProps> = ({
         `mykn-form-control--justify-${justify}`,
         {
           [`mykn-form-control--direction-${direction[0]}`]: direction,
-          "mykn-form-control--error": error,
         },
       )}
     >
