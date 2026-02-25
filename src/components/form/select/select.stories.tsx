@@ -107,6 +107,21 @@ export const SelectComponent: Story = {
   },
 };
 
+export const InvalidSelectComponent: Story = {
+  args: {
+    options: [
+      { label: "Freshman", value: "FR" },
+      { label: "Sophomore", value: "SO" },
+      { label: "Junior", value: "JR" },
+      { label: "Senior", value: "SR" },
+      { label: "Graduate", value: "GR" },
+    ],
+    name: "school_year",
+    placeholder: "Select school year",
+    invalid: true,
+  },
+};
+
 export const ValueBasedOnOptionValue: Story = {
   args: {
     options: [

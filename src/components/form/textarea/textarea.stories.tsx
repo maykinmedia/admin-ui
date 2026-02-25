@@ -64,6 +64,16 @@ export const TextareaComponent: Story = {
   decorators: [FORM_TEST_DECORATOR],
 };
 
+export const InvalidTextareaComponent: Story = {
+  args: {
+    name: "textarea",
+    placeholder: "e.g. John Doe",
+    invalid: true,
+  },
+  argTypes: FORM_TEST_ARG_TYPES,
+  play: () => undefined,
+};
+
 export const Padding: Story = {
   args: {
     name: "textarea",

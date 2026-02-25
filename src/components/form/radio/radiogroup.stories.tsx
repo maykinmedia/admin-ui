@@ -56,3 +56,18 @@ export const RadioGroupComponent: Story = {
     await expect(data.school_year).toEqual("Senior");
   },
 };
+
+export const InvalidRadioGroupComponent: Story = {
+  args: {
+    name: "school_year",
+    options: [
+      { label: "Freshman", selected: true },
+      { label: "Sophomore" },
+      { label: "Junior" },
+      { label: "Senior" },
+      { label: "Graduate" },
+    ],
+    invalid: true,
+  },
+  argTypes: FORM_TEST_ARG_TYPES,
+};

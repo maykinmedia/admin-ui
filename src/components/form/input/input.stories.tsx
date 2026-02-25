@@ -87,6 +87,18 @@ export const InputComponent: Story = {
   decorators: [FORM_TEST_DECORATOR],
 };
 
+export const InvalidInputComponent: Story = {
+  args: {
+    name: "input",
+    placeholder: "e.g. John Doe",
+    type: "text",
+    invalid: true,
+  },
+  argTypes: FORM_TEST_ARG_TYPES,
+  decorators: [FORM_TEST_DECORATOR],
+  play: () => undefined,
+};
+
 export const InputTypeCheckbox: Story = {
   args: {
     name: "input",
