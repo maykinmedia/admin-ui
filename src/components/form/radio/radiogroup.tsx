@@ -11,6 +11,12 @@ export type RadioGroupProps = ChoiceFieldProps<
 > & {
   /** Whether the items appear horizontally (h) or vertically (v), mobile devices always use vertical. */
   direction?: "h" | "v";
+
+  /**
+   * Invalid radio groups get additional markup/styling and aria tags to indicate the
+   * invalid state.
+   */
+  invalid?: boolean;
 };
 export const RadioGroup: React.FC<RadioGroupProps> = ({
   id = "",
@@ -24,6 +30,7 @@ export const RadioGroup: React.FC<RadioGroupProps> = ({
   onClick,
   disabled,
   value,
+  invalid,
 }) => {
   const reactId = useId();
   const _id = id || reactId;
@@ -73,6 +80,7 @@ export const RadioGroup: React.FC<RadioGroupProps> = ({
             onChange={handleChange}
             onClick={onClick}
             disabled={disabled}
+            invalid={invalid}
           >
             {option.label}
           </Radio>

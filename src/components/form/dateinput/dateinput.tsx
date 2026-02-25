@@ -65,6 +65,12 @@ export type DateInputProps = {
 
   /** Disabled state. */
   disabled?: boolean;
+
+  /**
+   * Invalid dateinput fields get additional markup/styling and aria tags to indicate the
+   * invalid state.
+   */
+  invalid?: boolean;
 };
 
 /**
@@ -88,6 +94,7 @@ export const DateInput: React.FC<DateInputProps> = ({
   value = null,
   onChange,
   disabled = false,
+  invalid,
   ...props
 }) => {
   type SanitizedValues = { DD: string; MM: string; YY: string };
@@ -355,6 +362,7 @@ export const DateInput: React.FC<DateInputProps> = ({
       pad: pad,
       required,
       disabled,
+      "aria-invalid": invalid,
     };
   }, [props]);
 

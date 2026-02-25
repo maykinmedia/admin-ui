@@ -114,6 +114,7 @@ export type SelectProps = Omit<ChoiceFieldProps, "variant" | "options"> & {
  * @param placeholderSearch
  * @param onBlur
  * @param onChange
+ * @param invalid
  * @param props
  * @constructor
  */
@@ -146,6 +147,7 @@ export const Select: React.FC<SelectProps> = ({
   placeholderSearch,
   onBlur,
   onChange,
+  invalid,
   ...props
 }) => {
   const isAsync = typeof options === "function";
@@ -262,6 +264,7 @@ export const Select: React.FC<SelectProps> = ({
         aria-autocomplete="none"
         aria-disabled={disabled}
         aria-hidden={hidden}
+        aria-invalid={invalid}
         title={label || undefined}
         onBlur={handleBlur}
         {...referenceProps}

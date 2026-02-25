@@ -56,6 +56,12 @@ export type DurationInputProps = {
 
   /** Gets called when the value is changed. */
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
+
+  /**
+   * Invalid duration fields get additional markup/styling and aria tags to indicate the
+   * invalid state.
+   */
+  invalid?: boolean;
 };
 
 type Key = keyof DurationNoTime;
@@ -100,6 +106,7 @@ export const DurationInput: React.FC<DurationInputProps> = ({
   onChange,
   labelOverrides,
   placeholderOverrides,
+  invalid,
   ...rest
 }) => {
   const hiddenRef = useRef<HTMLInputElement>(null);
@@ -223,6 +230,7 @@ export const DurationInput: React.FC<DurationInputProps> = ({
               <Input
                 id={inputId}
                 aria-label={placeholder}
+                aria-invalid={invalid}
                 pad={pad}
                 placeholder={placeholder}
                 {...inputProps}

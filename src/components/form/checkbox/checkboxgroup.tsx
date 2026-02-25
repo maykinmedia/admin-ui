@@ -11,6 +11,12 @@ export type CheckboxGroupProps = ChoiceFieldProps<
 > & {
   /** Whether the items appear horizontally (h) or vertically (v), mobile devices always use vertical. */
   direction?: "h" | "v";
+
+  /**
+   * Invalid checkbox groups get additional markup/styling and aria tags to indicate the
+   * invalid state.
+   */
+  invalid?: boolean;
 };
 
 export const CheckboxGroup: React.FC<CheckboxGroupProps> = ({
@@ -25,6 +31,7 @@ export const CheckboxGroup: React.FC<CheckboxGroupProps> = ({
   onChange,
   onClick,
   disabled,
+  invalid,
 }) => {
   const reactId = useId();
   const _id = id || reactId;
@@ -54,6 +61,7 @@ export const CheckboxGroup: React.FC<CheckboxGroupProps> = ({
             onChange={onChange}
             onClick={onClick}
             disabled={disabled}
+            invalid={invalid}
           >
             {option.label}
           </Checkbox>

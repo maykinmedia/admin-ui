@@ -30,6 +30,12 @@ export type TextareaProps = Omit<
   /** The variant (style) of the textarea. */
   variant?: "normal" | "transparent";
 
+  /**
+   * Invalid textarea fields get additional markup/styling and aria tags to indicate the
+   * invalid state.
+   */
+  invalid?: boolean;
+
   /** Gets called when the value is changed */
   onChange?: React.ChangeEventHandler<HTMLTextAreaElement>;
 };
@@ -47,6 +53,7 @@ export const Textarea: React.FC<TextareaProps> = ({
   size = "s",
   variant = "normal",
   onChange,
+  invalid,
   ...props
 }) => {
   const textareaRef = React.useRef<HTMLTextAreaElement>(null);
@@ -85,6 +92,7 @@ export const Textarea: React.FC<TextareaProps> = ({
         },
       )}
       onChange={_onChange}
+      aria-invalid={invalid}
       aria-label={label || undefined}
       {...props}
     />
