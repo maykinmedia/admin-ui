@@ -25,6 +25,15 @@ export const DateRangeInputComponent: Story = {
   decorators: [FORM_TEST_DECORATOR],
 };
 
+export const InvalidDateRangeInputComponent: Story = {
+  args: {
+    name: "daterange",
+    value: "1988-08-02/2023-09-15",
+    invalid: true,
+  },
+  decorators: [FORM_TEST_DECORATOR],
+};
+
 export const SeparatedInputs: Story = {
   args: {
     name: "date",

@@ -72,6 +72,16 @@ export const DatepickerComponent: Story = {
   },
 };
 
+export const InvalidDatepickerComponent: Story = {
+  args: {
+    type: "datepicker",
+    name: "date",
+    value: "2023-09-15",
+    invalid: true,
+  },
+  decorators: [FORM_TEST_DECORATOR],
+};
+
 export const DatePickerWithoutValue: Story = {
   ...DatepickerComponent,
   args: {

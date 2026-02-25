@@ -62,3 +62,18 @@ export const CheckboxGroupComponent: Story = {
     await expect(data.school_year).toEqual(["Freshman", "Junior", "Graduate"]);
   },
 };
+
+export const InvalidCheckboxGroupComponent: Story = {
+  args: {
+    label: "Select school year",
+    name: "school_year",
+    options: [
+      { label: "Freshman" },
+      { label: "Sophomore" },
+      { label: "Junior" },
+      { label: "Senior" },
+      { label: "Graduate" },
+    ],
+    invalid: true,
+  },
+};

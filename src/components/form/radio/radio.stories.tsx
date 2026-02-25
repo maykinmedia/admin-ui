@@ -35,3 +35,13 @@ export const RadioComponent: Story = {
     await expect(data.input).toBe(args.value || "on");
   },
 };
+
+export const InvalidRadioComponent: Story = {
+  args: {
+    children: "Click me!",
+    name: "input",
+    value: "",
+    invalid: true,
+  },
+  argTypes: FORM_TEST_ARG_TYPES,
+};

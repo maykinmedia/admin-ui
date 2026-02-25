@@ -75,6 +75,11 @@ export const Designator: Story = {
   },
 };
 
+export const InvalidDesignator: Story = {
+  args: { mode: "designator", invalid: true },
+  render: (args) => <Controlled {...args} initial="" />,
+};
+
 export const DesignatorWithWeeks: Story = {
   args: { mode: "designator" },
   render: (args) => <Controlled {...args} initial="P8W" />,

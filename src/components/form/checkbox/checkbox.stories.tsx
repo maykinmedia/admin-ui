@@ -27,7 +27,7 @@ export const CheckboxComponent: Story = {
   play: async ({ canvasElement, args }) => {
     const canvas = within(canvasElement);
     const pre = await canvas.findByRole("log");
-    const input = canvas.getByLabelText(args.children);
+    const input = canvas.getByLabelText(args.children as string);
     let data;
 
     // On
@@ -45,4 +45,14 @@ export const CheckboxComponent: Story = {
     data = JSON.parse(pre?.textContent || "{}");
     await expect(data.input).toBe(args.value || "on");
   },
+};
+
+export const InvalidCheckboxComponent: Story = {
+  args: {
+    children: "Click me!",
+    name: "input",
+    value: "",
+    invalid: true,
+  },
+  argTypes: FORM_TEST_ARG_TYPES,
 };

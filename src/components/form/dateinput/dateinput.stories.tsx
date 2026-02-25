@@ -19,6 +19,14 @@ export const DateInputComponent: Story = {
   decorators: [FORM_TEST_DECORATOR],
 };
 
+export const InvalidDateInputComponent: Story = {
+  args: {
+    name: "date",
+    invalid: true,
+  },
+  decorators: [FORM_TEST_DECORATOR],
+};
+
 export const SeparatedInputs: Story = {
   args: {
     name: "date",
