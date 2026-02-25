@@ -19,7 +19,7 @@ export const DEFAULT_URL_FIELDS = [
 export type Field<T extends object = object> = keyof T;
 
 /** A key in object annotated with its type and optionally meta information. */
-export type TypedField<T extends object = object> = {
+export type TypedField<T extends object = Record<string, unknown>> = {
   /** The field name. */
   name: keyof T;
 
