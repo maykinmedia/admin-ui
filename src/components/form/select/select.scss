@@ -112,6 +112,12 @@
     --mykn-select-color-background: transparent;
   }
 
+  // Invalid state
+  &:invalid,
+  &[aria-invalid="true"] {
+    --mykn-select-color-border: var(--form-select-invalid-border);
+  }
+
   .mykn-icon {
     pointer-events: none;
     transition: transform var(--animation-duration-medium)
