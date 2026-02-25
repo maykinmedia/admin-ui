@@ -32,6 +32,12 @@ export type InputProps = Omit<
 
   /** Gets called when the value is changed */
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
+
+  /**
+   * Invalid input fields get additional markup/styling and aria tags to indicate the
+   * invalid state.
+   */
+  invalid?: boolean;
 };
 
 /**
@@ -50,6 +56,7 @@ export const Input: React.FC<InputProps> = ({
   value,
   variant = "normal",
   onChange,
+  invalid,
   ...props
 }) => {
   const inputRef = React.useRef<HTMLInputElement>(null);
@@ -112,6 +119,7 @@ export const Input: React.FC<InputProps> = ({
       type={inputType}
       onChange={_onChange}
       aria-label={label || undefined}
+      aria-invalid={invalid}
       {...valueProps}
       {...props}
     />

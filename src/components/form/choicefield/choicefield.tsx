@@ -46,6 +46,12 @@ export type ChoiceFieldProps<
 
   /** Disabled state. */
   disabled?: boolean;
+
+  /**
+   * Invalid choicefield fields get additional markup/styling and aria tags to indicate
+   * the invalid state.
+   */
+  invalid?: boolean;
 };
 /**
  * A single (select) option, can be passed to `Select as array.

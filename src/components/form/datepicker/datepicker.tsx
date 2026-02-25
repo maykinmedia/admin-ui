@@ -53,6 +53,12 @@ export type DatePickerProps = Omit<
 
   /** Gets called when the value is changed. */
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
+
+  /**
+   * Invalid datepicker fields get additional markup/styling and aria tags to indicate
+   * the invalid state.
+   */
+  invalid?: boolean;
 };
 
 /**
@@ -85,6 +91,7 @@ export const DatePicker: React.FC<DatePickerProps> = ({
   labelWeek,
   pad = true,
   onChange,
+  invalid,
   ...props
 }) => {
   const fakeInputRef = React.useRef<HTMLInputElement>(null);
@@ -340,6 +347,7 @@ export const DatePicker: React.FC<DatePickerProps> = ({
         showIcon
         icon={icon || <Outline.CalendarIcon />}
         onChange={handleChange}
+        ariaInvalid={invalid !== undefined ? invalid.toString() : undefined}
         {...props}
       />
     </>
