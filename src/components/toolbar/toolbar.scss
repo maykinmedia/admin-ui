@@ -246,6 +246,12 @@
       width: 100%;
     }
 
+    // Prevent nested buttons inside selects or dropdowns from stretching
+    > .mykn-select .mykn-button,
+    > .mykn-dropdown .mykn-button {
+      width: auto;
+    }
+
     .mykn-iconinitials {
       align-self: center;
     }
