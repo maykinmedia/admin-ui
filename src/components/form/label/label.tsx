@@ -11,19 +11,25 @@ export type LabelProps = React.ComponentProps<"label"> & {
 /**
  * Label component
  * @param bold
+ * @param className
  * @param children
  * @param props
  * @constructor
  */
 export const Label: React.FC<LabelProps> = ({
   bold = true,
+  className,
   children,
   ...props
 }) => (
   <label
-    className={clsx("mykn-label", {
-      "mykn-label--bold": bold,
-    })}
+    className={clsx(
+      "mykn-label",
+      {
+        "mykn-label--bold": bold,
+      },
+      className,
+    )}
     {...props}
   >
     {children}
