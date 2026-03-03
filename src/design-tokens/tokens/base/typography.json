@@ -34,10 +34,13 @@
           "value": "20px"
         },
         "h3": {
-          "value": "16px"
+          "value": "18px"
         },
         "xl": {
           "value": "26px"
+        },
+        "body-md": {
+          "value": "16px"
         },
         "body-s": {
           "value": "14px"
@@ -60,22 +63,25 @@
     },
     "line-height": {
       "h1": {
-        "value": "24px"
+        "value": "1.25"
       },
       "h2": {
-        "value": "24px"
+        "value": "1.5"
       },
       "h3": {
-        "value": "24px"
+        "value": "1.5"
       },
       "xl": {
-        "value": "24px"
+        "value": "1"
+      },
+      "body-md": {
+        "value": "1.5"
       },
       "body-s": {
-        "value": "24px"
+        "value": "1.5"
       },
       "body-xs": {
-        "value": "24px"
+        "value": "1.5"
       }
     }
   }
