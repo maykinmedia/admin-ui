@@ -273,7 +273,7 @@ export const DataGrid = <T extends object = object, F extends object = T>(
   // Specify the default props.
   const defaults: Partial<DataGridProps<T, F>> = {
     allowOverflowX: true,
-    compact: true,
+    compact: false,
     showPaginator: Boolean(props.paginatorProps),
     selectable: false,
     allowSelectAll: true,
