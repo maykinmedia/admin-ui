@@ -225,7 +225,9 @@
   --button-success-disabled-shadow: var(--theme-base-foreground);
   --card-background: var(--theme-base-background);
   --datagrid-background: var(--theme-base-background);
-  --datagrid-header-background: var(--theme-base-background-alternate);
+  --datagrid-background-even: var(--theme-base-background);
+  --datagrid-background-odd: var(--theme-base-background-alternate);
+  --datagrid-header-background: var(--theme-base-background);
   --datagrid-row-active: var(--theme-brand-accent-active);
   --dropdown-border: var(--theme-brand-primary-default);
   --form-border: var(--theme-base-border);

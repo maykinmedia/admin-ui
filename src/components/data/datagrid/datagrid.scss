@@ -64,6 +64,14 @@
     top: var(--mykn-datagrid-thead-top-base, 0px);
   }
 
+  &__tbody &__row:nth-child(even) {
+    background-color: var(--datagrid-background-even);
+  }
+
+  &__tbody &__row:nth-child(odd) {
+    background-color: var(--datagrid-background-odd);
+  }
+
   &__thead &__row--filter {
     background-color: var(--datagrid-header-background);
 
@@ -93,8 +101,6 @@
   }
 
   &__cell {
-    border-block-start: 1px solid transparent;
-    border-block-end: 1px solid var(--datagrid-border);
     box-sizing: border-box;
     padding: var(--mykn-datagrid-spacing-v) var(--mykn-datagrid-spacing-h);
     position: relative;
