@@ -1,0 +1,8 @@
+{
+  "itemgrid": {
+    "item": {
+      "background": { "value": "{theme.base.background-alternate}" },
+      "shadow": { "value": "{theme.base.shadow}" }
+    }
+  }
+}
