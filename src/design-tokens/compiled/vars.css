@@ -11,6 +11,8 @@
   --sizes-container-max: 1240px;
   --sizes-spacing-m-h: 48px;
   --sizes-spacing-m-v: 48px;
+  --sizes-spacing-sm-h: 32px;
+  --sizes-spacing-sm-v: 32px;
   --sizes-spacing-s-h: 16px;
   --sizes-spacing-s-v: 16px;
   --sizes-spacing-xs-h: 8px;
@@ -251,6 +253,8 @@
   --form-toggle-active-thumb: var(--theme-brand-primary-contrast);
   --form-color-background: var(--theme-base-background);
   --iconinitials-background: var(--theme-base-background-alternate);
+  --itemgrid-item-background: var(--theme-base-background-alternate);
+  --itemgrid-item-shadow: var(--theme-base-shadow);
   --kanban-background: var(--theme-base-background-alternate);
   --kanban-drop-indicator-background: var(--theme-brand-accent-default);
   --kanban-drop-indicator-border: var(--theme-brand-primary-default);

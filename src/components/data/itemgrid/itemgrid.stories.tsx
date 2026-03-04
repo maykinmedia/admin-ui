@@ -1,15 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import * as React from "react";
+import React, { ReactNode } from "react";
 
 import { PAGE_DECORATOR } from "../../../../.storybook/decorators";
-import {
-  FIXTURE_TODOS,
-  FIXTURE_TODOS_STATUS_DONE,
-  FIXTURE_TODOS_STATUS_IN_PROGRESS,
-  FIXTURE_TODOS_STATUS_IN_REVIEW,
-  FIXTURE_TODOS_STATUS_TODO,
-} from "../../../../.storybook/fixtures/todos";
-import { ItemGrid, ItemGridProps } from "./itemgrid";
+import { Outline } from "../../icon";
+import { ItemGrid, ItemGridItemProps } from "./itemgrid";
 
 const meta: Meta<typeof ItemGrid> = {
   title: "Data/Itemgrid",
@@ -20,49 +14,141 @@ const meta: Meta<typeof ItemGrid> = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+const ITEM_GRID_ITEMS: ItemGridItemProps[] = [
+  {
+    icon: <Outline.DocumentIcon />,
+    title: "projectplan_2026_v3.pdf",
+    informationLines: ["PDF", "842 KB", "10-02-2026"],
+  },
+  {
+    icon: <Outline.PhotoIcon />,
+    title:
+      "teamfoto_bedrijfsuitje_heel_lang_bestandsnaam_extrateamfoto_bedrijfsuitje_heel_lang_bestandsnaam_extra.jpg",
+    informationLines: ["JPG", "2.4 MB", "08-02-2026"],
+    buttonProps: {
+      as: "a",
+      href: "https://www.example.com/photo",
+    },
+  },
+  {
+    icon: <Outline.VideoCameraIcon />,
+    title: "product_demo_launch_event.mp4",
+    informationLines: ["MP4", "84.1 MB", "01-02-2026"],
+  },
+  {
+    icon: <Outline.MusicalNoteIcon />,
+    title: "podcast_aflevering_12_final_edit.mp3",
+    informationLines: ["MP3", "12.7 MB", "28-01-2026"],
+  },
+  {
+    icon: <Outline.ArchiveBoxIcon />,
+    title: "backup_2026_01_31.zip",
+    informationLines: ["ZIP", "120 MB", "31-01-2026"],
+  },
+  {
+    icon: <Outline.TableCellsIcon />,
+    title: "financieel_overzicht_q1.xlsx",
+    informationLines: ["XLSX", "356 KB", "15-01-2026"],
+  },
+  {
+    icon: <Outline.PresentationChartBarIcon />,
+    title: "kwartaalpresentatie_sales.pptx",
+    informationLines: ["PPTX", "4.8 MB", "12-01-2026"],
+  },
+  {
+    icon: <Outline.CodeBracketIcon />,
+    title: "api_client_config.ts",
+    informationLines: ["TypeScript", "14 KB", "05-01-2026"],
+  },
+  {
+    icon: <Outline.DocumentTextIcon />,
+    title: "notulen_teamoverleg_januari.docx",
+    informationLines: ["DOCX", "98 KB", "03-01-2026"],
+  },
+  {
+    icon: <Outline.ShieldCheckIcon />,
+    title: "security_audit_report_2025.pdf",
+    informationLines: ["PDF", "1.2 MB", "22-12-2025"],
+  },
+  {
+    icon: <Outline.CloudArrowUpIcon />,
+    title: "upload_export_dataset.csv",
+    informationLines: ["CSV", "6.3 MB", "18-12-2025"],
+  },
+  {
+    icon: <Outline.ServerStackIcon />,
+    title: "database_dump_production.sql",
+    informationLines: ["SQL", "48 MB", "10-12-2025"],
+  },
+  {
+    icon: <Outline.MapIcon />,
+    title: "locatie_overzicht_werkgebied.geojson",
+    informationLines: ["GeoJSON", "2.1 MB", "02-12-2025"],
+  },
+  {
+    icon: <Outline.DocumentDuplicateIcon />,
+    title: "contract_klant_acme_corp_signed.pdf",
+    informationLines: ["PDF", "512 KB", "25-11-2025"],
+    buttonProps: {
+      as: "a",
+      href: "https://www.example.com/contract",
+    },
+  },
+  {
+    icon: <Outline.CalendarIcon />,
+    title: "planning_roadmap_2026.xlsx",
+    informationLines: ["XLSX", "221 KB", "20-11-2025"],
+  },
+];
+
 export const ItemGridComponent: Story = {
-  // @ts-expect-error - never
   args: {
-    title: "The quick brown fox jumps over the lazy dog.",
-    fieldsets: [
-      ["Todo", { fields: ["title"], title: "title" }],
-      ["In Progress", { fields: ["title"], title: "title" }],
-      ["In Review", { fields: ["title"], title: "title" }],
-      ["Done", { fields: ["title"], title: "title" }],
-    ],
-    objectLists: [
-      FIXTURE_TODOS_STATUS_TODO,
-      FIXTURE_TODOS_STATUS_IN_PROGRESS,
-      FIXTURE_TODOS_STATUS_IN_REVIEW,
-      FIXTURE_TODOS_STATUS_DONE,
-    ],
+    items: ITEM_GRID_ITEMS,
   },
 };
 
-export const CustomPreview: Story = {
-  ...ItemGridComponent,
-  // @ts-expect-error - Fix never
+export const ItemGridComponentWithEllipsis: Story = {
   args: {
-    ...(ItemGridComponent.args as ItemGridProps),
-    renderPreview: (data: Record<string, string>) => (
-      <img
-        alt={data.title}
-        src="/static/maykin_logo.png"
-        height="24"
-        style={{ objectFit: "contain" }}
-      />
-    ),
+    items: ITEM_GRID_ITEMS,
+    ellipsis: true,
   },
 };
 
-export const GroupBy: Story = {
-  ...ItemGridComponent,
-  // @ts-expect-error - Fix never
+export const ItemGridComponentDirectionRow: Story = {
   args: {
-    ...(ItemGridComponent.args as ItemGridProps),
-    title: "The quick brown fox jumps over the lazy dog.",
-    fieldset: [`{group}`, { fields: ["title"], title: "title" }],
-    objectList: FIXTURE_TODOS,
-    groupBy: "status",
+    items: ITEM_GRID_ITEMS,
+    direction: "row",
+  },
+};
+
+export const ItemGridComponentDirectionRowWithEllipsis: Story = {
+  args: {
+    items: ITEM_GRID_ITEMS,
+    direction: "row",
+    ellipsis: true,
+  },
+};
+
+const addInfoIcons = (lines: string[]): ReactNode[] => [
+  <>
+    <Outline.DocumentIcon />
+    {lines[0]}
+  </>,
+  <>
+    <Outline.ArrowDownTrayIcon />
+    {lines[1]}
+  </>,
+  <>
+    <Outline.ClockIcon />
+    {lines[2]}
+  </>,
+];
+
+export const ItemGridWithInfoIcons: Story = {
+  args: {
+    items: ITEM_GRID_ITEMS.map((item) => ({
+      ...item,
+      informationLines: addInfoIcons(item.informationLines as string[]),
+    })),
   },
 };

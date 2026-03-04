@@ -1,214 +1,148 @@
-import { string2Title } from "@maykin-ui/client-common";
-import React from "react";
+import clsx from "clsx";
+import React, { FC, HTMLAttributes, ReactNode, useId } from "react";
 
-import { DEFAULT_URL_FIELDS, FieldSet, getFieldName } from "../../../lib";
-import {
-  GroupedDataProps,
-  getContextData,
-} from "../../../lib/data/groupeddata";
 import { Button, ButtonLink, ButtonLinkProps, ButtonProps } from "../../button";
-import { Column, Grid } from "../../layout";
-import { Body, H1, H2, H3, P } from "../../typography";
-import { Value } from "../value";
+import { Body, H3, P } from "../../typography";
 import "./itemgrid.scss";
 
-export type ItemGridProps<T extends object = object> = GroupedDataProps<T>;
+export type ItemGridProps = {
+  /* The (flex) direction of the grid. */
+  direction?: "row" | "column";
+  /* Whether to truncate title/information lines with ellipsis. */
+  ellipsis?: boolean;
+  /* The items to display in the grid. */
+  items: ItemGridItemProps[];
+};
 
 /**
- * ItemGrid Component
+ * A grid of items, each consisting of an icon, title, information lines and an optional button.
+ * The grid can be displayed in a row or column direction, and the information lines can be truncated
+ * with ellipsis if desired.
  *
- * Shows item over various rows.
+ * It is recommended to use `ellipsis: true` when you expect long titles or information lines
  *
- * @typeParam T - The shape of a single item.
+ * @example
+ * <ItemGrid
+ *   direction="row"
+ *   ellipsis
+ *   items={[
+ *     {
+ *       icon: <MyIcon />,
+ *       title: "Item 1",
+ *       informationLines: ["Line 1", "Line 2"],
+ *       buttonProps: { as: "button", onClick: () => alert("Clicked!") },
+ *     },
+ *     {
+ *       icon: <MyIcon />,
+ *       title: "Item 2",
+ *       informationLines: ["Line 1", "Line 2"],
+ *       buttonProps: { as: "a", href: "https://example.com" },
+ *     },
+ *   ]}
+ * />
  */
-export const ItemGrid = <T extends object = object>({
-  buttonProps,
-  buttonLinkProps,
-  fieldset,
-  fieldsets,
-  groupBy,
-  objectList,
-  objectLists,
-  renderPreview,
-  title,
-  urlFields = DEFAULT_URL_FIELDS,
-  onClick,
-  ...props
-}: ItemGridProps<T>) => {
-  const [_fieldsets, _objectLists] = getContextData<T>(
-    groupBy,
-    fieldset,
-    fieldsets,
-    objectList as T[],
-    objectLists as T[][],
-  );
-
-  return (
-    <div className="mykn-itemgrid" {...props}>
-      {title && (
-        <Body>
-          <H2>{title}</H2>
-        </Body>
-      )}
-      {_fieldsets.map((fieldset, index) => (
-        <ItemGridSection<T>
-          key={fieldset[0] ? fieldset[0] : index}
-          buttonLinkProps={buttonLinkProps}
-          buttonProps={buttonProps}
-          fieldset={fieldset}
-          objectList={_objectLists[index]}
-          renderPreview={renderPreview}
-          // @ts-expect-error - complex union
-          urlFields={urlFields}
-          onClick={onClick}
-        />
-      ))}
-    </div>
-  );
-};
-
-export type ItemGridSectionProps<T extends object = object> = Omit<
-  React.ComponentProps<"section">,
-  "onClick"
-> & {
-  buttonLinkProps?: ButtonLinkProps;
-  buttonProps?: ButtonProps;
-  fieldset: FieldSet<T>;
-  objectList: T[];
-  renderPreview?: (data: T) => React.ReactNode;
-  urlFields: (keyof ItemGridSectionProps["objectList"][number])[];
-  onClick?: (event: React.MouseEvent, data: T) => void;
-};
-
-export const ItemGridSection = <T extends object = object>({
-  buttonLinkProps,
-  buttonProps,
-  fieldset,
-  objectList,
-  renderPreview,
-  urlFields,
-  onClick,
-}: ItemGridSectionProps<T>) => (
-  <section className="mykn-itemgrid__section">
-    <Body>
-      <Grid>
-        {fieldset[0] && (
-          <Column span={12}>
-            <H3>{string2Title(fieldset[0])}</H3>
-          </Column>
-        )}
-        {objectList.map((o, index) => (
-          <ItemGridItem<T>
-            key={index}
-            buttonLinkProps={buttonLinkProps}
-            buttonProps={buttonProps}
-            fieldset={fieldset}
-            object={o}
-            renderPreview={renderPreview}
-            urlFields={urlFields}
-            onClick={onClick}
-          />
-        ))}
-      </Grid>
-    </Body>
-  </section>
+export const ItemGrid: FC<ItemGridProps> = ({
+  direction = "column",
+  ellipsis = false,
+  items,
+}) => (
+  <ul
+    className={clsx("mykn-itemgrid", {
+      "mykn-itemgrid--direction-row": direction === "row",
+      "mykn-itemgrid__item--ellipsis": ellipsis,
+    })}
+  >
+    {items.map((item, index) => (
+      <li
+        key={item.id ?? `${item.title}-${index}`}
+        className="mykn-itemgrid__item-wrapper"
+      >
+        <ItemGridItem {...item} ellipsis={ellipsis} />
+      </li>
+    ))}
+  </ul>
 );
 
-export type ItemGridItemProps<T extends object = object> = Omit<
-  React.ComponentProps<"li">,
-  "onClick"
-> & {
-  buttonLinkProps?: ButtonLinkProps;
-  buttonProps?: ButtonProps;
-  fieldset: FieldSet<T>;
-  object: T;
-  renderPreview?: (data: T) => React.ReactNode;
-  urlFields: (keyof ItemGridItemProps["object"])[];
-  onClick?: (event: React.MouseEvent, data: T) => void;
-};
-
-export const ItemGridItem = <T extends object = object>({
-  buttonLinkProps,
-  buttonProps,
-  fieldset,
-  object,
-  renderPreview,
-  urlFields,
-  onClick,
-}: ItemGridItemProps<T>) => {
-  const fields = fieldset[1].fields;
-  const titleField = fieldset[1].title || Object.keys(object)[0];
-  const urlField = urlFields.find((f) => object[f]);
-
-  const label = String(object[titleField as keyof T]);
-  const href = urlField ? String(object[urlField]) || undefined : undefined;
-  const otherFields = fields.filter(
-    (field) => ![...urlFields, titleField].includes(getFieldName(field)),
-  );
-
-  return (
-    <Column direction="column" span={1} mobileSpan={2}>
-      <ItemGridButton<T>
-        buttonLinkProps={buttonLinkProps}
-        buttonProps={buttonProps}
-        href={href}
-        object={object}
-        renderPreview={renderPreview}
-        title={label}
-        onClick={onClick}
-      ></ItemGridButton>
-      <P bold size="xs">
-        {string2Title(label)}
-      </P>
-
-      {otherFields.map((field) => (
-        <P key={getFieldName(field).toString()} muted size="xs">
-          <Value value={object[getFieldName(field)]} />
-        </P>
-      ))}
-    </Column>
-  );
-};
-
-export type ItemGridButtonProps<T extends object = object> = {
-  buttonLinkProps?: ButtonLinkProps;
-  buttonProps?: ButtonProps;
-  href?: string;
-  object: T;
-  renderPreview?: (data: T) => React.ReactNode;
+export type ItemGridItemProps = {
+  /* A stable key for the item */
+  id?: string;
+  /* The icon to display */
+  icon: ReactNode;
+  /* An accessible label for the icon. If not provided, the icon will be hidden from assistive technologies. */
+  iconLabel?: string;
+  /* Title string to display. */
   title: string;
-  onClick?: (event: React.MouseEvent, data: T) => void;
+  /* Information lines to display along with the title */
+  informationLines?: ReactNode[];
+  /* Whether to truncate title/information lines with ellipsis. */
+  ellipsis?: boolean;
+  /* Button props. If `as` is "button", a `<Button>` will be rendered. If `as` is "a", a `<ButtonLink>` will be rendered. */
+  buttonProps?:
+    | ({ as: "button" } & ButtonProps)
+    | ({ as: "a" } & ButtonLinkProps);
 };
 
-export const ItemGridButton = <T extends object = object>({
-  buttonLinkProps,
-  buttonProps,
-  href,
+export const ItemGridItem: FC<ItemGridItemProps> = ({
+  id,
+  icon,
+  iconLabel,
   title,
-  object,
-  renderPreview = () => <H1 aria-hidden>{title[0].toUpperCase()}</H1>,
-  onClick,
-}: ItemGridButtonProps<T>) => {
-  const content = renderPreview(object);
+  informationLines = [],
+  ellipsis,
+  buttonProps = { as: "button" },
+}) => {
+  const internalId = useId();
+  const baseId = id ?? `${internalId}-item`;
+  const infoId = `${baseId}-info`;
+  const { as, ...rest } = buttonProps;
 
-  return href ? (
-    <ButtonLink
-      href={href}
-      title={title}
-      variant="secondary"
-      {...buttonLinkProps}
-      onClick={(e) => onClick?.(e, object)}
-    >
-      <span className="mykn-itemgrid__preview">{content}</span>
+  const ariaDescribedBy = informationLines.length ? infoId : undefined;
+
+  const iconProps: HTMLAttributes<HTMLDivElement> =
+    iconLabel != null
+      ? { role: "img", "aria-label": iconLabel }
+      : { "aria-hidden": true };
+
+  const content = (
+    <Body className="mykn-itemgrid__item-body">
+      <div className="mykn-itemgrid__item-icon" {...iconProps}>
+        {icon}
+      </div>
+      <div className="mykn-itemgrid__item-content">
+        <H3
+          className="mykn-itemgrid__item-title"
+          title={ellipsis ? title : undefined}
+        >
+          {title}
+        </H3>
+        <div id={infoId} className="mykn-itemgrid__item-information">
+          {informationLines.map((line, index) => (
+            <P
+              key={index}
+              className="mykn-itemgrid__item-information-line"
+              title={ellipsis ? String(line) : undefined}
+            >
+              {line}
+            </P>
+          ))}
+        </div>
+      </div>
+    </Body>
+  );
+
+  const sharedButtonProps = {
+    pad: false,
+    className: "mykn-itemgrid__item",
+    "aria-describedby": ariaDescribedBy,
+  };
+
+  return as === "a" ? (
+    <ButtonLink {...sharedButtonProps} {...(rest as ButtonLinkProps)}>
+      {content}
     </ButtonLink>
   ) : (
-    <Button
-      title={title}
-      variant="secondary"
-      {...buttonProps}
-      onClick={(e) => onClick?.(e, object)}
-    >
-      <span className="mykn-itemgrid__preview">{content}</span>
+    <Button {...sharedButtonProps} {...(rest as ButtonProps)}>
+      {content}
     </Button>
   );
 };

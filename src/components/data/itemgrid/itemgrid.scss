@@ -1,35 +1,124 @@
+@use "../../../settings/constants";
+
 .mykn-itemgrid {
-  width: 100%;
+  display: grid;
+  // A single (shrinkable) column by default
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--sizes-spacing-sm-h) var(--sizes-spacing-sm-v);
+  list-style: none;
+  padding: 0;
+  margin: 0;
 
-  .mykn-column--span-12 {
-    position: sticky;
-    top: 0;
-    z-index: 10;
+  @media screen and (min-width: constants.$breakpoint-desktop) {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(0, 200px));
   }
 
-  .mykn-column > * {
-    overflow: hidden;
-    text-align: center;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    width: 100%;
-  }
-
-  .mykn-column .mykn-button {
-    height: 0;
-    padding: 0;
-    padding-block-start: 100%;
-  }
-
-  &__preview {
-    align-items: center;
-    display: flex;
-    justify-content: center;
-    top: 50%;
-    left: 50%;
-    position: absolute;
-    transform: translate(-50%, -50%);
+  &__item {
     width: 100%;
     height: 100%;
+    background-color: var(--itemgrid-item-background);
+    padding: var(--sizes-spacing-s-v) var(--sizes-spacing-xs-h);
+    box-shadow: 0 2px 7px 0 var(--itemgrid-item-shadow);
+    border: none;
+    white-space: normal;
+
+    &-body {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: var(--sizes-spacing-s-v);
+      padding: 0;
+    }
+
+    &-icon {
+      color: var(--typography-color-body);
+      width: 32px;
+      height: 32px;
+      margin-inline: auto;
+
+      > * {
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    &-content {
+      color: var(--typography-color-body);
+    }
+
+    &-title {
+      margin-block-start: 0;
+      margin-block-end: var(--sizes-spacing-s-v);
+      text-align: center;
+    }
+
+    &-title,
+    &-information-line {
+      font-weight: normal;
+      white-space: normal;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+      hyphens: auto;
+    }
+
+    &-information {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    &-information-line {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--sizes-spacing-xs-h);
+    }
+
+    &--ellipsis {
+      .mykn-itemgrid__item-title,
+      .mykn-itemgrid__item-information-line {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    }
+  }
+
+  &--direction-row {
+    // Only on desktop we keep 300px, otherwise default (1fr)
+    @media screen and (min-width: constants.$breakpoint-desktop) {
+      /* For the Row, we increase minimum column width for a better display */
+      grid-template-columns: repeat(auto-fit, minmax(0, 300px));
+    }
+
+    .mykn-itemgrid__item {
+      padding: var(--sizes-spacing-xs-v) var(--sizes-spacing-s-h);
+
+      &-body {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: var(--sizes-spacing-s-h);
+      }
+
+      &-information {
+        display: block;
+      }
+
+      &-title {
+        margin-block-end: var(--sizes-spacing-xs-v);
+        text-align: start;
+      }
+
+      &-icon {
+        flex-shrink: 0;
+        margin: 0;
+      }
+
+      &-content {
+        min-width: 0;
+      }
+    }
   }
 }
