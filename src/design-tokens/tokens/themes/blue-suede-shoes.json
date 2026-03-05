@@ -26,7 +26,7 @@
     },
     "base": {
       "background": { "value": "#FFFFFF" },
-      "background-alternate": { "value": "#EDEDED" },
+      "background-alternate": { "value": "#F7F7F7" },
       "foreground": { "value": "#333333" },
       "foreground-disabled": { "value": "#767676" },
       "foreground-muted": { "value": "#595959" },
