@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
 import { FormControl } from "./formcontrol";
+import { expect, userEvent, within } from "storybook/test";
 
 const meta: Meta<typeof FormControl> = {
   title: "Form/Formcontrol",
@@ -10,7 +11,7 @@ const meta: Meta<typeof FormControl> = {
 export default meta;
 type Story = StoryObj<typeof FormControl>;
 
-export const InputFormControl: Story = {
+export const FormControlWithErrorMessage: Story = {
   args: {
     error: 'Field "e-mail" does not contain a valid e-mail address',
     forceShowError: true, // Make sure the Story shows error.
@@ -18,6 +19,26 @@ export const InputFormControl: Story = {
     name: "e-mail",
     value: "johndoe@example.com",
   },
+   play: async ({ canvasElement }) => {
+      const canvas = within(canvasElement);
+      const errorMessage = canvas.getByRole("alert")
+      const emailInput = canvas.getByLabelText('Enter your e-mail address'); 
+      
+      const wrapper = errorMessage.parentElement;
+
+      const children = wrapper 
+        ? [...wrapper.children] 
+        : [];
+
+      const iErrorMessage = children.indexOf(errorMessage);
+      const iEmailInput = children.indexOf(emailInput);
+    
+      expect(wrapper).toContain(errorMessage);
+      expect(wrapper).toContain(emailInput);
+
+      // gh-180
+      expect(iErrorMessage).toBeLessThan(iEmailInput);
+    }
 };
 
 export const SelectFormControl: Story = {
