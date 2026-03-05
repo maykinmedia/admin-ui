@@ -1,0 +1,70 @@
+.mykn-toggle {
+  align-items: center;
+  display: flex;
+  gap: var(--sizes-spacing-xs-h);
+  height: var(--typography-line-height-body-s);
+
+  // Toggle styling must come after [type="checkbox"] to override at equal specificity`
+  .mykn-input--toggle[type="checkbox"] {
+    background-color: var(--form-toggle-default-background);
+    border-color: transparent;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    height: 20px;
+    max-width: 41px;
+    min-width: 41px;
+    transition: background-color var(--animation-duration-fast)
+      var(--animation-timing-function);
+    width: 41px;
+
+    // Sliding thumb.
+    &::before {
+      background-color: var(--form-toggle-default-thumb);
+      border-radius: 50%;
+      content: "";
+      height: 16px;
+      left: 2px;
+      mask-image: none;
+      mask-size: auto;
+      position: absolute;
+      top: 2px;
+      transform: none;
+      transition:
+        left var(--animation-duration-fast) var(--animation-timing-function),
+        background-color var(--animation-duration-fast)
+          var(--animation-timing-function);
+      width: 16px;
+      z-index: 2;
+    }
+
+    // "off" label — visible on the right when unchecked, hidden when checked.
+    &::after {
+      color: var(--form-toggle-default-thumb);
+      content: attr(data-label-off);
+      font-family: var(--typography-font-family-body);
+      font-size: 9px;
+      line-height: 1;
+      position: absolute;
+      right: 4px;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 1;
+    }
+
+    &:checked {
+      background-color: var(--form-toggle-active-background);
+
+      &::before {
+        // all: unset;
+        background-color: var(--form-toggle-active-thumb);
+        left: calc(100% - 18px); // 41 - 16(thumb) - 2(padding) = 23px
+        mask-image: none;
+      }
+
+      &::after {
+        content: none;
+      }
+    }
+  }
+}

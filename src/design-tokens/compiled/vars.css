@@ -245,6 +245,10 @@
   --form-radio-default-background: var(--theme-base-background);
   --form-radio-active-background: var(--theme-brand-primary-default);
   --form-radio-active-text: var(--theme-brand-primary-contrast);
+  --form-toggle-default-background: var(--theme-base-foreground);
+  --form-toggle-default-thumb: var(--theme-base-background);
+  --form-toggle-active-background: var(--theme-brand-primary-default);
+  --form-toggle-active-thumb: var(--theme-brand-primary-contrast);
   --form-color-background: var(--theme-base-background);
   --iconinitials-background: var(--theme-base-background-alternate);
   --kanban-background: var(--theme-base-background-alternate);

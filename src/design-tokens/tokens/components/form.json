@@ -51,6 +51,16 @@
         "text": { "value": "{theme.brand.primary.contrast}" }
       }
     },
+    "toggle": {
+      "default": {
+        "background": { "value": "{theme.base.foreground}" },
+        "thumb": { "value": "{theme.base.background}" }
+      },
+      "active": {
+        "background": { "value": "{theme.brand.primary.default}" },
+        "thumb": { "value": "{theme.brand.primary.contrast}" }
+      }
+    },
     "color": {
       "background": { "value": "{theme.base.background}" },
       "text": { "value": "{typography.color.body}" }

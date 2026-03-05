@@ -46,3 +46,15 @@ export const Required: Story = {
     required: true,
   },
 };
+
+export const RequiredToggle: Story = {
+  args: {
+    error: "Permission is required to continue.",
+    labelOff: "No",
+    forceShowError: true, // Make sure the Story shows error.
+    label: "Do you give permission?",
+    name: "permission",
+    required: true,
+    type: "toggle",
+  },
+};

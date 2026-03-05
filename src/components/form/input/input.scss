@@ -78,7 +78,7 @@
     width: 16px;
   }
 
-  &[type="checkbox"] {
+  &[type="checkbox"]:not(&--toggle) {
     &:checked {
       background-color: var(--form-checkbox-active-background);
     }
