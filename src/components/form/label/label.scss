@@ -8,5 +8,6 @@
   &--bold {
     color: var(--typography-color-h);
     font-weight: var(--typography-font-weight-bold);
+    grid-row: span 2;
   }
 }

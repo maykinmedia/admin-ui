@@ -8,6 +8,9 @@
     align-items: center;
     flex-direction: row;
     white-space: nowrap;
+    display: grid;
+    grid-template-columns: max-content max-content;
+    grid-template-rows: max-content max-content;
   }
 
   &--error {
