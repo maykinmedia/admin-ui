@@ -79,7 +79,9 @@ export const Input: React.FC<InputProps> = ({
   // For checkboxes, this is problematic as it loses the "on" | "off" values.
   // This conditionalizes the presence of the "value" props.
   const valueProps =
-    type.toLowerCase() === "checkbox" || type.toLowerCase() === "radio"
+    type.toLowerCase() === "checkbox" ||
+    type.toLowerCase() === "radio" ||
+    type.toLowerCase() === "toggle"
       ? typeof value === "undefined"
         ? {}
         : {
@@ -88,6 +90,10 @@ export const Input: React.FC<InputProps> = ({
       : {
           value: value,
         };
+
+  // Normalize input type "toggle" to type "checkbox".
+  // This needs to happen because "toggle" is not a valid input type.
+  const inputType = type === "toggle" ? "checkbox" : type;
 
   const input = (
     <input
@@ -99,10 +105,11 @@ export const Input: React.FC<InputProps> = ({
         {
           "mykn-input--pad-h": pad === true || pad === "h",
           "mykn-input--pad-v": pad === true || pad === "v",
+          [`mykn-input--toggle`]: type == "toggle",
         },
       )}
       size={inputSize}
-      type={type}
+      type={inputType}
       onChange={_onChange}
       aria-label={label || undefined}
       {...valueProps}

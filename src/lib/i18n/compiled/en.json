@@ -63,6 +63,7 @@
   "mykn.components.Select.placeholderSearch": "search…",
   "mykn.components.Sidebar.collapse": "Collapse sidebar",
   "mykn.components.Sidebar.expand": "Expand sidebar",
+  "mykn.components.Toggle.labelOff": "off",
   "mykn.components.Value.labelEdit": "Edit \"{label}\"",
   "mykn.templates.Login.labelLogin": "login",
   "mykn.templates.Login.labelOidcLogin": "Login with organisation account"

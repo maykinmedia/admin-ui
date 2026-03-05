@@ -16,6 +16,7 @@ import {
   isRadio,
   isRadioGroup,
   isTextarea,
+  isToggle,
 } from "../../../lib";
 import { Checkbox } from "../checkbox";
 import { ChoiceField } from "../choicefield";
@@ -29,6 +30,7 @@ import { Input, InputProps } from "../input";
 import { Label } from "../label";
 import { Radio } from "../radio";
 import { Textarea } from "../textarea";
+import { Toggle } from "../toggle";
 import "./formcontrol.scss";
 
 // FIXME: Clashes in types, add generic for FormField?
@@ -170,6 +172,10 @@ export const FormWidget: React.FC<FormField> = ({ ...props }) => {
 
   if (isRadio(props)) {
     return <Radio {...props} />;
+  }
+
+  if (isToggle(props)) {
+    return <Toggle {...props} />;
   }
 
   if (isDateInput(props)) {

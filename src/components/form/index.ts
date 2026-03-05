@@ -12,4 +12,5 @@ export * from "./input";
 export * from "./label";
 export * from "./radio";
 export * from "./select";
+export * from "./toggle";
 export * from "./textarea";

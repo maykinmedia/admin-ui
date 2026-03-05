@@ -6,6 +6,7 @@ import {
   InputProps,
   RadioProps,
   SelectProps,
+  ToggleProps,
 } from "../../components";
 import { DateInputProps } from "../../components/form/dateinput";
 import { DateRangeInputProps } from "../../components/form/daterangeinput";
@@ -16,6 +17,7 @@ import { FieldType } from "../data";
 export type FormField =
   | CheckboxProps
   | RadioProps
+  | ToggleProps
   | ChoiceFieldProps
   | DateInputProps
   | DateRangeInputProps
@@ -69,6 +71,7 @@ export function getFormFieldTypeByFieldType(
 export const isFormControl = (props: unknown): props is FormControlProps =>
   isCheckbox(props as CheckboxProps) ||
   isRadio(props as RadioProps) ||
+  isToggle(props as ToggleProps) ||
   isDateInput(props as DateInputProps) ||
   isDatePicker(props as DatePickerProps) ||
   isDateRangeInput(props as DateRangeInputProps) ||
@@ -81,6 +84,13 @@ export const isFormControl = (props: unknown): props is FormControlProps =>
 export const isCheckbox = (props: FormField): props is CheckboxProps =>
   _isNonChoiceInput(props) &&
   (props.type === "checkbox" ||
+    typeof props.checked !== "undefined" ||
+    typeof props.defaultChecked !== "undefined");
+
+/** Typeguard for ToggleProps. */
+export const isToggle = (props: FormField): props is ToggleProps =>
+  _isNonChoiceInput(props) &&
+  (props.type === "toggle" ||
     typeof props.checked !== "undefined" ||
     typeof props.defaultChecked !== "undefined");
 
