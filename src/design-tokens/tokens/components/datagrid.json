@@ -1,5 +1,6 @@
 {
   "datagrid": {
+    "background": { "value": "{theme.base.background}" },
     "background-even": { "value": "{theme.base.background}" },
     "background-odd": { "value": "{theme.base.background-alternate}" },
     "border": { "value": "{typography.color.border}" },
