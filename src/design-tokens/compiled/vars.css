@@ -226,6 +226,7 @@
   --button-success-disabled-border: var(--theme-base-background-alternate);
   --button-success-disabled-shadow: var(--theme-base-foreground);
   --card-background: var(--theme-base-background);
+  --datagrid-background: var(--theme-base-background);
   --datagrid-background-even: var(--theme-base-background);
   --datagrid-background-odd: var(--theme-base-background-alternate);
   --datagrid-header-background: var(--theme-base-background);
