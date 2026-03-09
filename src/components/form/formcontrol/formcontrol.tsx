@@ -140,6 +140,10 @@ export const FormControl: React.FC<FormControlProps> = ({
         </Label>
       )}
 
+      {(isDirty || forceShowError) && error && (
+        <ErrorMessage id={idError}>{error}</ErrorMessage>
+      )}
+
       <FormWidget
         id={_id}
         aria-invalid={!!error}
@@ -151,10 +155,6 @@ export const FormControl: React.FC<FormControlProps> = ({
           props.onChange?.(e);
         }}
       />
-
-      {(isDirty || forceShowError) && error && (
-        <ErrorMessage id={idError}>{error}</ErrorMessage>
-      )}
     </div>
   );
 };
