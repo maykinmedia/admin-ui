@@ -103,6 +103,11 @@
     --mykn-button-padding-xs: calc(var(--sizes-spacing-xs-h) / 2);
   }
 
+  &--size-md {
+    --mykn-button-font-size: var(--typography-font-size-body-md);
+    --mykn-button-line-height: var(--typography-line-height-body-md);
+  }
+
   &--size-xs {
     --mykn-button-font-size: var(--typography-font-size-body-xs);
     --mykn-button-line-height: var(--typography-line-height-body-xs);

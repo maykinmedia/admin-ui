@@ -11,7 +11,7 @@ export type PProps = React.ComponentProps<"p"> & {
   muted?: boolean;
 
   /** The size of the text. */
-  size?: "s" | "xs";
+  size?: "md" | "s" | "xs";
 
   /** "word-break" CSS value. */
   wordBreak?: React.CSSProperties["wordBreak"];

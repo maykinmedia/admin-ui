@@ -15,6 +15,11 @@
     color: var(--typography-color-muted);
   }
 
+  &--size-md {
+    font-size: var(--typography-font-size-body-md);
+    line-height: var(--typography-line-height-body-md);
+  }
+
   &--size-xs {
     font-size: var(--typography-font-size-body-xs);
     line-height: var(--typography-line-height-body-xs);
