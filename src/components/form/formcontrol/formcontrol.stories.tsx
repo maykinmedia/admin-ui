@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { expect, within } from "storybook/test";
 
 import { FormControl } from "./formcontrol";
-import { expect, userEvent, within } from "storybook/test";
 
 const meta: Meta<typeof FormControl> = {
   title: "Form/Formcontrol",
@@ -19,26 +19,24 @@ export const FormControlWithErrorMessage: Story = {
     name: "e-mail",
     value: "johndoe@example.com",
   },
-   play: async ({ canvasElement }) => {
-      const canvas = within(canvasElement);
-      const errorMessage = canvas.getByRole("alert")
-      const emailInput = canvas.getByLabelText('Enter your e-mail address'); 
-      
-      const wrapper = errorMessage.parentElement;
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const errorMessage = canvas.getByRole("alert");
+    const emailInput = canvas.getByLabelText("Enter your e-mail address");
 
-      const children = wrapper 
-        ? [...wrapper.children] 
-        : [];
+    const wrapper = errorMessage.parentElement;
 
-      const iErrorMessage = children.indexOf(errorMessage);
-      const iEmailInput = children.indexOf(emailInput);
-    
-      expect(wrapper).toContain(errorMessage);
-      expect(wrapper).toContain(emailInput);
+    const children = wrapper ? [...wrapper.children] : [];
 
-      // gh-180
-      expect(iErrorMessage).toBeLessThan(iEmailInput);
-    }
+    const iErrorMessage = children.indexOf(errorMessage);
+    const iEmailInput = children.indexOf(emailInput);
+
+    expect(wrapper).toContain(errorMessage);
+    expect(wrapper).toContain(emailInput);
+
+    // gh-180
+    expect(iErrorMessage).toBeLessThan(iEmailInput);
+  },
 };
 
 export const SelectFormControl: Story = {
