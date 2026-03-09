@@ -37,7 +37,8 @@
   &--position-start &__header &__toggle,
   &--position-end &__header &__toggle {
     inset-block-start: calc(
-      var(--typography-line-height-h2) + var(--typography-font-size-h2)
+      var(--typography-line-height-h2) * var(--typography-font-size-h2) +
+        var(--typography-font-size-h2)
     );
     position: absolute;
     transform-origin: center;
@@ -110,13 +111,15 @@
       :has(:not(.mykn-sidebar__toggle):focus)
     ):not(:has(&__body:hover)) {
     width: calc(
-      var(--typography-line-height-body-xs) + 2 * var(--sizes-spacing-xs-h)
+      var(--typography-line-height-body-xs) *
+        var(--typography-font-size-body-xs) + 2 * var(--sizes-spacing-xs-h)
     );
 
     #{$self}__header,
     #{$self}__body {
       width: calc(
-        var(--typography-line-height-body-xs) + 2 * var(--sizes-spacing-xs-h)
+        var(--typography-line-height-body-xs) *
+          var(--typography-font-size-body-xs) + 2 * var(--sizes-spacing-xs-h)
       );
     }
 

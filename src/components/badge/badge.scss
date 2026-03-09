@@ -17,7 +17,7 @@
   justify-content: center;
   line-height: var(--typography-line-height-body-xs);
   overflow: hidden;
-  padding: 0 var(--sizes-spacing-xs-h);
+  padding: calc(var(--sizes-spacing-xs-v) / 2) var(--sizes-spacing-xs-h);
   position: relative;
   transform-style: preserve-3d;
 
@@ -91,7 +91,10 @@
   }
 
   &--rounded {
-    border-radius: var(--typography-font-size-body-xs);
+    border-radius: calc(
+      var(--typography-font-size-body-xs) *
+        var(--typography-line-height-body-xs)
+    );
   }
 
   .mykn-icon {

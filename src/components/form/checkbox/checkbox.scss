@@ -2,6 +2,8 @@
   border-color: var(--form-border);
   display: flex;
   align-items: center;
-  height: var(--typography-line-height-body-s);
+  height: calc(
+    var(--typography-line-height-body-md) * var(--typography-font-size-body-md)
+  );
   gap: var(--sizes-spacing-xs-h);
 }
