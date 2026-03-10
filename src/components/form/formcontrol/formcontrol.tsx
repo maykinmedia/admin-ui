@@ -31,12 +31,16 @@ import { Label } from "../label";
 import { Radio } from "../radio";
 import { Textarea } from "../textarea";
 import { Toggle } from "../toggle";
+import { HelpText } from "../helptext";
 import "./formcontrol.scss";
 
 // FIXME: Clashes in types, add generic for FormField?
 export type FormControlProps = FormField & {
   /** The direction in which to render the form. */
   direction?: "v" | "h" | "vertical" | "horizontal"; // TODO: deprecate horizontal and vertical
+
+  /** An help text to show */
+  helptext?: string;
 
   /** Justification type. */
   justify?: "baseline" | "stretch";
@@ -55,9 +59,6 @@ export type FormControlProps = FormField & {
 
   /** The required (accessible) label. */
   labelRequired?: string;
-
-  /** An help text to show */
-  helptext?: string;
 };
 
 /**
@@ -160,6 +161,10 @@ export const FormControl: React.FC<FormControlProps> = ({
           props.onChange?.(e);
         }}
       />
+
+      {helptext && (
+        <HelpText>{helptext}</HelpText>
+      )}
     </div>
   );
 };
