@@ -44,6 +44,9 @@ export type SidebarProps = React.PropsWithChildren<{
 
   /** Whether the sidebar should be sticky (default: true). */
   sticky?: boolean;
+
+  /** Whether the sidebar should be completely collapsible. */
+  fullyCollapsible?: boolean;
 }>;
 
 /**
@@ -62,6 +65,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
   showLogo = false,
   slotLogo,
   sticky = true,
+  fullyCollapsible = false,
   ...props
 }) => {
   const id = useId();
@@ -112,6 +116,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
         "mykn-sidebar--border": border,
         "mykn-sidebar--sticky": sticky,
         "mykn-sidebar--min-width": minWidth,
+        "mykn-sidebar--fully-collapsible": fullyCollapsible,
       })}
       {...props}
       aria-expanded={expandedState}
