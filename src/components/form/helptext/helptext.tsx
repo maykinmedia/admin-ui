@@ -5,7 +5,7 @@ import "./helptext.scss";
 export type HelpTextProps = React.ComponentProps<"div">;
 
 /**
- * ErrorMessage component
+ * HelpText component
  * @param children
  * @param props
  * @constructor
