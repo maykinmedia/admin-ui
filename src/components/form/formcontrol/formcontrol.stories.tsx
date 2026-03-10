@@ -77,3 +77,14 @@ export const RequiredToggle: Story = {
     type: "toggle",
   },
 };
+
+export const FormControlWithHelpText: Story = {
+  args: {
+    label: "Enter your e-mail address",
+    name: "helptext",
+    helptext: "Example: johndoe@example.com",
+  },
+  play: async ({ canvasElement }) => {
+    expect(canvasElement.textContent).toContain("Example: johndoe@example.com")
+  },
+};
