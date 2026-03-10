@@ -15,7 +15,7 @@
   font-family: var(--typography-font-family-body), serif;
   font-size: var(--mykn-textarea-font-size);
   font-weight: var(--mykn-textarea-font-weight);
-  line-height: calc(var(--mykn-textarea-line-height) - 2px);
+  line-height: var(--mykn-textarea-line-height);
   margin: 0;
   padding-block: var(--mykn-textarea-padding-v);
   padding-inline: var(--mykn-textarea-padding-h);

@@ -27,7 +27,10 @@
     background-color: var(--kanban-drop-indicator-background);
     border: 1px dashed var(--kanban-drop-indicator-border);
     box-sizing: content-box;
-    height: calc(var(--typography-line-height-body-s) * 2);
+    height: calc(
+      var(--typography-line-height-body-s) *
+        var(--typography-font-size-body-s) * 2
+    );
     padding-block: var(--sizes-spacing-xs-v);
     z-index: 10;
   }

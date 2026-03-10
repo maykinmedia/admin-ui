@@ -145,7 +145,8 @@
   &__cell--checkbox {
     @media screen and (min-width: constants.$breakpoint-desktop) {
       max-width: calc(
-        var(--typography-line-height-body-s) + var(--mykn-datagrid-spacing-h)
+        var(--typography-line-height-body-s) *
+          var(--typography-font-size-body-s) + var(--mykn-datagrid-spacing-h)
       );
       width: calc(var(--mykn-datagrid-spacing-h) * 2 + 20px);
     }
