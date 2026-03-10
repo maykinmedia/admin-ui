@@ -11,6 +11,12 @@
     display: grid;
     grid-template-columns: max-content max-content;
     grid-template-rows: max-content max-content;
+
+    .mykn-input,
+    .mykn-select,
+    .mykn-textarea {
+      grid-column-start: 2;
+    }
   }
 
   &--error {
