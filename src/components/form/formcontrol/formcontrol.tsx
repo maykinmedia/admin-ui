@@ -26,12 +26,12 @@ import { DateRangeInput } from "../daterangeinput";
 import { DurationInput } from "../durationinput";
 import { ErrorMessage } from "../errormessage";
 import { TRANSLATIONS } from "../form/translations";
+import { HelpText } from "../helptext";
 import { Input, InputProps } from "../input";
 import { Label } from "../label";
 import { Radio } from "../radio";
 import { Textarea } from "../textarea";
 import { Toggle } from "../toggle";
-import { HelpText } from "../helptext";
 import "./formcontrol.scss";
 
 // FIXME: Clashes in types, add generic for FormField?
@@ -162,9 +162,7 @@ export const FormControl: React.FC<FormControlProps> = ({
         }}
       />
 
-      {helptext && (
-        <HelpText>{helptext}</HelpText>
-      )}
+      {helptext && <HelpText>{helptext}</HelpText>}
     </div>
   );
 };
