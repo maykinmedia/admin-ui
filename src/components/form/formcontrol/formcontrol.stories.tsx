@@ -85,6 +85,6 @@ export const FormControlWithHelpText: Story = {
     helptext: "Example: johndoe@example.com",
   },
   play: async ({ canvasElement }) => {
-    expect(canvasElement.textContent).toContain("Example: johndoe@example.com")
+    expect(canvasElement.textContent).toContain("Example: johndoe@example.com");
   },
 };

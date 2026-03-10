@@ -10,10 +10,7 @@ export type HelpTextProps = React.ComponentProps<"div">;
  * @param props
  * @constructor
  */
-export const HelpText: React.FC<HelpTextProps> = ({
-  children,
-  ...props
-}) => (
+export const HelpText: React.FC<HelpTextProps> = ({ children, ...props }) => (
   <div className="mykn-helptext" {...props}>
     {children}
   </div>
