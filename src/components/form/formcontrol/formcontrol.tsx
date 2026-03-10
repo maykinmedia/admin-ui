@@ -55,6 +55,9 @@ export type FormControlProps = FormField & {
 
   /** The required (accessible) label. */
   labelRequired?: string;
+
+  /** An help text to show */
+  helptext?: string;
 };
 
 /**
@@ -68,6 +71,7 @@ export type FormControlProps = FormField & {
  * @param requiredIndicator
  * @param labelRequired
  * @param props
+ * @param helptext
  * @constructor
  */
 export const FormControl: React.FC<FormControlProps> = ({
@@ -78,6 +82,7 @@ export const FormControl: React.FC<FormControlProps> = ({
   showRequiredIndicator = true,
   requiredIndicator,
   labelRequired,
+  helptext,
   ...props
 }) => {
   deprecated(
