@@ -107,20 +107,18 @@
   }
 
   /// Collapsed state
-  &:not([aria-expanded="true"]):not(
-      :has(:not(.mykn-sidebar__toggle):focus)
-    ):not(:has(&__body:hover)) {
-    width: calc(
+  &[aria-expanded="false"] {
+    // Regular collapsed styling
+    --mykn-collapsed-sidebar-width: calc(
       var(--typography-line-height-body-xs) *
         var(--typography-font-size-body-xs) + 2 * var(--sizes-spacing-xs-h)
     );
 
+    width: var(--mykn-collapsed-sidebar-width);
+
     #{$self}__header,
     #{$self}__body {
-      width: calc(
-        var(--typography-line-height-body-xs) *
-          var(--typography-font-size-body-xs) + 2 * var(--sizes-spacing-xs-h)
-      );
+      width: var(--mykn-collapsed-sidebar-width);
     }
 
     #{$self}__header .mykn-body {
@@ -130,22 +128,29 @@
     .mykn-logo .mykn-logo__handle {
       transition: none;
     }
-  }
 
-  &:not([aria-expanded="true"]):has(:not(.mykn-sidebar__toggle):focus),
-  &:not([aria-expanded="true"]):has(&__body:hover) {
-    width: calc(
-      var(--typography-line-height-body-xs) + 2 * var(--sizes-spacing-xs-h)
-    );
-  }
+    // On hover or focus, open the sidebar
+    &:has(:not(.mykn-sidebar__toggle):focus),
+    &:has(#{$self}__body:hover) {
+      width: calc(
+        var(--typography-line-height-body-xs) + 2 * var(--sizes-spacing-xs-h)
+      );
 
-  &:not([aria-expanded="true"]):has(&__body:hover) {
-    transition-delay: 1s;
+      #{$self}__header,
+      #{$self}__body {
+        width: var(--mykn-sidebar-width);
+      }
+    }
 
-    #{$self}__header,
-    #{$self}__header .mykn-body,
-    #{$self}__body {
+    // Delay the transition when hovering
+    &:has(#{$self}__body:hover) {
       transition-delay: 1s;
+
+      #{$self}__header,
+      #{$self}__header .mykn-body,
+      #{$self}__body {
+        transition-delay: 1s;
+      }
     }
   }
 
