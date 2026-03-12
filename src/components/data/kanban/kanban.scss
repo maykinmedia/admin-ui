@@ -16,6 +16,7 @@
 
   &__body .mykn-grid {
     height: 100%;
+    grid-template-columns: unset;
   }
 
   &__body .mykn-column {
@@ -39,6 +40,10 @@
     position: sticky;
     top: 0;
     z-index: 10;
+  }
+
+  &__body .mykn-badge--rounded {
+    align-self: center;
   }
 
   &__track {
@@ -88,13 +93,10 @@
 }
 
 @media screen and (min-width: 768px) {
-  
   .mykn-kanban {
-  &__body .mykn-h3 {
-    min-height: 100px;
+    &__body .mykn-grid {
+      grid-auto-flow: column;
+      grid-template-rows: max-content auto;
+    }
   }
-
-  &__body .mykn-badge--rounded {
-    align-self: center;
-  }
-}}
+}

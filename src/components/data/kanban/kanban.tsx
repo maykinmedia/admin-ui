@@ -1,5 +1,5 @@
 import { string2Title } from "@maykin-ui/client-common";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useId } from "react";
 
 import {
   DEFAULT_URL_FIELDS,
@@ -319,7 +319,15 @@ export const KanbanSection = <T extends object = object>({
   const isDragging = Boolean(
     draggable && dragIndex && dragIndex[0] === columnIndex,
   );
+  const kanbanId = useId();
   return (
+    <>
+      {fieldset[0] && (
+        <Toolbar directionResponsive={false} pad={false} variant="transparent">
+          <H3 id={kanbanId}>{string2Title(fieldset[0], { title: false })}</H3>
+          <Badge rounded>{objectList.length}</Badge>
+        </Toolbar>
+      )}
     <Column
       className={isDragging ? "mykn-kanban__drop-target" : undefined}
       direction="column"
@@ -328,13 +336,8 @@ export const KanbanSection = <T extends object = object>({
       onDragOver={onDragOver}
       onDrop={onDrop}
       data-column-index={columnIndex}
+      aria-labelledby={kanbanId}
     >
-      {fieldset[0] && (
-        <Toolbar directionResponsive={false} pad={false} variant="transparent">
-          <H3>{string2Title(fieldset[0], { title: false })}</H3>
-          <Badge rounded>{objectList.length}</Badge>
-        </Toolbar>
-      )}
       <Body className="mykn-kanban__track">
         {objectList.map((o, index) => (
           <React.Fragment key={index}>
@@ -366,6 +369,7 @@ export const KanbanSection = <T extends object = object>({
         )}
       </Body>
     </Column>
+    </>
   );
 };
 
