@@ -1,5 +1,5 @@
 import { string2Title } from "@maykin-ui/client-common";
-import React, { useEffect, useState, useId } from "react";
+import React, { useEffect, useId, useState } from "react";
 
 import {
   DEFAULT_URL_FIELDS,
@@ -328,47 +328,47 @@ export const KanbanSection = <T extends object = object>({
           <Badge rounded>{objectList.length}</Badge>
         </Toolbar>
       )}
-    <Column
-      className={isDragging ? "mykn-kanban__drop-target" : undefined}
-      direction="column"
-      gap={true}
-      span={1}
-      onDragOver={onDragOver}
-      onDrop={onDrop}
-      data-column-index={columnIndex}
-      aria-labelledby={kanbanId}
-    >
-      <Body className="mykn-kanban__track">
-        {objectList.map((o, index) => (
-          <React.Fragment key={index}>
-            {isDragging && dragIndex?.[1] === index && (
-              <div className="mykn-kanban__drop-indicator" aria-hidden />
-            )}
-            <KanbanItem<T>
-              key={index}
-              buttonLinkProps={buttonLinkProps}
-              buttonProps={buttonProps}
-              draggable={draggable}
-              fieldset={fieldset}
-              fieldsets={fieldsets}
-              fieldsetIndex={fieldsetIndex}
-              labelSelectColumn={labelSelectColumn}
-              labelMoveObject={labelMoveObject}
-              object={o}
-              objectIndex={index}
-              objectList={objectList}
-              renderPreview={renderPreview}
-              urlFields={urlFields}
-              onClick={onClick}
-              onObjectChange={onObjectChange}
-            />
-          </React.Fragment>
-        ))}
-        {isDragging && (dragIndex?.[1] || 0) >= objectList.length && (
-          <div className="mykn-kanban__drop-indicator" aria-hidden />
-        )}
-      </Body>
-    </Column>
+      <Column
+        className={isDragging ? "mykn-kanban__drop-target" : undefined}
+        direction="column"
+        gap={true}
+        span={1}
+        onDragOver={onDragOver}
+        onDrop={onDrop}
+        data-column-index={columnIndex}
+        aria-labelledby={kanbanId}
+      >
+        <Body className="mykn-kanban__track">
+          {objectList.map((o, index) => (
+            <React.Fragment key={index}>
+              {isDragging && dragIndex?.[1] === index && (
+                <div className="mykn-kanban__drop-indicator" aria-hidden />
+              )}
+              <KanbanItem<T>
+                key={index}
+                buttonLinkProps={buttonLinkProps}
+                buttonProps={buttonProps}
+                draggable={draggable}
+                fieldset={fieldset}
+                fieldsets={fieldsets}
+                fieldsetIndex={fieldsetIndex}
+                labelSelectColumn={labelSelectColumn}
+                labelMoveObject={labelMoveObject}
+                object={o}
+                objectIndex={index}
+                objectList={objectList}
+                renderPreview={renderPreview}
+                urlFields={urlFields}
+                onClick={onClick}
+                onObjectChange={onObjectChange}
+              />
+            </React.Fragment>
+          ))}
+          {isDragging && (dragIndex?.[1] || 0) >= objectList.length && (
+            <div className="mykn-kanban__drop-indicator" aria-hidden />
+          )}
+        </Body>
+      </Column>
     </>
   );
 };
