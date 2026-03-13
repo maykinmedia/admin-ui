@@ -239,7 +239,7 @@ export const Kanban = <T extends object = object>({
         />
       )}
       <Body className="mykn-kanban__body">
-        <Grid cols={fieldsetsState.length}>
+        <Grid cols={fieldsetsState.length} className="mykn-kanban__grid">
           {fieldsetsState.map((fieldset, index) => (
             <KanbanSection<T>
               key={fieldset[0] ? fieldset[0] : index}
