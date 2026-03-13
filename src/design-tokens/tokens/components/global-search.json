@@ -1,0 +1,44 @@
+{
+  "global-search": {
+    "background": {
+      "value": "{theme.base.background-alternate}"
+    },
+    "shadow": {
+      "value": "{theme.base.shadow}"
+    },
+    "item": {
+      "background": {
+        "value": "{theme.base.background}"
+      },
+      "active": {
+        "background": {
+          "value": "{theme.brand.primary.default}"
+        },
+        "color": {
+          "value": "{theme.brand.primary.contrast}"
+        }
+      },
+      "subtitle": {
+        "color": {
+          "value": "{theme.base.foreground-muted}"
+        }
+      }
+    },
+    "loading": {
+      "color": {
+        "value": "{theme.base.foreground}"
+      }
+    },
+    "keyboard": {
+      "background": {
+        "value": "{theme.base.background}"
+      },
+      "color": {
+        "value": "{theme.base.foreground}"
+      },
+      "border": {
+        "value": "{theme.base.background-alternate}"
+      }
+    }
+  }
+}

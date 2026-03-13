@@ -1,0 +1,128 @@
+.mykn-global-search {
+  position: relative;
+  width: 100%;
+
+  &__panel {
+    background: var(--global-search-background);
+    border-radius: var(--sizes-border-radius-s);
+    box-shadow: 0 4px 11px 0 var(--global-search-shadow);
+    max-width: 600px;
+    width: 100%;
+  }
+
+  &__input {
+    padding: var(--sizes-spacing-s-v) var(--sizes-spacing-s-h) 0
+      var(--sizes-spacing-s-h);
+
+    .mykn-stackctx,
+    input {
+      width: 100%;
+    }
+  }
+
+  ol {
+    margin: 0;
+    padding: 0;
+  }
+
+  &__results {
+    // TODO: Ask designer
+    max-height: 300px;
+    min-height: 100px;
+    overflow-y: auto;
+    margin-block-start: var(--sizes-spacing-s-v);
+    padding: 0 var(--sizes-spacing-s-h);
+  }
+
+  &__results--empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .mykn-icon--spin {
+    color: var(--global-search-loading-color);
+  }
+
+  &__no-results {
+    text-align: center;
+  }
+
+  &__group {
+    margin-block-end: var(--sizes-spacing-xs-v);
+  }
+
+  &__group-header {
+    margin-block-end: 4px; // TODO: No design token
+  }
+
+  &__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    display: flex;
+    flex-direction: column;
+    gap: var(--sizes-spacing-xs-v);
+  }
+
+  &__item {
+    border-radius: var(--sizes-border-radius-s);
+    padding: 4px var(--sizes-spacing-xs-h);
+    background-color: var(--global-search-item-background);
+    color: var(--typography-color-body);
+    cursor: pointer;
+
+    a,
+    &-title {
+      color: inherit;
+    }
+
+    &--selected {
+      background: var(--global-search-item-active-background);
+      color: var(--global-search-item-active-color);
+    }
+
+    &-subtitle {
+      font-size: var(--typography-font-size-body-xs);
+      color: var(--global-search-item-subtitle-color);
+    }
+
+    &--selected &-subtitle {
+      color: unset;
+    }
+
+    a {
+      width: 100%;
+    }
+
+    &-content {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      align-self: stretch;
+      font-size: 24px; // For icon size, TODO: Ask designer
+      gap: var(--sizes-spacing-xs-h);
+    }
+
+    &-go {
+      margin-inline-start: auto;
+    }
+  }
+
+  &__keyboard {
+    display: flex;
+    justify-content: space-evenly;
+    gap: var(--sizes-spacing-xs-h);
+    background-color: var(--global-search-keyboard-background);
+    color: var(--global-search-keyboard-color);
+    padding: var(--sizes-spacing-xs-v) var(--sizes-spacing-s-h);
+    border-block-start: 1px solid var(--global-search-keyboard-border);
+
+    &-item {
+      display: flex;
+      align-items: center;
+      gap: var(--sizes-spacing-xs-h);
+    }
+  }
+}
