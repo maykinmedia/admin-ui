@@ -1,21 +1,21 @@
 export const allModes = {
   "light desktop": {
-    theme: "light",
+    theme: "purple-rain",
     viewport: "large",
   },
   "light mobile": {
-    theme: "light",
+    theme: "purple-rain",
     viewport: {
       width: 320,
       height: 568,
     },
   },
   "dark desktop": {
-    theme: "dark",
+    theme: "paint-it-black",
     viewport: "large",
   },
   "dark mobile": {
-    theme: "dark",
+    theme: "paint-it-black",
     viewport: {
       width: 320,
       height: 568,

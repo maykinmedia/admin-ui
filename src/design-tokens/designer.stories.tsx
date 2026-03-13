@@ -4,6 +4,7 @@ import * as React from "react";
 import { useEffect, useState } from "react";
 
 import { FIXTURE_PRODUCTS } from "../../.storybook/fixtures/products";
+import { THEMES, ThemeId, ThemeName } from "../../.storybook/preview";
 import {
   Badge,
   Body,
@@ -36,13 +37,25 @@ export const ThemeDesignerStory: Story = {
   name: "ThemeDesigner",
   args: {},
   render: (args, { globals }) => {
-    const isDark =
-      globals.theme === "dark" ||
-      (globals.theme === "system" &&
-        window.matchMedia("(prefers-color-scheme: dark)"));
-    return (
-      <ThemeDesigner {...args} theme={isDark ? PaintItBlack : PurpleRain} />
-    );
+    const theme = globals.theme as ThemeName | "";
+    const themeId: ThemeId = THEMES[theme || "system"];
+    const prefersDark = window.matchMedia(
+      "(prefers-color-scheme: dark)",
+    ).matches;
+    const systemTheme: Theme = prefersDark ? PaintItBlack : BlueSuedeShoes;
+
+    switch (themeId) {
+      case "blue-suede-shoes":
+        return <ThemeDesigner theme={BlueSuedeShoes} />;
+      case "purple-rain":
+        return <ThemeDesigner theme={PurpleRain} />;
+      case "paint-it-black":
+        return <ThemeDesigner theme={PaintItBlack} />;
+      case "system":
+        return <ThemeDesigner theme={systemTheme} />;
+      default:
+        throw new Error(`Invalid theme: ${theme}`);
+    }
   },
 };
 
@@ -221,7 +234,7 @@ function ThemeDesigner({ theme }: { theme: Theme }) {
           </Tabs>
         </Column>
         <Column span={8}>
-          <Toolbar sticky="top" pad={false} h>
+          <Toolbar sticky="top" pad={false}>
             <ThemeDesignerPreview />
           </Toolbar>
         </Column>
