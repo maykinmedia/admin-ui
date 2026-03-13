@@ -16,10 +16,13 @@ import {
   Tabs,
   Toolbar,
 } from "../components";
+import BlueSuedeShoes from "../design-tokens/tokens/themes/blue-suede-shoes.json";
 import PaintItBlack from "../design-tokens/tokens/themes/paint-it-black.json";
 import PurpleRain from "../design-tokens/tokens/themes/purple-rain.json";
 import { FormField, isPrimitive } from "../lib";
 import { ListTemplate } from "../templates";
+
+type Theme = typeof PurpleRain & typeof BlueSuedeShoes & typeof PaintItBlack;
 
 const meta: Meta<typeof ThemeDesigner> = {
   title: "Manual/Theme Designer",
@@ -33,8 +36,13 @@ export const ThemeDesignerStory: Story = {
   name: "ThemeDesigner",
   args: {},
   render: (args, { globals }) => {
-    const isDark = globals.theme === "dark";
-    return <ThemeDesigner {...args} isDark={isDark} />;
+    const isDark =
+      globals.theme === "dark" ||
+      (globals.theme === "system" &&
+        window.matchMedia("(prefers-color-scheme: dark)"));
+    return (
+      <ThemeDesigner {...args} theme={isDark ? PaintItBlack : PurpleRain} />
+    );
   },
 };
 
@@ -48,7 +56,7 @@ type JSON = { [key: string]: string | JSON };
 /**
  * The theme designer allows generating theme code.
  */
-function ThemeDesigner({ isDark }: { isDark: boolean }) {
+function ThemeDesigner({ theme }: { theme: Theme }) {
   /**
    * Finds design tokens in `object` recursively.
    *
@@ -99,10 +107,9 @@ function ThemeDesigner({ isDark }: { isDark: boolean }) {
     useState<CSSVariableDictionary>(PurpleRain);
 
   useEffect(() => {
-    const themeTokens = isDark ? PaintItBlack : PurpleRain;
-    const referenceValues = findRecursiveDesignTokens(themeTokens, "theme");
+    const referenceValues = findRecursiveDesignTokens(theme, "theme");
     setCSSVariablesState(referenceValues);
-  }, [isDark]);
+  }, [theme]);
 
   const fields = Object.entries(CSSVariablesState).map(([key, value]) => ({
     justify: "stretch",
