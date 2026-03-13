@@ -1,6 +1,11 @@
 {
+  "_colorScheme": {
+    "value": "light"
+  },
+  "_name": {
+    "value": "purple-rain"
+  },
   "theme": {
-    "color-scheme": "light",
     "brand": {
       "primary": {
         "default": { "value": "#341A90" },

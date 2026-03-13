@@ -1,6 +1,11 @@
 {
+  "_colorScheme": {
+    "value": "dark"
+  },
+  "_name": {
+    "value": "paint-it-black"
+  },
   "theme": {
-    "color-scheme": "dark",
     "brand": {
       "primary": {
         "default": { "value": "#A89EFF" },

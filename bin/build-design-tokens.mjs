@@ -1,4 +1,4 @@
-import { readFileSync, readdirSync } from "node:fs";
+import { readdirSync } from "node:fs";
 import { basename, extname, join } from "node:path";
 import StyleDictionary from "style-dictionary";
 
@@ -49,29 +49,32 @@ StyleDictionary.registerFormat({
 
 StyleDictionary.registerFormat({
   name: "css/variables-with-scheme",
-  format: ({ dictionary, options }) => {
-    const scheme = options?.colorScheme === "dark" ? "dark" : "light";
-    const selectorLight = options?.selectorLight ?? ":root";
-    const selectorDark = options?.selectorDark ?? ':root[data-mode="dark"]';
-    const addMediaFallback = options?.addMediaFallback ?? true;
+  format: ({ dictionary }) => {
+    const findToken = (tokenName) =>
+      dictionary.allTokens.find((token) => token.path.at(-1) === tokenName);
 
-    const isColorSchemeToken = (t) =>
-      Array.isArray(t.path) && t.path.includes("color-scheme");
+    const schemeToken = findToken("_colorScheme");
+    const scheme = schemeToken?.value || "light";
+    const themeName = findToken("_name").value;
 
-    const lines = dictionary.allTokens
-      .filter((t) => !isColorSchemeToken(t))
-      .map((t) => `  --${t.name}: ${t.value};`);
+    const rules = dictionary.allTokens
+      .filter((t) => !t.path.at(-1).startsWith("_")) // Skip private tokens.
+      .map((t) => `--${t.name}: ${t.value};`) // Create CSS var.
+      .join("\n"); // Trailing newline.
 
-    if (scheme === "light") {
-      return `${selectorLight} {\n${lines.join("\n")}\n}\n`;
-    }
+    // Default stylesheets are picked up when the colorscheme matches and data-mode
+    // is not set.
+    const stylesheet = `
+      @media (prefers-color-scheme: ${scheme}) { html:not([data-mode]), [data-mode=""] {
+      ${rules}
+      }}
 
-    let out = `${selectorDark} {\n${lines.join("\n")}\n}\n`;
+      [data-mode=${themeName}] {
+      ${rules}
+      }
+      `;
 
-    if (addMediaFallback) {
-      out += `\n@media (prefers-color-scheme: dark) {\n  ${selectorLight}:not([data-mode]) {\n${lines.join("\n")}\n  }\n}\n`;
-    }
-    return out;
+    return stylesheet.replaceAll(/^\s+/gm, "");
   },
 });
 
@@ -99,12 +102,6 @@ await sd({
   for (const file of themeFiles) {
     const name = basename(file, extname(file));
     const themePath = join(THEMES, file);
-    const themeJson = JSON.parse(readFileSync(themePath, "utf8"));
-    const colorScheme =
-      themeJson?.theme?.["color-scheme"] ??
-      themeJson?.["color-scheme"] ??
-      themeJson?.meta?.["color-scheme"] ??
-      "light";
 
     const themed = await base.extend({
       source: [themePath],
@@ -116,12 +113,19 @@ await sd({
             {
               destination: `${name}.css`,
               format: "css/variables-with-scheme",
-              options: {
-                colorScheme,
-                selectorLight: ":root",
-                selectorDark: ':root[data-mode="dark"]',
-                addMediaFallback: true,
-              },
+              filter: (t) =>
+                typeof t.filePath === "string" &&
+                t.filePath.includes("/tokens/themes/"),
+            },
+          ],
+        },
+        storybook: {
+          transformGroup: "css",
+          buildPath: `.storybook/static`,
+          files: [
+            {
+              destination: `${name}.css`,
+              format: "css/variables-with-scheme",
               filter: (t) =>
                 typeof t.filePath === "string" &&
                 t.filePath.includes("/tokens/themes/"),
