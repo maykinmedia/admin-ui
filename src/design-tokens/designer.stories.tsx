@@ -7,6 +7,7 @@ import { FIXTURE_PRODUCTS } from "../../.storybook/fixtures/products";
 import {
   Badge,
   Body,
+  Card,
   Column,
   Form,
   Grid,
@@ -185,37 +186,40 @@ function ThemeDesigner({ isDark }: { isDark: boolean }) {
     root.style.setProperty(key, value);
   }
   return (
-    <Tabs>
-      <Tab label="Designer">
-        <Body>
-          <Grid>
-            <Column span={4}>
-              <ThemeDesignerForm
-                title="Theme Designer"
-                fields={fields}
-                onValuesChange={setCSSVariablesState}
-              />
-            </Column>
-            <Column span={8}>
-              <Toolbar sticky="top">
-                <ThemeDesignerPreview />
-              </Toolbar>
-            </Column>
-          </Grid>
-        </Body>
-      </Tab>
-
-      <Tab label="CSS">
-        <Body>
-          <pre>{serializeCSS(CSSVariablesState)}</pre>
-        </Body>
-      </Tab>
-      <Tab label="JSON">
-        <Body>
-          <pre>{JSON.stringify(serializeJSON(CSSVariablesState), null, 2)}</pre>
-        </Body>
-      </Tab>
-    </Tabs>
+    <Card>
+      <Grid gutter={false}>
+        <Column span={4}>
+          <Tabs>
+            <Tab label="Designer">
+              <Body>
+                <ThemeDesignerForm
+                  title="Theme Designer"
+                  fields={fields}
+                  onValuesChange={setCSSVariablesState}
+                />
+              </Body>
+            </Tab>
+            <Tab label="CSS">
+              <Body>
+                <pre>{serializeCSS(CSSVariablesState)}</pre>
+              </Body>
+            </Tab>
+            <Tab label="JSON">
+              <Body>
+                <pre>
+                  {JSON.stringify(serializeJSON(CSSVariablesState), null, 2)}
+                </pre>
+              </Body>
+            </Tab>
+          </Tabs>
+        </Column>
+        <Column span={8}>
+          <Toolbar sticky="top" pad={false} h>
+            <ThemeDesignerPreview />
+          </Toolbar>
+        </Column>
+      </Grid>
+    </Card>
   );
 }
 
