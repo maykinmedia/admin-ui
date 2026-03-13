@@ -52,15 +52,17 @@ export const Grid: React.FC<GridProps> = ({
   const _debug = debug || contextDebug;
 
   return (
-     <div
-      className={clsx("mykn-grid", {
+    <div
+      className={clsx(
+        "mykn-grid",
+        {
           "mykn-grid--debug": _debug,
           "mykn-grid--full-height": fullHeight || stretch,
           [`mykn-grid--cols-${cols}`]: cols,
           [`mykn-grid--gutter-${gutter}`]: gutter,
           [`mykn-grid--valign-${valign}`]: valign,
         },
-        className
+        className,
       )}
       {...props}
     >
