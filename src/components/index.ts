@@ -9,6 +9,7 @@ export * from "./card";
 export * from "./data";
 export * from "./dropdown";
 export * from "./form";
+export * from "./global-search";
 export * from "./icon";
 export * from "./iconinitials";
 export * from "./layout";

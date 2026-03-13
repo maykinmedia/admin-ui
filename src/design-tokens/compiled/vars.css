@@ -262,6 +262,16 @@
   --form-toggle-active-background: var(--theme-brand-primary-default);
   --form-toggle-active-thumb: var(--theme-brand-primary-contrast);
   --form-color-background: var(--theme-base-background);
+  --global-search-background: var(--theme-base-background-alternate);
+  --global-search-shadow: var(--theme-base-shadow);
+  --global-search-item-background: var(--theme-base-background);
+  --global-search-item-active-background: var(--theme-brand-primary-default);
+  --global-search-item-active-color: var(--theme-brand-primary-contrast);
+  --global-search-item-subtitle-color: var(--theme-base-foreground-muted);
+  --global-search-loading-color: var(--theme-base-foreground);
+  --global-search-keyboard-background: var(--theme-base-background);
+  --global-search-keyboard-color: var(--theme-base-foreground);
+  --global-search-keyboard-border: var(--theme-base-background-alternate);
   --iconinitials-background: var(--theme-base-background-alternate);
   --itemgrid-item-background: var(--theme-base-background-alternate);
   --itemgrid-item-shadow: var(--theme-base-shadow);
