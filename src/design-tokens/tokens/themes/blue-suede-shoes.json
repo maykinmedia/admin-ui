@@ -1,6 +1,11 @@
 {
+  "_colorScheme": {
+    "value": "light"
+  },
+  "_name": {
+    "value": "blue-suede-shoes"
+  },
   "theme": {
-    "color-scheme": "light",
     "brand": {
       "primary": {
         "default": { "value": "#2078C5" },

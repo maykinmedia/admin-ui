@@ -1,8 +1,20 @@
 import { withThemeByDataAttribute } from "@storybook/addon-themes";
-import type { Preview } from "@storybook/react-webpack5";
+import { Decorator, Preview } from "@storybook/react-vite";
+import React from "react";
 
 import "../src/index.scss";
 import { allModes } from "./modes";
+
+export const THEMES = {
+  "Blue suede shoes": "blue-suede-shoes",
+  "Purple rain": "purple-rain",
+  "Paint it black (dark mode)": "paint-it-black",
+  system: "",
+} as const;
+
+export type ThemeMap = typeof THEMES;
+export type ThemeName = keyof ThemeMap;
+export type ThemeId = ThemeMap[ThemeName];
 
 const preview: Preview = {
   parameters: {
@@ -45,14 +57,26 @@ const preview: Preview = {
     withThemeByDataAttribute({
       attributeName: "data-mode",
       parentSelector: "html",
-      themes: {
-        light: "light",
-        dark: "dark",
-        system: "system",
-      },
-      defaultTheme: "light",
-    }) as any,
-  ],
+      themes: THEMES,
+      defaultTheme: "Blue suede shoes",
+    }),
+    (Story, { globals }: { globals: { theme?: ThemeName | "" } }) => {
+      const nodeId = "theme-tokens";
+      const current = document.getElementById(nodeId);
+      current?.parentNode?.removeChild(current);
+
+      if (globals.theme && globals.theme !== "system") {
+        const themeId = THEMES[globals.theme];
+
+        const href = `/static/${themeId}.css`;
+        const link = document.createElement("link");
+        link.rel = "stylesheet";
+        link.href = href;
+        document.head.append(link);
+      }
+      return <Story />;
+    },
+  ] satisfies Decorator[],
 
   tags: ["autodocs"],
 };

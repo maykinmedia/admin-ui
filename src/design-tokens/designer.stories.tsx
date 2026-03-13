@@ -4,21 +4,27 @@ import * as React from "react";
 import { useEffect, useState } from "react";
 
 import { FIXTURE_PRODUCTS } from "../../.storybook/fixtures/products";
+import { THEMES, ThemeId, ThemeName } from "../../.storybook/preview";
 import {
   Badge,
   Body,
+  Card,
   Column,
   Form,
   Grid,
   Outline,
+  P,
   Tab,
   Tabs,
   Toolbar,
 } from "../components";
+import BlueSuedeShoes from "../design-tokens/tokens/themes/blue-suede-shoes.json";
 import PaintItBlack from "../design-tokens/tokens/themes/paint-it-black.json";
 import PurpleRain from "../design-tokens/tokens/themes/purple-rain.json";
 import { FormField, isPrimitive } from "../lib";
 import { ListTemplate } from "../templates";
+
+type Theme = typeof PurpleRain & typeof BlueSuedeShoes & typeof PaintItBlack;
 
 const meta: Meta<typeof ThemeDesigner> = {
   title: "Manual/Theme Designer",
@@ -32,8 +38,25 @@ export const ThemeDesignerStory: Story = {
   name: "ThemeDesigner",
   args: {},
   render: (args, { globals }) => {
-    const isDark = globals.theme === "dark";
-    return <ThemeDesigner {...args} isDark={isDark} />;
+    const theme = globals.theme as ThemeName | "";
+    const themeId: ThemeId = THEMES[theme || "system"];
+    const prefersDark = window.matchMedia(
+      "(prefers-color-scheme: dark)",
+    ).matches;
+    const systemTheme: Theme = prefersDark ? PaintItBlack : BlueSuedeShoes;
+
+    switch (themeId) {
+      case "blue-suede-shoes":
+        return <ThemeDesigner theme={BlueSuedeShoes} />;
+      case "purple-rain":
+        return <ThemeDesigner theme={PurpleRain} />;
+      case "paint-it-black":
+        return <ThemeDesigner theme={PaintItBlack} />;
+      case "":
+        return <ThemeDesigner theme={systemTheme} />;
+      default:
+        throw new Error(`Invalid theme: ${theme}`);
+    }
   },
 };
 
@@ -47,7 +70,7 @@ type JSON = { [key: string]: string | JSON };
 /**
  * The theme designer allows generating theme code.
  */
-function ThemeDesigner({ isDark }: { isDark: boolean }) {
+function ThemeDesigner({ theme }: { theme: Theme }) {
   /**
    * Finds design tokens in `object` recursively.
    *
@@ -60,11 +83,12 @@ function ThemeDesigner({ isDark }: { isDark: boolean }) {
     path: string = "",
     resultSet: CSSVariableDictionary = {},
   ): CSSVariableDictionary => {
-    const tokenObject = getByDotSeparatedPath(object, path);
+    const tokenObject =
+      path !== "" ? getByDotSeparatedPath(object, path) : object;
 
     // This is not a proper design token as it does not contain a "value".
     // Return the current `resultSet`.
-    if (isPrimitive(tokenObject) || tokenObject === undefined) {
+    if (isPrimitive(tokenObject) || typeof tokenObject === "undefined") {
       return resultSet;
     }
 
@@ -95,13 +119,12 @@ function ThemeDesigner({ isDark }: { isDark: boolean }) {
   };
 
   const [CSSVariablesState, setCSSVariablesState] =
-    useState<CSSVariableDictionary>(PurpleRain);
+    useState<CSSVariableDictionary>({});
 
   useEffect(() => {
-    const themeTokens = isDark ? PaintItBlack : PurpleRain;
-    const referenceValues = findRecursiveDesignTokens(themeTokens, "theme");
+    const referenceValues = findRecursiveDesignTokens(theme, "theme");
     setCSSVariablesState(referenceValues);
-  }, [isDark]);
+  }, [theme]);
 
   const fields = Object.entries(CSSVariablesState).map(([key, value]) => ({
     justify: "stretch",
@@ -146,10 +169,13 @@ function ThemeDesigner({ isDark }: { isDark: boolean }) {
    * @param {CSSVariableDictionary} data - The input data object, where keys represent hierarchical paths separated by "--" or "-".
    * @return {Object} A nested JSON object reflecting the hierarchical structure implied by the input keys.
    */
-  const serializeJSON = (data: CSSVariableDictionary): JSON => {
+  const serializeJSON = (theme: Theme, data: CSSVariableDictionary): JSON => {
     // The result object to build.
     // This object gets mutated by updates to `current`.
-    const result: JSON = {};
+    const result: JSON = {
+      _colorScheme: theme._colorScheme,
+      _name: theme["_name"],
+    };
 
     for (const key in data) {
       // Split the CSS variable name in an array of segments; each segment represents
@@ -185,37 +211,48 @@ function ThemeDesigner({ isDark }: { isDark: boolean }) {
     root.style.setProperty(key, value);
   }
   return (
-    <Tabs>
-      <Tab label="Designer">
-        <Body>
-          <Grid>
-            <Column span={4}>
-              <ThemeDesignerForm
-                title="Theme Designer"
-                fields={fields}
-                onValuesChange={setCSSVariablesState}
-              />
-            </Column>
-            <Column span={8}>
-              <Toolbar sticky="top">
-                <ThemeDesignerPreview />
-              </Toolbar>
-            </Column>
-          </Grid>
-        </Body>
-      </Tab>
-
-      <Tab label="CSS">
-        <Body>
-          <pre>{serializeCSS(CSSVariablesState)}</pre>
-        </Body>
-      </Tab>
-      <Tab label="JSON">
-        <Body>
-          <pre>{JSON.stringify(serializeJSON(CSSVariablesState), null, 2)}</pre>
-        </Body>
-      </Tab>
-    </Tabs>
+    <Card>
+      <Grid gutter={false}>
+        <Column span={4}>
+          <Tabs>
+            <Tab label="Designer">
+              <Body>
+                <ThemeDesignerForm
+                  title="Theme Designer"
+                  fields={fields}
+                  onValuesChange={setCSSVariablesState}
+                />
+              </Body>
+            </Tab>
+            <Tab label="CSS">
+              <Body>
+                <P>
+                  <pre>{serializeCSS(CSSVariablesState)}</pre>
+                </P>
+              </Body>
+            </Tab>
+            <Tab label="JSON">
+              <Body>
+                <P>
+                  <pre>
+                    {JSON.stringify(
+                      serializeJSON(theme, CSSVariablesState),
+                      null,
+                      2,
+                    )}
+                  </pre>
+                </P>
+              </Body>
+            </Tab>
+          </Tabs>
+        </Column>
+        <Column span={8}>
+          <Toolbar sticky="top" pad={false}>
+            <ThemeDesignerPreview />
+          </Toolbar>
+        </Column>
+      </Grid>
+    </Card>
   );
 }
 
