@@ -16,6 +16,9 @@
 
   &__body .mykn-grid {
     height: 100%;
+  }
+
+  &__grid{
     grid-template-columns: unset;
   }
 

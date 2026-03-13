@@ -14,6 +14,8 @@ export type GridProps = React.PropsWithChildren<{
   /** Whether to use `height 100%;`. */
   fullHeight?: boolean;
 
+  className?: string;
+
   /** Whether to use gutters (gaps between columns). */
   gutter?: boolean | "h" | "v";
 
@@ -35,6 +37,7 @@ export const Grid: React.FC<GridProps> = ({
   cols,
   debug,
   fullHeight,
+  className,
   stretch,
   gutter = true,
   valign,
@@ -49,14 +52,16 @@ export const Grid: React.FC<GridProps> = ({
   const _debug = debug || contextDebug;
 
   return (
-    <div
+     <div
       className={clsx("mykn-grid", {
-        "mykn-grid--debug": _debug,
-        "mykn-grid--full-height": fullHeight || stretch,
-        [`mykn-grid--cols-${cols}`]: cols,
-        [`mykn-grid--gutter-${gutter}`]: gutter,
-        [`mykn-grid--valign-${valign}`]: valign,
-      })}
+          "mykn-grid--debug": _debug,
+          "mykn-grid--full-height": fullHeight || stretch,
+          [`mykn-grid--cols-${cols}`]: cols,
+          [`mykn-grid--gutter-${gutter}`]: gutter,
+          [`mykn-grid--valign-${valign}`]: valign,
+        },
+        className
+      )}
       {...props}
     >
       {children}
