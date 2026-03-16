@@ -181,12 +181,16 @@
     background-color: transparent;
   }
 
-  .mykn-stackctx & + .mykn-icon {
-    pointer-events: none;
-    color: var(--typography-color-muted);
+  .mykn-stackctx & + .mykn-icon,
+  .mykn-stackctx & + .mykn-button {
     inset-block-start: 50%;
     inset-inline-end: var(--sizes-spacing-xs-h);
     position: absolute;
     transform: translateY(-50%);
+  }
+
+  .mykn-stackctx & + .mykn-icon {
+    pointer-events: none;
+    color: var(--typography-color-muted);
   }
 }

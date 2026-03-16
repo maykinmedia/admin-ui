@@ -9,6 +9,7 @@ import {
   PAGE_DECORATOR,
 } from "../../../../.storybook/decorators";
 import { Button } from "../../button";
+import { Outline } from "../../icon";
 import { Input } from "./input";
 
 const meta: Meta<typeof Input> = {
@@ -209,6 +210,32 @@ export const InputWithCustomSize: Story = {
     placeholder: "e.g. 1015CJ",
     inputSize: 6,
     type: "text",
+  },
+  argTypes: FORM_TEST_ARG_TYPES,
+  decorators: [FORM_TEST_DECORATOR],
+};
+
+export const InputWithIcon: Story = {
+  args: {
+    name: "input",
+    placeholder: "e.g. John Doe",
+    type: "text",
+    suffix: <Outline.AcademicCapIcon />,
+  },
+  argTypes: FORM_TEST_ARG_TYPES,
+  decorators: [FORM_TEST_DECORATOR],
+};
+
+export const InputWithButton: Story = {
+  args: {
+    name: "input",
+    placeholder: "e.g. John Doe",
+    type: "text",
+    suffix: (
+      <Button variant="transparent" type="button">
+        <Outline.AcademicCapIcon />
+      </Button>
+    ),
   },
   argTypes: FORM_TEST_ARG_TYPES,
   decorators: [FORM_TEST_DECORATOR],
