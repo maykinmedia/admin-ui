@@ -1,3 +1,4 @@
+import { deprecated } from "@maykin-ui/client-common";
 import clsx from "clsx";
 import React from "react";
 
@@ -9,8 +10,11 @@ export type InputProps = Omit<
   React.InputHTMLAttributes<HTMLInputElement>,
   "size" | "value" | "onChange"
 > & {
-  /** Component to use as icon. */
+  /** @deprecated: REMOVE IN 4.0 - Use suffix instead. */
   icon?: React.ReactNode;
+
+  /** Component to use as suffix, e.g. an icon. */
+  suffix?: React.ReactNode;
 
   /** Input label. */
   label?: string;
@@ -48,6 +52,7 @@ export type InputProps = Omit<
  */
 export const Input: React.FC<InputProps> = ({
   icon,
+  suffix = icon,
   label = "",
   pad = true,
   size = "s",
@@ -60,6 +65,12 @@ export const Input: React.FC<InputProps> = ({
   ...props
 }) => {
   const inputRef = React.useRef<HTMLInputElement>(null);
+
+  deprecated(
+    Boolean(icon),
+    "icon",
+    `mykn.components.Input: icon prop is deprecated, use suffix instead`,
+  );
 
   /**
    * Handles a change of value.
@@ -125,10 +136,10 @@ export const Input: React.FC<InputProps> = ({
     />
   );
 
-  return icon ? (
+  return suffix ? (
     <StackCtx>
       {input}
-      {icon}
+      {suffix}
     </StackCtx>
   ) : (
     input
