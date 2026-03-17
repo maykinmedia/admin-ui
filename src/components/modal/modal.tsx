@@ -50,6 +50,9 @@ export type ModalProps = Omit<React.ComponentProps<"dialog">, "title"> & {
    * an overlay.
    */
   type?: "modal" | "dialog";
+
+  /** Additional class names. */
+  className?: string;
 };
 
 /**
@@ -69,6 +72,7 @@ export const Modal: React.FC<ModalProps> = ({
   showClose = true,
   title,
   type = "modal",
+  className,
   ...props
 }) => {
   const [openState, setOpenState] = useState<ModalProps["open"]>(false);
@@ -170,11 +174,15 @@ export const Modal: React.FC<ModalProps> = ({
     <dialog
       hidden={!openState}
       ref={dialogRef}
-      className={clsx("mykn-modal", {
-        [`mykn-modal--size-${size}`]: size,
-        [`mykn-modal--position-${position}`]: position,
-        [`mykn-modal--type-${type}`]: type,
-      })}
+      className={clsx(
+        "mykn-modal",
+        {
+          [`mykn-modal--size-${size}`]: size,
+          [`mykn-modal--position-${position}`]: position,
+          [`mykn-modal--type-${type}`]: type,
+        },
+        className,
+      )}
       onClose={handleClose}
       onKeyDown={handleKeyDown}
       {...props}
