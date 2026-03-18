@@ -15,6 +15,9 @@ export type BodyProps = React.ComponentProps<"div"> & {
 
   /** @deprecated REMOVE IN 3.0 - Renamed to fullHeight. */
   stretch?: boolean;
+
+  /** The size of the padding. */
+  padSize?: "xs" | "s" | "m";
 };
 
 /**
@@ -27,6 +30,7 @@ export const Body: React.FC<BodyProps> = ({
   className,
   stretch,
   fullHeight = false,
+  padSize = "xs",
   ...props
 }) => {
   // Stretch is renamed to fullHeight.
@@ -44,6 +48,7 @@ export const Body: React.FC<BodyProps> = ({
             allowScroll === true || allowScroll === "h",
           "mykn-body--allow-scroll-v":
             allowScroll === true || allowScroll === "v",
+          [`mykn-body--pad-size-${padSize}`]: padSize,
         },
         className,
       )}

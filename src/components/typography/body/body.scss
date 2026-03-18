@@ -27,6 +27,16 @@
   }
 
   @media screen and (min-width: constants.$breakpoint-desktop) {
-    padding: var(--sizes-spacing-xs-v) var(--sizes-spacing-xs-h);
+    &--pad-size-xs {
+      padding: var(--sizes-spacing-xs-v) var(--sizes-spacing-xs-h);
+    }
+
+    &--pad-size-s {
+      padding: var(--sizes-spacing-s-v) var(--sizes-spacing-s-h);
+    }
+
+    &--pad-size-m {
+      padding: var(--sizes-spacing-sm-v) var(--sizes-spacing-sm-h);
+    }
   }
 }
