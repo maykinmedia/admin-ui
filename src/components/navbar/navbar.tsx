@@ -16,7 +16,7 @@ export const Navbar: React.FC<NavbarProps> = ({ children, ...props }) => {
       justify="v"
       pad
       padSize="xs"
-      variant="primary"
+      variant="alt"
       sticky="top"
       {...props}
     >
