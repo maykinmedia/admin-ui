@@ -134,6 +134,14 @@
     }
   }
 
+  &--border {
+    border: 1px solid var(--typography-color-border);
+  }
+
+  &--rounded {
+    border-radius: var(--sizes-border-radius-s);
+  }
+
   &--variant-transparent {
     background-color: var(--toolbar-transparent-background);
     color: var(--toolbar-transparent-text);

@@ -196,3 +196,12 @@ export const SidebarEnd: Story = {
   ...SidebarStart,
   args: { ...SidebarStart.args, align: "end", justify: "h" },
 };
+
+export const ToolbarComponentWithRoundedBorder: Story = {
+  ...ToolbarComponent,
+  args: {
+    ...ToolbarComponent.args,
+    border: true,
+    rounded: true,
+  },
+};

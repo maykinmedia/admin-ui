@@ -67,6 +67,16 @@ export type ToolbarProps = React.PropsWithChildren<
    * of certain components when rendered in a Toolbar.
    */
   overrideItemProps?: boolean;
+
+  /**
+   * Whether the corners of the toolbar should be rounded.
+   */
+  rounded?: boolean;
+
+  /**
+   * Adds a border to the toolbar, working in conjunction with `rounded`.
+   */
+  border?: boolean;
 };
 
 /**
@@ -90,6 +100,8 @@ export function Toolbar({
   variant = "normal",
   items = [],
   overrideItemProps = true,
+  border = false,
+  rounded = false,
   ...props
 }: ToolbarProps) {
   // TODO: Deprecate "horizontal" and "vertical" (use "h" and "v" instead).
@@ -298,6 +310,8 @@ export function Toolbar({
           "mykn-toolbar--pad-h": pad === true || pad === "h",
           "mykn-toolbar--pad-v": pad === true || pad === "v",
           "mykn-toolbar--pad-a": padA,
+          "mykn-toolbar--rounded": rounded,
+          "mykn-toolbar--border": border,
           [`mykn-toolbar--pad-size-${padSize}`]: padSize,
           [`mykn-toolbar--size-${size}`]: size,
           [`mykn-toolbar--sticky-${sticky}`]: sticky,
