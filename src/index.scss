@@ -4,9 +4,25 @@
 @import "design-tokens/compiled/themes/paint-it-black.css";
 
 :root {
+  color-scheme: light dark;
+
   @media (prefers-reduced-motion) {
     --animation-duration-slow: 0s;
     --animation-duration-medium: 0s;
     --animation-duration-fast: 0s;
+  }
+}
+
+html {
+  color-scheme: light;
+}
+
+html[data-mode="paint-it-black"] {
+  color-scheme: dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  html:not([data-mode]) {
+    color-scheme: dark;
   }
 }
