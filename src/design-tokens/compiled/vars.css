@@ -273,6 +273,8 @@
   --page-background: var(--theme-brand-accent-default);
   --placeholder-background-dark: var(--theme-base-foreground-muted);
   --placeholder-background-light: var(--theme-base-background-alternate);
+  --sidebar-toggle-background: var(--theme-base-background);
+  --sidebar-toggle-text: var(--theme-base-foreground);
   --toolbar-default-background: var(--theme-base-background);
   --toolbar-primary-background: var(--theme-brand-primary-default);
   --toolbar-primary-text: var(--theme-brand-primary-contrast);
