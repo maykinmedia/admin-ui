@@ -190,16 +190,29 @@
     background-color: transparent;
   }
 
+  // Input with suffix styling (currently supporting icon and button elements)
   .mykn-stackctx & + .mykn-icon,
   .mykn-stackctx & + .mykn-button {
     inset-block-start: 50%;
-    inset-inline-end: var(--sizes-spacing-xs-h);
     position: absolute;
     transform: translateY(-50%);
   }
 
   .mykn-stackctx & + .mykn-icon {
+    inset-inline-end: var(--sizes-spacing-xs-h);
     pointer-events: none;
     color: var(--typography-color-muted);
+  }
+
+  // Custom styling for button suffix, ensuring the spacing of inline-end is similar to
+  // the spacing between the button and the top/bottom of the input.
+  .mykn-stackctx & + .mykn-button {
+    inset-inline-end: calc(var(--sizes-spacing-xs-h) / 2);
+  }
+
+  // In this scenario the spacing above and below is zero. Setting the inline-end to 1px
+  // ensures the button doesn't cover the input border.
+  .mykn-stackctx &--size-xxs + .mykn-button--size-xxs {
+    inset-inline-end: 1px;
   }
 }
