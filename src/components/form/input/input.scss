@@ -15,7 +15,16 @@
   font-family: var(--typography-font-family-body);
   font-size: var(--mykn-input-font-size);
   font-weight: var(--mykn-input-font-weight);
-  line-height: var(--mykn-input-line-height);
+
+  // We need to ensure that the input has an height dividable by 2 (so we can centrally
+  // align the suffix elements). We do this by calculating the line-height and rounding
+  // it up to the nearest even number.
+  line-height: round(
+    up,
+    calc(var(--mykn-input-line-height) * var(--mykn-input-font-size)),
+    2px
+  );
+
   margin: 0;
   padding-block: var(--mykn-input-padding-v);
   padding-inline: var(--mykn-input-padding-h);
