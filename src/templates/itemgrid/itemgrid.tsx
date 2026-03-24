@@ -33,10 +33,10 @@ export const ItemGridTemplate: React.FC<ItemGridTemplateProps> = ({
 }) => (
   <CardBaseTemplate {...props}>
     {children}
+    <Body>{title && <H2>{title}</H2>}</Body>
     <Body>
-      {title && <H2>{title}</H2>}
       <ItemGrid {...itemGridProps} />
-      {paginatorProps && <Paginator {...paginatorProps} />}
     </Body>
+    <Body>{paginatorProps && <Paginator {...paginatorProps} />}</Body>
   </CardBaseTemplate>
 );
