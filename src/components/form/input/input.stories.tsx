@@ -231,14 +231,54 @@ export const InputWithButton: Story = {
     name: "input",
     placeholder: "e.g. John Doe",
     type: "text",
-    suffix: (
-      <Button variant="transparent" type="button">
-        <Outline.AcademicCapIcon />
-      </Button>
-    ),
   },
   argTypes: FORM_TEST_ARG_TYPES,
   decorators: [FORM_TEST_DECORATOR],
+  render: (args) => {
+    return (
+      <>
+        <Input
+          {...args}
+          suffix={
+            <Button variant="primary" type="button" size={args.size}>
+              <Outline.AcademicCapIcon />
+            </Button>
+          }
+        />
+        <br />
+        <br />
+        <Input
+          {...args}
+          suffix={
+            <Button variant="secondary" type="button" size={args.size}>
+              <Outline.AcademicCapIcon />
+            </Button>
+          }
+        />
+        <br />
+        <br />
+        <Input
+          {...args}
+          suffix={
+            <Button variant="accent" type="button" size={args.size}>
+              <Outline.AcademicCapIcon />
+            </Button>
+          }
+        />
+        <br />
+        <br />
+        <Input
+          {...args}
+          suffix={
+            <Button variant="transparent" type="button" size={args.size}>
+              <Outline.AcademicCapIcon />
+            </Button>
+          }
+        />
+      </>
+    );
+  },
+  play: () => undefined,
 };
 
 export const Padding: Story = {
