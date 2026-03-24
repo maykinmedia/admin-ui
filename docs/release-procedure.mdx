@@ -32,12 +32,11 @@ git push
 
 ## Tag and publish
 
-Once the release commit is merged, finalize the release by tagging and publishing:
+Once the release commit is merged, finalize the release by tagging and pushing the tag:
 
 ```sh
 git tag <new version>
 git push --tags
-npm publish --access=public
 ```
 
-> If you do not have credentials to publish to npm, ask someone with the necessary access to complete this step.
+> The tag should be picked up by ci and published on npm.

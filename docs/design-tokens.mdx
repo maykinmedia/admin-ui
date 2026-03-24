@@ -17,7 +17,7 @@ import { Meta } from "@storybook/addon-docs/blocks";
 5. [How tokens relate: base → theme → component](#how-tokens-relate-base--theme--component)
 6. [Component tokens in practice](#component-tokens-in-practice)
 7. [Typography, spacing, motion, assets](#typography-spacing-motion-assets)
-8. [Theming & modes (light/dark)](#theming--modes-lightdark)
+8. [Theming & color schemes (light/dark)](#theming--color-schemes-lightdark)
    - [Scheme-based themes](#scheme-based-themes)
    - [Attribute-driven mode control](#attribute-driven-mode-control)
 
@@ -156,71 +156,67 @@ h1 {
 
 ---
 
-## Theming & modes (light/dark)
+## Theming & color schemes (light/dark)
 
 ### Scheme-based themes
 
-Each theme JSON includes a **top-level identifier**:
+Each theme JSON includes a `_colorScheme` and `_name` along with the `theme` definition.
 
 ```jsonc
 {
-  "theme": {
-    "color-scheme": "light" | "dark",
-    "brand": { /* … */ },
-    "base": { /* … */ },
-    "intent": { /* … */ }
-  }
+  "_colorScheme": {
+    "value": "light"
+  },
+  "_name": {
+    "value": "blue-suede-shoes"
+  },
+  "theme": { /* … */ }
 }
 ```
 
-**Build output rules**:
+**Notes**:
 
-- If a theme is **light**, its variables are emitted under `:root` in `compiled/themes/<name>.css`.
-- If a theme is **dark**, its variables are emitted under `:root[data-mode="dark"]`, **plus** a system-dark fallback block so dark applies when no explicit mode is set:
+- Themes are emitted in `src/design-token/compiled/themes/{_name.value}.css`.
+- Themes are automatically activated based on the user's prefered color-scheme (`@media (prefers-color-scheme: {_colorScheme.value})`).
+- Themes can be forcfully activated by setting `html[data-mode="{_name.value}"]`
+- The default "light" theme is "blue-suede-shoes", this can be overridden by importing other light mode themes ("purple-rain").
+- Themes are named after famous popular songs describing their main color name.
 
 ```css
 /* dark theme file */
-:root[data-mode="dark"] {
-  /* variables for dark theme */
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-mode]) {
-    /* same variables to follow OS setting */
-  }
+@media (prefers-color-scheme: light) { html:not([data-mode]), [data-mode=""] {
+  /* … */
+}}
+[data-mode=blue-suede-shoes] {
+  /* … */
 }
 ```
 
-> The `color-scheme` value is **metadata** used by the build to choose wrappers. It is **not** emitted as a CSS variable or property.
+> The `_colorScheme` and `_name` values are **metadata** used by the build to choose wrappers. It is **not** emitted as
+a CSS variable or property.
 
-### Attribute-driven mode control
+## Theme designer
 
-Consumers control mode via an attribute:
-
-```html
-<html data-mode="light">
-  …
-</html>
-<!-- force light -->
-<html data-mode="dark">
-  …
-</html>
-<!-- force dark  -->
-```
-
-If the attribute is **absent**, dark themes will follow the user’s OS setting through the `prefers-color-scheme` fallback in the theme CSS.
+The [Theme Designer story](/story/manual-theme-designer--theme-designer-story) allows for interactive experimentation
+based on the current theme and should be used as starting point for modifications or new themes.
 
 ---
 
 ## Theme tokens quick guide (what to define)
 
-> For authors creating or tweaking **themes** under `tokens/themes/`.
+> For authors creating or tweaking **themes** under `src/design-tokens/tokens/themes/`.
 
 ### Structure
 
 ```jsonc
 {
+  "_colorScheme": {
+    "value": "light"
+  },
+  "_name": {
+    "value": "blue-suede-shoes"
+  },
   "theme": {
-    "color-scheme": "light", // or "dark"
     "brand": {
       "primary": {
         "default": { "value": "#2078C5" },
@@ -272,13 +268,13 @@ Create two separate theme files if you need both a light **and** a dark variant 
 
 ### Add a new component token file
 
-1. Create `tokens/components/<component>.json`.
+1. Create `src/design-tokens/tokens/components/<component>.json`.
 2. Define stateful properties referencing **theme** and **base** tokens.
-3. Rebuild to regenerate `compiled/vars.css`.
+3. Rebuild to regenerate `src/design-tokens/compiled/vars.css`.
 4. Update your component CSS to consume the new variables.
 
 ```jsonc
-// tokens/components/toggle.json (example)
+// src/design-tokens/tokens/components/toggle.json (example)
 {
   "toggle": {
     "on": {
@@ -295,8 +291,8 @@ Create two separate theme files if you need both a light **and** a dark variant 
 
 ### Add or modify a theme
 
-1. Create `tokens/themes/<theme>.json` with `color-scheme`, `brand`, `base`, and `intent` groups.
-2. Rebuild to get `compiled/themes/<theme>.css`.
+1. Create `src/design-tokens/tokens/themes/<theme>.json` with `color-scheme`, `brand`, `base`, and `intent` groups.
+2. Rebuild to get `src/design-tokens/compiled/themes/<theme>.css`.
 3. Import that CSS to apply.
 
 ---
@@ -364,16 +360,17 @@ export function DangerLink({ children }: { children: React.ReactNode }) {
 ## FAQ
 
 **Can I import only the tokens I need?**
-`compiled/vars.css` is already small; import once at app root.
+`src/design-tokens/compiled/vars.css` is already small; import once at app root.
 
 **Can I read theme vars directly in CSS?**
 No. Use **component** or **base** tokens. Theme vars are an implementation detail.
 
 **How do I add fonts?**
-Add to `tokens/base/assets.json`, rebuild.
+Add to `src/design-tokens/tokens/base/assets.json`, rebuild.
 
 **How do I support dark mode now?**
-Create a separate **dark** theme file with `"color-scheme": "dark"`. Consumers can force mode with `data-mode="dark"|"light"`; if absent, dark themes respect `prefers-color-scheme`.
+Dark mode should be natively supported based on the user's preference using `@media (prefers-color-scheme: {_colorScheme.value})`.
+If dark should be explicitly set (e.g. by a switch) set `html[data-mode="paint-it-black"]`.
 
 ---
 
