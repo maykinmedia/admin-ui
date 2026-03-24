@@ -1,0 +1,8 @@
+{
+  "sidebar": {
+    "toggle": {
+      "background": { "value": "{theme.base.background}" },
+      "text": { "value": "{theme.base.foreground}" }
+    }
+  }
+}

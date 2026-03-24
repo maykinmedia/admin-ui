@@ -34,6 +34,11 @@
     z-index: 1010;
   }
 
+  &__toggle {
+    background: var(--sidebar-toggle-background, #fff);
+    color: var(--sidebar-toggle-text, #000);
+  }
+
   &--position-start &__header &__toggle,
   &--position-end &__header &__toggle {
     inset-block-start: calc(
