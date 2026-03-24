@@ -8,7 +8,20 @@
     padding-inline-end: 30px;
   }
 
+  // Ensuring that the input text is visible across different input and button sizes.
   &:has(.mykn-button) .mykn-input {
-    padding-inline-end: 42px;
+    padding-inline-end: 40px;
+  }
+
+  &:has(.mykn-button--size-xl) .mykn-input {
+    padding-inline-end: 52px;
+  }
+
+  &:has(.mykn-button--size-xs) .mykn-input {
+    padding-inline-end: 36px;
+  }
+
+  &:has(.mykn-button--size-xxs) .mykn-input {
+    padding-inline-end: 30px;
   }
 }
