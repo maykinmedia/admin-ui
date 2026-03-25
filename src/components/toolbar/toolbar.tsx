@@ -47,7 +47,7 @@ export type ToolbarProps = React.PropsWithChildren<
   /** The size of the padding. */
   padSize?: "s" | "xs";
 
-  /** When set to true, padding is applied to A components to match Button component's height. */
+  /** When set to true, padding is applied to A (anchor) components to match Button components height. */
   padA?: boolean;
 
   /** Can be set to `fit-content` to apply auto sizing based on content width. */
