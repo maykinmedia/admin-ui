@@ -98,6 +98,40 @@ export const Compact: Story = {
   },
 };
 
+export const PaddingSizes: Story = {
+  ...ToolbarComponent,
+  args: {
+    ...ToolbarComponent.args,
+    variant: "accent",
+    items: ToolbarComponent.args?.items?.toSpliced(0, 1),
+  },
+  render: (args) => {
+    const padSizes: ToolbarProps["padSize"][] = ["s", "xs"];
+    return (
+      <>
+        {padSizes.map((padSize) => {
+          return (
+            <>
+              <br />
+              <Toolbar
+                key={padSize}
+                padSize={padSize}
+                {...{
+                  ...args,
+                  items: [
+                    <H3 key="label">Padding size: {padSize}</H3>,
+                    ...(args.items || []),
+                  ],
+                }}
+              />
+            </>
+          );
+        })}
+      </>
+    );
+  },
+};
+
 export const Variants: Story = {
   ...ToolbarComponent,
   args: {

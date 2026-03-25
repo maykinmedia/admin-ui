@@ -81,8 +81,8 @@
     padding-block: var(--sizes-spacing-xs-v);
   }
 
-  &--pad-size-xs-#{&}--pad-v {
-    padding-inline: calc(var(--sizes-spacing-xs-v) / 2);
+  &--pad-size-xs#{&}--pad-v {
+    padding-block: calc(var(--sizes-spacing-xs-v) / 2);
   }
 
   &--variant-primary {
