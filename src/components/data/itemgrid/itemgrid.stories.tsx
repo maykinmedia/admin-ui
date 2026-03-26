@@ -152,3 +152,14 @@ export const ItemGridWithInfoIcons: Story = {
     })),
   },
 };
+
+export const WithPaginator: Story = {
+  args: {
+    items: ITEM_GRID_ITEMS,
+    paginatorProps: {
+      count: 100,
+      page: 1,
+      pageSize: 15,
+    },
+  },
+};

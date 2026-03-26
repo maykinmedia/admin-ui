@@ -3,6 +3,7 @@ import React, { FC, HTMLAttributes, ReactNode, useId } from "react";
 
 import { Button, ButtonLink, ButtonLinkProps, ButtonProps } from "../../button";
 import { Body, H3, P } from "../../typography";
+import { Paginator, PaginatorProps } from "../paginator";
 import "./itemgrid.scss";
 
 export type ItemGridProps = {
@@ -10,8 +11,12 @@ export type ItemGridProps = {
   direction?: "row" | "column";
   /* Whether to truncate title/information lines with ellipsis. */
   ellipsis?: boolean;
+  /* Whether to stretch to fill the parent's height, pushing the paginator to the bottom */
+  fullHeight?: boolean;
   /* The items to display in the grid. */
   items: ItemGridItemProps[];
+  /* Paginator props, when set renders a paginator */
+  paginatorProps?: PaginatorProps;
 };
 
 /**
@@ -44,23 +49,36 @@ export type ItemGridProps = {
 export const ItemGrid: FC<ItemGridProps> = ({
   direction = "column",
   ellipsis = false,
+  fullHeight = false,
   items,
+  paginatorProps,
 }) => (
-  <ul
-    className={clsx("mykn-itemgrid", {
-      "mykn-itemgrid--direction-row": direction === "row",
-      "mykn-itemgrid__item--ellipsis": ellipsis,
+  <div
+    className={clsx("mykn-itemgrid__wrapper", {
+      "mykn-itemgrid__wrapper--full-height": fullHeight,
     })}
   >
-    {items.map((item, index) => (
-      <li
-        key={item.id ?? `${item.title}-${index}`}
-        className="mykn-itemgrid__item-wrapper"
-      >
-        <ItemGridItem {...item} ellipsis={ellipsis} />
-      </li>
-    ))}
-  </ul>
+    <ul
+      className={clsx("mykn-itemgrid", {
+        "mykn-itemgrid--direction-row": direction === "row",
+        "mykn-itemgrid__item--ellipsis": ellipsis,
+      })}
+    >
+      {items.map((item, index) => (
+        <li
+          key={item.id ?? `${item.title}-${index}`}
+          className="mykn-itemgrid__item-wrapper"
+        >
+          <ItemGridItem {...item} ellipsis={ellipsis} />
+        </li>
+      ))}
+    </ul>
+    {paginatorProps && (
+      <div className="mykn-itemgrid__footer">
+        <Paginator {...paginatorProps} />
+      </div>
+    )}
+  </div>
 );
 
 export type ItemGridItemProps = {
