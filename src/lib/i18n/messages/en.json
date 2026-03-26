@@ -209,6 +209,36 @@
     "description": "mykn.components.Form: The required indicator (*)",
     "originalDefault": "*"
   },
+  "mykn.components.GlobalSearch.labelClose": {
+    "defaultMessage": "Close",
+    "description": "mykn.components.GlobalSearch: The keyboard hint label for closing the panel",
+    "originalDefault": "Sluiten"
+  },
+  "mykn.components.GlobalSearch.labelLoading": {
+    "defaultMessage": "Loading",
+    "description": "mykn.components.GlobalSearch: The loading (accessible) label",
+    "originalDefault": "Laden"
+  },
+  "mykn.components.GlobalSearch.labelNavigate": {
+    "defaultMessage": "Navigate",
+    "description": "mykn.components.GlobalSearch: The keyboard hint label for navigating results",
+    "originalDefault": "Navigeren"
+  },
+  "mykn.components.GlobalSearch.labelNoResults": {
+    "defaultMessage": "No results",
+    "description": "mykn.components.GlobalSearch: The text shown when no results are found",
+    "originalDefault": "Geen resultaten"
+  },
+  "mykn.components.GlobalSearch.labelPlaceholder": {
+    "defaultMessage": "Search",
+    "description": "mykn.components.GlobalSearch: The search input placeholder",
+    "originalDefault": "Zoeken"
+  },
+  "mykn.components.GlobalSearch.labelSelect": {
+    "defaultMessage": "Select",
+    "description": "mykn.components.GlobalSearch: The keyboard hint label for selecting a result",
+    "originalDefault": "Selecteren"
+  },
   "mykn.components.Kanban.labelMoveObject": {
     "defaultMessage": "change position of item",
     "description": "mykn.components.Kanban: The kanban \"move object position\" (accessible) label",
