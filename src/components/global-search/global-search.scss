@@ -26,8 +26,7 @@
   }
 
   &__results {
-    // TODO: Ask designer
-    max-height: 300px;
+    max-height: min(50vh, 500px);
     min-height: 100px;
     overflow-y: auto;
     margin-block-start: var(--sizes-spacing-s-v);
@@ -68,7 +67,7 @@
 
   &__item {
     border-radius: var(--sizes-border-radius-s);
-    padding: 4px var(--sizes-spacing-xs-h);
+    padding: var(--sizes-spacing-xs-v) var(--sizes-spacing-xs-h);
     background-color: var(--global-search-item-background);
     color: var(--typography-color-body);
     cursor: pointer;
@@ -101,12 +100,12 @@
       display: flex;
       align-items: center;
       align-self: stretch;
-      font-size: 24px; // For icon size, TODO: Ask designer
       gap: var(--sizes-spacing-xs-h);
     }
 
-    &-go {
-      margin-inline-start: auto;
+    &-body {
+      flex: 1;
+      min-width: 0;
     }
   }
 

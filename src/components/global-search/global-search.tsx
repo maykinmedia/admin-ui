@@ -1,18 +1,14 @@
 import clsx from "clsx";
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 
 import { useDebounce } from "../../hooks";
+import { gettextFirst } from "../../lib";
 import { Input } from "../form";
 import { Outline } from "../icon";
 import { A, P } from "../typography";
 import { Ol } from "../typography/ol";
 import "./global-search.scss";
+import { TRANSLATIONS } from "./translations";
 
 export type SearchResult = {
   /** The main label displayed for this result */
@@ -32,32 +28,20 @@ export type SearchResult = {
 };
 
 export type GlobalSearchProps = {
-  /** Placeholder text shown inside the search input. Defaults to `"Search"` */
-  placeholder?: string;
-
-  /** Async function called with the current query string, expected to return a list of {@link SearchResult} items */
-  search: (query: string) => Promise<SearchResult[]>;
-
-  /** Called when the user selects a result, receives the result's `href` */
-  onNavigate?: (href: string) => void;
+  /** Async function called with the current query string, expected to return a list of {@link SearchResult} items. Receives an {@link AbortSignal} that is aborted when a newer search is triggered */
+  search: (
+    query: string,
+    options: { signal: AbortSignal },
+  ) => Promise<SearchResult[]>;
 
   /** Additional CSS class name(s) applied to the root element */
   className?: string;
 
-  /** Called when the user presses `Escape` or otherwise requests to close the search panel */
-  onClose?: () => void;
-
-  /** Initial value for the search input. Defaults to `""` */
-  initialQuery?: string;
-
   /** Delay in milliseconds before the search function is called after the user stops typing. Defaults to `250` */
   debounceMs?: number;
 
-  /** Text displayed when the search returns no results. Defaults to `"No results"` */
-  noResultsLabel?: string;
-
-  /** Displayed for the loading (aria) label */
-  loadingLabel?: string;
+  /** Initial value for the search input. Defaults to `""` */
+  initialQuery?: string;
 
   /** Labels for the keyboard shortcut hints at the bottom of the panel */
   keyboardLabels?: {
@@ -65,6 +49,21 @@ export type GlobalSearchProps = {
     navigate?: string;
     close?: string;
   };
+
+  /** Displayed for the loading (aria) label */
+  loadingLabel?: string;
+
+  /** Text displayed when the search returns no results */
+  noResultsLabel?: string;
+
+  /** Placeholder text shown inside the search input */
+  placeholder?: string;
+
+  /** Called when the user presses `Escape` or otherwise requests to close the search panel */
+  onClose?: () => void;
+
+  /** Called when the user selects a result, receives the result's `href` */
+  onNavigate?: (href: string) => void;
 };
 
 /**
@@ -82,22 +81,35 @@ export type GlobalSearchProps = {
  * />
  */
 export const GlobalSearch: React.FC<GlobalSearchProps> = ({
-  placeholder = "Search",
+  placeholder,
   search,
   onNavigate,
   className,
   onClose,
   initialQuery = "",
   debounceMs = 250,
-  noResultsLabel = "No results",
-  loadingLabel = "Loading",
+  noResultsLabel,
+  loadingLabel,
   keyboardLabels = {},
 }) => {
-  const {
-    select = "Select",
-    navigate = "Navigate",
-    close = "Close",
-  } = keyboardLabels;
+  const _placeholder = gettextFirst(
+    placeholder,
+    TRANSLATIONS.LABEL_PLACEHOLDER,
+  );
+  const _noResultsLabel = gettextFirst(
+    noResultsLabel,
+    TRANSLATIONS.LABEL_NO_RESULTS,
+  );
+  const _loadingLabel = gettextFirst(loadingLabel, TRANSLATIONS.LABEL_LOADING);
+  const _select = gettextFirst(
+    keyboardLabels.select,
+    TRANSLATIONS.LABEL_SELECT,
+  );
+  const _navigate = gettextFirst(
+    keyboardLabels.navigate,
+    TRANSLATIONS.LABEL_NAVIGATE,
+  );
+  const _close = gettextFirst(keyboardLabels.close, TRANSLATIONS.LABEL_CLOSE);
 
   const [query, setQuery] = useState<string>(initialQuery);
   const debouncedQuery = useDebounce<string>(query, debounceMs);
@@ -107,39 +119,36 @@ export const GlobalSearch: React.FC<GlobalSearchProps> = ({
   const [selected, setSelected] = useState<number>(0);
   const itemsRef = useRef<Array<HTMLLIElement | null>>([]);
 
-  const requestToken = useMemo(() => ({ id: 0 }), []);
-
-  const nextRequestId = useCallback(() => {
-    return ++requestToken.id;
-  }, [requestToken]);
+  const abortControllerRef = useRef<AbortController | null>(null);
 
   useEffect(() => {
     itemsRef.current[selected]?.scrollIntoView({ block: "nearest" });
   }, [selected]);
 
   useEffect(() => {
-    let mounted = true;
-    const q = debouncedQuery.trim();
-    const thisRequest = nextRequestId();
+    abortControllerRef.current?.abort();
+    const controller = new AbortController();
+    abortControllerRef.current = controller;
 
+    const q = debouncedQuery.trim();
     setLoading(true);
 
-    search(q)
+    search(q, { signal: controller.signal })
       .then((res) => {
-        if (!mounted || thisRequest !== requestToken.id) return;
+        if (controller.signal.aborted) return;
         setResults(res);
         setSelected(0);
         setIsDirty(true);
       })
       .finally(() => {
-        if (!mounted || thisRequest !== requestToken.id) return;
+        if (controller.signal.aborted) return;
         setLoading(false);
       });
 
     return () => {
-      mounted = false;
+      controller.abort();
     };
-  }, [debouncedQuery, search, requestToken, nextRequestId]);
+  }, [debouncedQuery, search]);
 
   const grouped = useMemo(() => {
     const map = new Map<string, SearchResult[]>();
@@ -191,8 +200,8 @@ export const GlobalSearch: React.FC<GlobalSearchProps> = ({
               setQuery(e.target.value);
               setSelected(0);
             }}
-            placeholder={placeholder}
-            aria-label={placeholder}
+            placeholder={_placeholder}
+            aria-label={_placeholder}
           />
         </div>
 
@@ -205,11 +214,11 @@ export const GlobalSearch: React.FC<GlobalSearchProps> = ({
           aria-busy={loading}
         >
           {showSpinner && (
-            <Outline.ArrowPathIcon spin={true} aria-label={loadingLabel} />
+            <Outline.ArrowPathIcon spin={true} aria-label={_loadingLabel} />
           )}
 
           {showNoResults && (
-            <P className="mykn-global-search__no-results">{noResultsLabel}</P>
+            <P className="mykn-global-search__no-results">{_noResultsLabel}</P>
           )}
 
           <Ol listStyle="none" inline={false}>
@@ -281,7 +290,7 @@ export const GlobalSearch: React.FC<GlobalSearchProps> = ({
             <P bold>
               <Outline.ArrowTurnDownLeftIcon />
             </P>
-            <P>{select}</P>
+            <P>{_select}</P>
           </div>
           <div className="mykn-global-search__keyboard-item">
             <P bold>
@@ -290,11 +299,11 @@ export const GlobalSearch: React.FC<GlobalSearchProps> = ({
             <P bold>
               <Outline.ArrowDownIcon />
             </P>
-            <P>{navigate}</P>
+            <P>{_navigate}</P>
           </div>
           <div className="mykn-global-search__keyboard-item">
             <P bold>esc</P>
-            <P>{close}</P>
+            <P>{_close}</P>
           </div>
         </div>
       </div>
