@@ -5,7 +5,6 @@ import {
   H2,
   ItemGrid,
   ItemGridProps,
-  Paginator,
   PaginatorProps,
 } from "../../components";
 import { CardBaseTemplate, CardBaseTemplateProps } from "../base";
@@ -34,9 +33,6 @@ export const ItemGridTemplate: React.FC<ItemGridTemplateProps> = ({
   <CardBaseTemplate {...props}>
     {children}
     <Body>{title && <H2>{title}</H2>}</Body>
-    <Body>
-      <ItemGrid {...itemGridProps} />
-    </Body>
-    <Body>{paginatorProps && <Paginator {...paginatorProps} />}</Body>
+    <ItemGrid fullHeight {...itemGridProps} paginatorProps={paginatorProps} />
   </CardBaseTemplate>
 );
