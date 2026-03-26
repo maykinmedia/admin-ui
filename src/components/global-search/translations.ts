@@ -15,7 +15,7 @@ export const TRANSLATIONS = defineMessages({
   LABEL_LOADING: {
     id: "mykn.components.GlobalSearch.labelLoading",
     description: "mykn.components.GlobalSearch: The loading (accessible) label",
-    defaultMessage: "Laden",
+    defaultMessage: "Bezig met laden...",
   },
   LABEL_SELECT: {
     id: "mykn.components.GlobalSearch.labelSelect",

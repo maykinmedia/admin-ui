@@ -215,9 +215,9 @@
     "originalDefault": "Sluiten"
   },
   "mykn.components.GlobalSearch.labelLoading": {
-    "defaultMessage": "Loading",
+    "defaultMessage": "Loading...",
     "description": "mykn.components.GlobalSearch: The loading (accessible) label",
-    "originalDefault": "Laden"
+    "originalDefault": "Bezig met laden..."
   },
   "mykn.components.GlobalSearch.labelNavigate": {
     "defaultMessage": "Navigate",
