@@ -183,11 +183,21 @@ Each theme JSON includes a `_colorScheme` and `_name` along with the `theme` def
 - Themes are named after famous popular songs describing their main color name.
 
 ```css
-/* dark theme file */
+/* light theme file */
 @media (prefers-color-scheme: light) { html:not([data-mode]), [data-mode=""] {
   /* … */
 }}
-[data-mode=blue-suede-shoes] {
+[data-mode="blue-suede-shoes"] {
+  /* … */
+}
+```
+
+```css
+/* dark theme file */
+@media (prefers-color-scheme: dark) { html:not([data-mode]), [data-mode=""] {
+  /* … */
+}}
+[data-mode="paint-it-black"] {
   /* … */
 }
 ```
@@ -291,7 +301,7 @@ Create two separate theme files if you need both a light **and** a dark variant 
 
 ### Add or modify a theme
 
-1. Create `src/design-tokens/tokens/themes/<theme>.json` with `color-scheme`, `brand`, `base`, and `intent` groups.
+1. Create `src/design-tokens/tokens/themes/<theme>.json` with `_colorScheme`, `_name` metadata and `brand`, `base`, and `intent` groups.
 2. Rebuild to get `src/design-tokens/compiled/themes/<theme>.css`.
 3. Import that CSS to apply.
 
@@ -369,8 +379,10 @@ No. Use **component** or **base** tokens. Theme vars are an implementation detai
 Add to `src/design-tokens/tokens/base/assets.json`, rebuild.
 
 **How do I support dark mode now?**
-Dark mode should be natively supported based on the user's preference using `@media (prefers-color-scheme: {_colorScheme.value})`.
-If dark should be explicitly set (e.g. by a switch) set `html[data-mode="paint-it-black"]`.
+Dark mode is supported through the `paint-it-black` theme which is loaded by default. Dark mode should be autmatically
+activated based on the user's preference using `@media (prefers-color-scheme: {_colorScheme.value})`.
+
+If dark should be explicitly set (e.g., by a switch) set `html[data-mode="paint-it-black"]`.
 
 ---
 

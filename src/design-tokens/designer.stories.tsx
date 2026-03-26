@@ -174,7 +174,7 @@ function ThemeDesigner({ theme }: { theme: Theme }) {
     // This object gets mutated by updates to `current`.
     const result: JSON = {
       _colorScheme: theme._colorScheme,
-      _name: theme["_name"],
+      _name: theme._name,
     };
 
     for (const key in data) {
