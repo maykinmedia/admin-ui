@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import * as React from "react";
 
 import { Outline } from "../icon";
+import { Modal } from "../modal";
 import { GlobalSearch, SearchResult } from "./global-search";
 
 const results: SearchResult[] = [
@@ -114,7 +115,7 @@ const results: SearchResult[] = [
 ];
 
 const meta = {
-  title: "Uncategorized/GlobalSearch",
+  title: "Data/GlobalSearch",
   component: GlobalSearch,
   args: {
     placeholder: "Zoek voor documenten, zaken, etc.",
@@ -176,4 +177,23 @@ export const InitialQuery: Story = {
       );
     },
   },
+};
+
+export const InModal: StoryObj = {
+  render: () => (
+    <Modal open={true} title="Zoeken" size="m">
+      <GlobalSearch
+        placeholder="Zoek voor documenten, zaken, etc."
+        search={async (query: string) => {
+          await new Promise((resolve) => setTimeout(resolve, 500));
+          return results.filter((result) =>
+            (result.title as string)
+              ?.toLowerCase()
+              .includes(query.toLowerCase()),
+          );
+        }}
+        onNavigate={(href: string) => alert(`Navigating to ${href}`)}
+      />
+    </Modal>
+  ),
 };
