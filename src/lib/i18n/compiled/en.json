@@ -42,7 +42,7 @@
   "mykn.components.Form.requiredExplanation": "Required fields are marked with an asterisk ({requiredIndicator})",
   "mykn.components.Form.requiredIndicator": "*",
   "mykn.components.GlobalSearch.labelClose": "Close",
-  "mykn.components.GlobalSearch.labelLoading": "Loading",
+  "mykn.components.GlobalSearch.labelLoading": "Loading...",
   "mykn.components.GlobalSearch.labelNavigate": "Navigate",
   "mykn.components.GlobalSearch.labelNoResults": "No results",
   "mykn.components.GlobalSearch.labelPlaceholder": "Search",

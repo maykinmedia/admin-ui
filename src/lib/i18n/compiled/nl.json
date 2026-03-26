@@ -42,7 +42,7 @@
   "mykn.components.Form.requiredExplanation": "Verplichte velden zijn gemarkeerd met een sterretje ({requiredIndicator})",
   "mykn.components.Form.requiredIndicator": "*",
   "mykn.components.GlobalSearch.labelClose": "Sluiten",
-  "mykn.components.GlobalSearch.labelLoading": "Laden",
+  "mykn.components.GlobalSearch.labelLoading": "Bezig met laden...",
   "mykn.components.GlobalSearch.labelNavigate": "Navigeren",
   "mykn.components.GlobalSearch.labelNoResults": "Geen resultaten",
   "mykn.components.GlobalSearch.labelPlaceholder": "Zoeken",
