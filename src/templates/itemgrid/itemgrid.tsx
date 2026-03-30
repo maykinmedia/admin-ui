@@ -32,7 +32,8 @@ export const ItemGridTemplate: React.FC<ItemGridTemplateProps> = ({
 }) => (
   <CardBaseTemplate {...props}>
     {children}
-    <Body>{title && <H2>{title}</H2>}</Body>
+    <Body padSize="s">{title && <H2>{title}</H2>}</Body>
+    <Body padSize="s" />
     <ItemGrid fullHeight {...itemGridProps} paginatorProps={paginatorProps} />
   </CardBaseTemplate>
 );
