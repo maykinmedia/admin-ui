@@ -6,7 +6,7 @@
   grid-template-columns: minmax(0, 1fr);
   gap: var(--sizes-spacing-sm-h) var(--sizes-spacing-sm-v);
   list-style: none;
-  padding: 0;
+  padding: 0 var(--sizes-spacing-s-h);
   margin: 0;
 
   @media screen and (min-width: constants.$breakpoint-desktop) {
@@ -17,10 +17,40 @@
   &__wrapper {
     display: flex;
     flex-direction: column;
-    padding: 0 var(--sizes-spacing-s-h);
 
     &--full-height {
       height: 100%;
+    }
+  }
+
+  &__item-wrapper {
+    display: flex;
+    flex-direction: column;
+
+    &--has-actions {
+      background-color: var(--itemgrid-item-background);
+      box-shadow: 0 2px 7px 0 var(--itemgrid-item-shadow);
+      border-radius: var(--sizes-border-radius-s);
+      overflow: hidden;
+
+      .mykn-itemgrid__item {
+        background-color: transparent;
+        box-shadow: none;
+        flex: 1;
+      }
+    }
+  }
+
+  &__item-actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: var(--sizes-spacing-xs-h);
+    padding: var(--sizes-spacing-xs-v) var(--sizes-spacing-xs-h);
+    border-top: 1px solid var(--card-border);
+
+    .mykn-button {
+      --mykn-button-color-text: var(--typography-color-muted);
     }
   }
 
@@ -30,8 +60,11 @@
     background-color: var(--itemgrid-item-background);
     padding: var(--sizes-spacing-s-v) var(--sizes-spacing-xs-h);
     box-shadow: 0 2px 7px 0 var(--itemgrid-item-shadow);
-    border: none;
     white-space: normal;
+
+    &:is(button, a) {
+      border: none;
+    }
 
     &-body {
       width: 100%;
@@ -102,6 +135,18 @@
       grid-template-columns: repeat(auto-fit, minmax(0, 300px));
     }
 
+    .mykn-itemgrid__item-wrapper--has-actions {
+      flex-direction: row;
+    }
+
+    .mykn-itemgrid__item-actions {
+      border-inline-start: 1px solid var(--card-border);
+      flex-direction: column;
+      flex-wrap: wrap;
+      align-content: center;
+      justify-content: center;
+    }
+
     .mykn-itemgrid__item {
       padding: var(--sizes-spacing-xs-v) var(--sizes-spacing-s-h);
 
@@ -135,6 +180,10 @@
   &__footer {
     margin-top: auto;
     box-sizing: border-box;
-    padding-block-start: var(--sizes-spacing-s-v);
+    padding: var(--sizes-spacing-xs-v) var(--sizes-spacing-xs-h);
+    position: sticky;
+    bottom: 0;
+    background-color: var(--card-background);
+    z-index: 10;
   }
 }

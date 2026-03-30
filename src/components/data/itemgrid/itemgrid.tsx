@@ -6,6 +6,10 @@ import { Body, H3, P } from "../../typography";
 import { Paginator, PaginatorProps } from "../paginator";
 import "./itemgrid.scss";
 
+export type ItemGridButtonProps =
+  | ({ as: "button" } & ButtonProps)
+  | ({ as: "a" } & ButtonLinkProps);
+
 export type ItemGridProps = {
   /* The (flex) direction of the grid. */
   direction?: "row" | "column";
@@ -20,9 +24,12 @@ export type ItemGridProps = {
 };
 
 /**
- * A grid of items, each consisting of an icon, title, information lines and an optional button.
+ * A grid of items, each consisting of an icon, title, information lines and optional actions.
  * The grid can be displayed in a row or column direction, and the information lines can be truncated
  * with ellipsis if desired.
+ *
+ * - 1 action: the entire card is clickable.
+ * - 2+ actions: the card is non-interactive and all actions are shown in a strip.
  *
  * It is recommended to use `ellipsis: true` when you expect long titles or information lines
  *
@@ -35,13 +42,16 @@ export type ItemGridProps = {
  *       icon: <MyIcon />,
  *       title: "Item 1",
  *       informationLines: ["Line 1", "Line 2"],
- *       buttonProps: { as: "button", onClick: () => alert("Clicked!") },
+ *       actions: [{ as: "button", onClick: () => alert("Clicked!") }],
  *     },
  *     {
  *       icon: <MyIcon />,
  *       title: "Item 2",
  *       informationLines: ["Line 1", "Line 2"],
- *       buttonProps: { as: "a", href: "https://example.com" },
+ *       actions: [
+ *         { as: "a", href: "/download/2", "aria-label": "Download Item 2" },
+ *         { as: "button", onClick: () => alert("Edit!"), "aria-label": "Edit Item 2", children: <PencilIcon /> },
+ *       ],
  *     },
  *   ]}
  * />
@@ -64,14 +74,48 @@ export const ItemGrid: FC<ItemGridProps> = ({
         "mykn-itemgrid__item--ellipsis": ellipsis,
       })}
     >
-      {items.map((item, index) => (
-        <li
-          key={item.id ?? `${item.title}-${index}`}
-          className="mykn-itemgrid__item-wrapper"
-        >
-          <ItemGridItem {...item} ellipsis={ellipsis} />
-        </li>
-      ))}
+      {items.map((item, index) => {
+        const { actions, ...itemProps } = item;
+        const stripMode = actions !== undefined && actions.length > 1;
+        const singleAction = actions?.length === 1 ? actions[0] : undefined;
+        return (
+          <li
+            key={item.id ?? `${item.title}-${index}`}
+            className={clsx("mykn-itemgrid__item-wrapper", {
+              "mykn-itemgrid__item-wrapper--has-actions": stripMode,
+            })}
+          >
+            <ItemGridItem
+              {...itemProps}
+              buttonProps={stripMode ? undefined : singleAction}
+              ellipsis={ellipsis}
+            />
+            {stripMode && (
+              <div className="mykn-itemgrid__item-actions">
+                {actions.map(({ as, ...actionProps }, actionIndex) =>
+                  as === "a" ? (
+                    <ButtonLink
+                      key={actionIndex}
+                      size="s"
+                      variant="transparent"
+                      square
+                      {...(actionProps as ButtonLinkProps)}
+                    />
+                  ) : (
+                    <Button
+                      key={actionIndex}
+                      size="s"
+                      variant="transparent"
+                      square
+                      {...(actionProps as ButtonProps)}
+                    />
+                  ),
+                )}
+              </div>
+            )}
+          </li>
+        );
+      })}
     </ul>
     {paginatorProps && (
       <div className="mykn-itemgrid__footer">
@@ -94,25 +138,29 @@ export type ItemGridItemProps = {
   informationLines?: ReactNode[];
   /* Whether to truncate title/information lines with ellipsis. */
   ellipsis?: boolean;
-  /* Button props. If `as` is "button", a `<Button>` will be rendered. If `as` is "a", a `<ButtonLink>` will be rendered. */
-  buttonProps?:
-    | ({ as: "button" } & ButtonProps)
-    | ({ as: "a" } & ButtonLinkProps);
+  /**
+   * Actions for the item.
+   * - 1 action: the entire card acts as that action.
+   * - 2+ actions: the card is non-interactive; all actions appear in a strip.
+   */
+  actions?: ItemGridButtonProps[];
 };
 
-export const ItemGridItem: FC<ItemGridItemProps> = ({
+/** @internal Renders the card body. Used by ItemGrid — prefer that over using this directly. */
+export const ItemGridItem: FC<
+  Omit<ItemGridItemProps, "actions"> & { buttonProps?: ItemGridButtonProps }
+> = ({
   id,
   icon,
   iconLabel,
   title,
   informationLines = [],
   ellipsis,
-  buttonProps = { as: "button" },
+  buttonProps,
 }) => {
   const internalId = useId();
   const baseId = id ?? `${internalId}-item`;
   const infoId = `${baseId}-info`;
-  const { as, ...rest } = buttonProps;
 
   const ariaDescribedBy = informationLines.length ? infoId : undefined;
 
@@ -148,6 +196,15 @@ export const ItemGridItem: FC<ItemGridItemProps> = ({
     </Body>
   );
 
+  if (!buttonProps) {
+    return (
+      <div className="mykn-itemgrid__item" aria-describedby={ariaDescribedBy}>
+        {content}
+      </div>
+    );
+  }
+
+  const { as, ...rest } = buttonProps;
   const sharedButtonProps = {
     pad: false,
     className: "mykn-itemgrid__item",
