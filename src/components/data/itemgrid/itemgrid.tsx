@@ -7,7 +7,7 @@ import { Paginator, PaginatorProps } from "../paginator";
 import "./itemgrid.scss";
 
 export type ItemGridButtonProps =
-  | ({ as: "button" } & ButtonProps)
+  | ({ as?: "button" } & ButtonProps)
   | ({ as: "a" } & ButtonLinkProps);
 
 export type ItemGridProps = {

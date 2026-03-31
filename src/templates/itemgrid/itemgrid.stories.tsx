@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import * as React from "react";
 
-import { Badge, Outline } from "../../components";
+import { Badge, Outline, P } from "../../components";
 import { ItemGridTemplate as ItemGridTemplateComponent } from "./itemgrid";
 
 const meta: Meta<typeof ItemGridTemplateComponent> = {
@@ -70,6 +70,14 @@ export const ItemGridTemplate: Story = {
         title: "Uitloggen",
       },
     ],
+  },
+};
+
+export const WithChildren: Story = {
+  ...ItemGridTemplate,
+  args: {
+    ...ItemGridTemplate.args,
+    children: <P>5 documenten</P>,
   },
 };
 
