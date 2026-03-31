@@ -13,6 +13,9 @@ export type ItemGridTemplateProps = CardBaseTemplateProps & {
   /** Title to display above the item grid */
   title?: React.ReactNode;
 
+  /** Optional slot rendered below the title (e.g. a count or description) */
+  children?: React.ReactNode;
+
   /** ItemGrid props */
   itemGridProps: ItemGridProps;
 
@@ -31,9 +34,8 @@ export const ItemGridTemplate: React.FC<ItemGridTemplateProps> = ({
   ...props
 }) => (
   <CardBaseTemplate {...props}>
-    {children}
     <Body padSize="s">{title && <H2>{title}</H2>}</Body>
-    <Body padSize="s" />
+    {children && <Body padSize="s">{children}</Body>}
     <ItemGrid fullHeight {...itemGridProps} paginatorProps={paginatorProps} />
   </CardBaseTemplate>
 );

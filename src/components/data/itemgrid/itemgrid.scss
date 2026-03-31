@@ -88,6 +88,7 @@
 
     &-content {
       color: var(--typography-color-body);
+      min-width: 0;
     }
 
     &-title {
@@ -97,8 +98,9 @@
     }
 
     &-title,
+    &-title,
     &-information-line {
-      font-weight: normal;
+      font-weight: var(--typography-font-weight-normal);
       white-space: normal;
       overflow-wrap: anywhere;
       word-break: break-word;
