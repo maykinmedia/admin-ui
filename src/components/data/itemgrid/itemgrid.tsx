@@ -12,7 +12,7 @@ export type ItemGridButtonProps =
 
 export type ItemGridProps = {
   /* The (flex) direction of the grid. */
-  direction?: "row" | "column";
+  direction?: "h" | "v";
   /* Whether to truncate title/information lines with ellipsis. */
   ellipsis?: boolean;
   /* Whether to stretch to fill the parent's height, pushing the paginator to the bottom */
@@ -35,7 +35,7 @@ export type ItemGridProps = {
  *
  * @example
  * <ItemGrid
- *   direction="row"
+ *   direction="h"
  *   ellipsis
  *   items={[
  *     {
@@ -57,7 +57,7 @@ export type ItemGridProps = {
  * />
  */
 export const ItemGrid: FC<ItemGridProps> = ({
-  direction = "column",
+  direction = "v",
   ellipsis = false,
   fullHeight = false,
   items,
@@ -70,7 +70,7 @@ export const ItemGrid: FC<ItemGridProps> = ({
   >
     <ul
       className={clsx("mykn-itemgrid", {
-        "mykn-itemgrid--direction-row": direction === "row",
+        "mykn-itemgrid--direction-row": direction === "h",
         "mykn-itemgrid__item--ellipsis": ellipsis,
       })}
     >
