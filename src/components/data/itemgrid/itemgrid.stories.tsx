@@ -190,14 +190,14 @@ export const ItemGridComponentWithEllipsis: Story = {
 export const ItemGridComponentDirectionRow: Story = {
   args: {
     items: ITEM_GRID_ITEMS,
-    direction: "row",
+    direction: "h",
   },
 };
 
 export const ItemGridComponentDirectionRowWithEllipsis: Story = {
   args: {
     items: ITEM_GRID_ITEMS,
-    direction: "row",
+    direction: "h",
     ellipsis: true,
   },
 };
@@ -252,7 +252,7 @@ export const ItemGridWithActions: Story = {
 
 export const ItemGridWithActionsRow: Story = {
   args: {
-    direction: "row",
+    direction: "h",
     items: WITH_TWO_ACTIONS,
   },
 };
