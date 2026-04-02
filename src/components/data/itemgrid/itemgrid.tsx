@@ -11,7 +11,7 @@ export type ItemGridButtonProps =
   | ({ as: "a" } & ButtonLinkProps);
 
 export type ItemGridProps = {
-  /* The (flex) direction of the grid. */
+  /** Whether the item content appears horizontally (h) or vertically (v) */
   direction?: "h" | "v";
   /* Whether to truncate title/information lines with ellipsis. */
   ellipsis?: boolean;
