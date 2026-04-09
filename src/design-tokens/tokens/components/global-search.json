@@ -3,6 +3,9 @@
     "background": {
       "value": "{theme.base.background-alternate}"
     },
+    "contrast": {
+      "value": "{typography.color.body}"
+    },
     "shadow": {
       "value": "{theme.base.shadow}"
     },
