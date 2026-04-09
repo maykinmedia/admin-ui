@@ -100,6 +100,7 @@ export const Modal: React.FC<ModalProps> = ({
 
       setOpenState(true);
       if (restoreAutofocus) {
+        doRestoreAutofocus();
         dialogRef.current?.addEventListener("animationend", doRestoreAutofocus);
         return () =>
           dialogRef.current?.removeEventListener(
@@ -114,13 +115,13 @@ export const Modal: React.FC<ModalProps> = ({
   }, [open]);
 
   /**
-   * Focuses the first child element with "autofocus" set.
-   * FIXME: Probably doesn't work due to React swallowing autofocus attribute.
+   * Focuses the first child element with "autofocus" or "data-autofocus" set
    */
   const doRestoreAutofocus = () => {
     setTimeout(() => {
-      const input =
-        dialogRef.current?.querySelector<HTMLInputElement>("[autofocus]");
+      const input = dialogRef.current?.querySelector<HTMLElement>(
+        "[data-autofocus], [autofocus]",
+      );
       input?.focus();
     });
   };

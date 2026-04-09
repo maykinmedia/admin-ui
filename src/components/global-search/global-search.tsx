@@ -206,6 +206,8 @@ export const GlobalSearch: React.FC<GlobalSearchProps> = ({
             }}
             placeholder={_placeholder}
             aria-label={_placeholder}
+            autoFocus
+            data-autofocus
           />
         </div>
 
