@@ -140,6 +140,10 @@ export const GlobalSearch: React.FC<GlobalSearchProps> = ({
         setSelected(0);
         setIsDirty(true);
       })
+      .catch((err) => {
+        if (controller.signal.aborted) return;
+        throw err;
+      })
       .finally(() => {
         if (controller.signal.aborted) return;
         setLoading(false);
