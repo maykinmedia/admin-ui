@@ -318,6 +318,7 @@
   --datagrid-border: var(--typography-color-border);
   --form-select-default-text: var(--typography-color-body);
   --form-color-text: var(--typography-color-body);
+  --global-search-contrast: var(--typography-color-body);
   --toolbar-default-text: var(--typography-color-body);
   --toolbar-alternate-text: var(--typography-color-body);
   --toolbar-transparent-text: var(--typography-color-body);
