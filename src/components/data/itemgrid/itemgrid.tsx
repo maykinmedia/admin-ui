@@ -75,7 +75,7 @@ export const ItemGrid: FC<ItemGridProps> = ({
       })}
     >
       {items.map((item, index) => {
-        const { actions, ...itemProps } = item;
+        const { actions, highlighted, ...itemProps } = item;
         const stripMode = actions !== undefined && actions.length > 1;
         const singleAction = actions?.length === 1 ? actions[0] : undefined;
         return (
@@ -83,6 +83,7 @@ export const ItemGrid: FC<ItemGridProps> = ({
             key={item.id ?? `${item.title}-${index}`}
             className={clsx("mykn-itemgrid__item-wrapper", {
               "mykn-itemgrid__item-wrapper--has-actions": stripMode,
+              "mykn-itemgrid__item-wrapper--highlighted": highlighted,
             })}
           >
             <ItemGridItem
@@ -138,6 +139,8 @@ export type ItemGridItemProps = {
   informationLines?: ReactNode[];
   /* Whether to truncate title/information lines with ellipsis. */
   ellipsis?: boolean;
+  /* Whether to visually highlight this item (e.g. as a search result). */
+  highlighted?: boolean;
   /**
    * Actions for the item.
    * - 1 action: the entire card acts as that action.
