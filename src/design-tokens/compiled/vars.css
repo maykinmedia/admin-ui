@@ -275,6 +275,7 @@
   --iconinitials-background: var(--theme-base-background-alternate);
   --itemgrid-item-background: var(--theme-base-background-alternate);
   --itemgrid-item-shadow: var(--theme-base-shadow);
+  --itemgrid-item-highlight: var(--theme-brand-primary-default);
   --kanban-background: var(--theme-base-background-alternate);
   --kanban-drop-indicator-background: var(--theme-brand-accent-default);
   --kanban-drop-indicator-border: var(--theme-brand-primary-default);

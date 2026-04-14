@@ -27,6 +27,10 @@
     display: flex;
     flex-direction: column;
 
+    &--highlighted {
+      border-inline-start: 3px solid var(--itemgrid-item-highlight);
+    }
+
     &--has-actions {
       background-color: var(--itemgrid-item-background);
       box-shadow: 0 2px 7px 0 var(--itemgrid-item-shadow);
