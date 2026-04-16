@@ -103,7 +103,7 @@ function ThemeDesigner({ theme }: { theme: Theme }) {
       try {
         const color = Color(value);
         resultSet[cssVariableName] = color.hex();
-      } catch (error) {
+      } catch {
         resultSet[cssVariableName] = value;
       }
       return resultSet;

@@ -154,7 +154,7 @@ export const DataGridContentCell = <
       if (Array.isArray(editingState)) {
         setEditingState([null, null]);
       }
-      !pristine && onEdit?.(data);
+      if (!pristine) onEdit?.(data);
     },
     [rowData, pristine, onEdit],
   );

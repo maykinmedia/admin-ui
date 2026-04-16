@@ -76,7 +76,7 @@ export const Textarea: React.FC<TextareaProps> = ({
     const value = event.target.value;
     const changeEvent = eventFactory("change", value, true, false, false);
     textarea.dispatchEvent(changeEvent);
-    onChange && onChange(event);
+    onChange?.(event);
   };
 
   const textarea = (

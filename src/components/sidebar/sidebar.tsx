@@ -98,7 +98,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
   const handleTransitionEnd: React.TransitionEventHandler = (e) => {
     const target = e.target as HTMLElement;
     const isSideBar = target.classList?.contains("mykn-sidebar");
-    isSideBar && setTransitionState(false);
+    if (isSideBar) setTransitionState(false);
   };
 
   const _logo = !showLogo

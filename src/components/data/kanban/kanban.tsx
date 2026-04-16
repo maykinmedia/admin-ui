@@ -453,7 +453,7 @@ export const KanbanItem = <T extends object = object>({
     e.dataTransfer.dropEffect = "move";
     e.dataTransfer.setData("text/plain", label);
     e.dataTransfer.setData("application/json", JSON.stringify(data));
-    href && e.dataTransfer.setData("text/uri-list", href);
+    if (href) e.dataTransfer.setData("text/uri-list", href);
   };
 
   const Component = fieldset[1].component || KanbanButton<T>;

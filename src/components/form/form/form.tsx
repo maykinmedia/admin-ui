@@ -181,7 +181,7 @@ export const Form = <T extends SerializedFormData = SerializedFormData>({
     useState(!validateOnChange);
 
   useEffect(() => {
-    values && setValuesState(values);
+    if (values) setValuesState(values);
   }, [values]);
 
   useEffect(() => {
