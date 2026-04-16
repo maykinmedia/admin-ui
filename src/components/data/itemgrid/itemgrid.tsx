@@ -2,7 +2,7 @@ import clsx from "clsx";
 import React, { FC, HTMLAttributes, ReactNode, useId } from "react";
 
 import { Button, ButtonLink, ButtonLinkProps, ButtonProps } from "../../button";
-import { Body, H3, P } from "../../typography";
+import { Body, P } from "../../typography";
 import { Paginator, PaginatorProps } from "../paginator";
 import "./itemgrid.scss";
 
@@ -178,17 +178,18 @@ export const ItemGridItem: FC<
         {icon}
       </div>
       <div className="mykn-itemgrid__item-content">
-        <H3
+        <P
           className="mykn-itemgrid__item-title"
           title={ellipsis ? title : undefined}
         >
           {title}
-        </H3>
+        </P>
         <div id={infoId} className="mykn-itemgrid__item-information">
           {informationLines.map((line, index) => (
             <P
               key={index}
               className="mykn-itemgrid__item-information-line"
+              size="xs"
               title={ellipsis ? String(line) : undefined}
             >
               {line}

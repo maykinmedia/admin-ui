@@ -129,6 +129,7 @@
     }
 
     &--ellipsis {
+      .mykn-itemgrid__item,
       .mykn-itemgrid__item-title,
       .mykn-itemgrid__item-information-line {
         overflow: hidden;
@@ -163,6 +164,7 @@
       &-body {
         display: flex;
         flex-direction: row;
+        height: 100%;
         align-items: center;
         gap: var(--sizes-spacing-s-h);
       }
