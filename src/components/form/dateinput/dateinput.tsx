@@ -148,10 +148,9 @@ export const DateInput: React.FC<DateInputProps> = ({
       // Dispatch event and trigger callback.
       setTimeout(() => {
         input.dispatchEvent(changeEvent);
-        onChange &&
-          onChange(
-            changeEvent as unknown as React.ChangeEvent<HTMLInputElement>,
-          );
+        onChange?.(
+          changeEvent as unknown as React.ChangeEvent<HTMLInputElement>,
+        );
       }, 0);
     },
     [fakeInputRef, onChange],

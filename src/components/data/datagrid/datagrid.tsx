@@ -440,7 +440,7 @@ export const DataGrid = <T extends object = object, F extends object = T>(
 
   // Update selectedState when selected prop changes.
   useEffect(() => {
-    selected && setSelectedState(selected);
+    if (selected) setSelectedState(selected);
   }, [selected]);
 
   // Update selectedState when selected prop changes.

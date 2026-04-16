@@ -90,7 +90,7 @@ export const Input: React.FC<InputProps> = ({
     const value = type === "file" ? input.files : event.target.value;
     const changeEvent = eventFactory("change", value, true, false, false);
     input.dispatchEvent(changeEvent);
-    onChange && onChange(event);
+    onChange?.(event);
   };
 
   // Setting the value prop directly (even to undefined) results in events reflecting it's value as the input value.

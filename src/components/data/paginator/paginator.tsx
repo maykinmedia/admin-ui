@@ -169,7 +169,7 @@ export const Paginator: React.FC<PaginatorProps> = ({
     const value = parseInt(target.value);
     setPageSizeState(value);
     setPageState(1);
-    onPageSizeChange && onPageSizeChange(value);
+    onPageSizeChange?.(value);
     emitPageChange(page);
   };
 
