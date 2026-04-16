@@ -1,6 +1,7 @@
 @use "../../../settings/constants";
 
 .mykn-itemgrid {
+  box-sizing: border-box;
   display: grid;
   // A single (shrinkable) column by default
   grid-template-columns: minmax(0, 1fr);
@@ -46,6 +47,7 @@
   }
 
   &__item-actions {
+    box-sizing: border-box;
     display: flex;
     justify-content: flex-end;
     align-items: center;
@@ -62,6 +64,7 @@
     width: 100%;
     height: 100%;
     background-color: var(--itemgrid-item-background);
+    box-sizing: border-box;
     padding: var(--sizes-spacing-s-v) var(--sizes-spacing-xs-h);
     box-shadow: 0 2px 7px 0 var(--itemgrid-item-shadow);
     white-space: normal;
@@ -71,6 +74,7 @@
     }
 
     &-body {
+      box-sizing: border-box;
       width: 100%;
       display: flex;
       flex-direction: column;
