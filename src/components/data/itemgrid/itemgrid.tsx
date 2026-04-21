@@ -181,6 +181,7 @@ export const ItemGridItem: FC<
         <P
           className="mykn-itemgrid__item-title"
           title={ellipsis ? title : undefined}
+          size="md"
         >
           {title}
         </P>
