@@ -2,7 +2,7 @@ import { useEffect } from "react";
 
 export type KeyboardShortcutOptions = {
   key: string;
-  /** When true, requires that Meta (Cmd) or Ctrl is heldj*/
+  /** When true, requires that Meta (Cmd) or Ctrl is held*/
   ctrlOrMeta?: boolean;
   shift?: boolean;
   alt?: boolean;
