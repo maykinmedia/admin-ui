@@ -1,3 +1,5 @@
+import * as React from "react";
+
 import { LoadOptionsFn, Option } from "../../components";
 import { FormField, getFormFieldTypeByFieldType } from "../form";
 import { typeByDataArray } from "./data";
@@ -110,6 +112,12 @@ export type FieldOptions<T extends object = object> = {
 
   /** When shown in an AttributeGrid: the number of columns to span for title. */
   titleSpan?: number;
+
+  /** When shown in a Kanban card: field to render as small gray identifier text above the title. */
+  subtitle?: Field<T>;
+
+  /** When shown in a Kanban card: render function returning a tag/badge (or any node) for the top-right of the card. */
+  renderTag?: (object: T) => React.ReactNode;
 };
 
 /** A Django-admin like fieldset definition. */

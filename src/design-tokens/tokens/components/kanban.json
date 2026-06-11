@@ -3,6 +3,11 @@
     "background": {
       "value": "{theme.base.background-alternate}"
     },
+    "card": {
+      "background": {
+        "value": "{theme.base.background}"
+      }
+    },
     "drop-indicator": {
       "background": {
         "value": "{theme.brand.accent.default}"

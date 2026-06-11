@@ -15,7 +15,7 @@ import { Card } from "../../card";
 import { Select } from "../../form";
 import { Column, Grid } from "../../layout";
 import { StackCtx } from "../../stackctx";
-import { Toolbar, ToolbarProps } from "../../toolbar";
+import { Toolbar, ToolbarProps, ToolbarSpacer } from "../../toolbar";
 import { Body, H2, H3, Hr, P } from "../../typography";
 import { Value } from "../value";
 import "./kanban.scss";
@@ -321,18 +321,22 @@ export const KanbanSection = <T extends object = object>({
   );
   const kanbanId = useId();
   return (
-    <>
+    <div className="mykn-kanban__section">
       {fieldset[0] && (
-        <Toolbar directionResponsive={false} pad={false} variant="transparent">
-          <H3 id={kanbanId}>{string2Title(fieldset[0], { title: false })}</H3>
-          <Badge rounded>{objectList.length}</Badge>
-        </Toolbar>
+        <div className="mykn-kanban__column-header">
+          <Toolbar directionResponsive={false} pad="h" variant="transparent">
+            <H3 id={kanbanId}>{string2Title(fieldset[0], { title: false })}</H3>
+            <ToolbarSpacer />
+            <Badge>{objectList.length}</Badge>
+          </Toolbar>
+          <Hr margin="xs" />
+        </div>
       )}
       <Column
+        span={1}
         className={isDragging ? "mykn-kanban__drop-target" : undefined}
         direction="column"
         gap={true}
-        span={1}
         onDragOver={onDragOver}
         onDrop={onDrop}
         data-column-index={columnIndex}
@@ -369,7 +373,7 @@ export const KanbanSection = <T extends object = object>({
           )}
         </Body>
       </Column>
-    </>
+    </div>
   );
 };
 
@@ -564,20 +568,36 @@ export const KanbanButton = <T extends object = object>({
   href,
   title,
   object,
-  renderPreview = () => title && <Badge>{title[0].toUpperCase()}</Badge>,
+  renderPreview = false,
   urlFields,
   onClick,
   onDragStart,
 }: KanbanButtonProps<T>) => {
   const fields = fieldset[1].fields;
   const titleField = fieldset[1].title || Object.keys(object)[0];
-  const otherFields = fields.filter(
-    (field) => ![...urlFields, titleField].includes(getFieldName(field)),
-  );
+  const subtitleField = fieldset[1].subtitle;
+  const renderTag = fieldset[1].renderTag;
+  const otherFields = fields.filter((field) => {
+    const name = getFieldName(field);
+    return ![
+      ...urlFields,
+      titleField,
+      ...(subtitleField !== undefined ? [subtitleField] : []),
+    ].includes(name);
+  });
   const _onClick = (object.onClick || onClick) as typeof onClick;
 
   const renderTitle = () => {
     const preview = renderPreview && renderPreview(object);
+    const subtitleValue =
+      subtitleField != null && object[subtitleField as keyof T] != null
+        ? String(object[subtitleField as keyof T])
+        : null;
+    const badgeNode = renderTag ? renderTag(object) : null;
+    const showTopRow = Boolean(
+      preview || subtitleValue != null || badgeNode != null,
+    );
+
     return (
       <Toolbar
         direction="vertical"
@@ -586,8 +606,20 @@ export const KanbanButton = <T extends object = object>({
         pad={false}
         variant="transparent"
       >
-        {preview}
-        <P wordBreak="break-word">{title}</P>
+        {showTopRow && (
+          <Toolbar
+            directionResponsive={false}
+            pad={false}
+            variant="transparent"
+          >
+            {preview || (subtitleValue && <P size="xs">{subtitleValue}</P>)}
+            <ToolbarSpacer />
+            {badgeNode}
+          </Toolbar>
+        )}
+        <P bold size="md" wordBreak="break-word">
+          {title}
+        </P>
       </Toolbar>
     );
   };
@@ -598,25 +630,18 @@ export const KanbanButton = <T extends object = object>({
     }
 
     return (
-      <>
-        <Hr />
-        <Body>
-          <Toolbar
-            directionResponsive={false}
-            pad={false}
-            variant="transparent"
-          >
-            {otherFields.map((field) => (
-              <Value
-                key={getFieldName(field).toString()}
-                decorate={true}
-                pProps={{ size: "xs" }}
-                value={object[getFieldName(field)]}
-              />
-            ))}
-          </Toolbar>
-        </Body>
-      </>
+      <Body>
+        <Toolbar directionResponsive={false} pad={false} variant="transparent">
+          {otherFields.map((field) => (
+            <Value
+              key={getFieldName(field).toString()}
+              decorate={true}
+              pProps={{ size: "s" }}
+              value={object[getFieldName(field)]}
+            />
+          ))}
+        </Toolbar>
+      </Body>
     );
   };
 
