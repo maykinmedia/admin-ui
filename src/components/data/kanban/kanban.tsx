@@ -3,6 +3,7 @@ import React, { useEffect, useId, useState } from "react";
 
 import {
   DEFAULT_URL_FIELDS,
+  Field,
   FieldSet,
   GroupedDataProps,
   getContextData,
@@ -36,6 +37,12 @@ export type KanbanProps<T extends object = object> = GroupedDataProps<T> & {
 
   /** Get called when the fieldsets change. */
   onFieldsetsChange?: (fieldsets: FieldSet<T>[]) => void;
+
+  /** Field to render as small gray identifier text above the card title. */
+  subtitleField?: Field<T>;
+
+  /** Render function returning a tag/badge (or any node) for the top-right of the card. */
+  renderTag?: (object: T) => React.ReactNode;
 
   /** Get called when the objectLists change. */
   onObjectListsChange?: (objectLists: T[][]) => void;
@@ -76,6 +83,8 @@ export const Kanban = <T extends object = object>({
   objectList,
   objectLists,
   renderPreview,
+  renderTag,
+  subtitleField,
   title,
   toolbarProps,
   urlFields = DEFAULT_URL_FIELDS,
@@ -255,6 +264,8 @@ export const Kanban = <T extends object = object>({
               labelMoveObject={labelMoveObject}
               objectList={objectListsState[index] || []}
               renderPreview={renderPreview}
+              renderTag={renderTag}
+              subtitleField={subtitleField}
               urlFields={urlFields}
               onClick={onClick}
               onDragOver={handleDragOver}
@@ -284,6 +295,8 @@ export type KanbanSectionProps<T extends object = object> = Omit<
   labelMoveObject?: string;
   objectList: T[];
   renderPreview?: (data: T) => React.ReactNode;
+  renderTag?: (object: T) => React.ReactNode;
+  subtitleField?: Field<T>;
   urlFields: string[];
   onClick?: (event: React.MouseEvent, data: T) => void;
   onDragOver: React.DragEventHandler;
@@ -310,6 +323,8 @@ export const KanbanSection = <T extends object = object>({
   labelMoveObject,
   objectList,
   renderPreview,
+  renderTag,
+  subtitleField,
   urlFields,
   onClick,
   onDragOver,
@@ -362,6 +377,8 @@ export const KanbanSection = <T extends object = object>({
                 objectIndex={index}
                 objectList={objectList}
                 renderPreview={renderPreview}
+                renderTag={renderTag}
+                subtitleField={subtitleField}
                 urlFields={urlFields}
                 onClick={onClick}
                 onObjectChange={onObjectChange}
@@ -393,6 +410,8 @@ export type KanbanItemProps<T extends object = object> = Omit<
   objectIndex: number;
   objectList: T[];
   renderPreview?: (data: T) => React.ReactNode;
+  renderTag?: (object: T) => React.ReactNode;
+  subtitleField?: Field<T>;
   urlFields: string[];
   onClick?: (event: React.MouseEvent, data: T) => void;
   onObjectChange?: (
@@ -417,6 +436,8 @@ export const KanbanItem = <T extends object = object>({
   objectIndex,
   objectList,
   renderPreview,
+  renderTag,
+  subtitleField,
   urlFields,
   onClick,
   onObjectChange,
@@ -532,6 +553,8 @@ export const KanbanItem = <T extends object = object>({
         href={href}
         object={object}
         renderPreview={renderPreview}
+        renderTag={renderTag}
+        subtitleField={subtitleField}
         urlFields={urlFields}
         title={label}
         onClick={onClick}
@@ -554,6 +577,8 @@ export type KanbanButtonProps<T extends object = object> = {
     onClick?: (event: React.MouseEvent, data: T) => void;
   };
   renderPreview?: ((data: T) => React.ReactNode) | false;
+  renderTag?: (object: T) => React.ReactNode;
+  subtitleField?: Field<T>;
   urlFields: string[];
   title: string;
   onClick?: (event: React.MouseEvent, data: T) => void;
@@ -569,14 +594,14 @@ export const KanbanButton = <T extends object = object>({
   title,
   object,
   renderPreview = false,
+  renderTag,
+  subtitleField,
   urlFields,
   onClick,
   onDragStart,
 }: KanbanButtonProps<T>) => {
   const fields = fieldset[1].fields;
   const titleField = fieldset[1].title || Object.keys(object)[0];
-  const subtitleField = fieldset[1].subtitle;
-  const renderTag = fieldset[1].renderTag;
   const otherFields = fields.filter((field) => {
     const name = getFieldName(field);
     return ![
@@ -589,13 +614,12 @@ export const KanbanButton = <T extends object = object>({
 
   const renderTitle = () => {
     const preview = renderPreview && renderPreview(object);
-    const subtitleValue =
-      subtitleField != null && object[subtitleField as keyof T] != null
-        ? String(object[subtitleField as keyof T])
-        : null;
-    const badgeNode = renderTag ? renderTag(object) : null;
+    const rawSubtitle =
+      subtitleField !== undefined ? (object[subtitleField] ?? null) : null;
+    const subtitleValue = rawSubtitle !== null ? String(rawSubtitle) : null;
+    const badgeNode = renderTag?.(object) ?? null;
     const showTopRow = Boolean(
-      preview || subtitleValue != null || badgeNode != null,
+      preview || subtitleValue !== null || badgeNode !== null,
     );
 
     return (

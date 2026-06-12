@@ -55,8 +55,6 @@ const renderPriorityTag = (obj: Record<string, unknown>) => {
 const ADDITIONAL_FIELDSET = {
   fields: ["title", "dueDate", "description"],
   title: "title",
-  subtitle: "dueDate",
-  renderTag: renderPriorityTag,
 } as const;
 
 export const AdditionalFields: Story = {
@@ -70,6 +68,8 @@ export const AdditionalFields: Story = {
       ["In Review", ADDITIONAL_FIELDSET],
       ["Done", ADDITIONAL_FIELDSET],
     ],
+    subtitleField: "dueDate",
+    renderTag: renderPriorityTag,
   },
 };
 

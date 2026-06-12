@@ -33,7 +33,6 @@
     padding: var(--mykn-kanban-spacing) 0;
     display: flex;
     flex-direction: column;
-    overflow: hidden;
   }
 
   &__body &__drop-indicator {
@@ -54,7 +53,6 @@
 
   &__body .mykn-column {
     box-sizing: border-box;
-    flex: 1;
     overflow-y: auto;
   }
 
@@ -124,6 +122,14 @@
 
 @media screen and (min-width: 768px) {
   .mykn-kanban {
+    &__section {
+      overflow: hidden;
+    }
+
+    &__body .mykn-column {
+      flex: 1;
+    }
+
     &__body .mykn-grid {
       grid-auto-flow: column;
     }
