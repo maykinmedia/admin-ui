@@ -282,17 +282,14 @@ export function Toolbar({
    * @param index
    */
   const renderItem = (item: ToolbarItem, index: number) => {
-    const props = React.isValidElement(item)
+    const sanitizedItem = React.isValidElement(item)
       ? {}
       : (item as Exclude<ToolbarItem, React.ReactNode>);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { componentType, ...props } = sanitizedItem;
+
     const [Component, defaultProps] = getItemComponent(item);
-    return (
-      <Component
-        key={index}
-        {...defaultProps}
-        {...(props as object)}
-      ></Component>
-    );
+    return <Component key={index} {...defaultProps} {...props}></Component>;
   };
 
   return (
