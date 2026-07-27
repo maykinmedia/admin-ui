@@ -198,6 +198,10 @@ export const Value = <T extends object = object>(rawProps: ValueProps<T>) => {
   if (editable && editingState) {
     // @ts-expect-error - Fields is set here.
     const type = getFormFieldTypeByFieldType(field.type);
+    const conditionalProps = field!.fetchOnMount
+      ? { fetchOnMount: field?.fetchOnMount }
+      : {};
+
     return (
       <FormControl
         autoFocus={typeof editing === "undefined"}
@@ -208,7 +212,6 @@ export const Value = <T extends object = object>(rawProps: ValueProps<T>) => {
         options={field.options}
         multiple={field!.multiple}
         placeholder={field!.placeholder}
-        fetchOnMount={field!.fetchOnMount}
         pad="h"
         type={type}
         checked={field!.type === "boolean" ? Boolean(valueState) : undefined}
@@ -216,6 +219,7 @@ export const Value = <T extends object = object>(rawProps: ValueProps<T>) => {
         value={valueState as string | Array<string | Option>}
         onChange={handleChange}
         onBlur={handleBlur}
+        {...conditionalProps}
         {...formControlProps}
       />
     );
