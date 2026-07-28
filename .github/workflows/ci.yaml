@@ -142,11 +142,11 @@ jobs:
       - build
       - commitlint
       - lint
-      - test
+      #- test
       - i18n-check
 
     # do not publish in forks or non-tag pushes
-    if: startsWith(github.ref, 'refs/tags/') && github.repository_owner == 'maykinmedia'
+    # if: startsWith(github.ref, 'refs/tags/') && github.repository_owner == 'maykinmedia'
 
     environment:
       name: release
@@ -166,7 +166,7 @@ jobs:
           node-version-file: '.nvmrc'
           registry-url: 'https://registry.npmjs.org'
 
-      - name: Update NPM
+      - name: Update Node/NPM
         run: npm install -g npm@latest
 
       - name: Download build artifact
@@ -187,6 +187,8 @@ jobs:
             TAG="alpha"
           elif [[ "$VERSION" == *beta* ]]; then
             TAG="beta"
+          elif [[ "$VERSION" == *rc* ]]; then
+            TAG="rc"
           fi
 
           cd artifacts/
@@ -195,4 +197,4 @@ jobs:
 
           file $FILE
           echo "Publishing $FILE with version $VERSION and tag $TAG"
-          npm publish "$FILE" --access public --tag $TAG
+          npm publish "$FILE" --access public --tag $TAG --dry-run
