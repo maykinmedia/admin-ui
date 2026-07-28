@@ -187,6 +187,8 @@ jobs:
             TAG="alpha"
           elif [[ "$VERSION" == *beta* ]]; then
             TAG="beta"
+          elif [[ "$VERSION" == *rc* ]]; then
+            TAG="rc"
           fi
 
           cd artifacts/
