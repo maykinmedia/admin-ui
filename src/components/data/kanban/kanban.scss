@@ -1,5 +1,5 @@
 .mykn-kanban {
-  --mykn-kanban-spacing: 4px;
+  --mykn-kanban-spacing: 16px;
 
   display: flex;
   flex-direction: column;
@@ -18,13 +18,21 @@
     height: 100%;
   }
 
-  &__grid{
+  &__grid {
     grid-template-columns: unset;
   }
 
-  &__body .mykn-column {
-    box-sizing: border-box;
-    overflow-y: auto;
+  &__column-header .mykn-h3 {
+    font-size: var(--typography-font-size-body-md);
+    font-weight: var(--typography-font-weight-bold);
+    line-height: var(--typography-line-height-body-md);
+  }
+
+  &__section {
+    background-color: var(--kanban-background);
+    padding: var(--mykn-kanban-spacing) 0;
+    display: flex;
+    flex-direction: column;
   }
 
   &__body &__drop-indicator {
@@ -39,14 +47,13 @@
     z-index: 10;
   }
 
-  &__body .mykn-column > .mykn-body > .mykn-h3 {
-    position: sticky;
-    top: 0;
-    z-index: 10;
-  }
-
   &__body .mykn-badge--rounded {
     align-self: center;
+  }
+
+  &__body .mykn-column {
+    box-sizing: border-box;
+    overflow-y: auto;
   }
 
   &__track {
@@ -55,21 +62,39 @@
     gap: var(--mykn-kanban-spacing);
     height: 100%;
     padding: var(--mykn-kanban-spacing) !important;
-    position: relative;
-  }
-
-  &__track:before {
-    background-color: var(--kanban-background);
-    content: "";
-    height: 100%;
-    inset-block-start: 0;
-    inset-inline-start: calc(-2 * var(--sizes-spacing-xs-h));
-    position: absolute;
-    width: calc(100% + 2 * var(--sizes-spacing-xs-h));
   }
 
   &__body &__button {
+    --mykn-button-color-border: transparent;
+    --mykn-button-color-shadow: transparent;
+    --card-background: var(--kanban-card-background);
     white-space: normal;
+    border-radius: var(--sizes-border-radius-md);
+
+    .mykn-card {
+      padding: 8px;
+    }
+
+    .mykn-card__header {
+      padding-block-start: 0;
+    }
+
+    .mykn-card__header > .mykn-body {
+      flex: 1;
+      padding: 0;
+    }
+
+    .mykn-card > .mykn-body {
+      padding: 0;
+    }
+
+    .mykn-toolbar--direction-vertical {
+      row-gap: 4px;
+    }
+
+    .mykn-p {
+      margin-block-end: 0;
+    }
 
     &:focus-within {
       z-index: 100;
@@ -97,9 +122,16 @@
 
 @media screen and (min-width: 768px) {
   .mykn-kanban {
+    &__section {
+      overflow: hidden;
+    }
+
+    &__body .mykn-column {
+      flex: 1;
+    }
+
     &__body .mykn-grid {
       grid-auto-flow: column;
-      grid-template-rows: max-content auto;
     }
   }
 }

@@ -3,6 +3,7 @@ import React, { useEffect, useId, useState } from "react";
 
 import {
   DEFAULT_URL_FIELDS,
+  Field,
   FieldSet,
   GroupedDataProps,
   getContextData,
@@ -15,7 +16,7 @@ import { Card } from "../../card";
 import { Select } from "../../form";
 import { Column, Grid } from "../../layout";
 import { StackCtx } from "../../stackctx";
-import { Toolbar, ToolbarProps } from "../../toolbar";
+import { Toolbar, ToolbarProps, ToolbarSpacer } from "../../toolbar";
 import { Body, H2, H3, Hr, P } from "../../typography";
 import { Value } from "../value";
 import "./kanban.scss";
@@ -36,6 +37,12 @@ export type KanbanProps<T extends object = object> = GroupedDataProps<T> & {
 
   /** Get called when the fieldsets change. */
   onFieldsetsChange?: (fieldsets: FieldSet<T>[]) => void;
+
+  /** Field to render as small gray identifier text above the card title. */
+  subtitleField?: Field<T>;
+
+  /** Render function returning a tag/badge (or any node) for the top-right of the card. */
+  renderTag?: (object: T) => React.ReactNode;
 
   /** Get called when the objectLists change. */
   onObjectListsChange?: (objectLists: T[][]) => void;
@@ -76,6 +83,8 @@ export const Kanban = <T extends object = object>({
   objectList,
   objectLists,
   renderPreview,
+  renderTag,
+  subtitleField,
   title,
   toolbarProps,
   urlFields = DEFAULT_URL_FIELDS,
@@ -255,6 +264,8 @@ export const Kanban = <T extends object = object>({
               labelMoveObject={labelMoveObject}
               objectList={objectListsState[index] || []}
               renderPreview={renderPreview}
+              renderTag={renderTag}
+              subtitleField={subtitleField}
               urlFields={urlFields}
               onClick={onClick}
               onDragOver={handleDragOver}
@@ -284,6 +295,8 @@ export type KanbanSectionProps<T extends object = object> = Omit<
   labelMoveObject?: string;
   objectList: T[];
   renderPreview?: (data: T) => React.ReactNode;
+  renderTag?: (object: T) => React.ReactNode;
+  subtitleField?: Field<T>;
   urlFields: string[];
   onClick?: (event: React.MouseEvent, data: T) => void;
   onDragOver: React.DragEventHandler;
@@ -310,6 +323,8 @@ export const KanbanSection = <T extends object = object>({
   labelMoveObject,
   objectList,
   renderPreview,
+  renderTag,
+  subtitleField,
   urlFields,
   onClick,
   onDragOver,
@@ -321,18 +336,22 @@ export const KanbanSection = <T extends object = object>({
   );
   const kanbanId = useId();
   return (
-    <>
+    <div className="mykn-kanban__section">
       {fieldset[0] && (
-        <Toolbar directionResponsive={false} pad={false} variant="transparent">
-          <H3 id={kanbanId}>{string2Title(fieldset[0], { title: false })}</H3>
-          <Badge rounded>{objectList.length}</Badge>
-        </Toolbar>
+        <div className="mykn-kanban__column-header">
+          <Toolbar directionResponsive={false} pad="h" variant="transparent">
+            <H3 id={kanbanId}>{string2Title(fieldset[0], { title: false })}</H3>
+            <ToolbarSpacer />
+            <Badge>{objectList.length}</Badge>
+          </Toolbar>
+          <Hr margin="xs" />
+        </div>
       )}
       <Column
+        span={1}
         className={isDragging ? "mykn-kanban__drop-target" : undefined}
         direction="column"
         gap={true}
-        span={1}
         onDragOver={onDragOver}
         onDrop={onDrop}
         data-column-index={columnIndex}
@@ -358,6 +377,8 @@ export const KanbanSection = <T extends object = object>({
                 objectIndex={index}
                 objectList={objectList}
                 renderPreview={renderPreview}
+                renderTag={renderTag}
+                subtitleField={subtitleField}
                 urlFields={urlFields}
                 onClick={onClick}
                 onObjectChange={onObjectChange}
@@ -369,7 +390,7 @@ export const KanbanSection = <T extends object = object>({
           )}
         </Body>
       </Column>
-    </>
+    </div>
   );
 };
 
@@ -389,6 +410,8 @@ export type KanbanItemProps<T extends object = object> = Omit<
   objectIndex: number;
   objectList: T[];
   renderPreview?: (data: T) => React.ReactNode;
+  renderTag?: (object: T) => React.ReactNode;
+  subtitleField?: Field<T>;
   urlFields: string[];
   onClick?: (event: React.MouseEvent, data: T) => void;
   onObjectChange?: (
@@ -413,6 +436,8 @@ export const KanbanItem = <T extends object = object>({
   objectIndex,
   objectList,
   renderPreview,
+  renderTag,
+  subtitleField,
   urlFields,
   onClick,
   onObjectChange,
@@ -528,6 +553,8 @@ export const KanbanItem = <T extends object = object>({
         href={href}
         object={object}
         renderPreview={renderPreview}
+        renderTag={renderTag}
+        subtitleField={subtitleField}
         urlFields={urlFields}
         title={label}
         onClick={onClick}
@@ -550,6 +577,8 @@ export type KanbanButtonProps<T extends object = object> = {
     onClick?: (event: React.MouseEvent, data: T) => void;
   };
   renderPreview?: ((data: T) => React.ReactNode) | false;
+  renderTag?: (object: T) => React.ReactNode;
+  subtitleField?: Field<T>;
   urlFields: string[];
   title: string;
   onClick?: (event: React.MouseEvent, data: T) => void;
@@ -564,20 +593,35 @@ export const KanbanButton = <T extends object = object>({
   href,
   title,
   object,
-  renderPreview = () => title && <Badge>{title[0].toUpperCase()}</Badge>,
+  renderPreview = false,
+  renderTag,
+  subtitleField,
   urlFields,
   onClick,
   onDragStart,
 }: KanbanButtonProps<T>) => {
   const fields = fieldset[1].fields;
   const titleField = fieldset[1].title || Object.keys(object)[0];
-  const otherFields = fields.filter(
-    (field) => ![...urlFields, titleField].includes(getFieldName(field)),
-  );
+  const otherFields = fields.filter((field) => {
+    const name = getFieldName(field);
+    return ![
+      ...urlFields,
+      titleField,
+      ...(subtitleField !== undefined ? [subtitleField] : []),
+    ].includes(name);
+  });
   const _onClick = (object.onClick || onClick) as typeof onClick;
 
   const renderTitle = () => {
     const preview = renderPreview && renderPreview(object);
+    const rawSubtitle =
+      subtitleField !== undefined ? (object[subtitleField] ?? null) : null;
+    const subtitleValue = rawSubtitle !== null ? String(rawSubtitle) : null;
+    const badgeNode = renderTag?.(object) ?? null;
+    const showTopRow = Boolean(
+      preview || subtitleValue !== null || badgeNode !== null,
+    );
+
     return (
       <Toolbar
         direction="vertical"
@@ -586,8 +630,20 @@ export const KanbanButton = <T extends object = object>({
         pad={false}
         variant="transparent"
       >
-        {preview}
-        <P wordBreak="break-word">{title}</P>
+        {showTopRow && (
+          <Toolbar
+            directionResponsive={false}
+            pad={false}
+            variant="transparent"
+          >
+            {preview || (subtitleValue && <P size="xs">{subtitleValue}</P>)}
+            <ToolbarSpacer />
+            {badgeNode}
+          </Toolbar>
+        )}
+        <P bold size="md" wordBreak="break-word">
+          {title}
+        </P>
       </Toolbar>
     );
   };
@@ -598,25 +654,18 @@ export const KanbanButton = <T extends object = object>({
     }
 
     return (
-      <>
-        <Hr />
-        <Body>
-          <Toolbar
-            directionResponsive={false}
-            pad={false}
-            variant="transparent"
-          >
-            {otherFields.map((field) => (
-              <Value
-                key={getFieldName(field).toString()}
-                decorate={true}
-                pProps={{ size: "xs" }}
-                value={object[getFieldName(field)]}
-              />
-            ))}
-          </Toolbar>
-        </Body>
-      </>
+      <Body>
+        <Toolbar directionResponsive={false} pad={false} variant="transparent">
+          {otherFields.map((field) => (
+            <Value
+              key={getFieldName(field).toString()}
+              decorate={true}
+              pProps={{ size: "s" }}
+              value={object[getFieldName(field)]}
+            />
+          ))}
+        </Toolbar>
+      </Body>
     );
   };
 
