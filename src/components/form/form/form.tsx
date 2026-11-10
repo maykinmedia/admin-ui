@@ -37,10 +37,11 @@ import { FormControl } from "../formcontrol";
 import "./form.scss";
 import { TRANSLATIONS } from "./translations";
 
-export type FormProps<T extends SerializedFormData = SerializedFormData> = Omit<
-  React.ComponentProps<"form">,
-  "onChange" | "onSubmit"
-> & {
+export type FormProps<
+  T extends SerializedFormData = SerializedFormData,
+  F extends FormField[] = FormField[],
+  V extends Validator[] = Validator[],
+> = Omit<React.ComponentProps<"form">, "onChange" | "onSubmit"> & {
   /** Props to pass to the (submit) button. */
   buttonProps?: ButtonProps;
 
@@ -70,7 +71,7 @@ export type FormProps<T extends SerializedFormData = SerializedFormData> = Omit<
   nonFieldErrors?: string | string[];
 
   /** An array of props for the applicable FormField, fields get rendered automatically. */
-  fields?: Array<FormField>;
+  fields?: F;
 
   /** An array of toolbar items to be shown next to the primary action. */
   secondaryActions?: ToolbarItem[];
@@ -109,13 +110,13 @@ export type FormProps<T extends SerializedFormData = SerializedFormData> = Omit<
   useTypedResults?: boolean;
 
   /** A validation function. */
-  validate?: FormValidator;
+  validate?: FormValidator<T, F, V>;
 
   /** Whether to run validation on every change. */
   validateOnChange?: boolean;
 
   /** If set, use this custom set of `Validator`s. */
-  validators?: Validator[];
+  validators?: V;
 
   /** Gets passed to `fields` if they don't specify their own handler. */
   onChange?: React.ChangeEventHandler;
