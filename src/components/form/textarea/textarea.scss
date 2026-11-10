@@ -71,7 +71,7 @@
   }
 
   // Invalid state
-  &:invalid,
+  &:user-invalid,
   &[aria-invalid="true"] {
     --form-border: var(--form-textarea-invalid-border);
   }
