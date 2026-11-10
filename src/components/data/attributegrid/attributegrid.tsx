@@ -44,7 +44,7 @@ export type AttributeGridProps<T extends object = object> = {
   title?: React.ReactNode;
 
   /** A validation function. */
-  validate?: FormValidator;
+  validate?: FormValidator<T>;
 
   /** If set, use this custom set of `Validator`s. */
   validators?: Validator[];
@@ -87,7 +87,7 @@ export const AttributeGrid = <T extends object = object>({
   title,
   labelEdit,
   separator,
-  validate = validateForm,
+  validate = validateForm<T>,
   validators = [validateRequired],
   valueProps,
   onBlur,

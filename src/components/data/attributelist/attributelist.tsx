@@ -49,7 +49,7 @@ export type AttributeListProps<T extends object = object> = Omit<
   titleSpan?: number;
 
   /** A validation function. */
-  validate?: FormValidator;
+  validate?: FormValidator<T>;
 
   /** If set, use this custom set of `Validator`s. */
   validators?: Validator[];
@@ -87,7 +87,7 @@ export const AttributeList = <T extends object = object>({
   onBlur,
   onChange,
   onEdit,
-  validate = validateForm,
+  validate = validateForm<T>,
   validators = [validateRequired],
   valueProps,
   ...props

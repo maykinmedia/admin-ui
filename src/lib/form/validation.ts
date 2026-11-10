@@ -16,12 +16,11 @@ import { parseFieldName } from "./utils";
  * Takes the form values, form fields, and an array of validators, and returns
  * a `FieldErrors` object mapping field names to their validation errors.
  */
-export type FormValidator = <T extends object, const F extends FormField[]>(
-  values: T,
-  fields: F,
-  validators: Validator[],
-) => FieldErrors<F, typeof validators>;
-
+export type FormValidator<
+  T extends object,
+  F extends FormField[] = FormField[],
+  V extends Validator[] = Validator[],
+> = (values: T, fields: F, validators?: V) => FieldErrors<F, V>;
 /**
  * A generic validator function type for form fields.
  *
@@ -141,21 +140,24 @@ export const validateRequired: Validator<
  * @param validators - An optional list of validators to run for each field.
  * @returns A `FieldErrors` object mapping field names to their corresponding validation errors.
  */
-export const validateForm: FormValidator = <
+export const validateForm = <
   T extends object,
-  const F extends FormField[],
+  const F extends FormField[] = FormField[],
+  const V extends Validator[] = Validator[],
 >(
   values: T,
   fields: F,
-  validators: Validator[] = [],
-): FieldErrors<F, typeof validators> => {
-  const errors: FieldErrors<F, typeof validators> = {};
+  validators: V = [] as unknown as V,
+): FieldErrors<F, V> => {
+  const errors: FieldErrors<F, V> = {};
 
   const runValidators = (
     value: unknown,
     field: FormField,
   ): ValidatorReturn<(typeof validators)[number]>[] | undefined => {
-    const results = validators.map((v) => v(value, field)).filter(Boolean);
+    const results = validators
+      .map((v) => v(value, field))
+      .filter(Boolean) as ValidatorReturn<(typeof validators)[number]>[];
     return results.length ? results : undefined;
   };
 
@@ -193,14 +195,14 @@ export const validateForm: FormValidator = <
 
       // Check if errors are present.
       if (fieldErrors.some(Boolean)) {
-        errors[name] = fieldErrors;
+        errors[name] = fieldErrors as (typeof errors)[typeof name];
       }
       // Deal with single field.
       // Errors will be `string[][]`.
     } else {
       const fieldError = runValidators(value, field);
       if (fieldError) {
-        errors[name] = fieldError;
+        errors[name] = fieldError as (typeof errors)[typeof name];
       }
     }
   }

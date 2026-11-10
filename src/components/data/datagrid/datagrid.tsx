@@ -196,7 +196,7 @@ export type DataGridProps<T extends object = object, F extends object = T> = {
   equalityChecker?: (item1: T, item2: T) => boolean;
 
   /** A validation function. */
-  validate?: FormValidator;
+  validate?: FormValidator<T>;
 
   /** If set, use this custom set of `Validator`s. */
   validators?: Validator[];
