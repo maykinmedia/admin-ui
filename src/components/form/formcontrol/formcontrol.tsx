@@ -151,7 +151,7 @@ export const FormControl: React.FC<FormControlProps> = ({
 
       <FormWidget
         id={_id}
-        aria-invalid={!!error}
+        invalid={isDirty && Boolean(error)}
         aria-describedby={error ? idError : undefined}
         {..._props}
         onChange={(e: React.ChangeEvent) => {

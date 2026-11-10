@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Changed
+### Fixed
 
+- Fixed a bug that caused pristine inputs to appear invalid.
 - Updated the types used in <Form> to allowed inferred types in validator.
