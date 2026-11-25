@@ -85,7 +85,9 @@
 
   &__header .mykn-body {
     display: flex;
-    height: calc(var(--typography-line-height-h2));
+    height: calc(
+      var(--typography-line-height-h2) * var(--typography-font-size-h2)
+    );
     justify-content: center;
   }
 
@@ -141,10 +143,6 @@
       // On hover or focus, open the sidebar
       &:has(:not(.mykn-sidebar__toggle):focus),
       &:has(#{$self}__body:hover) {
-        width: calc(
-          var(--typography-line-height-body-xs) + 2 * var(--sizes-spacing-xs-h)
-        );
-
         #{$self}__header,
         #{$self}__body {
           width: var(--mykn-sidebar-width);
