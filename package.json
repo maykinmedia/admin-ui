@@ -141,5 +141,11 @@
   },
   "optionalDependencies": {
     "@rollup/rollup-linux-x64-gnu": "latest"
+  },
+  "overrides": {
+    "glob@>=9.0.0 <14.0.2": "^14.0.6",
+    "test-exclude": {
+      "minimatch": "^11.0.9"
+    }
   }
 }
