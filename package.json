@@ -67,7 +67,7 @@
   },
   "homepage": "https://github.com/maykinmedia/admin-ui/#readme",
   "devDependencies": {
-    "@chromatic-com/storybook": "^4.0.1",
+    "@chromatic-com/storybook": "^5.6.0",
     "@commitlint/cli": "^19.0.0",
     "@commitlint/config-conventional": "^19.0.0",
     "@formatjs/cli": "^6.2.7",
@@ -75,20 +75,20 @@
     "@rollup/plugin-commonjs": "^25.0.8",
     "@rollup/plugin-json": "^6.1.0",
     "@rollup/plugin-terser": "^1.0.0",
-    "@storybook/addon-docs": "^9.1.21",
-    "@storybook/addon-links": "^9.1.21",
-    "@storybook/addon-onboarding": "^9.1.21",
-    "@storybook/addon-themes": "^9.1.21",
-    "@storybook/addon-vitest": "^9.1.21",
-    "@storybook/react-vite": "^9.1.21",
+    "@storybook/addon-docs": "^10.6.9",
+    "@storybook/addon-links": "^10.6.9",
+    "@storybook/addon-onboarding": "^10.6.9",
+    "@storybook/addon-themes": "^10.6.9",
+    "@storybook/addon-vitest": "^10.6.9",
+    "@storybook/react-vite": "^10.6.9",
     "@trivago/prettier-plugin-sort-imports": "^4.3.0",
     "@types/react": "^19.0.0",
     "@types/react-datepicker": "^7.0.0",
     "@types/react-dom": "^19.0.0",
     "@typescript-eslint/eslint-plugin": "^8.58.2",
     "@typescript-eslint/parser": "^8.58.2",
-    "@vitest/browser": "^3.2.7",
-    "@vitest/coverage-v8": "^3.2.7",
+    "@vitest/browser-playwright": "^4.1.12",
+    "@vitest/coverage-v8": "^4.1.12",
     "color": "^5.0.3",
     "commitlint": "^19.0.0",
     "concurrently": "^8.2.2",
@@ -96,7 +96,7 @@
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.1.2",
     "eslint-plugin-react": "^7.33.2",
-    "eslint-plugin-storybook": "^9.1.21",
+    "eslint-plugin-storybook": "^10.6.9",
     "formik": "^2.4.5",
     "http-server": "^14.1.1",
     "husky": "^8.0.3",
@@ -112,12 +112,12 @@
     "rollup-plugin-typescript2": "^0.37.0",
     "sass": "^1.69.7",
     "sass-loader": "^13.3.3",
-    "storybook": "^9.1.21",
+    "storybook": "^10.6.9",
     "style-dictionary": "^5.8.0",
     "ts-loader": "^9.5.1",
     "tslib": "^2.6.2",
     "typescript": "^5.3.3",
-    "vitest": "^3.2.7"
+    "vitest": "^4.1.12"
   },
   "peerDependencies": {
     "react": "^18.0.0 || ^19.0.0",
@@ -143,9 +143,6 @@
     "@rollup/rollup-linux-x64-gnu": "latest"
   },
   "overrides": {
-    "glob@>=9.0.0 <14.0.2": "^14.0.6",
-    "test-exclude": {
-      "minimatch": "^11.0.9"
-    }
+    "glob@>=9.0.0 <14.0.2": "^14.0.6"
   }
 }
