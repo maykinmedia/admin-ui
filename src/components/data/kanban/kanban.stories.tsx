@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import * as React from "react";
 
-import { PAGE_DECORATOR } from "../../../../.storybook/decorators";
 import {
   FIXTURE_TODOS,
   FIXTURE_TODOS_STATUS_DONE,
@@ -9,12 +8,12 @@ import {
   FIXTURE_TODOS_STATUS_IN_REVIEW,
   FIXTURE_TODOS_STATUS_TODO,
 } from "../../../../.storybook/fixtures/todos";
+import { Badge } from "../../badge";
 import { Kanban, KanbanProps } from "./kanban";
 
 const meta: Meta<typeof Kanban> = {
   title: "Data/Kanban",
   component: Kanban,
-  decorators: [PAGE_DECORATOR],
 };
 
 export default meta;
@@ -39,23 +38,38 @@ export const KanbanComponent: Story = {
   },
 };
 
+const PRIORITY_VARIANT = {
+  High: "danger",
+  Medium: "warning",
+  Low: "success",
+} as const;
+
+const renderPriorityTag = (obj: Record<string, unknown>) => {
+  const priority = obj.priority as keyof typeof PRIORITY_VARIANT | undefined;
+  if (!priority) return null;
+  return (
+    <Badge variant={PRIORITY_VARIANT[priority] ?? "primary"}>{priority}</Badge>
+  );
+};
+
+const ADDITIONAL_FIELDSET = {
+  fields: ["title", "dueDate", "description"],
+  title: "title",
+} as const;
+
 export const AdditionalFields: Story = {
   ...KanbanComponent,
   // @ts-expect-error - Fix never
   args: {
     ...(KanbanComponent.args as KanbanProps),
     fieldsets: [
-      ["Todo", { fields: ["title", "dueDate", "priority"], title: "title" }],
-      [
-        "In Progress",
-        { fields: ["title", "dueDate", "priority"], title: "title" },
-      ],
-      [
-        "In Review",
-        { fields: ["title", "dueDate", "priority"], title: "title" },
-      ],
-      ["Done", { fields: ["title", "dueDate", "priority"], title: "title" }],
+      ["Todo", ADDITIONAL_FIELDSET],
+      ["In Progress", ADDITIONAL_FIELDSET],
+      ["In Review", ADDITIONAL_FIELDSET],
+      ["Done", ADDITIONAL_FIELDSET],
     ],
+    subtitleField: "dueDate",
+    renderTag: renderPriorityTag,
   },
 };
 
